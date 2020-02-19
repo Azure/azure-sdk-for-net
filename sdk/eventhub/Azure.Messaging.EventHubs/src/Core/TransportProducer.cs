@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -24,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the producer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -36,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task SendAsync(IEnumerable<EventData> events,
-                                       SendOptions sendOptions,
+                                       SendEventOptions sendOptions,
                                        CancellationToken cancellationToken);
 
         /// <summary>
@@ -65,9 +66,9 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        /// <seealso cref="CreateBatchAsync(BatchOptions, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        public abstract ValueTask<TransportEventBatch> CreateBatchAsync(BatchOptions options,
+        public abstract ValueTask<TransportEventBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                         CancellationToken cancellationToken);
 
         /// <summary>

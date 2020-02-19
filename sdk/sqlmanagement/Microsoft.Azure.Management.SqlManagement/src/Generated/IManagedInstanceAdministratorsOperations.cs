@@ -61,9 +61,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
         /// </param>
-        /// <param name='administratorName'>
-        /// The administrator name.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -79,7 +76,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedInstanceAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedInstanceAdministrator>> GetWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a managed instance administrator.
         /// </summary>
@@ -90,9 +87,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
-        /// </param>
-        /// <param name='administratorName'>
-        /// The requested administrator name.
         /// </param>
         /// <param name='parameters'>
         /// The requested administrator parameters.
@@ -112,7 +106,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedInstanceAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedInstanceAdministrator>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a managed instance administrator.
         /// </summary>
@@ -123,9 +117,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
-        /// </param>
-        /// <param name='administratorName'>
-        /// The administrator name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -139,7 +130,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a managed instance administrator.
         /// </summary>
@@ -150,9 +141,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
-        /// </param>
-        /// <param name='administratorName'>
-        /// The requested administrator name.
         /// </param>
         /// <param name='parameters'>
         /// The requested administrator parameters.
@@ -172,7 +160,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedInstanceAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedInstanceAdministrator>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a managed instance administrator.
         /// </summary>
@@ -183,9 +171,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </param>
         /// <param name='managedInstanceName'>
         /// The name of the managed instance.
-        /// </param>
-        /// <param name='administratorName'>
-        /// The administrator name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -199,7 +184,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string administratorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of managed instance administrators.
         /// </summary>

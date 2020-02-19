@@ -96,14 +96,14 @@ namespace Azure.Storage.Sas
         /// Specifies which resources are accessible via the shared access
         /// signature.
         ///
-        /// Specify b if the shared resource is a blob. This grants access to
+        /// Specify "b" if the shared resource is a blob. This grants access to
         /// the content and metadata of the blob.
         ///
-        /// Specify c if the shared resource is a blob container. This grants
+        /// Specify "c" if the shared resource is a blob container. This grants
         /// access to the content and metadata of any blob in the container,
         /// and to the list of blobs in the container.
         ///
-        /// Beginning in version 2018-11-09, specify bs if the shared resource
+        /// Beginning in version 2018-11-09, specify "bs" if the shared resource
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
         /// blob.
@@ -207,8 +207,8 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -218,7 +218,7 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, BlobContainerName ?? String.Empty, BlobName ?? String.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 Snapshot,
@@ -228,7 +228,7 @@ namespace Azure.Storage.Sas
                 ContentLanguage,
                 ContentType);
 
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential,stringToSign);
 
             var p = new BlobSasQueryParameters(
                 version: Version,
@@ -269,10 +269,10 @@ namespace Azure.Storage.Sas
 
             EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -287,7 +287,7 @@ namespace Azure.Storage.Sas
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 Snapshot,
@@ -361,14 +361,18 @@ namespace Azure.Storage.Sas
         /// </summary>
         private void EnsureState()
         {
-            if (ExpiresOn == default)
+            if (Identifier == default)
             {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
             }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
+
             // Container
             if (String.IsNullOrEmpty(BlobName))
             {

@@ -89,10 +89,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
-            if (Location != null)
-            {
-                Location.Validate();
-            }
         }
     }
 }

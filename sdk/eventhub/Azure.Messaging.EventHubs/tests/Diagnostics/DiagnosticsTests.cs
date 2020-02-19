@@ -7,11 +7,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Tests;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using NUnit.Framework;
 
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportMock = new Mock<TransportProducer>();
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(eventData);
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
-                new KeyValuePair<string, string>(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType),
+                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
-            Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind)), "The activities tag should be internal.");
+            Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
         }
 
@@ -100,11 +100,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportMock = new Mock<TransportProducer>();
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             transportMock
-                .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(batch);
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
-                new KeyValuePair<string, string>(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType),
+                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
@@ -145,8 +145,8 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData[] writtenEventsData = null;
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<IEnumerable<EventData>, SendOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<IEnumerable<EventData>, SendEventOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -197,11 +197,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 });
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             transportMock
-                .Setup(m => m.CreateBatchAsync(It.IsAny<BatchOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -231,94 +231,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CheckpointManagerCreatesScope()
-        {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-
-            var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://some.endpoint.com/path");
-            var fakeConnection = new MockConnection(endpoint, eventHubName);
-            var context = new PartitionContext("partition");
-            var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
-
-            var processor = new EventProcessorClient("cg", new InMemoryPartitionManager(), fakeConnection, null);
-
-            await processor.UpdateCheckpointAsync(data, context);
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
-        }
-
-        /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="PartitionPump" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        public async Task PartitionPumpCreatesScopeForEventProcessing()
-        {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-            var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var consumerMock = new Mock<TransportConsumer>();
-            bool returnedItems = false;
-            consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(() =>
-                {
-                    if (returnedItems)
-                    {
-                        throw new InvalidOperationException("Something bad happened");
-                    }
-
-                    returnedItems = true;
-                    return Task.FromResult(
-                        (IEnumerable<EventData>)new[]
-                        {
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id" }
-                                }
-                            },
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id2" }
-                                }
-                            }
-                        });
-                });
-
-            var clientMock = new Mock<EventHubConnection>();
-            clientMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerClientOptions>())).Returns(consumerMock.Object);
-
-            var eventProcessorMock = new Mock<EventProcessorClient>();
-            eventProcessorMock.Object.ProcessEventAsync = processorEvent =>
-            {
-                processorCalledSource.SetResult(null);
-                return Task.CompletedTask;
-            };
-
-            var manager = new PartitionPump(eventProcessorMock.Object, clientMock.Object, "cg", new PartitionContext("pid"), EventPosition.Earliest, new EventProcessorClientOptions());
-
-            await manager.StartAsync();
-            await processorCalledSource.Task;
-            await manager.StopAsync(null);
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
-        }
-
-        /// <summary>
         ///   A minimal mock connection, allowing the public attributes
         ///   used with diagnostics to be set.
         /// </summary>
@@ -332,12 +244,11 @@ namespace Azure.Messaging.EventHubs.Tests
                                   string eventHubName) : base(MockConnectionString, eventHubName)
             {
                 _serviceEndpoint = serviceEndpoint;
-                EventHubName = eventHubName;
             }
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
-                                                                    TokenCredential credential,
+                                                                    EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options)
             {
                 var mockTransport = new Mock<TransportClient>();

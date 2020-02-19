@@ -39,7 +39,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: dotnet run -p ./samples/SmokeTest/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
+      - script: dotnet run -p ./common/SmokeTests/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
         env:
           KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// domain administrator</param>
         /// <param name="domain">Name of the Active Directory domain</param>
         /// <param name="dns">Comma separated list of DNS server IP addresses
-        /// for the Active Directory domain</param>
+        /// (IPv4 only) for the Active Directory domain</param>
         /// <param name="status">Status of the Active Directory</param>
         /// <param name="smbServerName">NetBIOS name of the SMB server. This
         /// name will be registered as a computer account in the AD and used to
@@ -87,8 +87,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Domain { get; set; }
 
         /// <summary>
-        /// Gets or sets comma separated list of DNS server IP addresses for
-        /// the Active Directory domain
+        /// Gets or sets comma separated list of DNS server IP addresses (IPv4
+        /// only) for the Active Directory domain
         /// </summary>
         [JsonProperty(PropertyName = "dns")]
         public string Dns { get; set; }

@@ -101,7 +101,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.List(null, "wfName", "rName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.List("rgName", null, "rName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.List("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowRunActions.List("rgName", "wfName", "rName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRunActions.List("rgName", "wfName", "rName"));
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.ListNext(null));
-            Assert.Throws<CloudException>(() => client.WorkflowRunActions.ListNext("http://management.azure.com/actionLink"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRunActions.ListNext("http://management.azure.com/actionLink"));
         }
 
         [Fact]
@@ -188,7 +188,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.Get("rgName", null, "rName", "actName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.Get("rgName", "wfName", null, "actName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRunActions.Get("rgName", "wfName", "rName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowRunActions.Get("rgName", "wfName", "rName", "actName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRunActions.Get("rgName", "wfName", "rName", "actName"));
         }
 
         [Fact]

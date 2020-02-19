@@ -52,7 +52,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="snapshotId">Snapshot ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="mountTargets">mountTargets</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), object mountTargets = default(object))
+        /// <param name="volumeType">What type of volume is this</param>
+        /// <param name="dataProtection">DataProtection</param>
+        /// <param name="isRestoring">Restoring</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), object mountTargets = default(object), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?))
         {
             Location = location;
             Id = id;
@@ -70,6 +73,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
             MountTargets = mountTargets;
+            VolumeType = volumeType;
+            DataProtection = dataProtection;
+            IsRestoring = isRestoring;
             CustomInit();
         }
 
@@ -106,7 +112,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public object Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets fileSystem ID
@@ -206,6 +212,28 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public object MountTargets { get; set; }
 
         /// <summary>
+        /// Gets or sets what type of volume is this
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.volumeType")]
+        public string VolumeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets dataProtection
+        /// </summary>
+        /// <remarks>
+        /// DataProtection type volumes include an object containing details of
+        /// the replication
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.dataProtection")]
+        public VolumePropertiesDataProtection DataProtection { get; set; }
+
+        /// <summary>
+        /// Gets or sets restoring
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isRestoring")]
+        public bool? IsRestoring { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -277,6 +305,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
                 {
                     throw new ValidationException(ValidationRules.Pattern, "BaremetalTenantId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
                 }
+            }
+            if (DataProtection != null)
+            {
+                DataProtection.Validate();
             }
         }
     }

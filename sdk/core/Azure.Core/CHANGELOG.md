@@ -1,5 +1,22 @@
 # Release History
 
+## 1.1.0-preview.1 (Unreleased)
+### Fixes and improvements
+- Add OPTIONS and TRACE HTTP request methods.
+
+## 1.0.2 (2020-01-10)
+
+- Block bearer token authentication for non TLS protected endpoints.
+- Add support for retrying on request timeouts.
+- Add support for retrying on 408, 500, 502, 504 status codes.
+- Remove commit hash from User-Agent telemetry.
+
+## 1.0.1
+
+- Fix issues with log redaction where first query character was replaced with '?' character.
+- Exclude EventCounter events from AzureEventSourceListener.
+- Add `AZURE_TRACING_DISABLED` environment variable support.
+
 ## 1.0.0
 
 - Updating versioning and packaging for general availability.

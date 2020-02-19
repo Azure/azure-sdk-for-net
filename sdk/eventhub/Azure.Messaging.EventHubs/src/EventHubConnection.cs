@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Metadata;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -30,14 +31,14 @@ namespace Azure.Messaging.EventHubs
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace { get; protected set; }
+        public string FullyQualifiedNamespace { get; }
 
         /// <summary>
         ///   The name of the Event Hub that the connection is associated with, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public string EventHubName { get; protected set; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="EventHubConnection"/> has been closed.
@@ -47,7 +48,7 @@ namespace Azure.Messaging.EventHubs
         ///   <c>true</c> if the connection is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool Closed => InnerClient.Closed;
+        public bool IsClosed => InnerClient.IsClosed;
 
         /// <summary>
         ///   The endpoint for the Event Hubs service to which the connection is associated.
@@ -82,7 +83,7 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public EventHubConnection(string connectionString) : this(connectionString, null, null)
+        public EventHubConnection(string connectionString) : this(connectionString, null, connectionOptions: null)
         {
         }
 
@@ -90,7 +91,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
@@ -121,7 +122,7 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         public EventHubConnection(string connectionString,
-                                  string eventHubName) : this(connectionString, eventHubName, null)
+                                  string eventHubName) : this(connectionString, eventHubName, connectionOptions: null)
         {
         }
 
@@ -129,7 +130,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the connection with.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
@@ -165,10 +166,13 @@ namespace Azure.Messaging.EventHubs
                  connectionStringProperties.SharedAccessKey
             );
 
+            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
+            var tokenCredentials = new EventHubTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, new SharedAccessSignatureCredential(sharedAccessSignature), connectionOptions);
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredentials, connectionOptions);
         }
 
         /// <summary>
@@ -198,17 +202,17 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
-                    break;
-
-                default:
-                    credential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
             }
 
+            var tokenCredential = new EventHubTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             Options = connectionOptions;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, credential, connectionOptions);
+
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
         }
 
         /// <summary>
@@ -227,15 +231,25 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual Task CloseAsync(CancellationToken cancellationToken = default) => InnerClient.CloseAsync(cancellationToken);
+        public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
 
-        /// <summary>
-        ///   Closes the connection to the Event Hubs namespace and associated Event Hub.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
+            try
+            {
+                await InnerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                EventHubsEventSource.Log.ClientCloseError(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace, ex.Message);
+                throw;
+            }
+            finally
+            {
+                EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
+            }
+        }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventHubConnection" />,
@@ -285,7 +299,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The set of information for the Event Hub that this connection is associated with.</returns>
         ///
-        internal virtual Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+        internal virtual Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                      CancellationToken cancellationToken = default) => InnerClient.GetPropertiesAsync(retryPolicy, cancellationToken);
 
         /// <summary>
@@ -298,14 +312,14 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of identifiers for the partitions within the Event Hub that this connection is associated with.</returns>
         ///
         /// <remarks>
-        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(EventHubRetryPolicy, CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(EventHubsRetryPolicy, CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
         ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-        internal virtual async Task<string[]> GetPartitionIdsAsync(EventHubRetryPolicy retryPolicy,
+        internal virtual async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
                                                                    CancellationToken cancellationToken = default) =>
-            (await GetPropertiesAsync(retryPolicy, cancellationToken).ConfigureAwait(false))?.PartitionIds;
+            (await GetPropertiesAsync(retryPolicy, cancellationToken).ConfigureAwait(false)).PartitionIds;
 
         /// <summary>
         ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
@@ -319,7 +333,7 @@ namespace Azure.Messaging.EventHubs
         /// <returns>The set of information for the requested partition under the Event Hub this connection is associated with.</returns>
         ///
         internal virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                               EventHubRetryPolicy retryPolicy,
+                                                                               EventHubsRetryPolicy retryPolicy,
                                                                                CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationToken);
 
         /// <summary>
@@ -327,12 +341,17 @@ namespace Azure.Messaging.EventHubs
         ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
         /// </summary>
         ///
-        /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
+        /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
-        internal virtual TransportProducer CreateTransportProducer(EventHubProducerClientOptions producerOptions = default) =>
-            InnerClient.CreateProducer(producerOptions?.Clone() ?? new EventHubProducerClientOptions());
+        internal virtual TransportProducer CreateTransportProducer(string partitionId,
+                                                                   EventHubsRetryPolicy retryPolicy)
+        {
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
+            return InnerClient.CreateProducer(partitionId, retryPolicy);
+        }
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
@@ -347,27 +366,33 @@ namespace Azure.Messaging.EventHubs
         ///   group to be actively reading events from the partition.  These non-exclusive consumers are
         ///   sometimes referred to as "Non-epoch Consumers."
         ///
-        ///   Designating a consumer as exclusive may be specified in the <paramref name="consumerOptions" />.
-        ///   By default, consumers are created as non-exclusive.
+        ///   Designating a consumer as exclusive may be specified by setting the <paramref name="ownerLevel" />.
+        ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
-        /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         ///
-        /// <returns>A <see cref="TransportConsumer"/> configured in the requested manner.</returns>
+        /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
                                                                    string partitionId,
                                                                    EventPosition eventPosition,
-                                                                   EventHubConsumerClientOptions consumerOptions = default)
+                                                                   EventHubsRetryPolicy retryPolicy,
+                                                                   bool trackLastEnqueuedEventProperties = true,
+                                                                   long? ownerLevel = default,
+                                                                   uint? prefetchCount = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(eventPosition, nameof(eventPosition));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, consumerOptions?.Clone() ?? new EventHubConsumerClientOptions());
+            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
         }
 
         /// <summary>
@@ -392,13 +417,13 @@ namespace Azure.Messaging.EventHubs
         ///
         internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                string eventHubName,
-                                                               TokenCredential credential,
+                                                               EventHubTokenCredential credential,
                                                                EventHubConnectionOptions options)
         {
             switch (options.TransportType)
             {
-                case TransportType.AmqpTcp:
-                case TransportType.AmqpWebSockets:
+                case EventHubsTransportType.AmqpTcp:
+                case EventHubsTransportType.AmqpWebSockets:
                     return new AmqpClient(fullyQualifiedNamespace, eventHubName, credential, options);
 
                 default:
@@ -416,7 +441,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildAudienceResource(TransportType transportType,
+        private static string BuildAudienceResource(EventHubsTransportType transportType,
                                                     string fullyQualifiedNamespace,
                                                     string eventHubName)
         {

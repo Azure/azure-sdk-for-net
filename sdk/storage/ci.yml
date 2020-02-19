@@ -15,7 +15,6 @@ trigger:
   branches:
     include:
     - master
-    - feature/*
     - hotfix/*
     - release/*
   paths:
@@ -43,6 +42,8 @@ stages:
       safeName: AzureStorageBlobs
     - name: Azure.Storage.Blobs.Batch
       safeName: AzureStorageBlobsBatch
+    - name: Azure.Storage.Blobs.Cryptography
+      safeName: AzureStorageBlobsCryptography
     - name: Azure.Storage.Common
       safeName: AzureStorageCommon
     - name: Azure.Storage.Files.Shares
@@ -51,4 +52,3 @@ stages:
       safeName: AzureStorageFilesDataLake
     - name: Azure.Storage.Queues
       safeName: AzureStorageQueues
-      

@@ -54,6 +54,11 @@ namespace Azure.Storage.Blobs.Specialized
         private HttpPipeline Pipeline => BlobClient?.Pipeline ?? BlobContainerClient.Pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => BlobClient?.Version ?? BlobContainerClient.Version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -280,6 +285,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             duration: serviceDuration,
                             proposedLeaseId: LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -287,7 +293,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Constants.Blob.Lease.AcquireOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Acquire)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -303,12 +309,13 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             duration: serviceDuration,
                             proposedLeaseId: LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Constants.Blob.Lease.AcquireOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Acquire)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -451,12 +458,13 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Constants.Blob.Lease.RenewOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Renew)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -473,10 +481,11 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Constants.Blob.Lease.RenewOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Renew)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -621,12 +630,13 @@ namespace Azure.Storage.Blobs.Specialized
                                 Pipeline,
                                 Uri,
                                 leaseId: LeaseId,
+                                version: Version.ToVersionString(),
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 ifMatch: conditions?.IfMatch,
                                 ifNoneMatch: conditions?.IfNoneMatch,
                                 async: async,
-                                operationName: Constants.Blob.Lease.ReleaseOperationName,
+                                operationName: $"{nameof(BlobLeaseClient)}.{nameof(Release)}",
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         return Response.FromValue(new ReleasedObjectInfo(response.Value), response.GetRawResponse());
@@ -645,10 +655,11 @@ namespace Azure.Storage.Blobs.Specialized
                                 Pipeline,
                                 Uri,
                                 leaseId: LeaseId,
+                                version: Version.ToVersionString(),
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 async: async,
-                                operationName: Constants.Blob.Lease.ReleaseOperationName,
+                                operationName: $"{nameof(BlobLeaseClient)}.{nameof(Release)}",
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         return Response.FromValue(new ReleasedObjectInfo(response.Value), response.GetRawResponse());
@@ -800,12 +811,13 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             leaseId: LeaseId,
                             proposedLeaseId: proposedId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Constants.Blob.Lease.ChangeOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Change)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -823,10 +835,11 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             leaseId: LeaseId,
                             proposedLeaseId: proposedId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Constants.Blob.Lease.ChangeOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Change)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1029,13 +1042,14 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             breakPeriod: serviceBreakPeriod,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: Constants.Blob.Lease.BreakOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Break)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false))
                             .ToLease();
@@ -1052,11 +1066,12 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             breakPeriod: serviceBreakPeriod,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
-                            operationName: Constants.Blob.Lease.BreakOperationName,
+                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Break)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false))
                             .ToLease();

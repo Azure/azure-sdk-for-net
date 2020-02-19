@@ -228,13 +228,13 @@ namespace Azure.Storage.Blobs.Tests
             if (_async)
             {
                 clientMock.Setup(
-                        c => c.UploadAsync(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, s_cancellationToken))
+                        c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, true, s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
             else
             {
-                clientMock.Setup(c => c.Upload(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, s_cancellationToken))
-                    .Returns(s_response);
+                clientMock.Setup(c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, false, s_cancellationToken))
+                    .ReturnsAsync(s_response);
             }
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);
@@ -266,7 +266,7 @@ namespace Azure.Storage.Blobs.Tests
                         IsAny<Stream>(),
                         IsAny<byte[]>(),
                         s_conditions,
-                        s_progress,
+                        IsAny<IProgress<long>>(),
                         s_cancellationToken
                     )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.StageAsync);
 
@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs.Tests
                         IsAny<Stream>(),
                         IsAny<byte[]>(),
                         s_conditions,
-                        s_progress,
+                        IsAny<IProgress<long>>(),
                         s_cancellationToken
                     )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.Stage);
 

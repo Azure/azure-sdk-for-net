@@ -3,8 +3,7 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
-using Azure.Storage.Test;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
@@ -13,6 +12,7 @@ namespace Azure.Storage.Test
     public class StorageConnectionStringTests
     {
         [Test]
+        [LiveOnly]
         [Description("StorageConnectionString object with an empty key value.")]
         public void StorageCredentialsEmptyKeyValue()
         {
@@ -23,7 +23,7 @@ namespace Azure.Storage.Test
 
             var credentials1 = new StorageSharedKeyCredential(accountName, emptyKeyValueAsString);
 
-            var conn1 = new StorageConnectionString(credentials1, true);
+            StorageConnectionString conn1 = TestExtensions.CreateStorageConnectionString(credentials1, true);
             Assert.AreEqual(emptyKeyConnectionString, conn1.ToString(true));
             Assert.IsNotNull(conn1.Credentials);
             Assert.IsInstanceOf(typeof(StorageSharedKeyCredential), conn1.Credentials);
@@ -52,17 +52,15 @@ namespace Azure.Storage.Test
             // endpoints are the same
             Assert.AreEqual(a.BlobEndpoint, b.BlobEndpoint);
             Assert.AreEqual(a.QueueEndpoint, b.QueueEndpoint);
-            Assert.AreEqual(a.TableEndpoint, b.TableEndpoint);
             Assert.AreEqual(a.FileEndpoint, b.FileEndpoint);
 
             // storage uris are the same
             Assert.AreEqual(a.BlobStorageUri, b.BlobStorageUri);
             Assert.AreEqual(a.QueueStorageUri, b.QueueStorageUri);
-            Assert.AreEqual(a.TableStorageUri, b.TableStorageUri);
             Assert.AreEqual(a.FileStorageUri, b.FileStorageUri);
 
             // seralized representatons are the same.
-            var aToStringNoSecrets = a.ToString();
+            var aToStringNoSecrets = a.ToString(false);
             var aToStringWithSecrets = a.ToString(true);
             var bToStringNoSecrets = b.ToString(false);
             var bToStringWithSecrets = b.ToString(true);
@@ -98,13 +96,10 @@ namespace Azure.Storage.Test
             StorageConnectionString devstoreAccount = StorageConnectionString.DevelopmentStorageAccount;
             Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1"), devstoreAccount.TableEndpoint);
             Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1"), devstoreAccount.BlobStorageUri.PrimaryUri);
             Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1"), devstoreAccount.QueueStorageUri.PrimaryUri);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1"), devstoreAccount.TableStorageUri.PrimaryUri);
             Assert.AreEqual(new Uri("http://127.0.0.1:10000/devstoreaccount1-secondary"), devstoreAccount.BlobStorageUri.SecondaryUri);
             Assert.AreEqual(new Uri("http://127.0.0.1:10001/devstoreaccount1-secondary"), devstoreAccount.QueueStorageUri.SecondaryUri);
-            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1-secondary"), devstoreAccount.TableStorageUri.SecondaryUri);
             Assert.IsNull(devstoreAccount.FileStorageUri.PrimaryUri);
             Assert.IsNull(devstoreAccount.FileStorageUri.SecondaryUri);
 
@@ -119,25 +114,22 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void DefaultStorageAccountWithHttp()
         {
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
-            var conn = new StorageConnectionString(cred, false);
+            var conn = TestExtensions.CreateStorageConnectionString(cred, false);
             Assert.AreEqual(conn.BlobEndpoint,
                 new Uri(string.Format("http://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueEndpoint,
                 new Uri(string.Format("http://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.TableEndpoint,
-                new Uri(string.Format("http://{0}.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileEndpoint,
                 new Uri(string.Format("http://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
                 new Uri(string.Format("http://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
                 new Uri(string.Format("http://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
                 new Uri(string.Format("http://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             _ = conn.ToString();
@@ -148,25 +140,22 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTPS")]
         public void DefaultStorageAccountWithHttps()
         {
             var cred = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
-            var conn = new StorageConnectionString(cred, true);
+            var conn = TestExtensions.CreateStorageConnectionString(cred, true);
             Assert.AreEqual(conn.BlobEndpoint,
                 new Uri(string.Format("https://{0}.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueEndpoint,
                 new Uri(string.Format("https://{0}.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.TableEndpoint,
-                new Uri(string.Format("https://{0}.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileEndpoint,
                 new Uri(string.Format("https://{0}.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
                 new Uri(string.Format("https://{0}-secondary.blob.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
                 new Uri(string.Format("https://{0}-secondary.queue.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
-            Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.table.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
                 new Uri(string.Format("https://{0}-secondary.file.core.windows.net", TestConfigurations.DefaultTargetTenant.AccountName)));
 
@@ -177,6 +166,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void EndpointSuffixWithHttp()
         {
@@ -193,16 +183,12 @@ namespace Azure.Storage.Test
                 new Uri(string.Format("http://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueEndpoint,
                 new Uri(string.Format("http://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.TableEndpoint,
-                new Uri(string.Format("http://{0}.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileEndpoint,
                 new Uri(string.Format("http://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
                 new Uri(string.Format("http://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
                 new Uri(string.Format("http://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(string.Format("http://{0}-secondary.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
                new Uri(string.Format("http://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
 
@@ -213,6 +199,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTPS")]
         public void EndpointSuffixWithHttps()
         {
@@ -229,16 +216,12 @@ namespace Azure.Storage.Test
                 new Uri(string.Format("https://{0}.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueEndpoint,
                 new Uri(string.Format("https://{0}.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.TableEndpoint,
-                new Uri(string.Format("https://{0}.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileEndpoint,
                 new Uri(string.Format("https://{0}.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.BlobStorageUri.SecondaryUri,
                 new Uri(string.Format("https://{0}-secondary.blob.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.QueueStorageUri.SecondaryUri,
                 new Uri(string.Format("https://{0}-secondary.queue.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
-            Assert.AreEqual(conn.TableStorageUri.SecondaryUri,
-                new Uri(string.Format("https://{0}-secondary.table.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
             Assert.AreEqual(conn.FileStorageUri.SecondaryUri,
                 new Uri(string.Format("https://{0}-secondary.file.{1}", TestConfigurations.DefaultTargetTenant.AccountName, TestEndpointSuffix)));
 
@@ -249,6 +232,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void EndpointSuffixWithBlob()
         {
@@ -271,6 +255,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void ConnectionStringRoundtrip()
         {
@@ -407,6 +392,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void ValidateExpectedExceptions()
         {
@@ -414,7 +400,6 @@ namespace Azure.Storage.Test
                 {
                     new[] { "BlobEndpoint={3}", "BlobSecondaryEndpoint={4}", "BlobEndpoint={3};BlobSecondaryEndpoint={4}" },
                     new[] { "QueueEndpoint={3}", "QueueSecondaryEndpoint={4}", "QueueEndpoint={3};QueueSecondaryEndpoint={4}" },
-                    new[] { "TableEndpoint={3}", "TableSecondaryEndpoint={4}", "TableEndpoint={3};TableSecondaryEndpoint={4}" },
                     new[] { "FileEndpoint={3}", "FileSecondaryEndpoint={4}", "FileEndpoint={3};FileSecondaryEndpoint={4}" }
                 };
 
@@ -460,7 +445,12 @@ namespace Azure.Storage.Test
                         );
 
 
-                StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
+                var conn = StorageConnectionString.Parse(accountStringKeyPrimary); // no exception expected
+
+                // Query params should not be set as no Sas token is included
+                Assert.IsEmpty(conn.BlobEndpoint.Query);
+                Assert.IsEmpty(conn.FileEndpoint.Query);
+                Assert.IsEmpty(conn.QueueEndpoint.Query);
 
                 TestHelper.AssertExpectedException(
                     () => StorageConnectionString.Parse(accountStringKeySecondary),
@@ -549,7 +539,12 @@ namespace Azure.Storage.Test
                         accountSasParams
                         );
 
-                StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimary); // no exception expected
+                conn = StorageConnectionString.Parse(accountStringSasNoDefaultProtocolPrimary); // no exception expected
+
+                // Sas token should be included in Query portion of Uri
+                StringAssert.Contains("sasTest", conn.BlobEndpoint.Query);
+                StringAssert.Contains("sasTest", conn.FileEndpoint.Query);
+                StringAssert.Contains("sasTest", conn.QueueEndpoint.Query);
 
                 TestHelper.AssertExpectedException(
                     () => StorageConnectionString.Parse(accountStringSasNoDefaultProtocolSecondary),
@@ -650,13 +645,10 @@ namespace Azure.Storage.Test
             Assert.IsTrue(StorageConnectionString.TryParse("UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://ipv4.fiddler", out StorageConnectionString devstoreAccount));
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueEndpoint);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10002/devstoreaccount1"), devstoreAccount.TableEndpoint);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1"), devstoreAccount.BlobStorageUri.PrimaryUri);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1"), devstoreAccount.QueueStorageUri.PrimaryUri);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10002/devstoreaccount1"), devstoreAccount.TableStorageUri.PrimaryUri);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10000/devstoreaccount1-secondary"), devstoreAccount.BlobStorageUri.SecondaryUri);
             Assert.AreEqual(new Uri("http://ipv4.fiddler:10001/devstoreaccount1-secondary"), devstoreAccount.QueueStorageUri.SecondaryUri);
-            Assert.AreEqual(new Uri("http://ipv4.fiddler:10002/devstoreaccount1-secondary"), devstoreAccount.TableStorageUri.SecondaryUri);
             Assert.IsNull(devstoreAccount.FileStorageUri.PrimaryUri);
             Assert.IsNull(devstoreAccount.FileStorageUri.SecondaryUri);
         }
@@ -696,7 +688,7 @@ namespace Azure.Storage.Test
 
             Assert.AreEqual(accountString, StorageConnectionString.Parse(accountString).ToString(true));
 
-            var account = new StorageConnectionString(null, new Uri("http://blobs/"), null, null, null);
+            var account = new StorageConnectionString(null, (new Uri("http://blobs/"), default), (default, default), (default, default));
 
             AccountsAreEqual(account, StorageConnectionString.Parse(account.ToString(true)));
         }
@@ -712,7 +704,7 @@ namespace Azure.Storage.Test
             var key = accountAndKey.ExportBase64EncodedKey();
             Assert.AreEqual(accountKeyString, key);
 
-            var keyBytes = accountAndKey.AccountKeyValue;
+            var keyBytes = accountAndKey.GetAccountKey();
             var expectedKeyBytes = Convert.FromBase64String(accountKeyString);
 
             TestHelper.AssertSequenceEqual(expectedKeyBytes, keyBytes);

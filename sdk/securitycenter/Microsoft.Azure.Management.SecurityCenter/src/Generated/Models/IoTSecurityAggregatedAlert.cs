@@ -60,7 +60,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// response.</param>
         /// <param name="logAnalyticsQuery">Log analytics query for getting the
         /// list of affected devices/alerts.</param>
-        public IoTSecurityAggregatedAlert(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string alertType = default(string), string alertDisplayName = default(string), System.DateTime? aggregatedDateUtc = default(System.DateTime?), string vendorName = default(string), string reportedSeverity = default(string), string remediationSteps = default(string), string description = default(string), int? count = default(int?), string effectedResourceType = default(string), string systemSource = default(string), string actionTaken = default(string), string logAnalyticsQuery = default(string))
+        /// <param name="topDevicesList">10 devices with the highest number of
+        /// occurrences of this alert type, on this day.</param>
+        public IoTSecurityAggregatedAlert(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string alertType = default(string), string alertDisplayName = default(string), System.DateTime? aggregatedDateUtc = default(System.DateTime?), string vendorName = default(string), string reportedSeverity = default(string), string remediationSteps = default(string), string description = default(string), int? count = default(int?), string effectedResourceType = default(string), string systemSource = default(string), string actionTaken = default(string), string logAnalyticsQuery = default(string), IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList = default(IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>))
         {
             Id = id;
             Name = name;
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.Security.Models
             SystemSource = systemSource;
             ActionTaken = actionTaken;
             LogAnalyticsQuery = logAnalyticsQuery;
+            TopDevicesList = topDevicesList;
             CustomInit();
         }
 
@@ -185,6 +188,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.logAnalyticsQuery")]
         public string LogAnalyticsQuery { get; private set; }
+
+        /// <summary>
+        /// Gets 10 devices with the highest number of occurrences of this
+        /// alert type, on this day.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.topDevicesList")]
+        public IList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get; private set; }
 
     }
 }

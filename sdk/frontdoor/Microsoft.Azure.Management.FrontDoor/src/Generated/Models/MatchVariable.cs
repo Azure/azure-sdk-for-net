@@ -24,5 +24,6 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public const string RequestHeader = "RequestHeader";
         public const string RequestBody = "RequestBody";
         public const string Cookies = "Cookies";
+        public const string SocketAddr = "SocketAddr";
     }
 }

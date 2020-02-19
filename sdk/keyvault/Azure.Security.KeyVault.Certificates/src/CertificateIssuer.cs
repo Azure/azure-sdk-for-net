@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate issuer used to sign certificates managed by Azure Key Vault
+    /// A certificate issuer used to sign certificates managed by Azure Key Vault.
     /// </summary>
     public class CertificateIssuer : IJsonDeserializable, IJsonSerializable
     {
@@ -33,59 +34,93 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
-        private List<AdministratorContact> _administrators;
+        private List<AdministratorContact> _administratorContacts;
+        private IssuerProperties _properties;
 
         internal CertificateIssuer(IssuerProperties properties = null)
         {
-            Properties = properties ?? new IssuerProperties();
+            _properties = properties ?? new IssuerProperties();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CertificateContact"/> class with the given <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class.
+        /// You can use this constructor to initialize a <see cref="CertificateIssuer"/> for
+        /// <see cref="CertificateClient.UpdateIssuer(CertificateIssuer, CancellationToken)"/> or
+        /// <see cref="CertificateClient.UpdateIssuerAsync(CertificateIssuer, CancellationToken)"/>.
         /// </summary>
         /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public CertificateIssuer(string name)
         {
-            Properties = new IssuerProperties(name);
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            _properties = new IssuerProperties(name);
         }
 
         /// <summary>
-        /// The unique identifier of the certificate issuer
+        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class.
+        /// You can use this constructor to initialize a <see cref="CertificateIssuer"/> for
+        /// <see cref="CertificateClient.CreateIssuer(CertificateIssuer, CancellationToken)"/> or
+        /// <see cref="CertificateClient.CreateIssuerAsync(CertificateIssuer, CancellationToken)"/>.
         /// </summary>
-        public Uri Id => Properties.Id;
+        /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="provider">The provider name of the certificate issuer.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="provider"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="provider"/> is null.</exception>
+        public CertificateIssuer(string name, string provider)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+
+            _properties = new IssuerProperties(name)
+            {
+                Provider = provider,
+            };
+        }
 
         /// <summary>
-        /// The name of the certificate issuer
+        /// Gets the unique identifier of the certificate issuer.
         /// </summary>
-        public string Name => Properties.Name;
+        public Uri Id => _properties.Id;
 
         /// <summary>
-        /// The account identifier or username used to authenticate to the certificate issuer
+        /// Gets the name of the certificate issuer.
+        /// </summary>
+        public string Name => _properties.Name;
+
+        /// <summary>
+        /// Gets or sets the provider name of the certificate issuer.
+        /// </summary>
+        public string Provider => _properties.Provider;
+
+        /// <summary>
+        /// Gets or sets the account identifier or username used to authenticate to the certificate issuer.
         /// </summary>
         public string AccountId { get; set; }
 
         /// <summary>
-        /// The password or key used to authenticate to the certificate issuer
+        /// Gets or sets the password or key used to authenticate to the certificate issuer.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
-        /// The organizational identifier for the issuer
+        /// Gets or sets the organizational identifier for the issuer.
         /// </summary>
         public string OrganizationId { get; set; }
 
         /// <summary>
-        /// A list of contacts who administrate the certificate issuer account
+        /// Gets a list of contacts who administer the certificate issuer account.
         /// </summary>
-        public IList<AdministratorContact> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
+        public IList<AdministratorContact> AdministratorContacts => LazyInitializer.EnsureInitialized(ref _administratorContacts);
 
         /// <summary>
-        /// The time the issuer was created in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
-        /// The last modified time of the issuer in UTC
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get; internal set; }
 
@@ -93,11 +128,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets or sets a value indicating whether the issuer can currently be used to issue certificates. If null, the server default will be used.
         /// </summary>
         public bool? Enabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets the attributes of the <see cref="CertificateIssuer"/>.
-        /// </summary>
-        public IssuerProperties Properties { get; }
 
         internal virtual void ReadProperty(JsonProperty prop)
         {
@@ -116,7 +146,7 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 default:
-                    Properties.ReadProperty(prop);
+                    _properties.ReadProperty(prop);
                     break;
             }
         }
@@ -153,7 +183,7 @@ namespace Azure.Security.KeyVault.Certificates
                         {
                             var admin = new AdministratorContact();
                             admin.ReadProperties(elem);
-                            Administrators.Add(admin);
+                            AdministratorContacts.Add(admin);
                         }
                         Password = prop.Value.GetString();
                         break;
@@ -184,7 +214,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal virtual void WriteProperties(Utf8JsonWriter json)
         {
-            Properties.WriteProperties(json);
+            _properties.WriteProperties(json);
 
             if (!string.IsNullOrEmpty(AccountId) || !string.IsNullOrEmpty(Password))
             {
@@ -195,7 +225,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (!string.IsNullOrEmpty(OrganizationId) || !_administrators.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(OrganizationId) || !_administratorContacts.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
@@ -234,11 +264,11 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
-            if (!_administrators.IsNullOrEmpty())
+            if (!_administratorContacts.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach (AdministratorContact admin in _administrators)
+                foreach (AdministratorContact admin in _administratorContacts)
                 {
                     json.WriteStartObject();
 

@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/certs",
+      "EncodedRequestUri": "L2NlcnRz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cf9b0d23-e7c9-4108-a3fd-c60fc8cc41f8"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Attestation.AttestationClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 10 Dec 2019 23:03:26 GMT"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2477"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"x5c\": [\r\n        \"MIIDWTCCAkGgAwIBAgIQUgd0WeHgd4JFI31wXxmZ4DANBgkqhkiG9w0BAQsFADA2MTQwMgYDVQQDEytodHRwczovL3RyYWRld2luZHMudXMudGVzdC5hdHRlc3QuYXp1cmUubmV0MB4XDTE5MTIxMDIzMDMyN1oXDTIwMTIxMDIzMDMyN1owNjE0MDIGA1UEAxMraHR0cHM6Ly90cmFkZXdpbmRzLnVzLnRlc3QuYXR0ZXN0LmF6dXJlLm5ldDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJe0j9qjBmzJZSaeGprPL0xm76UNSj4n2qMvBPF+SdPvEPoEEGK9I8aShBJeqTJGMM3mFF8sPxYRPNmSKbSArRpbBkiNd4BmOGzYN0oXO8dLAcc+WzGbHiu+zu1SkaJqKz4gcCNiExcRyX1i710mZ+qJGMXLt/1bJMpA3JRj+NER29iEVxACQi9i8WRo9T3W4Hza/w+lzqDs7709m1r+CopFxtE28oFFtnmAa4akZROlGG5QcUFE2mFT0p8glX3X+dMFHux1QAsQJs8BW9nKSLWfmGNlqrkV+PmWLh2hP19nVJHYd1jdL856cbg6kQk1GebX2pB1pTKAo+QgmlpKANcCAwEAAaNjMGEwDgYDVR0PAQH/BAQDAgIEMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFCH9jbpy6LEdU7ACDE7zJw8086VmMB8GA1UdIwQYMBaAFCH9jbpy6LEdU7ACDE7zJw8086VmMA0GCSqGSIb3DQEBCwUAA4IBAQAapuMtZr9p98awQBJwbCvctppyDgYeA5h4bRHwtlA4yf2L/+jKXjtPxQ4UuUuNcBtUxM/q4lnR60VbeEtrxfdF0Wtf2E8SG/7HhbIAM5JNZ91tasX2s2GLOfG4qlbGdsYtN4IPUSf6SfrSb7DhQVHuqYBC7VoFVHo5ODYIit8vqsiwsnjQu0Q3PFlbcNtJ/hG8jD692w7MDyM6ZtYNEyCSjnFsE6nvwZOlLlJ9VSKeDjJcGSrus28pr1HEbIyOtyrgK2/426vwWGeIy2owVE2BWAlG1IrHpg5A95nBTMN+XbNFvDk1BWDVMd8T2llWu85GL2CqzNyGsN5zcIwqgg4d\"\r\n      ],\r\n      \"kid\": \"G3loUlErBb/AD0sZByWLHCaWF5d4zTIfW7ac0cnrk5A=\",\r\n      \"kty\": \"RSA\"\r\n    },\r\n    {\r\n      \"x5c\": [\r\n        \"MIIDcDCCAligAwIBAgIQAMxeVti2SRWf2t71dDYmaTANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDEypBdHRlc3RhdGlvblNlcnZpY2UtTG9jYWxUZXN0LVJlcG9ydFNpZ25pbmcwHhcNMTkwNDI0MTYwMjUwWhcNMjEwNDI0MTYxMjUwWjA1MTMwMQYDVQQDEypBdHRlc3RhdGlvblNlcnZpY2UtTG9jYWxUZXN0LVJlcG9ydFNpZ25pbmcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCww8VBqpnKDXo6W+DJbYOXP3BPIFFQi8XnHC59fIco08l7XLwr6mCY+Zzh9qInAENV7fzRJPt4hluCLoUb1vmTY9VdrvSgR5fX4nALJ4FuCFOeLzsxD+5+jP6L0KOT+Lz/3K5s26QaWv4SCNhEz2vI2ffO31AC5w4qfvV+QTK0pI8t9NoW0Afldd7F0E2UowFLHtwVV4lVBtGszvFiIo4X/NpRkj/8e4/0cQdmFlQFFtP/xKg9XP25EZTHrvsmLHSl3tG1F31Om9qsakkL4plTxaOosn71GzyU6BWIh8ZQgSszyTrY8qw0h8KNAot2v3RQrNVYWAxugYVnHhPspofXAgMBAAGjfDB6MA4GA1UdDwEB/wQEAwIFoDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBRQCw4UHmsEwWMJKvERNt2nUVnaIDAdBgNVHQ4EFgQUUAsOFB5rBMFjCSrxETbdp1FZ2iAwDQYJKoZIhvcNAQELBQADggEBAJogTjVhZvG85eig5Qkqt72Hpm4YR9d06UYrwo8nQKoRLsOWW01ySOn7phGvb3dxEyXQmTe10U2x1X1gsGFqnXETXGX11oHnDCWtPk4hK+uVI3Uv2qlX1134nUGoicZb2nRicyUSh8+VHY0ZuOmUs95v+HEMIsEM12AbwWZRKB0+MTAW+4cXSR9LTxRm1pwLS+wKd4A2PYi4TLuO6erZBhZ4BbvmsQtdOaulsUJYWvF72fX+jGQF4WS3qiuN4QaI6Tm/ga3Dcgdfd2oBHePTkxLE252zxlKGZ8kx/WdOuVm/1F24e0fC5M67vlFJvq9VB9I+ElMcGponp8REzQamAIU=\"\r\n      ],\r\n      \"kid\": \"81dsh2B8UUKHZ2JXSOQn-VwfQMU\",\r\n      \"kty\": \"RSA\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

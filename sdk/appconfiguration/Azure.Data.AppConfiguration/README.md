@@ -16,7 +16,7 @@ Use the client library for App Configuration to:
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Data.AppConfiguration -Version 1.0.0-preview.2
+Install-Package Azure.Data.AppConfiguration
 ```
 
 **Prerequisites** 
@@ -52,6 +52,24 @@ Once you have the value of the connection string, you can create the Configurati
 ```C# Snippet:CreateConfigurationClient
 string connectionString = "<connection_string>";
 var client = new ConfigurationClient(connectionString);
+```
+
+#### Create ConfigurationClient with Azure Active Directory Credential
+
+Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
+or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
+You will also need to [register a new AAD application][aad_register_app] and [grant access][aad_grant_access] to Configuration Store by assigning the `"App Configuration Data Reader"` or `"App Configuration Data Owner"` role to your service principal.
+
+Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
+
+```C# Snippet:CreateConfigurationClientTokenCredential
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -212,20 +230,28 @@ Several App Configuration client library samples are available to you in this Gi
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+See the [App Configuration CONTRIBUTING.md][azconfig_contrib] for details on building, testing, and contributing to this library.
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.ApplicationModel.Configuration%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fappconfiguration%2FAzure.Data.AppConfiguration%2FREADME.png)
 
 <!-- LINKS -->
 [azconfig_docs]: https://docs.microsoft.com/azure/azure-app-configuration/
+[azconfig_contrib]: ../CONTRIBUTING.md
 [azconfig_setting_concepts]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value
 [azconfig_asof_snapshot]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-point-time-snapshot
-[source_root]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration
-[source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
+[aad_grant_access]: https://docs.microsoft.com/en-us/powershell/module/az.Resources/New-azRoleAssignment?view=azps-1.8.0
+[aad_register_app]: https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-provider-aad#-configure-with-advanced-settings
+[azure_identity]: ../../../sdk/identity/Azure.Identity
+[azure_identity_dac]: ../../identity/Azure.Identity/README.md#defaultazurecredential
+[azure_portal]: https://portal.azure.com
+[source_root]: ./
+[source_samples]: ./samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
 [azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
 [azure_cli]: https://docs.microsoft.com/cli/azure
@@ -234,6 +260,10 @@ This project has adopted the Microsoft Open Source Code of Conduct. For more inf
 [configuration_store]: https://docs.microsoft.com/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
 [label_concept]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
-[package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
-[samples_readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
+[package]: https://www.nuget.org/packages/Azure.Data.AppConfiguration/
+[samples_readme]: ./samples/README.md
 [moq]: https://github.com/Moq/moq4/
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[email_opencode]: mailto:opencode@microsoft.com

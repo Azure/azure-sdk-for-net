@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cba04894-1aff-43fd-ab9a-67d90ad27dd5"
+          "29abaf4c-5c9f-4746-b602-c36ab5f94f67"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 15 Sep 2019 09:08:07 GMT"
+          "Thu, 07 Nov 2019 14:20:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,13 +36,13 @@
           "749"
         ],
         "x-ms-request-id": [
-          "2613c96f-02c5-4bfb-a1fb-bae41afe50a3"
+          "677d49c7-3932-4669-92c2-9c2296db9404"
         ],
         "x-ms-correlation-request-id": [
-          "2613c96f-02c5-4bfb-a1fb-bae41afe50a3"
+          "677d49c7-3932-4669-92c2-9c2296db9404"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20190915T090808Z:2613c96f-02c5-4bfb-a1fb-bae41afe50a3"
+          "UKSOUTH2:20191107T142058Z:677d49c7-3932-4669-92c2-9c2296db9404"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1164"
+          "1165"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,7 +60,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_OpenPorts\",\r\n  \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_OpenPorts\",\r\n  \"type\": \"Microsoft.Security/IoTSecurityAggregatedRecommendation\",\r\n  \"properties\": {\r\n    \"recommendationName\": \"IoT_OpenPorts\",\r\n    \"recommendationDisplayName\": \"Device has open ports\",\r\n    \"recommendationTypeId\": \"\",\r\n    \"detectedBy\": \"IoTSecurity\",\r\n    \"healthyDevices\": 0,\r\n    \"unhealthyDeviceCount\": 1,\r\n    \"remediationSteps\": \"Review open ports on the device and make sure they belong to legitimate and necessary processes for the device to function correctly.\",\r\n    \"reportedSeverity\": \"Medium\",\r\n    \"description\": \"Found a listening endpoint on the device.\",\r\n    \"logAnalyticsQuery\": \"SecurityRecommendation | where tolower(AssessedResourceId) == tolower('/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus') and tolower(RecommendationName) == tolower('IoT_OpenPorts')\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_OpenPorts\",\r\n  \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default/IoT_OpenPorts\",\r\n  \"type\": \"Microsoft.Security/IoTSecurityAggregatedRecommendation\",\r\n  \"properties\": {\r\n    \"recommendationName\": \"IoT_OpenPorts\",\r\n    \"recommendationDisplayName\": \"Device has open ports\",\r\n    \"recommendationTypeId\": \"\",\r\n    \"detectedBy\": \"IoTSecurity\",\r\n    \"healthyDevices\": -1,\r\n    \"unhealthyDeviceCount\": 2,\r\n    \"remediationSteps\": \"Review open ports on the device and make sure they belong to legitimate and necessary processes for the device to function correctly.\",\r\n    \"reportedSeverity\": \"Medium\",\r\n    \"description\": \"Found a listening endpoint on the device.\",\r\n    \"logAnalyticsQuery\": \"SecurityRecommendation | where tolower(AssessedResourceId) == tolower('/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourcegroups/resourcegroup-cus/providers/microsoft.devices/iothubs/iothub-cus') and tolower(RecommendationName) == tolower('IoT_OpenPorts')\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

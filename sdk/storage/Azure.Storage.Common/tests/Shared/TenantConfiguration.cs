@@ -38,6 +38,7 @@ namespace Azure.Storage.Test
         public string ActiveDirectoryAuthEndpoint { get; private set; }
         public TenantType TenantType { get; private set; }
         public string ConnectionString { get; private set; }
+        public string EncryptionScope { get; private set; }
 
         /// <summary>
         /// Build a connection string for any tenant configuration that didn't
@@ -54,8 +55,8 @@ namespace Azure.Storage.Test
                 storageCredentials: new StorageSharedKeyCredential(AccountName, AccountKey),
                 blobStorageUri: (AsUri(BlobServiceEndpoint), AsUri(BlobServiceSecondaryEndpoint)),
                 fileStorageUri: (AsUri(FileServiceEndpoint), AsUri(FileServiceSecondaryEndpoint)),
-                queueStorageUri: (AsUri(QueueServiceEndpoint), AsUri(QueueServiceSecondaryEndpoint)),
-                tableStorageUri: (AsUri(TableServiceEndpoint), AsUri(TableServiceSecondaryEndpoint)));
+                tableStorageUri: (AsUri(TableServiceEndpoint), AsUri(TableServiceSecondaryEndpoint)),
+                queueStorageUri: (AsUri(QueueServiceEndpoint), AsUri(QueueServiceSecondaryEndpoint)));
             return connection.ToString(exportSecrets: !sanitize);
             Uri AsUri(string text) => !string.IsNullOrWhiteSpace(text) ? new Uri(text) : default;
         }
@@ -100,7 +101,8 @@ namespace Azure.Storage.Test
                 config.TenantType.ToString(),
                 !sanitize ?
                     config.ConnectionString :
-                    config.BuildConnectionString(sanitize));
+                    config.BuildConnectionString(sanitize),
+                config.EncryptionScope);
 
         /// <summary>
         /// Parse a TenantType and ignore case.
@@ -119,7 +121,7 @@ namespace Azure.Storage.Test
         public static TenantConfiguration Parse(string text)
         {
             var values = text?.Split('\n');
-            if (values == null || values.Length != 21)
+            if (values == null || values.Length != 22)
             {
                 throw new ArgumentException();
             }
@@ -147,7 +149,8 @@ namespace Azure.Storage.Test
                 ActiveDirectoryTenantId = values[17],
                 ActiveDirectoryAuthEndpoint = values[18],
                 TenantType = ParseTenantType(values[19]),
-                ConnectionString = values[20]
+                ConnectionString = values[20],
+                EncryptionScope = values[21]
             };
         }
 
@@ -182,7 +185,8 @@ namespace Azure.Storage.Test
                 ActiveDirectoryApplicationSecret = Get("ActiveDirectoryApplicationSecret"),
                 ActiveDirectoryTenantId = Get("ActiveDirectoryTenantId"),
                 ActiveDirectoryAuthEndpoint = Get("ActiveDirectoryAuthEndpoint"),
-                ConnectionString = Get("ConnectionString")
+                ConnectionString = Get("ConnectionString"),
+                EncryptionScope = Get("EncryptionScope")
             };
 
             // Build a connection string from the other properties if one

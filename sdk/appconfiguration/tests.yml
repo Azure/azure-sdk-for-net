@@ -10,7 +10,4 @@ resources:
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    MaxParallel: 1
     ServiceDirectory: appconfiguration
-    EnvVars:
-      APPCONFIGURATION_CONNECTION_STRING: $(net-azconfig-test-connection-string)

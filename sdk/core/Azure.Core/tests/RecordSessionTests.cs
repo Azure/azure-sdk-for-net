@@ -29,16 +29,16 @@ namespace Azure.Core.Tests
             session.Variables["b"] = "value b";
 
             RecordEntry recordEntry = new RecordEntry();
-            recordEntry.RequestHeaders.Add("Content-Type", new[] { contentType });
-            recordEntry.RequestHeaders.Add("Other-Header", new[] { "multi", "value" });
-            recordEntry.RequestBody = bodyBytes;
+            recordEntry.Request.Headers.Add("Content-Type", new[] { contentType });
+            recordEntry.Request.Headers.Add("Other-Header", new[] { "multi", "value" });
+            recordEntry.Request.Body = bodyBytes;
             recordEntry.RequestUri = "url";
             recordEntry.RequestMethod = RequestMethod.Delete;
 
-            recordEntry.ResponseHeaders.Add("Content-Type", new[] { contentType });
-            recordEntry.ResponseHeaders.Add("Other-Response-Header", new[] { "multi", "value" });
+            recordEntry.Response.Headers.Add("Content-Type", new[] { contentType });
+            recordEntry.Response.Headers.Add("Other-Response-Header", new[] { "multi", "value" });
 
-            recordEntry.ResponseBody = bodyBytes;
+            recordEntry.Response.Body = bodyBytes;
             recordEntry.StatusCode = 202;
 
             session.Entries.Add(recordEntry);
@@ -62,14 +62,14 @@ namespace Azure.Core.Tests
             Assert.AreEqual("url", recordEntry.RequestUri);
             Assert.AreEqual(202, recordEntry.StatusCode);
 
-            CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.RequestHeaders["content-type"]);
-            CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.RequestHeaders["other-header"]);
+            CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.Request.Headers["content-type"]);
+            CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.Request.Headers["other-header"]);
 
-            CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.ResponseHeaders["content-type"]);
-            CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.ResponseHeaders["other-response-header"]);
+            CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.Response.Headers["content-type"]);
+            CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.Response.Headers["other-response-header"]);
 
-            CollectionAssert.AreEqual(bodyBytes, deserializedRecord.RequestBody);
-            CollectionAssert.AreEqual(bodyBytes, deserializedRecord.ResponseBody);
+            CollectionAssert.AreEqual(bodyBytes, deserializedRecord.Request.Body);
+            CollectionAssert.AreEqual(bodyBytes, deserializedRecord.Response.Body);
         }
 
         [Test]
@@ -91,10 +91,13 @@ namespace Azure.Core.Tests
                 {
                     RequestUri = "http://remote-host",
                     RequestMethod = RequestMethod.Put,
-                    RequestHeaders =
+                    Request =
                     {
-                        { "Some-Header", new[] { "Non-Random value"}},
-                        { "Extra-Header", new[] { "Extra-Value" }}
+                        Headers =
+                            {
+                                { "Some-Header", new[] { "Non-Random value"}},
+                                { "Extra-Header", new[] { "Extra-Value" }}
+                            }
                     }
                 }
             };
@@ -130,9 +133,12 @@ namespace Azure.Core.Tests
                 {
                     RequestUri = "http://localhost",
                     RequestMethod = RequestMethod.Put,
-                    RequestHeaders =
+                    Request =
                     {
-                        { "Request-Id", new[] { "Non-Random value"}},
+                        Headers =
+                        {
+                            { "Request-Id", new[] { "Non-Random value"}},
+                        }
                     }
                 }
             };

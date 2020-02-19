@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Metadata;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   The endpoint for the Event Hubs service to which the client is associated.
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public abstract Task<EventHubProperties> GetPropertiesAsync(EventHubRetryPolicy retryPolicy,
+        public abstract Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
                                                                     CancellationToken cancellationToken);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
         public abstract Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                              EventHubRetryPolicy retryPolicy,
+                                                                              EventHubsRetryPolicy retryPolicy,
                                                                               CancellationToken cancellationToken);
 
         /// <summary>
@@ -66,11 +66,13 @@ namespace Azure.Messaging.EventHubs.Core
         ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
         /// </summary>
         ///
-        /// <param name="producerOptions">The set of options to apply when creating the producer.</param>
+        /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportProducer CreateProducer(EventHubProducerClientOptions producerOptions);
+        public abstract TransportProducer CreateProducer(string partitionId,
+                                                         EventHubsRetryPolicy retryPolicy);
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
@@ -85,21 +87,27 @@ namespace Azure.Messaging.EventHubs.Core
         ///   group to be actively reading events from the partition.  These non-exclusive consumers are
         ///   sometimes referred to as "Non-epoch Consumers."
         ///
-        ///   Designating a consumer as exclusive may be specified in the <paramref name="consumerOptions" />.
-        ///   By default, consumers are created as non-exclusive.
+        ///   Designating a consumer as exclusive may be specified by setting the <paramref name="ownerLevel" />.
+        ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
-        /// <param name="consumerOptions">The set of options to apply when creating the consumer.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         public abstract TransportConsumer CreateConsumer(string consumerGroup,
                                                          string partitionId,
                                                          EventPosition eventPosition,
-                                                         EventHubConsumerClientOptions consumerOptions);
+                                                         EventHubsRetryPolicy retryPolicy,
+                                                         bool trackLastEnqueuedEventProperties,
+                                                         long? ownerLevel,
+                                                         uint? prefetchCount);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

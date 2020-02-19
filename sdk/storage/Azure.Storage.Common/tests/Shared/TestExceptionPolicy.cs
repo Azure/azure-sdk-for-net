@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,28 +15,39 @@ namespace Azure.Storage.Test
     {
         public List<string> HostsSetInRequests { get; private set; }
 
-        private int CurrentInvocationNumber { get; set; }
+        public List<DateTime> DatesSetInRequests { get; private set; }
 
-        private int NumberOfReadFailuresToSimulate { get; set; }
+        private int _currentInvocationNumber;
 
-        private Uri SecondaryUri { get; set; }
+        private readonly int _numberOfFailuresToSimulate;
 
-        private bool Simulate404 { get; set; }
+        private readonly Uri _secondaryUri;
 
-        private List<RequestMethod> TrackedRequestMethods { get; set; }
+        private readonly bool _simulate404;
 
-        public TestExceptionPolicy(int numberOfReadFailuresToSimulate, Uri secondaryUri, bool simulate404 = false, List<RequestMethod> trackedRequestMethods = null)
+        private readonly List<RequestMethod> _trackedRequestMethods;
+
+        private readonly int _delayBetweenAttempts;
+
+        public TestExceptionPolicy(
+            int numberOfFailuresToSimulate,
+            Uri secondaryUri = default,
+            bool simulate404 = false,
+            List<RequestMethod> trackedRequestMethods = null,
+            int delayBetweenAttempts = default)
         {
-            NumberOfReadFailuresToSimulate = numberOfReadFailuresToSimulate;
-            Simulate404 = simulate404;
-            SecondaryUri = secondaryUri;
+            _numberOfFailuresToSimulate = numberOfFailuresToSimulate;
+            _simulate404 = simulate404;
+            _secondaryUri = secondaryUri;
             HostsSetInRequests = new List<string>();
-            TrackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
+            DatesSetInRequests = new List<DateTime>();
+            _trackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
+            _delayBetweenAttempts = delayBetweenAttempts;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!SimulateFailure(message))
+            if (!SimulateFailureAsync(message, false).EnsureCompleted())
             {
                 ProcessNext(message, pipeline);
             }
@@ -43,21 +55,37 @@ namespace Azure.Storage.Test
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            if (!SimulateFailure(message))
+            if (!await SimulateFailureAsync(message, true))
             {
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
         }
 
-        private bool SimulateFailure(HttpMessage message)
+        private async Task<bool> SimulateFailureAsync(HttpMessage message, bool async)
         {
-            if (TrackedRequestMethods.Contains(message.Request.Method))
+            if (_trackedRequestMethods.Contains(message.Request.Method))
             {
-                CurrentInvocationNumber++;
-                HostsSetInRequests.Add(message.Request.Uri.Host);
-                if (CurrentInvocationNumber <= NumberOfReadFailuresToSimulate)
+                if (_delayBetweenAttempts > 0)
                 {
-                    message.Response = new MockResponse(Simulate404 && message.Request.Uri.Host == SecondaryUri.Host ? 404 : 429);
+                    if (async)
+                    {
+                        await Task.Delay(_delayBetweenAttempts);
+                    }
+                    else
+                    {
+                        Thread.Sleep(_delayBetweenAttempts);
+                    }
+                }
+                _currentInvocationNumber++;
+                HostsSetInRequests.Add(message.Request.Uri.Host);
+                if (message.Request.Headers.TryGetValue("x-ms-date", out string date))
+                {
+                    DatesSetInRequests.Add(Convert.ToDateTime(date));
+                }
+                if (_currentInvocationNumber <= _numberOfFailuresToSimulate)
+                {
+                    message.Response = new MockResponse(
+                        _simulate404 && message.Request.Uri.Host == _secondaryUri?.Host ? 404 : 429);
                     return true;
                 }
             }

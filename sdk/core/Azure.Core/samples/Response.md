@@ -1,5 +1,7 @@
 # Azure.Core Response samples
 
+**NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`.
+
 Most client methods return one of the following types:
  - `Response` -  an HTTP response
  - `Response<T>` -  a value and HTTP response
@@ -90,10 +92,17 @@ If your project doesn't have C# 8.0 enabled you can still iterate over `AsyncPag
 AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
 
 IAsyncEnumerator<SecretProperties> enumerator = response.GetAsyncEnumerator();
-while (await enumerator.MoveNextAsync())
+try
 {
-    SecretProperties secretProperties = enumerator.Current;
-    Console.WriteLine(secretProperties.Name);
+    while (await enumerator.MoveNextAsync())
+    {
+        SecretProperties secretProperties = enumerator.Current;
+        Console.WriteLine(secretProperties.Name);
+    }
+}
+finally
+{
+    await enumerator.DisposeAsync();
 }
 ```
 
@@ -134,7 +143,7 @@ foreach (SecretProperties secretProperties in response)
 
 ## Handling exceptions
 
-When request fails the `RequestFailedException` is thrown by client methods. The exception exposes HTTP status code as the `Status` property and service specific `ErrorCode`.
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try

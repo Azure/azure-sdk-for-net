@@ -7,8 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
 
@@ -28,8 +30,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> RetryOptionTestCases()
         {
-            yield return new object[] { new RetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
-            yield return new object[] { new RetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = RetryMode.Fixed } };
+            yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 3, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
+            yield return new object[] { new EventHubsRetryOptions { MaximumRetries = 0, Delay = TimeSpan.FromMilliseconds(1), MaximumDelay = TimeSpan.FromMilliseconds(10), Mode = EventHubsRetryMode.Fixed } };
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresTheEventHubName(string eventHub)
         {
-            Assert.That(() => new AmqpConsumer(eventHub, "$DEFAULT", "0", EventPosition.Earliest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new AmqpConsumer(eventHub, "$DEFAULT", "0", EventPosition.Earliest, true, null, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresTheConsumerGroup(string group)
         {
-            Assert.That(() => new AmqpConsumer("myHub", group, "0", EventPosition.Earliest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new AmqpConsumer("myHub", group, "0", EventPosition.Earliest, true, null, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -65,27 +67,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresThePartition(string partition)
         {
-            Assert.That(() => new AmqpConsumer("aHub", "$DEFAULT", partition, EventPosition.Earliest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConstructorRequiresTheEventPosition()
-        {
-            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", null, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        public void ConstructorRequiresTheOptions()
-        {
-            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.FromOffset(1), null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpConsumer("aHub", "$DEFAULT", partition, EventPosition.Earliest, true, null, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -95,7 +77,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheConnectionScope()
         {
-            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.FromSequenceNumber(123), new EventHubConsumerClientOptions(), null, Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>()), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.FromSequenceNumber(123), true, null, null, null, Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorRequiresTheMessageConverter()
+        {
+            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.FromSequenceNumber(123), true, null, null, Mock.Of<AmqpConnectionScope>(), null, Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -105,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheRetryPolicy()
         {
-            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.Latest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), null), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpConsumer("theMostAwesomeHubEvar", "$DEFAULT", "0", EventPosition.Latest, true, null, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -116,11 +108,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CloseMarksTheConsumerAsClosed()
         {
-            var consumer = new AmqpConsumer("aHub", "$DEFAULT", "0", EventPosition.Earliest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>());
-            Assert.That(consumer.Closed, Is.False, "The consumer should not be closed on creation");
+            var consumer = new AmqpConsumer("aHub", "$DEFAULT", "0", EventPosition.Earliest, true, null, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
+            Assert.That(consumer.IsClosed, Is.False, "The consumer should not be closed on creation");
 
             await consumer.CloseAsync(CancellationToken.None);
-            Assert.That(consumer.Closed, Is.True, "The consumer should be marked as closed after closing");
+            Assert.That(consumer.IsClosed, Is.True, "The consumer should be marked as closed after closing");
         }
 
         /// <summary>
@@ -131,12 +123,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CloseRespectsTheCancellationToken()
         {
-            var consumer = new AmqpConsumer("aHub", "$DEFAULT", "0", EventPosition.Earliest, new EventHubConsumerClientOptions(), Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubRetryPolicy>());
+            var consumer = new AmqpConsumer("aHub", "$DEFAULT", "0", EventPosition.Earliest, true, null, null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
             using var cancellationSource = new CancellationTokenSource();
 
             cancellationSource.Cancel();
             Assert.That(async () => await consumer.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
-            Assert.That(consumer.Closed, Is.False, "Cancellation should have interrupted closing and left the consumer in an open state.");
+            Assert.That(consumer.IsClosed, Is.False, "Cancellation should have interrupted closing and left the consumer in an open state.");
         }
 
         /// <summary>
@@ -154,8 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();
@@ -163,7 +154,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var cancellationSource = new CancellationTokenSource();
 
-            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, true, null, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
             Assert.That(async () => await consumer.ReceiveAsync(count, null, cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -179,8 +170,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();
@@ -189,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, true, null, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
             Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
@@ -201,13 +191,14 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(RetryOptionTestCases))]
-        public void ReceiveAsyncRespectsTheRetryPolicy(RetryOptions retryOptions)
+        public void ReceiveAsyncAppliesTheRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             var eventHub = "eventHubName";
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
+            var trackLastEnqueued = false;
+            var ownerLevel = 123L;
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new EventHubsException(true, "Test");
@@ -226,12 +217,14 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<string>(),
                    It.IsAny<string>(),
                    It.IsAny<EventPosition>(),
-                   It.IsAny<EventHubConsumerClientOptions>(),
                    It.IsAny<TimeSpan>(),
+                   It.IsAny<uint>(),
+                   It.IsAny<long?>(),
+                   It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, trackLastEnqueued, ownerLevel, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
             Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
 
             mockScope
@@ -239,10 +232,235 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.Is<string>(value => value == consumerGroup),
                     It.Is<string>(value => value == partition),
                     It.Is<EventPosition>(value => value == eventPosition),
-                    It.Is<EventHubConsumerClientOptions>(value => value == options),
                     It.IsAny<TimeSpan>(),
+                    It.IsAny<uint>(),
+                    It.Is<long?>(value => value == ownerLevel),
+                    It.Is<bool>(value => value == trackLastEnqueued),
                     It.IsAny<CancellationToken>()),
                 Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void ReceiveAsyncConsidersOperationCanceledExceptionAsRetriable(EventHubsRetryOptions retryOptions)
+        {
+            var eventHub = "eventHubName";
+            var consumerGroup = "$DEFAULT";
+            var partition = "3";
+            var eventPosition = EventPosition.FromOffset(123);
+            var trackLastEnqueued = false;
+            var ownerLevel = 123L;
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var retriableException = new OperationCanceledException();
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<TokenCredential>();
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockScope
+               .Setup(scope => scope.OpenConsumerLinkAsync(
+                   It.IsAny<string>(),
+                   It.IsAny<string>(),
+                   It.IsAny<EventPosition>(),
+                   It.IsAny<TimeSpan>(),
+                   It.IsAny<uint>(),
+                   It.IsAny<long?>(),
+                   It.IsAny<bool>(),
+                   It.IsAny<CancellationToken>()))
+               .Throws(retriableException);
+
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, trackLastEnqueued, ownerLevel, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            mockScope
+                .Verify(scope => scope.OpenConsumerLinkAsync(
+                    It.Is<string>(value => value == consumerGroup),
+                    It.Is<string>(value => value == partition),
+                    It.Is<EventPosition>(value => value == eventPosition),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<uint>(),
+                    It.Is<long?>(value => value == ownerLevel),
+                    It.Is<bool>(value => value == trackLastEnqueued),
+                    It.IsAny<CancellationToken>()),
+                Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void ReceiveAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
+        {
+            var eventHub = "eventHubName";
+            var consumerGroup = "$DEFAULT";
+            var partition = "3";
+            var eventPosition = EventPosition.FromOffset(123);
+            var trackLastEnqueued = false;
+            var ownerLevel = 123L;
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<TokenCredential>();
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockScope
+               .Setup(scope => scope.OpenConsumerLinkAsync(
+                   It.IsAny<string>(),
+                   It.IsAny<string>(),
+                   It.IsAny<EventPosition>(),
+                   It.IsAny<TimeSpan>(),
+                   It.IsAny<uint>(),
+                   It.IsAny<long?>(),
+                   It.IsAny<bool>(),
+                   It.IsAny<CancellationToken>()))
+               .Throws(retriableException);
+
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, trackLastEnqueued, ownerLevel, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            mockScope
+                .Verify(scope => scope.OpenConsumerLinkAsync(
+                    It.Is<string>(value => value == consumerGroup),
+                    It.Is<string>(value => value == partition),
+                    It.Is<EventPosition>(value => value == eventPosition),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<uint>(),
+                    It.Is<long?>(value => value == ownerLevel),
+                    It.Is<bool>(value => value == trackLastEnqueued),
+                    It.IsAny<CancellationToken>()),
+                Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReceiveAsyncDetectsAnEmbeddedErrorForOperationCanceled()
+        {
+            var eventHub = "eventHubName";
+            var consumerGroup = "$DEFAULT";
+            var partition = "3";
+            var eventPosition = EventPosition.FromOffset(123);
+            var trackLastEnqueued = false;
+            var ownerLevel = 123L;
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var embeddedException = new OperationCanceledException("", new ArgumentNullException());
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<TokenCredential>();
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockScope
+               .Setup(scope => scope.OpenConsumerLinkAsync(
+                   It.IsAny<string>(),
+                   It.IsAny<string>(),
+                   It.IsAny<EventPosition>(),
+                   It.IsAny<TimeSpan>(),
+                   It.IsAny<uint>(),
+                   It.IsAny<long?>(),
+                   It.IsAny<bool>(),
+                   It.IsAny<CancellationToken>()))
+               .Throws(embeddedException);
+
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, trackLastEnqueued, ownerLevel, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            mockScope
+                .Verify(scope => scope.OpenConsumerLinkAsync(
+                    It.Is<string>(value => value == consumerGroup),
+                    It.Is<string>(value => value == partition),
+                    It.Is<EventPosition>(value => value == eventPosition),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<uint>(),
+                    It.Is<long?>(value => value == ownerLevel),
+                    It.Is<bool>(value => value == trackLastEnqueued),
+                    It.IsAny<CancellationToken>()),
+                Times.Once());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReceiveAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
+        {
+            var eventHub = "eventHubName";
+            var consumerGroup = "$DEFAULT";
+            var partition = "3";
+            var eventPosition = EventPosition.FromOffset(123);
+            var trackLastEnqueued = false;
+            var ownerLevel = 123L;
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<TokenCredential>();
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockScope
+               .Setup(scope => scope.OpenConsumerLinkAsync(
+                   It.IsAny<string>(),
+                   It.IsAny<string>(),
+                   It.IsAny<EventPosition>(),
+                   It.IsAny<TimeSpan>(),
+                   It.IsAny<uint>(),
+                   It.IsAny<long?>(),
+                   It.IsAny<bool>(),
+                   It.IsAny<CancellationToken>()))
+               .Throws(embeddedException);
+
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, trackLastEnqueued, ownerLevel, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            mockScope
+                .Verify(scope => scope.OpenConsumerLinkAsync(
+                    It.Is<string>(value => value == consumerGroup),
+                    It.Is<string>(value => value == partition),
+                    It.Is<EventPosition>(value => value == eventPosition),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<uint>(),
+                    It.Is<long?>(value => value == ownerLevel),
+                    It.Is<bool>(value => value == trackLastEnqueued),
+                    It.IsAny<CancellationToken>()),
+                Times.Once());
         }
 
         /// <summary>
@@ -257,8 +475,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumerGroup = "$DEFAULT";
             var partition = "3";
             var eventPosition = EventPosition.FromOffset(123);
-            var options = new EventHubConsumerClientOptions { Identifier = "OMG!" };
-            var retryPolicy = new BasicRetryPolicy(new RetryOptions());
+            var options = new EventHubConsumerClientOptions();
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<TokenCredential>();
@@ -266,10 +484,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var cancellationSource = new CancellationTokenSource();
 
-            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, options, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, true, null, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
             await consumer.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
     }
 }

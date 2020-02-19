@@ -5,12 +5,53 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-5b2c84a191d8574f817fdf3e029d157d-d26e882df56db144-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200214.1",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "7c4b8748a9e4569a0b3ffbaa05cb8996",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 15 Feb 2020 02:40:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.65;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.893",
+        "x-ms-request-id": "5c40316d-0d79-49d7-b7a3-00079c8b819e",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is missing a Bearer or PoP token."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/294310128/create?api-version=7.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "329",
         "Content-Type": "application/json",
-        "traceparent": "00-fad5ef69f8a55743a4ba7049c027db5d-1df0ed8a1f2f0d46-00",
+        "traceparent": "00-5b2c84a191d8574f817fdf3e029d157d-d26e882df56db144-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.0.0-dev.20191031.1\u002B585683d7b75498291d5ffdf6cae5e4dd7b53afd7",
+          "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200214.1",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7c4b8748a9e4569a0b3ffbaa05cb8996",
@@ -48,19 +89,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Nov 2019 17:10:30 GMT",
+        "Date": "Sat, 15 Feb 2020 02:40:57 GMT",
         "Expires": "-1",
-        "Location": "https://heathskv.vault.azure.net/certificates/294310128/pending?api-version=7.0\u0026request_id=e408ffcb94a648e29763df71cf2bafcd",
+        "Location": "https://heathskv.vault.azure.net/certificates/294310128/pending?api-version=7.0\u0026request_id=1fc63201fdea4d6d8e1914f6df1e7e40",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=131.107.147.193;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "addr=131.107.147.65;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
-        "x-ms-keyvault-service-version": "1.1.0.882",
-        "x-ms-request-id": "c0b168f1-4e53-495f-b702-ddaed9422011",
+        "x-ms-keyvault-service-version": "1.1.0.893",
+        "x-ms-request-id": "2717abd8-5137-4b0b-b6ad-b82536d42f47",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -68,11 +109,11 @@
         "issuer": {
           "name": "Unknown"
         },
-        "csr": "MIICojCCAYoCAQAwEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALBx\u002BK2Aj8lygL8zAAatAVi0ZPAkP7MdOVYsJyXwQuNMAs53Q4gSbLcscy/L66L1OrTGmd88MUFqM\u002BNlDoI9EtNwFMejFI9PnrjAmnAtVpljLgQ\u002B/m3xk4e8BBCDq5ZtXmbXUO7BWd8nmhJNVVac5QxSx\u002B09VAP989ST7DNjRdQLuiSKL8aKNy/7jbVRw2sL4/9rR3cKhbSVkKiLUpNKrnjC42pzKwL7j05zdt4arxIvtTfzC/XyoBoelFbmQVKYwOq2F3gI1gzjSk3mcHiIXx0nruc8/HUMJJc5ByQtHZpYAJfY3N5SAVVGWQ0ct03HZhWEcrke7Asl26T4OmNns\u002BECAwEAAaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgG\u002BMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQCCHxRpH3JgttC87ST16ajnQXtkYk5rr\u002B4gVJUEE0tTtHx7hiURE/uQn\u002BjHWyA3dJtNBWywzXPIMbgcFVkn6nWVlMUjQXQgmUGPYtDJuNf7DCtgC4XrhWU\u002B85f/ZiwXrBna/Y8XHDJgoVMY6A4LaiJxZrZ\u002BeS2pHxLoGmPqXVi0tQvGbbs9TNMtODGgKyVhjfUCgftTfGhyr3npdRdEoAV4fmpTjolKLtn7o0UF\u002BgEwunRilqh8cn1hoWazT3WDgIjPB/KaiBRY96iddbkEWGeHpazegBgAqpvgU8ibr6uuELg3BS1cKz/JllEF4Lh4z9q0mli1\u002BWRzNYa6LfzpZ5HR",
+        "csr": "MIICojCCAYoCAQAwEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJugB02LoC25bB6ZqQvv7O/WN3Ad\u002B6ZebEmAQS0c20fp83E/OMqptdII3Mvb3fFI7rE8Dm2mWNEEJDmEIzQ4Hc8ylDgtGP0C3msZ8diCmx5phOfboecb9reEmGuF0sV\u002Bf06oD3Usua20yivmyc1TcLakhGDkGaFCGl8b4siwLub8ar14X15KR7mK6nf4RAcg/lpYFehlnEHezhRbR9OZ4r9BqV\u002BQs4Cd\u002BcWjPW7F4jI4uLFsBVfyLVF3iuzJOybGfkP4tMU54lMna8NZx5W8shsXHF7ZFN0gWTSIz0FNs7/cDUwPirLw93lgXLHGurfzVA0BaXllprvbGF/jTMyP0RECAwEAAaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgG\u002BMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQB0L3IOZ80xV\u002Btol5srUqB9uK/r0cwumSV9zcvmkye8KRFVNjlZ/lYcJB6R7xS4DvnmAylClguHc2w/yVcBQ4Yc0ESm1RPV22vQ\u002BLkO2ARCgYGD06b7HSUn5kfCvgJZ4otXxAQlwPhJW16jb6WQZeHm0R3HyOesr07LhC9CgDoj/6PM1S9RPsIpgHcCR8VsyESZ3Ydmm1cq064UHsJsDY\u002BeF4Lf6F4uogC7yYm4PWZtlmB25LDHYjpU8syQnnmT7QjwC37nzJcB65xRr7PPJgLAKWu9HXHboaBYrnSB5ga714vaUUGXV\u002BujT/tWokakt0jpSfkrMkqJrbWwFhiDLRLM",
         "cancellation_requested": false,
         "status": "inProgress",
         "status_details": "Pending certificate created. Please Perform Merge to complete the request.",
-        "request_id": "e408ffcb94a648e29763df71cf2bafcd"
+        "request_id": "1fc63201fdea4d6d8e1914f6df1e7e40"
       }
     },
     {
@@ -82,9 +123,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-f287451c597ce3499262d79ff39e7675-a97210bd83bd6245-00",
+        "traceparent": "00-9f071fa9789cda44a48c10318a041a28-1b45cfcae9be4743-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.0.0-dev.20191031.1\u002B585683d7b75498291d5ffdf6cae5e4dd7b53afd7",
+          "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200214.1",
           "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "29b7b6b5123990dff904b2e22035ecc8",
@@ -96,7 +137,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1208",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 01 Nov 2019 17:10:30 GMT",
+        "Date": "Sat, 15 Feb 2020 02:40:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
@@ -104,10 +145,10 @@
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=131.107.147.193;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "addr=131.107.147.65;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
-        "x-ms-keyvault-service-version": "1.1.0.882",
-        "x-ms-request-id": "a6e4d53c-4837-4861-9547-3370212e75ff",
+        "x-ms-keyvault-service-version": "1.1.0.893",
+        "x-ms-request-id": "371d8777-1aaa-4478-8881-e40bd049a658",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -115,11 +156,11 @@
         "issuer": {
           "name": "Unknown"
         },
-        "csr": "MIICojCCAYoCAQAwEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALBx\u002BK2Aj8lygL8zAAatAVi0ZPAkP7MdOVYsJyXwQuNMAs53Q4gSbLcscy/L66L1OrTGmd88MUFqM\u002BNlDoI9EtNwFMejFI9PnrjAmnAtVpljLgQ\u002B/m3xk4e8BBCDq5ZtXmbXUO7BWd8nmhJNVVac5QxSx\u002B09VAP989ST7DNjRdQLuiSKL8aKNy/7jbVRw2sL4/9rR3cKhbSVkKiLUpNKrnjC42pzKwL7j05zdt4arxIvtTfzC/XyoBoelFbmQVKYwOq2F3gI1gzjSk3mcHiIXx0nruc8/HUMJJc5ByQtHZpYAJfY3N5SAVVGWQ0ct03HZhWEcrke7Asl26T4OmNns\u002BECAwEAAaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgG\u002BMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQCCHxRpH3JgttC87ST16ajnQXtkYk5rr\u002B4gVJUEE0tTtHx7hiURE/uQn\u002BjHWyA3dJtNBWywzXPIMbgcFVkn6nWVlMUjQXQgmUGPYtDJuNf7DCtgC4XrhWU\u002B85f/ZiwXrBna/Y8XHDJgoVMY6A4LaiJxZrZ\u002BeS2pHxLoGmPqXVi0tQvGbbs9TNMtODGgKyVhjfUCgftTfGhyr3npdRdEoAV4fmpTjolKLtn7o0UF\u002BgEwunRilqh8cn1hoWazT3WDgIjPB/KaiBRY96iddbkEWGeHpazegBgAqpvgU8ibr6uuELg3BS1cKz/JllEF4Lh4z9q0mli1\u002BWRzNYa6LfzpZ5HR",
+        "csr": "MIICojCCAYoCAQAwEjEQMA4GA1UEAxMHZGVmYXVsdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJugB02LoC25bB6ZqQvv7O/WN3Ad\u002B6ZebEmAQS0c20fp83E/OMqptdII3Mvb3fFI7rE8Dm2mWNEEJDmEIzQ4Hc8ylDgtGP0C3msZ8diCmx5phOfboecb9reEmGuF0sV\u002Bf06oD3Usua20yivmyc1TcLakhGDkGaFCGl8b4siwLub8ar14X15KR7mK6nf4RAcg/lpYFehlnEHezhRbR9OZ4r9BqV\u002BQs4Cd\u002BcWjPW7F4jI4uLFsBVfyLVF3iuzJOybGfkP4tMU54lMna8NZx5W8shsXHF7ZFN0gWTSIz0FNs7/cDUwPirLw93lgXLHGurfzVA0BaXllprvbGF/jTMyP0RECAwEAAaBLMEkGCSqGSIb3DQEJDjE8MDowDgYDVR0PAQH/BAQDAgG\u002BMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAJBgNVHRMEAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQB0L3IOZ80xV\u002Btol5srUqB9uK/r0cwumSV9zcvmkye8KRFVNjlZ/lYcJB6R7xS4DvnmAylClguHc2w/yVcBQ4Yc0ESm1RPV22vQ\u002BLkO2ARCgYGD06b7HSUn5kfCvgJZ4otXxAQlwPhJW16jb6WQZeHm0R3HyOesr07LhC9CgDoj/6PM1S9RPsIpgHcCR8VsyESZ3Ydmm1cq064UHsJsDY\u002BeF4Lf6F4uogC7yYm4PWZtlmB25LDHYjpU8syQnnmT7QjwC37nzJcB65xRr7PPJgLAKWu9HXHboaBYrnSB5ga714vaUUGXV\u002BujT/tWokakt0jpSfkrMkqJrbWwFhiDLRLM",
         "cancellation_requested": false,
         "status": "inProgress",
         "status_details": "Pending certificate created. Please Perform Merge to complete the request.",
-        "request_id": "e408ffcb94a648e29763df71cf2bafcd"
+        "request_id": "1fc63201fdea4d6d8e1914f6df1e7e40"
       }
     }
   ],

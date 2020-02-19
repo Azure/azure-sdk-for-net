@@ -122,21 +122,11 @@ namespace Azure.Storage.Sas
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
-            if (ExpiresOn == default)
-            {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
-            }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            EnsureState();
+
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -146,10 +136,10 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version);
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            var p = SasQueryParametersInternals.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -201,5 +191,29 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the QueueSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// Ensure the <see cref="QueueSasBuilder"/>'s properties are in a
+        /// consistent state.
+        /// </summary>
+        private void EnsureState()
+        {
+            if (Identifier == default)
+            {
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
+            }
+
+            if (string.IsNullOrEmpty(Version))
+            {
+                Version = SasQueryParameters.DefaultSasVersion;
+            }
+        }
     }
 }

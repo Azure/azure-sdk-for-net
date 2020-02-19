@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate along with its current policy
+    /// A <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>.
     /// </summary>
     public class KeyVaultCertificateWithPolicy : KeyVaultCertificate
     {
@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The current policy for the certificate
+        /// Gets the current policy for the certificate.
         /// </summary>
         public CertificatePolicy Policy { get; internal set; }
 

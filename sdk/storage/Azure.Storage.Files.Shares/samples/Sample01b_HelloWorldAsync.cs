@@ -10,7 +10,7 @@ using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Samples
+namespace Azure.Storage.Files.Shares.Samples
 {
     /// <summary>
     /// Basic Azure File Storage samples
@@ -59,7 +59,6 @@ namespace Azure.Storage.Files.Samples
             {
                 await file.CreateAsync(stream.Length);
                 await file.UploadRangeAsync(
-                    ShareFileRangeWriteType.Update,
                     new HttpRange(0, stream.Length),
                     stream);
             }

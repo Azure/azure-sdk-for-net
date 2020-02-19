@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// An action to be executed at a perscribed time in a certificates lifecycle
+    /// An action to be executed at a prescribed time in a certificates lifecycle
     /// </summary>
     public class LifetimeAction : IJsonSerializable, IJsonDeserializable
     {
@@ -25,24 +25,30 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="LifetimeAction"/> class.
         /// </summary>
-        public LifetimeAction()
+        /// <param name="action">The <see cref="CertificatePolicyAction"/> to be performed.</param>
+        public LifetimeAction(CertificatePolicyAction action)
+        {
+            Action = action;
+        }
+
+        private LifetimeAction()
         {
         }
 
         /// <summary>
-        /// Specifies the action should be performed the specified number of days before the certificate will expire
+        /// Gets or sets the action should be performed the specified number of days before the certificate will expire.
         /// </summary>
         public int? DaysBeforeExpiry { get; set; }
 
         /// <summary>
-        /// Specifies the action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99
+        /// Gets or sets the action should be performed when the certificate reaches the specified percentage of its lifetime. Valid values include 1-99.
         /// </summary>
         public int? LifetimePercentage { get; set; }
 
         /// <summary>
-        /// The action to be performed
+        /// Gets the <see cref="CertificatePolicyAction"/> to be performed.
         /// </summary>
-        public CertificatePolicyAction Action { get; set; }
+        public CertificatePolicyAction Action { get; private set; }
 
         internal static LifetimeAction FromJsonObject(JsonElement json)
         {

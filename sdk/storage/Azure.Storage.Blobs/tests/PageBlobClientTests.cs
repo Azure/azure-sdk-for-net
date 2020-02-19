@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -26,8 +28,8 @@ namespace Azure.Storage.Blobs.Test
         private const string ContentLanguage = "language";
         private const string ContentType = "type";
 
-        public PageBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public PageBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -41,7 +43,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -53,6 +55,35 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new PageBlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new PageBlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
         [Test]
@@ -124,26 +155,20 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CreateAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task CreateAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            var blobName = GetNewBlobName();
-            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            blob = InstrumentClient(new PageBlobClient(
-                blob.Uri,
-                blob.Pipeline,
-                blob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
-
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                blob.CreateAsync(Constants.KB),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         /// <summary>
@@ -336,32 +361,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task UploadPagesAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task UploadPagesAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             var blobName = GetNewBlobName();
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Constants.KB);
-            await httpsBlob.CreateAsync(Constants.KB);
+            await blob.CreateAsync(Constants.KB);
 
             using var stream = new MemoryStream(data);
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.UploadPagesAsync(
-                    content: stream,
-                    offset: 0),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<PageInfo> response = await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]
@@ -379,6 +399,26 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.UploadPagesAsync(stream, 5 * Constants.KB),
                     e => Assert.AreEqual("InvalidPageRange", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task UploadPagesAsync_NullStream_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadPagesAsync(
+                        content: stream,
+                        offset: 0),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 
@@ -505,7 +545,7 @@ namespace Azure.Storage.Blobs.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
 
@@ -521,6 +561,33 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadPagesAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            long blobSize = 4 * Constants.MB;
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, blobSize);
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            using (var stream = new MemoryStream(data))
+            {
+                // Act
+                await blob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         [Test]
@@ -576,33 +643,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task ClearPagesAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task ClearPagesAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsBlob.CreateAsync(4 * Constants.KB);
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateAsync(4 * Constants.KB);
             var data = GetRandomBuffer(4 * Constants.KB);
             using (var stream = new MemoryStream(data))
             {
-                await httpsBlob.UploadPagesAsync(stream, 0);
+                await blob.UploadPagesAsync(stream, 0);
             }
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.ClearPagesAsync(
-                    range: new HttpRange(Constants.KB, Constants.KB)),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<PageInfo> response = await blob.ClearPagesAsync(
+                range: new HttpRange(Constants.KB, Constants.KB));
         }
 
         [Test]
@@ -989,6 +1047,182 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetManagedDiskPageRangesDiffAsync()
+        {
+            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Upload some Pages
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            // Create prevSnapshot
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+            var prevSnapshot = response.Value.Snapshot;
+
+            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+            uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+            // Upload additional Pages
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            // create snapshot
+            response = await blob.CreateSnapshotAsync();
+            string snapshot = response.Value.Snapshot;
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot,
+                previousSnapshotUri: uriBuilder.Uri);
+
+            // Assert
+            Assert.AreEqual(1, result.Value.PageRanges.Count());
+            HttpRange range = result.Value.PageRanges.First();
+
+            Assert.AreEqual(2 * Constants.KB, range.Offset);
+            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
+        }
+
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetManagedDiskPageRangesDiffAsync_Error()
+        {
+            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetManagedDiskPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
+                e =>
+                {
+                    Assert.AreEqual("InvalidRange", e.ErrorCode);
+                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
+                        e.Message.Split('\n')[0]);
+                });
+        }
+
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
+            {
+                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+                // Upload some Pages
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 0);
+                }
+
+                // Create prevSnapshot
+                Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
+                var prevSnapshot = snapshotCreateResult.Value.Snapshot;
+
+                UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+                uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+                // Upload additional Pages
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+                }
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                Response<PageRangesInfo> response = await blob.GetManagedDiskPageRangesDiffAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    previousSnapshotUri: uriBuilder.Uri,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.Value.PageRanges);
+            }
+        }
+
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
+            {
+                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+                // Upload some Pages
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 0);
+                }
+
+                // Create prevSnapshot
+                Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+                var prevSnapshot = response.Value.Snapshot;
+
+                UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+                uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+                // Upload additional Pages
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+                }
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
+                            range: new HttpRange(0, Constants.KB),
+                            previousSnapshotUri: uriBuilder.Uri,
+                            conditions: accessConditions)).Value;
+                    });
+            }
+        }
+
         [Test]
         public async Task ResizeAsync()
         {
@@ -1024,34 +1258,25 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
-
         }
 
         [Test]
-        public async Task ResizeAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task ResizeAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            PageBlobClient httpBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new PageBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            PageBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsBlob.CreateAsync(Constants.KB);
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateAsync(Constants.KB);
             var newSize = 8 * Constants.KB;
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.ResizeAsync(size: newSize),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
 
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
         }
 
         [Test]
@@ -1584,14 +1809,18 @@ namespace Azure.Storage.Blobs.Test
             var range = new HttpRange(0, Constants.KB);
 
             // Act
-            await destBlob.UploadPagesFromUriAsync(
+            Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
                 sourceUri: sourceBlob.Uri,
                 sourceRange: range,
                 range: range);
+
+            // Assert
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
         [Test]
-        public async Task UploadPagesFromUriAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task UploadPagesFromUriAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1605,26 +1834,19 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.CreateAsync(Constants.KB);
             await sourceBlob.UploadPagesAsync(stream, 0);
 
-            PageBlobClient httpDestBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpDestBlob = InstrumentClient(new PageBlobClient(
-                httpDestBlob.Uri,
-                httpDestBlob.Pipeline,
-                httpDestBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
-            PageBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            await httpsDestBlob.CreateAsync(Constants.KB);
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await destBlob.CreateAsync(Constants.KB);
             var range = new HttpRange(0, Constants.KB);
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpDestBlob.UploadPagesFromUriAsync(
-                    sourceUri: sourceBlob.Uri,
-                    sourceRange: range,
-                    range: range),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
+                sourceUri: sourceBlob.Uri,
+                sourceRange: range,
+                range: range);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]

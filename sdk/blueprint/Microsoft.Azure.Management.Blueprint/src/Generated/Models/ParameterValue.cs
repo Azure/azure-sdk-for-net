@@ -10,14 +10,14 @@
 
 namespace Microsoft.Azure.Management.Blueprint.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Value for the specified parameter.
+    /// Value for the specified parameter. Can be either 'value' or 'reference'
+    /// but not both.
     /// </summary>
-    public partial class ParameterValue : ParameterValueBase
+    public partial class ParameterValue
     {
         /// <summary>
         /// Initializes a new instance of the ParameterValue class.
@@ -30,13 +30,12 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the ParameterValue class.
         /// </summary>
-        /// <param name="value">Actual value.</param>
-        /// <param name="description">Optional property. Establishes
-        /// ParameterValueBase as a BaseClass.</param>
-        public ParameterValue(object value, string description = default(string))
-            : base(description)
+        /// <param name="value">Parameter value as value type.</param>
+        /// <param name="reference">Parameter value as reference type.</param>
+        public ParameterValue(object value = default(object), SecretValueReference reference = default(SecretValueReference))
         {
             Value = value;
+            Reference = reference;
             CustomInit();
         }
 
@@ -46,22 +45,28 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets actual value.
+        /// Gets or sets parameter value as value type.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public object Value { get; set; }
 
         /// <summary>
+        /// Gets or sets parameter value as reference type.
+        /// </summary>
+        [JsonProperty(PropertyName = "reference")]
+        public SecretValueReference Reference { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Value == null)
+            if (Reference != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+                Reference.Validate();
             }
         }
     }

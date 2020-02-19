@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs
         ///   service.
         /// </summary>
         ///
-        public TransportType TransportType { get; set; } = TransportType.AmqpTcp;
+        public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
 
         /// <summary>
         ///   The proxy to use for communication over web sockets.
@@ -59,18 +59,5 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        ///   Creates a new copy of the current <see cref="EventHubConnectionOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="EventHubConnectionOptions" />.</returns>
-        ///
-        internal EventHubConnectionOptions Clone() =>
-            new EventHubConnectionOptions
-            {
-                TransportType = TransportType,
-                Proxy = Proxy
-            };
     }
 }

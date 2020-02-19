@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyProperties"/> class.
         /// </summary>
-        /// <param name="id">The Id of the key.</param>
+        /// <param name="id">The identifier of the key.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public KeyProperties(Uri id)
         {
@@ -90,31 +90,31 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the key will be valid and can be used for cryptographic operations.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the key will be valid and can be used for cryptographic operations.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Gets or sets a <see cref="DateTimeOffset"/> of when the key will expire and cannot be used for cryptographic operations.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the key will expire and cannot be used for cryptographic operations.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the key was created.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the key was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
-        /// Gets a <see cref="DateTimeOffset"/> of when the key was updated.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the key was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
         /// Gets the recovery level currently in effect for keys in the Key Vault.
-        /// If "Purgeable", the key can be permanently deleted by an authorized user;
-        /// otherwise, only the service can purge the key at the end of the retention interval.
+        /// If <c>Purgeable</c>, the key can be permanently deleted by an authorized user;
+        /// otherwise, only the service can purge the keys at the end of the retention interval.
         /// </summary>
-        /// <value>Possible values include "Purgeable", "Recoverable+Purgeable", "Recoverable", and "Recoverable+ProtectedSubscription".</value>
+        /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>

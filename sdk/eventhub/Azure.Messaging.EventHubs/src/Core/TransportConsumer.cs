@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -25,14 +26,14 @@ namespace Azure.Messaging.EventHubs.Core
         ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public virtual bool Closed { get; }
+        public virtual bool IsClosed { get; }
 
         /// <summary>
         ///   The most recent event received from the Event Hubs service by this consumer instance.
         /// </summary>
         ///
         /// <value>
-        ///   <c>null</c>, if the <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> was not requested; otherwise,
+        ///   <c>null</c>, if the tracking of the last enqueued event information was not requested; otherwise,
         ///   the most recently received event.
         /// </value>
         ///

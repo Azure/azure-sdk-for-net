@@ -32,7 +32,7 @@ namespace Compute.Tests
             {
                 Name = name,
                 Publisher = publisher,
-                Type = type,
+                Type1 = type,
                 TypeHandlerVersion = version,
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",
@@ -48,7 +48,7 @@ namespace Compute.Tests
             {
                 Name = "vmsssfext01",
                 Publisher = "Microsoft.Azure.ServiceFabric",
-                Type = "ServiceFabricNode",
+                Type1 = "ServiceFabricNode",
                 TypeHandlerVersion = "1.0",
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",
@@ -88,7 +88,7 @@ namespace Compute.Tests
             {
                 Name = "adeext1",
                 Publisher = "Microsoft.Azure.Security",
-                Type = "ADETest",
+                Type1 = "ADETest",
                 TypeHandlerVersion = "2.0",
                 Settings = new JRaw("{ " + settings + " }"),
                 ProtectedSettings = new JRaw("{ " + protectedSettings + " }")
@@ -236,7 +236,7 @@ namespace Compute.Tests
             return vmScaleSet;
         }
 
-        protected VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
+        public VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
             string rgName,
             string vmssName,
             StorageAccount storageAccount,
@@ -553,11 +553,8 @@ namespace Compute.Tests
                 bool expectedAutomaticRepairsEnabledValue = vmScaleSet.AutomaticRepairsPolicy.Enabled ?? false;
                 Assert.True(vmScaleSetOut.AutomaticRepairsPolicy.Enabled == expectedAutomaticRepairsEnabledValue);
 
-                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT5M";
+                string expectedAutomaticRepairsGracePeriodValue = vmScaleSet.AutomaticRepairsPolicy.GracePeriod ?? "PT30M";
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.GracePeriod, expectedAutomaticRepairsGracePeriodValue, ignoreCase: true);
-
-                int expectedAutomaticRepairsMaxInstanceRepairsPercentValue = vmScaleSet.AutomaticRepairsPolicy.MaxInstanceRepairsPercent ?? 20;
-                Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.MaxInstanceRepairsPercent, expectedAutomaticRepairsMaxInstanceRepairsPercentValue); 
             }
 
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&

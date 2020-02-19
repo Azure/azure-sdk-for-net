@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ipAddresses">IpAddresses/IpAddressPrefixes in the
         /// IpGroups resource.</param>
         /// <param name="firewalls">List of references to Azure resources that
-        /// this IpGroups is associated with</param>
+        /// this IpGroups is associated with.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         public IpGroup(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<string> ipAddresses = default(IList<string>), IList<SubResource> firewalls = default(IList<SubResource>), string etag = default(string))
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets list of references to Azure resources that this IpGroups is
-        /// associated with
+        /// associated with.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewalls")]
         public IList<SubResource> Firewalls { get; private set; }

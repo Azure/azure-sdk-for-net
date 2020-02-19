@@ -6,7 +6,7 @@ using System.Text;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Specifies file system specific access conditions.
+    /// Specifies lease access conditions for a file system or path.
     /// </summary>
     public class DataLakeRequestConditions : RequestConditions
     {

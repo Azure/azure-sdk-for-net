@@ -10,12 +10,16 @@
 
   .PARAMETER OutPath
   The path to the write the HTML-formatted report.
+
+  .PARAMETER DumpPath
+  The path to the write the JSONP-formatted dependency data file.
 #>
 
 Param(
   [Parameter(Mandatory = $true)][string]$PackagesPath,
   [Parameter(Mandatory = $false)][string]$LockfilePath,
-  [Parameter(Mandatory = $false)][string]$OutPath
+  [Parameter(Mandatory = $false)][string]$OutPath,
+  [Parameter(Mandatory = $false)][string]$DumpPath
 )
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -60,6 +64,18 @@ Function Save-Dep($Deps, $TargetFramework, $DepName, $DepVersion, $DependentPack
   }
 }
 
+Function Save-PkgDep($PkgDeps, $TargetFramework, $DepName, $DepVersion) {
+  if (-Not $PkgDeps[$DepName]) {
+    $PkgDeps[$DepName] = @{ }
+  }
+  if (-Not $PkgDeps[$DepName][$DepVersion]) {
+    $PkgDeps[$DepName][$DepVersion] = New-Object System.Collections.ArrayList
+  }
+  if (-Not $PkgDeps[$DepName][$DepVersion].Contains($TargetFramework)) {
+    $PkgDeps[$DepName][$DepVersion].Add($TargetFramework) | Out-Null
+  }
+}
+
 Function Save-Locked($Locked, $DepName, $DepVersion, $Condition) {
   if (-Not $Locked[$DepName]) {
     $Locked[$DepName] = @{ }
@@ -72,6 +88,44 @@ Function Save-Locked($Locked, $DepName, $DepVersion, $Condition) {
   }
 }
 
+Function Get-PackageExport($Pkgs, $Internal) {
+  $DumpData = @{ }
+  foreach ($PkgName in $Pkgs.Keys) {
+    $PkgInfo = $Pkgs[$PkgName]
+    $Id = $PkgName + ":" + $PkgInfo.Ver
+    $InternalDeps = [System.Collections.ArrayList]@()
+    foreach ($Dep in $PkgInfo.Deps)
+    {
+      if ($Internal.Contains($Dep.name)) {
+        $InternalDeps.Add($Dep) > $Null
+      }
+    }
+    $DumpData[$Id] = @{
+      name    = $PkgName;
+      version = $PkgInfo.Ver;
+      type    = "internal";
+      deps    = $InternalDeps
+    }
+  }
+
+  $PkgIds = $DumpData.Keys | ForEach-Object ToString
+  foreach ($PkgId in $PkgIds) {
+    foreach ($Dep in $DumpData[$PkgId].deps) {
+      $DepId = $Dep.name + ":" + $Dep.version
+      if (-Not $DumpData.ContainsKey($DepId)) {
+        $DumpData[$DepId] = @{
+          name    = $Dep.name;
+          version = $Dep.version;
+          type    = "internalbinary";
+          deps    = @()
+        }
+      }
+    }
+  }
+
+  return $DumpData
+}
+
 # Analyze package dependencies
 $Pkgs = @{ }
 $Deps = @{ }
@@ -80,23 +134,37 @@ foreach ($PkgFile in Resolve-Path $PackagesPath) {
   $LibraryName = $Nuspec.package.metadata.id
   $LibraryVer = $Nuspec.package.metadata.version
 
-  $Pkgs[$LibraryName] = @($LibraryVer, $PkgFile)
-
+  $Pkgs[$LibraryName] = @{ Ver = $LibraryVer; Src = $PkgFile; Deps = New-Object System.Collections.ArrayList }
+  $PkgDeps = @{ }
+  
   foreach ($Group in $Nuspec.package.metadata.dependencies.group) {
     foreach ($Dep in $Group.dependency) {
+      Save-PkgDep $PkgDeps $Group.targetFramework $Dep.id $Dep.version
       Save-Dep $Deps $Group.targetFramework $Dep.id $Dep.version $LibraryName
     }
   }
 
   foreach ($Dep in $Nuspec.package.metadata.dependencies.dependency) {
+    Save-PkgDep $PkgDeps "" $Dep.id $Dep.version
     if ($Deps.Count) {
       foreach ($TargetFramework in $Deps.Keys) {
         Save-Dep $Deps $TargetFramework $Dep.id $Dep.version $LibraryName
       }
       Save-Dep $Deps "(others)" $Dep.id $Dep.version $LibraryName
-    }
-    else {
+    } else {
       Save-Dep $Deps "(any)" $Dep.id $Dep.version $LibraryName
+    }
+  }
+  
+  foreach ($DepName in $PkgDeps.Keys) {
+    $DepVersions = $PkgDeps[$DepName]
+    if ($DepVersions.Count -gt 1) {
+      foreach ($DepVersion in $DepVersions.Keys) {
+        $TargetFrameworks = $DepVersions[$DepVersion]
+        $Pkgs[$LibraryName]["Deps"].Add(@{name = $DepName; version = $DepVersion; label = ($TargetFrameworks -Join ", ") }) | Out-Null
+      }
+    } else {
+      $Pkgs[$LibraryName]["Deps"].Add(@{name = $DepName; version = ($DepVersions.Keys | Select-Object -first 1) }) | Out-Null
     }
   }
 }
@@ -176,6 +244,13 @@ if ($OutPath) {
   Write-Host "Generating HTML report..."
   $__template__ = Get-Content "$PSScriptRoot/deps.html.tpl" -Raw
   Invoke-Expression "@`"`r`n$__template__`r`n`"@" | Out-File -FilePath $OutPath
+}
+
+if ($DumpPath) {
+  Write-Host "Generating JSONP data export..."
+  $Internal = $Pkgs.Keys | ForEach-Object ToString
+  $DumpData = Get-PackageExport $Pkgs $Internal
+  "const data = " + (ConvertTo-Json -InputObject $DumpData -Compress -Depth 10) + ";" | Out-File -FilePath $DumpPath
 }
 
 exit $ExitCode

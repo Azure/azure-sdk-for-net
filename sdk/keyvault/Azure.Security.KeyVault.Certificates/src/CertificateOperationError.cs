@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// An error encountered during the processing of a <see cref="CertificateOperation"/>
+    /// An error encountered during the processing of a <see cref="CertificateOperation"/>.
     /// </summary>
     public class CertificateOperationError : IJsonDeserializable
     {
@@ -19,17 +19,17 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The error code of the specified error
+        /// Gets the error code of the specified error.
         /// </summary>
         public string Code { get; internal set; }
 
         /// <summary>
-        /// A message containing details of the encountered error
+        /// Gets a message containing details of the encountered error.
         /// </summary>
         public string Message { get; internal set; }
 
         /// <summary>
-        /// An underlying error, if exists, for the current error
+        /// Gets an underlying error - if one exists - for the current error.
         /// </summary>
         public CertificateOperationError InnerError { get; internal set; }
 

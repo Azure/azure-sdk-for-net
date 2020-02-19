@@ -40,7 +40,7 @@ namespace Azure.Identity
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
-            : this(username, password, clientId, tenantId, (TokenCredentialOptions)null)
+            : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
         {
 
         }
@@ -96,7 +96,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.UsernamePasswordCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("UsernamePasswordCredential.GetToken", requestContext);
 
             try
             {
@@ -106,7 +106,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+                throw scope.FailAndWrap(e);
             }
         }
     }

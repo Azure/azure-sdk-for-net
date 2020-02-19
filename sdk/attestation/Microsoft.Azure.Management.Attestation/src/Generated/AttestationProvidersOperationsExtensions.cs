@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Attestation
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -152,7 +150,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<AttestationProvider> List(this IAttestationProvidersOperations operations)
+            public static AttestationProviderListResult List(this IAttestationProvidersOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -166,7 +164,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<AttestationProvider>> ListAsync(this IAttestationProvidersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AttestationProviderListResult> ListAsync(this IAttestationProvidersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -183,7 +181,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            public static IEnumerable<AttestationProvider> ListByResourceGroup(this IAttestationProvidersOperations operations, string resourceGroupName)
+            public static AttestationProviderListResult ListByResourceGroup(this IAttestationProvidersOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -200,7 +198,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<AttestationProvider>> ListByResourceGroupAsync(this IAttestationProvidersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AttestationProviderListResult> ListByResourceGroupAsync(this IAttestationProvidersOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {

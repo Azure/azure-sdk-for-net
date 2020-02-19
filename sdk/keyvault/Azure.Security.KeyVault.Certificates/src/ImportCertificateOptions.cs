@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core;
@@ -27,38 +28,35 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="ImportCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
-        /// <param name="value">The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.</param>
-        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.</param>
+        /// <param name="certificate">The PFX or ASCII PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="policy"/>, or <paramref name="value"/> is null.</exception>
-        public ImportCertificateOptions(string name, byte[] value, CertificatePolicy policy)
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="certificate"/> is null.</exception>
+        public ImportCertificateOptions(string name, byte[] certificate)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(policy, nameof(policy));
+            Argument.AssertNotNull(certificate, nameof(certificate));
 
             Name = name;
-            Value = value;
-            Policy = policy;
+            Certificate = certificate;
         }
 
         /// <summary>
-        /// The name of the certificate to import.
+        /// Gets the name of the certificate to import.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// The PFX or PEM formatted value of the certificate containing both the x509 certificates and the private key.
+        /// Gets the PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.
         /// </summary>
-        public byte[] Value { get; }
+        public byte[] Certificate { get; }
 
         /// <summary>
-        /// The policy which governs the lifecycle of the imported certificate and it's properties when it is rotated.
+        /// Gets the policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
         /// </summary>
-        public CertificatePolicy Policy { get; }
+        public CertificatePolicy Policy { get; set; }
 
         /// <summary>
-        /// The password protecting the certificate specified in the Value.
+        /// Gets or sets the password protecting the certificate specified in the Value.
         /// </summary>
         public string Password { get; set; }
 
@@ -68,16 +66,23 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// Tags to be applied to the imported certificate.
+        /// Gets the tags to be applied to the imported certificate.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
-            if (Value != null)
+            if (Certificate != null)
             {
-                string encoded = Base64Url.Encode(Value);
-                json.WriteString(s_valuePropertyNameBytes, encoded);
+                if (Policy != null && Policy.ContentType == CertificateContentType.Pem)
+                {
+                    string value = Encoding.ASCII.GetString(Certificate);
+                    json.WriteString(s_valuePropertyNameBytes, value);
+                }
+                else
+                {
+                    json.WriteBase64String(s_valuePropertyNameBytes, Certificate);
+                }
             }
 
             if (!string.IsNullOrEmpty(Password))

@@ -1673,10 +1673,7 @@ namespace DataFactory.Tests.JsonSamples
                 type: ""SecureString"",
                 value: ""some secret""
             },
-            clientId : {
-                type: ""SecureString"",
-                value: ""some secret""
-            },
+            clientId : ""myclientId"",
             clientSecret : {
                 type: ""SecureString"",
                 value: ""some secret""
@@ -1686,6 +1683,38 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string GoogleAdWordsLinkedService = @"
+{
+    name: ""GoogleAdWordsLinkedService"",
+    properties: {
+        type: ""GoogleAdWords"",
+        typeProperties: {
+            clientCustomerID : ""myclientCustomerID"",
+            developerToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            authenticationType : ""ServiceAuthentication"",
+            refreshToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            clientId : ""myclientId"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            email : ""myemail"",
+            keyFilePath : ""mykeyFilePath"",
+            trustedCertPath : ""mytrustedCertPath"",
+            useSystemTrustStore : true
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string GreenplumLinkedService = @"
 {
@@ -2302,8 +2331,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                value : ""fakeConnString"",
+                type : ""SecureString""
             }
         }
     }
@@ -2317,8 +2346,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2340,8 +2369,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             }
         }
     }
@@ -2355,8 +2384,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2389,7 +2418,9 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 type : ""SecureString"",
                 value : ""some password""
-            }
+            },
+            packageCollection : ""fakepackageCollection"",
+            certificateCommonName : ""fakecertificateCommonName""
         }
     }
 }";
