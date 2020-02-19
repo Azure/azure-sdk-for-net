@@ -589,7 +589,7 @@ namespace Azure.Storage.Blobs.Test
                 new StorageTransferOptions
                 {
                     MaximumTransferLength = Constants.KB,
-                    InitalTransferLength = Constants.KB
+                    InitialTransferLength = Constants.KB
                 });
 
         [Test]
@@ -609,7 +609,7 @@ namespace Azure.Storage.Blobs.Test
                 new StorageTransferOptions
                 {
                     MaximumTransferLength = Constants.KB,
-                    InitalTransferLength = Constants.KB
+                    InitialTransferLength = Constants.KB
                 });
 
         [Test]
@@ -627,7 +627,7 @@ namespace Azure.Storage.Blobs.Test
                 new StorageTransferOptions {
                     MaximumConcurrency = maximumThreadCount,
                     MaximumTransferLength = 16 * Constants.MB,
-                    InitalTransferLength = 16 * Constants.MB
+                    InitialTransferLength = 16 * Constants.MB
                 });
         }
 
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     MaximumConcurrency = maximumThreadCount,
                     MaximumTransferLength = 16 * Constants.MB,
-                    InitalTransferLength = 16 * Constants.MB
+                    InitialTransferLength = 16 * Constants.MB
                 });
         }
 
@@ -673,7 +673,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     MaximumConcurrency = maximumThreadCount,
                     MaximumTransferLength = 16 * Constants.MB,
-                    InitalTransferLength = 16 * Constants.MB
+                    InitialTransferLength = 16 * Constants.MB
                 });
         }
 
@@ -698,7 +698,7 @@ namespace Azure.Storage.Blobs.Test
                 new StorageTransferOptions {
                     MaximumConcurrency = maximumThreadCount,
                     MaximumTransferLength = 16 * Constants.MB,
-                    InitalTransferLength = 16 * Constants.MB
+                    InitialTransferLength = 16 * Constants.MB
                 });
         }
 

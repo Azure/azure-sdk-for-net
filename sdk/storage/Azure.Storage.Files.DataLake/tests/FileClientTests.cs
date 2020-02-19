@@ -2415,7 +2415,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     transferOptions: new StorageTransferOptions
                     {
                         MaximumTransferLength = 1 * Constants.MB,
-                        InitalTransferLength = 1 * Constants.MB
+                        InitialTransferLength = 1 * Constants.MB
                     });
             }
 
@@ -2426,7 +2426,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 transferOptions: new StorageTransferOptions
                 {
                     MaximumTransferLength = 1 * Constants.MB,
-                    InitalTransferLength = 1 * Constants.MB
+                    InitialTransferLength = 1 * Constants.MB
                 });
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }

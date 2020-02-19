@@ -77,15 +77,15 @@ namespace Azure.Storage.Files.DataLake
             }
 
             // Set _singleUploadThreshold
-            if (transferOptions.InitalTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue)
             {
-                if (transferOptions.InitalTransferLength.Value < 1)
+                if (transferOptions.InitialTransferLength.Value < 1)
                 {
                     _singleUploadThreshold = Constants.DataLake.MaxAppendBytes;
                 }
                 else
                 {
-                    _singleUploadThreshold = Math.Min(transferOptions.InitalTransferLength.Value, Constants.DataLake.MaxAppendBytes);
+                    _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.DataLake.MaxAppendBytes);
                 }
             }
             else

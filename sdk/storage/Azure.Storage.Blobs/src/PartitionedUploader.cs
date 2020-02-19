@@ -77,15 +77,15 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _singleUploadThreshold
-            if (transferOptions.InitalTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue)
             {
-                if (transferOptions.InitalTransferLength.Value < 1)
+                if (transferOptions.InitialTransferLength.Value < 1)
                 {
                     _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
                 }
                 else
                 {
-                    _singleUploadThreshold = Math.Min(transferOptions.InitalTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
+                    _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
                 }
             }
             else

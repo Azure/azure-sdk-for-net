@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs.Test
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions { MaximumTransferLength = 20, InitalTransferLength = 20 }, arrayPool: testPool);
+            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 }, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);

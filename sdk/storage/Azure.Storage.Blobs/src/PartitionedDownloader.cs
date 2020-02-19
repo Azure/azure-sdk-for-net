@@ -78,9 +78,9 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _initialRangeSize
-            if (transferOptions.InitalTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue)
             {
-                if (transferOptions.InitalTransferLength.Value < 1)
+                if (transferOptions.InitialTransferLength.Value < 1)
                 {
                     _initialRangeSize = Constants.DefaultBufferSize;
                 }
