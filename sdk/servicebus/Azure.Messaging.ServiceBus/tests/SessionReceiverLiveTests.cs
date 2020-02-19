@@ -250,5 +250,87 @@ namespace Azure.Messaging.ServiceBus.Tests
                 }
             }
         }
+
+        [Test]
+        public async Task ReceiveMessagesInPeekLockMode()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
+                await sender.SendRangeAsync(messages);
+
+                ServiceBusConnection conn = new ServiceBusConnection(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sessionOptions = new SessionOptions()
+                {
+                    SessionId = sessionId,
+                    Connection = conn
+                };
+                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, sessionOptions);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                messageEnum.Reset();
+                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekRangeAsync(messageCount);
+                await foreach (var item in peekMessages)
+                {
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                }
+            }
+        }
+
+        [Test]
+        public async Task ReceiveMessagesInReceiveAndDeleteMode()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
+                await sender.SendRangeAsync(messages);
+
+                ServiceBusConnection conn = new ServiceBusConnection(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sessionOptions = new SessionOptions()
+                {
+                    SessionId = sessionId,
+                    Connection = conn
+                };
+
+                var clientOptions = new QueueReceiverClientOptions()
+                {
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                };
+                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, sessionOptions, clientOptions);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                {
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    receivedMessageCount++;
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                var message = receiver.PeekAsync();
+                Assert.IsNull(message.Result);
+            }
+        }
     }
 }

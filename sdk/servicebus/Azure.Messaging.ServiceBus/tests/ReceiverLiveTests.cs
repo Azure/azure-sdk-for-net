@@ -91,13 +91,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
                 await sender.SendRangeAsync(messages);
 
-                var messageEnum = messages.GetEnumerator();
                 var clientOptions = new QueueReceiverClientOptions()
                 {
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
                 var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
                 var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
 
                 await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
                 {
