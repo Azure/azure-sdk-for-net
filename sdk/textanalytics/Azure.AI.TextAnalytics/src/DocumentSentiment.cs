@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentSentiment
     {
-        internal DocumentSentiment(SentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments)
+        internal DocumentSentiment(DocumentSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScorePerLabel(positiveScore, neutralScore, negativeScore);
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public SentimentLabel Sentiment { get; }
+        public DocumentSentimentLabel Sentiment { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
