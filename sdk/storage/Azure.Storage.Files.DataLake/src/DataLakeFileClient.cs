@@ -2455,7 +2455,7 @@ namespace Azure.Storage.Files.DataLake
             Stream content) =>
             Upload(
                 content,
-                overwrite: true);
+                overwrite: false);
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
@@ -2565,7 +2565,7 @@ namespace Azure.Storage.Files.DataLake
             Stream content) =>
             UploadAsync(
                 content,
-                overwrite: true);
+                overwrite: false);
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
@@ -2681,7 +2681,7 @@ namespace Azure.Storage.Files.DataLake
             string path) =>
             Upload(
                 path,
-                overwrite: true);
+                overwrite: false);
 
         /// <summary>
         /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
@@ -2797,7 +2797,7 @@ namespace Azure.Storage.Files.DataLake
             string path) =>
                 await UploadAsync(
                     path,
-                    overwrite: true).ConfigureAwait(false);
+                    overwrite: false).ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
