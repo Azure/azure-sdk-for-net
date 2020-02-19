@@ -4,17 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -158,6 +154,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
+                receiveMode: ReceiveMode,
                 prefetchCount: PrefetchCount,
                 sessionId: sessionOptions?.SessionId,
                 isSessionReceiver: IsSessionReceiver);
@@ -245,6 +242,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
+                receiveMode: ReceiveMode,
                 prefetchCount: PrefetchCount,
                 sessionId: sessionOptions?.SessionId,
                 isSessionReceiver: IsSessionReceiver);
@@ -276,6 +274,7 @@ namespace Azure.Messaging.ServiceBus.Core
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
+                receiveMode: ReceiveMode,
                 prefetchCount: PrefetchCount,
                 sessionId: sessionOptions?.SessionId,
                 isSessionReceiver: IsSessionReceiver);
@@ -294,20 +293,33 @@ namespace Azure.Messaging.ServiceBus.Core
         }
 
         /// <summary>
-        ///
+        ///  Receives a batch of <see cref="ServiceBusMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// </summary>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="maxMessages">The maximum number of messages that will be received.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveRangeAsync(
-            int maxMessages,
-            [EnumeratorCancellation]
-            CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveBatchAsync(
+           int maxMessages,
+           [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            foreach (ServiceBusMessage message in await Consumer.ReceiveAsync(maxMessages, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false))
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            try
             {
-                yield return message;
+                foreach (ServiceBusMessage message in await Consumer.ReceiveAsync(maxMessages, cancellationToken).ConfigureAwait(false))
+                {
+                    yield return message;
+                }
             }
+            finally
+            {
+                // TODO: Add log - SeviceBusEventSource.Log.ReceiveBatchAsyncComplete();
+            }
+
+            // If cancellation was requested, then surface the expected exception.
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
         ///// <summary>

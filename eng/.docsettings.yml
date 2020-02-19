@@ -70,6 +70,7 @@ known_presence_issues:
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
   - ['sdk/attestation/Microsoft.Azure.Attestation','#5499']
+  - ['sdk/storage/Azure.AspNetCore.DataProtection.Blobs','#9960']
   - ['sdk/keyvault/Azure.Extensions.Configuration.Secrets', '#9939']
   - ['sdk/keyvault/Azure.AspNetCore.DataProtection.Key','#9955']
 

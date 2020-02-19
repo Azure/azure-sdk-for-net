@@ -228,7 +228,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
-        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -239,7 +239,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(
             TimeSpan timeout,
             uint prefetchCount,
-            long? ownerLevel,
+            ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
             CancellationToken cancellationToken)
@@ -258,7 +258,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 consumerEndpoint,
                 timeout.CalculateRemaining(stopWatch.Elapsed),
                 prefetchCount,
-                ownerLevel,
+                receiveMode,
                 sessionId,
                 isSessionReceiver,
                 cancellationToken
@@ -472,7 +472,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
-        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -485,7 +485,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Uri endpoint,
             TimeSpan timeout,
             uint prefetchCount,
-            long? ownerLevel,
+             ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
             CancellationToken cancellationToken)
@@ -525,15 +525,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Role = true,
                     TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
-                    SettleType = SettleMode.SettleOnSend,
+                    SettleType = (receiveMode == ReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
-
-                if (ownerLevel.HasValue)
-                {
-                    linkSettings.AddProperty(AmqpProperty.OwnerLevel, ownerLevel.Value);
-                }
 
                 var link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
