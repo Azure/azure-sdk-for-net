@@ -4,6 +4,26 @@
     <LangVersion>preview</LangVersion>
     <UserSecretsId>67ca5d37-051b-4ab1-b013-c74a2d4edb76</UserSecretsId>
   </PropertyGroup>
+<PropertyGroup>
+    <Description><![CDATA[<h1>Package Title</h1>
+A package with awesome functionalities
+
+<pre>
+var x = ClassLib1.AwesomeStuff(param1, param2);
+</pre>
+
+<h2>Features</h2>
+Lots of features
+
+More info:
+<a href="https://azure.microsoft.com/">Product information </a> | <a href="https://docs.microsoft.com/en-us/azure">Documentation</a> | <a href="https://docs.microsoft.com/en-us/dotnet/azure/">Developer reference documentation</a>
+
+<ul>
+<li>Support for multiple languages</li>
+<li>打发发阿飞是否教案反思了啊</li>
+</ul>
+]]></Description>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-preview.6" />
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.0.0-preview.6" />
