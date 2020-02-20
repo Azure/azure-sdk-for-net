@@ -305,13 +305,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return null;
             }
-            ReceivingAmqpLink openedLink = null;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                openedLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-                EntityName,
-                ConnectionScope,
-                cancellationToken).ConfigureAwait(false);
+            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
 
             var source = (Source)openedLink.Settings.Source;
             source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
