@@ -5,6 +5,8 @@
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
   </PropertyGroup>
 
+  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
+
   <ItemGroup>
     <PackageReference Include="nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
