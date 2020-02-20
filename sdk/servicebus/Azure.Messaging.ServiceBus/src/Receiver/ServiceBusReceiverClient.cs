@@ -1027,18 +1027,20 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     TransportConsumer consumer = null;
+                    var threadOwnsConsumer = false;
                     if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
                     {
                         // If the user didn't specify a session, but this is a sessionful receiver,
                         // we want to allow each thread to have its own consumer so we can access
                         // multiple sessions concurrently.
                         consumer = Connection.CreateTransportConsumer(RetryPolicy, isSessionReceiver: true);
+                        threadOwnsConsumer = true;
                     }
                     else
                     {
                         consumer = Consumer;
                     }
-                    Task _ = GetAndProcessMessageAsync(consumer, options, cancellationToken);
+                    Task _ = GetAndProcessMessageAsync(consumer, threadOwnsConsumer, options, cancellationToken);
                 }
                 catch (Exception)
                 {
@@ -1053,6 +1055,7 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task GetAndProcessMessageAsync(
             TransportConsumer consumer,
+            bool threadOwnsConsumer,
             MessageHandlerOptions options,
             CancellationToken cancellationToken)
         {
@@ -1135,6 +1138,10 @@ namespace Azure.Messaging.ServiceBus
                     renewLockCancellationTokenSource?.Dispose();
                     autoRenewLockCancellationTimer?.Dispose();
                 }
+            }
+            if (threadOwnsConsumer)
+            {
+                await consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             MessageHandlerSemaphore.Release();
         }
