@@ -10,7 +10,7 @@ using Azure.Core.Cryptography;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.AspNetCore.DataProtection.XmlEncryption;
 
-namespace Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection
+namespace Azure.AspNetCore.DataProtection.Keys
 {
     internal class AzureKeyVaultXmlEncryptor : IXmlEncryptor
     {

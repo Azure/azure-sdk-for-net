@@ -27,12 +27,12 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Extensions.Configuration", "Azure.Security.KeyVault.Secrets.Extensions.Configuration\src\Azure.Security.KeyVault.Secrets.Extensions.Configuration.csproj", "{9D38074E-D5D3-4036-AD85-8885E139F821}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.Configuration.Secrets", "Azure.Extensions.Configuration.Secrets\src\Azure.Extensions.Configuration.Secrets.csproj", "{9D38074E-D5D3-4036-AD85-8885E139F821}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests", "Azure.Security.KeyVault.Secrets.Extensions.Configuration\test\Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests.csproj", "{F245603B-24FC-4F8C-A667-5069CD351BFA}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection", "Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection\src\Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection.csproj", "{71B00440-2553-4274-A98D-3B5925D1E15D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.Configuration.Secrets.Tests", "Azure.Extensions.Configuration.Secrets\test\Azure.Extensions.Configuration.Secrets.Tests.csproj", "{F245603B-24FC-4F8C-A667-5069CD351BFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Keys", "Azure.AspNetCore.DataProtection.Keys\src\Azure.AspNetCore.DataProtection.Keys.csproj", "{71B00440-2553-4274-A98D-3B5925D1E15D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection.Tests", "Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection\test\Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection.Tests.csproj", "{BBF91EB9-2049-47E4-87D7-35DEF26B8F40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Keys.Tests", "Azure.AspNetCore.DataProtection.Keys\test\Azure.AspNetCore.DataProtection.Keys.Tests.csproj", "{BBF91EB9-2049-47E4-87D7-35DEF26B8F40}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

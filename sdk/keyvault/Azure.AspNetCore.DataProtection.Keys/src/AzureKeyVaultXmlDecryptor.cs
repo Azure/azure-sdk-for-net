@@ -9,7 +9,7 @@ using Azure.Core.Cryptography;
 using Microsoft.AspNetCore.DataProtection.XmlEncryption;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection
+namespace Azure.AspNetCore.DataProtection.Keys
 {
 #pragma warning disable CA1812 // False positive, AzureKeyVaultXmlDecryptor is used in AzureKeyVaultXmlEncryptor
     internal class AzureKeyVaultXmlDecryptor : IXmlDecryptor

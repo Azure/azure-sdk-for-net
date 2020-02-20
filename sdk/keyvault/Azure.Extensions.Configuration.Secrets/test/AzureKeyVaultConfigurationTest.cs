@@ -7,11 +7,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
+namespace Azure.Extensions.Configuration.Secrets.Tests
 {
     public class AzureKeyVaultConfigurationTest
     {
@@ -78,7 +79,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
                 );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new DefaultKeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new KeyVaultSecretManager()))
             {
                 provider.Load();
 
@@ -143,7 +144,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new DefaultKeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
             {
                 provider.Load();
 
@@ -170,7 +171,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act & Assert
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new DefaultKeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
             {
                 provider.Load();
 
@@ -203,7 +204,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act & Assert
-            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new DefaultKeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
+            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new KeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
@@ -248,7 +249,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act & Assert
-            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new DefaultKeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
+            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new KeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
@@ -286,7 +287,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act & Assert
-            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new DefaultKeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
+            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new KeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
@@ -331,7 +332,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act & Assert
-            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new DefaultKeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
+            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new KeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
@@ -376,7 +377,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act & Assert
-            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new DefaultKeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
+            using (var provider = new ReloadControlKeyVaultProvider(client.Object, new KeyVaultSecretManager(), reloadPollDelay: NoReloadDelay))
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
@@ -423,7 +424,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new DefaultKeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
             {
                 provider.Load();
 
@@ -457,7 +458,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             );
 
             // Act
-            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new DefaultKeyVaultSecretManager());
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager());
             provider.Load();
             await tcs.Task;
 
@@ -475,16 +476,16 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
         [Test]
         public void ConstructorThrowsForZeroRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new DefaultKeyVaultSecretManager(), TimeSpan.Zero));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new KeyVaultSecretManager(), TimeSpan.Zero));
         }
 
         [Test]
         public void ConstructorThrowsForNegativeRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new DefaultKeyVaultSecretManager(), TimeSpan.FromMilliseconds(-1)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new KeyVaultSecretManager(), TimeSpan.FromMilliseconds(-1)));
         }
 
-        private class EndsWithOneKeyVaultSecretManager : DefaultKeyVaultSecretManager
+        private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
         {
             public override bool Load(SecretProperties secret)
             {
@@ -497,7 +498,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
             private TaskCompletionSource<object> _releaseTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             private TaskCompletionSource<object> _signalTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            public ReloadControlKeyVaultProvider(SecretClient client, IKeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null) : base(client, manager, reloadPollDelay)
+            public ReloadControlKeyVaultProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null) : base(client, manager, reloadPollDelay)
             {
             }
 

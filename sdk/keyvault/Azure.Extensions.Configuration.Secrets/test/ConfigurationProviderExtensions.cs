@@ -4,7 +4,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
+namespace Azure.Extensions.Configuration.Secrets.Tests
 {
     public static class ConfigurationProviderExtensions
     {

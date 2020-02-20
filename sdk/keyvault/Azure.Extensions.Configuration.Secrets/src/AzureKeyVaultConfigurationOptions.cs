@@ -3,21 +3,22 @@
 
 using System;
 using Azure.Core;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
+namespace Azure.Extensions.Configuration.Secrets
 {
     /// <summary>
     /// Options class used by the <see cref="AzureKeyVaultConfigurationExtensions"/>.
     /// </summary>
-    public class AzureKeyVaultConfigurationOptions
+    internal class AzureKeyVaultConfigurationOptions
     {
         /// <summary>
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationOptions"/>.
         /// </summary>
         public AzureKeyVaultConfigurationOptions()
         {
-            Manager = DefaultKeyVaultSecretManager.Instance;
+            Manager = KeyVaultSecretManager.Instance;
         }
 
         /// <summary>
@@ -38,9 +39,9 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
         public SecretClient Client { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="IKeyVaultSecretManager"/> instance used to control secret loading.
+        /// Gets or sets the <see cref="KeyVaultSecretManager"/> instance used to control secret loading.
         /// </summary>
-        public IKeyVaultSecretManager Manager { get; set; }
+        public KeyVaultSecretManager Manager { get; set; }
 
         /// <summary>
         /// Gets or sets the timespan to wait between attempts at polling the Azure Key Vault for changes. <code>null</code> to disable reloading.
