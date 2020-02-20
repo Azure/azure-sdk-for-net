@@ -66,25 +66,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!--Embed the shared resources -->
-  <!--<ItemGroup>
-    <Compile Update="Resources.Local.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Resources.Designer.cs">
-      <Link>Resources.Designer.cs</Link>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Resources.resx">
-      <Link>Resources.resx</Link>
-      <CustomToolNamespace>Azure.Messaging.ServiceBus</CustomToolNamespace>
-    </EmbeddedResource>
-  </ItemGroup>-->
-
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

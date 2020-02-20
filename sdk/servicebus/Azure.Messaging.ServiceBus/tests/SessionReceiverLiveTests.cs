@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,13 +49,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                     options);
 
                 sequenceNumber ??= 1;
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekBatchBySequenceAsync(
-                    fromSequenceNumber: (long)sequenceNumber,
-                    maxMessages: messageCt);
 
                 // verify peeked == send
                 var ct = 0;
-                await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchBySequenceAsync(
+                    fromSequenceNumber: (long)sequenceNumber,
+                    maxMessages: messageCt))
                 {
                     var peekedText = Encoding.Default.GetString(peekedMessage.Body);
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
@@ -101,14 +101,18 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
 
                 // peek the messages
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages1 = receiver1.PeekBatchBySequenceAsync(
-                    fromSequenceNumber: 1,
-                    maxMessages: messageCt);
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages2 = receiver2.PeekBatchBySequenceAsync(
-                    fromSequenceNumber: 1,
-                    maxMessages: messageCt);
-                await peekedMessages1.GetAsyncEnumerator().MoveNextAsync();
-                Assert.That(async () => await peekedMessages2.GetAsyncEnumerator().MoveNextAsync(), Throws.Exception);
+                Assert.That(() => ScheduleTasksAsync(), Throws.Exception);
+
+                async Task ScheduleTasksAsync()
+                {
+                    Task peek1 = receiver1.PeekBatchBySequenceAsync(
+                        fromSequenceNumber: 1,
+                        maxMessages: messageCt);
+                    Task peek2 = receiver2.PeekBatchBySequenceAsync(
+                        fromSequenceNumber: 1,
+                        maxMessages: messageCt);
+                    await Task.WhenAll(peek1, peek2);
+                }
             }
         }
 
@@ -139,15 +143,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                     scope.QueueName,
                     options);
 
-
                 long seq = 0;
                 for (int i = 0; i < messageCt / peekCt; i++)
                 {
-                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekBatchAsync(
-                        maxMessages: peekCt);
-
-
-                    await foreach (ServiceBusMessage msg in peekedMessages)
+                    foreach (ServiceBusMessage msg in await receiver.PeekBatchAsync(
+                        maxMessages: peekCt))
                     {
                         Assert.IsTrue(msg.SystemProperties.SequenceNumber > seq);
                         if (seq > 0)
@@ -225,11 +225,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                         TestEnvironment.ServiceBusConnectionString,
                         scope.QueueName,
                         options);
-                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekBatchBySequenceAsync(
-                        fromSequenceNumber: 1,
-                        maxMessages: 10);
 
-                    await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchBySequenceAsync(
+                        fromSequenceNumber: 1,
+                        maxMessages: 10))
                     {
                         var sessionId = await receiver.Session.GetSessionIdAsync();
                         Assert.AreEqual(sessionId, peekedMessage.SessionId);
@@ -262,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
@@ -273,8 +272,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
                 messageEnum.Reset();
-                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekBatchAsync(messageCount);
-                await foreach (var item in peekMessages)
+                foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
@@ -306,7 +304,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);

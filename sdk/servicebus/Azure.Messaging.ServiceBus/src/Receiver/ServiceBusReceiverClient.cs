@@ -43,7 +43,6 @@ namespace Azure.Messaging.ServiceBus
         private readonly SemaphoreSlim ProcessingStartStopSemaphore = new SemaphoreSlim(1, 1);
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
-
         /// <summary>
         ///   The running task responsible for performing partition load balancing between multiple <see cref="ServiceBusReceiverClient" />
         ///   instances, as well as managing partition processing tasks and ownership.
@@ -52,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         private Task ActiveReceiveTask { get; set; }
 
         /// <summary>
-        ///   Called when a 'process event' event is triggered.
+        ///   Called when a 'process message' event is triggered.
         /// </summary>
         ///
         /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
@@ -67,6 +66,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
         ///
         internal Task OnProcessMessageAsync(ServiceBusMessage message) => _processMessage(message);
+
         /// <summary>
         ///   Called when a 'process error' event is triggered.
         /// </summary>
@@ -74,6 +74,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
         ///
         private Task OnProcessErrorAsync(ExceptionReceivedEventArgs eventArgs) => _processErrorAsync(eventArgs);
+
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -94,7 +95,6 @@ namespace Azure.Messaging.ServiceBus
         public ReceiveMode ReceiveMode { get; private set; }
 
         internal bool IsSessionReceiver { get; set; }
-
 
         /// <summary>
         ///
@@ -253,7 +253,7 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName,
             ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, $"{topicName}/{subscriptionName}", clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            : this(new ServiceBusConnection(connectionString, GetSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
         {
         }
 
@@ -291,8 +291,13 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             TokenCredential credential,
             ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, $"{topicName}/{subscriptionName}", credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, GetSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
         {
+        }
+
+        private static string GetSubscriptionPath(string topicName, string subscriptionName)
+        {
+            return $"{topicName}/{subscriptionName}";
         }
 
         /// <summary>
@@ -340,28 +345,21 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveBatchAsync(
+        public virtual async Task<IEnumerable<ServiceBusMessage>> ReceiveBatchAsync(
            int maxMessages,
-           [EnumeratorCancellation] CancellationToken cancellationToken = default)
+           CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             try
             {
-                foreach (ServiceBusMessage message in await Consumer.ReceiveAsync(maxMessages, cancellationToken).ConfigureAwait(false))
-                {
-                    yield return message;
-                }
+                return await Consumer.ReceiveAsync(maxMessages, cancellationToken).ConfigureAwait(false);
             }
             finally
             {
                 // TODO: Add log - SeviceBusEventSource.Log.ReceiveBatchAsyncComplete();
             }
-
-            // If cancellation was requested, then surface the expected exception.
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
         /// <summary>
@@ -372,8 +370,9 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<ServiceBusMessage> ReceiveAsync(
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceAsync(fromSequenceNumber: 1);
-            await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+            // TODO implement to use ReceiveBatch
+            IEnumerable<ServiceBusMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: 1).ConfigureAwait(false);
+            foreach (ServiceBusMessage message in result)
             {
                 return message;
             }
@@ -387,8 +386,8 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceInternalAsync(null);
-            await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+            IEnumerable<ServiceBusMessage> result = await PeekBatchBySequenceInternalAsync(null).ConfigureAwait(false);
+            foreach (ServiceBusMessage message in result)
             {
                 return message;
             }
@@ -405,8 +404,8 @@ namespace Azure.Messaging.ServiceBus
             long fromSequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceAsync(fromSequenceNumber: fromSequenceNumber);
-            await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+            IEnumerable<ServiceBusMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: fromSequenceNumber).ConfigureAwait(false);
+            foreach (ServiceBusMessage message in result)
             {
                 return message;
             }
@@ -419,16 +418,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekBatchAsync(
+        public virtual async Task<IEnumerable<ServiceBusMessage>> PeekBatchAsync(
             int maxMessages,
-            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceInternalAsync(fromSequenceNumber: null, maxMessages);
-            await foreach (ServiceBusMessage msg in result.ConfigureAwait(false))
-            {
-                yield return msg;
-            }
+            return await PeekBatchBySequenceInternalAsync(fromSequenceNumber: null, maxMessages)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -438,20 +433,15 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekBatchBySequenceAsync(
+        public virtual async Task<IEnumerable<ServiceBusMessage>> PeekBatchBySequenceAsync(
             long fromSequenceNumber,
             int maxMessages = 1,
-            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekBatchBySequenceInternalAsync(
+            return await PeekBatchBySequenceInternalAsync(
                 fromSequenceNumber: fromSequenceNumber,
                 maxMessages: maxMessages,
-                cancellationToken: cancellationToken);
-            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
-            {
-                yield return msg;
-            }
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -461,10 +451,9 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal async IAsyncEnumerable<ServiceBusMessage> PeekBatchBySequenceInternalAsync(
+        internal async Task<IEnumerable<ServiceBusMessage>> PeekBatchBySequenceInternalAsync(
             long? fromSequenceNumber,
             int maxMessages = 1,
-            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
             if (IsSessionReceiver)
@@ -483,17 +472,14 @@ namespace Azure.Messaging.ServiceBus
                 receiveLinkName = link.Name;
             }
 
-            foreach (ServiceBusMessage message in await Connection.PeekAsync(
+            return await Connection.PeekAsync(
                 RetryPolicy,
                 fromSequenceNumber,
                 maxMessages,
                 await Session.GetSessionIdAsync().ConfigureAwait(false),
                 receiveLinkName,
                 cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return message;
-            }
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -507,9 +493,12 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<ServiceBusMessage> ReceiveDeferredMessageAsync(long sequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerator<ServiceBusMessage> result = ReceiveDeferredMessageBatchAsync(sequenceNumbers: new long[] { sequenceNumber }).GetAsyncEnumerator();
-            await result.MoveNextAsync().ConfigureAwait(false);
-            return result.Current;
+            IEnumerable<ServiceBusMessage> result = await ReceiveDeferredMessageBatchAsync(sequenceNumbers: new long[] { sequenceNumber }).ConfigureAwait(false);
+            foreach (ServiceBusMessage message in result)
+            {
+                return message;
+            }
+            return null;
         }
 
         /// <summary>
@@ -520,16 +509,12 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveDeferredMessageBatchAsync(
+        public virtual async Task<IEnumerable<ServiceBusMessage>> ReceiveDeferredMessageBatchAsync(
             IEnumerable<long> sequenceNumbers,
-            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchAsync(10);
-            await foreach (ServiceBusMessage msg in result.ConfigureAwait(false))
-            {
-                yield return msg;
-            }
+            // TODO implement
+            return await PeekBatchAsync(10).ConfigureAwait(false);
         }
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusMessage" />.</param>

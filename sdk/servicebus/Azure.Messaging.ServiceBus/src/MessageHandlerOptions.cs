@@ -61,12 +61,12 @@ namespace Azure.Messaging.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration
         {
-            get => this._maxAutoRenewDuration;
+            get => _maxAutoRenewDuration;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                this._maxAutoRenewDuration = value;
+                _maxAutoRenewDuration = value;
             }
         }
 

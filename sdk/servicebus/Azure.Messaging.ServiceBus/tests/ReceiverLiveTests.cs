@@ -32,19 +32,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body));
                 }
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekBatchAsync(
-                    maxMessages: messageCt);
 
                 var ct = 0;
-                await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAsync(
+                    maxMessages: messageCt))
                 {
                     var peekedText = Encoding.Default.GetString(peekedMessage.Body);
-                    //var sentText = sentMessageIdToLabel[peekedMessage.MessageId];
-
-                    //sentMessageIdToLabel.Remove(peekedMessage.MessageId);
-                    //Assert.AreEqual(sentText, peekedText);
-
-                    TestContext.Progress.WriteLine($"{peekedMessage.Label}: {peekedText}");
                     ct++;
                 }
                 Assert.AreEqual(messageCt, ct);
@@ -65,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
@@ -75,8 +68,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
                 messageEnum.Reset();
-                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekBatchAsync(messageCount);
-                await foreach (var item in peekMessages)
+                foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
@@ -102,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount).ConfigureAwait(false))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
@@ -212,9 +204,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                     }
                 }
                 await tcs.Task;
-                IAsyncEnumerable<ServiceBusMessage> result = receiver.ReceiveBatchAsync(numMessages);
                 var remainingCt = 0;
-                await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+                foreach (ServiceBusMessage message in await receiver.ReceiveBatchAsync(numMessages))
                 {
                     remainingCt++;
                 }
