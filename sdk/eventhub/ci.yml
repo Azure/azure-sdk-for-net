@@ -43,8 +43,8 @@ stages:
     - name: Azure.Messaging.EventHubs.Processor
       safeName: AzureMessagingEventHubsProcessor
     - name: Microsoft.Azure.EventHubs
-      safeName: Microsoft.Azure.EventHubs
+      safeName: MicrosoftAzureEventHubs
     - name: Microsoft.Azure.EventHubs.Processor
-      safeName: Microsoft.Azure.EventHubs.Processor
+      safeName: MicrosoftAzureEventHubsProcessor
     - name: Microsoft.Azure.EventHubs.ServiceFabricProcessor
-      safeName: Microsoft.Azure.EventHubs.ServiceFabricProcessor
+      safeName: MicrosoftAzureEventHubsServiceFabricProcessor
