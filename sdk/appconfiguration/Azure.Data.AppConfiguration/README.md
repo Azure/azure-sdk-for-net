@@ -217,13 +217,13 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 ### More sample code
 
 Several App Configuration client library samples are available to you in this GitHub repository.  These include: 
-- [Hello world](samples/Sample1_HelloWorld.cs): Create and delete a configuration setting.
-- [Hello world async with labels](samples/Sample2_HelloWorldExtended.cs): Asynchronously create, update and delete configuration settings with labels.
-- [Make a configuration setting readonly](samples/Sample3_SetClearReadOnly.cs): Make a configuration setting read-only, and then return it to a read-write state.
-- [Read revision history](samples/Sample4_ReadRevisionHistory.cs): Read the revision history of a configuration setting that has been changed.
-- [Get a setting if changed](samples/Sample5_GetSettingIfChanged.cs): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
-- [Update a setting if it hasn't changed](samples/Sample6_UpdateSettingIfUnchanged.cs): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
-- [Create a mock client](samples/Sample7_MockClient.cs): Mock a client for testing using the [Moq library][moq].
+- [Hello world](samples/Sample1_HelloWorld.md): Create and delete a configuration setting.
+- [Hello world async with labels](samples/Sample2_HelloWorldExtended.md): Asynchronously create, update and delete configuration settings with labels.
+- [Make a configuration setting readonly](samples/Sample3_SetClearReadOnly.md): Make a configuration setting read-only, and then return it to a read-write state.
+- [Read revision history](samples/Sample4_ReadRevisionHistory.md): Read the revision history of a configuration setting that has been changed.
+- [Get a setting if changed](samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
+- [Update a setting if it hasn't changed](samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
+- [Create a mock client](samples/Sample7_MockClient.md): Mock a client for testing using the [Moq library][moq].
 
  For more details see the [samples README][samples_readme].
 
