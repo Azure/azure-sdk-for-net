@@ -1027,20 +1027,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     TransportConsumer consumer = null;
-                    var threadOwnsConsumer = false;
-                    if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
-                    {
-                        // If the user didn't specify a session, but this is a sessionful receiver,
-                        // we want to allow each thread to have its own consumer so we can access
-                        // multiple sessions concurrently.
-                        consumer = Connection.CreateTransportConsumer(RetryPolicy, isSessionReceiver: true);
-                        threadOwnsConsumer = true;
-                    }
-                    else
-                    {
-                        consumer = Consumer;
-                    }
-                    Task _ = GetAndProcessMessageAsync(consumer, threadOwnsConsumer, options, cancellationToken);
+                    Task _ = GetAndProcessMessageAsync(consumer, options, cancellationToken);
                 }
                 catch (Exception)
                 {
@@ -1055,12 +1042,26 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task GetAndProcessMessageAsync(
             TransportConsumer consumer,
-            bool threadOwnsConsumer,
             MessageHandlerOptions options,
             CancellationToken cancellationToken)
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Timer autoRenewLockCancellationTimer = null;
+            bool useThreadLocalConsumer = false;
+
+            if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
+            {
+                // If the user didn't specify a session, but this is a sessionful receiver,
+                // we want to allow each thread to have its own consumer so we can access
+                // multiple sessions concurrently.
+                consumer = Connection.CreateTransportConsumer(RetryPolicy, isSessionReceiver: true);
+                useThreadLocalConsumer = true;
+            }
+            else
+            {
+                consumer = Consumer;
+            }
+
             // loop within the context of this thread
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -1139,7 +1140,7 @@ namespace Azure.Messaging.ServiceBus
                     autoRenewLockCancellationTimer?.Dispose();
                 }
             }
-            if (threadOwnsConsumer)
+            if (useThreadLocalConsumer)
             {
                 await consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
