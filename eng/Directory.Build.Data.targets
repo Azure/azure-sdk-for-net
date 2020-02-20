@@ -19,16 +19,24 @@
       <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
       <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
       <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
-      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
-      <SetPackageReleaseNotesScriptLocation Condition=" '$(SetPackageReleaseNotesScriptLocation)'=='' ">$(MSBuildThisFileDirectory)Set-PackageReleaseNotes.ps1</SetPackageReleaseNotesScriptLocation>
-      <ChangeLogLocation>$(PackageRootPath)/CHANGELOG.md</ChangeLogLocation>
+      <PackageReleaseNotes Condition="'$(ExtractedReleaseNotes)' != ''">$(ExtractedReleaseNotes)</PackageReleaseNotes>
     </PropertyGroup>
-    <Exec ConsoleToMsBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;&amp; { &amp;&apos;$(SetPackageReleaseNotesScriptLocation)&apos; &apos;$(ChangeLogLocation)&apos;} &quot;">
-      <Output TaskParameter="ConsoleOutput" PropertyName="ReleaseNotesValue" />
-    </Exec>
+  </Target>
+
+  <Target Name="GetCurrentReleaseNotes" AfterTargets="Restore" BeforeTargets="Build" Condition="'$(SkipDevBuildNumber)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
     <PropertyGroup>
-      <PackageReleaseNotes>$(ReleaseNotesValue)</PackageReleaseNotes>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
+      <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)Set-PackageReleaseNotes.ps1</GetReleaseNotesScriptPath>
+      <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
+      <ReleaseNotesPropsPath>$(IntermediateOutputPath)ReleaseNotes.txt</ReleaseNotesPropsPath>
     </PropertyGroup>
+    <Exec ContinueOnError="True" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(GetReleaseNotesScriptPath) $(ChangeLogPath) $(Version) $(ReleaseNotesPropsPath)">
+      <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
+    </Exec>
+    <Error Condition="'$(SetReleaseNotesErrorCode)' == '94'" Text="Release Notes for the specified version was not found" />
+    <ReadLinesFromFile File="$(ReleaseNotesPropsPath)">
+      <Output TaskParameter="Lines" PropertyName="ExtractedReleaseNotes" />
+    </ReadLinesFromFile>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
