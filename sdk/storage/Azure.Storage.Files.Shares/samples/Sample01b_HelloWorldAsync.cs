@@ -59,7 +59,6 @@ namespace Azure.Storage.Files.Shares.Samples
             {
                 await file.CreateAsync(stream.Length);
                 await file.UploadRangeAsync(
-                    ShareFileRangeWriteType.Update,
                     new HttpRange(0, stream.Length),
                     stream);
             }

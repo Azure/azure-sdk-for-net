@@ -27,7 +27,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
 
                 string resourceGroupName = CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
-                string databaseAccountName = "db993812";
+                string databaseAccountName = TestUtilities.GenerateName(prefix: "accountname");
 
                 List<Location> locations = new List<Location>();
                 locations.Add(new Location(locationName: "East US"));

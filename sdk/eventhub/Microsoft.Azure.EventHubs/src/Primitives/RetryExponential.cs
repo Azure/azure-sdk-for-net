@@ -65,7 +65,7 @@ namespace Microsoft.Azure.EventHubs
         private double ComputeRetryFactor()
         {
             double deltaBackoff = this.maximumBackoff.Subtract(this.minimumBackoff).TotalSeconds;
-            if (deltaBackoff <= 0 || this.maximumRetryCount <= 0)
+            if (deltaBackoff <= 1 || this.maximumRetryCount <= 0)
             {
                 return 0;
             }

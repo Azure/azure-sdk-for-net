@@ -116,10 +116,6 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageId");
             }
-            if (FlowAnalyticsConfiguration != null)
-            {
-                FlowAnalyticsConfiguration.Validate();
-            }
         }
     }
 }

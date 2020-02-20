@@ -53,5 +53,84 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateDatabase(db, dbCopy, dbCopy.Name);
             }
         }
+
+        [Fact]
+        public void TestContinuousCopyDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                //Create two servers
+                var server = context.CreateServer(resourceGroup);
+                var server2 = context.CreateServer(resourceGroup);
+
+                // Create a database with all parameters specified
+                // 
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    Collation = SqlTestConstants.DefaultCollation,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S3),
+                    CreateMode = "Default"
+                };
+                var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+                Assert.NotNull(db);
+
+                // Create a secondary database
+                //
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInputSecondary = new Database()
+                {
+                    Location = server2.Location,
+                    CreateMode = CreateMode.Secondary,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S3),
+                    SourceDatabaseId = db.Id
+                };
+                var dbSecondary = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server2.Name, dbName, dbInputSecondary);
+                Assert.NotNull(dbSecondary);
+            }
+        }
+
+        [Fact]
+        public void TestContinuousCopyHyperscaleDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                //Create two servers
+                var server = context.CreateServer(resourceGroup);
+                var server2 = context.CreateServer(resourceGroup);
+
+                // Create a database with all parameters specified
+                // 
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                var dbInput = new Database()
+                {
+                    Location = server.Location,
+                    Collation = SqlTestConstants.DefaultCollation,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("SQLDB_HS_Gen5_2"),
+                    CreateMode = "Default"
+                };
+                var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
+                Assert.NotNull(db);
+
+                // Create a secondary database
+                //
+                var dbInputSecondary = new Database()
+                {
+                    Location = server2.Location,
+                    CreateMode = CreateMode.Secondary,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("SQLDB_HS_Gen5_2"),
+                    SourceDatabaseId = db.Id
+                };
+                var dbSecondary = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server2.Name, dbName + "_secondary", dbInputSecondary);
+                Assert.NotNull(dbSecondary);
+            }
+        }
     }
 }

@@ -30,10 +30,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetClient()
         {
-            return InstrumentClient(
-                new ConfigurationClient(
-                    Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING"),
-                    Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
+            var connectionString = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_CONNECTION_STRING");
+            if (Recording.Mode == RecordedTestMode.Playback)
+            {
+                connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
+            }
+
+            var options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(connectionString, options));
         }
 
         private ConfigurationClient GetAADClient()
@@ -1069,63 +1073,6 @@ namespace Azure.Data.AppConfiguration.Tests
                 foreach (ConfigurationSetting setting in settings)
                 {
                     StringAssert.StartsWith("abc", setting.Key);
-                }
-            }
-            finally
-            {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-            }
-        }
-
-        [Test]
-        public async Task GetBatchSettingEndsWith()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting("yzabc", "Test of ends with", "yzabc");
-            string endsWith = testSetting.Key.Substring(5);
-
-            try
-            {
-                await service.SetConfigurationSettingAsync(testSetting);
-
-                var selector = new SettingSelector { KeyFilter = $"*{endsWith}" };
-
-                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
-
-                // There should be at least one key available.
-                CollectionAssert.IsNotEmpty(settings);
-
-                foreach (ConfigurationSetting setting in settings)
-                {
-                    StringAssert.EndsWith(endsWith, setting.Key);
-                }
-            }
-            finally
-            {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-            }
-        }
-
-        [Test]
-        public async Task GetBatchSettingContains()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting("yzabcde", "Contains abc", "yzabcde");
-
-            try
-            {
-                await service.SetConfigurationSettingAsync(testSetting);
-
-                var selector = new SettingSelector { KeyFilter = "*abc*" };
-
-                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
-
-                // There should be at least one key available.
-                CollectionAssert.IsNotEmpty(settings);
-
-                foreach (ConfigurationSetting setting in settings)
-                {
-                    StringAssert.Contains("abc", setting.Key);
                 }
             }
             finally

@@ -25,10 +25,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Shared.Tests", "Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.shproj", "{1AFA2644-A1D9-419F-B87D-9B519B673F24}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
 		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{1afa2644-a1d9-419f-b87d-9b519b673f24}*SharedItemsImports = 13
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{6bef56a3-a6b2-4f21-a4b6-895764a384f3}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{8da63e2c-3d93-4fd6-aa95-8ca8befe57ef}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{aa1c6fb6-7176-400e-b556-b04253a69949}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{b404190b-c1d4-4655-99d4-45cb6532806b}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{c361b52f-cd94-465d-aa79-1b2c0461a166}*SharedItemsImports = 5
+		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{e74dabdd-50b0-475c-b83a-44465cf5515c}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +79,10 @@ Global
 		{A9EE98A1-2769-4D37-A336-8418184A4448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9EE98A1-2769-4D37-A336-8418184A4448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9EE98A1-2769-4D37-A336-8418184A4448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

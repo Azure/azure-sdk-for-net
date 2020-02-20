@@ -1,0 +1,168 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/operations/policy/updatepolicy?api-version=2018-09-01-preview&tee=SgxEnclave",
+      "EncodedRequestUri": "L29wZXJhdGlvbnMvcG9saWN5L3VwZGF0ZXBvbGljeT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXcmdGVlPVNneEVuY2xhdmU=",
+      "RequestMethod": "POST",
+      "RequestBody": "\"eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6ICJ7XHJcbiAgICBcIiR2ZXJzaW9uXCI6IDEsXHJcbiAgICBcIiRhbGxvdy1kZWJ1Z2dhYmxlXCIgOiB0cnVlLFxyXG4gICAgXCIkY2xhaW1zXCI6W1xyXG4gICAgICAgIFwiaXMtZGVidWdnYWJsZVwiICxcclxuICAgICAgICBcInNneC1tcnNpZ25lclwiLFxyXG4gICAgICAgIFwic2d4LW1yZW5jbGF2ZVwiLFxyXG4gICAgICAgIFwicHJvZHVjdC1pZFwiLFxyXG4gICAgICAgIFwic3ZuXCIsXHJcbiAgICAgICAgXCJ0ZWVcIixcclxuICAgICAgICBcIk5vdERlYnVnZ2FibGVcIlxyXG4gICAgXSxcclxuICAgIFwiTm90RGVidWdnYWJsZVwiOiB7XCJ5ZXNcIjp7XCIkaXMtZGVidWdnYWJsZVwiOnRydWUsIFwiJG1hbmRhdG9yeVwiOnRydWUsIFwiJHZpc2libGVcIjpmYWxzZX19LFxyXG4gICAgXCJpcy1kZWJ1Z2dhYmxlXCIgOiBcIiRpcy1kZWJ1Z2dhYmxlXCIsXHJcbiAgICBcInNneC1tcnNpZ25lclwiIDogXCIkc2d4LW1yc2lnbmVyXCIsXHJcbiAgICBcInNneC1tcmVuY2xhdmVcIiA6IFwiJHNneC1tcmVuY2xhdmVcIixcclxuICAgIFwicHJvZHVjdC1pZFwiIDogXCIkcHJvZHVjdC1pZFwiLFxyXG4gICAgXCJzdm5cIiA6IFwiJHN2blwiLFxyXG4gICAgXCJ0ZWVcIiA6IFwiJHRlZVwiXHJcbn0ifQ.\"",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "240798f0-d477-46ec-8cf4-ec8a12ed268d"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Attestation.AttestationClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "text/plain"
+        ],
+        "Content-Length": [
+          "885"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 10 Dec 2019 23:03:23 GMT"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "761"
+        ]
+      },
+      "ResponseBody": "\"eyJhbGciOiAiUlMyNTYiLCAiamt1IjogImh0dHBzOi8vdHJhZGV3aW5kcy51cy5hdHRlc3QuYXp1cmUubmV0L2NlcnRzIiwgImtpZCI6ICIrdXQyMDlCbHVIT0d4VUNON2dtVTRhU1hqZzFnQ3NyZ0JOZ1VuY0VDRm9vPSIsICJ0eXAiOiAiSldUIn0.eyJhYXMtcG9saWN5SGFzaCI6ICJ2MG9QNG9KWkVKWnh4SXhFNmJiVVAxa1JSbWVfZXgtUHV4NlF0c1U4STdNIiwgImV4cCI6IDE1NzYwMjI2MDQsICJpYXQiOiAxNTc2MDE5MDA0LCAiaXNzIjogImh0dHBzOi8vdHJhZGV3aW5kcy51cy5hdHRlc3QuYXp1cmUubmV0IiwgIm5iZiI6IDE1NzYwMTkwMDR9.dD5aPLJ0iUE8lQw1YC_YLMjN6lq0K3sAmyJm6T405Fm0t8PCAWL1GhrBT2e_fWf8V8iKtmgtDcKFLq-Ir8Jf3mGTrzjyaUGAmD9CBCnn700Ava77cUvZXsWMvnDPaJ2iBi5wyulrRmw13sw_bhCukTSNTKtjHGFFmeHOSHwfio3En3iV6xpCf5LbfZX2jyCYAVaWreFSb6AsM28yEpyodx77jWd0DnBCAkL8LngUFJunvspgrLY7XCQKE0ceQcoNvtHlfX7ARbN8ose8KStixqphDH6rtJj-_MbrfSm36b3c22ka7s9gdNftbDRNsZgrNoyigionqNWqdigO2Rj5Jg\"",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/operations/policy/current?api-version=2018-09-01-preview&tee=SgxEnclave",
+      "EncodedRequestUri": "L29wZXJhdGlvbnMvcG9saWN5L2N1cnJlbnQ/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3JnRlZT1TZ3hFbmNsYXZl",
+      "RequestMethod": "PUT",
+      "RequestBody": "\"eyJhbGciOiAiUlMyNTYiLCAiamt1IjogImh0dHBzOi8vdHJhZGV3aW5kcy51cy5hdHRlc3QuYXp1cmUubmV0L2NlcnRzIiwgImtpZCI6ICIrdXQyMDlCbHVIT0d4VUNON2dtVTRhU1hqZzFnQ3NyZ0JOZ1VuY0VDRm9vPSIsICJ0eXAiOiAiSldUIn0.eyJhYXMtcG9saWN5SGFzaCI6ICJ2MG9QNG9KWkVKWnh4SXhFNmJiVVAxa1JSbWVfZXgtUHV4NlF0c1U4STdNIiwgImV4cCI6IDE1NzYwMjI2MDQsICJpYXQiOiAxNTc2MDE5MDA0LCAiaXNzIjogImh0dHBzOi8vdHJhZGV3aW5kcy51cy5hdHRlc3QuYXp1cmUubmV0IiwgIm5iZiI6IDE1NzYwMTkwMDR9.dD5aPLJ0iUE8lQw1YC_YLMjN6lq0K3sAmyJm6T405Fm0t8PCAWL1GhrBT2e_fWf8V8iKtmgtDcKFLq-Ir8Jf3mGTrzjyaUGAmD9CBCnn700Ava77cUvZXsWMvnDPaJ2iBi5wyulrRmw13sw_bhCukTSNTKtjHGFFmeHOSHwfio3En3iV6xpCf5LbfZX2jyCYAVaWreFSb6AsM28yEpyodx77jWd0DnBCAkL8LngUFJunvspgrLY7XCQKE0ceQcoNvtHlfX7ARbN8ose8KStixqphDH6rtJj-_MbrfSm36b3c22ka7s9gdNftbDRNsZgrNoyigionqNWqdigO2Rj5Jg\"",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "152e3bff-45a9-4f58-a8e7-ed2a83e55f33"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Attestation.AttestationClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "text/plain"
+        ],
+        "Content-Length": [
+          "761"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 10 Dec 2019 23:03:24 GMT"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "4"
+        ]
+      },
+      "ResponseBody": "null",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/operations/policy/current?api-version=2018-09-01-preview&tee=SgxEnclave",
+      "EncodedRequestUri": "L29wZXJhdGlvbnMvcG9saWN5L2N1cnJlbnQ/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3JnRlZT1TZ3hFbmNsYXZl",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dce2ad9a-5e00-4d05-9615-9f4b2fea83dc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Attestation.AttestationClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 10 Dec 2019 23:03:25 GMT"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "896"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Policy\": \"eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6ICJ7XHJcbiAgICBcIiR2ZXJzaW9uXCI6IDEsXHJcbiAgICBcIiRhbGxvdy1kZWJ1Z2dhYmxlXCIgOiB0cnVlLFxyXG4gICAgXCIkY2xhaW1zXCI6W1xyXG4gICAgICAgIFwiaXMtZGVidWdnYWJsZVwiICxcclxuICAgICAgICBcInNneC1tcnNpZ25lclwiLFxyXG4gICAgICAgIFwic2d4LW1yZW5jbGF2ZVwiLFxyXG4gICAgICAgIFwicHJvZHVjdC1pZFwiLFxyXG4gICAgICAgIFwic3ZuXCIsXHJcbiAgICAgICAgXCJ0ZWVcIixcclxuICAgICAgICBcIk5vdERlYnVnZ2FibGVcIlxyXG4gICAgXSxcclxuICAgIFwiTm90RGVidWdnYWJsZVwiOiB7XCJ5ZXNcIjp7XCIkaXMtZGVidWdnYWJsZVwiOnRydWUsIFwiJG1hbmRhdG9yeVwiOnRydWUsIFwiJHZpc2libGVcIjpmYWxzZX19LFxyXG4gICAgXCJpcy1kZWJ1Z2dhYmxlXCIgOiBcIiRpcy1kZWJ1Z2dhYmxlXCIsXHJcbiAgICBcInNneC1tcnNpZ25lclwiIDogXCIkc2d4LW1yc2lnbmVyXCIsXHJcbiAgICBcInNneC1tcmVuY2xhdmVcIiA6IFwiJHNneC1tcmVuY2xhdmVcIixcclxuICAgIFwicHJvZHVjdC1pZFwiIDogXCIkcHJvZHVjdC1pZFwiLFxyXG4gICAgXCJzdm5cIiA6IFwiJHN2blwiLFxyXG4gICAgXCJ0ZWVcIiA6IFwiJHRlZVwiXHJcbn0ifQ.\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/operations/policy/current?api-version=2018-09-01-preview&tee=SgxEnclave",
+      "EncodedRequestUri": "L29wZXJhdGlvbnMvcG9saWN5L2N1cnJlbnQ/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3JnRlZT1TZ3hFbmNsYXZl",
+      "RequestMethod": "POST",
+      "RequestBody": "\"eyJhbGciOiJub25lIn0..\"",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "da84f006-30ad-4e45-8ba7-36742aafcaa4"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Attestation.AttestationClient/0.9.0.0"
+        ],
+        "Content-Type": [
+          "text/plain"
+        ],
+        "Content-Length": [
+          "23"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 10 Dec 2019 23:03:26 GMT"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "4"
+        ]
+      },
+      "ResponseBody": "null",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

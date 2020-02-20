@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="artifactSourceId">The reference to the artifact source
         /// resource Id where the payload is located.</param>
-        public RolloutRequest(string location, Identity identity, string buildVersion, string targetServiceTopologyId, IList<Step> stepGroups, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string artifactSourceId = default(string))
+        public RolloutRequest(string location, Identity identity, string buildVersion, string targetServiceTopologyId, IList<StepGroup> stepGroups, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string artifactSourceId = default(string))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// Gets or sets the list of step groups that define the orchestration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stepGroups")]
-        public IList<Step> StepGroups { get; set; }
+        public IList<StepGroup> StepGroups { get; set; }
 
         /// <summary>
         /// Validate the object.

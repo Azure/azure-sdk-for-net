@@ -28,6 +28,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestProjectUnknownClassification = "BadRequestProjectUnknownClassification";
         public const string BadRequestProjectUnsupportedDomainTypeChange = "BadRequestProjectUnsupportedDomainTypeChange";
         public const string BadRequestProjectUnsupportedExportPlatform = "BadRequestProjectUnsupportedExportPlatform";
+        public const string BadRequestProjectImagePreprocessingSettings = "BadRequestProjectImagePreprocessingSettings";
         public const string BadRequestIterationName = "BadRequestIterationName";
         public const string BadRequestIterationNameNotUnique = "BadRequestIterationNameNotUnique";
         public const string BadRequestIterationDescription = "BadRequestIterationDescription";

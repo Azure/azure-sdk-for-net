@@ -68,6 +68,16 @@ namespace Azure.Storage.Files.DataLake
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly DataLakeClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -294,8 +304,9 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -313,16 +324,50 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
+        /// every request.
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
+        {
+            options ??= new DataLakeClientOptions();
+            var uriBuilder = new DataLakeUriBuilder(pathUri);
+            _uri = pathUri;
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = pipeline;
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
-            _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
-            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+            _version = version;
+            _clientDiagnostics = clientDiagnostics;
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -331,11 +376,11 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private class BlockBlobClientInternals : BlockBlobClient
         {
-            public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
+            public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
             {
                 return BlockBlobClient.CreateClient(
                     uri,
-                    new BlobClientOptions()
+                    new BlobClientOptions(version)
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
                     },
@@ -440,7 +485,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
 
             try
             {
@@ -523,7 +568,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
 
             try
             {
@@ -627,6 +672,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         resource: resourceType,
                         cacheControl: httpHeaders?.CacheControl,
                         contentEncoding: httpHeaders?.ContentEncoding,
@@ -666,6 +712,302 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Create
 
+        #region Create If Not Exists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(PathResourceType, PathHttpHeaders, Metadata, string, string, CancellationToken)"/>
+        /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new file or directory..
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file or directory..
+        /// </param>
+        /// <param name="permissions">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
+        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
+        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
+        /// octal notation (e.g. 0766) are supported.
+        /// </param>
+        /// <param name="umask">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
+        /// When creating a file or directory and the parent folder does not have a default ACL,
+        /// the umask restricts the permissions of the file or directory to be created. The resulting
+        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
+        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
+        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
+        /// in 4-digit octal notation (e.g. 0766).
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        protected virtual Response<PathInfo> CreateIfNotExists(
+            PathResourceType resourceType,
+            PathHttpHeaders httpHeaders = default,
+            Metadata metadata = default,
+            string permissions = default,
+            string umask = default,
+            CancellationToken cancellationToken = default)
+            => CreateIfNotExistsInternal(
+                    resourceType,
+                    httpHeaders,
+                    metadata,
+                    permissions,
+                    umask,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(PathResourceType, PathHttpHeaders, Metadata, string, string, CancellationToken)"/>
+        /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new file or directory.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file or directory..
+        /// </param>
+        /// <param name="permissions">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
+        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
+        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
+        /// octal notation (e.g. 0766) are supported.
+        /// </param>
+        /// <param name="umask">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
+        /// When creating a file or directory and the parent folder does not have a default ACL,
+        /// the umask restricts the permissions of the file or directory to be created. The resulting
+        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
+        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
+        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
+        /// in 4-digit octal notation (e.g. 0766).
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
+            PathResourceType resourceType,
+            PathHttpHeaders httpHeaders = default,
+            Metadata metadata = default,
+            string permissions = default,
+            string umask = default,
+            CancellationToken cancellationToken = default)
+            => await CreateIfNotExistsInternal(
+                resourceType,
+                httpHeaders,
+                metadata,
+                permissions,
+                umask,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, bool, CancellationToken)"/>
+        /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="resourceType">
+        /// Resource type of this path - file or directory.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new file or directory.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file or directory.
+        /// </param>
+        /// <param name="permissions">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
+        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
+        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
+        /// octal notation (e.g. 0766) are supported.
+        /// </param>
+        /// <param name="umask">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
+        /// When creating a file or directory and the parent folder does not have a default ACL,
+        /// the umask restricts the permissions of the file or directory to be created. The resulting
+        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
+        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
+        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
+        /// in 4-digit octal notation (e.g. 0766).
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathInfo>> CreateIfNotExistsInternal(
+            PathResourceType resourceType,
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
+            Response<PathInfo> response;
+            try
+            {
+                scope.Start();
+                DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                response = await CreateInternal(
+                    resourceType,
+                    httpHeaders,
+                    metadata,
+                    permissions,
+                    umask,
+                    conditions,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == "PathAlreadyExists")
+            {
+                response = default;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+            return response;
+        }
+        #endregion Create If Not Exists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="DataLakePathClient"/> to see if the associated
+        /// file or director exists in the file system.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file or directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the file system if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists"/>
+        /// instead.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                return _blockBlobClient.Exists(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="DataLakePathClient"/> to see if the associated
+        /// file or directory exists in the file system.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file or directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the file system if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExistsAsync"/>
+        /// instead.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                return await _blockBlobClient.ExistsAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Exists
+
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path
@@ -698,7 +1040,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Delete)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Delete)}");
 
             try
             {
@@ -753,7 +1095,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Delete)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Delete)}");
 
             try
             {
@@ -826,6 +1168,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         recursive: recursive,
                         leaseId: conditions?.LeaseId,
                         ifMatch: conditions?.IfMatch,
@@ -851,6 +1194,146 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete
 
+        #region Delete If Exists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation marks the specified path
+        /// for deletion, if the path exists. The path is later deleted during
+        /// garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// </summary>
+        /// <param name="recursive">
+        /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
+        /// If "false" and the directory is non-empty, an error occurs.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// deleting this path.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            bool? recursive = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => DeleteIfExistsInternal(
+                recursive,
+                conditions,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified path
+        /// deletion, if the path exists. The path is later deleted during
+        /// garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// </summary>
+        /// <param name="recursive">
+        /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
+        /// If "false" and the directory is non-empty, an error occurs.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// deleting this path.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            bool? recursive = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await DeleteIfExistsInternal(
+                recursive,
+                conditions,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified path
+        /// deletion, if the path exists. The path is later deleted during
+        /// garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// </summary>
+        /// <param name="recursive">
+        /// Required and valid only when the resource is a directory. If "true", all paths beneath the directory will be deleted.
+        /// If "false" and the directory is non-empty, an error occurs.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// deleting this path.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> DeleteIfExistsInternal(
+            bool? recursive,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(DeleteIfExists)}");
+            try
+            {
+                scope.Start();
+                Response response = await DeleteInternal(
+                    recursive: recursive,
+                    conditions: conditions,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(true, response);
+            }
+            catch (RequestFailedException ex)
+            when (ex.ErrorCode == "PathNotFound")
+            {
+                return Response.FromValue(false, default);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Delete If Exists
+
         #region Rename
         /// <summary>
         /// The <see cref="Rename"/> operation renames a file or directory.
@@ -859,6 +1342,10 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="destinationFileSystem">
+        /// Optional destination file system.  If null, path will be renamed within the
+        /// current file system.
         /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
@@ -882,17 +1369,19 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<DataLakePathClient> Rename(
             string destinationPath,
+            string destinationFileSystem = default,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Rename)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Rename)}");
 
             try
             {
                 scope.Start();
 
                 return RenameInternal(
+                    destinationFileSystem,
                     destinationPath,
                     sourceConditions,
                     destinationConditions,
@@ -919,6 +1408,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
+        /// <param name="destinationFileSystem">
+        /// Optional destination file system.  If null, path will be renamed within the
+        /// current file system.
+        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
@@ -941,17 +1434,19 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response<DataLakePathClient>> RenameAsync(
             string destinationPath,
+            string destinationFileSystem = default,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(Rename)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Rename)}");
 
             try
             {
                 scope.Start();
 
                 return await RenameInternal(
+                    destinationFileSystem,
                     destinationPath,
                     sourceConditions,
                     destinationConditions,
@@ -978,6 +1473,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
+        /// <param name="destinationFileSystem">
+        /// Optional destination file system.  If null, path will be renamed within the
+        /// current file system.
+        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
@@ -1003,6 +1502,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         private async Task<Response<DataLakePathClient>> RenameInternal(
             string destinationPath,
+            string destinationFileSystem,
             DataLakeRequestConditions sourceConditions,
             DataLakeRequestConditions destinationConditions,
             bool async,
@@ -1014,6 +1514,7 @@ namespace Azure.Storage.Files.DataLake
                     nameof(DataLakePathClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(destinationFileSystem)}: {destinationFileSystem}\n" +
                     $"{nameof(destinationPath)}: {destinationPath}\n" +
                     $"{nameof(destinationConditions)}: {destinationConditions}\n" +
                     $"{nameof(sourceConditions)}: {sourceConditions}");
@@ -1022,6 +1523,7 @@ namespace Azure.Storage.Files.DataLake
                     DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri);
                     string renameSource = "/" + uriBuilder.FileSystemName + "/" + uriBuilder.DirectoryOrFilePath;
 
+                    uriBuilder.FileSystemName = destinationFileSystem ?? uriBuilder.FileSystemName;
                     uriBuilder.DirectoryOrFilePath = destinationPath;
                     DataLakePathClient destPathClient = new DataLakePathClient(uriBuilder.ToUri(), Pipeline);
 
@@ -1029,6 +1531,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: destPathClient.DfsUri,
+                        version: Version.ToVersionString(),
                         mode: PathRenameMode.Legacy,
                         renameSource: renameSource,
                         leaseId: destinationConditions?.LeaseId,
@@ -1098,7 +1601,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetAccessControl)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetAccessControl)}");
 
             try
             {
@@ -1157,7 +1660,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetAccessControl)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetAccessControl)}");
 
             try
             {
@@ -1232,6 +1735,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         action: PathGetPropertiesAction.GetAccessControl,
                         upn: userPrincipalName,
                         leaseId: conditions?.LeaseId,
@@ -1305,7 +1809,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetAccessControlList)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlList)}");
 
             try
             {
@@ -1369,7 +1873,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetAccessControlList)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlList)}");
 
             try
             {
@@ -1454,6 +1958,7 @@ namespace Azure.Storage.Files.DataLake
                             clientDiagnostics: _clientDiagnostics,
                             pipeline: Pipeline,
                             resourceUri: _dfsUri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -1526,7 +2031,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetPermissions)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetPermissions)}");
 
             try
             {
@@ -1591,7 +2096,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetPermissions)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetPermissions)}");
 
             try
             {
@@ -1676,6 +2181,7 @@ namespace Azure.Storage.Files.DataLake
                             clientDiagnostics: _clientDiagnostics,
                             pipeline: Pipeline,
                             resourceUri: _dfsUri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -1738,7 +2244,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
 
             try
             {
@@ -1791,7 +2297,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
 
             try
             {
@@ -1849,7 +2355,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
 
             try
             {
@@ -1909,7 +2415,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
 
             try
             {
@@ -1972,7 +2478,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
 
             try
             {
@@ -2031,7 +2537,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
 
             try
             {

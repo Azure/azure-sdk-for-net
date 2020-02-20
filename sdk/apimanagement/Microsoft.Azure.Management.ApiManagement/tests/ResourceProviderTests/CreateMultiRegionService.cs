@@ -18,6 +18,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public void CreateMultiRegionService()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

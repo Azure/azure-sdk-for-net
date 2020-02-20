@@ -11,4 +11,6 @@ if ($ServiceDirectory) {
     $root += '/' + $ServiceDirectory
 }
 
-dotnet run -p $generatorProject -b "$root"
+$repoRoot = Resolve-Path "$root"
+
+dotnet run -p $generatorProject -b "$repoRoot"

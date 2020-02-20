@@ -17,11 +17,10 @@ namespace Azure.Identity
     /// App Service and Azure Functions applications, as well as inside of Azure Cloud Shell. More information about configuring managed identities can be found here:
     /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview
     /// </summary>
-    public class ManagedIdentityCredential : TokenCredential, IExtendedTokenCredential
+    public class ManagedIdentityCredential : TokenCredential
     {
         internal const string MsiUnavailableError = "No managed identity endpoint found.";
 
-        private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private readonly ManagedIdentityClient _client;
 
@@ -47,13 +46,12 @@ namespace Azure.Identity
         }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(clientId, pipeline, new ManagedIdentityClient(pipeline))
+            : this(pipeline, new ManagedIdentityClient(pipeline, clientId))
         {
         }
 
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, ManagedIdentityClient client)
+        internal ManagedIdentityCredential(CredentialPipeline pipeline, ManagedIdentityClient client)
         {
-            _clientId = clientId;
 
             _pipeline = pipeline;
 
@@ -68,7 +66,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,36 +77,18 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImpl(requestContext, cancellationToken).GetTokenOrThrow();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-        }
-
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenImpl(requestContext, cancellationToken);
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ManagedIdentityCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ManagedIdentityCredential.GetToken", requestContext);
 
             try
             {
-                MsiType msiType = await _client.GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
+                AccessToken result = isAsync ? await _client.AuthenticateAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.Authenticate(requestContext.Scopes, cancellationToken);
 
-                // if msi is unavailable or we were unable to determine the type return a default access token
-                if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
-                {
-                    return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(MsiUnavailableError)));
-                }
-
-                AccessToken token = await _client.AuthenticateAsync(msiType, requestContext.Scopes, _clientId, cancellationToken).ConfigureAwait(false);
-
-                return new ExtendedAccessToken(scope.Succeeded(token));
+                return scope.Succeeded(result);
             }
             catch (OperationCanceledException e)
             {
@@ -118,39 +98,8 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
+               throw scope.FailAndWrap(e);
             }
         }
-
-        private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ManagedIdentityCredential.GetToken", requestContext);
-
-            try
-            {
-                MsiType msiType = _client.GetMsiType(cancellationToken);
-
-                // if msi is unavailable or we were unable to determine the type return a default access token
-                if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
-                {
-                    return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(MsiUnavailableError)));
-                }
-
-                AccessToken token = _client.Authenticate(msiType, requestContext.Scopes, _clientId, cancellationToken);
-
-                return new ExtendedAccessToken(scope.Succeeded(token));
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
-            catch (Exception e)
-            {
-                return new ExtendedAccessToken(scope.Failed(e));
-            }
-        }
-
     }
 }

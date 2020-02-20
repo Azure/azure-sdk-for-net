@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,6 +61,16 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -80,6 +91,16 @@ namespace Azure.Storage.Blobs
         /// The <see cref="CustomerProvidedKey"/> to be used when sending requests.
         /// </summary>
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
+
+        /// <summary>
+        /// The <see cref="EncryptionScope"/> to be used when sending requests.
+        /// </summary>
+        internal readonly string _encryptionScope;
+
+        /// <summary>
+        /// The <see cref="EncryptionScope"/> to be used when sending requests.
+        /// </summary>
+        internal virtual string EncryptionScope => _encryptionScope;
 
         /// <summary>
         /// The Storage account name corresponding to the container client.
@@ -169,8 +190,12 @@ namespace Azure.Storage.Blobs
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _encryptionScope = options.EncryptionScope;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
 
         /// <summary>
@@ -259,9 +284,12 @@ namespace Azure.Storage.Blobs
             _uri = blobContainerUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
 
         /// <summary>
@@ -276,15 +304,28 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics"></param>
-        /// /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal BlobContainerClient(
+            Uri containerUri,
+            HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            string encryptionScope)
         {
             _uri = containerUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _encryptionScope = encryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
 
         /// <summary>
@@ -309,7 +350,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlobContainerClient(containerUri, pipeline, new ClientDiagnostics(options), null);
+            return new BlobContainerClient(containerUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
         }
         #endregion ctor
 
@@ -322,7 +363,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) =>
-            new BlobClient(Uri.AppendToPath(blobName), _pipeline, ClientDiagnostics, CustomerProvidedKey);
+            new BlobClient(Uri.AppendToPath(blobName), _pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -339,7 +380,59 @@ namespace Azure.Storage.Blobs
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new container
+        /// The <see cref="Create(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container
+        /// under the specified account. If the container with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// </summary>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the container may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// specifies full public read access for container and blob data.
+        /// Clients can enumerate blobs within the container via anonymous
+        /// request, but cannot enumerate containers within the storage
+        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// read access for blobs.  Blob data within this container can be
+        /// read via anonymous request, but container data is not available.
+        /// Clients cannot enumerate blobs within the container via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="encryptionScopeOptions">
+        /// Optional encryption scope options to set for this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> describing the newly
+        /// created blob container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContainerInfo> Create(
+            PublicAccessType publicAccessType = PublicAccessType.None,
+            Metadata metadata = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
+            CancellationToken cancellationToken = default) =>
+            CreateInternal(
+                publicAccessType,
+                metadata,
+                encryptionScopeOptions,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Create(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -373,20 +466,24 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerInfo> Create(
-            PublicAccessType publicAccessType = PublicAccessType.None,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
             CreateInternal(
                 publicAccessType,
                 metadata,
-                false, // async
+                encryptionScopeOptions: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new container
-        /// under the specified account. If the container with the same name
+        /// The <see cref="CreateAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
@@ -406,6 +503,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="encryptionScopeOptions">
+        /// Optional encryption scope options to set for this container.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -422,16 +522,18 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 publicAccessType,
                 metadata,
-                true, // async
+                encryptionScopeOptions,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a new container
+        /// The <see cref="CreateAsync(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -458,8 +560,61 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> describing the newly
+        /// A <see cref="Response{BlobContainerInfo}"/> describing the newly
         /// created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            await CreateInternal(
+                publicAccessType,
+                metadata,
+                encryptionScopeOptions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container under the specified account. If the container with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// </summary>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the container may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// specifies full public read access for container and blob data.
+        /// Clients can enumerate blobs within the container via anonymous
+        /// request, but cannot enumerate containers within the storage
+        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// read access for blobs.  Blob data within this container can be
+        /// read via anonymous request, but container data is not available.
+        /// Clients cannot enumerate blobs within the container via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="encryptionScopeOptions">
+        /// Optional encryption scope options to set for this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -468,16 +623,18 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContainerInfo> CreateIfNotExists(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
                 publicAccessType,
                 metadata,
-                false, // async
+                encryptionScopeOptions,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new container
+        /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -498,6 +655,59 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobContainerInfo> CreateIfNotExists(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            CreateIfNotExistsInternal(
+                publicAccessType,
+                metadata,
+                encryptionScopeOptions: default,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container under the specified account. If the container with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// </summary>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the container may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// specifies full public read access for container and blob data.
+        /// Clients can enumerate blobs within the container via anonymous
+        /// request, but cannot enumerate containers within the storage
+        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// read access for blobs.  Blob data within this container can be
+        /// read via anonymous request, but container data is not available.
+        /// Clients cannot enumerate blobs within the container via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="encryptionScopeOptions">
+        /// Optional encryption scope options to set for this container.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -514,16 +724,18 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
                 publicAccessType,
                 metadata,
-                true, // async
+                encryptionScopeOptions,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new container
+        /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -545,6 +757,59 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ContainerInfo}"/> describing the newly
+        /// created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PublicAccessType publicAccessType,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            await CreateIfNotExistsInternal(
+                publicAccessType,
+                metadata,
+                encryptionScopeOptions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, bool, CancellationToken)"/>
+        /// operation creates a new container under the specified account.  If the container already exists, it is
+        /// not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// </summary>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the container may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// specifies full public read access for container and blob data.
+        /// Clients can enumerate blobs within the container via anonymous
+        /// request, but cannot enumerate containers within the storage
+        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// read access for blobs.  Blob data within this container can be
+        /// read via anonymous request, but container data is not available.
+        /// Clients cannot enumerate blobs within the container via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this container.
+        /// </param>
+        /// <param name="encryptionScopeOptions">
+        /// Optional encryption scope options to set for this container.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -553,8 +818,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContainerInfo}"/> describing the newly
-        /// created container.
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -563,26 +828,45 @@ namespace Azure.Storage.Blobs
         private async Task<Response<BlobContainerInfo>> CreateIfNotExistsInternal(
             PublicAccessType publicAccessType,
             Metadata metadata,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions,
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobContainerInfo> response;
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                response = await CreateInternal(
-                    publicAccessType,
-                    metadata,
-                    async,
-                    cancellationToken,
-                    Constants.Blob.Container.CreateIfNotExistsOperationName)
-                    .ConfigureAwait(false);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(publicAccessType)}: {publicAccessType}");
+                Response <BlobContainerInfo> response;
+                try
+                {
+                    response = await CreateInternal(
+                        publicAccessType,
+                        metadata,
+                        encryptionScopeOptions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
+                {
+                    response = default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+                return response;
             }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
-            {
-                response = default;
-            }
-            return response;
         }
 
         /// <summary>
@@ -608,6 +892,9 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Optional custom metadata to set for this container.
         /// </param>
+        /// <param name="encryptionScopeOptions">
+        /// Optional encryption scope options to set for this container.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -629,9 +916,10 @@ namespace Azure.Storage.Blobs
         private async Task<Response<BlobContainerInfo>> CreateInternal(
             PublicAccessType publicAccessType,
             Metadata metadata,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Container.CreateOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -646,10 +934,13 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        metadata: metadata,
                         access: publicAccessType,
+                        defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
+                        preventEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
+                        version: Version.ToVersionString(),
+                        metadata: metadata,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -824,20 +1115,37 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                Response response = await DeleteInternal(
-                    conditions,
-                    async,
-                    cancellationToken,
-                    Constants.Blob.Container.DeleteIfExistsOperationName)
-                    .ConfigureAwait(false);
-                return Response.FromValue(true, response);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
-            {
-                return Response.FromValue(false, default);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
             }
         }
 
@@ -873,7 +1181,7 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Container.DeleteOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -894,11 +1202,12 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -914,6 +1223,119 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Delete
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// instead.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// instead.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<FlattenedContainerItem> response = await BlobRestClient.Container.GetPropertiesAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(Exists)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+        #endregion Exists
 
         #region GetProperties
         /// <summary>
@@ -1029,9 +1451,10 @@ namespace Azure.Storage.Blobs
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             async: async,
-                            operationName: Constants.Blob.Container.GetPropertiesOperationName,
+                            operationName: $"{nameof(BlobContainerClient)}.{nameof(GetProperties)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1047,8 +1470,10 @@ namespace Azure.Storage.Blobs
                                 LeaseDuration = response.Value.LeaseDuration,
                                 PublicAccess = response.Value.BlobPublicAccess,
                                 HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
-                                HasLegalHold = response.Value.HasLegalHold
-                            },
+                                HasLegalHold = response.Value.HasLegalHold,
+                                DefaultEncryptionScope = response.Value.DefaultEncryptionScope,
+                                PreventEncryptionScopeOverride = response.Value.DenyEncryptionScopeOverride
+                        },
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -1191,11 +1616,12 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         async: async,
-                        operationName: Constants.Blob.Container.SetMetaDataOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1321,9 +1747,10 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(GetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1516,13 +1943,14 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         leaseId: conditions?.LeaseId,
                         access: accessType,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: Constants.Blob.Container.SetAccessPolicyOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1689,6 +2117,7 @@ namespace Azure.Storage.Blobs
                           ClientDiagnostics,
                           Pipeline,
                           Uri,
+                          version: Version.ToVersionString(),
                           marker: marker,
                           prefix: prefix,
                           maxresults: pageSizeHint,
@@ -1929,6 +2358,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,
@@ -1953,10 +2383,8 @@ namespace Azure.Storage.Blobs
 
         #region UploadBlob
         /// <summary>
-        /// The <see cref="UploadBlob"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlobAsync"/> operation creates a new block
+        /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -1978,8 +2406,11 @@ namespace Azure.Storage.Blobs
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To override an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> UploadBlob(
@@ -1992,10 +2423,8 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadBlobAsync"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlob"/> operation creates a new block
+        /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -2017,8 +2446,11 @@ namespace Azure.Storage.Blobs
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To override an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(

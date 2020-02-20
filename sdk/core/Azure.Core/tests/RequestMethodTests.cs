@@ -25,6 +25,8 @@ namespace Azure.Core.Tests
             new object[] { RequestMethod.Post, "POST" },
             new object[] { RequestMethod.Put, "PUT" },
             new object[] { RequestMethod.Head, "HEAD" },
+            new object[] { RequestMethod.Options, "OPTIONS" },
+            new object[] { RequestMethod.Trace, "TRACE" },
         };
 
         [Theory]

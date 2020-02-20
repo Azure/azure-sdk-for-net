@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -34,39 +35,64 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
         private List<AdministratorContact> _administratorContacts;
+        private IssuerProperties _properties;
 
         internal CertificateIssuer(IssuerProperties properties = null)
         {
-            Properties = properties ?? new IssuerProperties();
+            _properties = properties ?? new IssuerProperties();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class with the given <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class.
+        /// You can use this constructor to initialize a <see cref="CertificateIssuer"/> for
+        /// <see cref="CertificateClient.UpdateIssuer(CertificateIssuer, CancellationToken)"/> or
+        /// <see cref="CertificateClient.UpdateIssuerAsync(CertificateIssuer, CancellationToken)"/>.
         /// </summary>
         /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public CertificateIssuer(string name)
         {
-            Properties = new IssuerProperties(name);
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            _properties = new IssuerProperties(name);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateIssuer"/> class.
+        /// You can use this constructor to initialize a <see cref="CertificateIssuer"/> for
+        /// <see cref="CertificateClient.CreateIssuer(CertificateIssuer, CancellationToken)"/> or
+        /// <see cref="CertificateClient.CreateIssuerAsync(CertificateIssuer, CancellationToken)"/>.
+        /// </summary>
+        /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="provider">The provider name of the certificate issuer.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="provider"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="provider"/> is null.</exception>
+        public CertificateIssuer(string name, string provider)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+
+            _properties = new IssuerProperties(name)
+            {
+                Provider = provider,
+            };
         }
 
         /// <summary>
         /// Gets the unique identifier of the certificate issuer.
         /// </summary>
-        public Uri Id => Properties.Id;
+        public Uri Id => _properties.Id;
 
         /// <summary>
         /// Gets the name of the certificate issuer.
         /// </summary>
-        public string Name => Properties.Name;
+        public string Name => _properties.Name;
 
         /// <summary>
         /// Gets or sets the provider name of the certificate issuer.
         /// </summary>
-        public string Provider
-        {
-            get => Properties.Provider;
-            set => Properties.Provider = value;
-        }
+        public string Provider => _properties.Provider;
 
         /// <summary>
         /// Gets or sets the account identifier or username used to authenticate to the certificate issuer.
@@ -103,11 +129,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public bool? Enabled { get; set; }
 
-        /// <summary>
-        /// Gets the attributes of the <see cref="CertificateIssuer"/>.
-        /// </summary>
-        public IssuerProperties Properties { get; }
-
         internal virtual void ReadProperty(JsonProperty prop)
         {
             switch (prop.Name)
@@ -125,7 +146,7 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 default:
-                    Properties.ReadProperty(prop);
+                    _properties.ReadProperty(prop);
                     break;
             }
         }
@@ -193,7 +214,7 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal virtual void WriteProperties(Utf8JsonWriter json)
         {
-            Properties.WriteProperties(json);
+            _properties.WriteProperties(json);
 
             if (!string.IsNullOrEmpty(AccountId) || !string.IsNullOrEmpty(Password))
             {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Azure.Messaging.EventHubs.Shared.Tests</AssemblyName>
-    <VersionPrefix>5.0.0</VersionPrefix>
+    <Version>1.0.0</Version>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
@@ -31,9 +31,11 @@
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Diagnostics.projitems" Label="Diagnostics" />
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Authorization.projitems" Label="Authorization" />
+  <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Processor.projitems" Label="Processor" />
 
   <ItemGroup>
     <Compile Include="..\src\Testing\EventDataExtensions.cs" Link="SharedSource\Testing\EventDataExtensions.cs" />
+    <Compile Include="..\src\Testing\MockCheckPointStorage.cs" Link="SharedSource\Testing\MockCheckPointStorage.cs" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

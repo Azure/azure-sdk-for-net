@@ -273,7 +273,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "This test was disabled by removing the [Fact] prior to the central migration")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task CreateReceiverWithSequenceNumber()
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "This test was disabled by removing the [Fact] prior to the central migration")]
+        [Fact(Skip = "This test is intermittently failing.  Tracked by issue #9798")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task CreateReceiverWithInclusiveSequenceNumber()

@@ -30,7 +30,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
 
-                DatabaseAccountGetResults databaseAccount = null;
+                //DatabaseAccountGetResults databaseAccount = null;
                 if (!isDatabaseNameExists)
                 {
                     return;
@@ -131,9 +131,10 @@ namespace CosmosDB.Tests.ScenarioTests
 
         private void VerifyEqualGremlinDatabases(GremlinDatabaseGetResults expectedValue, GremlinDatabaseGetResults actualValue)
         {
-            Assert.Equal(expectedValue._rid, actualValue._rid);
-            Assert.Equal(expectedValue._ts, actualValue._ts);
-            Assert.Equal(expectedValue._etag, actualValue._etag);
+            Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
+            Assert.Equal(expectedValue.Resource._rid, actualValue.Resource._rid);
+            Assert.Equal(expectedValue.Resource._ts, actualValue.Resource._ts);
+            Assert.Equal(expectedValue.Resource._etag, actualValue.Resource._etag);
         }
     }
 }

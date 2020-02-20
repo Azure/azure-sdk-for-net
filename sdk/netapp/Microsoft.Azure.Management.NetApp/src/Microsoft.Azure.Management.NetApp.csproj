@@ -8,11 +8,13 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.3.0 relates to NetApp Files (ANF) RP R6 GA.
+        Version 1.4.0 relates to NetApp Files (ANF) RP R7 GA.
+          - added replication functionality
+
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
           Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:

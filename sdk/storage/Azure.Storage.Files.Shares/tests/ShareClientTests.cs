@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.Shares.Test
 {
     public class ShareClientTests : FileTestBase
     {
-        public ShareClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ShareClientTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -199,7 +199,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateAsync(),
-                e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode));
 
             // Cleanup
             await share.DeleteAsync(false);
@@ -307,10 +307,31 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
 
             // Act
-            Response<ShareProperties> reponse = await share.GetPropertiesAsync();
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(reponse.GetRawResponse().Headers.RequestId);
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.LastModified);
+        }
+
+        [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public async Task GetPropertiesAsync_Premium()
+        {
+            await using DisposingShare test = await GetTestShareAsync(GetServiceClient_Premium());
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.LastModified);
+            Assert.IsNotNull(response.Value.NextAllowedQuotaDowngradeTime);
+            Assert.IsNotNull(response.Value.ProvisionedEgressMBps);
+            Assert.IsNotNull(response.Value.ProvisionedIngressMBps);
+            Assert.IsNotNull(response.Value.ProvisionedIops);
+            Assert.IsNotNull(response.Value.QuotaInGB);
         }
 
         [Test]
@@ -324,7 +345,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetPropertiesAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -356,7 +377,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -393,7 +414,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetAccessPolicyAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -424,12 +445,13 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetAccessPolicyAsync(signedIdentifiers),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
         public async Task GetStatisticsAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
@@ -438,6 +460,30 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.IsNotNull(response);
+        }
+
+        [Test]
+        public async Task GetStatisticsAsync_LargeShare()
+        {
+            // Arrange
+            long size = 3 * (long)Constants.GB;
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.SetContent($"﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><ShareStats><ShareUsageBytes>{size}</ShareUsageBytes></ShareStats>");
+            ShareClientOptions shareClientOption = new ShareClientOptions()
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+            ShareClient shareClient = InstrumentClient(new ShareClient(new Uri(TestConfigDefault.FileServiceEndpoint), shareClientOption));
+
+            // Act
+            Response<ShareStatistics> response = await shareClient.GetStatisticsAsync();
+
+            // Assert
+            Assert.AreEqual(size, response.Value.ShareUsageInBytes);
+
+            TestHelper.AssertExpectedException(
+                () => { int intSize = response.Value.ShareUsageBytes; },
+                new OverflowException(Constants.File.Errors.ShareUsageBytesOverflow));
         }
 
         [Test]
@@ -452,7 +498,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetStatisticsAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -479,7 +525,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateSnapshotAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -507,7 +553,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetQuotaAsync(Constants.KB),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -538,7 +584,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.DeleteAsync(false),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]

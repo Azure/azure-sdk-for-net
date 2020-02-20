@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VpnClientConfiguration class.
         /// </summary>
-        /// <param name="vpnClientAddressPool">The reference of the address
+        /// <param name="vpnClientAddressPool">The reference to the address
         /// space resource which represents Address space for P2S
         /// VpnClient.</param>
         /// <param name="vpnClientRootCertificates">VpnClientRootCertificate
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of the address space resource which
+        /// Gets or sets the reference to the address space resource which
         /// represents Address space for P2S VpnClient.
         /// </summary>
         [JsonProperty(PropertyName = "vpnClientAddressPool")]

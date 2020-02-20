@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allows for both publishing and consuming events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.0.0-preview.7</Version>
+    <Version>5.1.0-preview.1</Version>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CHANGELOG.md</PackageReleaseNotes>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
-    <GenerateAPIListing>false</GenerateAPIListing>
+    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,7 +44,7 @@
 
   <!--Embed the shared resources -->
   <ItemGroup>
-     <Compile Update="Resources.Local.cs">
+    <Compile Update="Resources.Local.cs">
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 

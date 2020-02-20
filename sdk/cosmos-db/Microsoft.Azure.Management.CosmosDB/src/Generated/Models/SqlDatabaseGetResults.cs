@@ -34,33 +34,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the SqlDatabaseGetResults class.
         /// </summary>
-        /// <param name="sqlDatabaseGetResultsId">Name of the Cosmos DB SQL
-        /// database</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        /// <param name="_rid">A system generated property. A unique
-        /// identifier.</param>
-        /// <param name="_ts">A system generated property that denotes the last
-        /// updated timestamp of the resource.</param>
-        /// <param name="_etag">A system generated property representing the
-        /// resource etag required for optimistic concurrency control.</param>
-        /// <param name="_colls">A system generated property that specified the
-        /// addressable path of the collections resource.</param>
-        /// <param name="_users">A system generated property that specifies the
-        /// addressable path of the users resource.</param>
-        public SqlDatabaseGetResults(string sqlDatabaseGetResultsId, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string _rid = default(string), object _ts = default(object), string _etag = default(string), string _colls = default(string), string _users = default(string))
+        public SqlDatabaseGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SqlDatabaseGetPropertiesResource resource = default(SqlDatabaseGetPropertiesResource))
             : base(id, name, type, location, tags)
         {
-            SqlDatabaseGetResultsId = sqlDatabaseGetResultsId;
-            this._rid = _rid;
-            this._ts = _ts;
-            this._etag = _etag;
-            this._colls = _colls;
-            this._users = _users;
+            Resource = resource;
             CustomInit();
         }
 
@@ -70,44 +53,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the Cosmos DB SQL database
         /// </summary>
-        [JsonProperty(PropertyName = "properties.id")]
-        public string SqlDatabaseGetResultsId { get; set; }
-
-        /// <summary>
-        /// Gets a system generated property. A unique identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._rid")]
-        public string _rid { get; private set; }
-
-        /// <summary>
-        /// Gets a system generated property that denotes the last updated
-        /// timestamp of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._ts")]
-        public object _ts { get; private set; }
-
-        /// <summary>
-        /// Gets a system generated property representing the resource etag
-        /// required for optimistic concurrency control.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._etag")]
-        public string _etag { get; private set; }
-
-        /// <summary>
-        /// Gets or sets a system generated property that specified the
-        /// addressable path of the collections resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._colls")]
-        public string _colls { get; set; }
-
-        /// <summary>
-        /// Gets or sets a system generated property that specifies the
-        /// addressable path of the users resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._users")]
-        public string _users { get; set; }
+        [JsonProperty(PropertyName = "properties.resource")]
+        public SqlDatabaseGetPropertiesResource Resource { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -117,9 +65,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (SqlDatabaseGetResultsId == null)
+            if (Resource != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SqlDatabaseGetResultsId");
+                Resource.Validate();
             }
         }
     }

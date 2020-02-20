@@ -1,5 +1,33 @@
 # Release History
 
+## 5.1.0-preview.1 (Unreleased)
+
+Release notes will be provided here when the final set of features for the release is available.
+
+## 5.0.1
+
+### Acknowledgements
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Alberto De Natale _([GitHub](https://github.com/albertodenatale))_
+
+### Changes
+
+#### General
+
+- A migration guide is now available for those moving from the 4.x version of the `Microsoft.Azure.EventHubs` libraries to the 5.0.1 version under the `Azure.Messaging.EventHubs` namespace.
+
+- A bug was fixed that would intermittently cause a failure that caused retries to abort, potentially preventing recovery from transient failures.
+
+- Several minor performance and efficiency improvements have been implemented.
+
+#### Organization and naming
+
+- Namespaces have been reorganized to align types to their functional area, reducing the number of types in the root namespace and offering better context for where a type is used.  Cross-functional types have been left in the root while specialized types were moved to the `Producer`, `Consumer`, or `Processor` namespaces.
+
+- The hierarchy of custom exceptions has been flattened, with only the `EventHubsException` remaining.  The well-known failure scenarios that had previously been represented as stand-alone types are now exposed by a new `Reason` property to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal. 
+
 ## 5.0.0-preview.6
 
 ### Acknowledgements

@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test
@@ -11,6 +12,7 @@ namespace Azure.Storage.Test
     public class StorageConnectionStringTests
     {
         [Test]
+        [LiveOnly]
         [Description("StorageConnectionString object with an empty key value.")]
         public void StorageCredentialsEmptyKeyValue()
         {
@@ -112,6 +114,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void DefaultStorageAccountWithHttp()
         {
@@ -137,6 +140,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTPS")]
         public void DefaultStorageAccountWithHttps()
         {
@@ -162,6 +166,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void EndpointSuffixWithHttp()
         {
@@ -194,6 +199,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTPS")]
         public void EndpointSuffixWithHttps()
         {
@@ -226,6 +232,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void EndpointSuffixWithBlob()
         {
@@ -248,6 +255,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void ConnectionStringRoundtrip()
         {
@@ -384,6 +392,7 @@ namespace Azure.Storage.Test
         }
 
         [Test]
+        [LiveOnly]
         [Description("Regular account with HTTP")]
         public void ValidateExpectedExceptions()
         {

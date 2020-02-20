@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/.well-known/openid-configuration",
+      "EncodedRequestUri": "Ly53ZWxsLWtub3duL29wZW5pZC1jb25maWd1cmF0aW9u",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b81cdf0c-2e23-44bd-b015-cc017785da02"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Attestation.AttestationClient/0.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 10 Dec 2019 23:03:23 GMT"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "377"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"response_types_supported\": [\r\n    \"token\",\r\n    \"none\"\r\n  ],\r\n  \"id_token_signing_alg_values_supported\": [\r\n    \"RS256\"\r\n  ],\r\n  \"revocation_endpoint\": \"https://tradewinds.us.test.attest.azure.net/revoke\",\r\n  \"jwks_uri\": \"https://tradewinds.us.test.attest.azure.net/certs\",\r\n  \"claims_supported\": [\r\n    \"is-debuggable\",\r\n    \"sgx-mrsigner\",\r\n    \"sgx-mrenclave\",\r\n    \"product-id\",\r\n    \"svn\",\r\n    \"tee\",\r\n    \"device_id\",\r\n    \"component_0_id\",\r\n    \"expected_components\"\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

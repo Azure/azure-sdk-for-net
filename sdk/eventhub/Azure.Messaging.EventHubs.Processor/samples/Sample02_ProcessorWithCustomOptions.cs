@@ -4,6 +4,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
 using Azure.Storage.Blobs;
 

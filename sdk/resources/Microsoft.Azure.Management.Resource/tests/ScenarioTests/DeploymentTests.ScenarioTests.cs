@@ -126,7 +126,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                         JObject.Parse(
-                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -176,7 +176,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -389,7 +389,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -455,16 +455,16 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
-                string groupId = "tiano-mgtest01";
+                string groupId = "tag-mg1";
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
-                var parameters = new Deployment
+                var parameters = new ScopedDeployment
                 {
                     Properties = new DeploymentProperties()
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tianosatestgl'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa1'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US"
@@ -496,7 +496,7 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(context, handler);
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
-                var parameters = new Deployment
+                var parameters = new ScopedDeployment
                 {
                     Properties = new DeploymentProperties()
                     {
@@ -576,7 +576,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
-                string groupId = "tiano-mgtest01";
+                string groupId = "tag-mg1";
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
                 var parameters = new Deployment
@@ -585,7 +585,7 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tianosatestgl'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa1'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Location = "East US"

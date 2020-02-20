@@ -33,7 +33,14 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// Initializes a new instance of the PersonalizerError class.
         /// </summary>
         /// <param name="code">High level error code. Possible values include:
-        /// 'BadRequest', 'ResourceNotFound', 'InternalServerError'</param>
+        /// 'BadRequest', 'ResourceNotFound', 'InternalServerError',
+        /// 'InvalidServiceConfiguration', 'InvalidPolicyConfiguration',
+        /// 'InvalidPolicyContract', 'InvalidEvaluationContract',
+        /// 'InvalidRewardRequest', 'InvalidEventIdToActivate',
+        /// 'InvalidRankRequest', 'InvalidExportLogsRequest',
+        /// 'InvalidContainer', 'FrontEndNotFound', 'EvaluationNotFound',
+        /// 'LogsPropertiesNotFound', 'RankNullResponse',
+        /// 'UpdateConfigurationFailed', 'ModelResetFailed'</param>
         /// <param name="message">A message explaining the error reported by
         /// the service.</param>
         /// <param name="target">Error source element.</param>
@@ -57,7 +64,14 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 
         /// <summary>
         /// Gets or sets high level error code. Possible values include:
-        /// 'BadRequest', 'ResourceNotFound', 'InternalServerError'
+        /// 'BadRequest', 'ResourceNotFound', 'InternalServerError',
+        /// 'InvalidServiceConfiguration', 'InvalidPolicyConfiguration',
+        /// 'InvalidPolicyContract', 'InvalidEvaluationContract',
+        /// 'InvalidRewardRequest', 'InvalidEventIdToActivate',
+        /// 'InvalidRankRequest', 'InvalidExportLogsRequest',
+        /// 'InvalidContainer', 'FrontEndNotFound', 'EvaluationNotFound',
+        /// 'LogsPropertiesNotFound', 'RankNullResponse',
+        /// 'UpdateConfigurationFailed', 'ModelResetFailed'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
