@@ -148,8 +148,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private FaultTolerantAmqpObject<AmqpConnection> ActiveConnection { get; }
 
-        public override DateTimeOffset LockedUntilUtc { get; protected set; }
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
@@ -561,8 +559,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Track the link before returning it, so that it can be managed with the scope.
 
                 BeginTrackingLinkAsActive(link, refreshTimer);
-
-
                 return link;
             }
             catch
