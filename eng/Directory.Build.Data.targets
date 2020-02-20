@@ -19,6 +19,15 @@
       <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
       <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
       <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
+      <SetPackageReleaseNotesScriptLocation Condition=" '$(SetPackageReleaseNotesScriptLocation)'=='' ">$(MSBuildThisFileDirectory)Set-PackageReleaseNotes.ps1</SetPackageReleaseNotesScriptLocation>
+      <ChangeLogLocation>$(PackageRootPath)/CHANGELOG.md</ChangeLogLocation>
+    </PropertyGroup>
+    <Exec ConsoleToMsBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;&amp; { &amp;&apos;$(SetPackageReleaseNotesScriptLocation)&apos; &apos;$(ChangeLogLocation)&apos;} &quot;">
+      <Output TaskParameter="ConsoleOutput" PropertyName="ReleaseNotesValue" />
+    </Exec>
+    <PropertyGroup>
+      <PackageReleaseNotes>$(ReleaseNotesValue)</PackageReleaseNotes>
     </PropertyGroup>
   </Target>
 
