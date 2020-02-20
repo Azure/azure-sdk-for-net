@@ -147,10 +147,14 @@ namespace ResourceGroups.Tests
 	                'subscriptionId': '38b598fc-e57a-423f-b2e7-dc0ddb631f1f',
 	                'displayName': 'Visual Studio Ultimate with MSDN',
 	                'state': 'Disabled',
+                    'tags': {
+                        'tagsTestKey': 'tagsTestValue'
+                    },
 	                'subscriptionPolicies': {
 		                'locationPlacementId': 'Public_2014-09-01',
 		                'quotaId': 'MSDN_2014-09-01'
-	                }
+                    }
+	                ,
                 }")
             };
 
@@ -177,6 +181,9 @@ namespace ResourceGroups.Tests
             Assert.NotNull(getSubscriptionResult.SubscriptionPolicies);
             Assert.Equal("Public_2014-09-01", getSubscriptionResult.SubscriptionPolicies.LocationPlacementId);
             Assert.Equal("MSDN_2014-09-01", getSubscriptionResult.SubscriptionPolicies.QuotaId);
+            Assert.NotNull(getSubscriptionResult.Tags);
+            Assert.True(getSubscriptionResult.Tags.ContainsKey("tagsTestKey"));
+            Assert.Equal("tagsTestValue", getSubscriptionResult.Tags["tagsTestKey"]);
         }
     }
 }
