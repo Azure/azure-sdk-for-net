@@ -28,12 +28,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public virtual bool IsSessionEntity { get; set; }
+        public bool IsSessionEntity { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public virtual string SessionId { get; set; }
+        public string SessionId { get; set; }
 
         /// <summary>
         ///

@@ -316,9 +316,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
             return openedLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
-            ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
+            ? new DateTimeOffset(lockedUntilUtcTicks, TimeSpan.Zero)
             : DateTimeOffset.MinValue;
-
         }
 
         private async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken)

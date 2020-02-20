@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="retryPolicy"></param>
         /// <param name="sendLinkName"></param>
         /// <param name="cancellationToken"></param>
-        public async Task CancelScheduledMessageAsync(
+        internal async Task CancelScheduledMessageAsync(
             long sequenceNumber,
             ServiceBusRetryPolicy retryPolicy,
             string sendLinkName = null,

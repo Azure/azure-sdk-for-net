@@ -74,18 +74,13 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Get all rules associated with the subscription.
         /// </summary>
-        public virtual async IAsyncEnumerable<RuleDescription> GetRulesAsync(
-            [EnumeratorCancellation]
+        public virtual async Task<IEnumerable<RuleDescription>> GetRulesAsync(
                 CancellationToken cancellationToken = default)
         {
-            await foreach (var ServiceBusMessage in PeekRangeAsync(10).ConfigureAwait(false))
-            {
-                yield return new RuleDescription();
-            }
-            throw new NotImplementedException();
+            return await PeekRangeAsync(10).ConfigureAwait(false);
         }
 
-        private IAsyncEnumerable<RuleDescription> PeekRangeAsync(int v)
+        private Task<IEnumerable<RuleDescription>> PeekRangeAsync(int v)
         {
             throw new NotImplementedException();
         }
