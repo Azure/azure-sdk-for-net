@@ -35,3 +35,4 @@ namespace Microsoft.Azure.Management.ResourceManager
       }
   }
 }
+
