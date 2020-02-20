@@ -4,13 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -97,6 +102,14 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         public ServiceBusSession Session { get; set; }
 
+        /// <summary>
+        ///   A map of locked messages received using the management client.
+        /// </summary>
+        ///
+        internal readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
+
+        internal Exception LinkException { get; set; }
+
         ///// <summary>
         /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         ///// </summary>
@@ -151,6 +164,7 @@ namespace Azure.Messaging.ServiceBus.Core
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
@@ -239,6 +253,7 @@ namespace Azure.Messaging.ServiceBus.Core
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
@@ -271,6 +286,7 @@ namespace Azure.Messaging.ServiceBus.Core
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
@@ -363,6 +379,186 @@ namespace Azure.Messaging.ServiceBus.Core
             IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceInternal(null).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
+        }
+
+        /// <summary>
+        /// Completes a <see cref="ServiceBusMessage"/> using its lock token. This will delete the message from the service.
+        /// </summary>
+        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
+        /// <param name="cancellationToken"></param>
+        /// <remarks>
+        /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
+        public virtual async Task CompleteAsync(string lockToken,
+            CancellationToken cancellationToken = default)
+        {
+            await CompleteAsync(new[] { lockToken }, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// </summary>
+        /// <remarks>
+        /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
+        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="cancellationToken"></param>
+        public virtual async Task CompleteAsync(IEnumerable<string> lockTokens,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            ThrowIfNotPeekLockMode();
+            Argument.AssertNotNullOrEmpty(lockTokens, nameof(lockTokens));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            try
+            {
+                await RetryPolicy.RunOperation(
+                    async (timeout) => await OnCompleteAsync(lockTokens, timeout).ConfigureAwait(false),
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            finally
+            {
+                // this.diagnosticSource.CompleteStop(activity, lockTokenList, completeTask?.Status);
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            // MessagingEventSource.Log.MessageCompleteStop(this.ClientId);
+        }
+
+        /// <summary>
+        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// </summary>
+        /// <remarks>
+        /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
+        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="timeout"></param>
+        protected virtual Task OnCompleteAsync(IEnumerable<string> lockTokens, TimeSpan timeout)
+        {
+            var lockTokenGuids = lockTokens.Select(lockToken => new Guid(lockToken)).ToArray();
+            if (lockTokenGuids.Any(lockToken => requestResponseLockedMessages.Contains(lockToken)))
+            {
+                // return this.DisposeMessageRequestResponseAsync(lockTokenGuids, DispositionStatus.Completed);
+            }
+            return this.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
+        }
+
+        /// <summary>
+        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// </summary>
+        /// <remarks>
+        /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
+        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed on messages that were received by this receiver.
+        /// </remarks>
+        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="outcome"></param>
+        /// <param name="timeout"></param>
+        internal async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome, TimeSpan timeout)
+        {
+            if (IsSessionReceiver)
+            {
+                ThrowIfSessionLockLost();
+            }
+
+            List<ArraySegment<byte>> deliveryTags = this.ConvertLockTokensToDeliveryTags(lockTokens);
+
+            ReceivingAmqpLink receiveLink = null;
+            try
+            {
+                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                var ambientTransaction = Transaction.Current;
+                if (ambientTransaction != null)
+                {
+                    // transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+                }
+
+                if (!Consumer.ReceiveLink.TryGetOpenedObject(out receiveLink))
+                {
+                        receiveLink = await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                }
+
+                var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
+                var i = 0;
+                foreach (ArraySegment<byte> deliveryTag in deliveryTags)
+                {
+                    disposeMessageTasks[i++] = Task.Factory.FromAsync(
+                        (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeout, c, s),
+                        a => receiveLink.EndDisposeMessage(a),
+                        this);
+                }
+
+                var outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
+                Error error = null;
+                foreach (Outcome item in outcomes)
+                {
+                    var disposedOutcome = item.DescriptorCode == Rejected.Code && ((error = ((Rejected)item).Error) != null) ? item : null;
+                    if (disposedOutcome != null)
+                    {
+                        if (error.Condition.Equals(AmqpErrorCode.NotFound))
+                        {
+                            if (IsSessionReceiver)
+                            {
+                             //  throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
+                            }
+
+                            //   throw new MessageLockLostException(Resources.MessageLockLost);
+                        }
+
+                         // throw error.ToMessagingContractException();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                if (exception is OperationCanceledException &&
+                    receiveLink != null && receiveLink.State != AmqpObjectState.Opened)
+                {
+                    // The link state is lost, We need to return a non-retriable error.
+                   // MessagingEventSource.Log.LinkStateLost(this.ClientId, receiveLink.Name, receiveLink.State, this.isSessionReceiver, exception);
+                    if (IsSessionReceiver)
+                    {
+                      //  throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
+                    }
+
+                    // throw new MessageLockLostException(Resources.MessageLockLost);
+                }
+
+                // throw AmqpExceptionHelper.GetClientException(exception);
+            }
+        }
+
+        private List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
+        {
+            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
+        }
+
+        private void ThrowIfNotPeekLockMode()
+        {
+            if (this.ReceiveMode != ReceiveMode.PeekLock)
+            {
+                throw new InvalidOperationException("The operation is only supported in 'PeekLock' receive mode.");
+            }
+        }
+
+        private void ThrowIfSessionLockLost()
+        {
+            if (this.LinkException != null)
+            {
+                throw this.LinkException;
+            }
         }
 
         /// <summary>
@@ -594,41 +790,6 @@ namespace Azure.Messaging.ServiceBus.Core
             // TODO implement
 
             return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Completes a <see cref="ServiceBusMessage"/> using its lock token. This will delete the message from the service.
-        /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public virtual async Task CompleteAsync(string lockToken, CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
-        /// </summary>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
-        /// <param name="cancellationToken"></param>
-        public virtual async Task CompleteAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
         }
 
         /// <summary>
