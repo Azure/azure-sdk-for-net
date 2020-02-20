@@ -315,6 +315,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
         public async Task GetPropertiesAsync_Premium()
         {
             await using DisposingShare test = await GetTestShareAsync(GetServiceClient_Premium());

@@ -366,23 +366,11 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity partition, in the context
-        ///   of a specific consumer group.
-        ///
-        ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
-        ///   group to ensure that only one consumer from that group is reading the from the partition.
-        ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
-        ///
-        ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
-        ///   group to be actively reading events from the partition.  These non-exclusive consumers are
-        ///   sometimes referred to as "Non-epoch Consumers."
-        ///
-        ///   Designating a consumer as exclusive may be specified by setting the <paramref name="ownerLevel" />.
-        ///   When <c>null</c>, consumers are created as non-exclusive.
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
@@ -391,13 +379,13 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal virtual TransportConsumer CreateTransportConsumer(
             ServiceBusRetryPolicy retryPolicy,
-            long? ownerLevel = default,
+            ReceiveMode receiveMode = default,
             uint? prefetchCount = default,
             string sessionId = default,
             bool isSessionReceiver = default)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateConsumer(retryPolicy, ownerLevel, prefetchCount, sessionId, isSessionReceiver);
+            return InnerClient.CreateConsumer(retryPolicy, receiveMode, prefetchCount, sessionId, isSessionReceiver);
         }
 
         /// <summary>

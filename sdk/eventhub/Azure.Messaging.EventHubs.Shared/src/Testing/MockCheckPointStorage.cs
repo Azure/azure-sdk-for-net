@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   store the checkpoints and partition ownership to a persistent store instead.
     /// </summary>
     ///
-    internal sealed class MockCheckPointStorage : StorageManager
+    internal class MockCheckPointStorage : StorageManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();

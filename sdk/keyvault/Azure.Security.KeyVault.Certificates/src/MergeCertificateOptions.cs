@@ -86,8 +86,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 foreach (byte[] x509certificate in X509Certificates)
                 {
-                    string encoded = Base64Url.Encode(x509certificate);
-                    json.WriteStringValue(encoded);
+                    json.WriteBase64StringValue(x509certificate);
                 }
 
                 json.WriteEndArray();

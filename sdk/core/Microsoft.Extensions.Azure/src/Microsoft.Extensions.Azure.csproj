@@ -12,6 +12,7 @@
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
  </PropertyGroup>
 
   <ItemGroup>
