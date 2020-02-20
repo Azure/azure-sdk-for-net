@@ -5,14 +5,14 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Core
+namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver" />
+    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiverClient" />
     ///   to configure its behavior.
     /// </summary>
     ///
-    public abstract class ServiceBusReceiverClientOptions
+    public class ServiceBusReceiverClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
         internal ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
@@ -24,6 +24,16 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// </summary>
         public uint PrefetchCount = 0;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual bool IsSessionEntity { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual string SessionId { get; set; }
 
         /// <summary>
         ///
@@ -88,5 +98,21 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="ServiceBusReceiverClientOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="ServiceBusReceiverClientOptions" />.</returns>
+        ///
+        internal ServiceBusReceiverClientOptions Clone() =>
+            new ServiceBusReceiverClientOptions
+            {
+                _connectionOptions = ConnectionOptions.Clone(),
+                _retryOptions = RetryOptions.Clone(),
+                ReceiveMode = ReceiveMode,
+                IsSessionEntity = IsSessionEntity,
+                SessionId = SessionId
+            };
     }
 }

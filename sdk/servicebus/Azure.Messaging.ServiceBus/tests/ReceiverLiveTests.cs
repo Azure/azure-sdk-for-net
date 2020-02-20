@@ -18,20 +18,20 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
 
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt);
-                await sender.SendRangeAsync(sentMessages);
+                await sender.SendBatchAsync(sentMessages);
 
-                await using var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
 
                 Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
                 foreach (ServiceBusMessage message in sentMessages)
                 {
                     sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body));
                 }
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
+                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekBatchAsync(
                     maxMessages: messageCt);
 
                 var ct = 0;
@@ -55,12 +55,12 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCount = 10;
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                await sender.SendRangeAsync(messages);
+                await sender.SendBatchAsync(messages);
 
-                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
                 messageEnum.Reset();
-                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekRangeAsync(messageCount);
+                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekBatchAsync(messageCount);
                 await foreach (var item in peekMessages)
                 {
                     messageEnum.MoveNext();
@@ -88,16 +88,16 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCount = 10;
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                await sender.SendRangeAsync(messages);
+                await sender.SendBatchAsync(messages);
 
-                var clientOptions = new QueueReceiverClientOptions()
+                var clientOptions = new ServiceBusReceiverClientOptions()
                 {
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
-                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
@@ -125,21 +125,22 @@ namespace Azure.Messaging.ServiceBus.Tests
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var sender = new QueueSenderClient(
+                await using var sender = new ServiceBusSenderClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
-                await sender.SendRangeAsync(GetMessages(numThreads * 2));
-                await using var receiver = new QueueReceiverClient(
+                await sender.SendBatchAsync(GetMessages(numThreads * 2));
+                await using var receiver = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int messageCt = 0;
 
                 receiver.ProcessMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
 
-                var options = new MessageHandlerOptions(ExceptionHandler)
+                var options = new MessageHandlerOptions()
                 {
                     MaxConcurrentCalls = numThreads
                 };
@@ -175,13 +176,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var sender = new QueueSenderClient(
+                await using var sender = new ServiceBusSenderClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int numMessages = 50;
-                await sender.SendRangeAsync(GetMessages(numMessages));
+                await sender.SendBatchAsync(GetMessages(numMessages));
 
-                await using var receiver = new QueueReceiverClient(
+                await using var receiver = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int messageProcessedCt = 0;
@@ -190,8 +191,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 int stopAfterMessagesCt = numMessages / 2;
 
                 receiver.ProcessMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
 
-                var options = new MessageHandlerOptions(ExceptionHandler)
+                var options = new MessageHandlerOptions()
                 {
                     MaxConcurrentCalls = numThreads
                 };

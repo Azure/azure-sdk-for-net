@@ -23,20 +23,18 @@ namespace Azure.Messaging.ServiceBus
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
         ///     <see cref="MaxAutoLockRenewalDuration"/> = 5 minutes
         /// </summary>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
-        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        public MessageHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        public MessageHandlerOptions()
         {
             MaxConcurrentCalls = 1;
             AutoComplete = true;
             ReceiveTimeOut = Constants.DefaultOperationTimeout;
             MaxAutoLockRenewalDuration = Constants.ClientPumpRenewLockTimeout;
-            ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
+            //ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
         /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        public Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
+        internal Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
