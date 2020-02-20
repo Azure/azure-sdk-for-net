@@ -210,7 +210,9 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file or directory.
+        /// The <see cref="Create"/> operation creates a directory.
+        /// If the directory already exists, it will be overwritten.  If you don't intent to override
+        /// an existing directory, consider using the <see cref="CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -219,7 +221,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -238,7 +240,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -287,7 +289,9 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file or directory.
+        /// The <see cref="Create"/> operation creates a directory.
+        /// If the directory already exists, it will be overwritten.  If you don't intent to override
+        /// an existing directory, consider using the <see cref="DataLakeDirectoryClient.CreateIfNotExistsAsync"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -296,7 +300,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -315,7 +319,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1558,6 +1562,8 @@ namespace Azure.Storage.Files.DataLake
         #region Create File
         /// <summary>
         /// The <see cref="CreateFile"/> operation creates a file in this directory.
+        /// If the file already exists, it will be overwritten.  If you don't intent to override
+        /// an existing file, consider using the <see cref="DataLakeFileClient.CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1569,7 +1575,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -1588,7 +1594,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1644,6 +1650,8 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="CreateFileAsync"/> operation creates a new file in this directory.
+        /// If the file already exists, it will be overwritten.  If you don't intent to override
+        /// an existing file, consider using the <see cref="DataLakeFileClient.CreateIfNotExistsAsync"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1655,7 +1663,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -1674,7 +1682,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
