@@ -219,4 +219,10 @@
   <data name="ArgumentInvalidCombination" xml:space="preserve">
     <value>The following arguments must all be provided or none at all: {0}.</value>
   </data>
+  <data name="CannotRegisterNonSessionEventHandlerWhenUsingSession" xml:space="preserve">
+    <value>When using a sessionful entity, the Session event handler must be used.</value>
+  </data>
+  <data name="CannotRegisterSessionEventHandlerWhenNotUsingSessions" xml:space="preserve">
+    <value>When not using a sessionful entity, the non-session event handler must be used.</value>
+  </data>
 </root>

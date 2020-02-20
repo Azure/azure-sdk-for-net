@@ -81,7 +81,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override TransportConnectionScope ConnectionScope =>
             _connectionScope;
 
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
         /// </summary>
@@ -300,7 +299,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<string> GetSessionId(CancellationToken cancellationToken = default)
+        public override async Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default)
         {
             if (!_isSessionReceiver)
             {
@@ -317,6 +316,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var source = (Source)openedLink.Settings.Source;
             source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
             return sessionId;
+        }
+
+        public override async Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default)
+        {
+            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+            return openedLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
+            ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
+            : DateTimeOffset.MinValue;
+
+        }
+
+        private async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken)
+        {
+            ReceivingAmqpLink openedLink = null;
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                openedLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                EntityName,
+                ConnectionScope,
+                cancellationToken).ConfigureAwait(false);
+            return openedLink;
         }
 
     }

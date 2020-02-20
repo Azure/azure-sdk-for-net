@@ -71,7 +71,14 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<string> GetSessionId(CancellationToken cancellationToken = default);
+        public abstract Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get the DateTimeOffset for when the session is locked until.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default);
 
     }
 }

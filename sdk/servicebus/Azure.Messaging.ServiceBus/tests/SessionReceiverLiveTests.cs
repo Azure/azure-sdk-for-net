@@ -4,11 +4,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -232,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                     await foreach (ServiceBusMessage peekedMessage in peekedMessages)
                     {
-                        var sessionId = await receiver.Session.GetSessionId();
+                        var sessionId = await receiver.Session.GetSessionIdAsync();
                         Assert.AreEqual(sessionId, peekedMessage.SessionId);
                     }
 
@@ -356,7 +354,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     clientOptions);
                 int messageCt = 0;
 
-                receiver.ProcessMessageAsync += ProcessMessage;
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
                 receiver.ProcessErrorAsync += ExceptionHandler;
 
                 var options = new MessageHandlerOptions()
@@ -369,12 +367,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // Allow 5s to be sure there is enough time for a message to be processed per thread.
                 await Task.Delay(1000 * 5);
 
-                async Task ProcessMessage(ServiceBusMessage message)
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
                 {
                     await receiver.CompleteAsync(message.SystemProperties.LockToken);
                     Interlocked.Increment(ref messageCt);
                     sessions.TryRemove(message.SessionId, out bool _);
-                    TestContext.Progress.WriteLine(message.SessionId);
+                    Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
+                    Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
                     await Task.Delay(1000 * 5);
                 }
 
@@ -415,6 +414,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
+                    // just use the last sessionId from the loop above
                     SessionId = sessionId,
                     IsSessionEntity = true,
                 };
@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     clientOptions);
                 int messageCt = 0;
 
-                receiver.ProcessMessageAsync += ProcessMessage;
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
                 receiver.ProcessErrorAsync += ExceptionHandler;
 
                 var options = new MessageHandlerOptions()
@@ -438,12 +438,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // Allow 5s to be sure there is enough time for a message to be processed per thread.
                 await Task.Delay(1000 * 5);
 
-                async Task ProcessMessage(ServiceBusMessage message)
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
                 {
                     await receiver.CompleteAsync(message.SystemProperties.LockToken);
                     Interlocked.Increment(ref messageCt);
                     sessions.TryRemove(message.SessionId, out bool _);
                     Assert.AreEqual(sessionId, message.SessionId);
+                    Assert.AreEqual(sessionId, await session.GetSessionIdAsync());
+                    Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
                     await Task.Delay(1000 * 5);
                 }
 

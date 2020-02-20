@@ -25,5 +25,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Disposes of the connection scope.
         /// </summary>
         public abstract void Dispose();
+
+        /// <summary>
+        ///
+        /// </summary>
+        public abstract DateTimeOffset LockedUntilUtc { get; protected set; }
     }
 }

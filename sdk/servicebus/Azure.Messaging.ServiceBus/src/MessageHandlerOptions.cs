@@ -29,12 +29,7 @@ namespace Azure.Messaging.ServiceBus
             AutoComplete = true;
             ReceiveTimeOut = Constants.DefaultOperationTimeout;
             MaxAutoLockRenewalDuration = Constants.ClientPumpRenewLockTimeout;
-            //ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
-
-        /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
-        /// When errors are received calls will automatically be retried, so this is informational. </summary>
-        internal Func<ExceptionReceivedEventArgs, Task> ExceptionReceivedHandler { get; }
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
@@ -78,17 +73,5 @@ namespace Azure.Messaging.ServiceBus
         internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         internal TimeSpan ReceiveTimeOut { get; }
-
-        internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
-        {
-            try
-            {
-                await ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
-            }
-        }
     }
 }

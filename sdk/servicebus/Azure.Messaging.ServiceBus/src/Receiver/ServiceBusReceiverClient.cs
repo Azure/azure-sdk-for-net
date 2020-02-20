@@ -32,7 +32,8 @@ namespace Azure.Messaging.ServiceBus
     ///
     public class ServiceBusReceiverClient : IAsyncDisposable
     {
-        private Func<ServiceBusMessage, Task> _processMessageAsync;
+        private Func<ServiceBusMessage, Task> _processMessage;
+        private Func<ServiceBusMessage, ServiceBusSession, Task> _processSessionMessage;
         private Func<ExceptionReceivedEventArgs, Task> _processErrorAsync = default;
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly object EventHandlerGuard = new object();
@@ -49,14 +50,23 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         private Task ActiveReceiveTask { get; set; }
+
+        /// <summary>
+        ///   Called when a 'process event' event is triggered.
+        /// </summary>
+        ///
+        /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
+        /// <param name="session"></param>
+        ///
+        internal Task OnProcessSessionMessageAsync(ServiceBusMessage message, ServiceBusSession session) => _processSessionMessage(message, session);
+
         /// <summary>
         ///   Called when a 'process event' event is triggered.
         /// </summary>
         ///
         /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
         ///
-        private Task OnProcessMessageAsync(ServiceBusMessage message) => _processMessageAsync(message);
-
+        internal Task OnProcessMessageAsync(ServiceBusMessage message) => _processMessage(message);
         /// <summary>
         ///   Called when a 'process error' event is triggered.
         /// </summary>
@@ -285,158 +295,6 @@ namespace Azure.Messaging.ServiceBus
         {
         }
 
-
-
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        ///// <param name="sessionOptions"></param>
-        /////
-        ///// <remarks>
-        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        /////   passed only once, either as part of the connection string or separately.
-        ///// </remarks>
-        /////
-        //public ServiceBusReceiver(
-        //    string connectionString,
-        //    string entityName,
-        //    SessionOptions sessionOptions) :
-        //    this(
-        //        connectionString,
-        //        entityName,
-        //        sessionOptions,
-        //        new ServiceBusReceiverClientOptions())
-        //{
-        //}
-
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        ///// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
-        /////
-        ///// <remarks>
-        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        /////   passed only once, either as part of the connection string or separately.
-        ///// </remarks>
-        /////
-        //internal ServiceBusReceiverClient(
-        //    string connectionString,
-        //    string entityName,
-        //    ServiceBusReceiverClientOptions clientOptions)
-        //{
-        //    Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-        //    Argument.AssertNotNull(clientOptions, nameof(clientOptions));
-
-        //    IsSessionReceiver = clientOptions.IsSessionEntity;
-        //    OwnsConnection = true;
-        //    Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
-        //    RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-        //    ReceiveMode = clientOptions.ReceiveMode;
-        //    Consumer = Connection.CreateTransportConsumer(
-        //        retryPolicy: RetryPolicy,
-        //        receiveMode: ReceiveMode,
-        //        prefetchCount: PrefetchCount,
-        //        sessionId: clientOptions.SessionId,
-        //        isSessionReceiver: IsSessionReceiver);
-        //    Session = new ServiceBusSession(
-        //        Consumer,
-        //        clientOptions.SessionId);
-        //}
-
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        /////
-        ///// <remarks>
-        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        /////   passed only once, either as part of the connection string or separately.
-        ///// </remarks>
-        /////
-        //public ServiceBusReceiver(
-        //    string connectionString,
-        //    string entityName) :
-        //    this(
-        //        connectionString,
-        //        entityName,
-        //        null,
-        //        new ServiceBusReceiverClientOptions())
-        //{
-        //}
-
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        ///// <param name="clientOptions"></param>
-        /////
-        ///// <remarks>
-        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        /////   passed only once, either as part of the connection string or separately.
-        ///// </remarks>
-        /////
-        //public ServiceBusReceiver(
-        //    string connectionString,
-        //    string entityName,
-        //    ServiceBusReceiverClientOptions clientOptions) :
-        //    this(
-        //        connectionString,
-        //        entityName,
-        //        null,
-        //        clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
-        //{
-        //}
-
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        ///// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        ///// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
-        /////
-        //internal ServiceBusReceiverClient(
-        //    string fullyQualifiedNamespace,
-        //    string entityName,
-        //    TokenCredential credential,
-        //    ServiceBusReceiverClientOptions clientOptions)
-        //{
-        //    Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-        //    Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-        //    Argument.AssertNotNull(credential, nameof(credential));
-        //    Argument.AssertNotNull(clientOptions, nameof(clientOptions));
-
-        //    IsSessionReceiver = clientOptions.IsSessionEntity;
-        //    OwnsConnection = true;
-        //    Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
-        //    RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-        //    ReceiveMode = clientOptions.ReceiveMode;
-        //    Consumer = Connection.CreateTransportConsumer(
-        //        retryPolicy: RetryPolicy,
-        //        receiveMode: ReceiveMode,
-        //        prefetchCount: PrefetchCount,
-        //        sessionId: clientOptions.SessionId,
-        //        isSessionReceiver: IsSessionReceiver);
-        //    Session = new ServiceBusSession(
-        //        Consumer,
-        //        clientOptions.SessionId);
-        //}
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
@@ -629,7 +487,7 @@ namespace Azure.Messaging.ServiceBus
                 RetryPolicy,
                 fromSequenceNumber,
                 maxMessages,
-                await Session.GetSessionId().ConfigureAwait(false),
+                await Session.GetSessionIdAsync().ConfigureAwait(false),
                 receiveLinkName,
                 cancellationToken)
                 .ConfigureAwait(false))
@@ -933,20 +791,63 @@ namespace Azure.Messaging.ServiceBus
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ServiceBusMessage, ServiceBusSession, Task> ProcessSessionMessageAsync
+        {
+            add
+            {
+                lock (EventHandlerGuard)
+                {
+                    if (!IsSessionReceiver)
+                    {
+                        throw new NotSupportedException(Resources.CannotRegisterNonSessionEventHandlerWhenUsingSession);
+                    }
+                    Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
+
+                    if (_processSessionMessage != default || _processMessage != default)
+                    {
+                        throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    }
+                    EnsureNotRunningAndInvoke(() => _processSessionMessage = value);
+                }
+            }
+
+            remove
+            {
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
+
+                if (_processSessionMessage != value)
+                {
+                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                }
+
+                EnsureNotRunningAndInvoke(() => _processSessionMessage = default);
+            }
+        }
+
+        /// <summary>
+        ///   The event responsible for processing events received from the Event Hubs service.  Implementation
+        ///   is mandatory.
+        /// </summary>
+        ///
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ServiceBusMessage, Task> ProcessMessageAsync
         {
             add
             {
                 lock (EventHandlerGuard)
                 {
-
+                    if (IsSessionReceiver)
+                    {
+                        throw new NotSupportedException(Resources.CannotRegisterSessionEventHandlerWhenNotUsingSessions);
+                    }
                     Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
 
-                    if (_processMessageAsync != default)
+                    if (_processSessionMessage != default || _processMessage != default)
                     {
                         throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
                     }
-                    EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
+                    EnsureNotRunningAndInvoke(() => _processMessage = value);
                 }
             }
 
@@ -954,12 +855,46 @@ namespace Azure.Messaging.ServiceBus
             {
                 Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
 
-                if (_processMessageAsync != value)
+                if (_processMessage != value)
                 {
                     throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
                 }
 
-                EnsureNotRunningAndInvoke(() => _processMessageAsync = default);
+                EnsureNotRunningAndInvoke(() => _processMessage = default);
+            }
+        }
+
+        /// <summary>
+        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
+        ///   Implementation is mandatory.
+        /// </summary>
+        ///
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ExceptionReceivedEventArgs, Task> ProcessErrorAsync
+        {
+            add
+            {
+                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
+
+                if (_processErrorAsync != default)
+                {
+                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                }
+
+                EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
+            }
+
+            remove
+            {
+                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
+
+                if (_processErrorAsync != value)
+                {
+                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                }
+
+                EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
             }
         }
 
@@ -996,7 +931,7 @@ namespace Azure.Messaging.ServiceBus
 
                         if (ActiveReceiveTask == null)
                         {
-                            if (_processMessageAsync == null)
+                            if (_processSessionMessage == null && _processMessage == null)
                             {
                                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessMessageAsync)));
                             }
@@ -1105,7 +1040,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     TransportConsumer consumer = null;
-                    if (IsSessionReceiver && Session.UserSpecifiedSession == null)
+                    if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
                     {
                         // If the user didn't specify a session, but this is a sessionful receiver,
                         // we want to allow each thread to have its own consumer so we can access
@@ -1162,14 +1097,12 @@ namespace Azure.Messaging.ServiceBus
                         action = ExceptionReceivedEventArgsAction.RenewLock;
                         renewLockCancellationTokenSource = new CancellationTokenSource();
 
-                        if (IsSessionReceiver)
-                        {
+                        Task _ = RenewLock(
+                            consumer,
+                            message,
+                            cancellationToken,
+                            renewLockCancellationTokenSource.Token);
 
-                        }
-                        else
-                        {
-                            Task _ = RenewMessageLock(message, options, cancellationToken, renewLockCancellationTokenSource.Token);
-                        }
 
                         // After a threshold time of renewal('AutoRenewTimeout'), create timer to cancel anymore renewals.
                         autoRenewLockCancellationTimer = new Timer(
@@ -1180,7 +1113,18 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     action = ExceptionReceivedEventArgsAction.UserCallback;
-                    await OnProcessMessageAsync(message).ConfigureAwait(false);
+
+                    // if this is a session receiver, supply a session object to the callback so that users can
+                    // perform operations on this session
+                    if (IsSessionReceiver)
+                    {
+                        var session = new ServiceBusSession(consumer, message.SessionId);
+                        await OnProcessSessionMessageAsync(message, session).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await OnProcessMessageAsync(message).ConfigureAwait(false);
+                    }
 
                     if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
                     {
@@ -1193,7 +1137,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 catch (Exception ex)
                 {
-                    await options.RaiseExceptionReceived(
+                    await RaiseExceptionReceived(
                         // TODO - add clientId implementation and pass as last argument to ExceptionReceivedEventArgs
                         new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
                     await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
@@ -1222,13 +1166,27 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private async Task RenewMessageLock(ServiceBusMessage message, MessageHandlerOptions options, CancellationToken eventCancellationToken, CancellationToken renewLockCancellationToken)
+        private async Task RenewLock(
+            TransportConsumer consumer,
+            ServiceBusMessage message,
+            CancellationToken eventCancellationToken,
+            CancellationToken renewLockCancellationToken)
         {
             while (!eventCancellationToken.IsCancellationRequested && !renewLockCancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    TimeSpan delay = CalculateRenewDelay(message.SystemProperties.LockedUntilUtc);
+                    DateTimeOffset lockedUntil = default;
+                    if (IsSessionReceiver)
+                    {
+                        lockedUntil = await consumer.GetSessionLockedUntilUtcAsync(eventCancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        lockedUntil = message.SystemProperties.LockedUntilUtc;
+                    }
+
+                    TimeSpan delay = CalculateRenewDelay(lockedUntil);
 
                     // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
                     // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
@@ -1240,16 +1198,15 @@ namespace Azure.Messaging.ServiceBus
                         break;
                     }
 
-                    if (!eventCancellationToken.IsCancellationRequested &&
-                        !renewLockCancellationToken.IsCancellationRequested)
+                    if (IsSessionReceiver)
                     {
-                        await RenewLockAsync(message).ConfigureAwait(false);
-                        //MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
+                        await Session.RenewSessionLockAsync(renewLockCancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        break;
+                        await RenewLockAsync(message, renewLockCancellationToken).ConfigureAwait(false);
                     }
+                    //MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
                 }
 
                 catch (Exception exception)
@@ -1260,7 +1217,7 @@ namespace Azure.Messaging.ServiceBus
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
                     if (!(exception is ObjectDisposedException))
                     {
-                        await options.RaiseExceptionReceived(
+                        await RaiseExceptionReceived(
                             new ExceptionReceivedEventArgs(
                                 exception,
                                 ExceptionReceivedEventArgsAction.RenewLock,
@@ -1277,7 +1234,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private static TimeSpan CalculateRenewDelay(DateTime lockedUntilUtc)
+        private static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntilUtc)
         {
             var remainingTime = lockedUntilUtc - DateTime.UtcNow;
 
@@ -1322,38 +1279,18 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
-        ///   Implementation is mandatory.
-        /// </summary>
-        ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
-        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<ExceptionReceivedEventArgs, Task> ProcessErrorAsync
+        internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
         {
-            add
+            try
             {
-                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
-
-                if (_processErrorAsync != default)
-                {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
-                }
-
-                EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
+                await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
             }
-
-            remove
+            catch (Exception exception)
             {
-                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
-
-                if (_processErrorAsync != value)
-                {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
-                }
-
-                EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
+                MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
             }
         }
+
+
     }
 }
