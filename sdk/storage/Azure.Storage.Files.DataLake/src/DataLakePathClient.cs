@@ -432,7 +432,7 @@ namespace Azure.Storage.Files.DataLake
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a file or directory.
-        /// If the path already exists, it will be overwritten.  If you don't intent to override
+        /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
         /// an existing path, consider using the <see cref="CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -517,7 +517,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Create"/> operation creates a file or directory.
-        /// If the path already exists, it will be overwritten.  If you don't intent to override
+        /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
         /// an existing path, consider using the <see cref="CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.

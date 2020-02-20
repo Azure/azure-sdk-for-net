@@ -2407,7 +2407,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown
-        /// if the blob already exists.  To override an existing block blob,
+        /// if the blob already exists.  to overwrite an existing block blob,
         /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
         /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.
@@ -2447,7 +2447,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown
-        /// if the blob already exists.  To override an existing block blob,
+        /// if the blob already exists.  to overwrite an existing block blob,
         /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
         /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.

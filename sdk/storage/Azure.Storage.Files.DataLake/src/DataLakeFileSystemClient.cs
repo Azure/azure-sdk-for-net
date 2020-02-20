@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Files.DataLake
         #region Create Directory
         /// <summary>
         /// The <see cref="CreateDirectory"/> operation creates a directory in this file system.
-        /// If the directory already exists, it will be overwritten.  If you don't intent to override
+        /// If the directory already exists, it will be overwritten.  If you don't intent to overwrite
         /// an existing directory, consider using the <see cref="DataLakeDirectoryClient.CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1457,7 +1457,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="CreateDirectoryAsync"/> operation creates a directory in this file system.
-        /// If the directory already exists, it will be overwritten.  If you don't intent to override
+        /// If the directory already exists, it will be overwritten.  If you don't intent to overwrite
         /// an existing directory, consider using the <see cref="DataLakeDirectoryClient.CreateIfNotExistsAsync"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1654,7 +1654,7 @@ namespace Azure.Storage.Files.DataLake
         #region Create File
         /// <summary>
         /// The <see cref="CreateFile"/> operation creates a file in this file system.
-        /// If the file already exists, it will be overwritten.  If you don't intent to override
+        /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
         /// an existing file, consider using the <see cref="DataLakeFileClient.CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1742,7 +1742,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="CreateFileAsync"/> creates a file in this file system.
-        /// If the file already exists, it will be overwritten.  If you don't intent to override
+        /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
         /// an existing file, consider using the <see cref="DataLakeFileClient.CreateIfNotExistsAsync"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
