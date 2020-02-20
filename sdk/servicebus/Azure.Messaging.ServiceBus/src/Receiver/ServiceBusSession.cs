@@ -33,6 +33,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             return await Task.FromResult(new byte[4]).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>

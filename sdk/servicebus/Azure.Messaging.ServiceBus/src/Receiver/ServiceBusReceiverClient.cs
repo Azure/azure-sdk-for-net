@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceInternal(null);
+            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceInternalAsync(null);
             await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
             {
                 return message;
@@ -424,7 +424,7 @@ namespace Azure.Messaging.ServiceBus
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceInternal(fromSequenceNumber: null, maxMessages);
+            IAsyncEnumerable<ServiceBusMessage> result = PeekBatchBySequenceInternalAsync(fromSequenceNumber: null, maxMessages);
             await foreach (ServiceBusMessage msg in result.ConfigureAwait(false))
             {
                 yield return msg;
@@ -444,7 +444,7 @@ namespace Azure.Messaging.ServiceBus
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekBatchBySequenceInternal(
+            IAsyncEnumerable<ServiceBusMessage> ret = PeekBatchBySequenceInternalAsync(
                 fromSequenceNumber: fromSequenceNumber,
                 maxMessages: maxMessages,
                 cancellationToken: cancellationToken);
@@ -461,7 +461,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal async IAsyncEnumerable<ServiceBusMessage> PeekBatchBySequenceInternal(
+        internal async IAsyncEnumerable<ServiceBusMessage> PeekBatchBySequenceInternalAsync(
             long? fromSequenceNumber,
             int maxMessages = 1,
             [EnumeratorCancellation]
@@ -548,6 +548,7 @@ namespace Azure.Messaging.ServiceBus
         {
             // TODO implement
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -568,6 +569,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -590,6 +592,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -662,6 +665,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -683,6 +687,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
         /// <summary>
         ///   Closes the consumer.
@@ -909,7 +914,7 @@ namespace Azure.Messaging.ServiceBus
         /// exception cref="EventHubsException">Occurs when this <see cref="ServiceBusReceiverClient" /> instance is already closed./exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessMessageAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
-        public virtual async Task StartProcessingAsync(
+        public virtual async Task StartReceivingAsync(
             MessageHandlerOptions handlerOptions = default,
             CancellationToken cancellationToken = default)
         {
@@ -951,7 +956,7 @@ namespace Azure.Messaging.ServiceBus
                             // for partition load balancing among multiple event processor instances.
 
                             //Logger.EventProcessorStart(Identifier);
-                            ActiveReceiveTask = RunAsync(
+                            ActiveReceiveTask = RunReceiveTaskAsync(
                                 handlerOptions,
                                 RunningTaskTokenSource.Token);
                         }
@@ -975,7 +980,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusReceiverClient" /> will keep running.</param>
         ///
-        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task StopReceivingAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             //Logger.EventProcessorStopStart(Identifier);
@@ -1020,21 +1025,18 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs load balancing between multiple "EventProcessorClient" /> instances, claiming others' partitions to enforce
-        ///   a more equal distribution when necessary.  It also manages its own partition processing tasks and ownership.
+        ///   Runs the Receive task in as many threads as are
+        ///   specified in the <see cref="MessageHandlerOptions.MaxConcurrentCalls"/> property.
         /// </summary>
         /// <param name="options"></param>
-        ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        private async Task RunAsync(
+        private async Task RunReceiveTaskAsync(
             MessageHandlerOptions options,
             CancellationToken cancellationToken)
         {
-
             while (!cancellationToken.IsCancellationRequested)
             {
-
                 await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 try
@@ -1051,7 +1053,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         consumer = Consumer;
                     }
-                    Task _ = GetAndProcessMessage(consumer, options, cancellationToken);
+                    Task _ = GetAndProcessMessageAsync(consumer, options, cancellationToken);
                 }
                 catch (Exception)
                 {
@@ -1064,7 +1066,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
-        private async Task GetAndProcessMessage(
+        private async Task GetAndProcessMessageAsync(
             TransportConsumer consumer,
             MessageHandlerOptions options,
             CancellationToken cancellationToken)
@@ -1102,7 +1104,6 @@ namespace Azure.Messaging.ServiceBus
                             message,
                             cancellationToken,
                             renewLockCancellationTokenSource.Token);
-
 
                         // After a threshold time of renewal('AutoRenewTimeout'), create timer to cancel anymore renewals.
                         autoRenewLockCancellationTimer = new Timer(
@@ -1290,7 +1291,5 @@ namespace Azure.Messaging.ServiceBus
                 MessagingEventSource.Log.ExceptionReceivedHandlerThrewException(exception);
             }
         }
-
-
     }
 }

@@ -36,6 +36,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
-
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
-
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 yield return new RuleDescription();
             }
+            throw new NotImplementedException();
         }
 
         private IAsyncEnumerable<RuleDescription> PeekRangeAsync(int v)

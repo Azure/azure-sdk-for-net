@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -354,18 +355,21 @@ namespace Azure.Messaging.ServiceBus.Tests
                     clientOptions);
                 int messageCt = 0;
 
-                receiver.ProcessSessionMessageAsync += ProcessMessage;
-                receiver.ProcessErrorAsync += ExceptionHandler;
-
                 var options = new MessageHandlerOptions()
                 {
                     MaxConcurrentCalls = numThreads
                 };
 
-                await receiver.StartProcessingAsync(options);
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
 
-                // Allow 5s to be sure there is enough time for a message to be processed per thread.
-                await Task.Delay(1000 * 5);
+                var completionSourceIndex = -1;
+
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
+                await receiver.StartReceivingAsync(options);
 
                 async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
                 {
@@ -374,8 +378,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                     sessions.TryRemove(message.SessionId, out bool _);
                     Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
                     Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
-                    await Task.Delay(1000 * 5);
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    completionSources[setIndex].TrySetResult(true);
                 }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
 
                 // we only give each thread enough time to process one message, so the total number of messages
                 // processed should equal the number of threads
@@ -425,18 +431,20 @@ namespace Azure.Messaging.ServiceBus.Tests
                     clientOptions);
                 int messageCt = 0;
 
-                receiver.ProcessSessionMessageAsync += ProcessMessage;
-                receiver.ProcessErrorAsync += ExceptionHandler;
-
                 var options = new MessageHandlerOptions()
                 {
                     MaxConcurrentCalls = numThreads
                 };
 
-                await receiver.StartProcessingAsync(options);
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
 
-                // Allow 5s to be sure there is enough time for a message to be processed per thread.
-                await Task.Delay(1000 * 5);
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
+                await receiver.StartReceivingAsync(options);
 
                 async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
                 {
@@ -446,8 +454,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                     Assert.AreEqual(sessionId, message.SessionId);
                     Assert.AreEqual(sessionId, await session.GetSessionIdAsync());
                     Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
-                    await Task.Delay(1000 * 5);
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    completionSources[setIndex].TrySetResult(true);
                 }
+                await Task.WhenAny(completionSources.Select(source => source.Task));
 
                 // although we are allowing concurrent calls,
                 // since we are specifying a specific session, the
