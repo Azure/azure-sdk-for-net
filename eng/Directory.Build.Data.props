@@ -26,6 +26,12 @@
       CA2237; <!-- [Serializeable] on exceptions -->
       CA2225; <!-- Provide alternative to implicit operators -->
       CA1714; <!-- Flags should have plural names -->
+      AZC0106;
+      AZC0107;
+      AZC0108;
+      AZC0109;
+      AZC0110;
+      AZC0111;
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

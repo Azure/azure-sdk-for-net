@@ -547,6 +547,22 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
+            => await StartProcessingImplAsync(true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
+        ///   is running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
+        ///
+        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
+        ///
+        public virtual void StartProcessing(CancellationToken cancellationToken = default)
+            => StartProcessingImplAsync(false, cancellationToken).EnsureCompleted();
+
+        private async Task StartProcessingImplAsync(bool async, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -596,16 +612,14 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
-        ///   is running, no action is taken.
+        ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
+        ///   is not running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
-        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
-        ///
-        public virtual void StartProcessing(CancellationToken cancellationToken = default) => StartProcessingAsync(cancellationToken).GetAwaiter().GetResult();
+        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
+            => await StopProcessingImplAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
@@ -614,7 +628,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
-        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
+        public virtual void StopProcessing(CancellationToken cancellationToken = default)
+            => StopProcessingImplAsync(false, cancellationToken).EnsureCompleted();
+
+        private async Task StopProcessingImplAsync(bool async, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorStopStart(Identifier);
@@ -656,7 +673,8 @@ namespace Azure.Messaging.EventHubs
                     // StopPartitionProcessingIfRunningAsync method.
 
                     await Task.WhenAll(ActivePartitionProcessors.Keys
-                        .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None)))
+                            .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId,
+                                ProcessingStoppedReason.Shutdown, CancellationToken.None)))
                         .ConfigureAwait(false);
 
                     // Stop the LoadBalancer.
@@ -681,15 +699,6 @@ namespace Azure.Messaging.EventHubs
                 Logger.EventProcessorStopComplete(Identifier);
             }
         }
-
-        /// <summary>
-        ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
-        ///   is not running, no action is taken.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
-        ///
-        public virtual void StopProcessing(CancellationToken cancellationToken = default) => StopProcessingAsync(cancellationToken).GetAwaiter().GetResult();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
