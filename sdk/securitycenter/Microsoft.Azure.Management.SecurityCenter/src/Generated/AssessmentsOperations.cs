@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            string apiVersion = "2019-01-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "assessmentName");
             }
-            string apiVersion = "2019-01-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 assessment.Validate();
             }
-            string apiVersion = "2019-01-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "assessmentName");
             }
-            string apiVersion = "2019-01-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

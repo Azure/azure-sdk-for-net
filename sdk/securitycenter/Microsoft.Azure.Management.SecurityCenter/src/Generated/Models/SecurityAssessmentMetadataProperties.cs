@@ -11,28 +11,28 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Security assessment metadata
+    /// Describes properties of an assessment metadata.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class SecurityAssessmentMetadata : Resource
+    public partial class SecurityAssessmentMetadataProperties
     {
         /// <summary>
-        /// Initializes a new instance of the SecurityAssessmentMetadata class.
+        /// Initializes a new instance of the
+        /// SecurityAssessmentMetadataProperties class.
         /// </summary>
-        public SecurityAssessmentMetadata()
+        public SecurityAssessmentMetadataProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SecurityAssessmentMetadata class.
+        /// Initializes a new instance of the
+        /// SecurityAssessmentMetadataProperties class.
         /// </summary>
         /// <param name="displayName">User friendly display name of the
         /// assessment</param>
@@ -42,9 +42,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// built-in Azure Policy definition, Custom if the assessment based on
         /// custom Azure Policy definition. Possible values include: 'BuiltIn',
         /// 'CustomPolicy', 'CustomerManaged', 'VerifiedPartner'</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
         /// <param name="policyDefinitionId">Azure resource ID of the policy
         /// definition that turns this assessment calculation on</param>
         /// <param name="description">Human readable description of the
@@ -58,8 +55,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// 'Low', 'Moderate', 'High'</param>
         /// <param name="preview">True if this assessment is in preview release
         /// status</param>
-        public SecurityAssessmentMetadata(string displayName, string severity, string assessmentType, string id = default(string), string name = default(string), string type = default(string), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> category = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
-            : base(id, name, type)
+        public SecurityAssessmentMetadataProperties(string displayName, string severity, string assessmentType, string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), IList<string> category = default(IList<string>), string userImpact = default(string), string implementationEffort = default(string), IList<string> threats = default(IList<string>), bool? preview = default(bool?), SecurityAssessmentMetadataPartnerData partnerData = default(SecurityAssessmentMetadataPartnerData))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -84,64 +80,64 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Gets or sets user friendly display name of the assessment
         /// </summary>
-        [JsonProperty(PropertyName = "properties.displayName")]
+        [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets azure resource ID of the policy definition that turns this
         /// assessment calculation on
         /// </summary>
-        [JsonProperty(PropertyName = "properties.policyDefinitionId")]
+        [JsonProperty(PropertyName = "policyDefinitionId")]
         public string PolicyDefinitionId { get; private set; }
 
         /// <summary>
         /// Gets or sets human readable description of the assessment
         /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets human readable description of what you should do to
         /// mitigate this security issue
         /// </summary>
-        [JsonProperty(PropertyName = "properties.remediationDescription")]
+        [JsonProperty(PropertyName = "remediationDescription")]
         public string RemediationDescription { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.category")]
+        [JsonProperty(PropertyName = "category")]
         public IList<string> Category { get; set; }
 
         /// <summary>
         /// Gets or sets the severity level of the assessment. Possible values
         /// include: 'Low', 'Medium', 'High'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.severity")]
+        [JsonProperty(PropertyName = "severity")]
         public string Severity { get; set; }
 
         /// <summary>
         /// Gets or sets the user impact of the assessment. Possible values
         /// include: 'Low', 'Moderate', 'High'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userImpact")]
+        [JsonProperty(PropertyName = "userImpact")]
         public string UserImpact { get; set; }
 
         /// <summary>
         /// Gets or sets the implementation effort required to remediate this
         /// assessment. Possible values include: 'Low', 'Moderate', 'High'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.implementationEffort")]
+        [JsonProperty(PropertyName = "implementationEffort")]
         public string ImplementationEffort { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.threats")]
+        [JsonProperty(PropertyName = "threats")]
         public IList<string> Threats { get; set; }
 
         /// <summary>
         /// Gets or sets true if this assessment is in preview release status
         /// </summary>
-        [JsonProperty(PropertyName = "properties.preview")]
+        [JsonProperty(PropertyName = "preview")]
         public bool? Preview { get; set; }
 
         /// <summary>
@@ -150,12 +146,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Policy definition. Possible values include: 'BuiltIn',
         /// 'CustomPolicy', 'CustomerManaged', 'VerifiedPartner'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.assessmentType")]
+        [JsonProperty(PropertyName = "assessmentType")]
         public string AssessmentType { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.partnerData")]
+        [JsonProperty(PropertyName = "partnerData")]
         public SecurityAssessmentMetadataPartnerData PartnerData { get; set; }
 
         /// <summary>

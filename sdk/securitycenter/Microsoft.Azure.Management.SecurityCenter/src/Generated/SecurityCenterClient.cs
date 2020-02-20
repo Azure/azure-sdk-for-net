@@ -232,11 +232,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual IAssessmentsMetadataOperations AssessmentsMetadata { get; private set; }
 
         /// <summary>
-        /// Gets the IAssessmentsMetadataSubscriptionOperations.
-        /// </summary>
-        public virtual IAssessmentsMetadataSubscriptionOperations AssessmentsMetadataSubscription { get; private set; }
-
-        /// <summary>
         /// Gets the IAssessmentsOperations.
         /// </summary>
         public virtual IAssessmentsOperations Assessments { get; private set; }
@@ -513,7 +508,6 @@ namespace Microsoft.Azure.Management.Security
             SubAssessments = new SubAssessmentsOperations(this);
             Automations = new AutomationsOperations(this);
             AssessmentsMetadata = new AssessmentsMetadataOperations(this);
-            AssessmentsMetadataSubscription = new AssessmentsMetadataSubscriptionOperations(this);
             Assessments = new AssessmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

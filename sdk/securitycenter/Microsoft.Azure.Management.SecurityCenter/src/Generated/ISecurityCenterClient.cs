@@ -227,11 +227,6 @@ namespace Microsoft.Azure.Management.Security
         IAssessmentsMetadataOperations AssessmentsMetadata { get; }
 
         /// <summary>
-        /// Gets the IAssessmentsMetadataSubscriptionOperations.
-        /// </summary>
-        IAssessmentsMetadataSubscriptionOperations AssessmentsMetadataSubscription { get; }
-
-        /// <summary>
         /// Gets the IAssessmentsOperations.
         /// </summary>
         IAssessmentsOperations Assessments { get; }

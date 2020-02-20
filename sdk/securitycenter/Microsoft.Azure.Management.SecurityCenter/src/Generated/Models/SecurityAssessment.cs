@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// assessment</param>
         /// <param name="additionalData">Additional data regarding the
         /// assessment</param>
-        public SecurityAssessment(ResourceDetails resourceDetails, AssessmentStatus status, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>), AssessmentLinks links = default(AssessmentLinks))
+        public SecurityAssessment(ResourceDetails resourceDetails, AssessmentStatus status, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>), AssessmentLinks links = default(AssessmentLinks), SecurityAssessmentMetadataProperties metadata = default(SecurityAssessmentMetadataProperties), SecurityAssessmentPartnerData partnersData = default(SecurityAssessmentPartnerData))
             : base(id, name, type)
         {
             ResourceDetails = resourceDetails;
@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Security.Models
             Status = status;
             AdditionalData = additionalData;
             Links = links;
+            Metadata = metadata;
+            PartnersData = partnersData;
             CustomInit();
         }
 
@@ -85,6 +87,16 @@ namespace Microsoft.Azure.Management.Security.Models
         public AssessmentLinks Links { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public SecurityAssessmentMetadataProperties Metadata { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnersData")]
+        public SecurityAssessmentPartnerData PartnersData { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -103,6 +115,14 @@ namespace Microsoft.Azure.Management.Security.Models
             if (Status != null)
             {
                 Status.Validate();
+            }
+            if (Metadata != null)
+            {
+                Metadata.Validate();
+            }
+            if (PartnersData != null)
+            {
+                PartnersData.Validate();
             }
         }
     }

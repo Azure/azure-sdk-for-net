@@ -30,5 +30,10 @@ namespace Microsoft.Azure.Management.Security.Models
         /// to Azure Security Center
         /// </summary>
         public const string CustomerManaged = "CustomerManaged";
+        /// <summary>
+        /// An assessment that was created by a verified 3rd party if the user
+        /// connected it to ASC
+        /// </summary>
+        public const string VerifiedPartner = "VerifiedPartner";
     }
 }

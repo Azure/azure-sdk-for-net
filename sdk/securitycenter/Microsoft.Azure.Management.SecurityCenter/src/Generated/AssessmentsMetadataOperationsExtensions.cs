@@ -84,6 +84,145 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
+            /// Get metadata information on all assessment types in a specific subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<SecurityAssessmentMetadata> ListBySubscription(this IAssessmentsMetadataOperations operations)
+            {
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get metadata information on all assessment types in a specific subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SecurityAssessmentMetadata>> ListBySubscriptionAsync(this IAssessmentsMetadataOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get metadata information on an assessment type in a specific subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='assessmentMetadataName'>
+            /// The Assessment Key - Unique key for the assessment type
+            /// </param>
+            public static SecurityAssessmentMetadata GetInSubscription(this IAssessmentsMetadataOperations operations, string assessmentMetadataName)
+            {
+                return operations.GetInSubscriptionAsync(assessmentMetadataName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get metadata information on an assessment type in a specific subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='assessmentMetadataName'>
+            /// The Assessment Key - Unique key for the assessment type
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SecurityAssessmentMetadata> GetInSubscriptionAsync(this IAssessmentsMetadataOperations operations, string assessmentMetadataName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetInSubscriptionWithHttpMessagesAsync(assessmentMetadataName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create metadata information on an assessment type in a specific
+            /// subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='assessmentMetadataName'>
+            /// The Assessment Key - Unique key for the assessment type
+            /// </param>
+            /// <param name='assessmentMetadata'>
+            /// AssessmentMetadata object
+            /// </param>
+            public static SecurityAssessmentMetadata CreateInSubscription(this IAssessmentsMetadataOperations operations, string assessmentMetadataName, SecurityAssessmentMetadata assessmentMetadata)
+            {
+                return operations.CreateInSubscriptionAsync(assessmentMetadataName, assessmentMetadata).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create metadata information on an assessment type in a specific
+            /// subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='assessmentMetadataName'>
+            /// The Assessment Key - Unique key for the assessment type
+            /// </param>
+            /// <param name='assessmentMetadata'>
+            /// AssessmentMetadata object
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SecurityAssessmentMetadata> CreateInSubscriptionAsync(this IAssessmentsMetadataOperations operations, string assessmentMetadataName, SecurityAssessmentMetadata assessmentMetadata, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateInSubscriptionWithHttpMessagesAsync(assessmentMetadataName, assessmentMetadata, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete metadata information on an assessment type in a specific
+            /// subscription, will cause the deletion of all the assessments of that type
+            /// in that subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='assessmentMetadataName'>
+            /// The Assessment Key - Unique key for the assessment type
+            /// </param>
+            public static void DeleteInSubscription(this IAssessmentsMetadataOperations operations, string assessmentMetadataName)
+            {
+                operations.DeleteInSubscriptionAsync(assessmentMetadataName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete metadata information on an assessment type in a specific
+            /// subscription, will cause the deletion of all the assessments of that type
+            /// in that subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='assessmentMetadataName'>
+            /// The Assessment Key - Unique key for the assessment type
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteInSubscriptionAsync(this IAssessmentsMetadataOperations operations, string assessmentMetadataName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteInSubscriptionWithHttpMessagesAsync(assessmentMetadataName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Get metadata information on all assessment types
             /// </summary>
             /// <param name='operations'>
@@ -112,6 +251,40 @@ namespace Microsoft.Azure.Management.Security
             public static async Task<IPage<SecurityAssessmentMetadata>> ListNextAsync(this IAssessmentsMetadataOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get metadata information on all assessment types in a specific subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SecurityAssessmentMetadata> ListBySubscriptionNext(this IAssessmentsMetadataOperations operations, string nextPageLink)
+            {
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get metadata information on all assessment types in a specific subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SecurityAssessmentMetadata>> ListBySubscriptionNextAsync(this IAssessmentsMetadataOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
