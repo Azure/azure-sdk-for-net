@@ -43,6 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task UpdateCheckpointAsyncCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
