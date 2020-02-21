@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Core
             CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Closes the connection to the transport producer instance.
+        ///   Closes the connection to the transport consumer instance.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>

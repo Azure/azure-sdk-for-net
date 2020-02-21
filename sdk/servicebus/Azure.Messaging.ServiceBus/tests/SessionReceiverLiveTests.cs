@@ -390,6 +390,87 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
         }
 
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task Receive_Event_Consumes_All_Messages(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                for (int i = 0; i < numThreads; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    IsSessionEntity = true,
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                    RetryOptions = new ServiceBusRetryOptions()
+                    {
+                        // to prevent the receive batch from taking a long time when we
+                        // expect it to fail
+                        MaximumRetries = 0
+                    }
+                };
+                await using var receiver = new ServiceBusReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    clientOptions);
+                int messageCt = 0;
+
+                var options = new MessageHandlerOptions()
+                {
+                    MaxConcurrentCalls = numThreads
+                };
+
+                TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
+                await receiver.StartReceivingAsync(options);
+
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                {
+                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    sessions.TryRemove(message.SessionId, out bool _);
+                    Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
+                    Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
+                    var ct = Interlocked.Increment(ref messageCt);
+                    if (ct == numThreads)
+                    {
+                        taskCompletionSource.SetResult(true);
+                    }
+                }
+                await taskCompletionSource.Task;
+
+
+                // we only give each thread enough time to process one message, so the total number of messages
+                // processed should equal the number of threads
+                Assert.AreEqual(numThreads, messageCt);
+
+                // we should have received messages from each of the sessions
+                Assert.AreEqual(0, sessions.Count);
+
+                // try receiving to verify empty
+                // since all the messages are gone and we are using sessions, we won't actually
+                // be able to open the Receive link
+                Assert.That(async () => await receiver.ReceiveBatchAsync(numThreads), Throws.Exception);
+            }
+        }
+
 
         [Test]
         [TestCase(1)]

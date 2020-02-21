@@ -1026,35 +1026,36 @@ namespace Azure.Messaging.ServiceBus
 
                 try
                 {
-                    TransportConsumer consumer = null;
-                    Task _ = GetAndProcessMessageAsync(consumer, options, cancellationToken);
+                    Task _ = GetAndProcessMessagesAsync(options, cancellationToken);
                 }
                 catch (Exception)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
             }
-
             // If cancellation has been requested, throw an exception so we can keep a consistent behavior.
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
-        private async Task GetAndProcessMessageAsync(
-            TransportConsumer consumer,
+        private async Task GetAndProcessMessagesAsync(
             MessageHandlerOptions options,
             CancellationToken cancellationToken)
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Timer autoRenewLockCancellationTimer = null;
             bool useThreadLocalConsumer = false;
+            TransportConsumer consumer;
 
             if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
             {
                 // If the user didn't specify a session, but this is a sessionful receiver,
                 // we want to allow each thread to have its own consumer so we can access
                 // multiple sessions concurrently.
-                consumer = Connection.CreateTransportConsumer(RetryPolicy, isSessionReceiver: true);
+                consumer = Connection.CreateTransportConsumer(
+                    retryPolicy: RetryPolicy,
+                    receiveMode: ReceiveMode,
+                    isSessionReceiver: true);
                 useThreadLocalConsumer = true;
             }
             else
@@ -1062,89 +1063,96 @@ namespace Azure.Messaging.ServiceBus
                 consumer = Consumer;
             }
 
-            // loop within the context of this thread
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                ServiceBusMessage message = null;
-                string action = ExceptionReceivedEventArgsAction.Receive;
-                try
+                // loop within the context of this thread
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    IEnumerator<ServiceBusMessage> messages = (await consumer.ReceiveAsync(
-                        1,
-                        cancellationToken).ConfigureAwait(false)).GetEnumerator();
-                    if (messages.MoveNext())
+                    ServiceBusMessage message = null;
+                    string action = ExceptionReceivedEventArgsAction.Receive;
+                    try
                     {
-                        message = messages.Current;
+                        IEnumerable<ServiceBusMessage> messages = await consumer.ReceiveAsync(
+                            1,
+                            cancellationToken).ConfigureAwait(false);
+                        var enumerator = messages.GetEnumerator();
+                        if (enumerator.MoveNext())
+                        {
+                            message = enumerator.Current;
+                        }
+                        else
+                        {
+                            // no messages returned, so exit the loop as we are likely out of messages
+                            // in the case of sessions, this means we will create a new consumer and potentially use a different session
+                            break;
+                        }
+
+                        Task renewLock = null;
+                        if (ReceiveMode == ReceiveMode.PeekLock && options.AutoRenewLock)
+                        {
+                            action = ExceptionReceivedEventArgsAction.RenewLock;
+                            renewLockCancellationTokenSource = new CancellationTokenSource();
+                            renewLockCancellationTokenSource.CancelAfter(options.MaxAutoLockRenewalDuration);
+
+                            renewLock = RenewLock(
+                                consumer,
+                                message,
+                                cancellationToken,
+                                renewLockCancellationTokenSource.Token);
+                        }
+
+                        action = ExceptionReceivedEventArgsAction.UserCallback;
+
+                        // if this is a session receiver, supply a session object to the callback so that users can
+                        // perform operations on this session
+                        if (IsSessionReceiver)
+                        {
+                            var session = new ServiceBusSession(consumer, message.SessionId);
+                            // this could maybe collapsed into just one handler
+                            await OnProcessSessionMessageAsync(message, session).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            await OnProcessMessageAsync(message).ConfigureAwait(false);
+                        }
+
+                        if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
+                        {
+                            action = ExceptionReceivedEventArgsAction.Complete;
+                            await CompleteAsync(
+                                message.SystemProperties.LockToken,
+                                cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        if (renewLock != null)
+                        {
+                            await renewLock.ConfigureAwait(false);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        // no messages returned, so exit the loop as we are likely out of messages
-                        // in the case of sessions, this lets the caller give us a new consumer
-                        break;
-                    }
+                        await RaiseExceptionReceived(
+                            // TODO - add clientId implementation and pass as last argument to ExceptionReceivedEventArgs
+                            new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
+                        await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
 
-                    if (ReceiveMode == ReceiveMode.PeekLock && options.AutoRenewLock)
+                    }
+                    finally
                     {
-                        action = ExceptionReceivedEventArgsAction.RenewLock;
-                        renewLockCancellationTokenSource = new CancellationTokenSource();
-
-                        Task _ = RenewLock(
-                            consumer,
-                            message,
-                            cancellationToken,
-                            renewLockCancellationTokenSource.Token);
-
-                        // After a threshold time of renewal('AutoRenewTimeout'), create timer to cancel anymore renewals.
-                        autoRenewLockCancellationTimer = new Timer(
-                            CancelAutoRenewLock,
-                            renewLockCancellationTokenSource,
-                            options.MaxAutoLockRenewalDuration,
-                            TimeSpan.FromMilliseconds(Timeout.Infinite));
+                        renewLockCancellationTokenSource?.Cancel();
+                        renewLockCancellationTokenSource?.Dispose();
+                        autoRenewLockCancellationTimer?.Dispose();
                     }
-
-                    action = ExceptionReceivedEventArgsAction.UserCallback;
-
-                    // if this is a session receiver, supply a session object to the callback so that users can
-                    // perform operations on this session
-                    if (IsSessionReceiver)
-                    {
-                        var session = new ServiceBusSession(consumer, message.SessionId);
-                        await OnProcessSessionMessageAsync(message, session).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await OnProcessMessageAsync(message).ConfigureAwait(false);
-                    }
-
-                    if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
-                    {
-                        action = ExceptionReceivedEventArgsAction.Complete;
-                        await CompleteAsync(
-                            message.SystemProperties.LockToken,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    await RaiseExceptionReceived(
-                        // TODO - add clientId implementation and pass as last argument to ExceptionReceivedEventArgs
-                        new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
-                    await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
-
-                }
-                finally
-                {
-                    renewLockCancellationTokenSource?.Cancel();
-                    renewLockCancellationTokenSource?.Dispose();
-                    autoRenewLockCancellationTimer?.Dispose();
                 }
             }
-            if (useThreadLocalConsumer)
+            finally
             {
-                await consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                MessageHandlerSemaphore.Release();
+                if (useThreadLocalConsumer)
+                {
+                    await consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                }
             }
-            MessageHandlerSemaphore.Release();
         }
 
         private void CancelAutoRenewLock(object state)
