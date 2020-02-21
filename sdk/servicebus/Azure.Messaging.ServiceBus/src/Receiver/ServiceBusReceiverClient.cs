@@ -1043,9 +1043,9 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
-            Timer autoRenewLockCancellationTimer = null;
             bool useThreadLocalConsumer = false;
             TransportConsumer consumer;
+            Task renewLock = null;
 
             if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
             {
@@ -1087,13 +1087,11 @@ namespace Azure.Messaging.ServiceBus
                             break;
                         }
 
-                        Task renewLock = null;
                         if (ReceiveMode == ReceiveMode.PeekLock && options.AutoRenewLock)
                         {
                             action = ExceptionReceivedEventArgsAction.RenewLock;
                             renewLockCancellationTokenSource = new CancellationTokenSource();
                             renewLockCancellationTokenSource.CancelAfter(options.MaxAutoLockRenewalDuration);
-
                             renewLock = RenewLock(
                                 consumer,
                                 message,
@@ -1115,6 +1113,14 @@ namespace Azure.Messaging.ServiceBus
                         {
                             await OnProcessMessageAsync(message).ConfigureAwait(false);
                         }
+                        try
+                        {
+                            renewLockCancellationTokenSource.Cancel();
+                        }
+                        catch (Exception ex) when (ex is OperationCanceledException)
+                        {
+                            // Nothing to do here.  These exceptions are expected.
+                        }
 
                         if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
                         {
@@ -1123,10 +1129,6 @@ namespace Azure.Messaging.ServiceBus
                                 message.SystemProperties.LockToken,
                                 cancellationToken)
                                 .ConfigureAwait(false);
-                        }
-                        if (renewLock != null)
-                        {
-                            await renewLock.ConfigureAwait(false);
                         }
                     }
                     catch (Exception ex)
@@ -1141,7 +1143,6 @@ namespace Azure.Messaging.ServiceBus
                     {
                         renewLockCancellationTokenSource?.Cancel();
                         renewLockCancellationTokenSource?.Dispose();
-                        autoRenewLockCancellationTimer?.Dispose();
                     }
                 }
             }
