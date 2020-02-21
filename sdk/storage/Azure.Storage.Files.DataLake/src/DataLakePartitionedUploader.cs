@@ -60,16 +60,10 @@ namespace Azure.Storage.Files.DataLake
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
             // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue)
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                if (transferOptions.MaximumConcurrency < 1)
-                {
-                    _maxWorkerCount = Constants.DataLake.DefaultConcurrentTransfersCount;
-                }
-                else
-                {
-                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
-                }
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
             }
             else
             {
@@ -77,16 +71,10 @@ namespace Azure.Storage.Files.DataLake
             }
 
             // Set _singleUploadThreshold
-            if (transferOptions.InitialTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue
+                && transferOptions.InitialTransferLength.Value > 0)
             {
-                if (transferOptions.InitialTransferLength.Value < 1)
-                {
-                    _singleUploadThreshold = Constants.DataLake.MaxAppendBytes;
-                }
-                else
-                {
-                    _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.DataLake.MaxAppendBytes);
-                }
+                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.DataLake.MaxAppendBytes);
             }
             else
             {
@@ -94,22 +82,12 @@ namespace Azure.Storage.Files.DataLake
             }
 
             // Set _blockSize
-            if (transferOptions.MaximumTransferLength.HasValue)
+            if (transferOptions.MaximumTransferLength.HasValue
+                && transferOptions.MaximumTransferLength > 0)
             {
-                if (transferOptions.MaximumTransferLength < 1)
-                {
-                    _blockSize = Constants.DataLake.MaxAppendBytes;
-                }
-                else
-                {
-                    _blockSize = Math.Min(
-                        Constants.DataLake.MaxAppendBytes,
-                        transferOptions.MaximumTransferLength.Value);
-                }
-            }
-            else
-            {
-                _blockSize = Constants.DataLake.MaxAppendBytes;
+                _blockSize = Math.Min(
+                    Constants.DataLake.MaxAppendBytes,
+                    transferOptions.MaximumTransferLength.Value);
             }
 
             _operationName = operationName;
