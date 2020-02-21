@@ -1,7 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Personalizer Library</AssemblyTitle>
-    <Description>Provides API functions for consuming Microsoft Azure Cognitive Services Personalizer APIs.</Description>
+    <Description></Description>
+    <Description>
+<![CDATA[<h1>Cognitive Services - QnA Maker</h1>
+Provides API functions for consuming Microsoft Azure Cognitive Services Personalizer APIs.
+
+<a href="https://aka.ms/personalizer-sdk-dotnet-acom">Product information </a> | <a href="https://aka.ms/personalizer-sdk-dotnet-docs-conceptual">Documentation</a> | <a href="https://aka.ms/personalizer-sdk-dotnet-docs-reference">Developer reference documentation</a>
+]]>
+    </Description>
     <Version>1.0.0</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Personalizer API;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
