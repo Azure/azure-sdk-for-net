@@ -3,7 +3,7 @@
     <AssemblyTitle>Microsoft Azure Cognitive Services Personalizer Library</AssemblyTitle>
     <Description></Description>
     <Description>
-<![CDATA[<h1>Cognitive Services - QnA Maker</h1>
+<![CDATA[<h1>Cognitive Services - Personalizer</h1>
 Provides API functions for consuming Microsoft Azure Cognitive Services Personalizer APIs.
 
 <a href="https://aka.ms/personalizer-sdk-dotnet-acom">Product information </a> | <a href="https://aka.ms/personalizer-sdk-dotnet-docs-conceptual">Documentation</a> | <a href="https://aka.ms/personalizer-sdk-dotnet-docs-reference">Developer reference documentation</a>
