@@ -112,15 +112,16 @@ namespace Azure.AI.TextAnalytics
         /// as a score indicating the model's confidence that the inferred
         /// language is correct.  Scores close to 1 indicate high certainty in
         /// the result.  120 languages are supported.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of the text
         /// input to assist the text analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
@@ -170,15 +171,16 @@ namespace Azure.AI.TextAnalytics
         /// as a score indicating the model's confidence that the inferred
         /// language is correct.  Scores close to 1 indicate high certainty in
         /// the result.  120 languages are supported.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of the text
         /// input to assist the text analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
@@ -228,16 +230,16 @@ namespace Azure.AI.TextAnalytics
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">A collection of input strings to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
         /// the input strings to assist the text analytics model in predicting
         /// the language they is written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".  The same country hint is applied to all strings in the
-        /// input collection.</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
@@ -262,16 +264,16 @@ namespace Azure.AI.TextAnalytics
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">A collection of input strings to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
         /// the input strings to assist the text analytics model in predicting
         /// the language they is written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".  The same country hint is applied to all strings in the
-        /// input collection.</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
@@ -296,6 +298,8 @@ namespace Azure.AI.TextAnalytics
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">A collection of input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -342,6 +346,8 @@ namespace Azure.AI.TextAnalytics
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">A collection of input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -394,6 +400,8 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -453,6 +461,8 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -507,11 +517,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
         /// in the passed-in input strings, and categorize those entities into types
-        /// such as person, location, or organization.  For more information on
-        /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// such as person, location, or organization.
+        /// For more information on available categories, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that all the input strings are
@@ -541,11 +553,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
         /// in the passed-in input strings, and categorize those entities into types
-        /// such as person, location, or organization.  For more information on
-        /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// such as person, location, or organization.
+        /// For more information on available categories, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that all the input strings are
@@ -575,11 +589,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
         /// in the passed-in input documents, and categorize those entities into types
-        /// such as person, location, or organization.  For more information on
-        /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// such as person, location, or organization.
+        /// For more information on available categories, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -624,11 +640,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
         /// in the passed-in input documents, and categorize those entities into types
-        /// such as person, location, or organization.  For more information on
-        /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// such as person, location, or organization.
+        /// For more information on available categories, see
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -680,6 +698,8 @@ namespace Azure.AI.TextAnalytics
         /// indicating the model's confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -736,6 +756,8 @@ namespace Azure.AI.TextAnalytics
         /// confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -791,7 +813,9 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the input strings, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that all of the input strings are written in.
@@ -822,7 +846,9 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the input strings, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that all of the input strings are written in.
@@ -853,7 +879,9 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the input documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -899,7 +927,9 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the input documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -947,8 +977,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
+        /// For example, for the input text "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1002,8 +1037,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
+        /// For example, for the input text "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1057,8 +1097,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
+        /// For example, for the input text "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that all the input strings are
@@ -1087,8 +1132,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
+        /// For example, for the input text "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that all the input strings are
@@ -1117,8 +1167,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
+        /// For example, for the input text "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1162,8 +1217,13 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
+        /// For example, for the input text "The food was delicious and there
+        /// were wonderful staff", the API returns the main talking points: "food"
+        /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1215,6 +1275,8 @@ namespace Azure.AI.TextAnalytics
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1273,6 +1335,8 @@ namespace Azure.AI.TextAnalytics
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1330,7 +1394,9 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1363,7 +1429,9 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1396,7 +1464,9 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1444,7 +1514,9 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1496,6 +1568,8 @@ namespace Azure.AI.TextAnalytics
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1553,6 +1627,8 @@ namespace Azure.AI.TextAnalytics
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1610,6 +1686,8 @@ namespace Azure.AI.TextAnalytics
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1642,6 +1720,8 @@ namespace Azure.AI.TextAnalytics
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1674,6 +1754,8 @@ namespace Azure.AI.TextAnalytics
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1721,6 +1803,8 @@ namespace Azure.AI.TextAnalytics
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
+        /// For document length limits, maximum batch size, and supported text encoding, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to

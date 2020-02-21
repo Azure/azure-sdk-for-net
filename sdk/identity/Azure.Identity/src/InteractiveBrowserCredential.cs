@@ -14,7 +14,7 @@ namespace Azure.Identity
     /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user, and obtain an access token.
     /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the users refresh token as long as it's valid.
     /// </summary>
-    public class InteractiveBrowserCredential : TokenCredential, IExtendedTokenCredential
+    public class InteractiveBrowserCredential : TokenCredential
     {
         private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
@@ -75,7 +75,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -86,20 +86,10 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
-        }
-
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.GetToken", requestContext);
 
@@ -111,20 +101,20 @@ namespace Azure.Identity
                     {
                         AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
-                        return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
+                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
                     catch (MsalUiRequiredException)
                     {
                         AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                        return new ExtendedAccessToken(scope.Succeeded(token));
+                        return scope.Succeeded(token);
                     }
                 }
                 else
                 {
                     AccessToken token = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                    return new ExtendedAccessToken(scope.Succeeded(token));
+                    return scope.Succeeded(token);
                 }
             }
             catch (OperationCanceledException e)
@@ -135,7 +125,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
+               throw scope.FailAndWrap(e);
             }
         }
 

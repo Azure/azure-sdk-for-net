@@ -1,17 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
     <Version>1.2.0-preview.1</Version>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
-
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
@@ -19,7 +16,6 @@
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
@@ -29,7 +25,6 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
   </ItemGroup>
-
   <!-- Import the Azure.Base project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

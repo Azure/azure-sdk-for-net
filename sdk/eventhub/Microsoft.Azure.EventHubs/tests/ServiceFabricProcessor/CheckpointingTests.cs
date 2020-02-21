@@ -112,7 +112,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
             // EXPECTED RESULT: Normal processing. This case checkpoints specific events. Validate that the
             // last event processed has a higher sequence number than the checkpointed event.
-            Assert.True(state.Processor.TotalErrors == 0, $"Errors found {state.Processor.TotalErrors}");
+            Assert.True(state.Processor.TotalErrors == 0, $"Errors found {state.Processor.TotalErrors}. Last Error: {state.Processor?.LastError?.Message}");
             Assert.Null(state.ShutdownException);
 
             EventData checkpointedEvent = ((CheckpointingProcessor)state.Processor).CheckpointedEvent;
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             // EXPECTED RESULT: Normal processing. The sequence number of the first event processed in
             // this stage should be one higher than the sequence number of the event checkpointed in
             // the previous stage.
-            Assert.True(state.Processor.TotalErrors == 0, $"Errors found {state.Processor.TotalErrors}");
+            Assert.True(state.Processor.TotalErrors == 0, $"Errors found {state.Processor.TotalErrors}. Last Error: {state.Processor?.LastError?.Message}");
             Assert.Null(state.ShutdownException);
 
             EventData restartEvent = ((CheckpointingProcessor)state.Processor).FirstEvent;

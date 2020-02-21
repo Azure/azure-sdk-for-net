@@ -15,8 +15,8 @@ namespace Azure.Storage.Files.Shares.Test
 {
     public class DirectoryClientTests : FileTestBase
     {
-        public DirectoryClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public DirectoryClientTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.CreateAsync(),
-                e => Assert.AreEqual("ResourceAlreadyExists", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceAlreadyExists", e.ErrorCode));
         }
 
         [Test]
@@ -249,7 +249,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.DeleteAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -283,7 +283,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetPropertiesAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -409,7 +409,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -475,7 +475,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.GetFilesAndDirectoriesAsync().ToListAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -538,6 +538,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual(0, response.ClosedHandlesCount);
+            Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
         [Test]
@@ -552,6 +553,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual(0, response.ClosedHandlesCount);
+            Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
         [Test]

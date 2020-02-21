@@ -15,6 +15,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiExportImportTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public void SwaggerTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -76,6 +77,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public void WadlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -139,6 +141,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public void WsdlTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -224,6 +227,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public void OpenApiTest()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -268,6 +272,67 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(path, getResponse.Path);
                     Assert.Equal("Swagger Petstore", getResponse.DisplayName);
                     Assert.Equal("http://petstore.swagger.io/v1", getResponse.ServiceUrl);
+
+                    ApiExportResult openApiExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, openApiId, ExportFormat.Openapi);
+
+                    Assert.NotNull(openApiExport);
+                    Assert.NotNull(openApiExport.Value.Link);
+                    Assert.Equal("openapi-link", openApiExport.ExportResultFormat);
+                }
+                finally
+                {
+                    // remove the API
+                    testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, openApiId, "*");
+                }
+
+            }
+        }
+
+        [Fact]
+        public void OpenApiInJsonTest()
+        {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new ApiManagementTestBase(context);
+                testBase.TryCreateApiManagementService();
+
+                const string openapiFilePath = "./Resources/petstoreOpenApi.json";
+                const string path = "openapi4";
+                string openApiId = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    string openApiContent;
+                    using (StreamReader reader = File.OpenText(openapiFilePath))
+                    {
+                        openApiContent = reader.ReadToEnd();
+                    }
+
+                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = path,
+                        Format = ContentFormat.Openapijson,
+                        Value = openApiContent
+                    };
+
+                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            openApiId,
+                            apiCreateOrUpdate);
+
+                    Assert.NotNull(swaggerApiResponse);
+
+                    // get the api to check it was created
+                    var getResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, openApiId);
+
+                    Assert.NotNull(getResponse);
+                    Assert.Equal(openApiId, getResponse.Name);
+                    Assert.Equal(path, getResponse.Path);
+                    Assert.Equal("Swagger Petstore", getResponse.DisplayName);
+                    Assert.Equal("http://petstore.swagger.io/v2", getResponse.ServiceUrl);
 
                     ApiExportResult openApiExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, openApiId, ExportFormat.Openapi);
 

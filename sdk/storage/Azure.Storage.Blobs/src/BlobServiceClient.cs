@@ -83,6 +83,16 @@ namespace Azure.Storage.Blobs
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
         /// <summary>
+        /// The name of the Encryption Scope to be used when sending request.
+        /// </summary>
+        internal readonly string _encryptionScope;
+
+        /// <summary>
+        /// The name of the Encryption Scope to be used when sending request.
+        /// </summary>
+        internal virtual string EncryptionScope => _encryptionScope;
+
+        /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
         private string _accountName;
@@ -153,6 +163,9 @@ namespace Azure.Storage.Blobs
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _encryptionScope = options.EncryptionScope;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
 
         /// <summary>
@@ -234,12 +247,13 @@ namespace Azure.Storage.Blobs
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
             : this(
-                serviceUri,
-                authentication,
-                options?.Version ?? BlobClientOptions.LatestVersion,
-                new ClientDiagnostics(options),
-                options?.CustomerProvidedKey,
-                options.Build(authentication))
+                  serviceUri,
+                  authentication,
+                  options?.Version ?? BlobClientOptions.LatestVersion,
+                  new ClientDiagnostics(options),
+                  options?.CustomerProvidedKey,
+                  options?.EncryptionScope,
+                  options.Build(authentication))
         {
 
         }
@@ -263,10 +277,18 @@ namespace Azure.Storage.Blobs
         /// diagnostic scopes every request.
         /// </param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
+        /// <param name="encryptionScope">Encryption scope.</param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey, HttpPipeline pipeline)
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            string encryptionScope,
+            HttpPipeline pipeline)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
@@ -274,6 +296,8 @@ namespace Azure.Storage.Blobs
             _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _encryptionScope = encryptionScope;
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -300,9 +324,13 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// New instanc of the <see cref="BlobServiceClient"/> class.
         /// </returns>
-        protected static BlobServiceClient CreateClient(Uri serviceUri, BlobClientOptions options, HttpPipelinePolicy authentication, HttpPipeline pipeline)
+        protected static BlobServiceClient CreateClient(
+            Uri serviceUri,
+            BlobClientOptions options,
+            HttpPipelinePolicy authentication,
+            HttpPipeline pipeline)
         {
-            return new BlobServiceClient(serviceUri, authentication, options.Version, new ClientDiagnostics(options), null, pipeline);
+            return new BlobServiceClient(serviceUri, authentication, options.Version, new ClientDiagnostics(options), null, null, pipeline);
         }
         #endregion ctors
 
@@ -319,7 +347,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>

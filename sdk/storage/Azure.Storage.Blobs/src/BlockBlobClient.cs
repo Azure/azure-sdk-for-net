@@ -235,8 +235,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal BlockBlobClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            string encryptionScope)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
 
@@ -262,7 +269,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null);
+            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
         }
         #endregion ctors
 
@@ -291,7 +298,8 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+
+            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         ///// <summary>
@@ -370,7 +378,6 @@ namespace Azure.Storage.Blobs.Specialized
             PartitionedUploader uploader = new PartitionedUploader(
                 client: this,
                 transferOptions: default,
-                singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.Upload(
@@ -442,7 +449,6 @@ namespace Azure.Storage.Blobs.Specialized
             PartitionedUploader uploader = new PartitionedUploader(
                 client: this,
                 transferOptions: default,
-                singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadAsync(
@@ -548,6 +554,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         tier: accessTier,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -786,6 +793,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(StageBlock)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -1053,6 +1061,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         leaseId: conditions?.LeaseId,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
@@ -1302,6 +1311,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         tier: accessTier,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -1538,6 +1548,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
-                client.CustomerProvidedKey);
+                client.CustomerProvidedKey,
+                client.EncryptionScope);
     }
 }

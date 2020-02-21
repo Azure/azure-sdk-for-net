@@ -62,9 +62,14 @@ namespace Azure.AI.TextAnalytics
         public static readonly EntitySubCategory Dimension = new EntitySubCategory("Dimension");
 
         /// <summary>
-        /// Specifies that numeric category entity is Percentage (e.g.: 32 degrees, 10°C).
+        /// Specifies that numeric category entity is Temperature (e.g.: 32 degrees, 10°C).
         /// </summary>
         public static readonly EntitySubCategory Temperature = new EntitySubCategory("Temperature");
+
+        /// <summary>
+        /// Specifies that location category entity is Geographical/Social/Political.
+        /// </summary>
+        public static readonly EntitySubCategory GPE = new EntitySubCategory("GPE");
 
         private readonly string _value;
 
