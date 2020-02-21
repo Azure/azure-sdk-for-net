@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -22,40 +25,36 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
 
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId, partitionKey);
-                await sender.SendRangeAsync(sentMessages);
+                await sender.SendBatchAsync(sentMessages);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
                 foreach (ServiceBusMessage message in sentMessages)
                 {
                     sentMessageIdToMsg.Add(message.MessageId, message);
                 }
 
-                // peek the messages
-                var sessionSettings = new SessionOptions()
+                var options = new ServiceBusReceiverClientOptions()
                 {
-                    Connection = new ServiceBusConnection(
-                        TestEnvironment.ServiceBusConnectionString,
-                        scope.QueueName),
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    IsSessionEntity = true
                 };
-                var receiver = new QueueReceiverClient(
+                var receiver = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName,
-                    sessionSettings);
+                    options);
 
                 sequenceNumber ??= 1;
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeBySequenceAsync(
-                    fromSequenceNumber: (long)sequenceNumber,
-                    maxMessages: messageCt);
 
                 // verify peeked == send
                 var ct = 0;
-                await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchBySequenceAsync(
+                    fromSequenceNumber: (long)sequenceNumber,
+                    maxMessages: messageCt))
                 {
                     var peekedText = Encoding.Default.GetString(peekedMessage.Body);
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
@@ -79,39 +78,41 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
-                await sender.SendRangeAsync(sentMessages);
+                await sender.SendBatchAsync(sentMessages);
 
-                var sessionSettings = new SessionOptions()
+                var options = new ServiceBusReceiverClientOptions()
                 {
-                    Connection = new ServiceBusConnection(
-                        TestEnvironment.ServiceBusConnectionString,
-                        scope.QueueName),
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    IsSessionEntity = true
                 };
-                var receiver1 = new QueueReceiverClient(
+                var receiver1 = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName,
-                    sessionSettings);
-                var receiver2 = new QueueReceiverClient(
+                    options);
+                var receiver2 = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName,
-                    sessionSettings);
+                    options);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
 
                 // peek the messages
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages1 = receiver1.PeekRangeBySequenceAsync(
-                    fromSequenceNumber: 1,
-                    maxMessages: messageCt);
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages2 = receiver2.PeekRangeBySequenceAsync(
-                    fromSequenceNumber: 1,
-                    maxMessages: messageCt);
-                await peekedMessages1.GetAsyncEnumerator().MoveNextAsync();
-                Assert.That(async () => await peekedMessages2.GetAsyncEnumerator().MoveNextAsync(), Throws.Exception);
+                Assert.That(() => ScheduleTasksAsync(), Throws.Exception);
+
+                async Task ScheduleTasksAsync()
+                {
+                    Task peek1 = receiver1.PeekBatchBySequenceAsync(
+                        fromSequenceNumber: 1,
+                        maxMessages: messageCt);
+                    Task peek2 = receiver2.PeekBatchBySequenceAsync(
+                        fromSequenceNumber: 1,
+                        maxMessages: messageCt);
+                    await Task.WhenAll(peek1, peek2);
+                }
             }
         }
 
@@ -124,35 +125,29 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var sender = new QueueSenderClient(
+                var sender = new ServiceBusSenderClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
-                await sender.SendRangeAsync(sentMessages);
+                await sender.SendBatchAsync(sentMessages);
 
-                var sessionSettings = new SessionOptions()
+                var options = new ServiceBusReceiverClientOptions()
                 {
-                    Connection = new ServiceBusConnection(
-                        TestEnvironment.ServiceBusConnectionString,
-                        scope.QueueName),
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    IsSessionEntity = true
                 };
-                var receiver = new QueueReceiverClient(
+                var receiver = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName,
-                    sessionSettings);
-
+                    options);
 
                 long seq = 0;
                 for (int i = 0; i < messageCt / peekCt; i++)
                 {
-                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
-                        maxMessages: peekCt);
-
-
-                    await foreach (ServiceBusMessage msg in peekedMessages)
+                    foreach (ServiceBusMessage msg in await receiver.PeekBatchAsync(
+                        maxMessages: peekCt))
                     {
                         Assert.IsTrue(msg.SystemProperties.SequenceNumber > seq);
                         if (seq > 0)
@@ -172,23 +167,21 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
-                await sender.SendRangeAsync(sentMessages);
+                await sender.SendBatchAsync(sentMessages);
 
-                var sessionSettings = new SessionOptions()
+                var options = new ServiceBusReceiverClientOptions()
                 {
-                    Connection = new ServiceBusConnection(
-                        TestEnvironment.ServiceBusConnectionString,
-                        scope.QueueName),
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    IsSessionEntity = true
                 };
-                var receiver = new QueueReceiverClient(
+                var receiver = new ServiceBusReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName,
-                    sessionSettings);
+                    options);
 
 
                 long seq = 0;
@@ -210,38 +203,34 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
                 HashSet<string> sessions = new HashSet<string>() { "1", "2", "3" };
 
                 // send the messages
                 foreach (string session in sessions)
                 {
-                    await sender.SendRangeAsync(GetMessages(messageCt, session));
+                    await sender.SendBatchAsync(GetMessages(messageCt, session));
                 }
 
                 // create receiver not scoped to a specific session
                 for (int i = 0; i < 10; i++)
                 {
-                    var sessionSettings = new SessionOptions()
+                    var options = new ServiceBusReceiverClientOptions()
                     {
-                        Connection = new ServiceBusConnection(
-                            TestEnvironment.ServiceBusConnectionString,
-                            scope.QueueName),
-                        SessionId = null
+                        IsSessionEntity = true
                     };
 
-                    var receiver = new QueueReceiverClient(
+                    var receiver = new ServiceBusReceiverClient(
                         TestEnvironment.ServiceBusConnectionString,
                         scope.QueueName,
-                        sessionSettings);
-                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeBySequenceAsync(
-                        fromSequenceNumber: 1,
-                        maxMessages: 10);
+                        options);
 
-                    await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchBySequenceAsync(
+                        fromSequenceNumber: 1,
+                        maxMessages: 10))
                     {
-                        var sessionId = await receiver.Session.GetSessionId();
+                        var sessionId = await receiver.Session.GetSessionIdAsync();
                         Assert.AreEqual(sessionId, peekedMessage.SessionId);
                     }
 
@@ -256,23 +245,23 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
-                await sender.SendRangeAsync(messages);
+                await sender.SendBatchAsync(messages);
 
                 ServiceBusConnection conn = new ServiceBusConnection(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                var sessionOptions = new SessionOptions()
+                var options = new ServiceBusReceiverClientOptions()
                 {
                     SessionId = sessionId,
-                    Connection = conn
+                    IsSessionEntity = true
                 };
-                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, sessionOptions);
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, options);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
@@ -283,8 +272,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
                 messageEnum.Reset();
-                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekRangeAsync(messageCount);
-                await foreach (var item in peekMessages)
+                foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
@@ -298,28 +286,25 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
-                await sender.SendRangeAsync(messages);
+                await sender.SendBatchAsync(messages);
 
                 ServiceBusConnection conn = new ServiceBusConnection(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                var sessionOptions = new SessionOptions()
+                var clientOptions = new ServiceBusReceiverClientOptions()
                 {
                     SessionId = sessionId,
-                    Connection = conn
+                    IsSessionEntity = true,
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete
                 };
 
-                var clientOptions = new QueueReceiverClientOptions()
-                {
-                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
-                };
-                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, sessionOptions, clientOptions);
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
@@ -366,6 +351,74 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var message = receiver.PeekAsync();
                 Assert.IsNull(message.Result);
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task Receive_Event(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                for (int i = 0; i < numThreads; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    IsSessionEntity = true,
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                };
+                await using var receiver = new ServiceBusReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    clientOptions);
+                int messageCt = 0;
+
+                var options = new MessageHandlerOptions()
+                {
+                    MaxConcurrentCalls = numThreads
+                };
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+
+                var completionSourceIndex = -1;
+
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
+                await receiver.StartReceivingAsync(options);
+
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                {
+                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    Interlocked.Increment(ref messageCt);
+                    sessions.TryRemove(message.SessionId, out bool _);
+                    Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
+                    Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    completionSources[setIndex].TrySetResult(true);
+                }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+
+                // we only give each thread enough time to process one message, so the total number of messages
+                // processed should equal the number of threads
+                Assert.AreEqual(numThreads, messageCt);
+
+                // we should have received messages from each of the sessions
+                Assert.AreEqual(0, sessions.Count);
             }
         }
 
@@ -502,6 +555,160 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
                 // TODO: Call ReceiveDeferredMessageAsync() to verify the messages
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task Receive_Event_Consumes_All_Messages(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                for (int i = 0; i < numThreads; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    IsSessionEntity = true,
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                    RetryOptions = new ServiceBusRetryOptions()
+                    {
+                        // to prevent the receive batch from taking a long time when we
+                        // expect it to fail
+                        MaximumRetries = 0
+                    }
+                };
+                await using var receiver = new ServiceBusReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    clientOptions);
+                int messageCt = 0;
+
+                var options = new MessageHandlerOptions()
+                {
+                    MaxConcurrentCalls = numThreads
+                };
+
+                TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
+                await receiver.StartReceivingAsync(options);
+
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                {
+                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    sessions.TryRemove(message.SessionId, out bool _);
+                    Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
+                    Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
+                    var ct = Interlocked.Increment(ref messageCt);
+                    if (ct == numThreads)
+                    {
+                        taskCompletionSource.SetResult(true);
+                    }
+                }
+                await taskCompletionSource.Task;
+
+
+                // we only give each thread enough time to process one message, so the total number of messages
+                // processed should equal the number of threads
+                Assert.AreEqual(numThreads, messageCt);
+
+                // we should have received messages from each of the sessions
+                Assert.AreEqual(0, sessions.Count);
+
+                // try receiving to verify empty
+                // since all the messages are gone and we are using sessions, we won't actually
+                // be able to open the Receive link
+                Assert.That(async () => await receiver.ReceiveBatchAsync(numThreads), Throws.Exception);
+            }
+        }
+
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task Receive_Event_SessionId(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                string sessionId = null;
+                for (int i = 0; i < numThreads; i++)
+                {
+                    sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    // just use the last sessionId from the loop above
+                    SessionId = sessionId,
+                    IsSessionEntity = true,
+                };
+
+                await using var receiver = new ServiceBusReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    clientOptions);
+                int messageCt = 0;
+
+                var options = new MessageHandlerOptions()
+                {
+                    MaxConcurrentCalls = numThreads
+                };
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
+
+                receiver.ProcessSessionMessageAsync += ProcessMessage;
+                receiver.ProcessErrorAsync += ExceptionHandler;
+                await receiver.StartReceivingAsync(options);
+
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                {
+                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    Interlocked.Increment(ref messageCt);
+                    sessions.TryRemove(message.SessionId, out bool _);
+                    Assert.AreEqual(sessionId, message.SessionId);
+                    Assert.AreEqual(sessionId, await session.GetSessionIdAsync());
+                    Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    completionSources[setIndex].TrySetResult(true);
+                }
+                await Task.WhenAny(completionSources.Select(source => source.Task));
+
+                // although we are allowing concurrent calls,
+                // since we are specifying a specific session, the
+                // concurrency won't really work as only one receiver can be linked to the session; TODO may want to add validation for this
+                Assert.AreEqual(1, messageCt);
+
+                // we should have received messages from only the specified session
+                Assert.AreEqual(numThreads - 1, sessions.Count);
             }
         }
     }

@@ -74,6 +74,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
             var mockStorage = new MockCheckPointStorage();

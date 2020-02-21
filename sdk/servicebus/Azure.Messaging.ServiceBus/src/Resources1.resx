@@ -225,8 +225,8 @@
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
     <value>Cannot begin processing without {0} handler set.</value>
   </data>
-  <data name="RunningEventProcessorCannotPerformOperation" xml:space="preserve">
-    <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
+  <data name="RunningMessageProcessor" xml:space="preserve">
+    <value>The message processor is already running and needs to be stopped in order to perform this operation.</value>
   </data>
   <data name="ClientNeededForThisInformation" xml:space="preserve">
     <value>The Service Bus entity client responsible for this information</value>

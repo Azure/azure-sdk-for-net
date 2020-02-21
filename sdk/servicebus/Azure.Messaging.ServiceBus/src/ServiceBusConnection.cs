@@ -52,15 +52,16 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   The endpoint for the Service Bus service to which the connection is associated.
+        ///   This is essentially the <see cref="FullyQualifiedNamespace"/> but with
+        ///   the scheme included.
         /// </summary>
         ///
         internal Uri ServiceEndpoint => InnerClient.ServiceEndpoint;
 
         /// <summary>
-        ///   The set of client options used for creation of this client.
+        /// The transport type used for this connection.
         /// </summary>
-        ///
-        private ServiceBusConnectionOptions Options { get; set; }
+        public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
         ///   An abstracted Service Bus entity Client specific to the active protocol and transport intended to perform delegated operations.
@@ -83,7 +84,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusConnection(string connectionString) : this(connectionString, null, connectionOptions: null)
+        public ServiceBusConnection(string connectionString) :
+            this(connectionString, null, connectionOptions: null)
         {
         }
 
@@ -103,8 +105,10 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusConnection(string connectionString,
-                                  ServiceBusConnectionOptions connectionOptions) : this(connectionString, null, connectionOptions)
+        public ServiceBusConnection(
+            string connectionString,
+            ServiceBusConnectionOptions connectionOptions)
+            : this(connectionString, null, connectionOptions)
         {
         }
 
@@ -121,7 +125,9 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusConnection(string connectionString, string entityName)
+        public ServiceBusConnection(
+            string connectionString,
+            string entityName)
             : this(connectionString, entityName, connectionOptions: null)
         {
         }
@@ -148,6 +154,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
             connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
+
             ValidateConnectionOptions(connectionOptions);
             var builder = new ServiceBusConnectionStringBuilder(connectionString);
 
@@ -170,8 +177,8 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityName = entityName;
-            Options = connectionOptions;
             InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredentials, connectionOptions);
+            TransportType = connectionOptions.TransportType;
         }
 
         /// <summary>
@@ -210,7 +217,7 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityName = entityName;
-            Options = connectionOptions;
+            TransportType = connectionOptions.TransportType;
 
             InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredential, connectionOptions);
         }
@@ -352,7 +359,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="retryPolicy"></param>
         /// <param name="sendLinkName"></param>
         /// <param name="cancellationToken"></param>
-        public async Task CancelScheduledMessageAsync(
+        internal async Task CancelScheduledMessageAsync(
             long sequenceNumber,
             ServiceBusRetryPolicy retryPolicy,
             string sendLinkName = null,

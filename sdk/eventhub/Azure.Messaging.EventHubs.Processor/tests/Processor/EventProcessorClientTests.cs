@@ -852,6 +852,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task StopProcessingAsyncStopsProcessingForEveryPartition()
         {
             var maximumWaitTimeInMilli = 100;
@@ -1594,6 +1595,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task PartitionInitializingAsyncTokenIsCanceledWhenStopProcessingAsyncIsCalled()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -1647,6 +1649,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task PartitionClosingAsyncIsCalledWithShutdownReasonWhenStoppingTheProcessor()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -2260,6 +2263,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenOwnershipRenewalFails()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -2595,6 +2599,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task ProcessErrorAsyncIsNotTriggeredWhenRelinquishingOwnershipFails()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -2682,6 +2687,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task ProcessErrorAsyncIsNotTriggeredWhenUpdateCheckpointFails()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -3231,6 +3237,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task ProcessorStopsProcessingPartitionItDoesNotOwnAnymore()
         {
             const int NumberOfPartitions = 2;

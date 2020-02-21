@@ -194,6 +194,11 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>An Service Bus resource, such as an Service Bus entity, consumer group, or partition cannot be found by the Service Bus service.</summary>
             ResourceNotFound,
 
+            /// <summary>
+            ///
+            /// </summary>
+            MessageLockLost,
+
             /// <summary>A message is larger than the maximum size allowed for its transport.</summary>
             MessageSizeExceeded,
 

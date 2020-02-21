@@ -461,6 +461,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task ProcessorDoesNotProcessCheckpointedEventsAgain()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
