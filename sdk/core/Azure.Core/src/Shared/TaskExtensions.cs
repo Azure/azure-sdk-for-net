@@ -52,17 +52,23 @@ namespace Azure.Core.Pipeline
 
         public static ConfiguredValueTaskAwaitable<T> EnsureCompleted<T>(this ConfiguredValueTaskAwaitable<T> task, bool async)
         {
-#pragma warning disable AZC0109
-            Debug.Assert(async || task.GetAwaiter().IsCompleted);
-#pragma warning restore AZC0109
+#if DEBUG
+            if (!async)
+            {
+                VerifyTaskCompleted(task.GetAwaiter().IsCompleted);
+            }
+#endif
             return task;
         }
 
         public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable task, bool async)
         {
-#pragma warning disable AZC0109
-            Debug.Assert(async || task.GetAwaiter().IsCompleted);
-#pragma warning restore AZC0109
+#if DEBUG
+            if (!async)
+            {
+                VerifyTaskCompleted(task.GetAwaiter().IsCompleted);
+            }
+#endif
             return task;
         }
 
@@ -71,9 +77,16 @@ namespace Azure.Core.Pipeline
         {
             if (!isCompleted)
             {
-                // Throw an InvalidOperationException instead of using
-                // Debug.Assert because that brings down nUnit immediately
-                throw new InvalidOperationException("Task is not completed");
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+                else
+                {
+                    // Throw an InvalidOperationException instead of using
+                    // Debug.Assert because that brings down nUnit immediately
+                    throw new InvalidOperationException("Task is not completed");
+                }
             }
         }
     }
