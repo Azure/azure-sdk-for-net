@@ -11,23 +11,23 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>Provides options associated with message pump processing using
     ///  cref="QueueClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" /> and
     ///  cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
-    public sealed class MessageHandlerOptions
+    public sealed class ProcessingOptions
     {
         private int _maxConcurrentCalls;
         private TimeSpan _maxAutoRenewDuration;
 
-        /// <summary>Initializes a new instance of the <see cref="MessageHandlerOptions" /> class.
+        /// <summary>Initializes a new instance of the <see cref="ProcessingOptions" /> class.
         /// Default Values:
         ///     <see cref="MaxConcurrentCalls"/> = 1
         ///     <see cref="AutoComplete"/> = true
-        ///     <see cref="ReceiveTimeOut"/> = 1 minute
+        ///     <see cref="MaxReceiveTimeout"/> = 1 minute
         ///     <see cref="MaxAutoLockRenewalDuration"/> = 5 minutes
         /// </summary>
-        public MessageHandlerOptions()
+        public ProcessingOptions()
         {
             MaxConcurrentCalls = 1;
             AutoComplete = true;
-            ReceiveTimeOut = Constants.DefaultOperationTimeout;
+            MaxReceiveTimeout = Constants.DefaultOperationTimeout;
             MaxAutoLockRenewalDuration = Constants.ClientPumpRenewLockTimeout;
         }
 
@@ -72,6 +72,9 @@ namespace Azure.Messaging.ServiceBus
 
         internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
-        internal TimeSpan ReceiveTimeOut { get; }
+        /// <summary>
+        ///
+        /// </summary>
+        public TimeSpan MaxReceiveTimeout { get; }
     }
 }

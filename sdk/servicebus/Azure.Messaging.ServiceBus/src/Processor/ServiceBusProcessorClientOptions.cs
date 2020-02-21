@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
@@ -12,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusReceiverClientOptions
+    public class ServiceBusProcessorClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
         internal ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
@@ -105,8 +106,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A new copy of <see cref="ServiceBusReceiverClientOptions" />.</returns>
         ///
-        internal ServiceBusReceiverClientOptions Clone() =>
-            new ServiceBusReceiverClientOptions
+        internal ServiceBusProcessorClientOptions Clone() =>
+            new ServiceBusProcessorClientOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
@@ -114,5 +115,6 @@ namespace Azure.Messaging.ServiceBus
                 IsSessionEntity = IsSessionEntity,
                 SessionId = SessionId
             };
+
     }
 }

@@ -261,12 +261,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
                 await sender.SendBatchAsync(GetMessages(numThreads * 2));
-                await using var receiver = new ServiceBusReceiverClient(
+                await using var processor = new ServiceBusProcessorClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int messageCt = 0;
 
-                var options = new MessageHandlerOptions()
+                var options = new ProcessingOptions()
                 {
                     MaxConcurrentCalls = numThreads
                 };
@@ -277,13 +277,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .ToArray();
                 var completionSourceIndex = -1;
 
-                receiver.ProcessMessageAsync += ProcessMessage;
-                receiver.ProcessErrorAsync += ExceptionHandler;
-                await receiver.StartReceivingAsync(options);
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message)
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
                 {
-                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await processor.CompleteAsync(message.SystemProperties.LockToken);
                     Interlocked.Increment(ref messageCt);
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].TrySetResult(true);
@@ -313,34 +313,36 @@ namespace Azure.Messaging.ServiceBus.Tests
                 int numMessages = 50;
                 await sender.SendBatchAsync(GetMessages(numMessages));
 
-                await using var receiver = new ServiceBusReceiverClient(
+                await using var processor = new ServiceBusProcessorClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int messageProcessedCt = 0;
 
                 // stop processing halfway through
                 int stopAfterMessagesCt = numMessages / 2;
-                var options = new MessageHandlerOptions()
+                var options = new ProcessingOptions()
                 {
                     MaxConcurrentCalls = numThreads
                 };
 
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                receiver.ProcessMessageAsync += ProcessMessage;
-                receiver.ProcessErrorAsync += ExceptionHandler;
-                await receiver.StartReceivingAsync(options);
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message)
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
                 {
                     Interlocked.Increment(ref messageProcessedCt);
                     if (messageProcessedCt == stopAfterMessagesCt)
                     {
-                        await receiver.StopReceivingAsync();
+                        await processor.StopProcessingAsync();
                         tcs.TrySetResult(true);
                     }
                 }
                 await tcs.Task;
                 var remainingCt = 0;
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+
                 foreach (ServiceBusMessage message in await receiver.ReceiveBatchAsync(numMessages))
                 {
                     remainingCt++;

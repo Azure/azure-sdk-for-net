@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     ///   A transport client abstraction responsible for brokering operations for AMQP-based connections.
-    ///   It is intended that the public <see cref="ServiceBusReceiverClient" /> make use of an instance
+    ///   It is intended that the public <see cref="ServiceBusProcessorClient" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
