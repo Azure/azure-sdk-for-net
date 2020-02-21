@@ -10,7 +10,6 @@ omitted_paths:
   - common/SmokeTests/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
-  - doc/ApiDocGeneration/*
   - doc/*
   - sdk/search/
   - sdk/keyvault/
