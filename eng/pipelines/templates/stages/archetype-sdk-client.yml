@@ -7,6 +7,7 @@ stages:
     jobs:
     - template: ../jobs/archetype-sdk-client.yml
       parameters:
+        ServiceToBuild: ${{ coalesce(parameters.ServiceToBuild, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{parameters.ServiceDirectory}}
         Artifacts: ${{parameters.Artifacts}}
         ArtifactName: packages
@@ -15,6 +16,7 @@ stages:
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
     - template: pipelines/stages/archetype-net-release.yml@azure-sdk-build-tools
       parameters:
+        ServiceDirectory: ${{parameters.ServiceDirectory}}
         DependsOn: Build
         Artifacts: ${{parameters.Artifacts}}
         ArtifactName: packages

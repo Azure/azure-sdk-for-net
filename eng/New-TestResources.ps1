@@ -71,6 +71,27 @@ function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
+function Retry([scriptblock] $Action, [int] $Attempts = 5) {
+    $attempt = 0
+    $sleep = 5
+
+    while ($attempt -lt $Attempts) {
+        try {
+            $attempt++
+            return $Action.Invoke()
+        } catch {
+            if ($attempt -lt $Attempts) {
+                $sleep *= 2
+
+                Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
+                Start-Sleep -Seconds $sleep
+            } else {
+                Write-Error -ErrorRecord $_
+            }
+        }
+    }
+}
+
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
@@ -84,7 +105,7 @@ trap {
 }
 
 # Enumerate test resources to deploy. Fail if none found.
-$root = Resolve-Path -Path "$PSScriptRoot/../sdk/$ServiceDirectory"
+$root = [System.IO.Path]::Combine("$PSScriptRoot/../sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
 
@@ -108,7 +129,10 @@ if ($ProvisionerApplicationId) {
     Log "Logging into service principal '$ProvisionerApplicationId'"
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
-    $provisionerAccount = Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+
+    $provisionerAccount = Retry {
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+    }
 
     $exitActions += {
         Write-Verbose "Logging out of service principal '$($provisionerAccount.Context.Account)'"
@@ -118,7 +142,10 @@ if ($ProvisionerApplicationId) {
 
 # Get test application OID from ID if not already provided.
 if ($TestApplicationId -and !$TestApplicationOid) {
-    $testServicePrincipal = Get-AzADServicePrincipal -ApplicationId $TestApplicationId
+    $testServicePrincipal = Retry {
+        Get-AzADServicePrincipal -ApplicationId $TestApplicationId
+    }
+
     if ($testServicePrincipal -and $testServicePrincipal.Id) {
         $script:TestApplicationOid = $testServicePrincipal.Id
     }
@@ -160,7 +187,10 @@ if ($CI) {
 }
 
 Log "Creating resource group '$resourceGroupName' in location '$Location'"
-$resourceGroup = New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
+$resourceGroup = Retry {
+    New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
+}
+
 if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
     # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
     Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
@@ -213,7 +243,10 @@ foreach ($templateFile in $templateFiles) {
     }
 
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
-    $deployment = New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+    $deployment = Retry {
+        New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+    }
+
     if ($deployment.ProvisioningState -eq 'Succeeded') {
         # New-AzResourceGroupDeployment would've written an error and stopped the pipeline by default anyway.
         Write-Verbose "Successfully deployed template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
@@ -276,7 +309,7 @@ If you are not currently logged into an account in the Az PowerShell module, you
 A name to use in the resource group and passed to the ARM template as 'baseName'.
 
 .PARAMETER ServiceDirectory
-A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'.
+A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'. This can also be an absolute path or specify parent directories.
 
 .PARAMETER TestApplicationId
 A service principal ID to authenticate the test runner against deployed resources.

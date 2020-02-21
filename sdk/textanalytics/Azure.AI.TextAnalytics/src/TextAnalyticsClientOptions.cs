@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
             /// <summary>
             /// Version 3.0-preview.1
             /// </summary>
-            V3_0_preview_1 = 0
+            V3_0_preview_1 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -36,10 +36,15 @@ namespace Azure.AI.TextAnalytics
         internal ServiceVersion Version { get; }
 
         /// <summary>
+        /// Default country hint value to use in all client calls.
+        /// If no value is specified, "us" is set as default.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.
         /// </summary>
         public string DefaultCountryHint { get; set; } = "us";
 
         /// <summary>
+        /// Default language value to use in all client calls.
+        /// If no value is specified, "en" is set as default.
         /// </summary>
         public string DefaultLanguage { get; set; } = "en";
 
@@ -65,7 +70,7 @@ namespace Azure.AI.TextAnalytics
                     return "v3.0-preview.1";
 
                 default:
-                    throw new ArgumentException(Version.ToString());
+                    throw new ArgumentException($"Version {Version.ToString()} not supported.");
             }
         }
     }

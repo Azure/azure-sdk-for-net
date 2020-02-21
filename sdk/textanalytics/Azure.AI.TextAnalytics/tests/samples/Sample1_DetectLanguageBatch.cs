@@ -16,11 +16,12 @@ namespace Azure.AI.TextAnalytics.Samples
         public void DetectLanguageBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
+            #region Snippet:TextAnalyticsSample1DetectLanguageBatch
             var inputs = new List<DetectLanguageInput>
             {
                 new DetectLanguageInput("1", "Hello world")
@@ -37,25 +38,27 @@ namespace Azure.AI.TextAnalytics.Samples
                 },
                 new DetectLanguageInput("4", ":) :( :D")
                 {
-                     CountryHint = "us",
+                     CountryHint = DetectLanguageInput.None,
                 }
             };
 
-            DetectLanguageResultCollection results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            #endregion
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (DetectLanguageResult result in results)
             {
-                var document = inputs[i++];
+                DetectLanguageInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error code: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {

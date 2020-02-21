@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.CognitiveServices
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Cognitive Services Management Client
@@ -86,9 +90,44 @@ namespace Microsoft.Azure.Management.CognitiveServices
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the ICheckSkuAvailabilityOperations.
+        /// Check available SKUs.
         /// </summary>
-        ICheckSkuAvailabilityOperations CheckSkuAvailability { get; }
+        /// <param name='location'>
+        /// Resource location.
+        /// </param>
+        /// <param name='skus'>
+        /// The SKU of the resource.
+        /// </param>
+        /// <param name='kind'>
+        /// The Kind of the resource.
+        /// </param>
+        /// <param name='type'>
+        /// The Type of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckSkuAvailabilityResultList>> CheckSkuAvailabilityWithHttpMessagesAsync(string location, IList<string> skus, string kind, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Check whether a domain is available.
+        /// </summary>
+        /// <param name='subdomainName'>
+        /// The subdomain name to use.
+        /// </param>
+        /// <param name='type'>
+        /// The Type of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckDomainAvailabilityResult>> CheckDomainAvailabilityWithHttpMessagesAsync(string subdomainName, string type, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -21,5 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string ONNX10 = "ONNX10";
         public const string ONNX12 = "ONNX12";
         public const string ARM = "ARM";
+        public const string TensorFlowNormal = "TensorFlowNormal";
+        public const string TensorFlowLite = "TensorFlowLite";
     }
 }

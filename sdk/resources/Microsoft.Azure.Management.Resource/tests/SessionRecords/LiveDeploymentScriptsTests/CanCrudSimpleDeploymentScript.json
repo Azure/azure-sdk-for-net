@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDM/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"properties\": {\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"azPowerShellVersion\": \"2.7.0\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"UserAssigned\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {}\r\n    }\r\n  },\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "42846492-e725-409e-a3a1-d8a997c6852d"
+          "ad52820e-c497-48fb-8776-507d67b9d6d9"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,10 +36,10 @@
           "17"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253/operationresults/0?api-version=2019-10-01-preview"
+          "https://management.azure.com/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/a3b9c49e-080b-43cc-a2f3-f49035823feb?api-version=2019-10-01-preview"
         ],
         "x-ms-request-id": [
-          "6cade2a2-d2fb-4fc7-a0f5-80f1124710da"
+          "931901fd-06b0-46d5-b1b5-eb162a5a363b"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -48,10 +48,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "929eb207-a9e8-40b6-bfc8-d2b855dc14b6"
+          "16669ce6-7abd-4365-b446-04a96b178c96"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T040933Z:929eb207-a9e8-40b6-bfc8-d2b855dc14b6"
+          "WESTUS:20200130T003724Z:16669ce6-7abd-4365-b446-04a96b178c96"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -60,10 +60,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:09:33 GMT"
+          "Thu, 30 Jan 2020 00:37:24 GMT"
         ],
         "Content-Length": [
-          "1154"
+          "1246"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -72,26 +72,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {},\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {\r\n      \"restartPolicy\": \"never\"\r\n    },\r\n    \"status\": {},\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703\",\r\n  \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet5703\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/a3b9c49e-080b-43cc-a2f3-f49035823feb?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDMvb3BlcmF0aW9ucmVzdWx0cy9hM2I5YzQ5ZS0wODBiLTQzY2MtYTJmMy1mNDkwMzU4MjNmZWI/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "1082b02d-f12f-4d28-8f72-404b95e65afc"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -102,7 +96,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "83ec163b-e94e-4c6e-905e-8430efc29300"
+          "8660353e-b1d3-48df-8121-7d6129b21462"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -111,10 +105,10 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "de1a60de-c3c0-4a06-bd6f-a2219705cd99"
+          "e4b78fc0-1fa7-4300-9499-7e54e3f25daf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T040933Z:de1a60de-c3c0-4a06-bd6f-a2219705cd99"
+          "WESTUS:20200130T003741Z:e4b78fc0-1fa7-4300-9499-7e54e3f25daf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,10 +117,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:09:33 GMT"
+          "Thu, 30 Jan 2020 00:37:41 GMT"
         ],
         "Content-Length": [
-          "1154"
+          "256"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -135,26 +129,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {},\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/0\",\r\n  \"name\": \"0\",\r\n  \"status\": \"provisioningResources\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/a3b9c49e-080b-43cc-a2f3-f49035823feb?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDMvb3BlcmF0aW9ucmVzdWx0cy9hM2I5YzQ5ZS0wODBiLTQzY2MtYTJmMy1mNDkwMzU4MjNmZWI/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "f3cbc367-38a5-4054-a625-33d69e9e9ea7"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -165,7 +153,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1072a5ee-058e-4f05-9fba-0805e916942f"
+          "46c72353-a260-433d-afb7-84804b41823c"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -174,10 +162,10 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "7b9f2047-116c-4a5f-a84f-52f6b14f9d96"
+          "dcc4a48e-0132-45f6-8fd9-70144ebec934"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T040943Z:7b9f2047-116c-4a5f-a84f-52f6b14f9d96"
+          "WESTUS:20200130T003758Z:dcc4a48e-0132-45f6-8fd9-70144ebec934"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -186,10 +174,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:09:43 GMT"
+          "Thu, 30 Jan 2020 00:37:57 GMT"
         ],
         "Content-Length": [
-          "1167"
+          "256"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -198,26 +186,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {},\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/0\",\r\n  \"name\": \"0\",\r\n  \"status\": \"provisioningResources\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/a3b9c49e-080b-43cc-a2f3-f49035823feb?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDMvb3BlcmF0aW9ucmVzdWx0cy9hM2I5YzQ5ZS0wODBiLTQzY2MtYTJmMy1mNDkwMzU4MjNmZWI/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "863cb8ea-3787-4417-91c5-14c6cf6f109a"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -228,19 +210,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1eb8f075-06f7-4384-8319-839d74395ee9"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "2ecee1c8-ae35-4f62-8a41-9066133fa0f0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
         "x-ms-correlation-request-id": [
-          "39bbaa1b-ea17-40fd-97a2-67867ecfd5b2"
+          "fadc1756-979d-4864-a6b6-43a13ab9aa8a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T040954Z:39bbaa1b-ea17-40fd-97a2-67867ecfd5b2"
+          "WESTUS:20200130T003815Z:fadc1756-979d-4864-a6b6-43a13ab9aa8a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -249,10 +231,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:09:53 GMT"
+          "Thu, 30 Jan 2020 00:38:15 GMT"
         ],
         "Content-Length": [
-          "1167"
+          "256"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -261,26 +243,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {},\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/0\",\r\n  \"name\": \"0\",\r\n  \"status\": \"provisioningResources\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/a3b9c49e-080b-43cc-a2f3-f49035823feb?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDMvb3BlcmF0aW9ucmVzdWx0cy9hM2I5YzQ5ZS0wODBiLTQzY2MtYTJmMy1mNDkwMzU4MjNmZWI/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ec6e7ad0-3406-4194-965a-f67701454c4e"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -291,7 +267,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "99bad668-3ce7-48c2-a171-23691905901e"
+          "660bbd89-a541-4144-8796-e1d58b2471a6"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -300,10 +276,10 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "a614e942-49c6-4fe9-821a-8638f59ce5cb"
+          "80ed7f76-38ce-4650-96cb-a0fc13c26caf"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041004Z:a614e942-49c6-4fe9-821a-8638f59ce5cb"
+          "WESTUS:20200130T003833Z:80ed7f76-38ce-4650-96cb-a0fc13c26caf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -312,10 +288,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:10:03 GMT"
+          "Thu, 30 Jan 2020 00:38:33 GMT"
         ],
         "Content-Length": [
-          "1398"
+          "256"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -324,26 +300,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/0\",\r\n  \"name\": \"0\",\r\n  \"status\": \"provisioningResources\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/a3b9c49e-080b-43cc-a2f3-f49035823feb?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlR3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDMvb3BlcmF0aW9ucmVzdWx0cy9hM2I5YzQ5ZS0wODBiLTQzY2MtYTJmMy1mNDkwMzU4MjNmZWI/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "d233fa7b-118f-4e2e-a3ba-e5de66195bd6"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -354,7 +324,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "1f709d31-5f02-4653-8c5f-c3d7b634487c"
+          "39cf59cd-0eff-45fd-9fff-88ac6ca21334"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -363,10 +333,10 @@
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "5f9e177c-96ff-4495-bce0-45dcef9e2414"
+          "52fd9349-9d96-4751-b9a3-36e339922f02"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041014Z:5f9e177c-96ff-4495-bce0-45dcef9e2414"
+          "WESTUS:20200130T003850Z:52fd9349-9d96-4751-b9a3-36e339922f02"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -375,10 +345,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:10:14 GMT"
+          "Thu, 30 Jan 2020 00:38:50 GMT"
         ],
         "Content-Length": [
-          "1398"
+          "244"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -387,26 +357,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703/operationresults/0\",\r\n  \"name\": \"0\",\r\n  \"status\": \"succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDM/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "080c714d-06a8-486a-a77b-93e76323d625"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -417,7 +381,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6abef4b8-81b0-4161-b0b9-3f05236c0988"
+          "ddad6f9a-79c8-48d3-aacd-3ac9f44ead07"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -426,10 +390,10 @@
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "6607ae2d-d346-4a90-ab07-cad427483db6"
+          "3c5463d2-713e-4e5f-88e9-c20912b7f75e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041024Z:6607ae2d-d346-4a90-ab07-cad427483db6"
+          "WESTUS:20200130T003850Z:3c5463d2-713e-4e5f-88e9-c20912b7f75e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -438,10 +402,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:10:24 GMT"
+          "Thu, 30 Jan 2020 00:38:50 GMT"
         ],
         "Content-Length": [
-          "1398"
+          "1829"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -450,26 +414,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {\r\n      \"restartPolicy\": \"never\"\r\n    },\r\n    \"status\": {\r\n      \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/7iowv2wggo5diazscripts\",\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/7iowv2wggo5diazscripts\",\r\n      \"startTime\": \"2020-01-30T00:37:25.6376398Z\",\r\n      \"endTime\": \"2020-01-30T00:38:45.8572836Z\",\r\n      \"expirationTime\": \"2020-01-31T02:38:45.8572836Z\"\r\n    },\r\n    \"outputs\": {\r\n      \"output\": \"Hello World\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703\",\r\n  \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet5703\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDM/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "943d493a-701c-4d64-9916-8de0547f7f17"
+          "8570f396-0c66-413d-ae0e-b36741d73177"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -480,19 +444,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6f6b242a-768b-45a6-8701-a465d4940258"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
+          "0cc41aef-b12c-42f7-85e0-a306cfd90560"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
         "x-ms-correlation-request-id": [
-          "dd92ce81-6c5f-49d0-abff-2e1823f71781"
+          "533c5a72-c6b1-4077-b5d2-8bb3d0a955f3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041034Z:dd92ce81-6c5f-49d0-abff-2e1823f71781"
+          "WESTUS:20200130T003850Z:533c5a72-c6b1-4077-b5d2-8bb3d0a955f3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -501,10 +465,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:10:34 GMT"
+          "Thu, 30 Jan 2020 00:38:50 GMT"
         ],
         "Content-Length": [
-          "1398"
+          "1829"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -513,26 +477,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {\r\n      \"restartPolicy\": \"never\"\r\n    },\r\n    \"status\": {\r\n      \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/7iowv2wggo5diazscripts\",\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/7iowv2wggo5diazscripts\",\r\n      \"startTime\": \"2020-01-30T00:37:25.6376398Z\",\r\n      \"endTime\": \"2020-01-30T00:38:45.8572836Z\",\r\n      \"expirationTime\": \"2020-01-31T02:38:45.8572836Z\"\r\n    },\r\n    \"outputs\": {\r\n      \"output\": \"Hello World\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703\",\r\n  \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet5703\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9317c0ce-984a-4eb7-b0d3-9541f3d4c490"
+          "ca80e5b4-e330-4062-ad90-e0011155b3f0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -543,7 +507,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "54997ad2-8a99-4e3d-9d17-35ad827d437b"
+          "9e405f30-60c1-418b-9d44-2293b35393d1"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -552,10 +516,10 @@
           "11992"
         ],
         "x-ms-correlation-request-id": [
-          "694934d3-212a-476a-add8-6e12a45d383a"
+          "f9aedb07-8ec8-4ae1-ae93-a4e8064d1ba2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041044Z:694934d3-212a-476a-add8-6e12a45d383a"
+          "WESTUS:20200130T003850Z:f9aedb07-8ec8-4ae1-ae93-a4e8064d1ba2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -564,10 +528,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:10:44 GMT"
+          "Thu, 30 Jan 2020 00:38:50 GMT"
         ],
         "Content-Length": [
-          "1398"
+          "17142"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -576,26 +540,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"Param([string]$Location) $output = get-azresourcegroup -Location $Location ; $DeploymentScriptOutputs['scriptOutput'] = $output\",\r\n        \"arguments\": \"-Location 'westus'\",\r\n        \"retentionInterval\": \"P7D\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ngnd5lro6s4hwazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ngnd5lro6s4hwazscripts\",\r\n          \"startTime\": \"2019-11-13T15:28:13.5131326Z\",\r\n          \"endTime\": \"2019-11-13T15:29:09.0164096Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"scriptOutput\": \"[\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"Ds-TestRg\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": \\\"System.Collections.Hashtable\\\",\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"RG_test123\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/RG_test123\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"storageRG_Test\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/storageRG_Test\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"testresourcegroup_bp3\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/testresourcegroup_bp3\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  }\\r\\n]\"\r\n        },\r\n        \"cleanupPreference\": \"OnExpiration\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/MyDeploymentScriptTest\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"MyDeploymentScriptTest\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/yuq6tppaexkgmazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/yuq6tppaexkgmazscripts\",\r\n          \"startTime\": \"2020-01-30T00:04:34.29774Z\",\r\n          \"endTime\": \"2020-01-30T00:07:58.7689571Z\",\r\n          \"expirationTime\": \"2020-01-31T02:07:58.7689571Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/filiz-test\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"filiz-test\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/2aqxgyefa55rsazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/2aqxgyefa55rsazscripts\",\r\n          \"startTime\": \"2020-01-29T23:58:27.8856701Z\",\r\n          \"endTime\": \"2020-01-29T23:59:46.8846379Z\",\r\n          \"expirationTime\": \"2020-01-31T01:59:46.8846379Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet6473\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet6473\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/bhq2ohzfsucfeazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/bhq2ohzfsucfeazscripts\",\r\n          \"startTime\": \"2020-01-30T00:03:01.9341928Z\",\r\n          \"endTime\": \"2020-01-30T00:04:24.3585082Z\",\r\n          \"expirationTime\": \"2020-01-31T02:04:24.3585082Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet9936\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet9936\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qonod6qf7yf3eazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qonod6qf7yf3eazscripts\",\r\n          \"startTime\": \"2020-01-30T00:07:48.9980456Z\",\r\n          \"endTime\": \"2020-01-30T00:09:06.4728785Z\",\r\n          \"expirationTime\": \"2020-01-31T02:09:06.4728785Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet952\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet952\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ygvcomoiaeqouazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ygvcomoiaeqouazscripts\",\r\n          \"startTime\": \"2020-01-30T00:14:51.9081222Z\",\r\n          \"endTime\": \"2020-01-30T00:16:11.4188365Z\",\r\n          \"expirationTime\": \"2020-01-31T02:16:11.4188365Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet3908\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet3908\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qcbrkfccafhzqazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qcbrkfccafhzqazscripts\",\r\n          \"startTime\": \"2020-01-30T00:30:26.510254Z\",\r\n          \"endTime\": \"2020-01-30T00:31:36.3026095Z\",\r\n          \"expirationTime\": \"2020-01-31T02:31:36.3026095Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--azsmnet98\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanGetDeploymentScriptExecutionLogs--azsmnet98\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/7iowv2wggo5diazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/7iowv2wggo5diazscripts\",\r\n          \"startTime\": \"2020-01-30T00:37:25.6376398Z\",\r\n          \"endTime\": \"2020-01-30T00:38:45.8572836Z\",\r\n          \"expirationTime\": \"2020-01-31T02:38:45.8572836Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet5703\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9a3164f8-a714-433d-927b-b5fdeb2adb59"
+          "2af1c22f-7114-4f46-9b25-8878b03922c6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -606,70 +570,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "54816cfa-fa18-41d6-9b68-9a08721e0864"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
-        ],
-        "x-ms-correlation-request-id": [
-          "82f8ff3d-870a-4959-8da7-8a4b19011020"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20191107T041054Z:82f8ff3d-870a-4959-8da7-8a4b19011020"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 07 Nov 2019 04:10:54 GMT"
-        ],
-        "Content-Length": [
-          "1398"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"ProvisioningResources\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "c859058e-0c8e-4407-9b8d-f67cbb9cabaa"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28008.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "d0888120-8345-41d1-9336-a2a71e67f2d1"
+          "22635e2f-5496-43ac-bc44-1f6aef590c95"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -678,10 +579,10 @@
           "11990"
         ],
         "x-ms-correlation-request-id": [
-          "fb1d693a-bd9a-4b92-afeb-211c698eb09a"
+          "27a0fba4-3a55-4d7d-b9be-50207e4ad548"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041104Z:fb1d693a-bd9a-4b92-afeb-211c698eb09a"
+          "WESTUS:20200130T003851Z:27a0fba4-3a55-4d7d-b9be-50207e4ad548"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -690,10 +591,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:11:03 GMT"
+          "Thu, 30 Jan 2020 00:38:51 GMT"
         ],
         "Content-Length": [
-          "1571"
+          "15154"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -702,26 +603,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Running\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/btyb7hhkm5z6oazscripts\",\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"Param([string]$Location) $output = get-azresourcegroup -Location $Location ; $DeploymentScriptOutputs['scriptOutput'] = $output\",\r\n        \"arguments\": \"-Location 'westus'\",\r\n        \"retentionInterval\": \"P7D\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ngnd5lro6s4hwazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ngnd5lro6s4hwazscripts\",\r\n          \"startTime\": \"2019-11-13T15:28:13.5131326Z\",\r\n          \"endTime\": \"2019-11-13T15:29:09.0164096Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"scriptOutput\": \"[\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"Ds-TestRg\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": \\\"System.Collections.Hashtable\\\",\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"RG_test123\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/RG_test123\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"storageRG_Test\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/storageRG_Test\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"testresourcegroup_bp3\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/testresourcegroup_bp3\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  }\\r\\n]\"\r\n        },\r\n        \"cleanupPreference\": \"OnExpiration\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/MyDeploymentScriptTest\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"MyDeploymentScriptTest\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/yuq6tppaexkgmazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/yuq6tppaexkgmazscripts\",\r\n          \"startTime\": \"2020-01-30T00:04:34.29774Z\",\r\n          \"endTime\": \"2020-01-30T00:07:58.7689571Z\",\r\n          \"expirationTime\": \"2020-01-31T02:07:58.7689571Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/filiz-test\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"filiz-test\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/2aqxgyefa55rsazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/2aqxgyefa55rsazscripts\",\r\n          \"startTime\": \"2020-01-29T23:58:27.8856701Z\",\r\n          \"endTime\": \"2020-01-29T23:59:46.8846379Z\",\r\n          \"expirationTime\": \"2020-01-31T01:59:46.8846379Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet6473\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet6473\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/bhq2ohzfsucfeazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/bhq2ohzfsucfeazscripts\",\r\n          \"startTime\": \"2020-01-30T00:03:01.9341928Z\",\r\n          \"endTime\": \"2020-01-30T00:04:24.3585082Z\",\r\n          \"expirationTime\": \"2020-01-31T02:04:24.3585082Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet9936\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet9936\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qonod6qf7yf3eazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qonod6qf7yf3eazscripts\",\r\n          \"startTime\": \"2020-01-30T00:07:48.9980456Z\",\r\n          \"endTime\": \"2020-01-30T00:09:06.4728785Z\",\r\n          \"expirationTime\": \"2020-01-31T02:09:06.4728785Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet952\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet952\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ygvcomoiaeqouazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ygvcomoiaeqouazscripts\",\r\n          \"startTime\": \"2020-01-30T00:14:51.9081222Z\",\r\n          \"endTime\": \"2020-01-30T00:16:11.4188365Z\",\r\n          \"expirationTime\": \"2020-01-31T02:16:11.4188365Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet3908\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet3908\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qcbrkfccafhzqazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qcbrkfccafhzqazscripts\",\r\n          \"startTime\": \"2020-01-30T00:30:26.510254Z\",\r\n          \"endTime\": \"2020-01-30T00:31:36.3026095Z\",\r\n          \"expirationTime\": \"2020-01-31T02:31:36.3026095Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--azsmnet98\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanGetDeploymentScriptExecutionLogs--azsmnet98\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRTY3JpcHRzP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "55b7ecd5-a871-4ccc-8014-5b0b2cb58e7d"
+          "c66efa7a-2f8c-4623-85cb-bb96a37e84b1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -732,7 +633,70 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "65a1b81c-568c-4b7a-aff7-05e246af6a43"
+          "4e4eb998-76bf-4f90-a310-2f8c9cf66a83"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "2d5e7318-11d2-44ae-9e57-f0e28b9b9165"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20200130T003850Z:2d5e7318-11d2-44ae-9e57-f0e28b9b9165"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 30 Jan 2020 00:38:50 GMT"
+        ],
+        "Content-Length": [
+          "17142"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"Param([string]$Location) $output = get-azresourcegroup -Location $Location ; $DeploymentScriptOutputs['scriptOutput'] = $output\",\r\n        \"arguments\": \"-Location 'westus'\",\r\n        \"retentionInterval\": \"P7D\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ngnd5lro6s4hwazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ngnd5lro6s4hwazscripts\",\r\n          \"startTime\": \"2019-11-13T15:28:13.5131326Z\",\r\n          \"endTime\": \"2019-11-13T15:29:09.0164096Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"scriptOutput\": \"[\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"Ds-TestRg\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": \\\"System.Collections.Hashtable\\\",\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"RG_test123\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/RG_test123\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"storageRG_Test\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/storageRG_Test\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"testresourcegroup_bp3\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/testresourcegroup_bp3\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  }\\r\\n]\"\r\n        },\r\n        \"cleanupPreference\": \"OnExpiration\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/MyDeploymentScriptTest\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"MyDeploymentScriptTest\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/yuq6tppaexkgmazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/yuq6tppaexkgmazscripts\",\r\n          \"startTime\": \"2020-01-30T00:04:34.29774Z\",\r\n          \"endTime\": \"2020-01-30T00:07:58.7689571Z\",\r\n          \"expirationTime\": \"2020-01-31T02:07:58.7689571Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/filiz-test\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"filiz-test\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/2aqxgyefa55rsazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/2aqxgyefa55rsazscripts\",\r\n          \"startTime\": \"2020-01-29T23:58:27.8856701Z\",\r\n          \"endTime\": \"2020-01-29T23:59:46.8846379Z\",\r\n          \"expirationTime\": \"2020-01-31T01:59:46.8846379Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet6473\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet6473\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/bhq2ohzfsucfeazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/bhq2ohzfsucfeazscripts\",\r\n          \"startTime\": \"2020-01-30T00:03:01.9341928Z\",\r\n          \"endTime\": \"2020-01-30T00:04:24.3585082Z\",\r\n          \"expirationTime\": \"2020-01-31T02:04:24.3585082Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet9936\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet9936\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qonod6qf7yf3eazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qonod6qf7yf3eazscripts\",\r\n          \"startTime\": \"2020-01-30T00:07:48.9980456Z\",\r\n          \"endTime\": \"2020-01-30T00:09:06.4728785Z\",\r\n          \"expirationTime\": \"2020-01-31T02:09:06.4728785Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet952\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet952\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ygvcomoiaeqouazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ygvcomoiaeqouazscripts\",\r\n          \"startTime\": \"2020-01-30T00:14:51.9081222Z\",\r\n          \"endTime\": \"2020-01-30T00:16:11.4188365Z\",\r\n          \"expirationTime\": \"2020-01-31T02:16:11.4188365Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet3908\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet3908\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qcbrkfccafhzqazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qcbrkfccafhzqazscripts\",\r\n          \"startTime\": \"2020-01-30T00:30:26.510254Z\",\r\n          \"endTime\": \"2020-01-30T00:31:36.3026095Z\",\r\n          \"expirationTime\": \"2020-01-31T02:31:36.3026095Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--azsmnet98\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanGetDeploymentScriptExecutionLogs--azsmnet98\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/7iowv2wggo5diazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/7iowv2wggo5diazscripts\",\r\n          \"startTime\": \"2020-01-30T00:37:25.6376398Z\",\r\n          \"endTime\": \"2020-01-30T00:38:45.8572836Z\",\r\n          \"expirationTime\": \"2020-01-31T02:38:45.8572836Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet5703\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRTY3JpcHRzP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e01cf016-d522-430f-b062-6386991416d7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c13fbeb6-754c-4c0c-902c-dd6fd856644a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -741,10 +705,10 @@
           "11989"
         ],
         "x-ms-correlation-request-id": [
-          "6aab41d9-86b9-4e72-8fb3-b8d63bbcb154"
+          "27bd577d-b904-45db-9ce3-6faeddc21a69"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041114Z:6aab41d9-86b9-4e72-8fb3-b8d63bbcb154"
+          "WESTUS:20200130T003851Z:27bd577d-b904-45db-9ce3-6faeddc21a69"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -753,10 +717,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:11:13 GMT"
+          "Thu, 30 Jan 2020 00:38:51 GMT"
         ],
         "Content-Length": [
-          "1680"
+          "15154"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -765,272 +729,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"kind\": \"AzurePowerShell\",\r\n  \"identity\": {\r\n    \"type\": \"userAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"userAssignedIdentities\": {\r\n      \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n        \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n        \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"azPowerShellVersion\": \"2.7.0\",\r\n    \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n    \"arguments\": \"'Hello World'\",\r\n    \"retentionInterval\": \"P1DT2H\",\r\n    \"timeout\": \"P1D\",\r\n    \"containerSettings\": {},\r\n    \"status\": {\r\n      \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/btyb7hhkm5z6oazscripts\",\r\n      \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n      \"startTime\": \"2019-11-07T04:10:00.4332008Z\",\r\n      \"endTime\": \"2019-11-07T04:11:05.8926494Z\"\r\n    },\r\n    \"outputs\": {\r\n      \"output\": \"Hello World\"\r\n    },\r\n    \"cleanupPreference\": \"Always\"\r\n  },\r\n  \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n  \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Failed\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"Param([string]$Location) $output = get-azresourcegroup -Location $Location ; $DeploymentScriptOutputs['scriptOutput'] = $output\",\r\n        \"arguments\": \"-Location 'westus'\",\r\n        \"retentionInterval\": \"P7D\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ngnd5lro6s4hwazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ngnd5lro6s4hwazscripts\",\r\n          \"startTime\": \"2019-11-13T15:28:13.5131326Z\",\r\n          \"endTime\": \"2019-11-13T15:29:09.0164096Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"scriptOutput\": \"[\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"Ds-TestRg\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": \\\"System.Collections.Hashtable\\\",\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"RG_test123\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/RG_test123\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"storageRG_Test\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/storageRG_Test\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  },\\r\\n  {\\r\\n    \\\"ResourceGroupName\\\": \\\"testresourcegroup_bp3\\\",\\r\\n    \\\"Location\\\": \\\"westus\\\",\\r\\n    \\\"ProvisioningState\\\": \\\"Succeeded\\\",\\r\\n    \\\"Tags\\\": null,\\r\\n    \\\"TagsTable\\\": null,\\r\\n    \\\"ResourceId\\\": \\\"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/testresourcegroup_bp3\\\",\\r\\n    \\\"ManagedBy\\\": null\\r\\n  }\\r\\n]\"\r\n        },\r\n        \"cleanupPreference\": \"OnExpiration\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/MyDeploymentScriptTest\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"MyDeploymentScriptTest\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/yuq6tppaexkgmazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/yuq6tppaexkgmazscripts\",\r\n          \"startTime\": \"2020-01-30T00:04:34.29774Z\",\r\n          \"endTime\": \"2020-01-30T00:07:58.7689571Z\",\r\n          \"expirationTime\": \"2020-01-31T02:07:58.7689571Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/filiz-test\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"filiz-test\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/2aqxgyefa55rsazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/2aqxgyefa55rsazscripts\",\r\n          \"startTime\": \"2020-01-29T23:58:27.8856701Z\",\r\n          \"endTime\": \"2020-01-29T23:59:46.8846379Z\",\r\n          \"expirationTime\": \"2020-01-31T01:59:46.8846379Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet6473\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet6473\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/bhq2ohzfsucfeazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/bhq2ohzfsucfeazscripts\",\r\n          \"startTime\": \"2020-01-30T00:03:01.9341928Z\",\r\n          \"endTime\": \"2020-01-30T00:04:24.3585082Z\",\r\n          \"expirationTime\": \"2020-01-31T02:04:24.3585082Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet9936\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet9936\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qonod6qf7yf3eazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qonod6qf7yf3eazscripts\",\r\n          \"startTime\": \"2020-01-30T00:07:48.9980456Z\",\r\n          \"endTime\": \"2020-01-30T00:09:06.4728785Z\",\r\n          \"expirationTime\": \"2020-01-31T02:09:06.4728785Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet952\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet952\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/ygvcomoiaeqouazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/ygvcomoiaeqouazscripts\",\r\n          \"startTime\": \"2020-01-30T00:14:51.9081222Z\",\r\n          \"endTime\": \"2020-01-30T00:16:11.4188365Z\",\r\n          \"expirationTime\": \"2020-01-31T02:16:11.4188365Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet3908\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet3908\"\r\n    },\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {\r\n          \"restartPolicy\": \"never\"\r\n        },\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/qcbrkfccafhzqazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/qcbrkfccafhzqazscripts\",\r\n          \"startTime\": \"2020-01-30T00:30:26.510254Z\",\r\n          \"endTime\": \"2020-01-30T00:31:36.3026095Z\",\r\n          \"expirationTime\": \"2020-01-31T02:31:36.3026095Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanGetDeploymentScriptExecutionLogs--azsmnet98\",\r\n      \"type\": \"Microsoft.Resources/deploymentScripts\",\r\n      \"name\": \"CanGetDeploymentScriptExecutionLogs--azsmnet98\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "43186ca6-9465-403c-85b1-39fc6e457f01"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28008.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "4c2cb868-0597-43d1-ac04-c40660b5b358"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11988"
-        ],
-        "x-ms-correlation-request-id": [
-          "69d5142e-2c9e-4f02-8bf1-e01b8ce42ba5"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20191107T041124Z:69d5142e-2c9e-4f02-8bf1-e01b8ce42ba5"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 07 Nov 2019 04:11:24 GMT"
-        ],
-        "Content-Length": [
-          "1845"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {},\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/btyb7hhkm5z6oazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n          \"startTime\": \"2019-11-07T04:10:00.4332008Z\",\r\n          \"endTime\": \"2019-11-07T04:11:05.8926494Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n    }\r\n  ]\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "82beeb45-4a63-4feb-8b16-e2dbd9360263"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28008.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11986"
-        ],
-        "x-ms-request-id": [
-          "7146b2d6-b065-459a-b4d4-a5270edf52c8"
-        ],
-        "x-ms-correlation-request-id": [
-          "7146b2d6-b065-459a-b4d4-a5270edf52c8"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20191107T041126Z:7146b2d6-b065-459a-b4d4-a5270edf52c8"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 07 Nov 2019 04:11:26 GMT"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "12"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRTY3JpcHRzP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "c1793105-31e9-4bfc-9b69-45ef130444b8"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28008.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "6beba91b-bffa-4d2c-af47-9817e743df43"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11987"
-        ],
-        "x-ms-correlation-request-id": [
-          "7c367196-ac1d-4286-ba5c-9ba0d42017cd"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20191107T041125Z:7c367196-ac1d-4286-ba5c-9ba0d42017cd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 07 Nov 2019 04:11:24 GMT"
-        ],
-        "Content-Length": [
-          "1845"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"AzurePowerShell\",\r\n      \"identity\": {\r\n        \"type\": \"userAssigned\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"userAssignedIdentities\": {\r\n          \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi\": {\r\n            \"principalId\": \"97939ebd-fa2e-4055-8e3b-eb5252632e6a\",\r\n            \"clientId\": \"0376d532-7364-4bec-8989-e11939b72a6a\"\r\n          }\r\n        }\r\n      },\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"azPowerShellVersion\": \"2.7.0\",\r\n        \"scriptContent\": \"param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld\",\r\n        \"arguments\": \"'Hello World'\",\r\n        \"retentionInterval\": \"P1DT2H\",\r\n        \"timeout\": \"P1D\",\r\n        \"containerSettings\": {},\r\n        \"status\": {\r\n          \"containerInstanceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.ContainerInstance/containerGroups/btyb7hhkm5z6oazscripts\",\r\n          \"storageAccountId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/Ds-TestRg/providers/Microsoft.Storage/storageAccounts/btyb7hhkm5z6oazscripts\",\r\n          \"startTime\": \"2019-11-07T04:10:00.4332008Z\",\r\n          \"endTime\": \"2019-11-07T04:11:05.8926494Z\"\r\n        },\r\n        \"outputs\": {\r\n          \"output\": \"Hello World\"\r\n        },\r\n        \"cleanupPreference\": \"Always\"\r\n      },\r\n      \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/ds-testrg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253\",\r\n      \"name\": \"CanCrudSimpleDeploymentScript--azsmnet253\"\r\n    }\r\n  ]\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/deploymentScripts?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRTY3JpcHRzP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ca4c6d70-ddb9-4292-8cc3-80bed70b9617"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28008.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11985"
-        ],
-        "x-ms-request-id": [
-          "88350e29-3e77-4a38-88da-bfa90ba89c3a"
-        ],
-        "x-ms-correlation-request-id": [
-          "88350e29-3e77-4a38-88da-bfa90ba89c3a"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS:20191107T041126Z:88350e29-3e77-4a38-88da-bfa90ba89c3a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 07 Nov 2019 04:11:26 GMT"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "12"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet253?api-version=2019-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDI1Mz9hcGktdmVyc2lvbj0yMDE5LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourcegroups/Ds-TestRg/providers/Microsoft.Resources/deploymentScripts/CanCrudSimpleDeploymentScript--azsmnet5703?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTFiZmE2MzUtZjJiZi00MmYxLTg2YjUtODQ4YzY3NGZjMzIxL3Jlc291cmNlZ3JvdXBzL0RzLVRlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50U2NyaXB0cy9DYW5DcnVkU2ltcGxlRGVwbG95bWVudFNjcmlwdC0tYXpzbW5ldDU3MDM/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b8b7bf42-3b28-49a3-82b1-5e336ae1941d"
+          "86362ef7-6ad2-44d7-85dd-413f1c495862"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/2.4.5.0"
+          "Microsoft.Azure.Management.ResourceManager.DeploymentScriptsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -1041,19 +759,19 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7bc35bda-19e0-4fdb-bec5-321aa3cb503e"
+          "ac138905-d17f-41ee-84c3-57e1a40d53c4"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "f9d665ad-aafb-4d32-8231-c7e21dfe810d"
+          "0cfc32da-949f-4c02-bbef-6231cc26c698"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191107T041126Z:f9d665ad-aafb-4d32-8231-c7e21dfe810d"
+          "WESTUS:20200130T003851Z:0cfc32da-949f-4c02-bbef-6231cc26c698"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1062,7 +780,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 07 Nov 2019 04:11:26 GMT"
+          "Thu, 30 Jan 2020 00:38:51 GMT"
         ],
         "Expires": [
           "-1"
@@ -1077,7 +795,7 @@
   ],
   "Names": {
     "CanCrudSimpleDeploymentScript": [
-      "azsmnet253"
+      "azsmnet5703"
     ]
   },
   "Variables": {

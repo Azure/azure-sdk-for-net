@@ -21,6 +21,7 @@
       CA1063; <!-- Dispose implementation -->
       CA1066; <!-- Implement IEquatable -->
       CA1815; <!-- Equality members on structs -->
+      CA2007; <!-- Do not directly await a Task without calling ConfigureAwait (replaced by AZC0012) -->
       CA2231; <!-- Override Equality operators -->
       CA2237; <!-- [Serializeable] on exceptions -->
       CA2225; <!-- Provide alternative to implicit operators -->
@@ -44,6 +45,7 @@
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
+    <EnableApiCompat Condition="'$(EnableApiCompat)' == '' and '$(IsShippingClientLibrary)' == 'true'">true</EnableApiCompat>
   </PropertyGroup>
 
   <!-- CodeAnalysis RuleSet -->
@@ -117,6 +119,7 @@
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">

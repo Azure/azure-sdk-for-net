@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    internal sealed class BlobsCheckpointStore : PartitionManager
+    internal sealed class BlobsCheckpointStore : StorageManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     return ownershipList;
                 };
 
-                result = await ApplyRetryPolicy(listOwnershipAsync, cancellationToken);
+                result = await ApplyRetryPolicy(listOwnershipAsync, cancellationToken).ConfigureAwait(false);
                 return result;
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
@@ -299,7 +299,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             try
             {
-                return await ApplyRetryPolicy(listCheckpointsAsync, cancellationToken);
+                return await ApplyRetryPolicy(listCheckpointsAsync, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
@@ -333,12 +333,12 @@ namespace Azure.Messaging.EventHubs.Processor
             Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>
             {
                 using var blobContent = new MemoryStream(Array.Empty<byte>());
-                await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken);
+                await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken).ConfigureAwait(false);
             };
 
             try
             {
-                await ApplyRetryPolicy(updateCheckpointAsync, cancellationToken);
+                await ApplyRetryPolicy(updateCheckpointAsync, cancellationToken).ConfigureAwait(false);
                 Logger.CheckpointUpdated(checkpoint.PartitionId);
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
@@ -428,10 +428,10 @@ namespace Azure.Messaging.EventHubs.Processor
 
             Func<CancellationToken, Task> wrapper = async token =>
             {
-                result = await functionToRetry(token);
+                result = await functionToRetry(token).ConfigureAwait(false);
             };
 
-            await ApplyRetryPolicy(wrapper, cancellationToken);
+            await ApplyRetryPolicy(wrapper, cancellationToken).ConfigureAwait(false);
 
             return result;
         }

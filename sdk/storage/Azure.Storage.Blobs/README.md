@@ -1,6 +1,6 @@
 # Azure Storage Blobs client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07 and 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.
@@ -195,21 +195,21 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs/
-[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage.blobs
-[rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
-[product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
+[docs]: https://docs.microsoft.com/dotnet/api/azure.storage.blobs
+[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/blob-service-rest-api
+[product_docs]: https://docs.microsoft.com/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[storage_ad]: https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
+[storage_ad]: https://docs.microsoft.com/azure/storage/common/storage-auth-aad
 [storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-error-codes
+[error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [samples]: samples/
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

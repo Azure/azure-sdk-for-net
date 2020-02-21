@@ -72,6 +72,9 @@ _ReSharper*/
 
 *.[Rr]e[Ss]harper
 
+# Rider IDE
+.idea
+
 # NCrunch
 *.ncrunch*
 .*crunch*.local.xml
@@ -114,6 +117,7 @@ tools/*.dll
 
 # Sensitive files
 *.keys
+!Azure.AspNetCore.DataProtection.Keys
 !Azure.Security.KeyVault.Keys
 *.pfx
 TestConfigurations.xml

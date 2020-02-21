@@ -1,6 +1,6 @@
 # Azure Storage Queues client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07 and 2019-02-02
 
 Azure Queue storage is a service for storing large numbers of messages that 
 can be accessed from anywhere in the world via authenticated calls using
@@ -178,21 +178,21 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Queues/
-[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage.queues
-[rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
-[product_docs]: https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction
+[docs]: https://docs.microsoft.com/dotnet/api/azure.storage.queues
+[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/queue-service-rest-api
+[product_docs]: https://docs.microsoft.com/azure/storage/queues/storage-queues-introduction
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[storage_ad]: https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
+[storage_ad]: https://docs.microsoft.com/azure/storage/common/storage-auth-aad
 [storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-error-codes
+[error_codes]: https://docs.microsoft.com/rest/api/storageservices/queue-service-error-codes
 [samples]: samples/
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

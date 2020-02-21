@@ -427,7 +427,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         quotaInGB: quotaInGB,
                         async: async,
-                        operationName: Constants.File.Share.CreateOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -545,7 +545,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: Constants.File.Share.CreateSnapshotOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(CreateSnapshot)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -667,7 +667,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
                         async: async,
-                        operationName: Constants.File.Share.DeleteOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -777,7 +777,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Share.GetPropertiesOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -891,7 +891,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
                         async: async,
-                        operationName: Constants.File.Share.SetQuotaOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1012,7 +1012,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: Constants.File.Share.SetMetadataOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1121,7 +1121,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Share.GetAccessPolicyOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1248,7 +1248,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         permissions: permissions,
                         async: async,
-                        operationName: Constants.File.Share.SetAccessPolicyOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1351,7 +1351,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Share.GetStatisticsOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(GetStatistics)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1434,7 +1434,7 @@ namespace Azure.Storage.Files.Shares
                             filePermissionKey: filePermissionKey,
                             version: Version.ToVersionString(),
                             async: async,
-                            operationName: Constants.File.Share.GetPermissionOperationName,
+                            operationName: $"{nameof(ShareClient)}.{nameof(GetPermission)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1556,7 +1556,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         sharePermissionJson: json,
                         async: async,
-                        operationName: Constants.File.Share.CreatePermissionOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(CreatePermission)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

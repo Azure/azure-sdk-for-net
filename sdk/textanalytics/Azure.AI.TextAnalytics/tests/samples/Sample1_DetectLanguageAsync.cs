@@ -15,17 +15,15 @@ namespace Azure.AI.TextAnalytics.Samples
         public async Task DetectLanguageAsync()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             #region Snippet:DetectLanguageAsync
             string input = "Este documento está en español.";
 
-            // Asynchronously detect the language the input text is written in
-            DetectLanguageResult result = await client.DetectLanguageAsync(input);
-            DetectedLanguage language = result.PrimaryLanguage;
+            DetectedLanguage language = await client.DetectLanguageAsync(input);
 
             Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
             #endregion

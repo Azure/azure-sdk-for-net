@@ -1,44 +1,72 @@
-# Generates API Docs from the Azure-SDK-for-NET repo
+<#
+.SYNOPSIS
+Generates API Docs from the Azure-SDK-for-NET repo
+
+.DESCRIPTION
+This script generates API documentation for libraries in the Azure-SDK-for-Net repo using DocFx Doc tool.
+
+.PARAMETER ArtifactName
+The name of the Package whose API doc should be generated. Usually the name of the Package Directory e.g. Azure.Core
+
+.PARAMETER ServiceDirectory
+The Name of the servicedirectory, usually the name of the service e.g. core
+
+.PARAMETER ArtifactsDirectoryName
+Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
+
+.PARAMETER LibType
+Specifies if its a client or management library
+
+.PARAMETER RepoRoot
+The root of the Azure-SDK-for-Net Repo
+
+.PARAMETER BinDirectory
+A directory to hold tools and intermediate files for the Docfx Process.
+If runing script locally this directory should already contain the following tools in respectively named directories
+Directory Name: docfx , Download Link: https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip
+Directory Name: ECMA2Yml , Download Link: https://www.nuget.org/packages/Microsoft.DocAsCode.ECMA2Yaml
+Directory Name: mdoc , Download Link: https://github.com/mono/api-doc-tools/releases/download/mdoc-5.7.4.9/mdoc-5.7.4.9.zip
+Directory Name: PopImport: https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/flatcontainer/popimport/1.0.0/popimport.1.0.0.nupkg
+
+.PARAMETER BinDirectory
+RepoRoot\doc\ApiDocGeneration
+
+#>
  
 [CmdletBinding()]
 Param (
+    [Parameter(Mandatory = $True)]
     $ArtifactName,
+    [Parameter(Mandatory = $True)]
     $ServiceDirectory,
     $ArtifactsDirectoryName,
-    $LibType,
-    $RepoRoot,
+    [ValidateSet('client', 'management')]
+    $LibType = "client",
+    $RepoRoot = "${PSScriptRoot}/../..",
+    [Parameter(Mandatory = $True)]
     $BinDirectory,
-    $DocGenDir
+    $DocGenDir = "${PSScriptRoot}"
 )
 
-Write-Verbose "Create variables for identifying package location and package safe names"
-$PackageLocation = "${ServiceDirectory}/${ArtifactName}"
-
-if ($ServiceDirectory -eq '*') {
-    $PackageLocation = "core/${ArtifactName}"
-}
-
-if ($ServiceDirectory -eq 'cognitiveservices') {
-    $PackageLocation = "cognitiveservices/${ArtifactsDirectoryName}"
-}
-
-if ($LibType -eq 'Management') {
-    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
-}
-
-Write-Verbose "Package Location ${PackageLocation}"
-
 Write-Verbose "Name Reccuring paths with variable names"
-$FrameworkDir = "${BinDirectory}/${ArtifactName}/dll-docs"
+if ([System.String]::IsNullOrEmpty($ArtifactsDirectoryName)) {$ArtifactsDirectoryName = $ArtifactName}
+$PackageLocation = "${ServiceDirectory}/${ArtifactsDirectoryName}"
+$FrameworkDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-docs"
 $ApiDir = "${FrameworkDir}/my-api"
 $ApiDependenciesDir = "${FrameworkDir}/dependencies/my-api"
-$XmlOutDir = "${BinDirectory}/${ArtifactName}/dll-xml-output"
-$YamlOutDir = "${BinDirectory}/${ArtifactName}/dll-yaml-output"
-$DocOutDir = "${BinDirectory}/${ArtifactName}/docfx-output/docfx_project"
+$XmlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-xml-output"
+$YamlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-yaml-output"
+$DocOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/docfx-output/docfx_project"
 $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
+
+if ($LibType -eq 'management') {
+    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
+}
+
+Write-Verbose "Package Location ${PackageLocation}"
 
 Write-Verbose "Create Directories Required for Doc Generation"
 mkdir $ApiDir
@@ -47,7 +75,7 @@ mkdir $XmlOutDir
 mkdir $YamlOutDir
 mkdir $DocOutDir
 
-if ($LibType -eq '') { 
+if ($LibType -eq 'client') { 
     Write-Verbose "Build Packages for Doc Generation - Client"
     dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$ApiDir /p:TargetFramework=netstandard2.0
 
@@ -55,7 +83,8 @@ if ($LibType -eq '') {
     dotnet build "${RepoRoot}/eng/service.proj" /p:ServiceDirectory=$PackageLocation /p:IncludeTests=false /p:IncludeSamples=false /p:OutputPath=$ApiDependenciesDir /p:TargetFramework=netstandard2.0 /p:CopyLocalLockFileAssemblies=true
 }
 
-if ($LibType -eq 'Management') { # Management Package
+if ($LibType -eq 'management') {
+    # Management Package
     Write-Verbose "Build Packages for Doc Generation - Management"
     dotnet msbuild "${RepoRoot}/eng/mgmt.proj" /p:scope=$PackageLocation /p:OutputPath=$ApiDir -maxcpucount:1 -nodeReuse:false
 
@@ -83,13 +112,11 @@ Write-Verbose "Provision DocFX Directory"
 
 Write-Verbose "Copy over Package ReadMe"
 $PkgReadMePath = "${RepoRoot}/sdk/${PackageLocation}/README.md"
-if ([System.IO.File]::Exists($PkgReadMePath))
-{
+if ([System.IO.File]::Exists($PkgReadMePath)) {
     Copy-Item $PkgReadMePath -Destination "${DocOutApiDir}/index.md" -Force
     Copy-Item $PkgReadMePath -Destination "${DocOutDir}/index.md" -Force
 }
-else
-{
+else {
     New-Item "${DocOutApiDir}/index.md" -Force
     Add-Content -Path "${DocOutApiDir}/index.md" -Value "This Package Contains no Readme."
     Copy-Item "${DocOutApiDir}/index.md" -Destination "${DocOutDir}/index.md" -Force
@@ -97,7 +124,7 @@ else
 }
 
 Write-Verbose "Copy over generated yml and other assets"
-Copy-Item "${YamlOutDir}/*"-Destination "${DocOutDir}/api" -Recurse
+Copy-Item "${YamlOutDir}/*"-Destination "${DocOutApiDir}" -Recurse -Force
 Copy-Item "${DocGenDir}/assets/docfx.json" -Destination "${DocOutDir}" -Recurse -Force
 New-Item -Path "${DocOutDir}" -Name templates -ItemType directory
 Copy-Item "${DocGenDir}/templates/**" -Destination "${DocOutDir}/templates" -Recurse -Force

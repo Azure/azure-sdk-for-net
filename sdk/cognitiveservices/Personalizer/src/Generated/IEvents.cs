@@ -23,14 +23,18 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     public partial interface IEvents
     {
         /// <summary>
-        /// Report reward to allocate to the top ranked action for the
-        /// specified event.
+        /// Post Reward.
         /// </summary>
+        /// <remarks>
+        /// Report reward that resulted from using the action specified in
+        /// rewardActionId for the specified event.
+        /// </remarks>
         /// <param name='eventId'>
         /// The event id this reward applies to.
         /// </param>
         /// <param name='reward'>
-        /// The reward should be a floating point number.
+        /// The reward should be a floating point number, typically between 0
+        /// and 1.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -38,7 +42,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -46,9 +50,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// </exception>
         Task<HttpOperationResponse> RewardWithHttpMessagesAsync(string eventId, RewardRequest reward, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Report that the specified event was actually displayed to the user
-        /// and a reward should be expected for it.
+        /// Activate Event.
         /// </summary>
+        /// <remarks>
+        /// Report that the specified event was actually displayed to the user
+        /// and a reward should be expected for it
+        /// </remarks>
         /// <param name='eventId'>
         /// The event ID this activation applies to.
         /// </param>
@@ -58,7 +65,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">

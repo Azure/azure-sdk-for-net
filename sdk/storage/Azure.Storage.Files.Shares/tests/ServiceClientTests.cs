@@ -15,8 +15,8 @@ namespace Azure.Storage.Files.Shares.Test
 {
     public class ServiceClientTests : FileTestBase
     {
-        public ServiceClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ServiceClientTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]
@@ -119,7 +119,8 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+
         }
 
         [Test]
@@ -143,6 +144,38 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
             Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
             Assert.IsTrue(shares.All(c => c.Properties.Metadata == null));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public async Task ListSharesSegmentAsync_Premium()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_Premium();
+            string shareName = GetNewShareName();
+
+            // Ensure at least one premium share
+            await using DisposingShare test = await GetTestShareAsync(
+                service: service,
+                shareName: shareName);
+            ShareClient share = test.Share;
+
+            var shares = new List<ShareItem>();
+            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
+            {
+                shares.AddRange(page.Values);
+            }
+
+            // Assert
+            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).First();
+            Assert.IsNotNull(premiumShareItem.Properties.ETag);
+            Assert.IsNotNull(premiumShareItem.Properties.LastModified);
+            Assert.IsNotNull(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedEgressMBps);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIngressMBps);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIops);
+            Assert.IsNotNull(premiumShareItem.Properties.QuotaInGB);
         }
 
         [Test]
@@ -186,7 +219,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetSharesAsync().ToListAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]

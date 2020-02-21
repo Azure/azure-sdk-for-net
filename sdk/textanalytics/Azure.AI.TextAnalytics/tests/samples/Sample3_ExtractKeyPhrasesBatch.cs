@@ -17,12 +17,12 @@ namespace Azure.AI.TextAnalytics.Samples
         public void ExtractKeyPhrasesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
-
+            #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
             var inputs = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
@@ -39,27 +39,29 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            #endregion
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (ExtractKeyPhrasesResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
                     Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
 
-                    foreach (var keyPhrase in result.KeyPhrases)
+                    foreach (string keyPhrase in result.KeyPhrases)
                     {
                         Debug.WriteLine($"        {keyPhrase}");
                     }

@@ -5,12 +5,25 @@ namespace Microsoft.Azure.EventHubs
 {
     using System;
     using System.Globalization;
+    using System.Text;
 
     static class StringUtility
     {
-        public static string GetRandomString()
+        public static string GetRandomString(int length = 6)
         {
-            return Guid.NewGuid().ToString().Substring(0, 6);
+            if (length <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            var strBuilder = new StringBuilder();
+
+            while (strBuilder.Length < length)
+            {
+                strBuilder.Append(Guid.NewGuid().ToString());
+            }
+
+            return strBuilder.ToString().Substring(0, length);
         }
 
         /// <summary>

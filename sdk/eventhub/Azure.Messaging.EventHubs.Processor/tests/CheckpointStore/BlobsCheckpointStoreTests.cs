@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
+using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Moq;
@@ -29,6 +31,29 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private const string WrongEtag = "wrongEtag";
         private const string PartitionId = "1";
         private readonly string OwnershipIdentifier = Guid.NewGuid().ToString();
+
+        /// <summary>
+        ///   Provides the test cases for non-fatal exceptions that are not retriable
+        ///   when encountered in a subscription.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> NonFatalNotRetriableExceptionTestCases()
+        {
+            yield return new object[] { new InvalidOperationException() };
+            yield return new object[] { new NotSupportedException() };
+            yield return new object[] { new NullReferenceException() };
+            yield return new object[] { new ObjectDisposedException("dummy") };
+        }
+
+        /// <summary>
+        ///   Provides the test cases for non-fatal exceptions that are retriable
+        ///   when encountered in a subscription.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> NonFatalRetriableExceptionTestCases()
+        {
+            yield return new object[] { new TimeoutException() };
+        }
 
         /// <summary>
         ///   Verifies functionality of the <see cref="BlobsCheckpointStore" />
@@ -209,12 +234,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public void ListCheckointsForMissingPartitionThrowsAndLogsOwnershipNotClaimable()
+        public void ListCheckpointsForMissingPartitionThrowsAndLogsOwnershipNotClaimable()
         {
             var ex = new RequestFailedException(0, "foo", BlobErrorCode.ContainerNotFound.ToString(), null);
 
             var target = new BlobsCheckpointStore(new MockBlobContainerClient(getBlobsAsyncException: ex),
-                                               new BasicRetryPolicy(new EventHubsRetryOptions()));
+                                                  new BasicRetryPolicy(new EventHubsRetryOptions()));
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
@@ -265,6 +290,591 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.CheckpointUpdateError(PartitionId, It.Is<string>(s => s.Contains(BlobErrorCode.ContainerNotFound.ToString()))));
         }
 
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
+        public void ListOwnershipAsyncRetriesAndSurfacesRetriableExceptions(Exception exception)
+        {
+            const int maximumRetries = 2;
+
+            var expectedServiceCalls = (maximumRetries + 1);
+            var serviceCalls = 0;
+
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
+
+            mockRetryPolicy
+                .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
+                .Returns(TimeSpan.FromMilliseconds(5));
+
+            mockContainerClient.GetBlobsAsyncCallback = (traits, states, prefix, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ListOwnershipAsync("ns", "eh", "cg", cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
+        public void ListOwnershipAsyncSurfacesNonRetriableExceptions(Exception exception)
+        {
+            var expectedServiceCalls = 1;
+            var serviceCalls = 0;
+
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            mockContainerClient.GetBlobsAsyncCallback = (traits, states, prefix, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ListOwnershipAsync("ns", "eh", "cg", cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListOwnershipAsyncDelegatesTheCancellationToken()
+        {
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            using var cancellationSource = new CancellationTokenSource();
+            var stateBeforeCancellation = default(bool?);
+            var stateAfterCancellation = default(bool?);
+
+            mockContainerClient.GetBlobsAsyncCallback = (traits, states, prefix, token) =>
+            {
+                if (!stateBeforeCancellation.HasValue)
+                {
+                    stateBeforeCancellation = token.IsCancellationRequested;
+                    cancellationSource.Cancel();
+                    stateAfterCancellation = token.IsCancellationRequested;
+                }
+            };
+
+            await checkpointStore.ListOwnershipAsync("ns", "eh", "cg", cancellationSource.Token);
+
+            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void AlreadyCanceledTokenMakesListOwnershipAsyncThrow()
+        {
+            var checkpointStore = new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), Mock.Of<EventHubsRetryPolicy>());
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await checkpointStore.ListOwnershipAsync("ns", "eh", "cg", cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
+        public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenETagIsNull(Exception exception)
+        {
+            const int maximumRetries = 2;
+
+            var expectedServiceCalls = (maximumRetries + 1);
+            var serviceCalls = 0;
+
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
+            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, null);
+
+            mockRetryPolicy
+                .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
+                .Returns(TimeSpan.FromMilliseconds(5));
+
+            mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
+        public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenETagIsNull(Exception exception)
+        {
+            var expectedServiceCalls = 1;
+            var serviceCalls = 0;
+
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, null);
+
+            mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
+        public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenETagIsNotNull(Exception exception)
+        {
+            const int maximumRetries = 2;
+
+            var expectedServiceCalls = (maximumRetries + 1);
+            var serviceCalls = 0;
+
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
+            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, "eTag");
+
+            mockRetryPolicy
+                .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
+                .Returns(TimeSpan.FromMilliseconds(5));
+
+            mockContainerClient.BlobInfo = Mock.Of<BlobInfo>();
+
+            mockContainerClient.BlobClientSetMetadataAsyncCallback = (metadata, conditions, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
+        public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenETagIsNotNull(Exception exception)
+        {
+            var expectedServiceCalls = 1;
+            var serviceCalls = 0;
+
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, "eTag");
+
+            mockContainerClient.BlobInfo = Mock.Of<BlobInfo>();
+
+            mockContainerClient.BlobClientSetMetadataAsyncCallback = (metadata, conditions, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("eTag")]
+        public async Task ClaimOwnershipAsyncDelegatesTheCancellationToken(string eTag)
+        {
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, eTag);
+
+            using var cancellationSource = new CancellationTokenSource();
+            var stateBeforeCancellation = default(bool?);
+            var stateAfterCancellation = default(bool?);
+
+            // UploadAsync will be called if eTag is null; SetMetadataAsync is used otherwise.
+
+            if (eTag == null)
+            {
+                mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
+                {
+                    if (!stateBeforeCancellation.HasValue)
+                    {
+                        stateBeforeCancellation = token.IsCancellationRequested;
+                        cancellationSource.Cancel();
+                        stateAfterCancellation = token.IsCancellationRequested;
+                    }
+                };
+            }
+            else
+            {
+                mockContainerClient.BlobInfo = Mock.Of<BlobInfo>();
+
+                mockContainerClient.BlobClientSetMetadataAsyncCallback = (metadata, conditions, token) =>
+                {
+                    if (!stateBeforeCancellation.HasValue)
+                    {
+                        stateBeforeCancellation = token.IsCancellationRequested;
+                        cancellationSource.Cancel();
+                        stateAfterCancellation = token.IsCancellationRequested;
+                    }
+                };
+            }
+
+            await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token);
+
+            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ClaimOwnershipAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void AlreadyCanceledTokenMakesClaimOwnershipAsyncThrow()
+        {
+            var checkpointStore = new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), Mock.Of<EventHubsRetryPolicy>());
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(Mock.Of<IEnumerable<PartitionOwnership>>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListCheckpointsAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
+        public void ListCheckpointsAsyncRetriesAndSurfacesRetriableExceptions(Exception exception)
+        {
+            const int maximumRetries = 2;
+
+            var expectedServiceCalls = (maximumRetries + 1);
+            var serviceCalls = 0;
+
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
+
+            mockRetryPolicy
+                .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
+                .Returns(TimeSpan.FromMilliseconds(5));
+
+            mockContainerClient.GetBlobsAsyncCallback = (traits, states, prefix, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ListCheckpointsAsync("ns", "eh", "cg", cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListCheckpointsAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
+        public void ListCheckpointsAsyncSurfacesNonRetriableExceptions(Exception exception)
+        {
+            var expectedServiceCalls = 1;
+            var serviceCalls = 0;
+
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            mockContainerClient.GetBlobsAsyncCallback = (traits, states, prefix, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.ListCheckpointsAsync("ns", "eh", "cg", cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListCheckpointsAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListCheckpointsAsyncDelegatesTheCancellationToken()
+        {
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            using var cancellationSource = new CancellationTokenSource();
+            var stateBeforeCancellation = default(bool?);
+            var stateAfterCancellation = default(bool?);
+
+            mockContainerClient.GetBlobsAsyncCallback = (traits, states, prefix, token) =>
+            {
+                if (!stateBeforeCancellation.HasValue)
+                {
+                    stateBeforeCancellation = token.IsCancellationRequested;
+                    cancellationSource.Cancel();
+                    stateAfterCancellation = token.IsCancellationRequested;
+                }
+            };
+
+            await checkpointStore.ListCheckpointsAsync("ns", "eh", "cg", cancellationSource.Token);
+
+            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.ListCheckpointsAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void AlreadyCanceledTokenMakesListCheckpointsAsyncThrow()
+        {
+            var checkpointStore = new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), Mock.Of<EventHubsRetryPolicy>());
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await checkpointStore.ListCheckpointsAsync("ns", "eh", "cg", cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
+        public void UpdateCheckpointAsyncRetriesAndSurfacesRetriableExceptions(Exception exception)
+        {
+            const int maximumRetries = 2;
+
+            var expectedServiceCalls = (maximumRetries + 1);
+            var serviceCalls = 0;
+
+            var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
+            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            mockRetryPolicy
+                .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
+                .Returns(TimeSpan.FromMilliseconds(5));
+
+            mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
+        public void UpdateCheckpointAsyncSurfacesNonRetriableExceptions(Exception exception)
+        {
+            var expectedServiceCalls = 1;
+            var serviceCalls = 0;
+
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
+            {
+                serviceCalls++;
+                throw exception;
+            };
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
+            Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task UpdateCheckpointAsyncDelegatesTheCancellationToken()
+        {
+            var mockContainerClient = new MockBlobContainerClient();
+            var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            using var cancellationSource = new CancellationTokenSource();
+            var stateBeforeCancellation = default(bool?);
+            var stateAfterCancellation = default(bool?);
+
+            mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
+            {
+                if (!stateBeforeCancellation.HasValue)
+                {
+                    stateBeforeCancellation = token.IsCancellationRequested;
+                    cancellationSource.Cancel();
+                    stateAfterCancellation = token.IsCancellationRequested;
+                }
+            };
+
+            await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token);
+
+            Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
+            Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
+            Assert.That(stateAfterCancellation.HasValue, Is.True, "State after cancellation should have been captured.");
+            Assert.That(stateAfterCancellation.Value, Is.True, "The token should have been canceled after cancellation request.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void AlreadyCanceledTokenMakesUpdateCheckpointAsyncThrow()
+        {
+            var checkpointStore = new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), Mock.Of<EventHubsRetryPolicy>());
+            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
         private class MockBlobContainerClient : BlobContainerClient
         {
             public override Uri Uri { get; }
@@ -274,8 +884,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             internal BlobInfo BlobInfo;
             internal Exception BlobClientUploadBlobException;
             internal Exception GetBlobsAsyncException;
-
-
+            internal Action<BlobTraits, BlobStates, string, CancellationToken> GetBlobsAsyncCallback;
+            internal Action<Stream, BlobHttpHeaders, IDictionary<string, string>, BlobRequestConditions, IProgress<long>, AccessTier?, StorageTransferOptions, CancellationToken> BlobClientUploadAsyncCallback;
+            internal Action<IDictionary<string, string>, BlobRequestConditions, CancellationToken> BlobClientSetMetadataAsyncCallback;
 
             public MockBlobContainerClient(string accountName = "blobAccount",
                                            string containerName = "container",
@@ -295,12 +906,15 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 {
                     throw GetBlobsAsyncException;
                 }
+
+                GetBlobsAsyncCallback?.Invoke(traits, states, prefix, cancellationToken);
+
                 return new MockAsyncPageable<BlobItem>(Blobs);
             }
 
             public override BlobClient GetBlobClient(string blobName)
             {
-                return new MockBlobClient(blobName, BlobInfo, BlobClientUploadBlobException);
+                return new MockBlobClient(blobName, BlobInfo, BlobClientUploadBlobException, BlobClientUploadAsyncCallback, BlobClientSetMetadataAsyncCallback);
             }
         }
 
@@ -309,10 +923,18 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public override string Name { get; }
             internal BlobInfo BlobInfo;
             internal Exception BlobClientUploadBlobException;
+            private Action<Stream, BlobHttpHeaders, IDictionary<string, string>, BlobRequestConditions, IProgress<long>, AccessTier?, StorageTransferOptions, CancellationToken> UploadAsyncCallback;
+            private Action<IDictionary<string, string>, BlobRequestConditions, CancellationToken> SetMetadataAsyncCallback;
 
-            public MockBlobClient(string blobName, BlobInfo blobInfo = null, Exception blobClientUploadBlobException = null)
+            public MockBlobClient(string blobName,
+                                  BlobInfo blobInfo = null,
+                                  Exception blobClientUploadBlobException = null,
+                                  Action<Stream, BlobHttpHeaders, IDictionary<string, string>, BlobRequestConditions, IProgress<long>, AccessTier?, StorageTransferOptions, CancellationToken> uploadAsyncCallback = null,
+                                  Action<IDictionary<string, string>, BlobRequestConditions, CancellationToken> setMetadataAsyncCallback = null)
             {
                 BlobClientUploadBlobException = blobClientUploadBlobException;
+                UploadAsyncCallback = uploadAsyncCallback;
+                SetMetadataAsyncCallback = setMetadataAsyncCallback;
                 Name = blobName;
                 BlobInfo = blobInfo;
             }
@@ -327,10 +949,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 {
                     return Task.FromResult(Response.FromValue(BlobInfo, Mock.Of<Response>()));
                 }
+
+                SetMetadataAsyncCallback?.Invoke(metadata, conditions, cancellationToken);
+
                 throw new RequestFailedException(412, BlobErrorCode.ConditionNotMet.ToString(), BlobErrorCode.ConditionNotMet.ToString(), default);
             }
 
-            public override Task<Response<BlobContentInfo>> UploadAsync(System.IO.Stream content, BlobHttpHeaders httpHeaders = null, IDictionary<string, string> metadata = null, BlobRequestConditions conditions = null, IProgress<long> progressHandler = null, AccessTier? accessTier = null, Storage.StorageTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
+            public override Task<Response<BlobContentInfo>> UploadAsync(Stream content, BlobHttpHeaders httpHeaders = null, IDictionary<string, string> metadata = null, BlobRequestConditions conditions = null, IProgress<long> progressHandler = null, AccessTier? accessTier = null, StorageTransferOptions transferOptions = default, CancellationToken cancellationToken = default)
             {
                 if (BlobClientUploadBlobException != null)
                 {
@@ -340,6 +965,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 {
                     throw new RequestFailedException(409, BlobErrorCode.BlobAlreadyExists.ToString(), BlobErrorCode.BlobAlreadyExists.ToString(), default);
                 }
+
+                UploadAsyncCallback?.Invoke(content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, cancellationToken);
 
                 return Task.FromResult(
                     Response.FromValue(

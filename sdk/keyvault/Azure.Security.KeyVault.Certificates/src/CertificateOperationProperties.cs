@@ -140,8 +140,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case CsrPropertyName:
-                        string csr = prop.Value.GetString();
-                        Csr = Base64Url.Decode(csr);
+                        Csr = prop.Value.GetBytesFromBase64();
                         break;
 
                     case CancellationRequestedPropertyName:

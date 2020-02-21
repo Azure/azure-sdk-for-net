@@ -17,10 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void ExtractEntityLinkingBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             var inputs = new List<string>
             {
@@ -29,18 +29,20 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Pike place market is my favorite Seattle attraction.",
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+            #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
+            #endregion
 
             Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizeLinkedEntitiesResult result in results)
             {
                 Debug.Write($"For input: \"{inputs[i++]}\", ");
-                Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
+                Debug.WriteLine($"extracted {result.Entities.Count()} linked entit{(result.Entities.Count() > 1 ? "ies" : "y")}:");
 
-                foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+                foreach (LinkedEntity linkedEntity in result.Entities)
                 {
-                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
+                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: \"{linkedEntity.DataSourceEntityId}\"");
                     foreach (LinkedEntityMatch match in linkedEntity.Matches)
                     {
                         Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");

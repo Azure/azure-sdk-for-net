@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,6 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -127,6 +129,14 @@ namespace Azure.Storage.Test.Shared
         public TenantConfiguration TestConfigHierarchicalNamespace => GetTestConfig(
                 "Storage_TestConfigHierarchicalNamespace",
                 () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigManagedDisk => GetTestConfig(
+                "Storage_TestConfigManagedDisk",
+                () => TestConfigurations.DefaultTargetManagedDiskTenant);
 
         /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
@@ -325,9 +335,25 @@ namespace Azure.Storage.Test.Shared
         /// get processed.
         /// </param>
         /// <returns>A task that will (optionally) delay.</returns>
-        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null)
+        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
+            await Delay(Mode, milliseconds, playbackDelayMilliseconds);
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
         {
-            if (Mode != RecordedTestMode.Playback)
+            if (mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(milliseconds);
             }
@@ -393,9 +419,8 @@ namespace Azure.Storage.Test.Shared
 
         protected async Task<T> EnsurePropagatedAsync<T>(
             Func<Task<T>> getResponse,
-            Func<T,bool> hasResponse)
+            Func<T, bool> hasResponse)
         {
-            int delayDuration = 10000;
             bool responseReceived = false;
             T response = default;
             // end time of 16 minutes from now to allow for propagation to secondary host
@@ -405,7 +430,7 @@ namespace Azure.Storage.Test.Shared
                 response = await getResponse();
                 if (!hasResponse(response))
                 {
-                    await this.Delay(delayDuration);
+                    await Delay(TestConstants.RetryDelay);
                 }
                 else
                 {
@@ -422,6 +447,67 @@ namespace Azure.Storage.Test.Shared
             Assert.AreEqual(constants.Sas.ContentEncoding, sasQueryParameters.ContentEncoding);
             Assert.AreEqual(constants.Sas.ContentLanguage, sasQueryParameters.ContentLanguage);
             Assert.AreEqual(constants.Sas.ContentType, sasQueryParameters.ContentType);
+        }
+
+        protected async Task<T> RetryAsync<T>(
+            Func<Task<T>> operation,
+            Func<RequestFailedException, bool> shouldRetry,
+            int retryDelay = TestConstants.RetryDelay,
+            int retryAttempts = Constants.MaxReliabilityRetries) =>
+            await RetryAsync(Mode, operation, shouldRetry, retryDelay, retryAttempts);
+
+        public static async Task<T> RetryAsync<T>(
+            RecordedTestMode mode,
+            Func<Task<T>> operation,
+            Func<RequestFailedException, bool> shouldRetry,
+            int retryDelay = TestConstants.RetryDelay,
+            int retryAttempts = Constants.MaxReliabilityRetries)
+        {
+            for (int attempt = 0; ;)
+            {
+                try
+                {
+                    return await operation();
+                }
+                catch (RequestFailedException ex)
+                    when (attempt++ < retryAttempts && shouldRetry(ex))
+                {
+                    await Delay(mode, retryDelay);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create a stream of a given size that will not use more than maxMemory memory.
+        /// If the size is greater than maxMemory, a TemporaryFileStream will be used that
+        /// will delete the file in its Dispose method.
+        /// </summary>
+        protected async Task<Stream> CreateLimitedMemoryStream(long size, long maxMemory = Constants.MB * 100)
+        {
+            Stream stream;
+            if (size < maxMemory)
+            {
+                var data = GetRandomBuffer(size);
+                stream = new MemoryStream(data);
+            }
+            else
+            {
+                var path = Path.GetTempFileName();
+                stream = new TemporaryFileStream(path, FileMode.Create);
+                var bufferSize = 4 * Constants.KB;
+
+                while (stream.Position + bufferSize < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (stream.Position < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(size - stream.Position), 0, (int)(size - stream.Position));
+                }
+                // reset the stream
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+            return stream;
         }
     }
 }

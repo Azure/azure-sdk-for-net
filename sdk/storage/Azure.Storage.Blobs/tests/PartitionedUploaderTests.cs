@@ -15,7 +15,7 @@ using Moq;
 using NUnit.Framework;
 using static Moq.It;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     [TestFixture(true)]
     [TestFixture(false)]
@@ -70,12 +70,12 @@ namespace Azure.Storage.Blobs.Tests
             clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
             SetupAsyncStaging(clientMock, sink);
 
-            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, singleUploadThreshold: 20, arrayPool: testPool);
+            PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, new StorageTransferOptions { MaximumTransferLength = 20, InitialTransferLength = 20 }, arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
 
@@ -228,13 +228,13 @@ namespace Azure.Storage.Blobs.Tests
             if (_async)
             {
                 clientMock.Setup(
-                        c => c.UploadAsync(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, s_cancellationToken))
+                        c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, true, s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
             else
             {
-                clientMock.Setup(c => c.Upload(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, s_cancellationToken))
-                    .Returns(s_response);
+                clientMock.Setup(c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, false, s_cancellationToken))
+                    .ReturnsAsync(s_response);
             }
 
             PartitionedUploader uploader = new PartitionedUploader(clientMock.Object, default, arrayPool: testPool);

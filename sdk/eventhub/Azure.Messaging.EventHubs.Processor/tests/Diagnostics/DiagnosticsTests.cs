@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Tests;
 using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
@@ -52,8 +53,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var context = new MockPartitionContext("partition");
             var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var storageManager = new Mock<PartitionManager>();
-            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            var storageManager = new Mock<StorageManager>();
+            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null, null);
 
             // UpdateCheckpointAsync does not invoke the handlers, but we are setting them here in case
             // this fact changes in the future.
@@ -73,12 +74,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Diagnostic scope is not completing properly. Maybe the listener is being disposed of first.")]
         public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
 
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -149,12 +149,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Validate diagnostics functionality.
 
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
+            Assert.That(listener.Scopes.Select(s => s.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+            Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id"));
+            Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id2"));
+            Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind)), "The activities tag should be server.");
         }
 
         private class MockConnection : EventHubConnection

@@ -128,7 +128,6 @@ namespace Azure.Messaging.EventHubs.Tests
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition });
-
                                 wereEventsPublished = true;
                                 continue;
                             }
@@ -140,7 +139,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < 1)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -210,7 +217,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < 1)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -282,7 +297,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < eventSet.Length)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -358,7 +381,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < eventBatch.Length)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -437,7 +468,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < eventBatch.Length)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -511,7 +550,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < expectedEventsCount)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -561,7 +608,15 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                             else if (++consecutiveEmpties >= 5)
                             {
-                                break;
+                                if (consecutiveEmpties >= 15)
+                                {
+                                    break;
+                                }
+
+                                if (receivedEvents.Count < expectedEventsCount)
+                                {
+                                    await Task.Delay(150);
+                                }
                             }
                         }
 
@@ -625,7 +680,15 @@ namespace Azure.Messaging.EventHubs.Tests
                                 }
                                 else if (++consecutiveEmpties >= 5)
                                 {
-                                    break;
+                                    if (consecutiveEmpties >= 15)
+                                    {
+                                        break;
+                                    }
+
+                                    if (receivedEvents.Count < expectedEventsCount)
+                                    {
+                                        await Task.Delay(150);
+                                    }
                                 }
                             }
 
@@ -692,7 +755,15 @@ namespace Azure.Messaging.EventHubs.Tests
                                 }
                                 else if (++consecutiveEmpties >= 5)
                                 {
-                                    break;
+                                    if (consecutiveEmpties >= 15)
+                                    {
+                                        break;
+                                    }
+
+                                    if (receivedEvents.Count < expectedEventsCount)
+                                    {
+                                        await Task.Delay(150);
+                                    }
                                 }
                             }
 
@@ -760,7 +831,15 @@ namespace Azure.Messaging.EventHubs.Tests
                                 }
                                 else if (++consecutiveEmpties >= 5)
                                 {
-                                    break;
+                                    if (consecutiveEmpties >= 15)
+                                    {
+                                        break;
+                                    }
+
+                                    if (receivedEvents.Count < expectedEventsCount)
+                                    {
+                                        await Task.Delay(150);
+                                    }
                                 }
                             }
 
@@ -795,7 +874,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var expectedCount = (eventsPerPartition * partitions.Length);
                     var readCount = 0;
                     var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 10;
+                    var maximumConsecutiveEmpties = 15;
+                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events to each partition.  Because reading begins at the beginning of the partition by
                     // default, these should be observed without publishing in the read loop.
@@ -829,9 +909,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                 break;
                             }
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (receivedEvents.Count < expectedCount)
+                            {
+                                await Task.Delay(150);
+                            }
                         }
                     }
 
@@ -873,7 +961,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var expectedCount = (eventsPerPartition * partitions.Length);
                     var readCount = 0;
                     var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 10;
+                    var maximumConsecutiveEmpties = 15;
+                    var maximumConsecutiveEmptiesBeforeDelay = 5;
                     var wereEventsPublished = false;
 
                     // Define a local function to publish events, since it will be done multiple times.
@@ -890,6 +979,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
 
                             await producer.SendAsync(batch, cancellationSource.Token);
+                            await Task.Delay(TimeSpan.FromSeconds(1));
                         }
                     }
 
@@ -909,9 +999,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                 break;
                             }
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= (maximumConsecutiveEmptiesBeforeDelay))
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (receivedEvents.Count < expectedCount)
+                            {
+                                await Task.Delay(150);
+                            }
                         }
                     }
 
@@ -943,9 +1041,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                 break;
                             }
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (receivedEvents.Count < expectedCount)
+                            {
+                                await Task.Delay(150);
+                            }
                         }
                     }
 
@@ -985,7 +1091,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var expectedCount = (eventsPerPartition * partitions.Length);
                     var readCount = 0;
                     var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 10;
+                    var maximumConsecutiveEmpties = 15;
+                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events using a set of partition keys.  Routing is controlled by the service and partitions may not
                     // receive an even distribution.  Because reading begins at the beginning of the partition by default, these
@@ -1019,9 +1126,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                 break;
                             }
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (readCount < expectedCount)
+                            {
+                                await Task.Delay(50);
+                            }
                         }
                     }
 
@@ -1057,7 +1172,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventsBatched = 0;
                     var readCount = 0;
                     var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 10;
+                    var maximumConsecutiveEmpties = 15;
+                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events without influencing the partition.  Routing is controlled by the service and partitions may not
                     // receive an even distribution.  Because reading begins at the beginning of the partition by default, these
@@ -1091,9 +1207,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                 break;
                             }
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (readCount < expectedCount)
+                            {
+                                await Task.Delay(50);
+                            }
                         }
                     }
 
@@ -1143,7 +1267,15 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                         else if (++consecutiveEmpties >= 5)
                         {
-                            break;
+                            if (consecutiveEmpties >= 15)
+                            {
+                                break;
+                            }
+
+                            if (receivedEvents.Count < expectedEventsCount)
+                            {
+                                await Task.Delay(150);
+                            }
                         }
                     }
 
@@ -1174,7 +1306,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var expectedCount = (eventsPerPartition * partitions.Length);
                     var readCount = 0;
                     var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 10;
+                    var maximumConsecutiveEmpties = 15;
+                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events to each partition.  Because reading begins at the beginning of the partition by
                     // default, these should be observed without publishing in the read loop.
@@ -1207,9 +1340,17 @@ namespace Azure.Messaging.EventHubs.Tests
                                 break;
                             }
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (readCount < expectedCount)
+                            {
+                                await Task.Delay(50);
+                            }
                         }
                     }
 
@@ -1221,7 +1362,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
         }
-
 
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
@@ -1972,6 +2112,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                 await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partitionIds[0] });
                             }
 
+                            await Task.Delay(TimeSpan.FromSeconds(1));
                             wereEventsPublished = true;
                             continue;
                         }
@@ -2030,12 +2171,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read back the events from two different consumer groups.
 
-                    var maximumConsecutiveEmpties = 10;
+                    var maximumConsecutiveEmpties = 15;
+                    var maximumConsecutiveEmptiesBeforeDelay = 5;
                     var consecutiveEmpties = 0;
                     var consumerReceivedEvents = new List<EventData>();
                     var anotherReceivedEvents = new List<EventData>();
                     var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
-
 
                     await foreach (var consumerEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, readOptions, cancellationSource.Token))
                     {
@@ -2044,9 +2185,17 @@ namespace Azure.Messaging.EventHubs.Tests
                             consumerReceivedEvents.Add(consumerEvent.Data);
                             consecutiveEmpties = 0;
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (consumerReceivedEvents.Count < eventBatch.Length)
+                            {
+                                await Task.Delay(50);
+                            }
                         }
                     }
 
@@ -2058,9 +2207,17 @@ namespace Azure.Messaging.EventHubs.Tests
                             anotherReceivedEvents.Add(anotherEvent.Data);
                             consecutiveEmpties = 0;
                         }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
+                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
                         {
-                            break;
+                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
+                            {
+                                break;
+                            }
+
+                            if (anotherReceivedEvents.Count < eventBatch.Length)
+                            {
+                                await Task.Delay(50);
+                            }
                         }
                     }
 

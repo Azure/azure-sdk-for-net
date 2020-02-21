@@ -12,14 +12,14 @@ namespace Azure.Security.KeyVault
     internal class KeyVaultPipeline
     {
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
+        public ClientDiagnostics Diagnostics { get; }
 
         public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             VaultUri = vaultUri;
             _pipeline = pipeline;
 
-            _clientDiagnostics = clientDiagnostics;
+            Diagnostics = clientDiagnostics;
 
             ApiVersion = apiVersion;
         }
@@ -95,13 +95,13 @@ namespace Azure.Security.KeyVault
 
         public DiagnosticScope CreateScope(string name)
         {
-            return _clientDiagnostics.CreateScope(name);
+            return Diagnostics.CreateScope(name);
         }
 
         public async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = Diagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault
         public Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = Diagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -237,7 +237,7 @@ namespace Azure.Security.KeyVault
                 case 204:
                     return response;
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
             }
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)
@@ -252,7 +252,7 @@ namespace Azure.Security.KeyVault
                 case 204:
                     return response;
                 default:
-                    throw response.CreateRequestFailedException();
+                    throw Diagnostics.CreateRequestFailedException(response);
             }
         }
     }

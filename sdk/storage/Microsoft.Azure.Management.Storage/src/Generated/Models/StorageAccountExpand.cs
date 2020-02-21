@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     public enum StorageAccountExpand
     {
         [EnumMember(Value = "geoReplicationStats")]
-        GeoReplicationStats
+        GeoReplicationStats,
+        [EnumMember(Value = "blobRestoreStatus")]
+        BlobRestoreStatus
     }
     internal static class StorageAccountExpandEnumExtension
     {
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 case StorageAccountExpand.GeoReplicationStats:
                     return "geoReplicationStats";
+                case StorageAccountExpand.BlobRestoreStatus:
+                    return "blobRestoreStatus";
             }
             return null;
         }
@@ -47,6 +51,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 case "geoReplicationStats":
                     return StorageAccountExpand.GeoReplicationStats;
+                case "blobRestoreStatus":
+                    return StorageAccountExpand.BlobRestoreStatus;
             }
             return null;
         }

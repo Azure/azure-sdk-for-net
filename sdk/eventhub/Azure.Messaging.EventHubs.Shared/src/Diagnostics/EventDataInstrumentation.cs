@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     internal static class EventDataInstrumentation
     {
         /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics("Azure.Messaging.EventHubs", true);
+        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory("Azure.Messaging.EventHubs", "Microsoft.EventHub", true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
@@ -28,8 +28,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
-                using DiagnosticScope messageScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
-                messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind);
+                using DiagnosticScope messageScope = ScopeFactory.CreateScope(DiagnosticProperty.EventActivityName);
+                messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;

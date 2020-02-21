@@ -1,6 +1,16 @@
 # Release History
 
-## 4.1.0-preview.1
+## 4.0.2 (Unreleased)
+
+### Minor changes
+
+- `SecretClient.PurgeDeletedSecret` properly traces errors ([#9658](https://github.com/Azure/azure-sdk-for-net/issues/9658))
+
+## 4.0.1 (2019-01-08)
+
+### Minor changes
+
+- Challenge-based authentication requests are only sent over HTTPS.
 
 ## 4.0.0 (2019-11)
 

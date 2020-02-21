@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.0/training/projects?name=Test%20Project&description=This%20is%20a%20test%20project&domainId=c151d5b5-dd07-472a-acc8-15d29dea8518",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cz9uYW1lPVRlc3QlMjBQcm9qZWN0JmRlc2NyaXB0aW9uPVRoaXMlMjBpcyUyMGElMjB0ZXN0JTIwcHJvamVjdCZkb21haW5JZD1jMTUxZDViNS1kZDA3LTQ3MmEtYWNjOC0xNWQyOWRlYTg1MTg=",
+      "RequestUri": "//customvision/v3.1/training/projects?name=Test%20Project&description=This%20is%20a%20test%20project&domainId=c151d5b5-dd07-472a-acc8-15d29dea8518",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cz9uYW1lPVRlc3QlMjBQcm9qZWN0JmRlc2NyaXB0aW9uPVRoaXMlMjBpcyUyMGElMjB0ZXN0JTIwcHJvamVjdCZkb21haW5JZD1jMTUxZDViNS1kZDA3LTQ3MmEtYWNjOC0xNWQyOWRlYTg1MTg=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,38 +10,38 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:30:57 GMT"
-        ],
         "apim-request-id": [
-          "4ddacdba-ae85-45c6-9081-9ef61512313a"
+          "c73d5b07-bbba-4d39-9a34-e33680fc184e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:22 GMT"
+        ],
         "Content-Length": [
-          "400"
+          "576"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"76c15328-0177-4562-91a2-d66241a910b3\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"targetExportPlatforms\": []\r\n  },\r\n  \"created\": \"2019-03-21T01:30:57.893Z\",\r\n  \"lastModified\": \"2019-03-21T01:30:57.893Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"c83a89ef-3e7e-4224-99a3-604c22bf4500\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"targetExportPlatforms\": [],\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"imageProcessingSettings\": {\r\n      \"augmentationMethods\": {\r\n        \"rotation\": true,\r\n        \"scaling\": true,\r\n        \"translation\": true,\r\n        \"horizontal flip\": true,\r\n        \"equalize\": true,\r\n        \"solarize\": true,\r\n        \"padtosquare\": true\r\n      }\r\n    }\r\n  },\r\n  \"created\": \"2019-09-16T14:58:22.846Z\",\r\n  \"lastModified\": \"2019-09-16T14:58:22.846Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.0/training/projects",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cw==",
+      "RequestUri": "//customvision/v3.1/training/projects",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -49,38 +49,38 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:30:57 GMT"
-        ],
         "apim-request-id": [
-          "9082eb2c-c8d8-43c8-8efa-d58c24472107"
+          "1d2690d9-1707-4c8c-8ee7-35953d155312"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:22 GMT"
+        ],
         "Content-Length": [
-          "1000"
+          "10598"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"76c15328-0177-4562-91a2-d66241a910b3\",\r\n    \"name\": \"Test Project\",\r\n    \"description\": \"This is a test project\",\r\n    \"settings\": {\r\n      \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"targetExportPlatforms\": []\r\n    },\r\n    \"created\": \"2019-03-21T01:30:57.893Z\",\r\n    \"lastModified\": \"2019-03-21T01:30:57.893Z\",\r\n    \"thumbnailUri\": null,\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"20bad8f4-72bc-4a07-9546-3330a53f2f3e\",\r\n    \"name\": \"t\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"6b4faeda-8396-481b-9f8b-177b9fa3097f\",\r\n      \"classificationType\": \"Multiclass\",\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"targetExportPlatforms\": [\r\n        \"VAIDK\"\r\n      ]\r\n    },\r\n    \"created\": \"2019-03-19T19:26:24.22Z\",\r\n    \"lastModified\": \"2019-03-19T19:26:24.22Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-20bad8f472bc4a0795463330a53f2f3e/t-f038c37ea7d54321bbb704761713e7d9?sv=2017-04-17&sr=b&sig=QJMpOQC55Bvw0Ws%2BUUCFuaxQlmNPaYjjyfccMgfT%2Bpo%3D&se=2019-03-22T01%3A30%3A57Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"c83a89ef-3e7e-4224-99a3-604c22bf4500\",\r\n    \"name\": \"Test Project\",\r\n    \"description\": \"This is a test project\",\r\n    \"settings\": {\r\n      \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-09-16T14:58:22.846Z\",\r\n    \"lastModified\": \"2019-09-16T14:58:22.846Z\",\r\n    \"thumbnailUri\": null,\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"61bef21e-590c-4374-a042-c82726e1917d\",\r\n    \"name\": \"databast_test1\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-08-20T17:21:04.396Z\",\r\n    \"lastModified\": \"2019-08-20T17:21:04.396Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-61bef21e590c4374a042c82726e1917d/t-49317ad728d3427abadb0a813634e87f?sv=2017-04-17&sr=b&sig=M07J0u6vR0pofh3xYHXbxbnm3cuKdD8tBk1IjEqFuOg%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"9d77ae70-d1aa-4d98-b2f3-9a9e20ecfeb7\",\r\n    \"name\": \"otest\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n      \"classificationType\": \"Multiclass\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-03-21T17:26:35.603Z\",\r\n    \"lastModified\": \"2019-03-21T17:26:35.603Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-9d77ae70d1aa4d98b2f39a9e20ecfeb7/t-de3cb81b6bdf409cb76805f86e8a3c31?sv=2017-04-17&sr=b&sig=IXptoy3bz0%2BWSIowft7F0oqWZY00UtKUe0A8E5Y6Np8%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"2068f2b6-3216-43a9-99b2-f195db2c3dde\",\r\n    \"name\": \"btest\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multiclass\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-03-21T17:14:55.503Z\",\r\n    \"lastModified\": \"2019-03-21T17:14:55.503Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-2068f2b6321643a999b2f195db2c3dde/t-d1f7b4f29e7141f1a7c217034e7fb1bf?sv=2017-04-17&sr=b&sig=d8jodEaMHC6%2BFlOkihT1NgkhR3lVM%2FjUsNwAKYw8pRA%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"eba165c8-5e46-4e55-9162-687fd5b5db3d\",\r\n    \"name\": \"atest\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n      \"classificationType\": \"Multiclass\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-03-20T22:36:18.966Z\",\r\n    \"lastModified\": \"2019-03-21T15:56:52.15Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-eba165c85e464e559162687fd5b5db3d/t-a5499e2600f34cca98b7114f608e3207?sv=2017-04-17&sr=b&sig=fKwCgEeD6dBjpRXKpBzGkYz0foyjd%2BnHhSD0pdxck1I%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"62842477-70c5-451d-98b8-9441947dd9ad\",\r\n    \"name\": \"Fruit\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multiclass\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-03-19T19:27:00.996Z\",\r\n    \"lastModified\": \"2019-03-19T19:27:00.996Z\",\r\n    \"thumbnailUri\": null,\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"8622c779-471c-4b6e-842c-63a11deffd7a\",\r\n    \"name\": \"Cats vs. Dogs Demo\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-03-19T19:19:24.49Z\",\r\n    \"lastModified\": \"2019-03-20T19:54:47.216Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-8622c779471c4b6e842c63a11deffd7a/t-1c766d3cd78943cdbab900ebaf391840?sv=2017-04-17&sr=b&sig=PllOSGqLUOFFb5E0xNl%2FtwvT69Ks9996fXnGHbEOSug%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"e290c6ad-ea78-4792-9e00-e82775bd7bd0\",\r\n    \"name\": \"voc2007-full\",\r\n    \"description\": \"detection\",\r\n    \"settings\": {\r\n      \"domainId\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-02-09T03:07:09.2Z\",\r\n    \"lastModified\": \"2019-02-13T20:51:39.64Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-e290c6adea7847929e00e82775bd7bd0/t-fa78ca0ca2a54b33af3000046b22e2d7?sv=2017-04-17&sr=b&sig=b58oP49J%2Beo8rXXA13j01NlUJ637CMZDN8b9yLKLQSw%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"1e0aadf1-d513-414f-aa72-1b99b25f177f\",\r\n    \"name\": \"Large-OD\",\r\n    \"description\": \"detection\",\r\n    \"settings\": {\r\n      \"domainId\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-02-02T03:47:00.963Z\",\r\n    \"lastModified\": \"2019-02-04T07:03:13.909Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-1e0aadf1d513414faa721b99b25f177f/t-ff60796d037c4f2b8a3900055749c114?sv=2017-04-17&sr=b&sig=nYPUFLNd8bsQtDDt5kemXN7em77%2Fw6QSW%2BxF2T5wcuY%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"f5059c77-6744-4b23-8c83-1b8f3847544f\",\r\n    \"name\": \"LargeProject-Food\",\r\n    \"description\": \"This is the default project for the PUDTool\",\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-02-01T21:06:29.693Z\",\r\n    \"lastModified\": \"2019-02-02T01:22:49.856Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-f5059c7767444b238c831b8f3847544f/t-6e2c75c71b154942825600002e533b86?sv=2017-04-17&sr=b&sig=pXj%2FV3iJ4K43VS2gtYs4DDnDwVnDTJ3W%2FcvifG4o9e4%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"4212bf64-050b-4cbb-a733-a9efe45faf8d\",\r\n    \"name\": \"quota-test\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2019-02-01T20:57:00.066Z\",\r\n    \"lastModified\": \"2019-02-01T20:57:00.066Z\",\r\n    \"thumbnailUri\": null,\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"5531601b-7a73-48a9-921b-c682a00e289d\",\r\n    \"name\": \"Ping-Logo\",\r\n    \"description\": \"detection\",\r\n    \"settings\": {\r\n      \"domainId\": \"a27d5ca5-bb19-49d8-a70a-fec086c47f5b\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2018-11-05T21:35:26.69Z\",\r\n    \"lastModified\": \"2019-06-21T18:54:48.05Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-5531601b7a7348a9921bc682a00e289d/t-896a42bca63141fe87190084427223e1?sv=2017-04-17&sr=b&sig=xqwKVSNnzu%2FNPImwkoUtwjrb5fU%2BnbuVDUmXed6551Y%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"214ceb0e-566d-44fb-95eb-70a8c2d7f156\",\r\n    \"name\": \"test (1)\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n      \"classificationType\": \"Multiclass\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2018-10-05T23:04:05.756Z\",\r\n    \"lastModified\": \"2018-10-05T23:04:05.756Z\",\r\n    \"thumbnailUri\": null,\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"3b14e0ae-2210-4b79-8e33-d22f2f5612b8\",\r\n    \"name\": \"Project Name (1)\",\r\n    \"description\": \"\",\r\n    \"settings\": {\r\n      \"domainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": \"\",\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2018-09-18T18:28:54.126Z\",\r\n    \"lastModified\": \"2018-09-20T21:34:48.641Z\",\r\n    \"thumbnailUri\": \"https://irisusscppestore.blob.core.windows.net/i-3b14e0ae22104b798e33d22f2f5612b8/t-59b1e733ff394525a922013c667b476d?sv=2017-04-17&sr=b&sig=qkYIRJWfCj0s8d6v7WXQg0GTYSKZjcunGE40X5GA4LM%3D&se=2019-09-17T14%3A58%3A23Z&sp=r\",\r\n    \"drModeEnabled\": false\r\n  },\r\n  {\r\n    \"id\": \"c466df53-a299-4052-9638-d790c9d55106\",\r\n    \"name\": \"all resource group\",\r\n    \"description\": null,\r\n    \"settings\": {\r\n      \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"classificationType\": \"Multilabel\",\r\n      \"targetExportPlatforms\": [],\r\n      \"useNegativeSet\": true,\r\n      \"detectionParameters\": null,\r\n      \"imageProcessingSettings\": {\r\n        \"augmentationMethods\": {\r\n          \"rotation\": true,\r\n          \"scaling\": true,\r\n          \"translation\": true,\r\n          \"horizontal flip\": true,\r\n          \"equalize\": true,\r\n          \"solarize\": true,\r\n          \"padtosquare\": true\r\n        }\r\n      }\r\n    },\r\n    \"created\": \"2018-02-21T19:52:37.306Z\",\r\n    \"lastModified\": \"2018-02-21T19:52:37.306Z\",\r\n    \"thumbnailUri\": null,\r\n    \"drModeEnabled\": false\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.0/training/projects/76c15328-0177-4562-91a2-d66241a910b3",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy83NmMxNTMyOC0wMTc3LTQ1NjItOTFhMi1kNjYyNDFhOTEwYjM=",
+      "RequestUri": "//customvision/v3.1/training/projects/c83a89ef-3e7e-4224-99a3-604c22bf4500",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy9jODNhODllZi0zZTdlLTQyMjQtOTlhMy02MDRjMjJiZjQ1MDA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -88,38 +88,38 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:30:57 GMT"
-        ],
         "apim-request-id": [
-          "a28198b0-b67e-43fb-b9a5-6d0cbc972f3e"
+          "04d8579f-e5d3-48d4-8bf5-37d90dd37f33"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:22 GMT"
+        ],
         "Content-Length": [
-          "400"
+          "576"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"76c15328-0177-4562-91a2-d66241a910b3\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"targetExportPlatforms\": []\r\n  },\r\n  \"created\": \"2019-03-21T01:30:57.893Z\",\r\n  \"lastModified\": \"2019-03-21T01:30:57.893Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"c83a89ef-3e7e-4224-99a3-604c22bf4500\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"targetExportPlatforms\": [],\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"imageProcessingSettings\": {\r\n      \"augmentationMethods\": {\r\n        \"rotation\": true,\r\n        \"scaling\": true,\r\n        \"translation\": true,\r\n        \"horizontal flip\": true,\r\n        \"equalize\": true,\r\n        \"solarize\": true,\r\n        \"padtosquare\": true\r\n      }\r\n    }\r\n  },\r\n  \"created\": \"2019-09-16T14:58:22.846Z\",\r\n  \"lastModified\": \"2019-09-16T14:58:22.846Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.0/training/projects/76c15328-0177-4562-91a2-d66241a910b3",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy83NmMxNTMyOC0wMTc3LTQ1NjItOTFhMi1kNjYyNDFhOTEwYjM=",
+      "RequestUri": "//customvision/v3.1/training/projects/c83a89ef-3e7e-4224-99a3-604c22bf4500",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy9jODNhODllZi0zZTdlLTQyMjQtOTlhMy02MDRjMjJiZjQ1MDA=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -127,24 +127,24 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:30:57 GMT"
-        ],
         "apim-request-id": [
-          "5397c916-821c-46fa-bdba-10763b6990c6"
+          "ad1112e6-92bd-44ce-b36f-301cfbae04fa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:22 GMT"
         ],
         "Content-Length": [
           "0"

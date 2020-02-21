@@ -16,17 +16,17 @@ namespace Azure.AI.TextAnalytics.Samples
         public void ExtractKeyPhrases()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #region Snippet:TextAnalyticsSample3CreateClient
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            #endregion
 
             #region Snippet:ExtractKeyPhrases
             string input = "My cat might need to see a veterinarian.";
 
-            // Extract key phrases from the input text.
-            ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
-            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+            Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
+            IEnumerable<string> keyPhrases = response.Value;
 
             Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
             foreach (string keyPhrase in keyPhrases)

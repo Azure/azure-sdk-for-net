@@ -9,28 +9,38 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// The result of the recognize PII entities operation on a single
-    /// document, containing a collection of the <see cref="NamedEntity"/>
-    /// objects containing personally identifiable information that were
+    /// document, containing a collection of the <see cref="PiiEntity"/>
+    /// objects containing Personally Identifiable Information that were
     /// found in that document.
     /// </summary>
     public class RecognizePiiEntitiesResult : TextAnalyticsResult
     {
-        internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, IList<NamedEntity> entities)
+        private readonly IReadOnlyCollection<PiiEntity> _entities;
+
+        internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, IList<PiiEntity> entities)
             : base(id, statistics)
         {
-            NamedEntities = new ReadOnlyCollection<NamedEntity>(entities);
+            _entities = new ReadOnlyCollection<PiiEntity>(entities);
         }
 
-        internal RecognizePiiEntitiesResult(string id, string errorMessage)
-            : base(id, errorMessage)
-        {
-            NamedEntities = Array.Empty<NamedEntity>();
-        }
+        internal RecognizePiiEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Gets the collection of named entities containing personally
-        /// identifiable information in the input document.
+        /// Gets the collection of PII entities containing Personally
+        /// Identifiable Information in the input document.
         /// </summary>
-        public IReadOnlyCollection<NamedEntity> NamedEntities { get; }
+        public IReadOnlyCollection<PiiEntity> Entities
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.Code}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _entities;
+            }
+        }
     }
 }

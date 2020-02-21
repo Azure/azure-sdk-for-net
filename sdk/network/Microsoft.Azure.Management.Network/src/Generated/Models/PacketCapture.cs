@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="target">The ID of the targeted resource, only VM is
         /// currently supported.</param>
-        /// <param name="storageLocation">Describes the storage location for a
-        /// packet capture session.</param>
+        /// <param name="storageLocation">The storage location for a packet
+        /// capture session.</param>
         /// <param name="bytesToCapturePerPacket">Number of bytes captured per
         /// packet, the remaining bytes are truncated.</param>
         /// <param name="totalBytesPerSession">Maximum size of the capture
@@ -88,8 +88,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? TimeLimitInSeconds { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the storage location for a packet capture
-        /// session.
+        /// Gets or sets the storage location for a packet capture session.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageLocation")]
         public PacketCaptureStorageLocation StorageLocation { get; set; }

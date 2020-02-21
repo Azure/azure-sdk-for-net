@@ -17,10 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizeEntitiesBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             var inputs = new List<string>
             {
@@ -29,18 +29,20 @@ namespace Azure.AI.TextAnalytics.Samples
                 "A key technology in Text Analytics is Named Entity Recognition (NER).",
             };
 
-            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
+            #region Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
+            RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
+            #endregion
 
             Debug.WriteLine($"Recognized entities for each input are:");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizeEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} entities were found: ");
+                Debug.WriteLine($"the following {result.Entities.Count()} entities were found: ");
 
-                foreach (var entity in result.NamedEntities)
+                foreach (CategorizedEntity entity in result.Entities)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
             }
         }

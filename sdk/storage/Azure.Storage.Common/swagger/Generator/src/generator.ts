@@ -185,7 +185,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) { w.line(`,`); }
-        w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
+        w.write(`string ${operationName} = "${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
         w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
         w.write(')')
@@ -235,7 +235,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`Azure.Response ${responseName} = ${messageName}.Response;`);
                 w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
 
-                const createResponse = `${methodName}_CreateResponse(${responseName})`;
+                const createResponse = `${methodName}_CreateResponse(${clientDiagnostics}, ${responseName})`;
                 if (result.returnStream) {
                     w.line(`return (${createResponse}, ${messageName}.ExtractResponseContent());`);
                 }
@@ -384,6 +384,19 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         if (operation.request.body) {
             w.line(`// Create the body`);
             const bodyType = operation.request.body.model;
+            const bodyParamName = naming.parameter(operation.request.body.clientName);
+
+            // Guard serialization if the body is optional
+            const optionalBody =
+                // Ignore anything required
+                !operation.request.body.required &&
+                // Ignore sequence types where we want an enclosing XML element for empty content
+                !(operation.consumes === `xml` && isPrimitiveType(bodyType) && bodyType.itemType && isObjectType(bodyType.itemType) && bodyType.itemType.serialize);
+            if (optionalBody) {
+                w.line(`if (${bodyParamName} != null)`);
+                w.pushScope(`{`);
+            }
+
             if (bodyType.type === `string`) {
                 // Temporary Hack: Serialize string content as JSON
                 w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
@@ -410,7 +423,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`System.Xml.Linq.XElement ${bodyName} = new System.Xml.Linq.XElement(${xname});`);
 
                         const itemType = bodyType.itemType;
-                        const bodyParamName = naming.parameter(operation.request.body.clientName);
                         w.line(`if (${bodyParamName} != null)`);
                         w.scope(`{`, `}`, () => {
                             w.line(`foreach (${types.getName(itemType)} _child in ${bodyParamName})`);
@@ -436,6 +448,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
             }
+            if (optionalBody) {
+                // Finish check for optional body content
+                w.popScope(`}`);
+            }
             w.line();
         }
 
@@ -449,10 +465,12 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} response or throw a failure exception.`);
     w.line(`/// </summary>`);
+    w.line(`/// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>`);
     w.line(`/// <param name="response">The raw Response.</param>`);
     w.line(`/// <returns>The ${regionName} ${returnType.replace(/</g, '{').replace(/>/g, '}')}.</returns>`);
     w.write(`internal static ${returnType} ${methodName}_CreateResponse(`);
     w.scope(() => {
+        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         w.write(`Azure.Response ${responseName})`);
     });
     w.scope(`{`, `}`, () => {
@@ -510,7 +528,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     if (response.exception) {
                         // If we're using x-ms-create-exception we'll pass the response to
                         // an unimplemented method on the partial class
-                        w.line(`throw ${valueName}.CreateException(${responseName});`);
+                        w.line(`throw ${valueName}.CreateException(${clientDiagnostics}, ${responseName});`);
                     } else {
                         w.line(`throw new Azure.RequestFailedException(${responseName});`);
                     }

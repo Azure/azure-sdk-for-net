@@ -1,6 +1,20 @@
-# README
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-storage
+- azure-event-hubs
+urlFragment: line-counter
+name: LineCounter
+description: Sample that illustrates using Storage and Event Hubs clients along with ASP.NET Core integration, distributed tracing and hosted services.
+---
 
-Sample that uses illustrates using blob and event hub clients along with ASP.NET Core integration, distributed tracing and hosted services.
+# LineCounter
+This is a sample app that illustrates using Storage and Event Hubs clients along with ASP.NET Core integration, distributed tracing and hosted services.
+It allows users to upload a file to a blob, which triggers an Event Hubs event containing the file name. 
+The Event Hubs Processor receives the event, and then the app downloads the blob and counts the number of lines in the file.
 
 # Configuration
 
