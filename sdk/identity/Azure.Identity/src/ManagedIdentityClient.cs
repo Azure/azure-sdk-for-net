@@ -83,7 +83,7 @@ namespace Azure.Identity
             throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
-        public async virtual Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
+        public virtual async Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
         {
             MsiType msiType = await GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
 
