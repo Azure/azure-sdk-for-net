@@ -1,20 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <Version>1.1.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      ]]>
-    </PackageReleaseNotes>
-
+    <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-
-    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
-    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +17,19 @@
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Numerics.Vectors" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shared\**\*.cs" />
+    <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\EventSourceEventFormatting.cs" />
+    <Compile Include="Shared\HashCodeBuilder.cs" />
+    <Compile Include="Shared\ClientDiagnostics.cs" />
+    <Compile Include="Shared\HttpMessageSanitizer.cs" />
+    <Compile Include="Shared\NullableAttributes.cs" />
+    <Compile Include="Shared\ContentTypeUtilities.cs" />
+    <Compile Include="Shared\DiagnosticScopeFactory.cs" />
+    <Compile Include="Shared\DiagnosticScope.cs" />
   </ItemGroup>
 </Project>

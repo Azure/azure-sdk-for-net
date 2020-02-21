@@ -242,12 +242,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                     new SubscriptionDescription(topicName, subscriptionName),
                     new RuleDescription("rule0", new FalseFilter()));
 
-                var sqlFilter = new SqlFilter("stringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam");
+                var sqlFilter = new SqlFilter("stringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam");
                 sqlFilter.Parameters.Add("@stringParam", "string");
                 sqlFilter.Parameters.Add("@intParam", (int)1);
                 sqlFilter.Parameters.Add("@longParam", (long)12);
                 sqlFilter.Parameters.Add("@dateParam", DateTime.UtcNow);
-                var rule1 = new RuleDescription()
+                sqlFilter.Parameters.Add("@timeSpanParam", TimeSpan.FromDays(1));
+                var rule1 = new RuleDescription
                 {
                     Name = "rule1",
                     Filter = sqlFilter,

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.HDInsight
         public async Task<AzureOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterCreateParameters clusterCreateParameters, CancellationToken cancellationToken)
         {
             var createParamsExtended = CreateParametersConverter.GetExtendedClusterCreateParameters(clusterName, clusterCreateParameters);
-            return await CreateWithHttpMessagesAsync(resourceGroupName, clusterName, createParamsExtended, null, cancellationToken);
+            return await CreateWithHttpMessagesAsync(resourceGroupName, clusterName, createParamsExtended, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.HDInsight
         public async Task<AzureOperationResponse<Cluster>> BeginCreatingAsync(string resourceGroupName, string clusterName, ClusterCreateParameters clusterCreateParameters, CancellationToken cancellationToken)
         {
             var createParamsExtended = CreateParametersConverter.GetExtendedClusterCreateParameters(clusterName, clusterCreateParameters);
-            return await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, createParamsExtended, null, cancellationToken);
+            return await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, createParamsExtended, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.HDInsight
         public async Task<AzureOperationResponse> ResizeAsync(string resourceGroupName, string clusterName, int targetInstanceCount, CancellationToken cancellationToken)
         {
             var resizeParams = new ClusterResizeParameters { TargetInstanceCount = targetInstanceCount };
-            return await ResizeWithHttpMessagesAsync(resourceGroupName, clusterName, resizeParams, null, cancellationToken);
+            return await ResizeWithHttpMessagesAsync(resourceGroupName, clusterName, resizeParams, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.HDInsight
             CancellationToken cancellationToken)
         {
             var resizeParams = new ClusterResizeParameters { TargetInstanceCount = targetInstanceCount };
-            return await BeginResizeWithHttpMessagesAsync(resourceGroupName, clusterName, resizeParams, null, cancellationToken);
+            return await BeginResizeWithHttpMessagesAsync(resourceGroupName, clusterName, resizeParams, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.HDInsight
             bool persistOnSuccess, CancellationToken cancellationToken)
         {
             ExecuteScriptActionParameters executeScriptActionsParams = new ExecuteScriptActionParameters { ScriptActions = scriptActions, PersistOnSuccess = persistOnSuccess };
-            return await ExecuteScriptActionsWithHttpMessagesAsync(resourceGroupName, clusterName, executeScriptActionsParams, null, cancellationToken);
+            return await ExecuteScriptActionsWithHttpMessagesAsync(resourceGroupName, clusterName, executeScriptActionsParams, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.HDInsight
             bool persistOnSuccess, CancellationToken cancellationToken)
         {
             var executeScriptActionsParams = new ExecuteScriptActionParameters { ScriptActions = scriptActions, PersistOnSuccess = persistOnSuccess };
-            return await BeginExecuteScriptActionsWithHttpMessagesAsync(resourceGroupName, clusterName, executeScriptActionsParams, null, cancellationToken);
+            return await BeginExecuteScriptActionsWithHttpMessagesAsync(resourceGroupName, clusterName, executeScriptActionsParams, null, cancellationToken).ConfigureAwait(false);
         }
     }
 }

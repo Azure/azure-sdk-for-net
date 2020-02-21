@@ -17,6 +17,10 @@ namespace Microsoft.Azure.Batch.Protocol
 
         private Func<Task<string>> TokenProvider { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BatchTokenProvider"/> class.
+        /// </summary>
+        /// <param name="tokenProvider">A token provider function which retrieves an AAD token.</param>
         public BatchTokenProvider(Func<Task<string>> tokenProvider)
         {
             this.TokenProvider = tokenProvider;

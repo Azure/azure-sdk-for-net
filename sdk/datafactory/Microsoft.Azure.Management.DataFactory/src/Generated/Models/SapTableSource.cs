@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for SAP Table source.
     /// </summary>
-    public partial class SapTableSource : CopySource
+    public partial class SapTableSource : TabularSource
     {
         /// <summary>
         /// Initializes a new instance of the SapTableSource class.
@@ -41,6 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
+        /// <param name="queryTimeout">Query timeout. Type: string (or
+        /// Expression with resultType string), pattern:
+        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="rowCount">The number of rows to be retrieved. Type:
         /// integer(or Expression with resultType integer).</param>
         /// <param name="rowSkips">The number of rows that will be skipped.
@@ -57,8 +60,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="customRfcReadTableFunctionModule">Specifies the custom
         /// RFC function module that will be used to read data from SAP Table.
         /// Type: string (or Expression with resultType string).</param>
-        public SapTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object rowCount = default(object), object rowSkips = default(object), object rfcTableFields = default(object), object rfcTableOptions = default(object), object batchSize = default(object), object customRfcReadTableFunctionModule = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
+        /// <param name="partitionOption">The partition mechanism that will be
+        /// used for SAP table read in parallel. Possible values include:
+        /// 'None', 'PartitionOnInt', 'PartitionOnCalendarYear',
+        /// 'PartitionOnCalendarMonth', 'PartitionOnCalendarDate',
+        /// 'PartitionOnTime'</param>
+        /// <param name="partitionSettings">The settings that will be leveraged
+        /// for SAP table source partitioning.</param>
+        public SapTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object rowCount = default(object), object rowSkips = default(object), object rfcTableFields = default(object), object rfcTableOptions = default(object), object batchSize = default(object), object customRfcReadTableFunctionModule = default(object), string partitionOption = default(string), SapTablePartitionSettings partitionSettings = default(SapTablePartitionSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
         {
             RowCount = rowCount;
             RowSkips = rowSkips;
@@ -66,6 +76,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             RfcTableOptions = rfcTableOptions;
             BatchSize = batchSize;
             CustomRfcReadTableFunctionModule = customRfcReadTableFunctionModule;
+            PartitionOption = partitionOption;
+            PartitionSettings = partitionSettings;
             CustomInit();
         }
 
@@ -119,6 +131,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "customRfcReadTableFunctionModule")]
         public object CustomRfcReadTableFunctionModule { get; set; }
+
+        /// <summary>
+        /// Gets or sets the partition mechanism that will be used for SAP
+        /// table read in parallel. Possible values include: 'None',
+        /// 'PartitionOnInt', 'PartitionOnCalendarYear',
+        /// 'PartitionOnCalendarMonth', 'PartitionOnCalendarDate',
+        /// 'PartitionOnTime'
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionOption")]
+        public string PartitionOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings that will be leveraged for SAP table
+        /// source partitioning.
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionSettings")]
+        public SapTablePartitionSettings PartitionSettings { get; set; }
 
     }
 }

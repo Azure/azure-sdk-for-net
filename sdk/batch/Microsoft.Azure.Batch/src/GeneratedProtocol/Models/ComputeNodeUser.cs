@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A user account for RDP or SSH access on a compute node.
+    /// A user Account for RDP or SSH access on a Compute Node.
     /// </summary>
     public partial class ComputeNodeUser
     {
@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ComputeNodeUser class.
         /// </summary>
-        /// <param name="name">The user name of the account.</param>
-        /// <param name="isAdmin">Whether the account should be an
-        /// administrator on the compute node.</param>
-        /// <param name="expiryTime">The time at which the account should
+        /// <param name="name">The user name of the Account.</param>
+        /// <param name="isAdmin">Whether the Account should be an
+        /// administrator on the Compute Node.</param>
+        /// <param name="expiryTime">The time at which the Account should
         /// expire.</param>
-        /// <param name="password">The password of the account.</param>
+        /// <param name="password">The password of the Account.</param>
         /// <param name="sshPublicKey">The SSH public key that can be used for
-        /// remote login to the compute node.</param>
+        /// remote login to the Compute Node.</param>
         public ComputeNodeUser(string name, bool? isAdmin = default(bool?), System.DateTime? expiryTime = default(System.DateTime?), string password = default(string), string sshPublicKey = default(string))
         {
             Name = name;
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the user name of the account.
+        /// Gets or sets the user name of the Account.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the account should be an administrator on the
-        /// compute node.
+        /// Gets or sets whether the Account should be an administrator on the
+        /// Compute Node.
         /// </summary>
         /// <remarks>
         /// The default value is false.
@@ -69,23 +69,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public bool? IsAdmin { get; set; }
 
         /// <summary>
-        /// Gets or sets the time at which the account should expire.
+        /// Gets or sets the time at which the Account should expire.
         /// </summary>
         /// <remarks>
         /// If omitted, the default is 1 day from the current time. For Linux
-        /// compute nodes, the expiryTime has a precision up to a day.
+        /// Compute Nodes, the expiryTime has a precision up to a day.
         /// </remarks>
         [JsonProperty(PropertyName = "expiryTime")]
         public System.DateTime? ExpiryTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the password of the account.
+        /// Gets or sets the password of the Account.
         /// </summary>
         /// <remarks>
-        /// The password is required for Windows nodes (those created with
-        /// 'cloudServiceConfiguration', or created with
-        /// 'virtualMachineConfiguration' using a Windows image reference). For
-        /// Linux compute nodes, the password can optionally be specified along
+        /// The password is required for Windows Compute Nodes (those created
+        /// with 'cloudServiceConfiguration', or created with
+        /// 'virtualMachineConfiguration' using a Windows Image reference). For
+        /// Linux Compute Nodes, the password can optionally be specified along
         /// with the sshPublicKey property.
         /// </remarks>
         [JsonProperty(PropertyName = "password")]
@@ -93,14 +93,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the SSH public key that can be used for remote login
-        /// to the compute node.
+        /// to the Compute Node.
         /// </summary>
         /// <remarks>
         /// The public key should be compatible with OpenSSH encoding and
         /// should be base 64 encoded. This property can be specified only for
-        /// Linux nodes. If this is specified for a Windows node, then the
-        /// Batch service rejects the request; if you are calling the REST API
-        /// directly, the HTTP status code is 400 (Bad Request).
+        /// Linux Compute Nodes. If this is specified for a Windows Compute
+        /// Node, then the Batch service rejects the request; if you are
+        /// calling the REST API directly, the HTTP status code is 400 (Bad
+        /// Request).
         /// </remarks>
         [JsonProperty(PropertyName = "sshPublicKey")]
         public string SshPublicKey { get; set; }

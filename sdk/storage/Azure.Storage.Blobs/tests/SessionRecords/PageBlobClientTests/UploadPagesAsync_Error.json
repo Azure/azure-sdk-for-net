@@ -1,323 +1,148 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96?restype=container",
+      "RequestUri": "http://seanstagetest.blob.core.windows.net/test-container-87b87bd8-1a83-fd09-bf44-8c217b740764?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "traceparent": "00-2517a1ff971ee74aa4abf7b4b8294df8-2ccb12b65a75e643-00",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.1.0-dev.20191210.1\u002B4108f7dcb3b573f551e264a3052039412b91b2f8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-blob-public-access": "container",
-        "x-ms-client-request-id": "2658344990afa2e3a56a0b39f0a92bee",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "x-ms-client-request-id": "acc077fb-f9fc-43e1-5e59-295b3cad1c11",
+        "x-ms-date": "Wed, 11 Dec 2019 04:37:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:58:21 GMT",
-        "ETag": "\u00220x8D6F36688A1CA0F\u0022",
-        "Last-Modified": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "Date": "Wed, 11 Dec 2019 04:37:13 GMT",
+        "ETag": "\u00220x8D77DF3CB91C5EA\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 04:37:14 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "a9364705-b01e-0079-3c4f-25b12a000000",
-        "x-ms-version": "2018-11-09"
+        "x-ms-client-request-id": "acc077fb-f9fc-43e1-5e59-295b3cad1c11",
+        "x-ms-request-id": "00dc5fb3-701e-0023-69dc-af08f8000000",
+        "x-ms-version": "2019-07-07"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c",
+      "RequestUri": "http://seanstagetest.blob.core.windows.net/test-container-87b87bd8-1a83-fd09-bf44-8c217b740764/test-blob-2bb68401-ed94-535b-a7ca-ccc0ab2559a3",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
+        "traceparent": "00-45d083f66c2412479363a6699077dfc8-6d670844c4f9d545-00",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.1.0-dev.20191210.1\u002B4108f7dcb3b573f551e264a3052039412b91b2f8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-blob-content-length": "4096",
         "x-ms-blob-sequence-number": "0",
         "x-ms-blob-type": "PageBlob",
-        "x-ms-client-request-id": "d4abca6d7e4c902ba8ffca2db94cc093",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "x-ms-client-request-id": "1fe25da6-6d64-0dfa-1c6c-05312d209739",
+        "x-ms-date": "Wed, 11 Dec 2019 04:37:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:58:21 GMT",
-        "ETag": "\u00220x8D6F36688A45FD5\u0022",
-        "Last-Modified": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "Date": "Wed, 11 Dec 2019 04:37:13 GMT",
+        "ETag": "\u00220x8D77DF3CB9E7D25\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 04:37:14 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "a936470f-b01e-0079-454f-25b12a000000",
+        "x-ms-client-request-id": "1fe25da6-6d64-0dfa-1c6c-05312d209739",
+        "x-ms-request-id": "00dc5fb7-701e-0023-6bdc-af08f8000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-07-07"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c?comp=page",
+      "RequestUri": "http://seanstagetest.blob.core.windows.net/test-container-87b87bd8-1a83-fd09-bf44-8c217b740764/test-blob-2bb68401-ed94-535b-a7ca-ccc0ab2559a3?comp=page",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "1024",
+        "traceparent": "00-307cde78ba07a347bcac0b9bde281bec-e9c4cbdbb27f254a-00",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.1.0-dev.20191210.1\u002B4108f7dcb3b573f551e264a3052039412b91b2f8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "656a963400e6bdc49e4aa4cbe1d7352b",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "x-ms-client-request-id": "5ed3b046-4c44-3c8e-dfc3-f4628155547a",
+        "x-ms-date": "Wed, 11 Dec 2019 04:37:14 GMT",
         "x-ms-page-write": "update",
         "x-ms-range": "bytes=5120-6143",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-07-07"
       },
-      "RequestBody": "Ylem7Lo4pkcrldNBa/sALEHuyyX9VqLaGEy58DjbCAeskYZK0jxiNCRjqbaq6SWt/p3ryoCblgu1y9Rtf7UPT4zLlNl0tloFi5YAma3rLy4nDPKa7z6HEft7lQZn9bVuVFkp31RLOEhC5T7pmvxdyZylRXLDdGBORILd\u002bSBUnpbgkUVUwVDZ29SpVwr/nXf/HctpwbBDq9/525vSbj4n7keoCAi2CQdMzGmdGR1WT6YL3txV6tzmneZmWua1B22WgmnCVpVvSBPDHfVGppHCo4v0x5Bh0gNrwmsiUK8hl8X7Bpezk/kRm5XJkc3mn/ZUpLdawEDdNa9mVpMqTfhkooYwS5/6Dg\u002bS4yv7l0A2hCN0zaz3xtaEHtHnTTxl5k6cZe9GtlRXWpWoyNwV4p1vMNJwtn9MbNuvqyzOEsHSLPzcXjJR787PHHIXT/75bzs0eBxq9TDPUPgTlwoniUjT1ZvfOIRrHUADoZkMNR3dtTvwmpmkaDfMDQ05PljEp5MqQ3liGTe3yVrcZ1SXwhvbNeHONu\u002buLm1jEyt2Md/oP/kF4vGje5wEOdE/yAHjNEryXQh39XGkfBQM/gYLQZd78ydakd8pOLlEyf0db2VsgN/gg9PWcUmIYGbclnyV\u002bfc5xNXZiaJqyCVOMitzhg2voH4mKr3DpIHd0jB5TKE9rtAF5KqQkvc8druuhz8eFdpYLfb\u002bb886dh9T\u002b7Zx8HuEEYNbbaJiHg2H6rQCFRxCv71WIB\u002brPj8By26LPJdAyoU/Kna7wqc39g7od4QaOGADEDz5G9Bc2dJDWqE01uJ2RiAvwuumhvwVHioQwse75pMNiCtaRq\u002b14lGjeGgFAx8scjBk63V1XIo/5PylTBcLh3MOJk62GwBweuCaAw6UEBoK40\u002bXV/oemCuhG2KyD5U5mPD0993Rdlcv83GU21l8q9Phm2nHczB5744jFf\u002bdvmpKYGsdnxg9OWz4Z2OJib3SJXCO0HMsciS/ewdPrWFXkTUGSnrtXgy7pGL8zwvN72bQUO\u002bPD\u002b33Hu1GXSMR7osLoNUtgj9C5MZj0ywQMKIY8ouhfl1xx4JHDyyMpwDoqrbX8C41n20njmwoKzvB5u1LLWuXb3AtmtlT5nIStT3Feyl1OT9z41Ieeu/wSJtGhig\u002bQXmVUDpGqVZV4rn6FNgvYrASS62u10oYefWAPVE9DGBK1HTDMCvuL5DoHgCZI2UWweXrMzp7j2oufNZExWwFF9ZZsD9kazKFIxwdxrhKf1WQaXtrUtglzkQJlLRUqmkj4wcqQHMlsVWzZRAdXsmx5P2BtFzwmcT9M\u002bH7W9Z\u002bMXmz\u002beOxID/iarcluO3IB3B7V7C20vYNM0lCLAyRKlZ/NQ==",
+      "RequestBody": "AIawPocYXKUcUzU5Zmb3Lxm\u002BGU1DOT4\u002BBBjnSFY2NtXDTfTVx3OGjgE8AxE3wKe1dNUYbgdK9cZHcjpuMBRP5R1fdhhyImelN4pMBjYsBkNxMdOAHsfOeVctjVU5GF3t7B3010qOQ1Jucjd8/e\u002BQGmv2/f5Bz8dVkf3BRJQRbB8tXxkYOC744u6AEauPUXtonXLqQhpeqxxWnkVNzf\u002B\u002BXAUYT57Vd\u002BI9/hsQwb4bxkCBWKYhJyoEzrP9wproqhXuwbSldwLckyWQrUT/TepeOtgFy3RYnTXbE4Dr2LRHVFMFIv8Jdk49pcSAkHrmBYDInojC4t\u002BglSR/ymSC8LtxSFjw\u002BSvrVcSJyCaw1wy79Q0AIjkshXF0ZYzbiqvqu7QJD0ch9QtU3UnEOBq58L4Xw9RWgs6BRMLmfJSfD8oYnwxxpsfEmQACq0TwaE1Xu3TNw8bXkznmiMuEO3l2tc1\u002Bq5kNR0n2UyrUVNaJkNx1jsAf0UwEQAvTix78QF2Gi/V2cryzSnMr13CbAz9iXPfvD6y4V\u002BOBemqOObwr\u002BhLMTcngEh0fwURN9PrcaD3McS4mDTGxzjQS9fhRJRC3/91dz7V1gUnZz01na2LppBEtwciNBO3hG3\u002BVzhwlzZw0lfUdf5mIVu/kTD3jSWPRKFDmJGNHKfrve7M24LIstAKwM9VtzCV4pGvYqLiw/dIcw6bMPqk47Gv6LQPmUnU9t5g7MxaNZFwrbn/4boBCP33gGhwMYHVYeEZpcp4iklL2m/EfdMq8jl5KodApQH3rt\u002B2GBTdYMFci4rrPI/K9CdstAtOPI8qyJIu9wb\u002BlLzjIfrqxm40anWuZ/JIQ7GtsjZj0/D6qW5Qi0\u002BGsmm6XfbKCB6U3C21OEmRo9SY3ojcgUTQnsDP6HSIljsirbgL8An/gjeXGNYEqperZQmZu6jGpjEk6b8x/iOqCEn2lo6Nia/OnVxRSWRyz/ApJIdq8tqOWAeG5wpKyYQX7QyMDhQJGdtZzx5McVzIthnLBNmcPxVvZDqHBqalg9fYOVxX5r3cIAqoDSe8Qeqqvizsf8Cue637HKndhhM0tEtKcDQAcNNf7uTO8C3xryZT2Eh1uQATLcGuXMYX/p33c1jYdc2yqkldkJDb34d8CXGDjanKvvtLN0Z2UhQNR\u002BxK14DVFTlUoTH/GChzO1I6LldUlHDwLLBdkUKLOFQ1TEigkQQGqvA0Kuh3y6bS2/v0PCO8uLN/VqrMd4f6zWTdxcvf0qpKM4djHGmEfGENjrlGlvg0eJeZITpdNjdsPV2HmgHa9wVRrgicWZhJ9tpFwujOsDpopU00Rq1v6P1T9t8MAOJfMpuz8OjzlB77Uy5gG3NOoYknGvA==",
       "StatusCode": 416,
       "ResponseHeaders": {
-        "Content-Length": "221",
+        "Content-Length": "222",
         "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:21 GMT",
+        "Date": "Wed, 11 Dec 2019 04:37:13 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+        "x-ms-client-request-id": "5ed3b046-4c44-3c8e-dfc3-f4628155547a",
         "x-ms-error-code": "InvalidPageRange",
-        "x-ms-request-id": "a936471f-b01e-0079-554f-25b12a000000",
-        "x-ms-version": "2018-11-09"
+        "x-ms-request-id": "00dc5fba-701e-0023-6cdc-af08f8000000",
+        "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidPageRange\u003c/Code\u003e\u003cMessage\u003eThe page range specified is invalid.\n",
-        "RequestId:a936471f-b01e-0079-554f-25b12a000000\n",
-        "Time:2019-06-17T20:58:22.4422420Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
+        "\u003CError\u003E\u003CCode\u003EInvalidPageRange\u003C/Code\u003E\u003CMessage\u003EThe page range specified is invalid.\n",
+        "RequestId:00dc5fba-701e-0023-6cdc-af08f8000000\n",
+        "Time:2019-12-11T04:37:14.3699168Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c?comp=page",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "1024",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "26037f715ec7a582c6996ff332513f61",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "x-ms-page-write": "update",
-        "x-ms-range": "bytes=5120-6143",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": "Ylem7Lo4pkcrldNBa/sALEHuyyX9VqLaGEy58DjbCAeskYZK0jxiNCRjqbaq6SWt/p3ryoCblgu1y9Rtf7UPT4zLlNl0tloFi5YAma3rLy4nDPKa7z6HEft7lQZn9bVuVFkp31RLOEhC5T7pmvxdyZylRXLDdGBORILd\u002bSBUnpbgkUVUwVDZ29SpVwr/nXf/HctpwbBDq9/525vSbj4n7keoCAi2CQdMzGmdGR1WT6YL3txV6tzmneZmWua1B22WgmnCVpVvSBPDHfVGppHCo4v0x5Bh0gNrwmsiUK8hl8X7Bpezk/kRm5XJkc3mn/ZUpLdawEDdNa9mVpMqTfhkooYwS5/6Dg\u002bS4yv7l0A2hCN0zaz3xtaEHtHnTTxl5k6cZe9GtlRXWpWoyNwV4p1vMNJwtn9MbNuvqyzOEsHSLPzcXjJR787PHHIXT/75bzs0eBxq9TDPUPgTlwoniUjT1ZvfOIRrHUADoZkMNR3dtTvwmpmkaDfMDQ05PljEp5MqQ3liGTe3yVrcZ1SXwhvbNeHONu\u002buLm1jEyt2Md/oP/kF4vGje5wEOdE/yAHjNEryXQh39XGkfBQM/gYLQZd78ydakd8pOLlEyf0db2VsgN/gg9PWcUmIYGbclnyV\u002bfc5xNXZiaJqyCVOMitzhg2voH4mKr3DpIHd0jB5TKE9rtAF5KqQkvc8druuhz8eFdpYLfb\u002bb886dh9T\u002b7Zx8HuEEYNbbaJiHg2H6rQCFRxCv71WIB\u002brPj8By26LPJdAyoU/Kna7wqc39g7od4QaOGADEDz5G9Bc2dJDWqE01uJ2RiAvwuumhvwVHioQwse75pMNiCtaRq\u002b14lGjeGgFAx8scjBk63V1XIo/5PylTBcLh3MOJk62GwBweuCaAw6UEBoK40\u002bXV/oemCuhG2KyD5U5mPD0993Rdlcv83GU21l8q9Phm2nHczB5744jFf\u002bdvmpKYGsdnxg9OWz4Z2OJib3SJXCO0HMsciS/ewdPrWFXkTUGSnrtXgy7pGL8zwvN72bQUO\u002bPD\u002b33Hu1GXSMR7osLoNUtgj9C5MZj0ywQMKIY8ouhfl1xx4JHDyyMpwDoqrbX8C41n20njmwoKzvB5u1LLWuXb3AtmtlT5nIStT3Feyl1OT9z41Ieeu/wSJtGhig\u002bQXmVUDpGqVZV4rn6FNgvYrASS62u10oYefWAPVE9DGBK1HTDMCvuL5DoHgCZI2UWweXrMzp7j2oufNZExWwFF9ZZsD9kazKFIxwdxrhKf1WQaXtrUtglzkQJlLRUqmkj4wcqQHMlsVWzZRAdXsmx5P2BtFzwmcT9M\u002bH7W9Z\u002bMXmz\u002beOxID/iarcluO3IB3B7V7C20vYNM0lCLAyRKlZ/NQ==",
-      "StatusCode": 416,
-      "ResponseHeaders": {
-        "Content-Length": "221",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:21 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "InvalidPageRange",
-        "x-ms-request-id": "a936473b-b01e-0079-704f-25b12a000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidPageRange\u003c/Code\u003e\u003cMessage\u003eThe page range specified is invalid.\n",
-        "RequestId:a936473b-b01e-0079-704f-25b12a000000\n",
-        "Time:2019-06-17T20:58:22.4842823Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c?comp=page",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "1024",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "31b883a60b9d5795ebf934ac6867686a",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "x-ms-page-write": "update",
-        "x-ms-range": "bytes=5120-6143",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": "Ylem7Lo4pkcrldNBa/sALEHuyyX9VqLaGEy58DjbCAeskYZK0jxiNCRjqbaq6SWt/p3ryoCblgu1y9Rtf7UPT4zLlNl0tloFi5YAma3rLy4nDPKa7z6HEft7lQZn9bVuVFkp31RLOEhC5T7pmvxdyZylRXLDdGBORILd\u002bSBUnpbgkUVUwVDZ29SpVwr/nXf/HctpwbBDq9/525vSbj4n7keoCAi2CQdMzGmdGR1WT6YL3txV6tzmneZmWua1B22WgmnCVpVvSBPDHfVGppHCo4v0x5Bh0gNrwmsiUK8hl8X7Bpezk/kRm5XJkc3mn/ZUpLdawEDdNa9mVpMqTfhkooYwS5/6Dg\u002bS4yv7l0A2hCN0zaz3xtaEHtHnTTxl5k6cZe9GtlRXWpWoyNwV4p1vMNJwtn9MbNuvqyzOEsHSLPzcXjJR787PHHIXT/75bzs0eBxq9TDPUPgTlwoniUjT1ZvfOIRrHUADoZkMNR3dtTvwmpmkaDfMDQ05PljEp5MqQ3liGTe3yVrcZ1SXwhvbNeHONu\u002buLm1jEyt2Md/oP/kF4vGje5wEOdE/yAHjNEryXQh39XGkfBQM/gYLQZd78ydakd8pOLlEyf0db2VsgN/gg9PWcUmIYGbclnyV\u002bfc5xNXZiaJqyCVOMitzhg2voH4mKr3DpIHd0jB5TKE9rtAF5KqQkvc8druuhz8eFdpYLfb\u002bb886dh9T\u002b7Zx8HuEEYNbbaJiHg2H6rQCFRxCv71WIB\u002brPj8By26LPJdAyoU/Kna7wqc39g7od4QaOGADEDz5G9Bc2dJDWqE01uJ2RiAvwuumhvwVHioQwse75pMNiCtaRq\u002b14lGjeGgFAx8scjBk63V1XIo/5PylTBcLh3MOJk62GwBweuCaAw6UEBoK40\u002bXV/oemCuhG2KyD5U5mPD0993Rdlcv83GU21l8q9Phm2nHczB5744jFf\u002bdvmpKYGsdnxg9OWz4Z2OJib3SJXCO0HMsciS/ewdPrWFXkTUGSnrtXgy7pGL8zwvN72bQUO\u002bPD\u002b33Hu1GXSMR7osLoNUtgj9C5MZj0ywQMKIY8ouhfl1xx4JHDyyMpwDoqrbX8C41n20njmwoKzvB5u1LLWuXb3AtmtlT5nIStT3Feyl1OT9z41Ieeu/wSJtGhig\u002bQXmVUDpGqVZV4rn6FNgvYrASS62u10oYefWAPVE9DGBK1HTDMCvuL5DoHgCZI2UWweXrMzp7j2oufNZExWwFF9ZZsD9kazKFIxwdxrhKf1WQaXtrUtglzkQJlLRUqmkj4wcqQHMlsVWzZRAdXsmx5P2BtFzwmcT9M\u002bH7W9Z\u002bMXmz\u002beOxID/iarcluO3IB3B7V7C20vYNM0lCLAyRKlZ/NQ==",
-      "StatusCode": 416,
-      "ResponseHeaders": {
-        "Content-Length": "221",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:21 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "InvalidPageRange",
-        "x-ms-request-id": "a936474e-b01e-0079-804f-25b12a000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidPageRange\u003c/Code\u003e\u003cMessage\u003eThe page range specified is invalid.\n",
-        "RequestId:a936474e-b01e-0079-804f-25b12a000000\n",
-        "Time:2019-06-17T20:58:22.5033009Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c?comp=page",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "1024",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "ab20e0f65852d56d13c49e4c90d08a4d",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "x-ms-page-write": "update",
-        "x-ms-range": "bytes=5120-6143",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": "Ylem7Lo4pkcrldNBa/sALEHuyyX9VqLaGEy58DjbCAeskYZK0jxiNCRjqbaq6SWt/p3ryoCblgu1y9Rtf7UPT4zLlNl0tloFi5YAma3rLy4nDPKa7z6HEft7lQZn9bVuVFkp31RLOEhC5T7pmvxdyZylRXLDdGBORILd\u002bSBUnpbgkUVUwVDZ29SpVwr/nXf/HctpwbBDq9/525vSbj4n7keoCAi2CQdMzGmdGR1WT6YL3txV6tzmneZmWua1B22WgmnCVpVvSBPDHfVGppHCo4v0x5Bh0gNrwmsiUK8hl8X7Bpezk/kRm5XJkc3mn/ZUpLdawEDdNa9mVpMqTfhkooYwS5/6Dg\u002bS4yv7l0A2hCN0zaz3xtaEHtHnTTxl5k6cZe9GtlRXWpWoyNwV4p1vMNJwtn9MbNuvqyzOEsHSLPzcXjJR787PHHIXT/75bzs0eBxq9TDPUPgTlwoniUjT1ZvfOIRrHUADoZkMNR3dtTvwmpmkaDfMDQ05PljEp5MqQ3liGTe3yVrcZ1SXwhvbNeHONu\u002buLm1jEyt2Md/oP/kF4vGje5wEOdE/yAHjNEryXQh39XGkfBQM/gYLQZd78ydakd8pOLlEyf0db2VsgN/gg9PWcUmIYGbclnyV\u002bfc5xNXZiaJqyCVOMitzhg2voH4mKr3DpIHd0jB5TKE9rtAF5KqQkvc8druuhz8eFdpYLfb\u002bb886dh9T\u002b7Zx8HuEEYNbbaJiHg2H6rQCFRxCv71WIB\u002brPj8By26LPJdAyoU/Kna7wqc39g7od4QaOGADEDz5G9Bc2dJDWqE01uJ2RiAvwuumhvwVHioQwse75pMNiCtaRq\u002b14lGjeGgFAx8scjBk63V1XIo/5PylTBcLh3MOJk62GwBweuCaAw6UEBoK40\u002bXV/oemCuhG2KyD5U5mPD0993Rdlcv83GU21l8q9Phm2nHczB5744jFf\u002bdvmpKYGsdnxg9OWz4Z2OJib3SJXCO0HMsciS/ewdPrWFXkTUGSnrtXgy7pGL8zwvN72bQUO\u002bPD\u002b33Hu1GXSMR7osLoNUtgj9C5MZj0ywQMKIY8ouhfl1xx4JHDyyMpwDoqrbX8C41n20njmwoKzvB5u1LLWuXb3AtmtlT5nIStT3Feyl1OT9z41Ieeu/wSJtGhig\u002bQXmVUDpGqVZV4rn6FNgvYrASS62u10oYefWAPVE9DGBK1HTDMCvuL5DoHgCZI2UWweXrMzp7j2oufNZExWwFF9ZZsD9kazKFIxwdxrhKf1WQaXtrUtglzkQJlLRUqmkj4wcqQHMlsVWzZRAdXsmx5P2BtFzwmcT9M\u002bH7W9Z\u002bMXmz\u002beOxID/iarcluO3IB3B7V7C20vYNM0lCLAyRKlZ/NQ==",
-      "StatusCode": 416,
-      "ResponseHeaders": {
-        "Content-Length": "221",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "InvalidPageRange",
-        "x-ms-request-id": "a9364758-b01e-0079-0a4f-25b12a000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidPageRange\u003c/Code\u003e\u003cMessage\u003eThe page range specified is invalid.\n",
-        "RequestId:a9364758-b01e-0079-0a4f-25b12a000000\n",
-        "Time:2019-06-17T20:58:22.5183149Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c?comp=page",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "1024",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "5e24430a031e668ee9ac3acd29d63d5e",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "x-ms-page-write": "update",
-        "x-ms-range": "bytes=5120-6143",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": "Ylem7Lo4pkcrldNBa/sALEHuyyX9VqLaGEy58DjbCAeskYZK0jxiNCRjqbaq6SWt/p3ryoCblgu1y9Rtf7UPT4zLlNl0tloFi5YAma3rLy4nDPKa7z6HEft7lQZn9bVuVFkp31RLOEhC5T7pmvxdyZylRXLDdGBORILd\u002bSBUnpbgkUVUwVDZ29SpVwr/nXf/HctpwbBDq9/525vSbj4n7keoCAi2CQdMzGmdGR1WT6YL3txV6tzmneZmWua1B22WgmnCVpVvSBPDHfVGppHCo4v0x5Bh0gNrwmsiUK8hl8X7Bpezk/kRm5XJkc3mn/ZUpLdawEDdNa9mVpMqTfhkooYwS5/6Dg\u002bS4yv7l0A2hCN0zaz3xtaEHtHnTTxl5k6cZe9GtlRXWpWoyNwV4p1vMNJwtn9MbNuvqyzOEsHSLPzcXjJR787PHHIXT/75bzs0eBxq9TDPUPgTlwoniUjT1ZvfOIRrHUADoZkMNR3dtTvwmpmkaDfMDQ05PljEp5MqQ3liGTe3yVrcZ1SXwhvbNeHONu\u002buLm1jEyt2Md/oP/kF4vGje5wEOdE/yAHjNEryXQh39XGkfBQM/gYLQZd78ydakd8pOLlEyf0db2VsgN/gg9PWcUmIYGbclnyV\u002bfc5xNXZiaJqyCVOMitzhg2voH4mKr3DpIHd0jB5TKE9rtAF5KqQkvc8druuhz8eFdpYLfb\u002bb886dh9T\u002b7Zx8HuEEYNbbaJiHg2H6rQCFRxCv71WIB\u002brPj8By26LPJdAyoU/Kna7wqc39g7od4QaOGADEDz5G9Bc2dJDWqE01uJ2RiAvwuumhvwVHioQwse75pMNiCtaRq\u002b14lGjeGgFAx8scjBk63V1XIo/5PylTBcLh3MOJk62GwBweuCaAw6UEBoK40\u002bXV/oemCuhG2KyD5U5mPD0993Rdlcv83GU21l8q9Phm2nHczB5744jFf\u002bdvmpKYGsdnxg9OWz4Z2OJib3SJXCO0HMsciS/ewdPrWFXkTUGSnrtXgy7pGL8zwvN72bQUO\u002bPD\u002b33Hu1GXSMR7osLoNUtgj9C5MZj0ywQMKIY8ouhfl1xx4JHDyyMpwDoqrbX8C41n20njmwoKzvB5u1LLWuXb3AtmtlT5nIStT3Feyl1OT9z41Ieeu/wSJtGhig\u002bQXmVUDpGqVZV4rn6FNgvYrASS62u10oYefWAPVE9DGBK1HTDMCvuL5DoHgCZI2UWweXrMzp7j2oufNZExWwFF9ZZsD9kazKFIxwdxrhKf1WQaXtrUtglzkQJlLRUqmkj4wcqQHMlsVWzZRAdXsmx5P2BtFzwmcT9M\u002bH7W9Z\u002bMXmz\u002beOxID/iarcluO3IB3B7V7C20vYNM0lCLAyRKlZ/NQ==",
-      "StatusCode": 416,
-      "ResponseHeaders": {
-        "Content-Length": "221",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "InvalidPageRange",
-        "x-ms-request-id": "a9364766-b01e-0079-184f-25b12a000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidPageRange\u003c/Code\u003e\u003cMessage\u003eThe page range specified is invalid.\n",
-        "RequestId:a9364766-b01e-0079-184f-25b12a000000\n",
-        "Time:2019-06-17T20:58:22.5343302Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96/test-blob-62dd4358-02ef-c209-536d-25e8a278281c?comp=page",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "Content-Length": "1024",
-        "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
-        ],
-        "x-ms-client-request-id": "52fd043193314e0e15e21dd86c49c61b",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "x-ms-page-write": "update",
-        "x-ms-range": "bytes=5120-6143",
-        "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
-      },
-      "RequestBody": "Ylem7Lo4pkcrldNBa/sALEHuyyX9VqLaGEy58DjbCAeskYZK0jxiNCRjqbaq6SWt/p3ryoCblgu1y9Rtf7UPT4zLlNl0tloFi5YAma3rLy4nDPKa7z6HEft7lQZn9bVuVFkp31RLOEhC5T7pmvxdyZylRXLDdGBORILd\u002bSBUnpbgkUVUwVDZ29SpVwr/nXf/HctpwbBDq9/525vSbj4n7keoCAi2CQdMzGmdGR1WT6YL3txV6tzmneZmWua1B22WgmnCVpVvSBPDHfVGppHCo4v0x5Bh0gNrwmsiUK8hl8X7Bpezk/kRm5XJkc3mn/ZUpLdawEDdNa9mVpMqTfhkooYwS5/6Dg\u002bS4yv7l0A2hCN0zaz3xtaEHtHnTTxl5k6cZe9GtlRXWpWoyNwV4p1vMNJwtn9MbNuvqyzOEsHSLPzcXjJR787PHHIXT/75bzs0eBxq9TDPUPgTlwoniUjT1ZvfOIRrHUADoZkMNR3dtTvwmpmkaDfMDQ05PljEp5MqQ3liGTe3yVrcZ1SXwhvbNeHONu\u002buLm1jEyt2Md/oP/kF4vGje5wEOdE/yAHjNEryXQh39XGkfBQM/gYLQZd78ydakd8pOLlEyf0db2VsgN/gg9PWcUmIYGbclnyV\u002bfc5xNXZiaJqyCVOMitzhg2voH4mKr3DpIHd0jB5TKE9rtAF5KqQkvc8druuhz8eFdpYLfb\u002bb886dh9T\u002b7Zx8HuEEYNbbaJiHg2H6rQCFRxCv71WIB\u002brPj8By26LPJdAyoU/Kna7wqc39g7od4QaOGADEDz5G9Bc2dJDWqE01uJ2RiAvwuumhvwVHioQwse75pMNiCtaRq\u002b14lGjeGgFAx8scjBk63V1XIo/5PylTBcLh3MOJk62GwBweuCaAw6UEBoK40\u002bXV/oemCuhG2KyD5U5mPD0993Rdlcv83GU21l8q9Phm2nHczB5744jFf\u002bdvmpKYGsdnxg9OWz4Z2OJib3SJXCO0HMsciS/ewdPrWFXkTUGSnrtXgy7pGL8zwvN72bQUO\u002bPD\u002b33Hu1GXSMR7osLoNUtgj9C5MZj0ywQMKIY8ouhfl1xx4JHDyyMpwDoqrbX8C41n20njmwoKzvB5u1LLWuXb3AtmtlT5nIStT3Feyl1OT9z41Ieeu/wSJtGhig\u002bQXmVUDpGqVZV4rn6FNgvYrASS62u10oYefWAPVE9DGBK1HTDMCvuL5DoHgCZI2UWweXrMzp7j2oufNZExWwFF9ZZsD9kazKFIxwdxrhKf1WQaXtrUtglzkQJlLRUqmkj4wcqQHMlsVWzZRAdXsmx5P2BtFzwmcT9M\u002bH7W9Z\u002bMXmz\u002beOxID/iarcluO3IB3B7V7C20vYNM0lCLAyRKlZ/NQ==",
-      "StatusCode": 416,
-      "ResponseHeaders": {
-        "Content-Length": "221",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:58:22 GMT",
-        "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-error-code": "InvalidPageRange",
-        "x-ms-request-id": "a9364770-b01e-0079-214f-25b12a000000",
-        "x-ms-version": "2018-11-09"
-      },
-      "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eInvalidPageRange\u003c/Code\u003e\u003cMessage\u003eThe page range specified is invalid.\n",
-        "RequestId:a9364770-b01e-0079-214f-25b12a000000\n",
-        "Time:2019-06-17T20:58:22.5483437Z\u003c/Message\u003e\u003c/Error\u003e"
-      ]
-    },
-    {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-6fa18c20-c598-b085-3c8d-46fe2f979b96?restype=container",
+      "RequestUri": "http://seanstagetest.blob.core.windows.net/test-container-87b87bd8-1a83-fd09-bf44-8c217b740764?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+        "traceparent": "00-a322c001e21b1e4db2c78fb0788f357e-d70eeaa304c26f42-00",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.1.0-dev.20191210.1\u002B4108f7dcb3b573f551e264a3052039412b91b2f8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "25a1e76e0a43f24c52b9c1a61d9fac3d",
-        "x-ms-date": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "x-ms-client-request-id": "b261bf39-6775-e078-9a6f-36357be051c4",
+        "x-ms-date": "Wed, 11 Dec 2019 04:37:14 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 17 Jun 2019 20:58:22 GMT",
+        "Date": "Wed, 11 Dec 2019 04:37:13 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "a9364777-b01e-0079-274f-25b12a000000",
-        "x-ms-version": "2018-11-09"
+        "x-ms-client-request-id": "b261bf39-6775-e078-9a6f-36357be051c4",
+        "x-ms-request-id": "00dc5fbb-701e-0023-6ddc-af08f8000000",
+        "x-ms-version": "2019-07-07"
       },
-      "ResponseBody": null
+      "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "900807364"
+    "RandomSeed": "2116569333",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized\nseanscope1"
   }
 }

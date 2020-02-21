@@ -22,47 +22,47 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum JobState
     {
         /// <summary>
-        /// The job is available to have tasks scheduled.
+        /// The Job is available to have Tasks scheduled.
         /// </summary>
         [EnumMember(Value = "active")]
         Active,
         /// <summary>
-        /// A user has requested that the job be disabled, but the disable
-        /// operation is still in progress (for example, waiting for tasks to
+        /// A user has requested that the Job be disabled, but the disable
+        /// operation is still in progress (for example, waiting for Tasks to
         /// terminate).
         /// </summary>
         [EnumMember(Value = "disabling")]
         Disabling,
         /// <summary>
-        /// A user has disabled the job. No tasks are running, and no new tasks
+        /// A user has disabled the Job. No Tasks are running, and no new Tasks
         /// will be scheduled.
         /// </summary>
         [EnumMember(Value = "disabled")]
         Disabled,
         /// <summary>
-        /// A user has requested that the job be enabled, but the enable
+        /// A user has requested that the Job be enabled, but the enable
         /// operation is still in progress.
         /// </summary>
         [EnumMember(Value = "enabling")]
         Enabling,
         /// <summary>
-        /// The job is about to complete, either because a Job Manager task has
-        /// completed or because the user has terminated the job, but the
+        /// The Job is about to complete, either because a Job Manager Task has
+        /// completed or because the user has terminated the Job, but the
         /// terminate operation is still in progress (for example, because Job
-        /// Release tasks are running).
+        /// Release Tasks are running).
         /// </summary>
         [EnumMember(Value = "terminating")]
         Terminating,
         /// <summary>
-        /// All tasks have terminated, and the system will not accept any more
-        /// tasks or any further changes to the job.
+        /// All Tasks have terminated, and the system will not accept any more
+        /// Tasks or any further changes to the Job.
         /// </summary>
         [EnumMember(Value = "completed")]
         Completed,
         /// <summary>
-        /// A user has requested that the job be deleted, but the delete
+        /// A user has requested that the Job be deleted, but the delete
         /// operation is still in progress (for example, because the system is
-        /// still terminating running tasks).
+        /// still terminating running Tasks).
         /// </summary>
         [EnumMember(Value = "deleting")]
         Deleting

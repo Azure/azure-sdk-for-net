@@ -9,8 +9,8 @@
       "use": "@microsoft.azure/autorest.csharp"
     },
     "advanced_options": {
-      "create_sdk_pull_requests": false,
-      "sdk_generation_pull_request_base": "main_branch",
+      "create_sdk_pull_requests": true,
+      "sdk_generation_pull_request_base": "integration_branch",
       "main_branch": "master"
     },
     "version": "0.2.0"

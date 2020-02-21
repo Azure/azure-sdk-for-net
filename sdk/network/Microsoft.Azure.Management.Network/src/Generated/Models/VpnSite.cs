@@ -48,13 +48,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="addressSpace">The AddressSpace that contains an array
         /// of IP address ranges.</param>
         /// <param name="bgpProperties">The set of bgp properties.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// <param name="provisioningState">The provisioning state of the VPN
+        /// site resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="isSecuritySite">IsSecuritySite flag.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
-        public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), string etag = default(string))
+        /// <param name="vpnSiteLinks">List of all vpn site links.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
+        public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), IList<VpnSiteLink> vpnSiteLinks = default(IList<VpnSiteLink>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;
             IsSecuritySite = isSecuritySite;
+            VpnSiteLinks = vpnSiteLinks;
             Etag = etag;
             CustomInit();
         }
@@ -112,17 +114,23 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
+        /// Gets the provisioning state of the VPN site resource. Possible
         /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets isSecuritySite flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isSecuritySite")]
         public bool? IsSecuritySite { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of all vpn site links.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vpnSiteLinks")]
+        public IList<VpnSiteLink> VpnSiteLinks { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Batch
 
     public partial class JobReleaseTask
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobReleaseTask"/> class.
+        /// </summary>
         public JobReleaseTask() : this(commandLine: null)
         {
         }

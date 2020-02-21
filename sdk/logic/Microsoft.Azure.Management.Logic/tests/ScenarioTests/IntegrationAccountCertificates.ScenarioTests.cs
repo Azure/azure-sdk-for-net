@@ -217,7 +217,7 @@ namespace Test.Azure.Management.Logic
                     certificate);
 
                 client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, integrationAccountName, certificateName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName, certificateName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName, certificateName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -243,7 +243,7 @@ namespace Test.Azure.Management.Logic
                     certificate);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName, certificateName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, integrationAccountName, certificateName));
             }
         }
 
@@ -286,9 +286,9 @@ namespace Test.Azure.Management.Logic
                     KeyName = "PRIVATEKEY",
                     KeyVault = new KeyVaultKeyReferenceKeyVault
                     {
-                        Id = $"/subscriptions/{Constants.DefaultSubscription}/resourcegroups/{Constants.DefaultResourceGroup}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault"
+                        Id = $"/subscriptions/{Constants.DefaultSubscription}/resourcegroups/{Constants.DefaultResourceGroup}/providers/microsoft.keyvault/vaults/AzureSdkTestKeyVault1"
                     },
-                    KeyVersion = "87d9764197604449b9b8eb7bd8710868"
+                    KeyVersion = "a890a8dae0ac419aa3e3db32c0a2ffb0"
                 },
                 publicCertificate: Convert.ToBase64String(cert.RawData));
 

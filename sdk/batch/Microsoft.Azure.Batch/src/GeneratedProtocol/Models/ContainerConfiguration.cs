@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The configuration for container-enabled pools.
+    /// The configuration for container-enabled Pools.
     /// </summary>
     public partial class ContainerConfiguration
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ContainerConfiguration class.
         /// </summary>
-        /// <param name="containerImageNames">The collection of container image
+        /// <param name="containerImageNames">The collection of container Image
         /// names.</param>
         /// <param name="containerRegistries">Additional private registries
         /// from which containers can be pulled.</param>
@@ -55,12 +55,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of container image names.
+        /// Gets or sets the collection of container Image names.
         /// </summary>
         /// <remarks>
-        /// This is the full image reference, as would be specified to "docker
-        /// pull". An image will be sourced from the default Docker registry
-        /// unless the image is fully qualified with an alternative registry.
+        /// This is the full Image reference, as would be specified to "docker
+        /// pull". An Image will be sourced from the default Docker registry
+        /// unless the Image is fully qualified with an alternative registry.
         /// </remarks>
         [JsonProperty(PropertyName = "containerImageNames")]
         public IList<string> ContainerImageNames { get; set; }
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// can be pulled.
         /// </summary>
         /// <remarks>
-        /// If any images must be downloaded from a private registry which
+        /// If any Images must be downloaded from a private registry which
         /// requires credentials, then those credentials must be provided here.
         /// </remarks>
         [JsonProperty(PropertyName = "containerRegistries")]

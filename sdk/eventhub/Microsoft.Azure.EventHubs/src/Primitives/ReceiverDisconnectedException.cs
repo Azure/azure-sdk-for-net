@@ -17,7 +17,7 @@ namespace Microsoft.Azure.EventHubs
         }
 
         internal ReceiverDisconnectedException(string message, Exception innerException)
-            : base(false, message, innerException)
+            : base(false, message, innerException, ErrorSourceType.UserError)
         {
         }
     }

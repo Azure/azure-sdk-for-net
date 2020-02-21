@@ -30,7 +30,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanCreateUpdateDeleteDataSource()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
@@ -100,7 +100,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void CanPageThroughDataSourceList()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);
@@ -153,7 +153,7 @@ namespace OperationalInsights.Test.ScenarioTests
         [Fact]
         public void DataSourceCreateFailsWithoutWorkspace()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourceClient = TestHelper.GetResourceManagementClient(this, context);
                 var client = TestHelper.GetOperationalInsightsManagementClient(this, context);

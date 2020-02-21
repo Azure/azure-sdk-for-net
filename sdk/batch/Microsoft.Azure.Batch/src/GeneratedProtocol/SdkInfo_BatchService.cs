@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Batch.Protocol
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("BatchService", "Account", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "Application", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "Certificate", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "ComputeNode", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "File", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "Job", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "JobSchedule", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "Pool", "2019-06-01.9.0"),
-                new Tuple<string, string, string>("BatchService", "Task", "2019-06-01.9.0"),
+                new Tuple<string, string, string>("BatchService", "Account", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "Application", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "Certificate", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "ComputeNode", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "File", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "Job", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "JobSchedule", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "Pool", "2019-08-01.10.0"),
+                new Tuple<string, string, string>("BatchService", "Task", "2019-08-01.10.0"),
               }.AsEnumerable();
           }
       }

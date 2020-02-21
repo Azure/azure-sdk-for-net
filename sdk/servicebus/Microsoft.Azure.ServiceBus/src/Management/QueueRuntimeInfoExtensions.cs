@@ -31,11 +31,11 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         private static QueueRuntimeInfo ParseFromEntryElement(XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNs)).Value;
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
             var qRuntime = new QueueRuntimeInfo(name);
 
-            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNs))?
-                .Element(XName.Get("QueueDescription", ManagementClientConstants.SbNs));
+            var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
+                .Element(XName.Get("QueueDescription", ManagementClientConstants.ServiceBusNamespace));
 
             if (qdXml == null)
             {

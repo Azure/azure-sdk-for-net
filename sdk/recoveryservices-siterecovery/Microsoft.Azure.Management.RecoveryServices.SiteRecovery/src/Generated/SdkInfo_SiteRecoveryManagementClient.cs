@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Compute", "ReplicationEligibilityResults", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "MigrationRecoveryPoints", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "Operations", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "RecoveryPoints", "2018-07-10"),
@@ -47,5 +48,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicessiterecovery/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\ASROneSDK\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "cb5fe2f993e08939a712c20f26ff9cbab7e98c82";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

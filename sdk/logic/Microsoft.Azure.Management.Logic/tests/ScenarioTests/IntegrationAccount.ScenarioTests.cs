@@ -151,7 +151,7 @@ namespace Test.Azure.Management.Logic
                     integrationAccount);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, integrationAccountName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, integrationAccountName));
             }
         }
 

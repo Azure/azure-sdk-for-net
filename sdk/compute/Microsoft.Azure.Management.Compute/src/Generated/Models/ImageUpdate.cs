@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the ImageUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="sourceVirtualMachine">The source virtual machine from
         /// which Image is created.</param>
         /// <param name="storageProfile">Specifies the storage settings for the
@@ -43,8 +46,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hyperVGeneration">Gets the HyperVGenerationType of the
         /// VirtualMachine created from the image. Possible values include:
         /// 'V1', 'V2'</param>
-        public ImageUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string), string hyperVGeneration = default(string))
-            : base(tags)
+        public ImageUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string), string hyperVGeneration = default(string))
+            : base(tags, id, name, type)
         {
             SourceVirtualMachine = sourceVirtualMachine;
             StorageProfile = storageProfile;

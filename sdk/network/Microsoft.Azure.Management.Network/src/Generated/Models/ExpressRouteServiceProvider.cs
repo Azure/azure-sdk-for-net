@@ -41,11 +41,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="peeringLocations">Get a list of peering
-        /// locations.</param>
-        /// <param name="bandwidthsOffered">Gets bandwidths offered.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// resource.</param>
+        /// <param name="peeringLocations">A list of peering locations.</param>
+        /// <param name="bandwidthsOffered">A list of bandwidths
+        /// offered.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// express route service provider resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         public ExpressRouteServiceProvider(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
             : base(id, name, type, location, tags)
         {
@@ -61,22 +62,24 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets get a list of peering locations.
+        /// Gets or sets a list of peering locations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringLocations")]
         public IList<string> PeeringLocations { get; set; }
 
         /// <summary>
-        /// Gets bandwidths offered.
+        /// Gets or sets a list of bandwidths offered.
         /// </summary>
         [JsonProperty(PropertyName = "properties.bandwidthsOffered")]
         public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the resource.
+        /// Gets the provisioning state of the express route service provider
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
     }
 }

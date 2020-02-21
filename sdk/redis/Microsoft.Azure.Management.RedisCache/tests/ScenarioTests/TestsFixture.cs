@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Redis;
@@ -25,7 +25,7 @@ namespace AzureRedisCache.Tests
         public TestsFixture()
         {
             _context = new MockContext();
-            MockContext.Start(this.GetType().FullName, ".ctor");
+            MockContext.Start(this.GetType(), ".ctor");
             try
             {
                 _redisCacheManagementHelper = new RedisCacheManagementHelper(this, _context);
@@ -56,7 +56,7 @@ namespace AzureRedisCache.Tests
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
+                HttpMockServer.Initialize(this.GetType(), ".cleanup");
             }
             if (_context != null)
             {
@@ -66,3 +66,4 @@ namespace AzureRedisCache.Tests
         }
     }
 }
+

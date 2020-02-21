@@ -66,6 +66,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Management service.</param>
         /// <param name="managementApiUrl">Management API endpoint URL of the
         /// API Management service.</param>
+        /// <param name="developerPortalUrl">Developer Portal endpoint URL of
+        /// the API Management service.</param>
         /// <param name="scmUrl">SCM endpoint URL of the API Management
         /// service.</param>
         /// <param name="hostnameConfigurations">Custom hostname configuration
@@ -82,15 +84,40 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="additionalLocations">Additional datacenter locations
         /// of the API Management service.</param>
         /// <param name="customProperties">Custom properties of the API
-        /// Management service. Setting
+        /// Management service.&lt;/br&gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168`
         /// will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all
-        /// TLS(1.0, 1.1 and 1.2). Setting
+        /// TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11`
-        /// can be used to disable just TLS 1.1 and setting
+        /// can be used to disable just TLS 1.1.&lt;/br&gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10`
         /// can be used to disable TLS 1.0 on an API Management
-        /// service.</param>
+        /// service.&lt;/br&gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11`
+        /// can be used to disable just TLS 1.1 for communications with
+        /// backends.&lt;/br&gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10`
+        /// can be used to disable TLS 1.0 for communications with
+        /// backends.&lt;/br&gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2`
+        /// can be used to enable HTTP2 protocol on an API Management
+        /// service.&lt;/br&gt;Not specifying any of these properties on PATCH
+        /// operation will reset omitted properties' values to their defaults.
+        /// For all the settings except Http2 the default value is `True` if
+        /// the service was created on or before April 1st 2018 and `False`
+        /// otherwise. Http2 setting's default value is
+        /// `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers
+        /// by using settings
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`:
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
+        /// The default value is `true` for them.</param>
         /// <param name="certificates">List of Certificates that need to be
         /// installed in the API Management service. Max supported certificates
         /// that can be installed is 10.</param>
@@ -110,7 +137,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="identity">Managed service identity of the Api
         /// Management service.</param>
         /// <param name="etag">ETag of the resource.</param>
-        public ApiManagementServiceResource(string publisherEmail, string publisherName, ApiManagementServiceSkuProperties sku, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string))
+        public ApiManagementServiceResource(string publisherEmail, string publisherName, ApiManagementServiceSkuProperties sku, string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string developerPortalUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string))
             : base(id, name, type, tags)
         {
             NotificationSenderEmail = notificationSenderEmail;
@@ -121,6 +148,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             GatewayRegionalUrl = gatewayRegionalUrl;
             PortalUrl = portalUrl;
             ManagementApiUrl = managementApiUrl;
+            DeveloperPortalUrl = developerPortalUrl;
             ScmUrl = scmUrl;
             HostnameConfigurations = hostnameConfigurations;
             PublicIPAddresses = publicIPAddresses;
@@ -201,6 +229,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ManagementApiUrl { get; private set; }
 
         /// <summary>
+        /// Gets developer Portal endpoint URL of the API Management service.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.developerPortalUrl")]
+        public string DeveloperPortalUrl { get; private set; }
+
+        /// <summary>
         /// Gets SCM endpoint URL of the API Management service.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scmUrl")]
@@ -245,15 +279,41 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<AdditionalLocation> AdditionalLocations { get; set; }
 
         /// <summary>
-        /// Gets or sets custom properties of the API Management service.
-        /// Setting
+        /// Gets or sets custom properties of the API Management
+        /// service.&amp;lt;/br&amp;gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168`
         /// will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all
-        /// TLS(1.0, 1.1 and 1.2). Setting
+        /// TLS(1.0, 1.1 and 1.2).&amp;lt;/br&amp;gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11`
-        /// can be used to disable just TLS 1.1 and setting
+        /// can be used to disable just TLS 1.1.&amp;lt;/br&amp;gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10`
-        /// can be used to disable TLS 1.0 on an API Management service.
+        /// can be used to disable TLS 1.0 on an API Management
+        /// service.&amp;lt;/br&amp;gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11`
+        /// can be used to disable just TLS 1.1 for communications with
+        /// backends.&amp;lt;/br&amp;gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10`
+        /// can be used to disable TLS 1.0 for communications with
+        /// backends.&amp;lt;/br&amp;gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2`
+        /// can be used to enable HTTP2 protocol on an API Management
+        /// service.&amp;lt;/br&amp;gt;Not specifying any of these properties
+        /// on PATCH operation will reset omitted properties' values to their
+        /// defaults. For all the settings except Http2 the default value is
+        /// `True` if the service was created on or before April 1st 2018 and
+        /// `False` otherwise. Http2 setting's default value is
+        /// `False`.&amp;lt;/br&amp;gt;&amp;lt;/br&amp;gt;You can disable any
+        /// of next ciphers by using settings
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`:
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
+        /// The default value is `true` for them.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customProperties")]
         public IDictionary<string, string> CustomProperties { get; set; }

@@ -7,9 +7,10 @@ namespace LUIS.Authoring.Tests.Luis
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class PatternsTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPattern()
         {
             UseClientFor(async client =>
@@ -17,7 +18,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2"
+                    "email"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
                 var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" };
@@ -36,7 +37,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddPatterns()
         {
             UseClientFor(async client =>
@@ -44,7 +45,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2",
+                    "email",
                     "number"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
@@ -71,7 +72,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePattern()
         {
             UseClientFor(async client =>
@@ -79,11 +80,11 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2"
+                    "email"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" };
-                var updatedPattern = new PatternRuleUpdateObject { Intent = "None", Pattern = "This [is] a {datetimeV2}" };
+                var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {email}" };
+                var updatedPattern = new PatternRuleUpdateObject { Intent = "None", Pattern = "This [is] a {email}" };
 
                 var addResult = await client.Pattern.AddPatternAsync(GlobalAppId, "0.1", pattern);
                 var updateResult = await client.Pattern.UpdatePatternAsync(GlobalAppId, "0.1", addResult.Id.Value, updatedPattern);
@@ -98,11 +99,11 @@ namespace LUIS.Authoring.Tests.Luis
                 Assert.Equal("None", updateResult.Intent);
                 Assert.Equal(addResult.Id, updateResult.Id);
                 Assert.NotEqual(Guid.Empty, updateResult.Id);
-                Assert.Equal("this [is] a {datetimeV2}", updateResult.Pattern);
+                Assert.Equal("this [is] a {email}", updateResult.Pattern);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdatePatterns()
         {
             UseClientFor(async client =>
@@ -110,14 +111,14 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2",
-                    "number"
+                    "email",
+                    "geographyV2"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var patterns = new[] { new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {number}" } };
+                var patterns = new[] { new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {email}" } };
                 var addResult = await client.Pattern.BatchAddPatternsAsync(GlobalAppId, "0.1", patterns);
 
-                var updatedPatterns = new[] { new PatternRuleUpdateObject { Intent = "None", Pattern = "This [is] a {datetimeV2}", Id = addResult.First().Id } };
+                var updatedPatterns = new[] { new PatternRuleUpdateObject { Intent = "None", Pattern = "This [is] a {geographyV2}", Id = addResult.First().Id } };
                 var updateResult = await client.Pattern.UpdatePatternsAsync(GlobalAppId, "0.1", updatedPatterns);
                 await client.Pattern.DeletePatternsAsync(GlobalAppId, "0.1", updateResult.Select(p => p.Id).ToList());
                 foreach (var added in prebuiltEntitiesAdded)
@@ -130,11 +131,11 @@ namespace LUIS.Authoring.Tests.Luis
                 Assert.Equal("None", updateResult.Single().Intent);
                 Assert.NotEqual(Guid.Empty, updateResult.Single().Id);
                 Assert.Equal(addResult.Single().Id, updateResult.Single().Id);
-                Assert.Equal("this [is] a {datetimeV2}", updateResult.Single().Pattern);
+                Assert.Equal("this [is] a {geographyV2}", updateResult.Single().Pattern);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetPatterns()
         {
             UseClientFor(async client =>
@@ -142,14 +143,14 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2",
-                    "number"
+                    "ordinalV2",
+                    "money"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
                 var patternsToAdd = new[]
                 {
-                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {number}" },
-                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" },
+                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {money}" },
+                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {ordinalV2}" },
                 };
 
                 var result = await client.Pattern.BatchAddPatternsAsync(GlobalAppId, "0.1", patternsToAdd);
@@ -172,7 +173,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetIntentPatterns()
         {
             UseClientFor(async client =>
@@ -180,14 +181,14 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2",
-                    "number"
+                    "money",
+                    "ordinalV2"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
                 var patternsToAdd = new[]
                 {
-                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {number}" },
-                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" },
+                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {money}" },
+                    new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {ordinalV2}" },
                 };
 
                 var result = await client.Pattern.BatchAddPatternsAsync(GlobalAppId, "0.1", patternsToAdd);
@@ -211,7 +212,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePattern()
         {
             UseClientFor(async client =>
@@ -219,10 +220,10 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2"
+                    "email"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
-                var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" };
+                var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {email}" };
                 var result = await client.Pattern.AddPatternAsync(GlobalAppId, "0.1", pattern);
                 await client.Pattern.DeletePatternAsync(GlobalAppId, "0.1", result.Id.Value);
                 var existingPatterns = await client.Pattern.ListPatternsAsync(GlobalAppId, "0.1");
@@ -235,7 +236,7 @@ namespace LUIS.Authoring.Tests.Luis
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeletePatterns()
         {
             UseClientFor(async client =>
@@ -243,7 +244,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var version = "0.1";
                 var prebuiltEntitiesToAdd = new string[]
                 {
-                    "datetimeV2",
+                    "email",
                     "number"
                 };
                 var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);

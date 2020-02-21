@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the DDoS custom policy.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update DDoS custom policy resource tags.
+            /// Parameters supplied to update DDoS custom policy resource tags.
             /// </param>
             public static DdosCustomPolicy UpdateTags(this IDdosCustomPoliciesOperations operations, string resourceGroupName, string ddosCustomPolicyName, TagsObject parameters)
             {
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the DDoS custom policy.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the update DDoS custom policy resource tags.
+            /// Parameters supplied to update DDoS custom policy resource tags.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -268,52 +268,6 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<DdosCustomPolicy> BeginCreateOrUpdateAsync(this IDdosCustomPoliciesOperations operations, string resourceGroupName, string ddosCustomPolicyName, DdosCustomPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, ddosCustomPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Update a DDoS custom policy tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ddosCustomPolicyName'>
-            /// The name of the DDoS custom policy.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update DDoS custom policy resource tags.
-            /// </param>
-            public static DdosCustomPolicy BeginUpdateTags(this IDdosCustomPoliciesOperations operations, string resourceGroupName, string ddosCustomPolicyName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, ddosCustomPolicyName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update a DDoS custom policy tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='ddosCustomPolicyName'>
-            /// The name of the DDoS custom policy.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update DDoS custom policy resource tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DdosCustomPolicy> BeginUpdateTagsAsync(this IDdosCustomPoliciesOperations operations, string resourceGroupName, string ddosCustomPolicyName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, ddosCustomPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

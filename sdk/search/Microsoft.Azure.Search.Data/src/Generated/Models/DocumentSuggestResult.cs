@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Response containing suggestion query results from an Azure Search
-    /// index.
+    /// Response containing suggestion query results from an index.
     /// </summary>
     public partial class DocumentSuggestResult<T>
     {

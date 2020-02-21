@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum ContainerWorkingDirectory
     {
         /// <summary>
-        /// Use the standard Batch service task working directory, which will
+        /// Use the standard Batch service Task working directory, which will
         /// contain the Task Resource Files populated by Batch.
         /// </summary>
         [EnumMember(Value = "taskWorkingDirectory")]
         TaskWorkingDirectory,
         /// <summary>
-        /// Use the working directory defined in the container image. Beware
+        /// Use the working directory defined in the container Image. Beware
         /// that this directory will not contain the Resource Files downloaded
         /// by Batch.
         /// </summary>

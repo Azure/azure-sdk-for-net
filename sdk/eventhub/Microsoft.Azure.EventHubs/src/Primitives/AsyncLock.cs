@@ -12,16 +12,16 @@ namespace Microsoft.Azure.EventHubs
     /// <summary>
     /// Used as an asynchronous semaphore for internal Event Hubs operations.
     /// </summary>
-    public class AsyncLock : IDisposable
+    class AsyncLock : IDisposable
     {
-        readonly SemaphoreSlim asyncSemaphore = new SemaphoreSlim(1);
+        readonly SemaphoreSlim asyncSemaphore = new SemaphoreSlim(1, 1);
         readonly Task<LockRelease> lockRelease;
         bool disposed;
 
         /// <summary>
         /// Returns a new AsyncLock.
         /// </summary>
-        public AsyncLock()
+        internal AsyncLock()
         {
             lockRelease = Task.FromResult(new LockRelease(this));
         }
@@ -33,6 +33,15 @@ namespace Microsoft.Azure.EventHubs
         public Task<LockRelease> LockAsync()
         {
             return this.LockAsync(CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Sets a lock.
+        /// </summary>
+        public LockRelease LockSync()
+        {
+            asyncSemaphore.Wait();
+            return new LockRelease(this);
         }
 
         /// <summary>

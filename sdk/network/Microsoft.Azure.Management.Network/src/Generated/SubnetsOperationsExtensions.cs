@@ -218,6 +218,55 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Unprepares a subnet by removing network intent policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='subnetName'>
+            /// The name of the subnet.
+            /// </param>
+            /// <param name='unprepareNetworkPoliciesRequestParameters'>
+            /// Parameters supplied to unprepare subnet to remove network intent policies.
+            /// </param>
+            public static void UnprepareNetworkPolicies(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters)
+            {
+                operations.UnprepareNetworkPoliciesAsync(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unprepares a subnet by removing network intent policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='subnetName'>
+            /// The name of the subnet.
+            /// </param>
+            /// <param name='unprepareNetworkPoliciesRequestParameters'>
+            /// Parameters supplied to unprepare subnet to remove network intent policies.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UnprepareNetworkPoliciesAsync(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UnprepareNetworkPoliciesWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets all subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
@@ -399,6 +448,55 @@ namespace Microsoft.Azure.Management.Network
             public static async Task BeginPrepareNetworkPoliciesAsync(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, PrepareNetworkPoliciesRequest prepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPrepareNetworkPoliciesWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, prepareNetworkPoliciesRequestParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Unprepares a subnet by removing network intent policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='subnetName'>
+            /// The name of the subnet.
+            /// </param>
+            /// <param name='unprepareNetworkPoliciesRequestParameters'>
+            /// Parameters supplied to unprepare subnet to remove network intent policies.
+            /// </param>
+            public static void BeginUnprepareNetworkPolicies(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters)
+            {
+                operations.BeginUnprepareNetworkPoliciesAsync(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unprepares a subnet by removing network intent policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='subnetName'>
+            /// The name of the subnet.
+            /// </param>
+            /// <param name='unprepareNetworkPoliciesRequestParameters'>
+            /// Parameters supplied to unprepare subnet to remove network intent policies.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUnprepareNetworkPoliciesAsync(this ISubnetsOperations operations, string resourceGroupName, string virtualNetworkName, string subnetName, UnprepareNetworkPoliciesRequest unprepareNetworkPoliciesRequestParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUnprepareNetworkPoliciesWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, subnetName, unprepareNetworkPoliciesRequestParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

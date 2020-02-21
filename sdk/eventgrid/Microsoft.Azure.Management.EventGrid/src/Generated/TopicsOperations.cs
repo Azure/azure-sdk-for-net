@@ -314,8 +314,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicName'>
         /// Name of the topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the resource
+        /// <param name='topicUpdateParameters'>
+        /// Topic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -323,10 +323,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Topic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Topic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Topic> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Topic> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1790,8 +1790,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicName'>
         /// Name of the topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the resource
+        /// <param name='topicUpdateParameters'>
+        /// Topic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1814,7 +1814,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Topic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Topic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, TopicUpdateParameters topicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1828,14 +1828,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "topicName");
             }
+            if (topicUpdateParameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "topicUpdateParameters");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            TopicUpdateParameters topicUpdateParameters = new TopicUpdateParameters();
-            if (tags != null)
-            {
-                topicUpdateParameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

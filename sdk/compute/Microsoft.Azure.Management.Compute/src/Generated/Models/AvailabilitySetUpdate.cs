@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the AvailabilitySetUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="platformUpdateDomainCount">Update Domain
         /// count.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count.</param>
@@ -47,8 +50,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2018-04-01.</param>
         /// <param name="statuses">The resource status information.</param>
         /// <param name="sku">Sku of the availability set</param>
-        public AvailabilitySetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), SubResource proximityPlacementGroup = default(SubResource), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), Sku sku = default(Sku))
-            : base(tags)
+        public AvailabilitySetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), IList<SubResource> virtualMachines = default(IList<SubResource>), SubResource proximityPlacementGroup = default(SubResource), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), Sku sku = default(Sku))
+            : base(tags, id, name, type)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
             PlatformFaultDomainCount = platformFaultDomainCount;

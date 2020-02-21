@@ -29,7 +29,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
 	            ""type"" : ""Microsoft.Cache/Redis"",
 	            ""tags"" : {""update"": ""done""},
 	            ""properties"" : {
-		            ""provisioningState"" : ""succeeded"",
+		            ""provisioningState"" : ""Succeeded"",
 		            ""sku"": {
                             ""name"": ""Basic"",
                             ""family"": ""C"",
@@ -40,7 +40,8 @@ namespace AzureRedisCache.Tests.InMemoryTests
 		            ""accessKeys"" : null,
 		            ""hostName"" : ""hydraradiscache.cache.icbbvt.windows-int.net"",
 		            ""port"" : 6379,
-		            ""sslPort"" : 6380
+		            ""sslPort"" : 6380,
+                    ""minimumTlsVersion"": ""1.2""
 	            }
             }
             ");
@@ -54,7 +55,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
             Assert.Equal("hydraradiscache", response.Name);
             Assert.Equal("Microsoft.Cache/Redis", response.Type);
 
-            Assert.Equal("succeeded", response.ProvisioningState);
+            Assert.Equal(ProvisioningState.Succeeded, response.ProvisioningState);
             Assert.Equal(SkuName.Basic, response.Sku.Name);
             Assert.Equal(SkuFamily.C, response.Sku.Family);
             Assert.Equal(1, response.Sku.Capacity);
@@ -64,6 +65,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
             Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.HostName);
             Assert.Equal(6379, response.Port);
             Assert.Equal(6380, response.SslPort);
+            Assert.Equal(TlsVersion.OneFullStopTwo, response.MinimumTlsVersion);
         }
 
         [Fact]

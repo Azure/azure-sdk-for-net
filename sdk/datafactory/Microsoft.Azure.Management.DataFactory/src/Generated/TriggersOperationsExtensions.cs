@@ -221,6 +221,144 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Subscribe event trigger to events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            public static TriggerSubscriptionOperationStatus SubscribeToEvents(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName)
+            {
+                return operations.SubscribeToEventsAsync(resourceGroupName, factoryName, triggerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Subscribe event trigger to events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TriggerSubscriptionOperationStatus> SubscribeToEventsAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.SubscribeToEventsWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get a trigger's event subscription status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            public static TriggerSubscriptionOperationStatus GetEventSubscriptionStatus(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName)
+            {
+                return operations.GetEventSubscriptionStatusAsync(resourceGroupName, factoryName, triggerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a trigger's event subscription status.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TriggerSubscriptionOperationStatus> GetEventSubscriptionStatusAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEventSubscriptionStatusWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Unsubscribe event trigger from events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            public static TriggerSubscriptionOperationStatus UnsubscribeFromEvents(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName)
+            {
+                return operations.UnsubscribeFromEventsAsync(resourceGroupName, factoryName, triggerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unsubscribe event trigger from events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TriggerSubscriptionOperationStatus> UnsubscribeFromEventsAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UnsubscribeFromEventsWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Starts a trigger.
             /// </summary>
             /// <param name='operations'>
@@ -304,6 +442,98 @@ namespace Microsoft.Azure.Management.DataFactory
             public static async Task StopAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.StopWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Subscribe event trigger to events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            public static TriggerSubscriptionOperationStatus BeginSubscribeToEvents(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName)
+            {
+                return operations.BeginSubscribeToEventsAsync(resourceGroupName, factoryName, triggerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Subscribe event trigger to events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TriggerSubscriptionOperationStatus> BeginSubscribeToEventsAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginSubscribeToEventsWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Unsubscribe event trigger from events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            public static TriggerSubscriptionOperationStatus BeginUnsubscribeFromEvents(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName)
+            {
+                return operations.BeginUnsubscribeFromEventsAsync(resourceGroupName, factoryName, triggerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unsubscribe event trigger from events.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='triggerName'>
+            /// The trigger name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TriggerSubscriptionOperationStatus> BeginUnsubscribeFromEventsAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, string triggerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUnsubscribeFromEventsWithHttpMessagesAsync(resourceGroupName, factoryName, triggerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

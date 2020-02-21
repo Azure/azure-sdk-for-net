@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryTargetDiskAccountType">The target disk type
         /// after failover. Its an optional value and will be same as source
         /// disk type if not user provided.</param>
+        /// <param name="recoveryDiskEncryptionSetId">The recovery disk
+        /// encryption set Id.</param>
         /// <param name="diskName">The disk name.</param>
         /// <param name="diskCapacityInBytes">The disk capacity in
         /// bytes.</param>
@@ -78,7 +80,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="keyIdentifier">The key URL / identifier (KEK).</param>
         /// <param name="kekKeyVaultArmId">The KeyVault resource id for key
         /// (KEK).</param>
-        public A2AProtectedManagedDiskDetails(string diskId = default(string), string recoveryResourceGroupId = default(string), string recoveryTargetDiskId = default(string), string recoveryReplicaDiskId = default(string), string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string diskState = default(string), IList<string> allowedDiskLevelOperation = default(IList<string>), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string))
+        /// <param name="failoverDiskName">The failover name for the managed
+        /// disk.</param>
+        /// <param name="tfoDiskName">The test failover name for the managed
+        /// disk.</param>
+        public A2AProtectedManagedDiskDetails(string diskId = default(string), string recoveryResourceGroupId = default(string), string recoveryTargetDiskId = default(string), string recoveryReplicaDiskId = default(string), string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryDiskEncryptionSetId = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string diskState = default(string), IList<string> allowedDiskLevelOperation = default(IList<string>), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string), string failoverDiskName = default(string), string tfoDiskName = default(string))
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -86,6 +92,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryReplicaDiskId = recoveryReplicaDiskId;
             RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
             RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
+            RecoveryDiskEncryptionSetId = recoveryDiskEncryptionSetId;
             DiskName = diskName;
             DiskCapacityInBytes = diskCapacityInBytes;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
@@ -103,6 +110,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             IsDiskKeyEncrypted = isDiskKeyEncrypted;
             KeyIdentifier = keyIdentifier;
             KekKeyVaultArmId = kekKeyVaultArmId;
+            FailoverDiskName = failoverDiskName;
+            TfoDiskName = tfoDiskName;
             CustomInit();
         }
 
@@ -148,6 +157,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryTargetDiskAccountType")]
         public string RecoveryTargetDiskAccountType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery disk encryption set Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryDiskEncryptionSetId")]
+        public string RecoveryDiskEncryptionSetId { get; set; }
 
         /// <summary>
         /// Gets or sets the disk name.
@@ -256,6 +271,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "kekKeyVaultArmId")]
         public string KekKeyVaultArmId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the failover name for the managed disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "failoverDiskName")]
+        public string FailoverDiskName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the test failover name for the managed disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoDiskName")]
+        public string TfoDiskName { get; set; }
 
     }
 }

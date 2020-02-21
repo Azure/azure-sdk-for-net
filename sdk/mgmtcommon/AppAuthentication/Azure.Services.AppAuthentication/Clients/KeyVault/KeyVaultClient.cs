@@ -92,7 +92,18 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 byte[] rawCertBytes = Convert.FromBase64String(secretBundle.Value);
 
-                X509Certificate2 certificate = new X509Certificate2(rawCertBytes);
+                X509Certificate2 certificate = null;
+
+                // access to key store dependent on environment, try to import to both user and machine key stores
+                try
+                {
+                    certificate = new X509Certificate2(rawCertBytes, default(string), X509KeyStorageFlags.UserKeySet);
+                }
+                catch
+                {
+                    certificate = new X509Certificate2(rawCertBytes, default(string), X509KeyStorageFlags.MachineKeySet);
+                }
+
                 return certificate;
             }
             catch (KeyVaultAccessTokenRetrievalException exp)
@@ -132,6 +143,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
             }
         }
+
         private async Task<string> GetKeyVaultAccessTokenAsync(string secretUrl, CancellationToken cancellationToken)
         {
             // Send an anonymous request to Key Vault endpoint to get an OAuth2 HTTP Bearer challenge
@@ -154,8 +166,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 try
                 {
-                    var authResult = await tokenProvider.GetAuthResultAsync(challenge.AuthorizationServer,
-                        challenge.Resource, challenge.Scope, cancellationToken).ConfigureAwait(false);
+                    var authResult = await tokenProvider.GetAuthResultAsync(challenge.Resource,
+                        challenge.AuthorizationServer, cancellationToken).ConfigureAwait(false);
 
                     PrincipalUsed = tokenProvider.PrincipalUsed;
 

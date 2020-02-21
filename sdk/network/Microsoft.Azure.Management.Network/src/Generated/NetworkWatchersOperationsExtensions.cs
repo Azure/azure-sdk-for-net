@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -595,7 +595,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             public static FlowLogInformation GetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -617,7 +617,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -681,8 +681,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -702,8 +703,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -729,8 +731,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -750,8 +753,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -777,7 +781,13 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get network configuration diagnostic.
+            /// Gets Network Configuration Diagnostic data to help customers understand and
+            /// debug network behavior. It provides detailed information on what security
+            /// rules were applied to a specified traffic flow and the result of evaluating
+            /// these rules. Customers must provide details of a flow like source,
+            /// destination, protocol, etc. The API returns whether traffic was allowed or
+            /// denied, the rules evaluated for the specified flow and the evaluation
+            /// results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -797,7 +807,13 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get network configuration diagnostic.
+            /// Gets Network Configuration Diagnostic data to help customers understand and
+            /// debug network behavior. It provides detailed information on what security
+            /// rules were applied to a specified traffic flow and the result of evaluating
+            /// these rules. Customers must provide details of a flow like source,
+            /// destination, protocol, etc. The API returns whether traffic was allowed or
+            /// denied, the rules evaluated for the specified flow and the evaluation
+            /// results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1092,7 +1108,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -1113,7 +1129,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -1154,7 +1170,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             public static FlowLogInformation BeginGetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -1176,7 +1192,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1240,8 +1256,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1261,8 +1278,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1288,8 +1306,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1309,8 +1328,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1336,7 +1356,13 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get network configuration diagnostic.
+            /// Gets Network Configuration Diagnostic data to help customers understand and
+            /// debug network behavior. It provides detailed information on what security
+            /// rules were applied to a specified traffic flow and the result of evaluating
+            /// these rules. Customers must provide details of a flow like source,
+            /// destination, protocol, etc. The API returns whether traffic was allowed or
+            /// denied, the rules evaluated for the specified flow and the evaluation
+            /// results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1356,7 +1382,13 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Get network configuration diagnostic.
+            /// Gets Network Configuration Diagnostic data to help customers understand and
+            /// debug network behavior. It provides detailed information on what security
+            /// rules were applied to a specified traffic flow and the result of evaluating
+            /// these rules. Customers must provide details of a flow like source,
+            /// destination, protocol, etc. The API returns whether traffic was allowed or
+            /// denied, the rules evaluated for the specified flow and the evaluation
+            /// results.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options for removing compute nodes from a pool.
+    /// Options for removing Compute Nodes from a Pool.
     /// </summary>
     public partial class NodeRemoveParameter
     {
@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeRemoveParameter class.
         /// </summary>
-        /// <param name="nodeList">A list containing the IDs of the compute
-        /// nodes to be removed from the specified pool.</param>
-        /// <param name="resizeTimeout">The timeout for removal of compute
-        /// nodes to the pool.</param>
+        /// <param name="nodeList">A list containing the IDs of the Compute
+        /// Nodes to be removed from the specified Pool.</param>
+        /// <param name="resizeTimeout">The timeout for removal of Compute
+        /// Nodes to the Pool.</param>
         /// <param name="nodeDeallocationOption">Determines what to do with a
-        /// node and its running task(s) after it has been selected for
+        /// Compute Node and its running task(s) after it has been selected for
         /// deallocation.</param>
         public NodeRemoveParameter(IList<string> nodeList, System.TimeSpan? resizeTimeout = default(System.TimeSpan?), ComputeNodeDeallocationOption? nodeDeallocationOption = default(ComputeNodeDeallocationOption?))
         {
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list containing the IDs of the compute nodes to be
-        /// removed from the specified pool.
+        /// Gets or sets a list containing the IDs of the Compute Nodes to be
+        /// removed from the specified Pool.
         /// </summary>
         [JsonProperty(PropertyName = "nodeList")]
         public IList<string> NodeList { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout for removal of compute nodes to the pool.
+        /// Gets or sets the timeout for removal of Compute Nodes to the Pool.
         /// </summary>
         /// <remarks>
         /// The default value is 15 minutes. The minimum value is 5 minutes. If
@@ -71,8 +71,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets determines what to do with a node and its running
-        /// task(s) after it has been selected for deallocation.
+        /// Gets or sets determines what to do with a Compute Node and its
+        /// running task(s) after it has been selected for deallocation.
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',

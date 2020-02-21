@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="language">The BCP-47 language code of the text in the
         /// image.</param>
-        /// <param name="textAngle">The angle, in degrees, of the detected text
+        /// <param name="textAngle">The angle, in radians, of the detected text
         /// with respect to the closest horizontal or vertical direction. After
         /// rotating the input image clockwise by this angle, the recognized
         /// text lines become horizontal or vertical. In combination with the
@@ -42,10 +42,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// different angles, only part of the text will be recognized
         /// correctly.</param>
         /// <param name="orientation">Orientation of the text recognized in the
-        /// image. The value (up, down, left, or right) refers to the direction
-        /// that the top of the recognized text is facing, after the image has
-        /// been rotated around its center according to the detected text angle
-        /// (see textAngle property).</param>
+        /// image, if requested. The value (up, down, left, or right) refers to
+        /// the direction that the top of the recognized text is facing, after
+        /// the image has been rotated around its center according to the
+        /// detected text angle (see textAngle property).
+        /// If detection of the orientation was not requested, or no text is
+        /// detected, the value is 'NotDetected'.</param>
         /// <param name="regions">An array of objects, where each object
         /// represents a region of recognized text.</param>
         public OcrResult(string language = default(string), double textAngle = default(double), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>))
@@ -69,7 +71,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string Language { get; set; }
 
         /// <summary>
-        /// Gets or sets the angle, in degrees, of the detected text with
+        /// Gets or sets the angle, in radians, of the detected text with
         /// respect to the closest horizontal or vertical direction. After
         /// rotating the input image clockwise by this angle, the recognized
         /// text lines become horizontal or vertical. In combination with the
@@ -85,11 +87,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public double TextAngle { get; set; }
 
         /// <summary>
-        /// Gets or sets orientation of the text recognized in the image. The
-        /// value (up, down, left, or right) refers to the direction that the
-        /// top of the recognized text is facing, after the image has been
-        /// rotated around its center according to the detected text angle (see
-        /// textAngle property).
+        /// Gets or sets orientation of the text recognized in the image, if
+        /// requested. The value (up, down, left, or right) refers to the
+        /// direction that the top of the recognized text is facing, after the
+        /// image has been rotated around its center according to the detected
+        /// text angle (see textAngle property).
+        /// If detection of the orientation was not requested, or no text is
+        /// detected, the value is 'NotDetected'.
         /// </summary>
         [JsonProperty(PropertyName = "orientation")]
         public string Orientation { get; set; }

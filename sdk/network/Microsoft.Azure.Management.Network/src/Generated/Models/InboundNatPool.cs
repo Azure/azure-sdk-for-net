@@ -60,15 +60,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enableTcpReset">Receive bidirectional TCP Reset on TCP
         /// flow idle timeout or unexpected connection termination. This
         /// element is only used when the protocol is set to TCP.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
-        /// <param name="name">The name of the resource that is unique within a
-        /// resource group. This name can be used to access the
-        /// resource.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// inbound NAT pool resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="name">The name of the resource that is unique within
+        /// the set of inbound NAT pools used by the load balancer. This name
+        /// can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public InboundNatPool(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, string id = default(string), SubResource frontendIPConfiguration = default(SubResource), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public InboundNatPool(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, string id = default(string), SubResource frontendIPConfiguration = default(SubResource), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -82,6 +83,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -153,25 +155,33 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableTcpReset { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the PublicIP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the inbound NAT pool resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource that is unique within a
-        /// resource group. This name can be used to access the resource.
+        /// Gets or sets the name of the resource that is unique within the set
+        /// of inbound NAT pools used by the load balancer. This name can be
+        /// used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

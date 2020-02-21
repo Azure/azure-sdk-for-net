@@ -820,6 +820,106 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Starts packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to start packet
+            /// capture on gateway.
+            /// </param>
+            public static string StartPacketCapture(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = default(VpnPacketCaptureStartParameters))
+            {
+                return operations.StartPacketCaptureAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to start packet
+            /// capture on gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> StartPacketCaptureAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = default(VpnPacketCaptureStartParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartPacketCaptureWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Stops packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to stop packet
+            /// capture on gateway.
+            /// </param>
+            public static string StopPacketCapture(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters)
+            {
+                return operations.StopPacketCaptureAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to stop packet
+            /// capture on gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> StopPacketCaptureAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StopPacketCaptureWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get VPN client connection health detail per P2S client connection of the
             /// virtual network gateway in the specified resource group.
             /// </summary>
@@ -859,6 +959,51 @@ namespace Microsoft.Azure.Management.Network
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            public static void DisconnectVirtualNetworkGatewayVpnConnections(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request)
+            {
+                operations.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(resourceGroupName, virtualNetworkGatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisconnectVirtualNetworkGatewayVpnConnectionsAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisconnectVirtualNetworkGatewayVpnConnectionsWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1079,6 +1224,106 @@ namespace Microsoft.Azure.Management.Network
             public static async Task BeginResetVpnClientSharedKeyAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginResetVpnClientSharedKeyWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Generates VPN client package for P2S client of the virtual network gateway
+            /// in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate virtual network gateway VPN client
+            /// package operation.
+            /// </param>
+            public static string BeginGeneratevpnclientpackage(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters)
+            {
+                return operations.BeginGeneratevpnclientpackageAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates VPN client package for P2S client of the virtual network gateway
+            /// in the specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate virtual network gateway VPN client
+            /// package operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginGeneratevpnclientpackageAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGeneratevpnclientpackageWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Generates VPN profile for P2S client of the virtual network gateway in the
+            /// specified resource group. Used for IKEV2 and radius based authentication.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate virtual network gateway VPN client
+            /// package operation.
+            /// </param>
+            public static string BeginGenerateVpnProfile(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters)
+            {
+                return operations.BeginGenerateVpnProfileAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates VPN profile for P2S client of the virtual network gateway in the
+            /// specified resource group. Used for IKEV2 and radius based authentication.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the generate virtual network gateway VPN client
+            /// package operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginGenerateVpnProfileAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGenerateVpnProfileWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -1358,6 +1603,106 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Starts packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to start packet
+            /// capture on gateway.
+            /// </param>
+            public static string BeginStartPacketCapture(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = default(VpnPacketCaptureStartParameters))
+            {
+                return operations.BeginStartPacketCaptureAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to start packet
+            /// capture on gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginStartPacketCaptureAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStartParameters parameters = default(VpnPacketCaptureStartParameters), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStartPacketCaptureWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Stops packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to stop packet
+            /// capture on gateway.
+            /// </param>
+            public static string BeginStopPacketCapture(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters)
+            {
+                return operations.BeginStopPacketCaptureAsync(resourceGroupName, virtualNetworkGatewayName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stops packet capture on virtual network gateway in the specified resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='parameters'>
+            /// Virtual network gateway packet capture parameters supplied to stop packet
+            /// capture on gateway.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> BeginStopPacketCaptureAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VpnPacketCaptureStopParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginStopPacketCaptureWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get VPN client connection health detail per P2S client connection of the
             /// virtual network gateway in the specified resource group.
             /// </summary>
@@ -1397,6 +1742,51 @@ namespace Microsoft.Azure.Management.Network
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            public static void BeginDisconnectVirtualNetworkGatewayVpnConnections(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request)
+            {
+                operations.BeginDisconnectVirtualNetworkGatewayVpnConnectionsAsync(resourceGroupName, virtualNetworkGatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDisconnectVirtualNetworkGatewayVpnConnectionsAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDisconnectVirtualNetworkGatewayVpnConnectionsWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

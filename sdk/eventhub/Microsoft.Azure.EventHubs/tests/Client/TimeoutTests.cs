@@ -16,41 +16,46 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task ReceiveTimeout()
         {
             var testValues = new[] { 30, 60, 120 };
-            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            var receiver = default(PartitionReceiver);
 
-            try
+            await using (var scope = await EventHubScope.CreateAsync(1))
             {
-                foreach (var receiveTimeoutInSeconds in testValues)
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                var receiver = default(PartitionReceiver);
+
+                try
                 {
-                    TestUtility.Log($"Testing with {receiveTimeoutInSeconds} seconds.");
-
-                    try
+                    foreach (var receiveTimeoutInSeconds in testValues)
                     {
-                        // Start receiving from a future time so that Receive call won't be able to fetch any events.
-                        receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(1)));
+                        TestUtility.Log($"Testing with {receiveTimeoutInSeconds} seconds.");
 
-                        var startTime = DateTime.Now;
-                        await receiver.ReceiveAsync(1, TimeSpan.FromSeconds(receiveTimeoutInSeconds));
+                        try
+                        {
+                            // Start receiving from a future time so that Receive call won't be able to fetch any events.
+                            receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(1)));
 
-                        // Receive call should have waited more than receive timeout.
-                        // Give 100 milliseconds of buffer.
-                        var diff = DateTime.Now.Subtract(startTime).TotalSeconds;
-                        Assert.True(diff >= receiveTimeoutInSeconds - 0.1, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+                            var startTime = DateTime.Now;
+                            await receiver.ReceiveAsync(1, TimeSpan.FromSeconds(receiveTimeoutInSeconds));
 
-                        // Timeout should not be late more than 5 seconds.
-                        // This is just a logical buffer for timeout behavior validation.
-                        Assert.True(diff < receiveTimeoutInSeconds + 5, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
-                    }
-                    finally
-                    {
-                        await receiver.CloseAsync();
+                            // Receive call should have waited more than receive timeout.
+                            // Give 100 milliseconds of buffer.
+                            var diff = DateTime.Now.Subtract(startTime).TotalSeconds;
+                            Assert.True(diff >= receiveTimeoutInSeconds - 0.1, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+
+                            // Timeout should not be late more than 5 seconds.
+                            // This is just a logical buffer for timeout behavior validation.
+                            Assert.True(diff < receiveTimeoutInSeconds + 5, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+                        }
+                        finally
+                        {
+                            await receiver.CloseAsync();
+                        }
                     }
                 }
-            }
-            finally
-            {
-                await ehClient.CloseAsync();
+                finally
+                {
+                    await ehClient.CloseAsync();
+                }
             }
         }
 
@@ -62,7 +67,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-       public  async Task SmallReceiveTimeout()
+        public async Task SmallReceiveTimeout()
         {
             var maxClients = 4;
 
@@ -70,7 +75,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             // Even those Receive calls should return NULL instead of bubbling the exception up.
             var receiveTimeoutInSeconds = 1;
 
-            var tasks = Enumerable.Range(0, maxClients)
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var tasks = Enumerable.Range(0, maxClients)
                 .Select(async i =>
                 {
                     PartitionReceiver receiver = null;
@@ -78,9 +85,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     try
                     {
                         TestUtility.Log($"Testing with {receiveTimeoutInSeconds} seconds on client {i}.");
-
                         // Start receiving from a future time so that Receive call won't be able to fetch any events.
-                        var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+                        var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                        var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                         receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(1)));
                         var ed = await receiver.ReceiveAsync(1, TimeSpan.FromSeconds(receiveTimeoutInSeconds));
                         if (ed == null)
@@ -94,7 +101,8 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     }
                 });
 
-            await Task.WhenAll(tasks);
+                await Task.WhenAll(tasks);
+            }
         }
     }
 }

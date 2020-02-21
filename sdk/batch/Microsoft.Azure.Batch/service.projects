@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)\tools\**\*.csproj" />
+  </ItemGroup>
+</Project>

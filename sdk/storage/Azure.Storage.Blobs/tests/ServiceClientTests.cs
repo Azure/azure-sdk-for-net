@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -17,8 +15,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class ServiceClientTests : BlobTestBase
     {
-        public ServiceClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ServiceClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -32,120 +30,257 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
-            var service = new BlobServiceClient(connectionString.ToString(true));
+            BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(connectionString.ToString(true)));
+            BlobServiceClient service2 = InstrumentClient(new BlobServiceClient(connectionString.ToString(true), GetOptions()));
 
-            var builder = new BlobUriBuilder(service.Uri);
+            var builder1 = new BlobUriBuilder(service1.Uri);
+            var builder2 = new BlobUriBuilder(service2.Uri);
 
-            Assert.AreEqual("", builder.ContainerName);
-            Assert.AreEqual("", builder.BlobName);
-            Assert.AreEqual("accountName", builder.AccountName);
+            Assert.IsEmpty(builder1.BlobContainerName);
+            Assert.IsEmpty(builder1.BlobName);
+            Assert.AreEqual(accountName, builder1.AccountName);
+
+            Assert.IsEmpty(builder2.BlobContainerName);
+            Assert.IsEmpty(builder2.BlobName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+
+            BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
+            BlobServiceClient service2 = InstrumentClient(new BlobServiceClient(blobEndpoint));
+
+            var builder1 = new BlobUriBuilder(service1.Uri);
+            var builder2 = new BlobUriBuilder(service2.Uri);
+
+            Assert.IsEmpty(builder1.BlobContainerName);
+            Assert.AreEqual("", builder1.BlobName);
+            Assert.AreEqual(accountName, builder1.AccountName);
+
+            Assert.IsEmpty(builder2.BlobContainerName);
+            Assert.AreEqual("", builder2.BlobName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
         [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
-            // Ensure at least one container
-            using (this.GetNewContainer(out _, service: service))
-            {
-                // Act
-                var containers = await service.GetContainersAsync().ToListAsync();
+            BlobServiceClient service = GetServiceClient_SharedKey();
 
-                // Assert
-                Assert.IsTrue(containers.Count() >= 1);
+            // Ensure at least one container
+            await using DisposingContainer test = await GetTestContainerAsync(service: service);
+
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
+
+            // Assert
+            Assert.IsTrue(containers.Count() >= 1);
+            var accountName = new BlobUriBuilder(service.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
+
+            Assert.IsNotNull(containers[0].Name);
+            Assert.IsNotNull(containers[0].Properties);
+            Assert.IsNotNull(containers[0].Properties.ETag);
+            Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
+            Assert.IsNotNull(containers[0].Properties.HasLegalHold);
+            Assert.IsNotNull(containers[0].Properties.LastModified);
+            Assert.IsNotNull(containers[0].Properties.LeaseState);
+            Assert.IsNotNull(containers[0].Properties.LeaseStatus);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
+            {
+                Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
+                Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
             }
         }
+
+        #region Secondary Storage
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageSecondRetrySuccessful()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorageThirdRetrySuccessful()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        [Test]
+        public async Task ListContainersSegmentAsync_SecondaryStorage404OnSecondary()
+        {
+            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+        }
+
+        private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
+        {
+            BlobServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
+                numberOfReadFailuresToSimulate,
+                out TestExceptionPolicy testExceptionPolicy,
+                retryOn404);
+            await using DisposingContainer test = await GetTestContainerAsync(service: service);
+                IList<BlobContainerItem> containers = await EnsurePropagatedAsync(
+                    async () => await service.GetBlobContainersAsync().ToListAsync(),
+                    containers => containers.Count > 0);
+                Assert.IsTrue(containers.Count >= 1);
+            return testExceptionPolicy;
+        }
+        #endregion
 
         [Test]
         public async Task ListContainersSegmentAsync_Marker()
         {
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (this.GetNewContainer(out var container, service: service))
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var marker = default(string);
+            var containers = new List<BlobContainerItem>();
+
+            await foreach (Page<BlobContainerItem> page in service.GetBlobContainersAsync().AsPages(marker))
             {
-                var marker = default(string);
-                var containers = new List<ContainerItem>();
-
-                await foreach (var page in service.GetContainersAsync().ByPage(marker))
-                {
-                    containers.AddRange(page.Values);
-                }
-
-                Assert.AreNotEqual(0, containers.Count);
-                Assert.AreEqual(containers.Count, containers.Select(c => c.Name).Distinct().Count());
-                Assert.IsTrue(containers.Any(c => container.Uri == this.InstrumentClient(service.GetBlobContainerClient(c.Name)).Uri));
+                containers.AddRange(page.Values);
             }
+
+            Assert.AreNotEqual(0, containers.Count);
+            Assert.AreEqual(containers.Count, containers.Select(c => c.Name).Distinct().Count());
+            Assert.IsTrue(containers.Any(c => test.Container.Uri == InstrumentClient(service.GetBlobContainerClient(c.Name)).Uri));
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (this.GetNewContainer(out _, service: service))
-            using (this.GetNewContainer(out var container, service: service))
-            {
-                // Act
-                var page = await
-                    service.GetContainersAsync()
-                    .ByPage(pageSizeHint: 1)
-                    .FirstAsync();
+            await using DisposingContainer test = await GetTestContainerAsync(service: service);
+            await using DisposingContainer container = await GetTestContainerAsync(service: service);
 
-                // Assert
-                Assert.AreEqual(1, page.Values.Count());
-            }
+            // Act
+            Page<BlobContainerItem> page = await
+                service.GetBlobContainersAsync()
+                .AsPages(pageSizeHint: 1)
+                .FirstAsync();
+
+            // Assert
+            Assert.AreEqual(1, page.Values.Count());
+
         }
 
         [Test]
         public async Task ListContainersSegmentAsync_Prefix()
         {
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
             var prefix = "aaa";
-            var containerName = prefix + this.GetNewContainerName();
+            var containerName = prefix + GetNewContainerName();
             // Ensure at least one container
-            using (this.GetNewContainer(out var container, service: service, containerName: containerName))
-            {
-                // Act
-                var containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
-                var items = await containers.ToListAsync();
-                // Assert
-                Assert.AreNotEqual(0, items.Count());
-                Assert.IsTrue(items.All(c => c.Value.Name.StartsWith(prefix)));
-                Assert.IsNotNull(items.Single(c => c.Value.Name == containerName));
-            }
+            await using DisposingContainer test = await GetTestContainerAsync(service: service, containerName: containerName);
+
+            AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(prefix: prefix);
+            IList<BlobContainerItem> items = await containers.ToListAsync();
+            // Assert
+            Assert.AreNotEqual(0, items.Count());
+            Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
+            Assert.IsNotNull(items.Single(c => c.Name == containerName));
+            Assert.IsTrue(items.All(c => c.Properties.Metadata == null));
         }
-        
+
         [Test]
         public async Task ListContainersSegmentAsync_Metadata()
         {
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (this.GetNewContainer(out var container, service: service))
-            {
-                // Arrange
-                var metadata = this.BuildMetadata();
-                await container.SetMetadataAsync(metadata);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Act
-                var first = await service.GetContainersAsync(new GetContainersOptions { IncludeMetadata = true }).FirstAsync();
+            // Arrange
+            IDictionary<string, string> metadata = BuildMetadata();
+            await test.Container.SetMetadataAsync(metadata);
 
-                // Assert
-                Assert.IsNotNull(first.Value.Metadata);
-            }
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
+
+            // Assert
+            AssertMetadataEquality(
+                metadata,
+                containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
         }
 
         [Test]
+        [AsyncOnly]
         public async Task ListContainersSegmentAsync_Error()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetContainersAsync().ByPage(continuationToken: "garbage").FirstAsync(),
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
@@ -153,10 +288,10 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetAccountInfoAsync()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            var response = await service.GetAccountInfoAsync();
+            Response<AccountInfo> response = await service.GetAccountInfoAsync();
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -166,13 +301,13 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
-            var service = this.InstrumentClient(
+            BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
-                    this.GetServiceClient_SharedKey().Uri,
-                    this.GetOptions()));
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetAccountInfoAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -181,26 +316,26 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetPropertiesAsync()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            var response = await service.GetPropertiesAsync();
+            Response<BlobServiceProperties> response = await service.GetPropertiesAsync();
 
             // Assert
-            Assert.IsFalse(String.IsNullOrWhiteSpace(response.Value.DefaultServiceVersion));
+            Assert.IsNotNull(response.Value.DeleteRetentionPolicy);
         }
 
         [Test]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
-            var service = this.InstrumentClient(
+            BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
-                    this.GetServiceClient_SharedKey().Uri,
-                    this.GetOptions()));
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -210,13 +345,13 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetPropertiesAsync()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
-            var properties = (await service.GetPropertiesAsync()).Value;
-            var originalCors = properties.Cors.ToArray();
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceProperties properties = (await service.GetPropertiesAsync()).Value;
+            BlobCorsRule[] originalCors = properties.Cors.ToArray();
             properties.Cors =
                 new[]
                 {
-                    new CorsRule
+                    new BlobCorsRule
                     {
                         MaxAgeInSeconds = 1000,
                         AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
@@ -245,15 +380,15 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
-            var properties = (await service.GetPropertiesAsync()).Value;
-            var invalidService = this.InstrumentClient(
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobServiceProperties properties = (await service.GetPropertiesAsync()).Value;
+            BlobServiceClient invalidService = InstrumentClient(
                 new BlobServiceClient(
-                    this.GetServiceClient_SharedKey().Uri,
-                    this.GetOptions()));
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 invalidService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
@@ -264,14 +399,14 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             // "-secondary" is required by the server
-            var service = this.InstrumentClient(
+            BlobServiceClient service = InstrumentClient(
                 new BlobServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.BlobServiceSecondaryEndpoint),
-                    this.GetNewSharedKeyCredentials(),
-                    this.GetOptions()));
+                    new Uri(TestConfigDefault.BlobServiceSecondaryEndpoint),
+                    GetNewSharedKeyCredentials(),
+                    GetOptions()));
 
             // Act
-            var response = await service.GetStatisticsAsync();
+            Response<BlobServiceStatistics> response = await service.GetStatisticsAsync();
 
             // Assert
             Assert.IsNotNull(response);
@@ -281,10 +416,10 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey()
         {
             // Arrange
-            var service = this.GetServiceClient_OauthAccount();
+            BlobServiceClient service = GetServiceClient_OauthAccount();
 
             // Act
-            var response = await service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
 
             // Assert
             Assert.IsNotNull(response.Value);
@@ -294,35 +429,41 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
-            var service = this.GetServiceClient_SharedKey();
+            BlobServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.UtcNow.AddHours(1)),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
-            var service = this.GetServiceClient_OauthAccount();
+            BlobServiceClient service = GetServiceClient_OauthAccount();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                service.GetUserDelegationKeyAsync(start: null, expiry: this.Recording.Now.AddHours(1)),
-                e => Assert.AreEqual("expiry must be UTC", e.Message));
+                service.GetUserDelegationKeyAsync(
+                    startsOn: null,
+                    // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
+                    // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
+                    expiresOn: TimeZoneInfo.ConvertTime(
+                        Recording.Now.AddHours(1),
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message)); ;
         }
 
         [Test]
         public async Task CreateBlobContainerAsync()
         {
-            var name = this.GetNewContainerName();
-            var service = this.GetServiceClient_SharedKey();
+            var name = GetNewContainerName();
+            BlobServiceClient service = GetServiceClient_SharedKey();
             try
             {
-                var container = (await service.CreateBlobContainerAsync(name)).Value;
-                var properties = await container.GetPropertiesAsync();
+                BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
+                Response<BlobContainerProperties> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally
@@ -334,12 +475,12 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DeleteBlobContainerAsync()
         {
-            var name = this.GetNewContainerName();
-            var service = this.GetServiceClient_SharedKey();
-            var container = (await service.CreateBlobContainerAsync(name)).Value;
+            var name = GetNewContainerName();
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
 
             await service.DeleteBlobContainerAsync(name);
-            Assert.ThrowsAsync<StorageRequestFailedException>(
+            Assert.ThrowsAsync<RequestFailedException>(
                 async () => await container.GetPropertiesAsync());
         }
     }

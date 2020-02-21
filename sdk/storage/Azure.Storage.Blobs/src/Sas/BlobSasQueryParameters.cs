@@ -1,8 +1,9 @@
-﻿//// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Azure.Storage.Sas
 {
@@ -11,40 +12,42 @@ namespace Azure.Storage.Sas
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  You can construct a new instance using
     /// <see cref="BlobSasBuilder"/>.
-    /// 
+    ///
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
     public sealed class BlobSasQueryParameters : SasQueryParameters
     {
+        internal UserDelegationKeyProperties KeyProperties { get; set; }
+
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => this.keyObjectId;
+        public string KeyObjectId => KeyProperties?.ObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => this.keyTenantId;
+        public string KeyTenantId => KeyProperties?.TenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStart => this.keyStart;
+        public DateTimeOffset KeyStartsOn => KeyProperties == null ? default : KeyProperties.StartsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiry => this.keyExpiry;
+        public DateTimeOffset KeyExpiresOn => KeyProperties == null ? default : KeyProperties.ExpiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => this.keyService;
+        public string KeyService => KeyProperties?.Service;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => this.keyVersion;
+        public string KeyVersion => KeyProperties?.Version;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -57,19 +60,16 @@ namespace Azure.Storage.Sas
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
-        /// type.
-        /// 
-        /// Expects decoded values.
+        /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
-        internal BlobSasQueryParameters(
+        internal BlobSasQueryParameters (
             string version,
-            string services,
-            string resourceTypes,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
-            DateTimeOffset startTime,
-            DateTimeOffset expiryTime,
-            IPRange ipRange,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
             string identifier,
             string resource,
             string permissions,
@@ -79,26 +79,39 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyStart = default,
             DateTimeOffset keyExpiry = default,
             string keyService = default,
-            string keyVersion = default)
+            string keyVersion = default,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default)
             : base(
                 version,
                 services,
                 resourceTypes,
                 protocol,
-                startTime,
-                expiryTime,
+                startsOn,
+                expiresOn,
                 ipRange,
                 identifier,
                 resource,
                 permissions,
                 signature,
-                keyOid,
-                keyTid,
-                keyStart,
-                keyExpiry,
-                keyService,
-                keyVersion)
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType)
         {
+            KeyProperties = new UserDelegationKeyProperties
+            {
+                ObjectId = keyOid,
+                TenantId = keyTid,
+                StartsOn = keyStart,
+                ExpiresOn = keyExpiry,
+                Service = keyService,
+                Version = keyVersion
+            };
         }
 
         /// <summary>
@@ -108,9 +121,11 @@ namespace Azure.Storage.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        internal BlobSasQueryParameters(UriQueryParamsCollection values)
-            : base(values, includeBlobParameters: true)
+        internal BlobSasQueryParameters (
+            IDictionary<string, string> values)
+            : base(values)
         {
+            this.ParseKeyProperties(values);
         }
 
         /// <summary>
@@ -119,7 +134,12 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        public override string ToString() =>
-            this.Encode(includeBlobParameters: true);
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            KeyProperties.AppendProperties(sb);
+            this.AppendProperties(sb);
+            return sb.ToString();
+        }
     }
 }

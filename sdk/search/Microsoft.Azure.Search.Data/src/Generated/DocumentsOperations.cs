@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Search
         public SearchIndexClient Client { get; private set; }
 
         /// <summary>
-        /// Queries the number of documents in the Azure Search index.
+        /// Queries the number of documents in the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Count-Documents" />
         /// </summary>
         /// <param name='searchRequestOptions'>
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Searches for documents in the Azure Search index.
+        /// Searches for documents in the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
         /// </summary>
         /// <param name='searchText'>
@@ -651,7 +651,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Searches for documents in the Azure Search index.
+        /// Searches for documents in the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents" />
         /// </summary>
         /// <param name='searchRequest'>
@@ -876,7 +876,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Retrieves a document from the Azure Search index.
+        /// Retrieves a document from the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document" />
         /// </summary>
         /// <param name='key'>
@@ -1100,8 +1100,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests documents in the Azure Search index that match the given partial
-        /// query text.
+        /// Suggests documents in the index that match the given partial query text.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='searchText'>
@@ -1423,8 +1422,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Suggests documents in the Azure Search index that match the given partial
-        /// query text.
+        /// Suggests documents in the index that match the given partial query text.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions" />
         /// </summary>
         /// <param name='suggestRequest'>
@@ -1644,7 +1642,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
-        /// Sends a batch of document write actions to the Azure Search index.
+        /// Sends a batch of document write actions to the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents" />
         /// </summary>
         /// <param name='batch'>
@@ -1887,7 +1885,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and matching terms
-        /// in the Azure Search index.
+        /// in the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='searchText'>
@@ -2199,7 +2197,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and matching terms
-        /// in the Azure Search index.
+        /// in the index.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete" />
         /// </summary>
         /// <param name='autocompleteRequest'>

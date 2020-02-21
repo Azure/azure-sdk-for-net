@@ -11,11 +11,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// </summary>
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
-        /// <summary>
-        /// Common authority for Azure Active Directory.
-        /// </summary>
-        public const string CommonAuthority = "https://login.microsoftonline.com/common";
-
         readonly string authority;
         readonly object authCallbackState;
         event AuthenticationCallback AuthCallback;
@@ -25,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
             this.AuthCallback = authenticationCallback ?? throw Fx.Exception.ArgumentNull(nameof(authenticationCallback));
-            this.authority = authority ?? CommonAuthority;
+            this.authority = authority ?? throw Fx.Exception.ArgumentNull(nameof(authority));
             this.authCallbackState = state;
         }
 
@@ -37,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            var tokenString = await this.AuthCallback(appliesTo, this.authority, this.authCallbackState).ConfigureAwait(false);
+            var tokenString = await this.AuthCallback(Constants.AadServiceBusAudience, this.authority, this.authCallbackState).ConfigureAwait(false);
             return new JsonSecurityToken(tokenString, appliesTo);
         }
     }

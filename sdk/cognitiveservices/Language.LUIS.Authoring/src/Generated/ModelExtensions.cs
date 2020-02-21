@@ -77,7 +77,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a simple entity extractor to a version of the application.
+            /// Adds an entity extractor to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -88,15 +88,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='versionId'>
             /// The version ID.
             /// </param>
-            /// <param name='modelCreateObject'>
-            /// A model object containing the name for the new simple entity extractor.
+            /// <param name='entityModelCreateObject'>
+            /// A model object containing the name of the new entity extractor and its
+            /// children.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Guid> AddEntityAsync(this IModel operations, System.Guid appId, string versionId, ModelCreateObject modelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Guid> AddEntityAsync(this IModel operations, System.Guid appId, string versionId, EntityModelCreateObject entityModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddEntityWithHttpMessagesAsync(appId, versionId, modelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddEntityWithHttpMessagesAsync(appId, versionId, entityModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -124,35 +125,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityExtractor>> ListEntitiesAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<NDepthEntityExtractor>> ListEntitiesAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListEntitiesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Adds a hierarchical entity extractor to a version of the application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appId'>
-            /// The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID.
-            /// </param>
-            /// <param name='hierarchicalModelCreateObject'>
-            /// A model containing the name and children of the new entity extractor.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<System.Guid> AddHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, HierarchicalEntityModel hierarchicalModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AddHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hierarchicalModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -183,32 +158,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             public static async Task<IList<HierarchicalEntityExtractor>> ListHierarchicalEntitiesAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListHierarchicalEntitiesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Adds a composite entity extractor to a version of the application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appId'>
-            /// The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID.
-            /// </param>
-            /// <param name='compositeModelCreateObject'>
-            /// A model containing the name and children of the new entity extractor.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<System.Guid> AddCompositeEntityAsync(this IModel operations, System.Guid appId, string versionId, CompositeEntityModel compositeModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AddCompositeEntityWithHttpMessagesAsync(appId, versionId, compositeModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -545,7 +494,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EntityExtractor> GetEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NDepthEntityExtractor> GetEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetEntityWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -554,7 +503,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the name of an entity in a version of the application.
+            /// Deletes an entity or a child from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -566,36 +515,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='entityId'>
-            /// The entity extractor ID.
-            /// </param>
-            /// <param name='modelUpdateObject'>
-            /// A model object containing the new entity extractor name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<OperationStatus> UpdateEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateEntityWithHttpMessagesAsync(appId, versionId, entityId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Deletes an entity from a version of the application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appId'>
-            /// The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID.
-            /// </param>
-            /// <param name='entityId'>
-            /// The entity extractor ID.
+            /// The entity extractor or the child entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -603,6 +523,211 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             public static async Task<OperationStatus> DeleteEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteEntityWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the name of an entity extractor or the name and instanceOf model of
+            /// a child entity extractor.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='entityId'>
+            /// The entity extractor or the child entity extractor ID.
+            /// </param>
+            /// <param name='entityModelUpdateObject'>
+            /// A model object containing the name new entity extractor or the name and
+            /// instance of model of a child entity extractor
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> UpdateEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, EntityModelUpdateObject entityModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateEntityChildWithHttpMessagesAsync(appId, versionId, entityId, entityModelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the information of the features used by the intent in a version of the
+            /// application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='intentId'>
+            /// The intent classifier ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<ModelFeatureInformation>> GetIntentFeaturesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetIntentFeaturesWithHttpMessagesAsync(appId, versionId, intentId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the information of the features used by the intent in a version of
+            /// the application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='intentId'>
+            /// The intent classifier ID.
+            /// </param>
+            /// <param name='featureRelationsUpdateObject'>
+            /// A list of feature information objects containing the new feature relations.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> ReplaceIntentFeaturesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, IList<ModelFeatureInformation> featureRelationsUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ReplaceIntentFeaturesWithHttpMessagesAsync(appId, versionId, intentId, featureRelationsUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a relation from the feature relations used by the intent in a
+            /// version of the application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='intentId'>
+            /// The intent classifier ID.
+            /// </param>
+            /// <param name='featureRelationDeleteObject'>
+            /// A feature information object containing the feature relation to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> DeleteIntentFeatureAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, ModelFeatureInformation featureRelationDeleteObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteIntentFeatureWithHttpMessagesAsync(appId, versionId, intentId, featureRelationDeleteObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the information of the features used by the entity in a version of the
+            /// application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='entityId'>
+            /// The entity extractor ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<ModelFeatureInformation>> GetEntityFeaturesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEntityFeaturesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the information of the features used by the entity in a version of
+            /// the application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='entityId'>
+            /// The entity extractor ID.
+            /// </param>
+            /// <param name='featureRelationsUpdateObject'>
+            /// A list of feature information objects containing the new feature relations.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> ReplaceEntityFeaturesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, IList<ModelFeatureInformation> featureRelationsUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ReplaceEntityFeaturesWithHttpMessagesAsync(appId, versionId, entityId, featureRelationsUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a relation from the feature relations used by the entity in a
+            /// version of the application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='entityId'>
+            /// The entity extractor ID.
+            /// </param>
+            /// <param name='featureRelationDeleteObject'>
+            /// A feature information object containing the feature relation to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatus> DeleteEntityFeatureAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, ModelFeatureInformation featureRelationDeleteObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteEntityFeatureWithHttpMessagesAsync(appId, versionId, entityId, featureRelationDeleteObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -636,8 +761,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the name and children of a hierarchical entity model in a version
-            /// of the application.
+            /// Updates the name of a hierarchical entity model in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -651,15 +776,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='hEntityId'>
             /// The hierarchical entity extractor ID.
             /// </param>
-            /// <param name='hierarchicalModelUpdateObject'>
-            /// Model containing names of the children of the hierarchical entity.
+            /// <param name='modelUpdateObject'>
+            /// Model containing names of the hierarchical entity.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> UpdateHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalEntityModel hierarchicalModelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateHierarchicalEntityAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, ModelUpdateObject modelUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, hierarchicalModelUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateHierarchicalEntityWithHttpMessagesAsync(appId, versionId, hEntityId, modelUpdateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1267,6 +1392,36 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
+            /// Creates a single child in an existing entity model hierarchy in a version
+            /// of the application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='entityId'>
+            /// The entity extractor ID.
+            /// </param>
+            /// <param name='childEntityModelCreateObject'>
+            /// A model object containing the name of the new child model and its children.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<System.Guid> AddEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, ChildEntityModelCreateObject childEntityModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AddEntityChildWithHttpMessagesAsync(appId, versionId, entityId, childEntityModelCreateObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets information about the child's model contained in an hierarchical
             /// entity child model in a version of the application.
             /// </summary>
@@ -1354,36 +1509,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             public static async Task<OperationStatus> DeleteHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hChildId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates a single child in an existing hierarchical entity model in a
-            /// version of the application.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='appId'>
-            /// The application ID.
-            /// </param>
-            /// <param name='versionId'>
-            /// The version ID.
-            /// </param>
-            /// <param name='hEntityId'>
-            /// The hierarchical entity extractor ID.
-            /// </param>
-            /// <param name='hierarchicalChildModelCreateObject'>
-            /// A model object containing the name of the new hierarchical child model.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<System.Guid> AddHierarchicalEntityChildAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalChildModelCreateObject hierarchicalChildModelCreateObject, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AddHierarchicalEntityChildWithHttpMessagesAsync(appId, versionId, hEntityId, hierarchicalChildModelCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

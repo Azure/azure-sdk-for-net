@@ -22,15 +22,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum VerificationType
     {
         /// <summary>
-        /// The Image is guaranteed to be compatible with the associated node
-        /// agent SKU and all Batch features have been confirmed to work as
-        /// expected.
+        /// The Image is guaranteed to be compatible with the associated
+        /// Compute Node agent SKU and all Batch features have been confirmed
+        /// to work as expected.
         /// </summary>
         [EnumMember(Value = "verified")]
         Verified,
         /// <summary>
-        /// The associated node agent SKU should have binary compatibility with
-        /// the Image, but specific functionality has not been verified.
+        /// The associated Compute Node agent SKU should have binary
+        /// compatibility with the Image, but specific functionality has not
+        /// been verified.
         /// </summary>
         [EnumMember(Value = "unverified")]
         Unverified

@@ -24,6 +24,37 @@ namespace Microsoft.Azure.Management.Reservations
     public partial interface IReservationOperations
     {
         /// <summary>
+        /// Get Available Scopes for `Reservation`.
+        /// </summary>
+        /// <remarks>
+        /// Get Available Scopes for `Reservation`.
+        ///
+        /// </remarks>
+        /// <param name='reservationOrderId'>
+        /// Order Id of the reservation
+        /// </param>
+        /// <param name='reservationId'>
+        /// Id of the Reservation Item
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Properties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Split the `Reservation`.
         /// </summary>
         /// <remarks>
@@ -118,6 +149,9 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
+        /// <param name='expand'>
+        /// Supported value of this query is renewProperties
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -133,7 +167,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReservationResponse>> GetWithHttpMessagesAsync(string reservationId, string reservationOrderId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReservationResponse>> GetWithHttpMessagesAsync(string reservationId, string reservationOrderId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a `Reservation`.
         /// </summary>
@@ -193,6 +227,37 @@ namespace Microsoft.Azure.Management.Reservations
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ReservationResponse>>> ListRevisionsWithHttpMessagesAsync(string reservationId, string reservationOrderId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get Available Scopes for `Reservation`.
+        /// </summary>
+        /// <remarks>
+        /// Get Available Scopes for `Reservation`.
+        ///
+        /// </remarks>
+        /// <param name='reservationOrderId'>
+        /// Order Id of the reservation
+        /// </param>
+        /// <param name='reservationId'>
+        /// Id of the Reservation Item
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Properties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Split the `Reservation`.
         /// </summary>

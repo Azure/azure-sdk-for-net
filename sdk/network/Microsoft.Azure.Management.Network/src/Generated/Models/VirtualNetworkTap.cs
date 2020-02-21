@@ -42,11 +42,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="networkInterfaceTapConfigurations">Specifies the list
         /// of resource IDs for the network interface IP configuration that
         /// needs to be tapped.</param>
-        /// <param name="resourceGuid">The resourceGuid property of the virtual
-        /// network tap.</param>
+        /// <param name="resourceGuid">The resource GUID property of the
+        /// virtual network tap resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// virtual network tap. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
+        /// virtual network tap resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="destinationNetworkInterfaceIPConfiguration">The
         /// reference to the private IP Address of the collector nic that will
         /// receive the tap.</param>
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// that will receive the tap.</param>
         /// <param name="destinationPort">The VXLAN destination port that will
         /// receive the tapped traffic.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public VirtualNetworkTap(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<NetworkInterfaceTapConfiguration> networkInterfaceTapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), string resourceGuid = default(string), string provisioningState = default(string), NetworkInterfaceIPConfiguration destinationNetworkInterfaceIPConfiguration = default(NetworkInterfaceIPConfiguration), FrontendIPConfiguration destinationLoadBalancerFrontEndIPConfiguration = default(FrontendIPConfiguration), int? destinationPort = default(int?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -83,14 +83,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterfaceTapConfiguration> NetworkInterfaceTapConfigurations { get; private set; }
 
         /// <summary>
-        /// Gets the resourceGuid property of the virtual network tap.
+        /// Gets the resource GUID property of the virtual network tap
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the virtual network tap. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the virtual network tap resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -121,7 +123,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

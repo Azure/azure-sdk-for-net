@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource.</param>
-        /// <param name="type">Type of the resource.</param>
+        /// <param name="name">Name of the resource</param>
+        /// <param name="type">Type of the resource</param>
         /// <param name="provider">Namespace of the provider of the topic
         /// type.</param>
         /// <param name="displayName">Display Name for the topic type.</param>
@@ -50,7 +50,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// 'Succeeded', 'Canceled', 'Failed'</param>
         /// <param name="supportedLocations">List of locations supported by
         /// this topic type.</param>
-        public TopicTypeInfo(string id = default(string), string name = default(string), string type = default(string), string provider = default(string), string displayName = default(string), string description = default(string), string resourceRegionType = default(string), string provisioningState = default(string), IList<string> supportedLocations = default(IList<string>))
+        /// <param name="sourceResourceFormat">Source resource format.</param>
+        public TopicTypeInfo(string id = default(string), string name = default(string), string type = default(string), string provider = default(string), string displayName = default(string), string description = default(string), string resourceRegionType = default(string), string provisioningState = default(string), IList<string> supportedLocations = default(IList<string>), string sourceResourceFormat = default(string))
             : base(id, name, type)
         {
             Provider = provider;
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             ResourceRegionType = resourceRegionType;
             ProvisioningState = provisioningState;
             SupportedLocations = supportedLocations;
+            SourceResourceFormat = sourceResourceFormat;
             CustomInit();
         }
 
@@ -105,6 +107,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportedLocations")]
         public IList<string> SupportedLocations { get; set; }
+
+        /// <summary>
+        /// Gets or sets source resource format.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceResourceFormat")]
+        public string SourceResourceFormat { get; set; }
 
     }
 }

@@ -20,10 +20,11 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class ApiRevisionTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -36,7 +37,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 string newReleaseId = TestUtilities.GenerateName("apireleaseid");
 
                 try
-                {                    
+                {
                     // import API
                     string swaggerApiContent;
                     using (StreamReader reader = File.OpenText(swaggerPath))
@@ -70,7 +71,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // test the number of operations it has
                     var petstoreApiOperations = testBase.client.ApiOperation.ListByApi(
                         testBase.rgName,
-                        testBase.serviceName, 
+                        testBase.serviceName,
                         newApiId);
                     Assert.NotNull(petstoreApiOperations);
                     Assert.NotEmpty(petstoreApiOperations);

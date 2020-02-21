@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Output for connect to Oracle, MySQL type source
+    /// Output for connect to MySQL type source
     /// </summary>
     public partial class ConnectToSourceNonSqlTaskOutput
     {

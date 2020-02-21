@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -79,7 +80,8 @@
             //Validation that there is a handler for AddTaskResult
             if (this._addTaskResultHandlerCollection.Count == 0)
             {
-                throw new BatchClientException(string.Format(BatchErrorMessages.GeneralBehaviorMissing, typeof(AddTaskCollectionResultHandler)));
+                throw new BatchClientException(
+                    string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.GeneralBehaviorMissing, typeof(AddTaskCollectionResultHandler)));
             }
         }
 
@@ -92,7 +94,7 @@
 
             if (original != HasNotRun)
             {
-                throw new RunOnceException(string.Format(BatchErrorMessages.CanOnlyBeRunOnceFailure, this.GetType().Name));
+                throw new RunOnceException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.CanOnlyBeRunOnceFailure, this.GetType().Name));
             }
             
             //Determine what time to timeout at
@@ -127,7 +129,7 @@
             {
                 if (cloudTask == null)
                 {
-                    throw new ArgumentNullException("tasksToAdd", BatchErrorMessages.CollectionMustNotContainNull);
+                    throw new ArgumentNullException(nameof(tasksToAdd), BatchErrorMessages.CollectionMustNotContainNull);
                 }
                 
                 if (cloudTask.BindingState == BindingState.Bound)

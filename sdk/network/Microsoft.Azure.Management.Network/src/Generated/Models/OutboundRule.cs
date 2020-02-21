@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Outbound pool of the load balancer.
+    /// Outbound rule of the load balancer.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class OutboundRule : SubResource
@@ -44,20 +44,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="allocatedOutboundPorts">The number of outbound ports
         /// to be used for NAT.</param>
-        /// <param name="provisioningState">Gets the provisioning state of the
-        /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// outbound rule resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="enableTcpReset">Receive bidirectional TCP Reset on TCP
         /// flow idle timeout or unexpected connection termination. This
         /// element is only used when the protocol is set to TCP.</param>
         /// <param name="idleTimeoutInMinutes">The timeout for the TCP idle
         /// connection.</param>
-        /// <param name="name">The name of the resource that is unique within a
-        /// resource group. This name can be used to access the
-        /// resource.</param>
+        /// <param name="name">The name of the resource that is unique within
+        /// the set of outbound rules used by the load balancer. This name can
+        /// be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public OutboundRule(IList<SubResource> frontendIPConfigurations, SubResource backendAddressPool, string protocol, string id = default(string), int? allocatedOutboundPorts = default(int?), string provisioningState = default(string), bool? enableTcpReset = default(bool?), int? idleTimeoutInMinutes = default(int?), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public OutboundRule(IList<SubResource> frontendIPConfigurations, SubResource backendAddressPool, string protocol, string id = default(string), int? allocatedOutboundPorts = default(int?), string provisioningState = default(string), bool? enableTcpReset = default(bool?), int? idleTimeoutInMinutes = default(int?), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
@@ -69,6 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -97,11 +99,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the PublicIP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the outbound rule resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the protocol for the outbound rule in load balancer.
@@ -125,18 +127,25 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource that is unique within a
-        /// resource group. This name can be used to access the resource.
+        /// Gets or sets the name of the resource that is unique within the set
+        /// of outbound rules used by the load balancer. This name can be used
+        /// to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -79,66 +79,6 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// </exception>
         Task<AzureOperationResponse<FrontendEndpoint>> GetWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new frontend endpoint with the specified host name within
-        /// the specified Front Door.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
-        /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front
-        /// Door.
-        /// </param>
-        /// <param name='frontendEndpointParameters'>
-        /// Frontend endpoint properties needed to create a new endpoint.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<FrontendEndpoint>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, FrontendEndpoint frontendEndpointParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes an existing frontend endpoint with the specified
-        /// parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
-        /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front
-        /// Door.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Enables a frontendEndpoint for HTTPS traffic
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -193,66 +133,6 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DisableHttpsWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates a new frontend endpoint with the specified host name within
-        /// the specified Front Door.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
-        /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front
-        /// Door.
-        /// </param>
-        /// <param name='frontendEndpointParameters'>
-        /// Frontend endpoint properties needed to create a new endpoint.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<FrontendEndpoint>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, FrontendEndpoint frontendEndpointParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes an existing frontend endpoint with the specified
-        /// parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='frontDoorName'>
-        /// Name of the Front Door which is globally unique.
-        /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front
-        /// Door.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Enables a frontendEndpoint for HTTPS traffic
         /// </summary>

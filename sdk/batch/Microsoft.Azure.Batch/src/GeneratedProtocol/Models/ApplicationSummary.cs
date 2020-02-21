@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about an application in an Azure Batch account.
+    /// Contains information about an application in an Azure Batch Account.
     /// </summary>
     public partial class ApplicationSummary
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ApplicationSummary class.
         /// </summary>
         /// <param name="id">A string that uniquely identifies the application
-        /// within the account.</param>
+        /// within the Account.</param>
         /// <param name="displayName">The display name for the
         /// application.</param>
         /// <param name="versions">The list of available versions of the
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a string that uniquely identifies the application
-        /// within the account.
+        /// within the Account.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

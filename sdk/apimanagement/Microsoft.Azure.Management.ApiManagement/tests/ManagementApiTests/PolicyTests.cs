@@ -63,14 +63,15 @@ namespace ApiManagement.Tests.ManagementApiTests
                 </policies>";
 
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                                
+
                 // test tenant policy
                 var globalPolicy = testBase.client.Policy.Get(testBase.rgName, testBase.serviceName);
 

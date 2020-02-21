@@ -25,7 +25,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
         [Fact]
         public async Task DynamicBlueprintCRUD()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -85,7 +85,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 blueprintName = "MGBPfromDotnetSDK",
                 blueprintName2 = "MGBPfromDotnetSDK2";
 
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -130,7 +130,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 blueprintName = "subBPfromDotnetSDK",
                 blueprintName2 = "subBPfromDotnetSDK2";
 
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -172,7 +172,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 templateArtifactName = "vNicTemplate",
                 policyArtifactName = "costCenterPolicy",
                 rbacArtifactName = "ownerRBAC";
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -190,7 +190,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     Assert.Equal("Microsoft.Blueprint/blueprints/artifacts", templateArtifactGet.Type);
                     Assert.Equal("vNicResourceGroup", templateArtifactGet.ResourceGroup);
                     Assert.Equal(2, templateArtifactGet.Parameters.Count);
-                    Assert.Single(templateArtifactGet.Parameters.Where(kvp=> kvp.Key.Equals("vNetName")));
+                    Assert.Single(templateArtifactGet.Parameters.Where(kvp => kvp.Key.Equals("vNetName")));
                     Assert.Single(templateArtifactGet.Parameters.Where(kvp => kvp.Key.Equals("Location")));
 
                     // update template artifact
@@ -223,7 +223,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     var rbacArtifactGet = await testFixture.BlueprintClient.Artifacts.GetInManagementGroupAsync(managementGroupName, blueprintName, rbacArtifactName) as RoleAssignmentArtifact;
                     Assert.Equal(rbacArtifactName, rbacArtifactGet.Name);
                     Assert.Equal("Microsoft.Blueprint/blueprints/artifacts", rbacArtifactGet.Type);
-                    Assert.Equal("/providers/Microsoft.Authorization/roleDefinitions/a26e1be5-31f6-4706-8d86-9614f3292268", rbacArtifactGet.RoleDefinitionId);
+                    Assert.Equal("/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c", rbacArtifactGet.RoleDefinitionId);
                     // update roleAssignment artifact
                     rbacArtifact.DisplayName = "Assign Owner to Central IT Admin and ServiceOwner";
                     await testFixture.BlueprintClient.Artifacts.CreateOrUpdateInManagementGroupAsync(managementGroupName, blueprintName, rbacArtifactName, rbacArtifact);
@@ -256,7 +256,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 assignmentName = "testAssignment",
                 subscriptionId = "7e2bacd2-6c4b-444c-9331-2e76799cbfc9";
 
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new BlueprintTestBase(context))
                 {
@@ -298,7 +298,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     Assert.Equal(assignmentName, assignmentGet.Name);
                     Assert.Equal("Microsoft.Blueprint/blueprintAssignments", assignmentGet.Type);
                     Assert.Equal(1, assignment.ResourceGroups.Count);
-                    Assert.Single(assignment.ResourceGroups.Keys.Where(k=>k.Equals("vNicResourceGroup")));
+                    Assert.Single(assignment.ResourceGroups.Keys.Where(k => k.Equals("vNicResourceGroup")));
                     Assert.Equal(3, assignment.Parameters.Count);
                     Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("vNetName")));
                     Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("defaultLocation")));
@@ -306,7 +306,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
 
                     // list assignment
                     var assignmentsList = await testFixture.BlueprintClient.Assignments.ListInSubscriptionAsync(subscriptionId);
-                    Assert.Single(assignmentsList);
+                    Assert.Single(assignmentsList.Where(a => String.Equals(a.Name, assignmentName, StringComparison.InvariantCultureIgnoreCase)));
 
                     // wait for assignment to finish
                     CancellationTokenSource waitTillFinish = new CancellationTokenSource(TimeSpan.FromMinutes(5));
@@ -315,12 +315,12 @@ namespace Management.Blueprint.Tests.ScenarioTests
                         (Assignment assign) => assign.IsTerminalState(),
                         waitTillFinish.Token);
 
-                    // validate we have assignmenOperation for detail deployment steps.
+                    // validate we have assignmentOperation for detail deployment steps.
                     var assignmentOperationList = await testFixture.BlueprintClient.AssignmentOperations.ListInSubscriptionAsync(subscriptionId, assignmentGet.Name);
                     var assignmentOperation = Assert.Single(assignmentOperationList);
                     var assignmentOperationGet = await testFixture.BlueprintClient.AssignmentOperations.GetInSubscriptionAsync(subscriptionId, assignmentGet.Name, assignmentOperation.Name);
                     Assert.Equal(assignmentGet.ProvisioningState, assignmentOperationGet.AssignmentState);
-                    
+
                     // cleanup
                     await testFixture.BlueprintClient.Assignments.DeleteInSubscriptionAsync(subscriptionId, assignmentName);
                     // assignment delete is async operation
@@ -329,12 +329,14 @@ namespace Management.Blueprint.Tests.ScenarioTests
                         () => testFixture.BlueprintClient.Assignments.GetInSubscriptionAsync(subscriptionId, assignmentName),
                         (Assignment assign) => assign.IsTerminalState(),
                         waitTillFinish.Token,
-                        (Exception ex) => {
+                        (Exception ex) =>
+                        {
                             if (ex is CloudException && (ex as CloudException).Response.StatusCode == HttpStatusCode.NotFound)
                             {
                                 return true;
                             }
-                            throw ex; });
+                            throw ex;
+                        });
 
                     await testFixture.BlueprintClient.PublishedBlueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName, "v1.0");
                     await testFixture.BlueprintClient.PublishedBlueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName, "v1.1");
@@ -368,7 +370,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                     }
                     throw ex;
                 }
-                
+
                 if (condition(result))
                 {
                     return result;
@@ -391,7 +393,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 {
                     { "vNicResourceGroup", new ResourceGroupValue { Name="default-virtual-networks", Location = "EastUS" } },
                 },
-                Parameters = new OrdinalStringDictionary<ParameterValueBase>
+                Parameters = new OrdinalStringDictionary<ParameterValue>
                 {
                     { "vNetName", new ParameterValue { Value = "DefaultPublicFacingNetwork" } },
                     { "defaultLocation", new ParameterValue { Value = "East US" } },
@@ -427,7 +429,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
                 DisplayName = "vNic template",
                 ResourceGroup = "vNicResourceGroup",
                 Template = JObject.Parse(File.ReadAllText(Path.Combine("Data", "vNicTemplate.json"))),
-                Parameters = new OrdinalStringDictionary<ParameterValueBase>
+                Parameters = new OrdinalStringDictionary<ParameterValue>
                 {
                     { "vNetName", new ParameterValue { Value= "[parameters('vNetName')]" } },
                     { "Location", new ParameterValue { Value= "[parameters('defaultLocation')]" } },
@@ -441,7 +443,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
             {
                 DisplayName = "Apply costCenter tag and default value",
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498",
-                Parameters = new OrdinalStringDictionary<ParameterValueBase>
+                Parameters = new OrdinalStringDictionary<ParameterValue>
                 {
                     { "tagName", new ParameterValue { Value= "costCenter" } },
                     { "tagValue", new ParameterValue { Value= "Contoso/IT/PROD/123456" } },
@@ -454,10 +456,10 @@ namespace Management.Blueprint.Tests.ScenarioTests
             return new RoleAssignmentArtifact
             {
                 DisplayName = "Assign IT Admin SecurityGroup",
-                RoleDefinitionId = "/providers/Microsoft.Authorization/roleDefinitions/a26e1be5-31f6-4706-8d86-9614f3292268",
+                RoleDefinitionId = "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
                 PrincipalIds = new string[] {
-                    "90060f63-b531-4e12-910a-11c570a10445", // principalId of securityGroup in AAD
-                    "9875a2ed-77f2-4f5a-94bf-1317779d658c"  //principalId of serviceOwner in AAD
+                    "327c26bf-bf3e-4128-9b75-fbbd99e98739",
+                    "f65e608c-c59e-45b8-b308-956f6ff1757f"
                 }
             };
         }

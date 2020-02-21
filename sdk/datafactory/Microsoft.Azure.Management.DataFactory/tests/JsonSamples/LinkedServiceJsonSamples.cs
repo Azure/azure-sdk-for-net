@@ -139,6 +139,29 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureSqlMILinkedService = @"
+{
+    name: ""Test-Windows-Azure-SQL-MI-LinkedService"",
+    properties:
+    {
+        type: ""AzureSqlMI"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            servicePrincipalId: ""fakeSPID"",
+            servicePrincipalKey: {
+                value: ""fakeSPKey"",
+                type: ""SecureString""
+            },
+            tenant: ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureSqlLinkedServiceWithPasswordInAKV = @"
 {
     name: ""Test-Windows-Azure-SQL-LinkedService-with-Password-in-AKV"",
@@ -219,6 +242,32 @@ namespace DataFactory.Tests.JsonSamples
                 value : ""fakeKey"",
                 type : ""SecureString""
             }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureMLServiceLinkedService = @"
+{
+    name: ""Test-AzureMLService-LinkedService"",
+    properties:
+    {
+        type: ""AzureMLService"",
+        connectVia: {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties:
+        {
+            subscriptionId: ""1e42591f-0000-0000-0000-a268f6105ec5"",
+            resourceGroupName: ""MyResourceGroupName"",
+            mlWorkspaceName: ""MyMLWorkspaceName"",
+            servicePrincipalId: ""fakeSPID"",
+            servicePrincipalKey: {
+                value: ""fakeSPKey"",
+                type: ""SecureString""
+            },
+            tenant: ""fakeTenant""
         }
     }
 }";
@@ -484,6 +533,24 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string CosmosDbLinkedServiceWithoutConnectionString = @"
+{
+    name: ""LinkedService-CosmosDb"",
+    properties:
+    {
+        type: ""CosmosDb"",
+        typeProperties: {
+            accountEndpoint: ""https://fakecosmosdb.documents.azure.com:443/"",
+            database: ""testdb"",
+            accountKey: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string CosmosDbLinkedServiceWithAccountKeyInAKV = @"
 {
     name: ""LinkedService-CosmosDb-with-AccountKey-in-AKV"",
@@ -531,6 +598,28 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string TeradataOdbcLinkedService = @"
+{
+    name: ""Test-Teradata-linkedService"",
+    properties:
+    {
+        type: ""Teradata"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: ""fakedConnectionString"",
+            username: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string HDInsightBYOCLinkedService = @"
 {
     name: ""Test-BYOC-HDInsight-linkedService"",
@@ -554,7 +643,6 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
-
         [JsonSample]
         public const string OdbcLinkedService = @"
 {
@@ -562,6 +650,68 @@ namespace DataFactory.Tests.JsonSamples
     properties:
     {
         type: ""Odbc"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            credential: {
+                value : ""fakeCredential"",
+                type : ""SecureString""
+            },
+            userName: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            authenticationType: ""Basic"",
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string InformixLinkedService = @"
+{
+    name: ""Test-Informix-linkedService"",
+    properties:
+    {
+        type: ""Informix"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            credential: {
+                value : ""fakeCredential"",
+                type : ""SecureString""
+            },
+            userName: ""microsoft"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            authenticationType: ""Basic"",
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string MicrosoftAccessLinkedService = @"
+{
+    name: ""Test-MicrosoftAccess-linkedService"",
+    properties:
+    {
+        type: ""MicrosoftAccess"",
         connectVia: {
             referenceName : ""MSourceDemoIR"",
             type : ""IntegrationRuntimeReference""
@@ -728,12 +878,220 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string DynamicsLinkedService_S2S_Key = @"
+{
+    name: ""Test-Dynamics-LinkedService-S2S-Key"",
+    properties:
+    {
+        type : ""Dynamics"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalKey"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                  value: ""fakepassword"",
+                  type: ""SecureString""
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsLinkedService_S2S_Cert = @"
+{
+    name: ""Test-Dynamics-LinkedService-S2S-Cert"",
+    properties:
+    {
+        type : ""Dynamics"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalCert"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeCertName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
         public const string DynamicsLinkedService = @"
 {
     name: ""LinkedService-Dynamics"",
     properties:
     {
         type: ""Dynamics"",
+        typeProperties: {
+            deploymentType: ""Online"",
+            authenticationType: ""Office365"",
+            hostName: ""hostname.com"",
+            port: 12345,
+            organizationName: ""contoso"",
+            username: ""fakeuser@contoso.com"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsCrmLinkedService = @"
+{
+    name: ""LinkedService-DynamicsCrm"",
+    properties:
+    {
+        type: ""DynamicsCrm"",
+        typeProperties: {
+            deploymentType: ""Online"",
+            authenticationType: ""Office365"",
+            hostName: ""hostname.com"",
+            port: 12345,
+            organizationName: ""contoso"",
+            username: ""fakeuser@contoso.com"",
+            password: {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsCrmLinkedService_S2S_Key = @"
+{
+    name: ""LinkedService-DynamicsCrm-S2S-Key"",
+    properties:
+    {
+        type : ""DynamicsCrm"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalKey"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                  value: ""fakepassword"",
+                  type: ""SecureString""
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsCrmLinkedService_S2S_Cert = @"
+{
+    name: ""LinkedService-DynamicsCrm-S2S-Cert"",
+    properties:
+    {
+        type : ""DynamicsCrm"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalCert"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeCertName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsLinkedService_S2S_Key = @"
+{
+    name: ""LinkedService-CommonDataServiceForApps-S2S-Key"",
+    properties:
+    {
+        type : ""CommonDataServiceForApps"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalKey"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                  value: ""fakepassword"",
+                  type: ""SecureString""
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsLinkedService_S2S_Cert = @"
+{
+    name: ""LinkedService-CommonDataServiceForApps-S2S-Cert"",
+    properties:
+    {
+        type : ""CommonDataServiceForApps"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalCert"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeCertName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsLinkedService = @"
+{
+    name: ""LinkedService-CommonDataServiceForApps"",
+    properties:
+    {
+        type: ""CommonDataServiceForApps"",
         typeProperties: {
             deploymentType: ""Online"",
             authenticationType: ""Office365"",
@@ -801,6 +1159,30 @@ namespace DataFactory.Tests.JsonSamples
                     type : ""LinkedServiceReference"",
                     referenceName : ""fakeAKVLinkedService""
                 }
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SalesforceServiceCloudLinkedService = @"
+{
+    name: ""SalesforceServiceCloudLinkedService"",
+    properties:
+    {
+        type: ""SalesforceServiceCloud"",
+        description: ""test description"",
+        typeProperties:
+        {
+            environmentUrl: ""url"",
+            username: ""admin"",
+            password : {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            securityToken: {
+                value : ""fakeToken"",
+                type : ""SecureString""
             }
         }
     }
@@ -1291,10 +1673,7 @@ namespace DataFactory.Tests.JsonSamples
                 type: ""SecureString"",
                 value: ""some secret""
             },
-            clientId : {
-                type: ""SecureString"",
-                value: ""some secret""
-            },
+            clientId : ""myclientId"",
             clientSecret : {
                 type: ""SecureString"",
                 value: ""some secret""
@@ -1304,6 +1683,38 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string GoogleAdWordsLinkedService = @"
+{
+    name: ""GoogleAdWordsLinkedService"",
+    properties: {
+        type: ""GoogleAdWords"",
+        typeProperties: {
+            clientCustomerID : ""myclientCustomerID"",
+            developerToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            authenticationType : ""ServiceAuthentication"",
+            refreshToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            clientId : ""myclientId"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            email : ""myemail"",
+            keyFilePath : ""mykeyFilePath"",
+            trustedCertPath : ""mytrustedCertPath"",
+            useSystemTrustStore : true
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string GreenplumLinkedService = @"
 {
@@ -1479,6 +1890,21 @@ namespace DataFactory.Tests.JsonSamples
     name: ""MariaDBLinkedService"",
     properties: {
         type: ""MariaDB"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string AzureMariaDBLinkedService = @"
+{
+    name: ""AzureMariaDBLinkedService"",
+    properties: {
+        type: ""AzureMariaDB"",
         typeProperties: {
             connectionString: {
                 type: ""SecureString"",
@@ -1905,8 +2331,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                value : ""fakeConnString"",
+                type : ""SecureString""
             }
         }
     }
@@ -1920,8 +2346,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -1943,8 +2369,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             }
         }
     }
@@ -1958,8 +2384,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -1992,7 +2418,9 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 type : ""SecureString"",
                 value : ""some password""
-            }
+            },
+            packageCollection : ""fakepackageCollection"",
+            certificateCommonName : ""fakecertificateCommonName""
         }
     }
 }";
@@ -2048,6 +2476,64 @@ namespace DataFactory.Tests.JsonSamples
             ""password"": {
                 ""type"": ""SecureString"",
                 ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureDataExplorerLinkedService = @"
+{
+    ""name"": ""AzureDataExplorerLinkedService"",
+    ""properties"": {
+        ""type"": ""AzureDataExplorer"",
+        ""typeProperties"": {
+            ""endpoint"": ""https://fakecluster.eastus2.kusto.windows.net"",
+            ""servicePrincipalId"": ""fakeSPID"",
+            ""servicePrincipalKey"": {
+                ""value"": ""fakeSPKey"",
+                ""type"": ""SecureString""
+            },
+            ""database"": ""MyDatabase"",
+            ""tenant"": ""fakeTenant""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureFileStorageLinkedService = @"
+{
+    name: ""AzureFileStorageLinkedService"",
+    properties:
+    {
+        type: ""AzureFileStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            host : ""fakehost"",
+            userId : ""fakeaccess"",
+            password : {
+                value : ""fakeKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleCloudStorageLinkedService = @"
+{
+    name: ""GoogleCloudStorageLinkedService"",
+    properties:
+    {
+        type: ""GoogleCloudStorage"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : {
+                value : ""fakeKey"",
+                type : ""SecureString""
             }
         }
     }

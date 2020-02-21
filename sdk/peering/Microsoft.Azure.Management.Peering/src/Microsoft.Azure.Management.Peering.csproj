@@ -10,11 +10,19 @@
 		<Version>1.0.1-preview</Version>
 		<PackageTags>Azure Peering;</PackageTags>
     <PackageReleaseNotes>
-    </PackageReleaseNotes>
+	<![CDATA[New features:   Adding Peering Service operations. ]]>
+</PackageReleaseNotes>
+		<PackageTags>Azure Peering;Peering_2019-09-01-preview;Peering_2019-09-01-preview;</PackageTags>
+    <PackageReleaseNotes>
+	<![CDATA[Added Prefix events]]>
+</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Folder Include="Generated\" />
+	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />

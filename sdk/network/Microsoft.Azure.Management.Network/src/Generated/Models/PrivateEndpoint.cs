@@ -41,19 +41,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="subnet">The ID of the subnet from which the private IP
         /// will be allocated.</param>
-        /// <param name="networkInterfaces">Gets an array of references to the
+        /// <param name="networkInterfaces">An array of references to the
         /// network interfaces created for this private endpoint.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// private endpoint. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.</param>
+        /// private endpoint resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="privateLinkServiceConnections">A grouping of
         /// information about the connection to the remote resource.</param>
         /// <param name="manualPrivateLinkServiceConnections">A grouping of
         /// information about the connection to the remote resource. Used when
         /// the network admin does not have access to approve connections to
         /// the remote resource.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public PrivateEndpoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Subnet subnet = default(Subnet), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateLinkServiceConnection> privateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default(IList<PrivateLinkServiceConnection>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -86,8 +86,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterface> NetworkInterfaces { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the private endpoint. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets the provisioning state of the private endpoint resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -112,7 +113,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

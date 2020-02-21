@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -18,218 +18,194 @@ namespace Azure.Storage.Queues.Samples
     /// <summary>
     /// Basic Azure Queue Storage samples
     /// </summary>
-    public class Sample01a_HelloWorldAsync : SampleTest
+    public class Sample01b_HelloWorldAsync : SampleTest
     {
         /// <summary>
         /// Create a queue and add a message.
         /// </summary>
-        [Test]
-        public async Task EnqueueAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="queueName">
+        /// The name of the queue to create and send a message to.
+        /// </param>
+        public static async Task SendMessageAsync(string connectionString, string queueName)
         {
-            // Get a connection string to our Azure Storage account.  You can
-            // obtain your connection string from the Azure Portal (click
-            // Access Keys under Settings in the Portal Storage account blade)
-            // or using the Azure CLI with:
-            // 
+            // We'll need a connection string to your Azure Storage account.
+            // You can obtain your connection string from the Azure Portal
+            // (click Access Keys under Settings in the Portal Storage account
+            // blade) or using the Azure CLI with:
+            //
             //     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-            // 
-            // And you can provide the connection string to your application
-            // using an environment variable.
-            string connectionString = ConnectionString;
+            //
+            // You would normally provide the connection string to your
+            // application using an environment variable.
 
-            // Get a reference to a queue named "sample-queue" and then create it
-            QueueClient queue = new QueueClient(connectionString, Randomize("sample-queue"));
+            #region Snippet:Azure_Storage_Queues_Samples_Sample01b_HelloWorld_SendMessageAsync
+            // We'll need a connection string to your Azure Storage account.
+            //@@ string connectionString = "<connection_string>";
+
+            // Name of the queue we'll send messages to
+            //@@ string queueName = "sample-queue";
+
+            // Get a reference to a queue and then create it
+            QueueClient queue = new QueueClient(connectionString, queueName);
             await queue.CreateAsync();
-            try
-            {
-                // Add a message to our queue
-                await queue.EnqueueMessageAsync("Hello, Azure!");
 
-                // Verify we uploaded one message
-                Assert.AreEqual(1, (await queue.PeekMessagesAsync(10)).Value.Count());
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await queue.DeleteAsync();
-            }
+            // Send a message to our queue
+            await queue.SendMessageAsync("Hello, Azure!");
+            #endregion Snippet:Azure_Storage_Queues_Samples_Sample01b_HelloWorld_SendMessageAsync
         }
 
         /// <summary>
-        /// Dequeue and process messages from a queue.
+        /// Receive and process messages from a queue.
         /// </summary>
-        [Test]
-        public async Task DequeueAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="queueName">
+        /// The name of an existing queue to operate on.
+        /// </param>
+        public static async Task ReceiveMessagesAsync(string connectionString, string queueName)
         {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
+            // Get a reference to a queue and then fill it with messages
+            QueueClient queue = new QueueClient(connectionString, queueName);
+            await queue.SendMessageAsync("first");
+            await queue.SendMessageAsync("second");
+            await queue.SendMessageAsync("third");
 
-            // Get a reference to a queue named "sample-queue" and then create it
-            QueueClient queue = new QueueClient(connectionString, Randomize("sample-queue"));
-            await queue.CreateAsync();
-            try
+            // Get the next messages from the queue
+            foreach (QueueMessage message in (await queue.ReceiveMessagesAsync(maxMessages: 10)).Value)
             {
-                // Add several messages to the queue
-                await queue.EnqueueMessageAsync("first");
-                await queue.EnqueueMessageAsync("second");
-                await queue.EnqueueMessageAsync("third");
-                await queue.EnqueueMessageAsync("fourth");
-                await queue.EnqueueMessageAsync("fifth");
+                // "Process" the message
+                Console.WriteLine($"Message: {message.MessageText}");
 
-                // Get the messages from the queue
-                List<string> messages = new List<string>();
-                foreach (DequeuedMessage message in (await queue.DequeueMessagesAsync(maxMessages: 10)).Value)
-                {
-                    // "Process" the message
-                    messages.Add(message.MessageText);
-
-                    // Let the service know we finished with the message and
-                    // it can be safely deleted.
-                    await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
-                }
-
-                // Verify the messages
-                Assert.AreEqual(5, messages.Count);
-                Assert.Contains("first", messages);
-                Assert.Contains("second", messages);
-                Assert.Contains("third", messages);
-                Assert.Contains("fourth", messages);
-                Assert.Contains("fifth", messages);
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await queue.DeleteAsync();
+                // Let the service know we're finished with the message and
+                // it can be safely deleted.
+                await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
             }
         }
 
         /// <summary>
         /// Peek at the messages on a queue.
         /// </summary>
-        [Test]
-        public async Task PeekAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="queueName">
+        /// The name of an existing queue to operate on.
+        /// </param>
+        public static async Task PeekMesssagesAsync(string connectionString, string queueName)
         {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
+            // Get a reference to a queue and then fill it with messages
+            QueueClient queue = new QueueClient(connectionString, queueName);
+            await queue.SendMessageAsync("first");
+            await queue.SendMessageAsync("second");
+            await queue.SendMessageAsync("third");
 
-            // Get a reference to a queue named "sample-queue" and then create it
-            QueueClient queue = new QueueClient(connectionString, Randomize("sample-queue"));
-            await queue.CreateAsync();
-            try
+            // Get the messages from the queue
+            foreach (PeekedMessage message in (await queue.PeekMessagesAsync(maxMessages: 10)).Value)
             {
-                // Add several messages to the queue
-                await queue.EnqueueMessageAsync("first");
-                await queue.EnqueueMessageAsync("second");
-                await queue.EnqueueMessageAsync("third");
-                await queue.EnqueueMessageAsync("fourth");
-                await queue.EnqueueMessageAsync("fifth");
-
-                // Get the messages from the queue
-                List<string> messages = new List<string>();
-                foreach (PeekedMessage message in (await queue.PeekMessagesAsync(maxMessages: 10)).Value)
-                {
-                    // Inspect the message
-                    messages.Add(message.MessageText);
-                }
-
-                // Verify the messages
-                Assert.AreEqual(5, messages.Count);
-                Assert.Contains("first", messages);
-                Assert.Contains("second", messages);
-                Assert.Contains("third", messages);
-                Assert.Contains("fourth", messages);
-                Assert.Contains("fifth", messages);
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                await queue.DeleteAsync();
+                // Inspect the message
+                Console.WriteLine($"Message: {message.MessageText}");
             }
         }
 
         /// <summary>
-        /// Dequeue messages and update their visibility timeout for extended
+        /// Receive messages and update their visibility timeout for extended
         /// processing.
         /// </summary>
-        [Test]
-        public async Task DequeueAndUpdateAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="queueName">
+        /// The name of an existing queue to operate on.
+        /// </param>
+        public static async Task ReceiveAndUpdateAsync(string connectionString, string queueName)
         {
-            // Get a connection string to our Azure Storage account.
-            string connectionString = ConnectionString;
+            // Get a reference to a queue and then fill it with messages
+            QueueClient queue = new QueueClient(connectionString, queueName);
+            await queue.SendMessageAsync("first");
+            await queue.SendMessageAsync("second");
+            await queue.SendMessageAsync("third");
 
-            // Get a reference to a queue named "sample-queue" and then create it
-            QueueClient queue = new QueueClient(connectionString, Randomize("sample-queue"));
-            await queue.CreateAsync();
-            try
+            // Get the messages from the queue with a short visibility timeout
+            // of 1 second
+            List<QueueMessage> messages = new List<QueueMessage>();
+            Response<QueueMessage[]> received = await queue.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(1));
+            foreach (QueueMessage message in received.Value)
             {
-                // Add several messages to the queue
-                await queue.EnqueueMessageAsync("first");
-                await queue.EnqueueMessageAsync("second");
-                await queue.EnqueueMessageAsync("third");
+                // Tell the service we need a little more time to process the
+                // message by giving them a 5 second visiblity window
+                UpdateReceipt receipt = await queue.UpdateMessageAsync(
+                    message.MessageId,
+                    message.PopReceipt,
+                    message.MessageText,
+                    TimeSpan.FromSeconds(5));
 
-                // Get the messages from the queue with a short visibility timeout
-                List<DequeuedMessage> messages = new List<DequeuedMessage>();
-                foreach (DequeuedMessage message in (await queue.DequeueMessagesAsync(10, TimeSpan.FromSeconds(1))).Value)
-                {
-                    // Tell the service we need a little more time to process the message
-                    UpdatedMessage changedMessage = await queue.UpdateMessageAsync(
-                        message.MessageText,
-                        message.MessageId,
-                        message.PopReceipt,
-                        TimeSpan.FromSeconds(5));
-                    messages.Add(message.Update(changedMessage));
-                }
-
-                // Wait until the visibility window times out
-                await Task.Delay(TimeSpan.FromSeconds(1.5));
-
-                // Ensure the messages aren't visible yet
-                Assert.AreEqual(0, (await queue.DequeueMessagesAsync(10)).Value.Count());
-
-                // Finish processing the messages
-                foreach (DequeuedMessage message in messages)
-                {
-                    // Tell the service we need a little more time to process the message
-                    await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
-                }
+                // Keep track of the updated messages
+                messages.Add(message.Update(receipt));
             }
-            finally
+
+            // Wait until the original 1 second visiblity window times out and
+            // check to make sure the messages aren't showing up yet
+            await Task.Delay(TimeSpan.FromSeconds(1.5));
+            Assert.AreEqual(0, (await queue.ReceiveMessagesAsync(10)).Value.Length);
+
+            // Finish processing the messages
+            foreach (QueueMessage message in messages)
             {
-                // Clean up after the test when we're finished
-                await queue.DeleteAsync();
+                // "Process" the message
+                Console.WriteLine($"Message: {message.MessageText}");
+
+                // Tell the service we need a little more time to process the message
+                await queue.DeleteMessageAsync(message.MessageId, message.PopReceipt);
             }
+        }
+
+        /// <summary>
+        /// Authenticate via Azure Active Directory.
+        ///
+        /// Azure Storage provides integration with Azure Active Directory
+        /// (Azure AD) for identity-based authentication of requests to the
+        /// Queue and Queue services. With Azure AD, you can use role-based
+        /// access control (RBAC) to grant access to your Azure Storage
+        /// resources to users, groups, or applications. You can grant
+        /// permissions that are scoped to the level of an individual
+        /// container or queue.
+        ///
+        /// To learn more about Azure AD integration in Azure Storage, see
+        /// https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad
+        /// </summary>
+        public static void IdentityAuth()
+        {
+            // Create a QueueClient that will authenticate through Active Directory
+            Uri accountUri = new Uri("https://MYSTORAGEACCOUNT.blob.core.windows.net/");
+            QueueClient queue = new QueueClient(accountUri, new DefaultAzureCredential());
         }
 
         /// <summary>
         /// Trigger a recoverable error.
         /// </summary>
-        [Test]
-        public async Task ErrorsAsync()
+        /// <param name="connectionString">
+        /// A connection string to your Azure Storage account.
+        /// </param>
+        /// <param name="queueName">
+        /// The name of an existing queue to operate on.
+        /// </param>
+        public static async Task ErrorsAsync(string connectionString, string queueName)
         {
-            // Get a connection string to our Azure Storage account
-            string connectionString = ConnectionString;
-
-            // Get a reference to a queue named "sample-queue" and then create it
-            QueueClient queue = new QueueClient(connectionString, Randomize("sample-queue"));
-            await queue.CreateAsync();
-
             try
             {
-                // Try to create the queue again
+                // Try to create a queue that already exists
+                QueueClient queue = new QueueClient(connectionString, queueName);
                 await queue.CreateAsync();
             }
-            catch (StorageRequestFailedException ex)
+            catch (RequestFailedException ex)
                 when (ex.ErrorCode == QueueErrorCode.QueueAlreadyExists)
             {
                 // Ignore any errors if the queue already exists
             }
-            catch (StorageRequestFailedException ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-
-            // Clean up after the test when we're finished
-            await queue.DeleteAsync();
         }
     }
 }

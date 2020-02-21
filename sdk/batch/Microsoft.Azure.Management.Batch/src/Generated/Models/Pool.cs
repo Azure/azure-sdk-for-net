@@ -86,7 +86,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// pool.</param>
         /// <param name="resizeOperationStatus">Contains details about the
         /// current or last completed resize operation.</param>
-        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus))
+        /// <param name="mountConfiguration">A list of file systems to mount on
+        /// each node in the pool.</param>
+        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
@@ -113,6 +115,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             ApplicationPackages = applicationPackages;
             ApplicationLicenses = applicationLicenses;
             ResizeOperationStatus = resizeOperationStatus;
+            MountConfiguration = mountConfiguration;
             CustomInit();
         }
 
@@ -366,6 +369,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         public ResizeOperationStatus ResizeOperationStatus { get; private set; }
 
         /// <summary>
+        /// Gets or sets a list of file systems to mount on each node in the
+        /// pool.
+        /// </summary>
+        /// <remarks>
+        /// This supports Azure Files, NFS, CIFS/SMB, and Blobfuse.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.mountConfiguration")]
+        public IList<MountConfiguration> MountConfiguration { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -434,6 +447,16 @@ namespace Microsoft.Azure.Management.Batch.Models
                     if (element3 != null)
                     {
                         element3.Validate();
+                    }
+                }
+            }
+            if (MountConfiguration != null)
+            {
+                foreach (var element4 in MountConfiguration)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
                     }
                 }
             }

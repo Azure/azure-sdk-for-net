@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <VersionPrefix>11.0.0</VersionPrefix>
+    <Version>12.1.0-preview.1</Version>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft Azure Batch</AssemblyTitle>
     <PackageTags>Microsoft;Azure;Batch;windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <SignAssembly>true</SignAssembly>
-    <NoWarn>1591;NU5105</NoWarn>
+    <NoWarn>$(NoWarn);1591;NU5105;CA1308;CA1825;CA2237</NoWarn>  <!-- Remove CA1825 supression here when we deprecate net452 -->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,7 +22,7 @@
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
     <!--
@@ -34,4 +34,14 @@
     <Analyzer Include="..\..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
     -->
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; reliability</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>AzureBatch.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
 </Project>

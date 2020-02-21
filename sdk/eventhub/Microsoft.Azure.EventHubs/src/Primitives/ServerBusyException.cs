@@ -16,7 +16,7 @@ namespace Microsoft.Azure.EventHubs
         }
 
         internal ServerBusyException(string message, Exception innerException)
-            : base(true, message, innerException)
+            : base(true, message, innerException, ErrorSourceType.ServerError)
         {
         }
     }

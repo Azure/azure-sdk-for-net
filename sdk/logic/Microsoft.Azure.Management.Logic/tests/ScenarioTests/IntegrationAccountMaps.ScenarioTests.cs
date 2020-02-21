@@ -239,7 +239,7 @@ namespace Test.Azure.Management.Logic
                     map);
 
                 client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, integrationAccountName, mapName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName, mapName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName, mapName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -266,7 +266,7 @@ namespace Test.Azure.Management.Logic
 
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName, mapName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, integrationAccountName, mapName));
             }
         }
 

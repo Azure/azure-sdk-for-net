@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/resourcegroups/sandipsh/providers/microsoft.storage/storageaccounts/sandipshsa1/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2019-10-01&$top=10&$filter=policyAssignmentId%20eq%20'%2Fsubscriptions%2Fe78961ba-36fe-4739-9212-e3031b4c8db7%2Fproviders%2FMicrosoft.Authorization%2FpolicyAssignments%2F8e6d811f59d145db97ca9f16'%20and%20resourceId%20eq%20'%2Fsubscriptions%2Fe78961ba-36fe-4739-9212-e3031b4c8db7%2Fresourcegroups%2Fsandipsh%2Fproviders%2Fmicrosoft.storage%2Fstorageaccounts%2Fsandipshsa1'&$expand=PolicyEvaluationDetails",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2U3ODk2MWJhLTM2ZmUtNDczOS05MjEyLWUzMDMxYjRjOGRiNy9yZXNvdXJjZWdyb3Vwcy9zYW5kaXBzaC9wcm92aWRlcnMvbWljcm9zb2Z0LnN0b3JhZ2Uvc3RvcmFnZWFjY291bnRzL3NhbmRpcHNoc2ExL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG9saWN5SW5zaWdodHMvcG9saWN5U3RhdGVzL2xhdGVzdC9xdWVyeVJlc3VsdHM/YXBpLXZlcnNpb249MjAxOS0xMC0wMSYkdG9wPTEwJiRmaWx0ZXI9cG9saWN5QXNzaWdubWVudElkJTIwZXElMjAlMjclMkZzdWJzY3JpcHRpb25zJTJGZTc4OTYxYmEtMzZmZS00NzM5LTkyMTItZTMwMzFiNGM4ZGI3JTJGcHJvdmlkZXJzJTJGTWljcm9zb2Z0LkF1dGhvcml6YXRpb24lMkZwb2xpY3lBc3NpZ25tZW50cyUyRjhlNmQ4MTFmNTlkMTQ1ZGI5N2NhOWYxNiUyNyUyMGFuZCUyMHJlc291cmNlSWQlMjBlcSUyMCUyNyUyRnN1YnNjcmlwdGlvbnMlMkZlNzg5NjFiYS0zNmZlLTQ3MzktOTIxMi1lMzAzMWI0YzhkYjclMkZyZXNvdXJjZWdyb3VwcyUyRnNhbmRpcHNoJTJGcHJvdmlkZXJzJTJGbWljcm9zb2Z0LnN0b3JhZ2UlMkZzdG9yYWdlYWNjb3VudHMlMkZzYW5kaXBzaHNhMSUyNyYkZXhwYW5kPVBvbGljeUV2YWx1YXRpb25EZXRhaWxz",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4af11d85-b789-4bcc-aec8-bd5d2905557a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/2.0.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 25 Nov 2019 22:59:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-policy-insights-requests": [
+          "598"
+        ],
+        "x-ms-request-id": [
+          ":f455c8ae-0b03-4d09-900f-454e9b17e306"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "6623dd5c-b312-484c-8916-54ddffeb81b1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191125T225904Z:6623dd5c-b312-484c-8916-54ddffeb81b1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "273"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://management.azure.com/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/resourcegroups/sandipsh/providers/microsoft.storage/storageaccounts/sandipshsa1/providers/Microsoft.PolicyInsights/policyStates/$metadata#latest\",\r\n  \"@odata.count\": 0,\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "0b40be06-04e8-4f70-abde-a502b2646fe8"
+  }
+}

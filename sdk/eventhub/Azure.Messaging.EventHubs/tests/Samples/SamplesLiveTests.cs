@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
-using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -17,8 +16,8 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </summary>
     ///
     /// <remarks>
-    ///   These tests have a depenency on live Azure services and may
-    ///   incur costs for the assocaied Azure subscription.
+    ///   These tests have a dependency on live Azure services and may
+    ///   incur costs for the associated Azure subscription.
     /// </remarks>
     ///
     [TestFixture]
@@ -38,6 +37,17 @@ namespace Azure.Messaging.EventHubs.Tests
               .Select(type => new object[] { (IEventHubsSample)Activator.CreateInstance(type) });
 
         /// <summary>
+        ///   Provides a set of test cases for each available identity sample.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> IdentitySampleTestCases() =>
+            typeof(Samples.Program)
+              .Assembly
+              .ExportedTypes
+              .Where(type => (type.IsClass && typeof(IEventHubsIdentitySample).IsAssignableFrom(type)))
+              .Select(type => new object[] { (IEventHubsIdentitySample)Activator.CreateInstance(type) });
+
+        /// <summary>
         ///   Verifies that the specified <see cref="IEventHubsSample" /> is able to
         ///   be run without encountering an exception.
         /// </summary>
@@ -46,10 +56,29 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCaseSource(nameof(SampleTestCases))]
         public async Task SmokeTestASample(IEventHubsSample sample)
         {
-            await using (var scope = await EventHubScope.CreateAsync(4))
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.EventHubsConnectionString;
                 Assert.That(async () => await sample.RunAsync(connectionString, scope.EventHubName), Throws.Nothing);
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the specified <see cref="IEventHubsIdentitySample" /> is able to
+        ///   be run without encountering an exception.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(IdentitySampleTestCases))]
+        public async Task SmokeIdentityTestASample(IEventHubsIdentitySample sample)
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
+            {
+                Assert.That(async () => await sample.RunAsync(TestEnvironment.FullyQualifiedNamespace,
+                                                              scope.EventHubName,
+                                                              TestEnvironment.EventHubsTenant,
+                                                              TestEnvironment.EventHubsClient,
+                                                              TestEnvironment.EventHubsSecret), Throws.Nothing);
             }
         }
     }

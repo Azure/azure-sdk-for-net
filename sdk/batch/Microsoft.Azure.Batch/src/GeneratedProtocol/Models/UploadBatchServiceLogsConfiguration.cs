@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The Azure Batch service log files upload configuration for a compute
-    /// node.
+    /// The Azure Batch service log files upload configuration for a Compute
+    /// Node.
     /// </summary>
     public partial class UploadBatchServiceLogsConfiguration
     {

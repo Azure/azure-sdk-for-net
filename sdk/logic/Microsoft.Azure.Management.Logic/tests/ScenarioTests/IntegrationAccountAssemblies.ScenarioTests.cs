@@ -133,7 +133,7 @@ namespace Test.Azure.Management.Logic
                     assembly);
 
                 client.IntegrationAccountAssemblies.Delete(Constants.DefaultResourceGroup, integrationAccountName, assemblyName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, integrationAccountName, assemblyName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, integrationAccountName, assemblyName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -159,7 +159,7 @@ namespace Test.Azure.Management.Logic
                     assembly);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, integrationAccountName, assemblyName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountAssemblies.Get(Constants.DefaultResourceGroup, integrationAccountName, assemblyName));
             }
         }
 

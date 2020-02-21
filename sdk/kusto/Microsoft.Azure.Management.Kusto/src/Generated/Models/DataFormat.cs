@@ -27,5 +27,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string RAW = "RAW";
         public const string SINGLEJSON = "SINGLEJSON";
         public const string AVRO = "AVRO";
+        public const string TSVE = "TSVE";
     }
 }

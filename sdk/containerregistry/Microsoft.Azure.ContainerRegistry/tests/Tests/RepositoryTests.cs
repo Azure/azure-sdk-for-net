@@ -6,146 +6,110 @@ namespace ContainerRegistry.Tests
 {
     using Microsoft.Azure.ContainerRegistry;
     using Microsoft.Azure.ContainerRegistry.Models;
-    using Microsoft.Rest;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Threading.Tasks;
     using Xunit;
 
     public class RepositoryTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task ListRepositoryCR()
+
+        [Fact]
+        public async Task ListRepository()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryCR)))
+            using (var context = MockContext.Start(GetType(), nameof(ListRepository)))
             {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                var repositories = await client.GetRepositoriesAsync();
-                
-                Assert.Equal(2, repositories.Names.Count);
-                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
+                var repositories = await client.Repository.GetListAsync(null, 1);
+
+                Assert.Equal(1, repositories.Names.Count);
+                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ManifestListTestRepository, name));
+
+                repositories = await client.Repository.GetListAsync();
+                Assert.Equal(4, repositories.Names.Count);
+                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ManifestListTestRepository, name),
+                                                      name => Assert.Equal(ACRTestUtil.OCITestRepository, name),
+                                                      name => Assert.Equal(ACRTestUtil.ProdRepository, name),
                                                       name => Assert.Equal(ACRTestUtil.TestRepository, name));
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task ListRepositoryMR()
+        [Fact]
+        public async Task GetAcrRepositoryDetails()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryMR)))
+            using (var context = MockContext.Start(GetType(), nameof(GetAcrRepositoryDetails)))
             {
                 var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositories = await client.GetRepositoriesAsync();
+                var repositoryDetails = await client.Repository.GetAttributesAsync(ACRTestUtil.ProdRepository);
 
-                Assert.Equal(2, repositories.Names.Count);
-                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
-                                                      name => Assert.Equal(ACRTestUtil.TestRepository, name));
-            }
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task GetAcrRepositoryDetailsMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsMR)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
-                
                 Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
-                Assert.Equal(1, repositoryDetails.TagCount);
-                Assert.Equal(1, repositoryDetails.ManifestCount);
-                Assert.Equal("2018-09-28T23:37:52.0356217Z", repositoryDetails.LastUpdateTime);
-                Assert.Equal("2018-09-28T23:37:51.9668212Z", repositoryDetails.CreatedTime);
+                Assert.Equal(2, repositoryDetails.TagCount);
+                Assert.Equal(2, repositoryDetails.ManifestCount);
+                Assert.Equal("2019-08-01T22:49:11.1632015Z", repositoryDetails.CreatedTime);
                 Assert.Equal(ACRTestUtil.ProdRepository, repositoryDetails.ImageName);
-                Assert.True(repositoryDetails.ChangeableAttributes.DeleteEnabled);
+                Assert.False(repositoryDetails.ChangeableAttributes.DeleteEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
-                Assert.True(repositoryDetails.ChangeableAttributes.WriteEnabled);
+                Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
             }
         }
+
 
         [Fact]
-        public async Task GetAcrRepositoryDetailsCRThrowException()
+        public async Task DeleteAcrRepository()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsCRThrowException)))
+            using (var context = MockContext.Start(GetType(), nameof(DeleteAcrRepository)))
             {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository));
-            }
-        }
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
+                var repositories = await client.Repository.GetListAsync();
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task GetAcrRepositoriesMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesMR)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var repositories = await client.GetAcrRepositoriesAsync();
-
-                Assert.Equal(2, repositories.Names.Count);
-                Assert.Collection(repositories.Names, name => Assert.Equal(ACRTestUtil.ProdRepository, name),
-                                                      name => Assert.Equal(ACRTestUtil.TestRepository, name));
-            }
-        }
-
-        [Fact]
-        public async Task GetAcrRepositoriesCRThrowException()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesCRThrowException)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistry);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.GetAcrRepositoriesAsync());                
-            }
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task DeleteAcrRepositoryMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryMR)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForDeleting);
-                var deletedRepo = await client.DeleteAcrRepositoryAsync(ACRTestUtil.TestRepository);
+                //Selects one of the previously stored hello-world repositories for deletion
+                string deletableRepo = "";
+                foreach (var repo in repositories.Names)
+                {
+                    if (repo.StartsWith("hello-world"))
+                    {
+                        deletableRepo = repo;
+                        continue;
+                    }
+                }
+                var deletedRepo = await client.Repository.DeleteAsync(deletableRepo);
 
                 Assert.Equal(1, deletedRepo.ManifestsDeleted.Count);
-                Assert.Equal("sha256:eabe547f78d4c18c708dd97ec3166cf7464cc651f1cbb67e70d407405b7ad7b6", deletedRepo.ManifestsDeleted[0]);
-                Assert.Equal(2, deletedRepo.TagsDeleted.Count);
-                Assert.Collection(deletedRepo.TagsDeleted, tag => Assert.Equal("01", tag), 
-                                                           tag => Assert.Equal("latest", tag));
+                Assert.Equal("sha256:92c7f9c92844bbbb5d0a101b22f7c2a7949e40f8ea90c8b3bc396879d95e899a", deletedRepo.ManifestsDeleted[0]);
+                Assert.Equal(1, deletedRepo.TagsDeleted.Count);
+                Assert.Collection(deletedRepo.TagsDeleted, tag => Assert.Equal("latest", tag));
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task DeleteAcrRepositoryCRThrowException()
+        [Fact]
+        public async Task UpdateAcrRepositoryAttributes()
         {
-            using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryCRThrowException)))
+            using (var context = MockContext.Start(GetType(), nameof(UpdateAcrRepositoryAttributes)))
             {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ClassicTestRegistryForDeleting);
-                await Assert.ThrowsAsync<AcrErrorsException>(() => client.DeleteAcrRepositoryAsync("prod/bash"));
-            }            
-        }
+                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistryForChanges);
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
-        public async Task UpdateAcrRepositoryAttributesMR()
-        {
-            using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributesMR)))
-            {
-                var client = await ACRTestUtil.GetACRClientAsync(context, ACRTestUtil.ManagedTestRegistry);
-                var updateAttributes = new ChangeableAttributes() { DeleteEnabled = true, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
-                var repositoryDetails = await client.GetAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository);
+                //Changeable attributes
+                var updateAttributes = new ChangeableAttributes() { DeleteEnabled = false, ListEnabled = true, ReadEnabled = true, WriteEnabled = false };
+                await client.Repository.UpdateAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
 
-                Assert.Equal(ACRTestUtil.ManagedTestRegistryFullName, repositoryDetails.Registry);
+                var repositoryDetails = await client.Repository.GetAttributesAsync(ACRTestUtil.changeableRepository);
+
+                //Undo change in remote (in case this fails)
+                updateAttributes.WriteEnabled = true;
+                updateAttributes.DeleteEnabled = true;
+                await client.Repository.UpdateAttributesAsync(ACRTestUtil.changeableRepository, updateAttributes);
+
+                //Check success
                 Assert.Equal(1, repositoryDetails.TagCount);
                 Assert.Equal(1, repositoryDetails.ManifestCount);
-                Assert.Equal("2018-09-28T23:37:52.0356217Z", repositoryDetails.LastUpdateTime);
-                Assert.Equal("2018-09-28T23:37:51.9668212Z", repositoryDetails.CreatedTime);
-                Assert.Equal(ACRTestUtil.ProdRepository, repositoryDetails.ImageName);
-                Assert.True(repositoryDetails.ChangeableAttributes.DeleteEnabled);
+                Assert.Equal(ACRTestUtil.changeableRepository, repositoryDetails.ImageName);
+                Assert.False(repositoryDetails.ChangeableAttributes.DeleteEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ListEnabled);
                 Assert.True(repositoryDetails.ChangeableAttributes.ReadEnabled);
                 Assert.False(repositoryDetails.ChangeableAttributes.WriteEnabled);
 
-                updateAttributes.WriteEnabled = true;
-                await client.UpdateAcrRepositoryAttributesAsync(ACRTestUtil.ProdRepository, updateAttributes);
             }
         }
+
     }
 }

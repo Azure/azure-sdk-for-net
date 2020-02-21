@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public const string NotSpecified = "NotSpecified";
         public const string BuiltIn = "BuiltIn";
         public const string Custom = "Custom";
+        public const string Static = "Static";
     }
 }
