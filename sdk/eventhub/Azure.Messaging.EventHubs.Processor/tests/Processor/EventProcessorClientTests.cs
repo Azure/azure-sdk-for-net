@@ -3237,6 +3237,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task ProcessorStopsProcessingPartitionItDoesNotOwnAnymore()
         {
             const int NumberOfPartitions = 2;
