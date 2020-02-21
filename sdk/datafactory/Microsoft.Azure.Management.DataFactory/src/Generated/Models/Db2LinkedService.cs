@@ -35,10 +35,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the Db2LinkedService class.
         /// </summary>
-        /// <param name="server">Server name for connection. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="database">Database name for connection. Type: string
-        /// (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -46,24 +42,40 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="connectionString">The connection string. It is
+        /// mutually exclusive with server, database, authenticationType,
+        /// userName, packageCollection and certificateCommonName property.
+        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="server">Server name for connection. It is mutually
+        /// exclusive with connectionString property. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="database">Database name for connection. It is mutually
+        /// exclusive with connectionString property. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="authenticationType">AuthenticationType to be used for
-        /// connection. Possible values include: 'Basic'</param>
-        /// <param name="username">Username for authentication. Type: string
-        /// (or Expression with resultType string).</param>
+        /// connection. It is mutually exclusive with connectionString
+        /// property. Possible values include: 'Basic'</param>
+        /// <param name="username">Username for authentication. It is mutually
+        /// exclusive with connectionString property. Type: string (or
+        /// Expression with resultType string).</param>
         /// <param name="password">Password for authentication.</param>
         /// <param name="packageCollection">Under where packages are created
-        /// when querying database. Type: string (or Expression with resultType
-        /// string).</param>
+        /// when querying database. It is mutually exclusive with
+        /// connectionString property. Type: string (or Expression with
+        /// resultType string).</param>
         /// <param name="certificateCommonName">Certificate Common Name when
-        /// TLS is enabled. Type: string (or Expression with resultType
+        /// TLS is enabled. It is mutually exclusive with connectionString
+        /// property. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
-        /// runtime credential manager. Type: string (or Expression with
+        /// runtime credential manager. It is mutually exclusive with
+        /// connectionString property. Type: string (or Expression with
         /// resultType string).</param>
-        public Db2LinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object packageCollection = default(object), object certificateCommonName = default(object), object encryptedCredential = default(object))
+        public Db2LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object server = default(object), object database = default(object), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object packageCollection = default(object), object certificateCommonName = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
+            ConnectionString = connectionString;
             Server = server;
             Database = database;
             AuthenticationType = authenticationType;
@@ -81,29 +93,42 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets server name for connection. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets the connection string. It is mutually exclusive with
+        /// server, database, authenticationType, userName, packageCollection
+        /// and certificateCommonName property. Type: string, SecureString or
+        /// AzureKeyVaultSecretReference.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.connectionString")]
+        public object ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets server name for connection. It is mutually exclusive
+        /// with connectionString property. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.server")]
         public object Server { get; set; }
 
         /// <summary>
-        /// Gets or sets database name for connection. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets database name for connection. It is mutually exclusive
+        /// with connectionString property. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.database")]
         public object Database { get; set; }
 
         /// <summary>
-        /// Gets or sets authenticationType to be used for connection. Possible
-        /// values include: 'Basic'
+        /// Gets or sets authenticationType to be used for connection. It is
+        /// mutually exclusive with connectionString property. Possible values
+        /// include: 'Basic'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authenticationType")]
         public string AuthenticationType { get; set; }
 
         /// <summary>
-        /// Gets or sets username for authentication. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets username for authentication. It is mutually exclusive
+        /// with connectionString property. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.username")]
         public object Username { get; set; }
@@ -116,14 +141,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets under where packages are created when querying
-        /// database. Type: string (or Expression with resultType string).
+        /// database. It is mutually exclusive with connectionString property.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.packageCollection")]
         public object PackageCollection { get; set; }
 
         /// <summary>
-        /// Gets or sets certificate Common Name when TLS is enabled. Type:
-        /// string (or Expression with resultType string).
+        /// Gets or sets certificate Common Name when TLS is enabled. It is
+        /// mutually exclusive with connectionString property. Type: string (or
+        /// Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.certificateCommonName")]
         public object CertificateCommonName { get; set; }
@@ -131,7 +158,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
         /// Credentials are encrypted using the integration runtime credential
-        /// manager. Type: string (or Expression with resultType string).
+        /// manager. It is mutually exclusive with connectionString property.
+        /// Type: string (or Expression with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.encryptedCredential")]
         public object EncryptedCredential { get; set; }
@@ -145,14 +173,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Server == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Server");
-            }
-            if (Database == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Database");
-            }
         }
     }
 }
