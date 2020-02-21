@@ -128,7 +128,7 @@ jobs:
           TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
-          OSVmImage: "macOS-10.13"
+          OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"
