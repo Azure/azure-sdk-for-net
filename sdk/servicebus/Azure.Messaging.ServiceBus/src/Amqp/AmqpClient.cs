@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
@@ -166,6 +167,37 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // TODO add event  ServiceBusEventSource.Log.ServiceBusClientCreateComplete(host, entityName);
             }
+        }
+
+        internal override async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
+           AmqpRequestMessage amqpRequestMessage,
+           TimeSpan timeout)
+        {
+            var amqpMessage = amqpRequestMessage.AmqpMessage;
+            if (IsSessionReceiver)
+            {
+                this.ThrowIfSessionLockLost();
+            }
+
+            ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+            var ambientTransaction = Transaction.Current;
+            if (ambientTransaction != null)
+            {
+                //   transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+            }
+
+            if (! ManagementLink.TryGetOpenedObject(out var requestResponseAmqpLink))
+            {
+                // MessagingEventSource.Log.CreatingNewLink(this.ClientId, this.isSessionReceiver, this.SessionIdInternal, true, this.LinkException);
+                requestResponseAmqpLink = await ManagementLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            }
+
+            var responseAmqpMessage = await Task.Factory.FromAsync(
+                (c, s) => requestResponseAmqpLink.BeginRequest(amqpMessage, transactionId, timeout, c, s),
+                (a) => requestResponseAmqpLink.EndRequest(a),
+                this).ConfigureAwait(false);
+
+            return AmqpResponseMessage.CreateResponse(responseAmqpMessage);
         }
 
         /// <summary>

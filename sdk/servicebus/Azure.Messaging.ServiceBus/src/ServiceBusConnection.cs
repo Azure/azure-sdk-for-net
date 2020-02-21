@@ -14,6 +14,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -291,6 +292,19 @@ namespace Azure.Messaging.ServiceBus
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///
+        /// </summary>
+        ///
+        /// <param name="amqpRequestMessage"></param>
+        /// <param name="timeout"></param>
+        internal virtual async Task ExecuteRequestResponseAsync(
+            AmqpRequestMessage amqpRequestMessage,
+            TimeSpan timeout) =>
+            await InnerClient.ExecuteRequestResponseAsync(
+                amqpRequestMessage,
+                timeout).ConfigureAwait(false);
 
         /// <summary>
         ///
