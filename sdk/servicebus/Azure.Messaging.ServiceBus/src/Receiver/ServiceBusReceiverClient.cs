@@ -327,7 +327,7 @@ namespace Azure.Messaging.ServiceBus
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed((bool)this.IsClosed, nameof(ServiceBus.ServiceBusReceiverClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             try
