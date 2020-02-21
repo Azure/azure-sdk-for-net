@@ -2,12 +2,19 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services QnAMaker SDK</AssemblyTitle>
     <AssemblyDescription>Provides access to the Microsoft Cognitive Services QnAMaker APIs.</AssemblyDescription>
-    <Description>This client library provides access to the Microsoft Cognitive Services QnAMaker APIs.</Description>
+    <Description>
+<![CDATA[<h1>Cognitive Services - QnA Maker</h1>
+This client library provides access to the Microsoft Cognitive Services QnAMaker APIs.
+
+More info:
+<a href="https://aka.ms/qnamaker-sdk-dotnet-acom">Product information </a> | <a href="https://aka.ms/qnamaker-sdk-dotnet-docs-conceptual">Documentation</a> | <a href="https://aka.ms/qnamaker-sdk-dotnet-docs-reference">Developer reference documentation</a>
+]]>
+    </Description>
     <Version>2.0.0-preview.1</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;QnAMaker;QnAMaker API;QnAMaker SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
-    <![CDATA[ 
-        This is SDK for QnAMaker v4 API.	
+    <![CDATA[
+        This is SDK for QnAMaker v4 API.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
