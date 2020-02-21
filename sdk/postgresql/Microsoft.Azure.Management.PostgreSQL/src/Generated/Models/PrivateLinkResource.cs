@@ -10,24 +10,24 @@
 
 namespace Microsoft.Azure.Management.PostgreSQL.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a ARM proxy resource. It will have
-    /// everything other than required location and tags
+    /// A private link resource
     /// </summary>
-    public partial class ProxyResource : Resource
+    public partial class PrivateLinkResource : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ProxyResource class.
+        /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
-        public ProxyResource()
+        public PrivateLinkResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ProxyResource class.
+        /// Initializes a new instance of the PrivateLinkResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -35,9 +35,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="properties">The private link resource group
+        /// id.</param>
+        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), PrivateLinkResourceProperties properties = default(PrivateLinkResourceProperties))
             : base(id, name, type)
         {
+            Properties = properties;
             CustomInit();
         }
 
@@ -45,6 +48,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the private link resource group id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public PrivateLinkResourceProperties Properties { get; private set; }
 
     }
 }

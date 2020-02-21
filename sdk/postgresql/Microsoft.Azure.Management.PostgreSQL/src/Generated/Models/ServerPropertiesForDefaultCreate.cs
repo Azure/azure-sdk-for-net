@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>

@@ -44,14 +44,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The subscription ID that identifies an Azure subscription.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version to use for the request.
-        /// </summary>
-        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -126,6 +121,16 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
     }
 }

@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.PostgreSQL
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VirtualNetworkRulesOperations operations.
+    /// PrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface IVirtualNetworkRulesOperations
+    public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Gets a virtual network rule.
+        /// Gets a private endpoint connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='virtualNetworkRuleName'>
-        /// The name of the virtual network rule.
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkRule>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates an existing virtual network rule.
+        /// Approve or reject a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -60,11 +60,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='virtualNetworkRuleName'>
-        /// The name of the virtual network rule.
+        /// <param name='privateEndpointConnectionName'>
         /// </param>
         /// <param name='parameters'>
-        /// The requested virtual Network Rule Resource state.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,9 +79,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the virtual network rule with the given name.
+        /// Deletes a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -91,8 +89,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='virtualNetworkRuleName'>
-        /// The name of the virtual network rule.
+        /// <param name='privateEndpointConnectionName'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,46 +103,24 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of virtual network rules in a server.
+        /// Updates tags on private endpoint connection.
         /// </summary>
+        /// <remarks>
+        /// Updates private endpoint connection with the specified tags.
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualNetworkRule>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates an existing virtual network rule.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='serverName'>
-        /// The name of the server.
-        /// </param>
-        /// <param name='virtualNetworkRuleName'>
-        /// The name of the virtual network rule.
+        /// <param name='privateEndpointConnectionName'>
         /// </param>
         /// <param name='parameters'>
-        /// The requested virtual Network Rule Resource state.
+        /// Parameters supplied to the Update private endpoint connection Tags
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -162,9 +137,9 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkRule>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, VirtualNetworkRule parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the virtual network rule with the given name.
+        /// Gets all private endpoint connections on a server.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -172,8 +147,61 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='virtualNetworkRuleName'>
-        /// The name of the virtual network rule.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListByServerWithHttpMessagesAsync(string resourceGroupName, string serverName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Approve or reject a private endpoint connection with a given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// </param>
+        /// <param name='parameters'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, PrivateEndpointConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a private endpoint connection with a given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -187,9 +215,43 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of virtual network rules in a server.
+        /// Updates tags on private endpoint connection.
+        /// </summary>
+        /// <remarks>
+        /// Updates private endpoint connection with the specified tags.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='serverName'>
+        /// The name of the server.
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update private endpoint connection Tags
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string serverName, string privateEndpointConnectionName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all private endpoint connections on a server.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -209,6 +271,6 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<VirtualNetworkRule>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListByServerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

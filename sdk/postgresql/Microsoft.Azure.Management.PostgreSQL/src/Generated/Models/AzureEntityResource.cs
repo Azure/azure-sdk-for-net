@@ -10,24 +10,25 @@
 
 namespace Microsoft.Azure.Management.PostgreSQL.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a ARM proxy resource. It will have
-    /// everything other than required location and tags
+    /// The resource model definition for a Azure Resource Manager resource
+    /// with an etag.
     /// </summary>
-    public partial class ProxyResource : Resource
+    public partial class AzureEntityResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ProxyResource class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        public ProxyResource()
+        public AzureEntityResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ProxyResource class.
+        /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -35,9 +36,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="etag">Resource Etag.</param>
+        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
             : base(id, name, type)
         {
+            Etag = etag;
             CustomInit();
         }
 
@@ -45,6 +48,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets resource Etag.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
     }
 }

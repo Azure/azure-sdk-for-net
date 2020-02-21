@@ -26,6 +26,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
                 new Tuple<string, string, string>("DBforPostgreSQL", "LocationBasedPerformanceTier", "2017-12-01"),
                 new Tuple<string, string, string>("DBforPostgreSQL", "LogFiles", "2017-12-01"),
                 new Tuple<string, string, string>("DBforPostgreSQL", "Operations", "2017-12-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateEndpointConnections", "2018-06-01"),
+                new Tuple<string, string, string>("DBforPostgreSQL", "PrivateLinkResources", "2018-06-01"),
                 new Tuple<string, string, string>("DBforPostgreSQL", "Replicas", "2017-12-01"),
                 new Tuple<string, string, string>("DBforPostgreSQL", "ServerSecurityAlertPolicies", "2017-12-01"),
                 new Tuple<string, string, string>("DBforPostgreSQL", "Servers", "2017-12-01"),

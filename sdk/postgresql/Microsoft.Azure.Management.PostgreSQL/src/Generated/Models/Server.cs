@@ -34,19 +34,21 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <summary>
         /// Initializes a new instance of the Server class.
         /// </summary>
-        /// <param name="location">The location the resource resides
-        /// in.</param>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="tags">Application-specific metadata in the form of
-        /// key-value pairs.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="administratorLogin">The administrator's login name of
         /// a server. Can only be specified when the server is being created
         /// (and is required for creation).</param>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
@@ -102,7 +104,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets server version. Possible values include: '9.5', '9.6',
-        /// '10', '10.0', '10.2'
+        /// '10', '10.0', '10.2', '11'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }

@@ -11,26 +11,22 @@
 namespace Microsoft.Azure.Management.PostgreSQL.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Represents a Database.
-    /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class Database : ProxyResource
+    public partial class Resource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Database class.
+        /// Initializes a new instance of the Resource class.
         /// </summary>
-        public Database()
+        public Resource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Database class.
+        /// Initializes a new instance of the Resource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -38,13 +34,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="charset">The charset of the database.</param>
-        /// <param name="collation">The collation of the database.</param>
-        public Database(string id = default(string), string name = default(string), string type = default(string), string charset = default(string), string collation = default(string))
-            : base(id, name, type)
+        public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
-            Charset = charset;
-            Collation = collation;
+            Id = id;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -54,16 +48,25 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the charset of the database.
+        /// Gets fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
-        [JsonProperty(PropertyName = "properties.charset")]
-        public string Charset { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the collation of the database.
+        /// Gets the name of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.collation")]
-        public string Collation { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

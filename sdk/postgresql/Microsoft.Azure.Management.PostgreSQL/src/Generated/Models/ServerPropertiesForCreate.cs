@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// Initializes a new instance of the ServerPropertiesForCreate class.
         /// </summary>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets server version. Possible values include: '9.5', '9.6',
-        /// '10', '10.0', '10.2'
+        /// '10', '10.0', '10.2', '11'
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
