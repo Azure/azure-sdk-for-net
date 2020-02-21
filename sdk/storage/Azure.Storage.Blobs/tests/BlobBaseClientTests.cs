@@ -600,7 +600,8 @@ namespace Azure.Storage.Blobs.Test
                             new StorageTransferOptions
                             {
                                 MaximumConcurrency = 1,
-                                MaximumTransferLength = Constants.KB
+                                MaximumTransferLength = Constants.KB,
+                                InitialTransferLength = Constants.KB
                             });
                 });
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
