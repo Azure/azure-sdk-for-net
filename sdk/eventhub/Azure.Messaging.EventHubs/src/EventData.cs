@@ -182,7 +182,6 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventBody">The raw data to use as the body of the event.</param>
         ///
         public EventData(ReadOnlyMemory<byte> eventBody) : this(eventBody, lastPartitionSequenceNumber: null)
-
         {
         }
 

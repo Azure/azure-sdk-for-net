@@ -79,6 +79,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -452,7 +453,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.AppendBlockAsync(
                         content: stream,
                         transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
-                    e => Assert.AreEqual("Md5Mismatch", e.ErrorCode.Split('\n')[0]));
+                    e => Assert.AreEqual("Md5Mismatch", e.ErrorCode));
             }
         }
 
@@ -470,7 +471,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.AppendBlockAsync(stream),
-                    e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
+                    e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
 

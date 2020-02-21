@@ -1,21 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using Azure.Messaging.ServiceBus.Sender;
-using Azure.Messaging.ServiceBus;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Identity;
-using System.Net;
-using Azure.Messaging.ServiceBus.Tests;
-using System;
-using Azure.Messaging.ServiceBus.Receiver;
-using System.Xml.Schema;
-using Azure.Core.Testing;
-using Moq;
-using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Tests;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.Template.Tests
 {
@@ -24,83 +17,99 @@ namespace Microsoft.Azure.Template.Tests
         [Test]
         public async Task Send_ConnString()
         {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            await sender.SendRangeAsync(GetMessages(10));
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await sender.SendRangeAsync(GetMessages(10));
+            }
         }
 
         [Test]
         public async Task Send_Token()
         {
             ClientSecretCredential credential = new ClientSecretCredential(
-                TenantId,
-                ClientId,
-                ClientSecret);
+                TestEnvironment.ServiceBusTenant,
+                TestEnvironment.ServiceBusClient,
+                TestEnvironment.ServiceBusSecret);
 
-            var sender = new ServiceBusSenderClient(Endpoint, QueueName, credential);
-            await sender.SendAsync(GetMessage());
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new QueueSenderClient(TestEnvironment.FullyQualifiedNamespace, scope.QueueName, credential);
+                await sender.SendAsync(GetMessage());
+            }
         }
 
         [Test]
         public async Task Send_Connection_Topic()
         {
-            var conn = new ServiceBusConnection(ConnString, TopicName);
-            var options = new ServiceBusSenderClientOptions
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                RetryOptions = new ServiceBusRetryOptions(),
-                ConnectionOptions = new ServiceBusConnectionOptions()
+                var options = new ServiceBusSenderClientOptions
                 {
-                    TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = new WebProxy("localHost")
-                }
-            };
-            options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
-            var sender = new ServiceBusSenderClient(conn, options);
+                    RetryOptions = new ServiceBusRetryOptions(),
+                    ConnectionOptions = new ServiceBusConnectionOptions()
+                    {
+                        TransportType = ServiceBusTransportType.AmqpWebSockets,
+                        Proxy = WebRequest.DefaultWebProxy
+                    }
+                };
+                options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
 
-            await sender.SendAsync(GetMessage());
+                await using var sender = new TopicSenderClient(TestEnvironment.ServiceBusConnectionString, scope.TopicName, options);
+                await sender.SendAsync(GetMessage());
+            }
         }
 
         [Test]
         public async Task Send_Topic_Session()
         {
-            var conn = new ServiceBusConnection(ConnString, "joshtopic");
-            var options = new ServiceBusSenderClientOptions
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                RetryOptions = new ServiceBusRetryOptions(),
-                ConnectionOptions = new ServiceBusConnectionOptions()
+                var options = new ServiceBusSenderClientOptions
                 {
-                    TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = new WebProxy("localHost")
-                }
-            };
-            options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
-            var sender = new ServiceBusSenderClient(conn, options);
-            var message = GetMessage();
-            message.SessionId = "1";
-            await sender.SendAsync(message);
+                    RetryOptions = new ServiceBusRetryOptions(),
+                    ConnectionOptions = new ServiceBusConnectionOptions()
+                    {
+                        TransportType = ServiceBusTransportType.AmqpWebSockets,
+                        Proxy = WebRequest.DefaultWebProxy
+                    }
+                };
+                options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
+                await using var sender = new TopicSenderClient(TestEnvironment.ServiceBusConnectionString, scope.TopicName, options);
+                var message = GetMessage();
+                message.SessionId = "1";
+                await sender.SendAsync(message);
+            }
         }
 
         [Test]
-        public void ClientProperties()
+        public async Task ClientProperties()
         {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            Assert.AreEqual(QueueName, sender.EntityName);
-            Assert.AreEqual(Endpoint, sender.FullyQualifiedNamespace);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                Assert.AreEqual(scope.QueueName, sender.EntityName);
+                Assert.AreEqual(TestEnvironment.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
+            }
         }
 
         [Test]
         public async Task Schedule()
         {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-            var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
+                var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
-            var receiver = new QueueReceiverClient(ConnString, QueueName);
-            ServiceBusMessage msg = await receiver.PeekBySequenceAsync(sequenceNum);
-            Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
+                await using var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                ServiceBusMessage msg = await receiver.PeekBySequenceAsync(sequenceNum);
+                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
 
-            await sender.CancelScheduledMessageAsync(sequenceNum);
-            msg = await receiver.PeekBySequenceAsync(sequenceNum);
-            Assert.IsNull(msg);
+                await sender.CancelScheduledMessageAsync(sequenceNum);
+                msg = await receiver.PeekBySequenceAsync(sequenceNum);
+                Assert.IsNull(msg);
+            }
         }
     }
 }

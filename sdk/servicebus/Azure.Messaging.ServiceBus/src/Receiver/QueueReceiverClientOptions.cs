@@ -3,7 +3,7 @@
 
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Receiver
+namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///
@@ -20,7 +20,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
             new QueueReceiverClientOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone()
+                _retryOptions = RetryOptions.Clone(),
+                 ReceiveMode =  ReceiveMode
             };
     }
 }

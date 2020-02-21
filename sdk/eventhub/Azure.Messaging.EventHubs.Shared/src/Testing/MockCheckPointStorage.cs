@@ -11,16 +11,16 @@ using Azure.Messaging.EventHubs.Processor;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The EventProcessor relies on a <see cref="PartitionManager" /> to store checkpoints and handle partition
-    ///   ownership.  <see cref="MockCheckPointStorage"/> is simple partition manager that stores checkpoints and
+    ///   The EventProcessor relies on a <see cref="StorageManager" /> to store checkpoints and handle partition
+    ///   ownership.  <see cref="MockCheckPointStorage"/> is simple storage manager that stores checkpoints and
     ///   partition ownership in memory of your program.
     ///
     ///   You can use the <see cref="MockCheckPointStorage"/> to get started with using the `EventProcessor`.
-    ///   But in production, you should choose an implementation of the <see cref="PartitionManager" /> interface that will
+    ///   But in production, you should choose an implementation of the <see cref="StorageManager" /> interface that will
     ///   store the checkpoints and partition ownership to a persistent store instead.
     /// </summary>
     ///
-    internal sealed class MockCheckPointStorage : PartitionManager
+    internal class MockCheckPointStorage : StorageManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The primitive for synchronizing access during checkpoint update.</summary>
         private readonly object _checkpointLock = new object();
 
-        /// <summary>Logs activities performed by this partition manager.</summary>
+        /// <summary>Logs activities performed by this storage manager.</summary>
         private readonly Action<string> _logger;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
         /// </summary>
         ///
-        /// <param name="logger">Logs activities performed by this partition manager.</param>
+        /// <param name="logger">Logs activities performed by this storage manager.</param>
         ///
         public MockCheckPointStorage(Action<string> logger = null)
         {

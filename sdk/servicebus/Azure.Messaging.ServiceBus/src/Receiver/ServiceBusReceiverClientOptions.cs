@@ -5,10 +5,10 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Receiver
+namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiverClient" />
+    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver" />
     ///   to configure its behavior.
     /// </summary>
     ///
@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <summary>
         ///
         /// </summary>
-        public int PrefetchCount = 0;
+        public uint PrefetchCount = 0;
 
         /// <summary>
         ///
