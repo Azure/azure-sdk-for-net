@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.Shares.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<StorageHandlesSegment> response  =await _client.GetHandlesInternal(
+            Response<StorageHandlesSegment> response = await _client.GetHandlesInternal(
                 continuationToken,
                 pageSizeHint,
                 async,
