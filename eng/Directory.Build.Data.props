@@ -26,12 +26,6 @@
       CA2237; <!-- [Serializeable] on exceptions -->
       CA2225; <!-- Provide alternative to implicit operators -->
       CA1714; <!-- Flags should have plural names -->
-      AZC0106; <!-- Temporary disabled: Non-public asynchronous method needs 'async' parameter. -->
-      AZC0107; <!-- Temporary disabled: DO NOT call public asynchronous method in synchronous scope. -->
-      AZC0108; <!-- Temporary disabled: Incorrect 'async' parameter value. -->
-      AZC0109; <!-- Temporary disabled: Misuse of 'async' parameter. -->
-      AZC0110; <!-- Temporary disabled: DO NOT use await keyword in possibly synchronous scope. -->
-      AZC0111; <!-- Temporary disabled: DO NOT use EnsureCompleted in possibly asynchronous scope. -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

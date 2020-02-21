@@ -1118,7 +1118,17 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
-                        await ActiveLoadBalancingTask.ConfigureAwait(false);
+                        if (async)
+                        {
+                            await ActiveLoadBalancingTask.ConfigureAwait(false);
+                        }
+                        else
+                        {
+#pragma warning disable AZC0102
+                            ActiveLoadBalancingTask.GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+                        }
+
                     }
                     catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
                     {
@@ -1140,15 +1150,20 @@ namespace Azure.Messaging.EventHubs
                     if (async)
                     {
                         await Task.WhenAll(stopPartitionProcessingTasks).ConfigureAwait(false);
+
+                        // Stop the LoadBalancer.
+                        await LoadBalancer.RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
                         Task.WaitAll(stopPartitionProcessingTasks);
+
+                        // Stop the LoadBalancer.
+#pragma warning disable AZC0102
+                        LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
                     }
 
-                    // Stop the LoadBalancer.
-
-                    await LoadBalancer.RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                     // would have a race condition where the user could update the processing handlers while some pumps are still running.

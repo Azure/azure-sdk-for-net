@@ -52,13 +52,17 @@ namespace Azure.Core.Pipeline
 
         public static ConfiguredValueTaskAwaitable<T> EnsureCompleted<T>(this ConfiguredValueTaskAwaitable<T> task, bool async)
         {
+#pragma warning disable AZC0109
             Debug.Assert(async || task.GetAwaiter().IsCompleted);
+#pragma warning restore AZC0109
             return task;
         }
 
         public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable task, bool async)
         {
+#pragma warning disable AZC0109
             Debug.Assert(async || task.GetAwaiter().IsCompleted);
+#pragma warning restore AZC0109
             return task;
         }
 
