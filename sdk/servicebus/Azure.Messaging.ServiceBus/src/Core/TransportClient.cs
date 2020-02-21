@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -41,7 +40,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <param name="amqpRequestMessage"></param>
         /// <param name="timeout"></param>
-        public abstract Task ExecuteRequestResponseAsync(
+        /// <returns></returns>
+        internal abstract Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
             AmqpRequestMessage amqpRequestMessage,
             TimeSpan timeout);
 

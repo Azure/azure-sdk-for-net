@@ -7,11 +7,9 @@ using System.Diagnostics;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 
@@ -169,24 +167,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="amqpRequestMessage"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
         internal override async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
            AmqpRequestMessage amqpRequestMessage,
            TimeSpan timeout)
         {
             var amqpMessage = amqpRequestMessage.AmqpMessage;
-            if (IsSessionReceiver)
-            {
-                this.ThrowIfSessionLockLost();
-            }
 
             ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-            var ambientTransaction = Transaction.Current;
-            if (ambientTransaction != null)
-            {
-                //   transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
-            }
+            //var ambientTransaction = Transaction.Current;
+            //if (ambientTransaction != null)
+            //{
+            //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+            //}
 
-            if (! ManagementLink.TryGetOpenedObject(out var requestResponseAmqpLink))
+            if (!ManagementLink.TryGetOpenedObject(out var requestResponseAmqpLink))
             {
                 // MessagingEventSource.Log.CreatingNewLink(this.ClientId, this.isSessionReceiver, this.SessionIdInternal, true, this.LinkException);
                 requestResponseAmqpLink = await ManagementLink.GetOrCreateAsync(timeout).ConfigureAwait(false);

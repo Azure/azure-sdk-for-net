@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -108,8 +107,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         internal readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
-
-        internal Exception LinkException { get; set; }
 
         ///// <summary>
         /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
@@ -380,6 +377,104 @@ namespace Azure.Messaging.ServiceBus.Core
             IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceInternal(null).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<ServiceBusMessage> PeekBySequenceAsync(
+            long fromSequenceNumber,
+            CancellationToken cancellationToken = default)
+        {
+            var result = PeekRangeBySequenceAsync(fromSequenceNumber: fromSequenceNumber).GetAsyncEnumerator();
+            await result.MoveNextAsync().ConfigureAwait(false);
+            return result.Current;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="maxMessages"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekRangeAsync(
+            int maxMessages,
+            [EnumeratorCancellation]
+            CancellationToken cancellationToken = default)
+        {
+            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(fromSequenceNumber: null, maxMessages);
+            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
+            {
+                yield return msg;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="maxMessages"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceAsync(
+            long fromSequenceNumber,
+            int maxMessages = 1,
+            [EnumeratorCancellation]
+            CancellationToken cancellationToken = default)
+        {
+            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(
+                fromSequenceNumber: fromSequenceNumber,
+                maxMessages: maxMessages,
+                cancellationToken: cancellationToken);
+            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
+            {
+                yield return msg;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="maxMessages"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceInternal(
+            long? fromSequenceNumber,
+            int maxMessages = 1,
+            [EnumeratorCancellation]
+            CancellationToken cancellationToken = default)
+        {
+            if (IsSessionReceiver)
+            {
+                // if this is a session receiver, the receive link must be open in order to peek messages
+                await RetryPolicy.RunOperation(
+                    async (timeout) => await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+            }
+
+            string receiveLinkName = "";
+            if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
+            {
+                receiveLinkName = link.Name;
+            }
+
+            foreach (ServiceBusMessage message in await Connection.PeekAsync(
+                RetryPolicy,
+                fromSequenceNumber,
+                maxMessages,
+                await Session.GetSessionId().ConfigureAwait(false),
+                receiveLinkName,
+                cancellationToken)
+                .ConfigureAwait(false))
+            {
+                yield return message;
+            }
         }
 
         /// <summary>
@@ -728,7 +823,7 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             if (IsSessionReceiver)
             {
-                ThrowIfSessionLockLost();
+                // TODO -  ThrowIfSessionLockLost();
             }
 
             List<ArraySegment<byte>> deliveryTags = this.ConvertLockTokensToDeliveryTags(lockTokens);
@@ -737,11 +832,11 @@ namespace Azure.Messaging.ServiceBus.Core
             try
             {
                 ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-                var ambientTransaction = Transaction.Current;
-                if (ambientTransaction != null)
-                {
-                    // transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
-                }
+                //var ambientTransaction = Transaction.Current;
+                //if (ambientTransaction != null)
+                //{
+                //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+                //}
 
                 if (!Consumer.ReceiveLink.TryGetOpenedObject(out receiveLink))
                 {
@@ -867,10 +962,15 @@ namespace Azure.Messaging.ServiceBus.Core
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
                 }
 
-                // var amqpResponseMessage = await Connection.ExecuteRequestResponseAsync(amqpRequestMessage, timeout).ConfigureAwait(false);
-                // if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+                if (IsSessionReceiver)
                 {
-                   // throw amqpResponseMessage.ToMessagingContractException();
+                    // TODO -  ThrowIfSessionLockLost();
+                }
+
+                var amqpResponseMessage = await Connection.ExecuteRequestResponseAsync(amqpRequestMessage, timeout).ConfigureAwait(false);
+                if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+                {
+                    // throw amqpResponseMessage.ToMessagingContractException();
                 }
             }
             catch (Exception)
@@ -890,14 +990,6 @@ namespace Azure.Messaging.ServiceBus.Core
             if (this.ReceiveMode != ReceiveMode.PeekLock)
             {
                 throw new InvalidOperationException(Resources1.OperationNotSupported);
-            }
-        }
-
-        internal void ThrowIfSessionLockLost()
-        {
-            if (this.LinkException != null)
-            {
-                throw this.LinkException;
             }
         }
 
@@ -976,104 +1068,6 @@ namespace Azure.Messaging.ServiceBus.Core
             }
 
             return rejected;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<ServiceBusMessage> PeekBySequenceAsync(
-            long fromSequenceNumber,
-            CancellationToken cancellationToken = default)
-        {
-            var result = PeekRangeBySequenceAsync(fromSequenceNumber: fromSequenceNumber).GetAsyncEnumerator();
-            await result.MoveNextAsync().ConfigureAwait(false);
-            return result.Current;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekRangeAsync(
-            int maxMessages,
-            [EnumeratorCancellation]
-            CancellationToken cancellationToken = default)
-        {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(fromSequenceNumber: null, maxMessages);
-            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
-            {
-                yield return msg;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceAsync(
-            long fromSequenceNumber,
-            int maxMessages = 1,
-            [EnumeratorCancellation]
-            CancellationToken cancellationToken = default)
-        {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(
-                fromSequenceNumber: fromSequenceNumber,
-                maxMessages: maxMessages,
-                cancellationToken: cancellationToken);
-            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
-            {
-                yield return msg;
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceInternal(
-            long? fromSequenceNumber,
-            int maxMessages = 1,
-            [EnumeratorCancellation]
-            CancellationToken cancellationToken = default)
-        {
-            if (IsSessionReceiver)
-            {
-                // if this is a session receiver, the receive link must be open in order to peek messages
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-                    EntityName,
-                    Consumer.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-
-            string receiveLinkName = "";
-            if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
-            {
-                receiveLinkName = link.Name;
-            }
-
-            foreach (ServiceBusMessage message in await Connection.PeekAsync(
-                RetryPolicy,
-                fromSequenceNumber,
-                maxMessages,
-                await Session.GetSessionId().ConfigureAwait(false),
-                receiveLinkName,
-                cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return message;
-            }
         }
 
         /// <summary>
