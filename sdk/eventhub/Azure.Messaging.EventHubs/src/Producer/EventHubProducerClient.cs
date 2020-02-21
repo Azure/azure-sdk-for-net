@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     return;
                 }
                 catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                    && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
+                                                                   && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
                 {
                     if (++attempts >= MaximumCreateProducerAttempts)
                     {
