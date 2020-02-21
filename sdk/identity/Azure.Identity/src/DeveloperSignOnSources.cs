@@ -9,7 +9,7 @@ namespace Azure.Identity
     /// Developer tools which can be used to obtain credentials to authenticate requests.
     /// </summary>
     [Flags]
-    public enum DeveloperSignOnSources
+    internal enum DeveloperSignOnSources
     {
         /// <summary>
         /// The Azure Cli. See https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest for installation instructions and documentation.

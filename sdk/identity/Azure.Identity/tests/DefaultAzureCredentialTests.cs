@@ -152,7 +152,7 @@ namespace Azure.Identity.Tests
             bool interactiveBrowserCredentialIncluded = false;
 
             credFactory.OnCreateEnvironmentCredential = (_) => environmentCredentialIncluded = true;
-            credFactory.OnCreateCliCredential = (_) => cliCredentialIncluded = true;
+            credFactory.OnCreateDeveloperCredential = (_) => cliCredentialIncluded = true;
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) => interactiveBrowserCredentialIncluded = true;
             credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
             {
@@ -214,7 +214,7 @@ namespace Azure.Identity.Tests
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("SharedTokenCacheCredential Unavailable"); };
             };
-            credFactory.OnCreateCliCredential = (c) =>
+            credFactory.OnCreateDeveloperCredential = (c) =>
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("CliCredential Unavailable"); };
             };
@@ -301,17 +301,17 @@ namespace Azure.Identity.Tests
                     }
                 };
             };
-            credFactory.OnCreateCliCredential = (c) =>
+            credFactory.OnCreateDeveloperCredential = (c) =>
             {
-                ((MockExtendedTokenCredential)c).TokenFactory = (context, cancel) =>
+                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
                 {
                     if (exPossition > 3)
                     {
-                        return new ExtendedAccessToken(new CredentialUnavailableException("CliCredential Unavailable"));
+                        throw new CredentialUnavailableException("CliCredential Unavailable");
                     }
                     else
                     {
-                        return new ExtendedAccessToken(new MockClientException("CliCredential unhandled exception"));
+                        throw new MockClientException("CliCredential unhandled exception");
                     }
                 };
             };

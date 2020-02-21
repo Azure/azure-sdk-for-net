@@ -4,21 +4,77 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Text.Json;
+using System.IO;
+using System.Collections.Generic;
+using Azure.Core;
+using System.Globalization;
+using System;
+using System.Text.RegularExpressions;
 
 namespace Azure.Identity
 {
     internal class AzureCliCredentialClient
     {
-        public virtual (string, int) GetAzureCliAccesToken(string resource)
+        private const string AzureCLINotInstalled = "Azure Cli not installed";
+        private const string AzNotLogIn = "Please run 'az login' to setup account";
+        private const string WinAzureCLIError = "'az' is not recognized";
+        private const string AzureCliTimeoutError = "Azure Cli authentication timed out.";
+
+        private const int CliProcessTImeoutMs = 10000;
+
+        public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
+        {
+            return RequestCliAccessTokenAsync(false, scopes, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        public virtual async ValueTask<AccessToken> RequestCliAccessTokenAsync(string[] scopes, CancellationToken cancellationToken)
+        {
+            return await RequestCliAccessTokenAsync(true, scopes, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool isAsync, string[] scopes, CancellationToken cancellationToken)
+        {
+            string resource = ScopeUtilities.ScopesToResource(scopes);
+
+            ScopeUtilities.ValidateScope(resource);
+
+            (string output, int exitCode) = isAsync ? await GetAzureCliAccesToken(true, resource, cancellationToken).ConfigureAwait(false) : GetAzureCliAccesToken(false, resource, cancellationToken).GetAwaiter().GetResult();
+
+            if (exitCode != 0)
+            {
+                bool isLoginError = output.StartsWith("Please run 'az login'", StringComparison.CurrentCultureIgnoreCase);
+                bool isWinError = output.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
+                string pattter = "az:(.*)not found";
+                bool isOtherOsError = Regex.IsMatch(output, pattter);
+
+                if (isWinError || isOtherOsError)
+                {
+                    throw new CredentialUnavailableException(AzureCLINotInstalled);
+                }
+                else if (isLoginError)
+                {
+                    throw new CredentialUnavailableException(AzNotLogIn);
+                }
+
+                throw new AuthenticationFailedException(output);
+            }
+
+            byte[] byteArrary = Encoding.ASCII.GetBytes(output);
+
+            using MemoryStream stream = new MemoryStream(byteArrary);
+
+            return isAsync ? await AccessTokenUtilities.DeserializeAsync(stream, cancellationToken).ConfigureAwait(false) : AccessTokenUtilities.Deserialize(stream);
+        }
+
+        protected virtual async ValueTask<(string, int)> GetAzureCliAccesToken(bool isAsync, string resource, CancellationToken cancellationToken)
         {
             string command = $"az account get-access-token --output json --resource {resource}";
 
             string fileName = string.Empty;
             string argument = string.Empty;
-            int exitCode = default;
-
-            StringBuilder stdOutput = new StringBuilder();
-            StringBuilder stdError = new StringBuilder();
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -31,17 +87,28 @@ namespace Azure.Identity
                 argument = $"-c \"{command}\"";
             }
 
+            ProcessStartInfo procStartInfo = new ProcessStartInfo()
+            {
+                FileName = fileName,
+                Arguments = argument,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
+            return isAsync ? await RunProcessAsync(isAsync, procStartInfo, cancellationToken).ConfigureAwait(false) : RunProcessAsync(isAsync, procStartInfo, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        private static async ValueTask<(string, int)> RunProcessAsync(bool isAsync, ProcessStartInfo procStartInfo, CancellationToken cancellationToken)
+        {
+            int exitCode = default;
+            StringBuilder stdOutput = new StringBuilder();
+            StringBuilder stdError = new StringBuilder();
+            bool completed;
+
             using (Process proc = new Process())
             {
-                ProcessStartInfo procStartInfo = new ProcessStartInfo()
-                {
-                    FileName = fileName,
-                    Arguments = argument,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
-                };
 
                 proc.StartInfo = procStartInfo;
                 proc.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
@@ -50,7 +117,17 @@ namespace Azure.Identity
                 proc.Start();
                 proc.BeginOutputReadLine();
                 proc.BeginErrorReadLine();
-                proc.WaitForExit();
+
+                completed = isAsync ? await Task.Run(() => proc.WaitForExit(CliProcessTImeoutMs), cancellationToken).ConfigureAwait(false) : proc.WaitForExit(CliProcessTImeoutMs);
+
+                if (!completed)
+                {
+                    proc.CancelOutputRead();
+
+                    proc.CancelErrorRead();
+
+                    throw new AuthenticationFailedException(AzureCliTimeoutError);
+                }
 
                 exitCode = proc.ExitCode;
             }
@@ -64,5 +141,7 @@ namespace Azure.Identity
                 return (stdOutput.ToString(), exitCode);
             }
         }
+
+
     }
 }

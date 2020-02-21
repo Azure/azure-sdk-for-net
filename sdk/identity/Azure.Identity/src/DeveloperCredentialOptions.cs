@@ -12,11 +12,21 @@ namespace Azure.Identity
     /// </summary>
     public class DeveloperCredentialOptions : TokenCredentialOptions
     {
-        public DeveloperCredentialOptions(DeveloperSignOnSources sources)
+        /// <summary>
+        /// Specifies if the <see cref="AzureCliCredential"/> should be excluded from the <see cref="DeveloperCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeCliCredential
         {
-            Sources = sources;
+            get
+            {
+                return (ExcludedSources & DeveloperSignOnSources.AzureCli) == DeveloperSignOnSources.AzureCli;
+            }
+            set
+            {
+                ExcludedSources |= DeveloperSignOnSources.AzureCli;
+            }
         }
 
-        public DeveloperSignOnSources Sources { get; }
+        internal DeveloperSignOnSources ExcludedSources { get; private set; }
     }
 }

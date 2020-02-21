@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests.Mock
 {
@@ -16,9 +18,9 @@ namespace Azure.Identity.Tests.Mock
             _resultGenerator = resultGenerator;
         }
 
-        public override (string, int) GetAzureCliAccesToken(string resource)
+        protected override ValueTask<(string, int)> GetAzureCliAccesToken(bool isAsync, string resource, CancellationToken cancellationToken)
         {
-            return _resultGenerator;
+            return new ValueTask<(string, int)>(_resultGenerator);
         }
     }
 }

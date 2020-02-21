@@ -6,10 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Globalization;
-using System.Text.Json;
-using System.Text;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Azure.Identity
@@ -19,11 +15,6 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential
     {
-        private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string AzNotLogIn = "Please run 'az login' to setup account";
-        private const string WinAzureCLIError = "'az' is not recognized";
-        private const string InvalidResourceMessage = "Resource is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
-
         private readonly CredentialPipeline _pipeline;
         private readonly AzureCliCredentialClient _client;
 
@@ -53,7 +44,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -64,56 +55,16 @@ namespace Azure.Identity
         /// <returns></returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.AzureCliCredential.GetToken", requestContext);
 
             try
             {
-                string resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
-                string resourcePatter = "^[0-9a-zA-Z-.:/]+$";
-                bool isResourceMatch = Regex.IsMatch(resource, resourcePatter);
-
-                if (!isResourceMatch)
-                {
-                    throw new Exception(InvalidResourceMessage);
-                }
-
-                (string output, int exitCode) = _client.GetAzureCliAccesToken(resource);
-
-                if (exitCode != 0)
-                {
-                    bool isLoginError = output.StartsWith("Please run 'az login'", StringComparison.CurrentCultureIgnoreCase);
-                    bool isWinError = output.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
-                    string pattter = "az:(.*)not found";
-                    bool isOtherOsError = Regex.IsMatch(output, pattter);
-
-                    if (isWinError || isOtherOsError)
-                    {
-                        throw new AuthenticationFailedException(AzureCLINotInstalled);
-                    }
-                    else if (isLoginError)
-                    {
-                        throw new CredentialUnavailableException(AzNotLogIn);
-                    }
-
-                    throw new CredentialUnavailableException(output);
-                }
-
-                byte[] byteArrary = Encoding.ASCII.GetBytes(output);
-                MemoryStream stream = new MemoryStream(byteArrary);
-
-                Dictionary<string, string> result = await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(stream, null, cancellationToken);
-                result.TryGetValue("accessToken", out string accessToken);
-                result.TryGetValue("expiresOn", out string expiresOnValue);
-
-                string expiresOnFormat = "yyyy-MM-dd HH:mm:ss.ffffff";
-                DateTimeOffset expiresOn = DateTimeOffset.ParseExact(expiresOnValue, expiresOnFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
-
-                AccessToken token = new AccessToken(accessToken, expiresOn);
+                AccessToken token = isAsync ? await _client.RequestCliAccessTokenAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.RequestCliAccessToken(requestContext.Scopes, cancellationToken);
 
                 return scope.Succeeded(token);
             }

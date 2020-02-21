@@ -12,28 +12,27 @@ namespace Azure.Identity
     /// <summary>
     /// A <see cref="TokenCredential"/> implementation to be used in a development environment capable of authenticating through various <see cref="DeveloperSignOnSources"/>.
     /// </summary>
-    public class DeveloperCredential : TokenCredential, IExtendedTokenCredential
+    public class DeveloperCredential : TokenCredential
     {
         private TokenCredential _selected = null;
 
-        private DeveloperSignOnSources _sources;
+        private DeveloperSignOnSources _excludedSources;
         private CredentialPipeline _pipeline;
 
         /// <summary>
         /// Creates a new <see cref="DeveloperCredential"/> instance with the specified sources.
         /// </summary>
-        /// <param name="sources">The sources the <see cref="DeveloperCredential"/> can use to obtain authentication tokens.</param>
         /// <param name="options">The configuration options for the <see cref="DeveloperCredential"/>.</param>
-        public DeveloperCredential(DeveloperSignOnSources sources, DeveloperCredentialOptions options = default)
-            : this(sources, CredentialPipeline.GetInstance(options))
+        public DeveloperCredential(DeveloperCredentialOptions options = default)
+            : this(options, CredentialPipeline.GetInstance(options))
         {
 
         }
 
-        internal DeveloperCredential(DeveloperSignOnSources sources, CredentialPipeline pipeline)
+        internal DeveloperCredential(DeveloperCredentialOptions options, CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
-            _sources = sources;
+            _excludedSources = options?.ExcludedSources ?? 0;
         }
 
         /// <summary>
@@ -58,35 +57,11 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            try
-            {
-                return new ExtendedAccessToken(GetToken(requestContext, cancellationToken));
-            }
-            catch (Exception e)
-            {
-                return new ExtendedAccessToken(e);
-            }
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            try
-            {
-                return new ExtendedAccessToken(await GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                return new ExtendedAccessToken(e);
-            }
-        }
-
         private IEnumerable<TokenCredential> Sources
         {
             get
             {
-                if ((_sources & DeveloperSignOnSources.AzureCli) != 0)
+                if ((_excludedSources & DeveloperSignOnSources.AzureCli) == 0)
                 {
                     yield return new AzureCliCredential();
                 }
@@ -101,7 +76,7 @@ namespace Azure.Identity
             {
                 if (_selected != null)
                 {
-                    return await GetTokenFromCredentialAsync(isAsync, _selected, requestContext, cancellationToken);
+                    return await GetTokenFromCredentialAsync(isAsync, _selected, requestContext, cancellationToken).ConfigureAwait(false);
                 }
 
                 List<Exception> unavailableInner = new List<Exception>(); //new AggregateException("One or more developer sign on sources were unavailable.");
@@ -110,7 +85,7 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AccessToken token = await GetTokenFromCredentialAsync(isAsync, source, requestContext, cancellationToken);
+                        AccessToken token = await GetTokenFromCredentialAsync(isAsync, source, requestContext, cancellationToken).ConfigureAwait(false);
 
                         _selected = source;
 
@@ -140,7 +115,7 @@ namespace Azure.Identity
 
         private static async ValueTask<AccessToken> GetTokenFromCredentialAsync(bool isAsync, TokenCredential credential, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return isAsync ? credential.GetToken(requestContext, cancellationToken) : await credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
+            return isAsync ? await credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : credential.GetToken(requestContext, cancellationToken);
         }
     }
 }

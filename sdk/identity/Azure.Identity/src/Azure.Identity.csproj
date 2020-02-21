@@ -7,7 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Memory" />

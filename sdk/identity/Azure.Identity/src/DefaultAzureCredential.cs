@@ -186,7 +186,7 @@ namespace Azure.Identity
 
             if (!options.ExcludeCliCredential)
             {
-                chain[i++] = factory.CreateCliCredential();
+                chain[i++] = factory.CreateDeveloperCredential();
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)
