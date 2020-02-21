@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     ///   A transport client abstraction responsible for brokering operations for AMQP-based connections.
-    ///   It is intended that the public <see cref="ServiceBusReceiver" /> make use of an instance
+    ///   It is intended that the public <see cref="ServiceBusReceiverClient" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
@@ -80,7 +80,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <inheritdoc/>
         public override TransportConnectionScope ConnectionScope =>
             _connectionScope;
-
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
@@ -300,12 +299,29 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<string> GetSessionId(CancellationToken cancellationToken = default)
+        public override async Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default)
         {
             if (!_isSessionReceiver)
             {
                 return null;
             }
+            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+
+            var source = (Source)openedLink.Settings.Source;
+            source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
+            return sessionId;
+        }
+
+        public override async Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default)
+        {
+            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+            return openedLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
+            ? new DateTimeOffset(lockedUntilUtcTicks, TimeSpan.Zero)
+            : DateTimeOffset.MinValue;
+        }
+
+        private async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken)
+        {
             ReceivingAmqpLink openedLink = null;
             await _retryPolicy.RunOperation(
                 async (timeout) =>
@@ -313,10 +329,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 EntityName,
                 ConnectionScope,
                 cancellationToken).ConfigureAwait(false);
-
-            var source = (Source)openedLink.Settings.Source;
-            source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
-            return sessionId;
+            return openedLink;
         }
 
     }

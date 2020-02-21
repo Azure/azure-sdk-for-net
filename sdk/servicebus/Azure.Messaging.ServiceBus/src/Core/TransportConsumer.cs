@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
     ///   Provides an abstraction for generalizing an Event Consumer so that a dedicated instance may provide operations
-    ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusReceiver" /> employ
+    ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusReceiverClient" /> employ
     ///   a transport consumer via containment and delegate operations to it rather than understanding protocol-specific details
     ///   for different transports.
     /// </summary>
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Core
             CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Closes the connection to the transport producer instance.
+        ///   Closes the connection to the transport consumer instance.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -71,7 +71,14 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<string> GetSessionId(CancellationToken cancellationToken = default);
+        public abstract Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get the DateTimeOffset for when the session is locked until.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default);
 
     }
 }
