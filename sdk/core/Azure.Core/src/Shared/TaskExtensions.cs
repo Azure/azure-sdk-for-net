@@ -50,26 +50,27 @@ namespace Azure.Core.Pipeline
 #pragma warning restore AZC0102
         }
 
-        public static ConfiguredValueTaskAwaitable<T> EnsureCompleted<T>(this ConfiguredValueTaskAwaitable<T> task, bool async)
+        public static ConfiguredValueTaskAwaitable<T> EnsureCompleted<T>(this ConfiguredValueTaskAwaitable<T> awaitable, bool async)
         {
-#if DEBUG
             if (!async)
             {
-                VerifyTaskCompleted(task.GetAwaiter().IsCompleted);
-            }
+#if DEBUG
+                VerifyTaskCompleted(awaitable.GetAwaiter().IsCompleted);
 #endif
-            return task;
+            }
+            return awaitable;
         }
 
-        public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable task, bool async)
+        public static ConfiguredValueTaskAwaitable EnsureCompleted(this ConfiguredValueTaskAwaitable awaitable, bool async)
         {
-#if DEBUG
+
             if (!async)
             {
-                VerifyTaskCompleted(task.GetAwaiter().IsCompleted);
-            }
+#if DEBUG
+                VerifyTaskCompleted(awaitable.GetAwaiter().IsCompleted);
 #endif
-            return task;
+            }
+            return awaitable;
         }
 
         [Conditional("DEBUG")]
