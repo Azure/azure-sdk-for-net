@@ -558,6 +558,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
         }
 
+        [Test]
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]
