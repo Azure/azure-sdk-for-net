@@ -61,12 +61,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var storageAccount = StorageTestEnvironment.StorageAccountName;
-            var token = await ResourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
             var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription };
 
             try
             {
-                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.DeleteAsync(resourceGroup, storageAccount, ContainerName));
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.DeleteAsync(resourceGroup, storageAccount, ContainerName)).ConfigureAwait(false);
             }
             catch
             {
@@ -100,13 +100,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var storageAccount = StorageTestEnvironment.StorageAccountName;
-            var token = await ResourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
             using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription })
             {
-                BlobContainer container = await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.CreateAsync(resourceGroup, storageAccount, CreateName(), PublicAccess.None));
+                BlobContainer container = await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.CreateAsync(resourceGroup, storageAccount, CreateName(), PublicAccess.None)).ConfigureAwait(false);
                 return new StorageScope(container.Name);
             }
         }
@@ -118,44 +118,24 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         /// <returns>The key attributes for identifying and accessing a dynamically created Azure storage account.</returns>
         ///
-        public static async Task<StorageProperties> CreateStorageAccountAsync()
+        public static async Task<StorageTestEnvironment.StorageProperties> CreateStorageAccountAsync()
         {
             var subscription = TestEnvironment.EventHubsSubscription;
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
-            var token = await ResourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
 
             static string CreateName() => $"neteventhubs{ Guid.NewGuid().ToString("N").Substring(0, 12) }";
 
             using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
-                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
+                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription).ConfigureAwait(false);
                 var sku = new Sku(SkuName.StandardLRS, SkuTier.Standard);
                 var parameters = new StorageAccountCreateParameters(sku, Kind.BlobStorage, location: location, tags: ResourceManager.GenerateTags(), accessTier: AccessTier.Hot);
-                StorageAccount storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
+                StorageAccount storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters)).ConfigureAwait(false);
 
-                StorageAccountListKeysResult storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
-                return new StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net", wasStorageAccountCreated: true);
+                StorageAccountListKeysResult storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name)).ConfigureAwait(false);
+                return new StorageTestEnvironment.StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net", shouldRemoveAtCompletion: true);
             }
-        }
-
-        /// <summary>
-        ///   It creates an instance of <see cref="StorageProperties"/>, populates it from a connection string and returns it.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string from the existing Azure storage account.</param>
-        ///
-        /// <returns>The <see cref="StorageProperties" /> that will be used in a given test run.</returns>
-        ///
-        /// <exception cref="ArgumentException">Occurs when <param name="connectionString"/> holds an invalid connection string.</exception>
-        ///
-        public static StorageProperties PopulateStoragePropertiesFromConnectionString(string connectionString)
-        {
-            if (IsConnectionStringValid(connectionString, out string name))
-            {
-                return new StorageProperties(name, connectionString, wasStorageAccountCreated: false);
-            }
-
-            throw new ArgumentException("An account name could not be found in the passed connection string");
         }
 
         /// <summary>
@@ -169,63 +149,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var subscription = TestEnvironment.EventHubsSubscription;
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
-            var token = await ResourceManager.AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
 
             using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
-                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName));
-            }
-        }
-
-        /// <summary>
-        ///   It checks if the connection string contains a valid Azure storage account name.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string.</param>
-        /// <param name="name">The Azure storage account name taken from the connection string.</param>
-        ///
-        /// <returns>
-        ///   <c>true</c> if the connection string is a valid connection string; otherwise, <c>false</c>.
-        /// </returns>
-        ///
-        private static bool IsConnectionStringValid(string connectionString, out string name)
-        {
-            name = ConnectionStringTokenParser.ParseTokenAndReturnValue(connectionString, "AccountName");
-
-            return !string.IsNullOrEmpty(name);
-        }
-
-        /// <summary>
-        ///   The key attributes for identifying and accessing a dynamically created Azure storage account,
-        ///   intended to serve as an ephemeral container for the checkpoints created during a test run.
-        /// </summary>
-        ///
-        public struct StorageProperties
-        {
-            /// <summary>The name of the Azure storage account that was dynamically created.</summary>
-            public readonly string Name;
-
-            /// <summary>The connection string to use for accessing the Azure storage account.</summary>
-            public readonly string ConnectionString;
-
-            /// <summary>Flags whether the storage account was created for the current test run or was retrieved from environment variables.</summary>
-            public readonly bool WasStorageAccountCreated;
-
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="StorageProperties"/> struct.
-            /// </summary>
-            ///
-            /// <param name="name">The name of the storage account.</param>
-            /// <param name="connectionString">The connection string to use for accessing the Azure storage account.</param>
-            /// <param name="wasStorageAccountCreated">Sets whether the storage account was created or read from environment variables.</param>
-            ///
-            internal StorageProperties(string name,
-                                       string connectionString,
-                                       bool wasStorageAccountCreated)
-            {
-                Name = name;
-                ConnectionString = connectionString;
-                WasStorageAccountCreated = wasStorageAccountCreated;
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.StorageAccounts.DeleteAsync(resourceGroup, accountName)).ConfigureAwait(false);
             }
         }
     }

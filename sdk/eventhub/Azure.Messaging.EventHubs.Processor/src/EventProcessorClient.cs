@@ -709,6 +709,7 @@ namespace Azure.Messaging.EventHubs
 
             await using var connectionAwaiter = connection.ConfigureAwait(false);
             await using var consumerAwaiter = consumer.ConfigureAwait(false);
+
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
                 using DiagnosticScope diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
