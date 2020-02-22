@@ -82,12 +82,9 @@ namespace Azure.Core.Pipeline
                 {
                     Debugger.Break();
                 }
-                else
-                {
-                    // Throw an InvalidOperationException instead of using
-                    // Debug.Assert because that brings down nUnit immediately
-                    throw new InvalidOperationException("Task is not completed");
-                }
+                // Throw an InvalidOperationException instead of using
+                // Debug.Assert because that brings down nUnit immediately
+                throw new InvalidOperationException("Task is not completed");
             }
         }
     }
