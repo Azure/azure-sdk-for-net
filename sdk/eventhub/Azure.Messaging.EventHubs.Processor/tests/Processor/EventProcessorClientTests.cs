@@ -526,7 +526,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // we'll try calling StartProcessingAsync again and make sure no other task has started by monitoring
             // CreateConsumer calls.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(
@@ -787,7 +787,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Wait until processing has started before stopping the processor. This way we can ensure the closing
             // handler will be triggered.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessEventAsync += eventArgs =>
             {
@@ -866,7 +866,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(partitionIds));
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var partitionsBeingProcessed = 0;
 
             // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed.
@@ -936,7 +936,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingAsyncShouldSurfaceBackgroundRunningTaskException()
         {
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(
@@ -1053,7 +1053,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var isProcessEventHandlerInvoked = false;
 
             mockProcessor.ProcessEventAsync += eventArgs =>
@@ -1078,7 +1078,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.StopProcessingAsync(cancellationSource.Token);
 
             isProcessEventHandlerInvoked = false;
-            completionSource = new TaskCompletionSource<bool>();
+            completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
             Assert.That(mockProcessor.IsRunning, Is.False);
@@ -1371,7 +1371,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task IsRunningReturnsFalseWhenLoadBalancingTaskFails()
         {
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             // This should be called right before the first load balancing cycle.
 
@@ -1465,7 +1465,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(partitionIds));
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var partitionsBeingProcessed = 0;
 
             // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed.
@@ -1551,7 +1551,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Keep track of how many times we call the init handler. If we call it for a second time,
             // it means a new processing task has started.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var initHandlerCalls = 0;
             var capturedPartitionId = default(string);
 
@@ -1607,7 +1607,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // We'll wait until the init handler is called and capture its token.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var capturedToken = default(CancellationToken);
 
             mockProcessor.PartitionInitializingAsync += eventArgs =>
@@ -1661,7 +1661,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(partitionIds));
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var partitionsBeingProcessed = 0;
 
             // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed.
@@ -1749,7 +1749,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(partitionIds));
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var partitionsBeingProcessed = 0;
 
             // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed. If the partition is faulted,
@@ -1846,7 +1846,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // We'll wait until the closing handler is called. If it's called before we stop
             // the processor, it means the failed task has stopped as expected.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var capturedEventArgs = default(PartitionClosingEventArgs);
 
             mockProcessor.PartitionClosingAsync += eventArgs =>
@@ -1906,7 +1906,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // We'll wait until the closing handler is called and capture its token.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var capturedToken = default(CancellationToken);
 
             mockProcessor.PartitionClosingAsync += eventArgs =>
@@ -1970,7 +1970,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var emptyEventArgs = default(ProcessEventArgs);
 
             mockProcessor.ProcessEventAsync += eventArgs =>
@@ -2093,7 +2093,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             var processEventTriggerCount = 0;
 
@@ -2146,7 +2146,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // We'll wait until the process handler is called and capture its token.
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var capturedToken = default(CancellationToken);
 
             mockProcessor.ProcessEventAsync += eventArgs =>
@@ -2222,7 +2222,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             var capturedEventArgs = default(ProcessErrorEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
@@ -2304,7 +2304,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             var capturedEventArgs = default(ProcessErrorEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
@@ -2370,7 +2370,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             var capturedEventArgs = default(ProcessErrorEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
@@ -2427,7 +2427,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             var capturedEventArgs = default(ProcessErrorEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
@@ -2495,7 +2495,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             var capturedEventArgs = default(ProcessErrorEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
@@ -2556,7 +2556,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             var capturedEventArgs = default(ProcessErrorEventArgs);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
@@ -2630,7 +2630,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedExceptionReference);
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             // We can stop processing once the partition has been claimed.
 
@@ -2716,7 +2716,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedExceptionReference);
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var capturedException = default(Exception);
 
             mockProcessor.ProcessEventAsync += async eventArgs =>
@@ -2781,7 +2781,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Task.FromResult(new[] { "0" }));
 
             var expectedExceptionReference = new Exception();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.PartitionInitializingAsync += eventArgs =>
             {
@@ -2856,7 +2856,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token));
 
             var expectedExceptionReference = new Exception();
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessEventAsync += eventArgs =>
             {
@@ -2935,7 +2935,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += async eventArgs =>
             {
@@ -2984,7 +2984,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessErrorAsync += async eventArgs =>
             {
@@ -3019,7 +3019,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockStorage
                 .Checkpoints.Add((fqNamespace, eventHub, consumerGroup, partitionId), checkpoint);
@@ -3075,7 +3075,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockConsumer
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
@@ -3144,7 +3144,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var emptyEventArgs = default(ProcessEventArgs);
 
             mockProcessor.ProcessEventAsync += eventArgs =>
@@ -3199,7 +3199,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            var completionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockProcessor.ProcessEventAsync += eventArgs =>
             {
