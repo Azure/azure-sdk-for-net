@@ -89,9 +89,24 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         IRunsOperations Runs { get; }
 
         /// <summary>
+        /// Gets the ITaskRunsOperations.
+        /// </summary>
+        ITaskRunsOperations TaskRuns { get; }
+
+        /// <summary>
         /// Gets the ITasksOperations.
         /// </summary>
         ITasksOperations Tasks { get; }
+
+        /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        IScopeMapsOperations ScopeMaps { get; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        ITokensOperations Tokens { get; }
 
     }
 }
