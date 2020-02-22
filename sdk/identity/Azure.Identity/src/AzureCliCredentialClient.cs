@@ -18,10 +18,10 @@ namespace Azure.Identity
 {
     internal class AzureCliCredentialClient
     {
-        private const string AzureCLINotInstalled = "Azure Cli not installed";
+        private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to setup account";
         private const string WinAzureCLIError = "'az' is not recognized";
-        private const string AzureCliTimeoutError = "Azure Cli authentication timed out.";
+        private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
 
         private const int CliProcessTImeoutMs = 10000;
 

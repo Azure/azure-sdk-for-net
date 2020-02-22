@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -39,10 +40,12 @@ namespace Azure.Identity
                 switch (prop.Name)
                 {
                     case "access_token":
+                    case "accessToken":
                         accessToken = prop.Value.GetString();
                         break;
 
                     case "expires_in":
+                    case "expiresIn":
                         expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(prop.Value.GetInt64());
                         break;
 
@@ -50,6 +53,14 @@ namespace Azure.Identity
                         if (expiresOn == DateTimeOffset.MaxValue)
                         {
                             expiresOn = prop.Value.GetDateTimeOffset();
+                        }
+                        break;
+                    case "expiresOn":
+                        if (expiresOn == DateTimeOffset.MaxValue)
+                        {
+                            var expiresOnStr = prop.Value.GetString();
+
+                            expiresOn = DateTimeOffset.ParseExact(expiresOnStr, "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
                         }
                         break;
                 }
