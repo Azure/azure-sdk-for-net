@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -24,18 +25,15 @@ namespace Azure.Storage.Files.Shares.Models
         public override async ValueTask<Page<ShareFileItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<FilesAndDirectoriesSegment>> task = _client.GetFilesAndDirectoriesInternal(
+            Response<FilesAndDirectoriesSegment> response = await _client.GetFilesAndDirectoriesInternal(
                 continuationToken,
                 _prefix,
                 pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<FilesAndDirectoriesSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             var items = new List<ShareFileItem>();
             items.AddRange(response.Value.DirectoryItems.Select(d => new ShareFileItem(true, d.Name)));

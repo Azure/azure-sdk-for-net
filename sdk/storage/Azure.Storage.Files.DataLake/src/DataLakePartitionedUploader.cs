@@ -261,8 +261,9 @@ namespace Azure.Storage.Files.DataLake
                 // calculate offsets for the next appends, and the final
                 // position to flush
                 long appendedBytes = 0;
-
+#pragma warning disable AZC0107
                 while (enumerator.MoveNextAsync().EnsureCompleted())
+#pragma warning restore AZC0107
                 {
                     // Dispose the block after the loop iterates and return its
                     // memory to our ArrayPool

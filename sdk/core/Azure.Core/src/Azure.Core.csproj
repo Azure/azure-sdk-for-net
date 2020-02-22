@@ -31,5 +31,6 @@
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
+    <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
 </Project>
