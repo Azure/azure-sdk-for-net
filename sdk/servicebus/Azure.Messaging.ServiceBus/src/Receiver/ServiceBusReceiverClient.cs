@@ -397,7 +397,16 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> result = await PeekBatchBySequenceInternalAsync(null).ConfigureAwait(false);
+            IEnumerable<ServiceBusMessage> result = null;
+            await RetryPolicy.RunOperation(
+                    async (timeout) =>
+                    {
+                        result = await PeekBatchBySequenceInternalAsync(timeout, null).ConfigureAwait(false);
+                    },
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+
             foreach (ServiceBusMessage message in result)
             {
                 return message;
@@ -433,8 +442,21 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages,
             CancellationToken cancellationToken = default)
         {
-            return await PeekBatchBySequenceInternalAsync(fromSequenceNumber: null, maxMessages)
-                .ConfigureAwait(false);
+            IEnumerable<ServiceBusMessage> messages = null;
+            await RetryPolicy.RunOperation(
+                    async (timeout) =>
+                    {
+                        messages = await PeekBatchBySequenceInternalAsync(
+                            timeout,
+                            fromSequenceNumber: null,
+                            maxMessages)
+                            .ConfigureAwait(false);
+                    },
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+
+            return messages;
         }
 
         /// <summary>
@@ -449,37 +471,51 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages = 1,
             CancellationToken cancellationToken = default)
         {
-            return await PeekBatchBySequenceInternalAsync(
-                fromSequenceNumber: fromSequenceNumber,
-                maxMessages: maxMessages,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            IEnumerable<ServiceBusMessage> messages = null;
+            await RetryPolicy.RunOperation(
+                    async (timeout) =>
+                    {
+                        messages = await PeekBatchBySequenceInternalAsync(
+                            timeout,
+                            fromSequenceNumber: fromSequenceNumber,
+                            maxMessages: maxMessages)
+                            .ConfigureAwait(false);
+                    },
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+
+            return messages;
         }
 
         /// <summary>
         ///
         /// </summary>
+        /// <param name="timeout"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<IEnumerable<ServiceBusMessage>> PeekBatchBySequenceInternalAsync(
+            TimeSpan timeout,
             long? fromSequenceNumber,
             int maxMessages = 1,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default
+            )
         {
             if (IsSessionReceiver)
             {
                 // if this is a session receiver, the receive link must be open in order to peek messages
-                await Consumer.GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+                await Consumer.GetOrCreateLinkAsync(timeout).ConfigureAwait(false);
             }
 
             string receiveLinkName = Consumer.GetReceiveLinkName();
 
             return await Connection.PeekAsync(
-                RetryPolicy,
+                timeout,
                 fromSequenceNumber,
                 maxMessages,
-                await Session.GetSessionIdAsync().ConfigureAwait(false),
+                await Session.GetSessionIdAsync(cancellationToken).ConfigureAwait(false),
                 receiveLinkName,
                 cancellationToken)
                 .ConfigureAwait(false);

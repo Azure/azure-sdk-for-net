@@ -100,7 +100,8 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///
         /// </summary>
-        internal abstract Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken);
+        /// <param name="timeout"></param>
+        internal abstract Task<ReceivingAmqpLink> GetOrCreateLinkAsync(TimeSpan timeout);
 
     }
 }

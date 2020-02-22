@@ -172,44 +172,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///
         /// </summary>
-        /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
         /// <param name="receiveLinkName"></param>
+        /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            ServiceBusRetryPolicy retryPolicy,
+            TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
             string receiveLinkName = null,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> messages = null;
-            Task peekTask = retryPolicy.RunOperation(async (timeout) =>
-            {
-                messages = await PeekInternal(
-                    retryPolicy,
+            IEnumerable<ServiceBusMessage> messages = await PeekInternal(
                     fromSequenceNumber,
                     messageCount,
                     sessionId,
                     receiveLinkName,
                     timeout,
                     cancellationToken).ConfigureAwait(false);
-            },
-            EntityName,
-            ConnectionScope,
-            cancellationToken);
-            await peekTask.ConfigureAwait(false);
+
             return messages;
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
@@ -218,7 +209,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<IEnumerable<ServiceBusMessage>> PeekInternal(
-            ServiceBusRetryPolicy retryPolicy,
             long? fromSequenceNumber,
             int messageCount,
             string sessionId,

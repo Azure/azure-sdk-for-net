@@ -395,7 +395,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return null;
             }
-            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+            ReceivingAmqpLink openedLink = null;
+
+            await _retryPolicy.RunOperation(
+               async (timeout) =>
+               openedLink = await GetOrCreateLinkAsync(timeout).ConfigureAwait(false),
+               EntityName,
+               ConnectionScope,
+               cancellationToken).ConfigureAwait(false);
 
             var source = (Source)openedLink.Settings.Source;
             source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
@@ -404,22 +411,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public override async Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default)
         {
-            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+            ReceivingAmqpLink openedLink = null;
+
+            await _retryPolicy.RunOperation(
+               async (timeout) =>
+               openedLink = await GetOrCreateLinkAsync(timeout).ConfigureAwait(false),
+               EntityName,
+               ConnectionScope,
+               cancellationToken).ConfigureAwait(false);
+
             return openedLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
             ? new DateTimeOffset(lockedUntilUtcTicks, TimeSpan.Zero)
             : DateTimeOffset.MinValue;
         }
 
-        internal override async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken)
+        internal override async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(TimeSpan timeout)
         {
-            ReceivingAmqpLink openedLink = null;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                openedLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-                EntityName,
-                ConnectionScope,
-                cancellationToken).ConfigureAwait(false);
-            return openedLink;
+            return await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
         }
 
         internal override string GetReceiveLinkName()
