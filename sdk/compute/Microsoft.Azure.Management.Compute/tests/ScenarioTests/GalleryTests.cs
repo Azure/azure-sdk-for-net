@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Compute.Tests.DiskRPTests;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -455,7 +456,11 @@ namespace Compute.Tests
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                        new TargetRegion {
+                            Name = galleryHomeLocation,
+                            RegionalReplicaCount = 1,
+                            StorageAccountType = StorageAccountType.StandardLRS
+                        }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 },
