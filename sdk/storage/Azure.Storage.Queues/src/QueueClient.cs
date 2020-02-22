@@ -417,7 +417,7 @@ namespace Azure.Storage.Queues
         }
         #endregion Create
 
-        #region Create If Not Exists
+        #region CreateIfNotExists
         /// <summary>
         /// The <see cref="CreateIfNotExists"/>
         /// operation creates a new queue under the specified account.  If the queue already exists, it is
@@ -547,7 +547,7 @@ namespace Azure.Storage.Queues
                 return response;
             }
         }
-        #endregion Create If Not Exists
+        #endregion CreateIfNotExists
 
         #region Exists
         /// <summary>
@@ -626,11 +626,7 @@ namespace Azure.Storage.Queues
 
                 try
                 {
-                    Response<QueueProperties> response = await QueueRestClient.Queue.GetPropertiesAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        version: Version.ToVersionString(),
+                    Response<QueueProperties> response = await GetPropertiesInternal(
                         async: async,
                         operationName: $"{nameof(QueueClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
@@ -656,7 +652,7 @@ namespace Azure.Storage.Queues
         }
         #endregion Exists
 
-        #region Delete If Exists
+        #region DeleteIfExists
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation deletes the specified
         /// queue if it exists.
@@ -761,7 +757,7 @@ namespace Azure.Storage.Queues
                 }
             }
         }
-        #endregion Delete If Exists
+        #endregion DeleteIfExists
 
         #region Delete
         /// <summary>
@@ -897,12 +893,16 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{QueueProperties}"/>
         /// </returns>
         private async Task<Response<QueueProperties>> GetPropertiesInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -917,6 +917,7 @@ namespace Azure.Storage.Queues
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
