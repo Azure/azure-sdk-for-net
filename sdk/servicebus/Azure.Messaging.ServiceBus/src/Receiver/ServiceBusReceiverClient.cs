@@ -401,7 +401,9 @@ namespace Azure.Messaging.ServiceBus
             await RetryPolicy.RunOperation(
                     async (timeout) =>
                     {
-                        result = await PeekBatchBySequenceInternalAsync(timeout, null).ConfigureAwait(false);
+                        result = await PeekBatchBySequenceInternalAsync(
+                            timeout,
+                            null).ConfigureAwait(false);
                     },
                     EntityName,
                     Consumer.ConnectionScope,
@@ -500,8 +502,7 @@ namespace Azure.Messaging.ServiceBus
             TimeSpan timeout,
             long? fromSequenceNumber,
             int maxMessages = 1,
-            CancellationToken cancellationToken = default
-            )
+            CancellationToken cancellationToken = default)
         {
             if (IsSessionReceiver)
             {
