@@ -50,7 +50,7 @@ namespace Azure.Extensions.Configuration.Secrets
         /// <summary>
         /// Load secrets into this provider.
         /// </summary>
-        public override void Load() => LoadAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        public override void Load() => LoadAsync().GetAwaiter().GetResult();
 
         private async Task PollForSecretChangesAsync()
         {

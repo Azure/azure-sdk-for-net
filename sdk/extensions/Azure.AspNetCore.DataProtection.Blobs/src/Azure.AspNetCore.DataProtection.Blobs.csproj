@@ -7,6 +7,7 @@
     <Version>1.0.0-preview.1</Version>
     <EnableApiCompat>false</EnableApiCompat>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <NoWarn>$(NoWarn);AZC0102</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
