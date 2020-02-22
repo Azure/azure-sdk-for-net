@@ -333,7 +333,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = isSessionSpecified? sessionId: null,
+                    SessionId = isSessionSpecified ? sessionId : null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
@@ -370,7 +370,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = isSessionSpecified? sessionId: null,
+                    SessionId = isSessionSpecified ? sessionId : null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
@@ -416,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = isSessionSpecified? sessionId: null,
+                    SessionId = isSessionSpecified ? sessionId : null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
@@ -473,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = isSessionSpecified? sessionId: null,
+                    SessionId = isSessionSpecified ? sessionId : null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);

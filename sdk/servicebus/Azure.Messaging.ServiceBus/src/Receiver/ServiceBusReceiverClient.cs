@@ -914,7 +914,8 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public virtual async Task<ServiceBusMessage> ReceiveDeferredMessageAsync(long sequenceNumber,
+        public virtual async Task<ServiceBusMessage> ReceiveDeferredMessageAsync(
+            long sequenceNumber,
             CancellationToken cancellationToken = default)
         {
             IEnumerable<ServiceBusMessage> result = await ReceiveDeferredMessageBatchAsync(sequenceNumbers: new long[] { sequenceNumber }).ConfigureAwait(false);
