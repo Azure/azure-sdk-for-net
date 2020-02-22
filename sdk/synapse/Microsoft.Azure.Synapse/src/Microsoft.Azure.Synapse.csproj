@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Synapse</PackageId>
+		<Description>Azure Synapse Client SDK Library</Description>
+		<AssemblyName>Microsoft.Azure.Synapse</AssemblyName>
+		<Version>0.1.0</Version>
+		<PackageTags>Microsoft Azure Synapse;Synapse</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+Initial Release
+      ]]>
+		</PackageReleaseNotes>
+    
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(Directory.Build.Data.props))') " Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.Data.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>
