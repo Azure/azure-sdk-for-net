@@ -8,8 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Azure.Messaging.ServiceBus
-{
+namespace Azure.Messaging.ServiceBus {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -20,316 +22,377 @@ namespace Azure.Messaging.ServiceBus
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources1
-    {
-
+    internal class Resources1 {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources1()
-        {
+        internal Resources1() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager(ResourcesNamespace.Current, typeof(Resources1).Assembly);
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Azure.Messaging.ServiceBus.Resources1", typeof(Resources1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Azure Storage Blobs container or blob used by the Event Processor Client does not exist..
+        /// </summary>
+        internal static string BlobsResourceDoesNotExist {
+            get {
+                return ResourceManager.GetString("BlobsResourceDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A checkpoint cannot be created or updated using an empty event..
+        /// </summary>
+        internal static string CannotCreateCheckpointForEmptyEvent {
+            get {
+                return ResourceManager.GetString("CannotCreateCheckpointForEmptyEvent", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to The {0} value is expected to be a {1} bit signed integer. Actual value: &apos;{2}&apos;..
         /// </summary>
-        internal static string CannotParseIntegerType
-        {
-            get
-            {
+        internal static string CannotParseIntegerType {
+            get {
                 return ResourceManager.GetString("CannotParseIntegerType", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The last enqueued event properties cannot be read when an event is not available..
+        /// </summary>
+        internal static string CannotReadLastEnqueuedEventPropertiesWithoutEvent {
+            get {
+                return ResourceManager.GetString("CannotReadLastEnqueuedEventPropertiesWithoutEvent", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition &apos;{0}&apos;..
         /// </summary>
-        internal static string CannotSendWithPartitionIdAndPartitionKey
-        {
-            get
-            {
+        internal static string CannotSendWithPartitionIdAndPartitionKey {
+            get {
                 return ResourceManager.GetString("CannotSendWithPartitionIdAndPartitionKey", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cannot begin processing without {0} handler set..
         /// </summary>
-        internal static string CannotStartEventProcessorWithoutHandler
-        {
-            get
-            {
+        internal static string CannotStartEventProcessorWithoutHandler {
+            get {
                 return ResourceManager.GetString("CannotStartEventProcessorWithoutHandler", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The Service Bus entity client responsible for this information.
         /// </summary>
-        internal static string ClientNeededForThisInformation
-        {
-            get
-            {
+        internal static string ClientNeededForThisInformation {
+            get {
                 return ResourceManager.GetString("ClientNeededForThisInformation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} has already been closed and cannot perform the requested operation..
         /// </summary>
-        internal static string ClosedConnectionCannotPerformOperation
-        {
-            get
-            {
+        internal static string ClosedConnectionCannotPerformOperation {
+            get {
                 return ResourceManager.GetString("ClosedConnectionCannotPerformOperation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0} has already been closed and cannot perform the requested operation..
         /// </summary>
-        internal static string ClosedInstanceCannotPerformOperation
-        {
-            get
-            {
+        internal static string ClosedInstanceCannotPerformOperation {
+            get {
                 return ResourceManager.GetString("ClosedInstanceCannotPerformOperation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The &apos;identifier&apos; parameter exceeds the maximum allowed size of {0} characters..
         /// </summary>
-        internal static string ConsumerIdentifierOverMaxValue
-        {
-            get
-            {
+        internal static string ConsumerIdentifierOverMaxValue {
+            get {
                 return ResourceManager.GetString("ConsumerIdentifierOverMaxValue", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unable to acquire an access token using the provided credential..
         /// </summary>
-        internal static string CouldNotAcquireAccessToken
-        {
-            get
-            {
+        internal static string CouldNotAcquireAccessToken {
+            get {
                 return ResourceManager.GetString("CouldNotAcquireAccessToken", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unable to create the items needed to communicate with the Service Bus service..
         /// </summary>
-        internal static string CouldNotCreateLink
-        {
-            get
-            {
+        internal static string CouldNotCreateLink {
+            get {
                 return ResourceManager.GetString("CouldNotCreateLink", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Could not create a reader of events for Service Bus entity: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
         /// </summary>
-        internal static string FailedToCreateReader
-        {
-            get
-            {
+        internal static string FailedToCreateReader {
+            get {
                 return ResourceManager.GetString("FailedToCreateReader", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Serialization failed due to an unsupported type, {0}..
         /// </summary>
-        internal static string FailedToSerializeUnsupportedType
-        {
-            get
-            {
+        internal static string FailedToSerializeUnsupportedType {
+            get {
                 return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Another handler has already been assigned to this event and there can be only one..
+        /// </summary>
+        internal static string HandlerHasAlreadyBeenAssigned {
+            get {
+                return ResourceManager.GetString("HandlerHasAlreadyBeenAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This handler has not been previously assigned to this event..
+        /// </summary>
+        internal static string HandlerHasNotBeenAssigned {
+            get {
+                return ResourceManager.GetString("HandlerHasNotBeenAssigned", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to The connection string could not be parsed; either it was malformed or contains no well-known tokens..
         /// </summary>
-        internal static string InvalidConnectionString
-        {
-            get
-            {
+        internal static string InvalidConnectionString {
+            get {
                 return ResourceManager.GetString("InvalidConnectionString", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
-        internal static string InvalidEncoding
-        {
-            get
-            {
+        internal static string InvalidEncoding {
+            get {
                 return ResourceManager.GetString("InvalidEncoding", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The event position is not valid for filtering.  It must have an offset, sequence number, or enqueued time available to filter against..
         /// </summary>
-        internal static string InvalidEventPositionForFilter
-        {
-            get
-            {
+        internal static string InvalidEventPositionForFilter {
+            get {
                 return ResourceManager.GetString("InvalidEventPositionForFilter", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}.
         /// </summary>
-        internal static string InvalidMessageBody
-        {
-            get
-            {
+        internal static string InvalidMessageBody {
+            get {
                 return ResourceManager.GetString("InvalidMessageBody", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The shared access signature could not be parsed; it was either malformed or incorrectly encoded..
         /// </summary>
-        internal static string InvalidSharedAccessSignature
-        {
-            get
-            {
+        internal static string InvalidSharedAccessSignature {
+            get {
                 return ResourceManager.GetString("InvalidSharedAccessSignature", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The time period may not be Zero or Infinite..
         /// </summary>
-        internal static string InvalidTimePeriod
-        {
-            get
-            {
+        internal static string InvalidTimePeriod {
+            get {
                 return ResourceManager.GetString("InvalidTimePeriod", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The requested transport type, &apos;{0}&apos; is not supported..
         /// </summary>
-        internal static string InvalidTransportType
-        {
-            get
-            {
+        internal static string InvalidTransportType {
+            get {
                 return ResourceManager.GetString("InvalidTransportType", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum permitted length is {0}.
+        /// </summary>
+        internal static string MaxPermittedLength {
+            get {
+                return ResourceManager.GetString("MaxPermittedLength", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes)..
         /// </summary>
-        internal static string MessageSizeExceeded
-        {
-            get
-            {
+        internal static string MessageSizeExceeded {
+            get {
                 return ResourceManager.GetString("MessageSizeExceeded", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately..
         /// </summary>
-        internal static string MissingConnectionInformation
-        {
-            get
-            {
+        internal static string MissingConnectionInformation {
+            get {
                 return ResourceManager.GetString("MissingConnectionInformation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
         /// </summary>
-        internal static string OnlyOneEventHubNameMayBeSpecified
-        {
-            get
-            {
+        internal static string OnlyOneEventHubNameMayBeSpecified {
+            get {
                 return ResourceManager.GetString("OnlyOneEventHubNameMayBeSpecified", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempting to claim a new ownership in the storage service..
+        /// </summary>
+        internal static string OperationClaimOwnership {
+            get {
+                return ResourceManager.GetString("OperationClaimOwnership", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving list of partition identifiers from a Consumer Client..
+        /// </summary>
+        internal static string OperationGetPartitionIds {
+            get {
+                return ResourceManager.GetString("OperationGetPartitionIds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving list of checkpoints from the storage service..
+        /// </summary>
+        internal static string OperationListCheckpoints {
+            get {
+                return ResourceManager.GetString("OperationListCheckpoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving list of ownership from the storage service..
+        /// </summary>
+        internal static string OperationListOwnership {
+            get {
+                return ResourceManager.GetString("OperationListOwnership", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation is only supported in &apos;PeekLock&apos; receive mode..
+        /// </summary>
+        internal static string OperationNotSupported {
+            get {
+                return ResourceManager.GetString("OperationNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading events from the Service Bus service..
+        /// </summary>
+        internal static string OperationReadEvents {
+            get {
+                return ResourceManager.GetString("OperationReadEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempting to renew all of the processor&apos;s partition ownership in the storage service..
+        /// </summary>
+        internal static string OperationRenewOwnership {
+            get {
+                return ResourceManager.GetString("OperationRenewOwnership", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to A proxy may only be used for a web sockets connection..
         /// </summary>
-        internal static string ProxyMustUseWebSockets
-        {
-            get
-            {
+        internal static string ProxyMustUseWebSockets {
+            get {
                 return ResourceManager.GetString("ProxyMustUseWebSockets", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The requested resource, &apos;{0}&apos;, does not match the resource of the shared access signature, &apos;{1}&apos;. A token cannot be issued..
         /// </summary>
-        internal static string ResourceMustMatchSharedAccessSignature
-        {
-            get
-            {
+        internal static string ResourceMustMatchSharedAccessSignature {
+            get {
                 return ResourceManager.GetString("ResourceMustMatchSharedAccessSignature", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly..
         /// </summary>
-        internal static string RetryOptionsMustBeSet
-        {
-            get
-            {
+        internal static string RetryOptionsMustBeSet {
+            get {
                 return ResourceManager.GetString("RetryOptionsMustBeSet", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The event processor is already running and needs to be stopped in order to perform this operation..
         /// </summary>
@@ -340,268 +403,121 @@ namespace Azure.Messaging.ServiceBus
                 return ResourceManager.GetString("RunningMessageProcessorCannotPerformOperation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
         /// </summary>
-        internal static string SharedAccessKeyIsRequired
-        {
-            get
-            {
+        internal static string SharedAccessKeyIsRequired {
+            get {
                 return ResourceManager.GetString("SharedAccessKeyIsRequired", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to A shared key credential is unable to generate a token directly. Please use this credential when creating an Service Bus entity Client, for proper generation of shared key tokens..
         /// </summary>
-        internal static string SharedKeyCredentialCannotGenerateTokens
-        {
-            get
-            {
+        internal static string SharedKeyCredentialCannotGenerateTokens {
+            get {
                 return ResourceManager.GetString("SharedKeyCredentialCannotGenerateTokens", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to A timeout value must be positive. To request using the default timeout, please use TimeSpan.Zero or null..
         /// </summary>
-        internal static string TimeoutMustBePositive
-        {
-            get
-            {
+        internal static string TimeoutMustBePositive {
+            get {
                 return ResourceManager.GetString("TimeoutMustBePositive", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Argument {0} must be a non-negative timespan value. The provided value was {1}..
         /// </summary>
-        internal static string TimeSpanMustBeNonNegative
-        {
-            get
-            {
+        internal static string TimeSpanMustBeNonNegative {
+            get {
                 return ResourceManager.GetString("TimeSpanMustBeNonNegative", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to This information is only available when TrackLastEnqueuedEventProperties is set on the Service Bus entity consumer options..
         /// </summary>
-        internal static string TrackLastEnqueuedEventPropertiesNotSet
-        {
-            get
-            {
+        internal static string TrackLastEnqueuedEventPropertiesNotSet {
+            get {
                 return ResourceManager.GetString("TrackLastEnqueuedEventPropertiesNotSet", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to An unknown error was encountered while communicating with the Service Bus service..
         /// </summary>
-        internal static string UnknownCommunicationException
-        {
-            get
-            {
+        internal static string UnknownCommunicationException {
+            get {
                 return ResourceManager.GetString("UnknownCommunicationException", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The specified connection type, &quot;{0}&quot;, is not recognized as valid in this context..
         /// </summary>
-        internal static string UnknownConnectionType
-        {
-            get
-            {
+        internal static string UnknownConnectionType {
+            get {
                 return ResourceManager.GetString("UnknownConnectionType", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The requested retry mode, &apos;{0}&apos;, is not known; a retry delay canot be determined..
         /// </summary>
-        internal static string UnknownRetryMode
-        {
-            get
-            {
+        internal static string UnknownRetryMode {
+            get {
                 return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to An unrecoverable exception was encountered that left the environment in a bad state..
         /// </summary>
-        internal static string UnrecoverableException
-        {
-            get
-            {
+        internal static string UnrecoverableException {
+            get {
                 return ResourceManager.GetString("UnrecoverableException", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The credential is not a known and supported credential type. Please use a JWT credential or shared key credential..
         /// </summary>
-        internal static string UnsupportedCredential
-        {
-            get
-            {
+        internal static string UnsupportedCredential {
+            get {
                 return ResourceManager.GetString("UnsupportedCredential", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The requested transport event type, &apos;{0}&apos;, is not supported by the active transport client..
         /// </summary>
-        internal static string UnsupportedTransportEventType
-        {
-            get
-            {
+        internal static string UnsupportedTransportEventType {
+            get {
                 return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The value supplied must be greater than or equal to {0}..
         /// </summary>
-        internal static string ValueMustBeAtLeast
-        {
-            get
-            {
+        internal static string ValueMustBeAtLeast {
+            get {
                 return ResourceManager.GetString("ValueMustBeAtLeast", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The value supplied must be between {0} and {1}..
         /// </summary>
-        internal static string ValueOutOfRange
-        {
-            get
-            {
+        internal static string ValueOutOfRange {
+            get {
                 return ResourceManager.GetString("ValueOutOfRange", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The Azure Storage Blobs container or blob used by the Event Processor Client does not exist..
-        /// </summary>
-        internal static string BlobsResourceDoesNotExist
-        {
-            get
-            {
-                return ResourceManager.GetString("BlobsResourceDoesNotExist", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to A checkpoint cannot be created or updated using an empty event..
-        /// </summary>
-        internal static string CannotCreateCheckpointForEmptyEvent
-        {
-            get
-            {
-                return ResourceManager.GetString("CannotCreateCheckpointForEmptyEvent", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Another handler has already been assigned to this event and there can be only one..
-        /// </summary>
-        internal static string HandlerHasAlreadyBeenAssigned
-        {
-            get
-            {
-                return ResourceManager.GetString("HandlerHasAlreadyBeenAssigned", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to This handler has not been previously assigned to this event..
-        /// </summary>
-        internal static string HandlerHasNotBeenAssigned
-        {
-            get
-            {
-                return ResourceManager.GetString("HandlerHasNotBeenAssigned", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Retrieving list of ownership from the storage service..
-        /// </summary>
-        internal static string OperationListOwnership
-        {
-            get
-            {
-                return ResourceManager.GetString("OperationListOwnership", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Retrieving list of partition identifiers from a Consumer Client..
-        /// </summary>
-        internal static string OperationGetPartitionIds
-        {
-            get
-            {
-                return ResourceManager.GetString("OperationGetPartitionIds", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Retrieving list of checkpoints from the storage service..
-        /// </summary>
-        internal static string OperationListCheckpoints
-        {
-            get
-            {
-                return ResourceManager.GetString("OperationListCheckpoints", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Attempting to claim a new ownership in the storage service..
-        /// </summary>
-        internal static string OperationClaimOwnership
-        {
-            get
-            {
-                return ResourceManager.GetString("OperationClaimOwnership", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Attempting to renew all of the processor's partition ownership in the storage service..
-        /// </summary>
-        internal static string OperationRenewOwnership
-        {
-            get
-            {
-                return ResourceManager.GetString("OperationRenewOwnership", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Reading events from the Service Bus service..
-        /// </summary>
-        internal static string OperationReadEvents
-        {
-            get
-            {
-                return ResourceManager.GetString("OperationReadEvents", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The last enqueued event properties cannot be read when an event is not available..
-        /// </summary>
-        internal static string CannotReadLastEnqueuedEventPropertiesWithoutEvent
-        {
-            get
-            {
-                return ResourceManager.GetString("CannotReadLastEnqueuedEventPropertiesWithoutEvent", resourceCulture);
             }
         }
     }

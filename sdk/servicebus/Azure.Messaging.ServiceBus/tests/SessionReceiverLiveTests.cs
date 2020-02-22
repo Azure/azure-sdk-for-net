@@ -319,6 +319,182 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CompleteMessages(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
+                await sender.SendBatchAsync(messages);
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    SessionId = isSessionSpecified ? sessionId : null,
+                    IsSessionEntity = true,
+                };
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    await receiver.CompleteAsync(item.SystemProperties.LockToken);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                var message = receiver.PeekAsync();
+                Assert.IsNull(message.Result);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AbandonMessages(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
+                await sender.SendBatchAsync(messages);
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    SessionId = isSessionSpecified ? sessionId : null,
+                    IsSessionEntity = true,
+                };
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    await receiver.AbandonAsync(item.SystemProperties.LockToken);
+                    Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                messageEnum.Reset();
+                receivedMessageCount = 0;
+                foreach (var item in await receiver.PeekBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeadLetterMessages(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
+                await sender.SendBatchAsync(messages);
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    SessionId = isSessionSpecified ? sessionId : null,
+                    IsSessionEntity = true,
+                };
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    await receiver.DeadLetterAsync(item.SystemProperties.LockToken);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                var message = receiver.PeekAsync();
+                Assert.IsNull(message.Result);
+
+                // TODO: System.InvalidOperationException : Cannot create a MessageSession for a sub-queue.
+
+                // messageEnum.Reset();
+                // receivedMessageCount = 0;
+                // string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
+                // var deadLetterReceiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, deadLetterQueuePath, sessionOptions);
+
+                // foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))
+                // {
+                //    receivedMessageCount++;
+                //    messageEnum.MoveNext();
+                //    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                //    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                //    await deadLetterReceiver.CompleteAsync(item.SystemProperties.LockToken);
+                // }
+                // Assert.AreEqual(receivedMessageCount, messageCount);
+
+                // var deadLetterMessage = deadLetterReceiver.PeekAsync();
+                // Assert.IsNull(deadLetterMessage.Result);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeferMessages(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount, sessionId);
+                await sender.SendBatchAsync(messages);
+
+                var clientOptions = new ServiceBusReceiverClientOptions()
+                {
+                    SessionId = isSessionSpecified ? sessionId : null,
+                    IsSessionEntity = true,
+                };
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
+                    await receiver.DeferAsync(item.SystemProperties.LockToken);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                // TODO: Call ReceiveDeferredMessageAsync() to verify the messages
+            }
+        }
+
+        [Test]
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]

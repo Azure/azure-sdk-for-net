@@ -237,6 +237,96 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
+        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// </summary>
+        ///
+        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="outcome"></param>
+        /// <param name="timeout"></param>
+        internal override async Task DisposeMessagesAsync(
+            IEnumerable<Guid> lockTokens,
+            Outcome outcome,
+            TimeSpan timeout)
+        {
+            if (_isSessionReceiver)
+            {
+                // TODO -  ThrowIfSessionLockLost();
+            }
+
+            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
+
+            ReceivingAmqpLink receiveLink = null;
+            try
+            {
+                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                //var ambientTransaction = Transaction.Current;
+                //if (ambientTransaction != null)
+                //{
+                //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, ServiceBusConnection).ConfigureAwait(false);
+                //}
+
+                if (!ReceiveLink.TryGetOpenedObject(out receiveLink))
+                {
+                    receiveLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                }
+
+                var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
+                var i = 0;
+                foreach (ArraySegment<byte> deliveryTag in deliveryTags)
+                {
+                    disposeMessageTasks[i++] = Task.Factory.FromAsync(
+                        (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeout, c, s),
+                        a => receiveLink.EndDisposeMessage(a),
+                        this);
+                }
+
+                var outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
+                Error error = null;
+                foreach (Outcome item in outcomes)
+                {
+                    var disposedOutcome = item.DescriptorCode == Rejected.Code && ((error = ((Rejected)item).Error) != null) ? item : null;
+                    if (disposedOutcome != null)
+                    {
+                        if (error.Condition.Equals(AmqpErrorCode.NotFound))
+                        {
+                            if (_isSessionReceiver)
+                            {
+                                //  throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
+                            }
+
+                            //   throw new MessageLockLostException(Resources.MessageLockLost);
+                        }
+
+                        // throw error.ToMessagingContractException();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                if (exception is OperationCanceledException &&
+                    receiveLink != null && receiveLink.State != AmqpObjectState.Opened)
+                {
+                    // The link state is lost, We need to return a non-retriable error.
+                    // MessagingEventSource.Log.LinkStateLost(ClientId, receiveLink.Name, receiveLink.State, isSessionReceiver, exception);
+                    if (_isSessionReceiver)
+                    {
+                        //  throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
+                    }
+
+                    // throw new MessageLockLostException(Resources.MessageLockLost);
+                }
+
+                // throw AmqpExceptionHelper.GetClientException(exception);
+                throw;
+            }
+        }
+
+        internal List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
+        {
+            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
+        }
+
+        /// <summary>
         ///   Closes the connection to the transport consumer instance.
         /// </summary>
         ///
@@ -305,7 +395,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return null;
             }
-            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+            ReceivingAmqpLink openedLink = null;
+
+            await _retryPolicy.RunOperation(
+               async (timeout) =>
+               openedLink = await GetOrCreateLinkAsync(timeout).ConfigureAwait(false),
+               EntityName,
+               ConnectionScope,
+               cancellationToken).ConfigureAwait(false);
 
             var source = (Source)openedLink.Settings.Source;
             source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
@@ -314,22 +411,33 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public override async Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default)
         {
-            ReceivingAmqpLink openedLink = await GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
+            ReceivingAmqpLink openedLink = null;
+
+            await _retryPolicy.RunOperation(
+               async (timeout) =>
+               openedLink = await GetOrCreateLinkAsync(timeout).ConfigureAwait(false),
+               EntityName,
+               ConnectionScope,
+               cancellationToken).ConfigureAwait(false);
+
             return openedLink.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
             ? new DateTimeOffset(lockedUntilUtcTicks, TimeSpan.Zero)
             : DateTimeOffset.MinValue;
         }
 
-        private async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken)
+        internal override async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(TimeSpan timeout)
         {
-            ReceivingAmqpLink openedLink = null;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                openedLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-                EntityName,
-                ConnectionScope,
-                cancellationToken).ConfigureAwait(false);
-            return openedLink;
+            return await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+        }
+
+        internal override string GetReceiveLinkName()
+        {
+            string receiveLinkName = "";
+            if (ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
+            {
+                receiveLinkName = link.Name;
+            }
+            return receiveLinkName;
         }
 
     }
