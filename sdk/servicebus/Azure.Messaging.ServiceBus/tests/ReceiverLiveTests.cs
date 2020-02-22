@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 messageEnum.Reset();
                 receivedMessageCount = 0;
-                string deadLetterQueuePath = receiver.GetDeadLetterQueuePath(scope.QueueName);
+                string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
                 var deadLetterReceiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, deadLetterQueuePath);
 
                 foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))

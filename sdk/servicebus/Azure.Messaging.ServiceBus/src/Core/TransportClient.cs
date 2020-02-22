@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -33,17 +34,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         public virtual Uri ServiceEndpoint { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        ///
-        /// <param name="amqpRequestMessage"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
-        internal abstract Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
-            AmqpRequestMessage amqpRequestMessage,
-            TimeSpan timeout);
 
         /// <summary>
         ///
@@ -138,5 +128,29 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public virtual async ValueTask DisposeAsync() => await CloseAsync(CancellationToken.None).ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="lockTokens"></param>
+        /// <param name="timeout"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="isSessionReceiver"></param>
+        /// <param name="dispositionStatus"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterDescription"></param>
+        /// <returns></returns>
+        internal abstract Task DisposeMessageRequestResponseAsync(
+            Guid[] lockTokens,
+            TimeSpan timeout,
+            DispositionStatus dispositionStatus,
+            bool isSessionReceiver,
+            string sessionId = null,
+            string receiveLinkName = null,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null);
     }
 }

@@ -319,7 +319,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task CompleteMessages()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CompleteMessages(bool isSessionSpecified)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -331,7 +333,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = sessionId,
+                    SessionId = isSessionSpecified? sessionId: null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
@@ -354,7 +356,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task AbandonMessages()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AbandonMessages(bool isSessionSpecified)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -366,7 +370,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = sessionId,
+                    SessionId = isSessionSpecified? sessionId: null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
@@ -398,7 +402,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task DeadLetterMessages()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeadLetterMessages(bool isSessionSpecified)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -410,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = sessionId,
+                    SessionId = isSessionSpecified? sessionId: null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
@@ -434,7 +440,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 // messageEnum.Reset();
                 // receivedMessageCount = 0;
-                // string deadLetterQueuePath = receiver.GetDeadLetterQueuePath(scope.QueueName);
+                // string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
                 // var deadLetterReceiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, deadLetterQueuePath, sessionOptions);
 
                 // foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))
@@ -453,7 +459,9 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task DeferMessages()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task DeferMessages(bool isSessionSpecified)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -465,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var clientOptions = new ServiceBusReceiverClientOptions()
                 {
-                    SessionId = sessionId,
+                    SessionId = isSessionSpecified? sessionId: null,
                     IsSessionEntity = true,
                 };
                 var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);

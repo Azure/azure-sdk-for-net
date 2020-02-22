@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -78,6 +79,28 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="lockTokens"></param>
+        /// <param name="outcome"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        internal abstract Task DisposeMessagesAsync(
+            IEnumerable<Guid> lockTokens,
+            Outcome outcome,
+            TimeSpan timeout);
+
+        /// <summary>
+        ///
+        /// </summary>
+        internal abstract string GetReceiveLinkName();
+
+        /// <summary>
+        ///
+        /// </summary>
+        internal abstract Task<ReceivingAmqpLink> GetOrCreateLinkAsync(CancellationToken cancellationToken);
 
     }
 }

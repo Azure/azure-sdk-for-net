@@ -12,6 +12,7 @@ using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -300,15 +301,36 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        ///
-        /// <param name="amqpRequestMessage"></param>
+        /// <param name="lockTokens"></param>
         /// <param name="timeout"></param>
-        internal virtual async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
-            AmqpRequestMessage amqpRequestMessage,
-            TimeSpan timeout) =>
-            await InnerClient.ExecuteRequestResponseAsync(
-                amqpRequestMessage,
-                timeout).ConfigureAwait(false);
+        /// <param name="dispositionStatus"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="isSessionReceiver"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterDescription"></param>
+        /// <returns></returns>
+        internal virtual async Task DisposeMessageRequestResponseAsync(
+            Guid[] lockTokens,
+            TimeSpan timeout,
+            DispositionStatus dispositionStatus,
+            bool isSessionReceiver,
+            string sessionId = null,
+            string receiveLinkName = null,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null) =>
+            await InnerClient.DisposeMessageRequestResponseAsync(
+                lockTokens,
+                timeout,
+                dispositionStatus,
+                isSessionReceiver,
+                sessionId,
+                receiveLinkName,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterDescription).ConfigureAwait(false);
 
         /// <summary>
         ///

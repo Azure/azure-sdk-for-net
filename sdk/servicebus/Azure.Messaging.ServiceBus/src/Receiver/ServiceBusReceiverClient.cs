@@ -156,7 +156,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// A map of locked messages received using the management client.
         /// </summary>
-        internal readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
+        internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
@@ -328,7 +328,7 @@ namespace Azure.Messaging.ServiceBus
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
+            RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
@@ -470,18 +470,10 @@ namespace Azure.Messaging.ServiceBus
             if (IsSessionReceiver)
             {
                 // if this is a session receiver, the receive link must be open in order to peek messages
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-                    EntityName,
-                    Consumer.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
+                await Consumer.GetOrCreateLinkAsync(cancellationToken).ConfigureAwait(false);
             }
 
-            string receiveLinkName = "";
-            if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
-            {
-                receiveLinkName = link.Name;
-            }
+            string receiveLinkName = Consumer.GetReceiveLinkName();
 
             return await Connection.PeekAsync(
                 RetryPolicy,
@@ -542,16 +534,16 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                // MessagingEventSource.Log.MessageCompleteException(this.ClientId, exception);
+                // MessagingEventSource.Log.MessageCompleteException(ClientId, exception);
                 throw exception;
             }
             finally
             {
-                // this.diagnosticSource.CompleteStop(activity, lockTokenList, completeTask?.Status);
+                // diagnosticSource.CompleteStop(activity, lockTokenList, completeTask?.Status);
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageCompleteStop(this.ClientId);
+            // MessagingEventSource.Log.MessageCompleteStop(ClientId);
         }
 
         /// <summary>
@@ -585,16 +577,16 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                // MessagingEventSource.Log.MessageAbandonException(this.ClientId, exception);
+                // MessagingEventSource.Log.MessageAbandonException(ClientId, exception);
                 throw exception;
             }
             finally
             {
-                // this.diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
+                // diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageAbandonStop(this.ClientId);
+            // MessagingEventSource.Log.MessageAbandonStop(ClientId);
         }
 
         /// <summary>
@@ -630,16 +622,16 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                // MessagingEventSource.Log.MessageDeadLetterException(this.ClientId, exception);
+                // MessagingEventSource.Log.MessageDeadLetterException(ClientId, exception);
                 throw exception;
             }
             finally
             {
-                // this.diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
+                // diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageCompleteStop(this.ClientId);
+            // MessagingEventSource.Log.MessageCompleteStop(ClientId);
         }
 
         /// <summary>
@@ -677,16 +669,16 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                // MessagingEventSource.Log.MessageDeadLetterException(this.ClientId, exception);
+                // MessagingEventSource.Log.MessageDeadLetterException(ClientId, exception);
                 throw exception;
             }
             finally
             {
-                // this.diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
+                // diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageDeadLetterStop(this.ClientId);
+            // MessagingEventSource.Log.MessageDeadLetterStop(ClientId);
         }
 
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -721,16 +713,16 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                // MessagingEventSource.Log.MessageDeferException(this.ClientId, exception);
+                // MessagingEventSource.Log.MessageDeferException(ClientId, exception);
                 throw exception;
             }
             finally
             {
-                // this.diagnosticSource.DisposeStop(activity, lockToken, deferTask?.Status);
+                // diagnosticSource.DisposeStop(activity, lockToken, deferTask?.Status);
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageDeferStop(this.ClientId);
+            // MessagingEventSource.Log.MessageDeferStop(ClientId);
         }
 
         /// <summary>
@@ -744,11 +736,12 @@ namespace Azure.Messaging.ServiceBus
             TimeSpan timeout)
         {
             var lockTokenGuids = lockTokens.Select(lockToken => new Guid(lockToken)).ToArray();
-            if (lockTokenGuids.Any(lockToken => requestResponseLockedMessages.Contains(lockToken)))
+            if (lockTokenGuids.Any(lockToken => RequestResponseLockedMessages.Contains(lockToken)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokenGuids, timeout, DispositionStatus.Completed);
+                string receiveLinkName = Consumer.GetReceiveLinkName();
+                return Connection.DisposeMessageRequestResponseAsync(lockTokenGuids, timeout, DispositionStatus.Completed, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName);
             }
-            return this.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
+            return Consumer.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
         }
 
         /// <summary>
@@ -764,11 +757,12 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null)
         {
             var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => requestResponseLockedMessages.Contains(lt)))
+            if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, propertiesToModify);
+                string receiveLinkName = Consumer.GetReceiveLinkName();
+                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName, propertiesToModify);
             }
-            return this.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
+            return Consumer.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -798,12 +792,13 @@ namespace Azure.Messaging.ServiceBus
             }
 
             var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
+            if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
+                string receiveLinkName = Consumer.GetReceiveLinkName();
+                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
             }
 
-            return this.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription), timeout);
+            return Consumer.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription), timeout);
         }
 
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -818,192 +813,17 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null)
         {
             var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => this.requestResponseLockedMessages.Contains(lt)))
+            if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return this.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, propertiesToModify);
+                string receiveLinkName = Consumer.GetReceiveLinkName();
+                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName, propertiesToModify);
             }
-            return this.DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
-        }
-
-        /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
-        /// </summary>
-        ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
-        /// <param name="outcome"></param>
-        /// <param name="timeout"></param>
-        internal async Task DisposeMessagesAsync(
-            IEnumerable<Guid> lockTokens,
-            Outcome outcome,
-            TimeSpan timeout)
-        {
-            if (IsSessionReceiver)
-            {
-                // TODO -  ThrowIfSessionLockLost();
-            }
-
-            List<ArraySegment<byte>> deliveryTags = this.ConvertLockTokensToDeliveryTags(lockTokens);
-
-            ReceivingAmqpLink receiveLink = null;
-            try
-            {
-                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-                //var ambientTransaction = Transaction.Current;
-                //if (ambientTransaction != null)
-                //{
-                //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
-                //}
-
-                if (!Consumer.ReceiveLink.TryGetOpenedObject(out receiveLink))
-                {
-                    receiveLink = await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
-                }
-
-                var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
-                var i = 0;
-                foreach (ArraySegment<byte> deliveryTag in deliveryTags)
-                {
-                    disposeMessageTasks[i++] = Task.Factory.FromAsync(
-                        (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeout, c, s),
-                        a => receiveLink.EndDisposeMessage(a),
-                        this);
-                }
-
-                var outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
-                Error error = null;
-                foreach (Outcome item in outcomes)
-                {
-                    var disposedOutcome = item.DescriptorCode == Rejected.Code && ((error = ((Rejected)item).Error) != null) ? item : null;
-                    if (disposedOutcome != null)
-                    {
-                        if (error.Condition.Equals(AmqpErrorCode.NotFound))
-                        {
-                            if (IsSessionReceiver)
-                            {
-                                //  throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
-                            }
-
-                            //   throw new MessageLockLostException(Resources.MessageLockLost);
-                        }
-
-                        // throw error.ToMessagingContractException();
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                if (exception is OperationCanceledException &&
-                    receiveLink != null && receiveLink.State != AmqpObjectState.Opened)
-                {
-                    // The link state is lost, We need to return a non-retriable error.
-                    // MessagingEventSource.Log.LinkStateLost(this.ClientId, receiveLink.Name, receiveLink.State, this.isSessionReceiver, exception);
-                    if (IsSessionReceiver)
-                    {
-                        //  throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
-                    }
-
-                    // throw new MessageLockLostException(Resources.MessageLockLost);
-                }
-
-                // throw AmqpExceptionHelper.GetClientException(exception);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the disposition status of deferred messages.
-        /// </summary>
-        ///
-        /// <param name="lockTokens">Message lock tokens to update disposition status.</param>
-        /// <param name="timeout"></param>
-        /// <param name="dispositionStatus"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="deadLetterReason"></param>
-        /// <param name="deadLetterDescription"></param>
-        internal async Task DisposeMessageRequestResponseAsync(
-            Guid[] lockTokens,
-            TimeSpan timeout,
-            DispositionStatus dispositionStatus,
-            IDictionary<string, object> propertiesToModify = null,
-            string deadLetterReason = null,
-            string deadLetterDescription = null)
-        {
-            try
-            {
-                // Create an AmqpRequest Message to update disposition
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.UpdateDispositionOperation, timeout, null);
-
-                if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
-                {
-                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
-                }
-                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens;
-                amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
-
-                if (deadLetterReason != null)
-                {
-                    amqpRequestMessage.Map[ManagementConstants.Properties.DeadLetterReason] = deadLetterReason;
-                }
-
-                if (deadLetterDescription != null)
-                {
-                    amqpRequestMessage.Map[ManagementConstants.Properties.DeadLetterDescription] = deadLetterDescription;
-                }
-
-                if (propertiesToModify != null)
-                {
-                    var amqpPropertiesToModify = new AmqpMap();
-                    foreach (var pair in propertiesToModify)
-                    {
-                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
-                        {
-                            amqpPropertiesToModify[new MapKey(pair.Key)] = amqpObject;
-                        }
-                        else
-                        {
-                            throw new NotSupportedException(
-                                Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
-                        }
-                    }
-
-                    if (amqpPropertiesToModify.Count > 0)
-                    {
-                        amqpRequestMessage.Map[ManagementConstants.Properties.PropertiesToModify] = amqpPropertiesToModify;
-                    }
-                }
-
-                string sessionId = await Session.GetSessionIdAsync().ConfigureAwait(false);
-                if (!string.IsNullOrWhiteSpace(sessionId))
-                {
-                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
-                }
-
-                if (IsSessionReceiver)
-                {
-                    // TODO -  ThrowIfSessionLockLost();
-                }
-
-                var amqpResponseMessage = await Connection.ExecuteRequestResponseAsync(amqpRequestMessage, timeout).ConfigureAwait(false);
-                if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
-                {
-                    // throw amqpResponseMessage.ToMessagingContractException();
-                }
-            }
-            catch (Exception)
-            {
-                // throw AmqpExceptionHelper.GetClientException(exception);
-                throw;
-            }
-        }
-
-        internal List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
-        {
-            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
+            return Consumer.DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
         }
 
         internal void ThrowIfNotPeekLockMode()
         {
-            if (this.ReceiveMode != ReceiveMode.PeekLock)
+            if (ReceiveMode != ReceiveMode.PeekLock)
             {
                 throw new InvalidOperationException(Resources1.OperationNotSupported);
             }
@@ -1011,12 +831,12 @@ namespace Azure.Messaging.ServiceBus
 
         internal Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify)
         {
-            return this.GetModifiedOutcome(propertiesToModify, false);
+            return GetModifiedOutcome(propertiesToModify, false);
         }
 
         internal Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify)
         {
-            return this.GetModifiedOutcome(propertiesToModify, true);
+            return GetModifiedOutcome(propertiesToModify, true);
         }
 
         internal Outcome GetModifiedOutcome(
@@ -1084,32 +904,6 @@ namespace Azure.Messaging.ServiceBus
             }
 
             return rejected;
-        }
-
-        /// <summary>
-        /// Returns the corresponding dead letter queue name for the queue represented by the given name.
-        /// </summary>
-        ///
-        ///<param name="queueName"></param>
-        public string GetDeadLetterQueuePath(string queueName)
-        {
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
-
-            return queueName + "/$DeadLetterQueue";
-        }
-
-        /// <summary>
-        /// Returns the corresponding dead letter topic name for the given topic and subscription names.
-        /// </summary>
-        ///
-        /// ///<param name="topicName"></param>
-        ///<param name="subscriptionName"></param>
-        public string GetDeadLetterTopicPath(string topicName, string subscriptionName)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(subscriptionName, nameof(subscriptionName));
-
-            return topicName + "/Subscriptions/" + subscriptionName + "/$DeadLetterQueue";
         }
 
         /// <summary>
@@ -1208,7 +1002,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await Consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                this.requestResponseLockedMessages.Close();
+                RequestResponseLockedMessages.Close();
             }
             catch (Exception ex)
             {
@@ -1719,12 +1513,12 @@ namespace Azure.Messaging.ServiceBus
                     {
                         await RenewLockAsync(message, renewLockCancellationToken).ConfigureAwait(false);
                     }
-                    //MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
+                    //MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(messageReceiver.ClientId, message);
                 }
 
                 catch (Exception exception)
                 {
-                    //MessagingEventSource.Log.MessageReceiverPumpRenewMessageException(this.messageReceiver.ClientId, message, exception);
+                    //MessagingEventSource.Log.MessageReceiverPumpRenewMessageException(messageReceiver.ClientId, message, exception);
 
                     // ObjectDisposedException should only happen here because the CancellationToken was disposed at which point
                     // this renew exception is not relevant anymore. Lets not bother user with this exception.
