@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
         private const string SubscriptionsSubPath = "Subscriptions";
         private const string RulesSubPath = "Rules";
         private const string SubQueuePrefix = "$";
-        private const string DeadLetterQueueSuffix = "DeadLetterQueueDeadLetterQueue";
+        private const string DeadLetterQueueSuffix = "DeadLetterQueue";
         private const string DeadLetterQueueName = SubQueuePrefix + DeadLetterQueueSuffix;
         private const string Transfer = "Transfer";
         private const string TransferDeadLetterQueueName = SubQueuePrefix + Transfer + PathDelimiter + DeadLetterQueueName;
