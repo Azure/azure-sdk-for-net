@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorSchemaException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorSchemaException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -366,6 +366,35 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// Thrown when a required parameter is null
         /// </exception>
         System.Threading.Tasks.Task<AzureOperationResponse<SourceUploadDefinition>> GetBuildSourceUploadUrlWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Generate keys for a token of a specified container registry.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='generateCredentialsParameters'>
+        /// The parameters for generating credentials.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<AzureOperationResponse<GenerateCredentialsResult>> GenerateCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Copies an image to this container registry from the specified
         /// container registry.
@@ -495,7 +524,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorSchemaException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -505,6 +534,35 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// Thrown when a required parameter is null
         /// </exception>
         System.Threading.Tasks.Task<AzureOperationResponse<Run>> BeginScheduleRunWithHttpMessagesAsync(string resourceGroupName, string registryName, RunRequest runRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Generate keys for a token of a specified container registry.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='generateCredentialsParameters'>
+        /// The parameters for generating credentials.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<AzureOperationResponse<GenerateCredentialsResult>> BeginGenerateCredentialsWithHttpMessagesAsync(string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the container registries under the specified resource
         /// group.

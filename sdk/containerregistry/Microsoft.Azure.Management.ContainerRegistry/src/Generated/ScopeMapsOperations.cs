@@ -22,12 +22,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Threading;
 
     /// <summary>
-    /// TasksOperations operations.
+    /// ScopeMapsOperations operations.
     /// </summary>
-    internal partial class TasksOperations : IServiceOperations<ContainerRegistryManagementClient>, ITasksOperations
+    internal partial class ScopeMapsOperations : IServiceOperations<ContainerRegistryManagementClient>, IScopeMapsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the TasksOperations class.
+        /// Initializes a new instance of the ScopeMapsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal TasksOperations(ContainerRegistryManagementClient client)
+        internal ScopeMapsOperations(ContainerRegistryManagementClient client)
         {
             if (client == null)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public ContainerRegistryManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the tasks for a specified container registry.
+        /// Gets the properties of the specified scope map.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -58,13 +58,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -79,7 +82,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Task>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -115,7 +118,26 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            string apiVersion = "2019-06-01-preview";
+            if (scopeMapName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "scopeMapName");
+            }
+            if (scopeMapName != null)
+            {
+                if (scopeMapName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "scopeMapName", 50);
+                }
+                if (scopeMapName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-_]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
+                }
+            }
+            string apiVersion = "2019-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -123,253 +145,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Task>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Task>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get the properties of a specified task.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorSchemaException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-            }
-            if (registryName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
-            }
-            if (registryName != null)
-            {
-                if (registryName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "registryName", 50);
-                }
-                if (registryName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "registryName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(registryName, "^[a-zA-Z0-9]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
-                }
-            }
-            if (taskName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
-            }
-            if (taskName != null)
-            {
-                if (taskName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
-                }
-                if (taskName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
-                }
-            }
-            string apiVersion = "2019-06-01-preview";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
+                tracingParameters.Add("scopeMapName", scopeMapName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{scopeMapName}", System.Uri.EscapeDataString(scopeMapName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -435,13 +224,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -451,6 +241,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -463,7 +257,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<ScopeMap>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -476,7 +270,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ScopeMap>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -496,7 +290,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a task for a container registry with the specified parameters.
+        /// Creates a scope map for a container registry with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -504,11 +298,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
-        /// <param name='taskCreateParameters'>
-        /// The parameters for creating a task.
+        /// <param name='actions'>
+        /// The list of scoped permissions for registry artifacts.
+        /// E.g. repositories/repository-name/content/read,
+        /// repositories/repository-name/metadata/write
+        /// </param>
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -516,15 +315,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Task taskCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, IList<string> actions, string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Task> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, taskName, taskCreateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ScopeMap> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, scopeMapName, actions, description, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes a specified task.
+        /// Deletes a scope map from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -532,8 +331,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -541,15 +340,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, taskName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, scopeMapName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Updates a task with the specified parameters.
+        /// Updates a scope map with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -557,11 +356,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
-        /// <param name='taskUpdateParameters'>
-        /// The parameters for updating a task.
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
+        /// </param>
+        /// <param name='actions'>
+        /// The list of scope permissions for registry artifacts.
+        /// E.g. repositories/repository-name/pull,
+        /// repositories/repository-name/delete
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -569,24 +373,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, TaskUpdateParameters taskUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, string description = default(string), IList<string> actions = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Task> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, taskName, taskUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ScopeMap> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, scopeMapName, description, actions, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Returns a task with extended information that includes all secrets.
+        /// Lists all the scope maps for the specified container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
         /// </param>
         /// <param name='registryName'>
         /// The name of the container registry.
-        /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -594,7 +395,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -609,7 +410,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> GetDetailsWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<ScopeMap>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -645,26 +446,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
-            }
-            if (taskName != null)
-            {
-                if (taskName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
-                }
-                if (taskName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
-                }
-            }
-            string apiVersion = "2019-06-01-preview";
+            string apiVersion = "2019-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -672,20 +454,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetDetails", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}/listDetails").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -698,7 +478,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -751,13 +531,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -767,6 +548,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -779,7 +564,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<IPage<ScopeMap>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -792,7 +577,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ScopeMap>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -812,7 +597,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a task for a container registry with the specified parameters.
+        /// Creates a scope map for a container registry with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -820,11 +605,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
-        /// <param name='taskCreateParameters'>
-        /// The parameters for creating a task.
+        /// <param name='actions'>
+        /// The list of scoped permissions for registry artifacts.
+        /// E.g. repositories/repository-name/content/read,
+        /// repositories/repository-name/metadata/write
+        /// </param>
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -832,7 +622,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -847,7 +637,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Task taskCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, IList<string> actions, string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -883,34 +673,36 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (scopeMapName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scopeMapName");
             }
-            if (taskName != null)
+            if (scopeMapName != null)
             {
-                if (taskName.Length > 50)
+                if (scopeMapName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "scopeMapName", 50);
                 }
-                if (taskName.Length < 5)
+                if (scopeMapName.Length < 5)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-_]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            if (taskCreateParameters == null)
+            if (actions == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskCreateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "actions");
             }
-            if (taskCreateParameters != null)
+            string apiVersion = "2019-05-01-preview";
+            ScopeMap scopeMapCreateParameters = new ScopeMap();
+            if (description != null || actions != null)
             {
-                taskCreateParameters.Validate();
+                scopeMapCreateParameters.Description = description;
+                scopeMapCreateParameters.Actions = actions;
             }
-            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -918,21 +710,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("taskCreateParameters", taskCreateParameters);
+                tracingParameters.Add("scopeMapName", scopeMapName);
+                tracingParameters.Add("scopeMapCreateParameters", scopeMapCreateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{scopeMapName}", System.Uri.EscapeDataString(scopeMapName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -976,9 +768,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
             // Serialize Request
             string _requestContent = null;
-            if(taskCreateParameters != null)
+            if(scopeMapCreateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(taskCreateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(scopeMapCreateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1004,13 +796,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1020,6 +813,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1032,7 +829,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<ScopeMap>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1045,7 +842,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ScopeMap>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1063,7 +860,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ScopeMap>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1083,7 +880,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Deletes a specified task.
+        /// Deletes a scope map from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -1091,8 +888,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1100,7 +897,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1112,7 +909,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1148,26 +945,26 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (scopeMapName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scopeMapName");
             }
-            if (taskName != null)
+            if (scopeMapName != null)
             {
-                if (taskName.Length > 50)
+                if (scopeMapName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "scopeMapName", 50);
                 }
-                if (taskName.Length < 5)
+                if (scopeMapName.Length < 5)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-_]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            string apiVersion = "2019-06-01-preview";
+            string apiVersion = "2019-05-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1175,20 +972,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
+                tracingParameters.Add("scopeMapName", scopeMapName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{scopeMapName}", System.Uri.EscapeDataString(scopeMapName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1254,13 +1051,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1270,6 +1068,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1297,7 +1099,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Updates a task with the specified parameters.
+        /// Updates a scope map with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -1305,11 +1107,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
-        /// <param name='taskUpdateParameters'>
-        /// The parameters for updating a task.
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
+        /// </param>
+        /// <param name='actions'>
+        /// The list of scope permissions for registry artifacts.
+        /// E.g. repositories/repository-name/pull,
+        /// repositories/repository-name/delete
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1317,7 +1124,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1332,7 +1139,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, TaskUpdateParameters taskUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, string description = default(string), IList<string> actions = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1368,30 +1175,32 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (scopeMapName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "scopeMapName");
             }
-            if (taskName != null)
+            if (scopeMapName != null)
             {
-                if (taskName.Length > 50)
+                if (scopeMapName.Length > 50)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "scopeMapName", 50);
                 }
-                if (taskName.Length < 5)
+                if (scopeMapName.Length < 5)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-_]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-_]*$");
                 }
             }
-            if (taskUpdateParameters == null)
+            string apiVersion = "2019-05-01-preview";
+            ScopeMapUpdateParameters scopeMapUpdateParameters = new ScopeMapUpdateParameters();
+            if (description != null || actions != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskUpdateParameters");
+                scopeMapUpdateParameters.Description = description;
+                scopeMapUpdateParameters.Actions = actions;
             }
-            string apiVersion = "2019-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1399,21 +1208,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("taskUpdateParameters", taskUpdateParameters);
+                tracingParameters.Add("scopeMapName", scopeMapName);
+                tracingParameters.Add("scopeMapUpdateParameters", scopeMapUpdateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/scopeMaps/{scopeMapName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{scopeMapName}", System.Uri.EscapeDataString(scopeMapName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1457,9 +1266,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
             // Serialize Request
             string _requestContent = null;
-            if(taskUpdateParameters != null)
+            if(scopeMapUpdateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(taskUpdateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(scopeMapUpdateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1485,13 +1294,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1501,6 +1311,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1513,7 +1327,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<ScopeMap>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1526,7 +1340,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ScopeMap>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1544,7 +1358,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ScopeMap>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1564,7 +1378,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Lists all the tasks for a specified container registry.
+        /// Lists all the scope maps for the specified container registry.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1575,7 +1389,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1590,7 +1404,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Task>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<ScopeMap>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1671,13 +1485,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1687,6 +1502,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1699,7 +1518,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Task>>();
+            var _result = new AzureOperationResponse<IPage<ScopeMap>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1712,7 +1531,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Task>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ScopeMap>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
