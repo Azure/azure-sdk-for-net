@@ -598,7 +598,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                     {
                         // to prevent the receive batch from taking a long time when we
                         // expect it to fail
-                        MaximumRetries = 0
+                        MaximumRetries = 0,
+                        TryTimeout = TimeSpan.FromSeconds(5)
                     }
                 };
                 await using var receiver = new ServiceBusReceiverClient(

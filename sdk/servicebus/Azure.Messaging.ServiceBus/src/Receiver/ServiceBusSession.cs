@@ -55,8 +55,8 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
+            // TODO implement
             await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
         }
 
         /// <summary>
