@@ -34,10 +34,13 @@
     <PackageReference Update="Microsoft.Azure.Management.EventGrid" Version="4.0.1-preview" />
     <PackageReference Update="Microsoft.Azure.Management.HDInsight" Version="4.1.0-preview" />
     <PackageReference Update="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
+    <PackageReference Update="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.31.0" />
+    <PackageReference Update="Microsoft.Azure.Management.Search" Version="3.0.0" />
     <PackageReference Update="Microsoft.Azure.Management.ServiceBus" Version="2.1.0" />
     <PackageReference Update="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
     <PackageReference Update="Microsoft.Azure.Management.Storage" Version="13.0.0" />
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
+    <PackageReference Update="Microsoft.Azure.Search" Version="10.1.0" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.0.0" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
@@ -75,6 +78,7 @@
     <PackageReference Update="System.Buffers" Version="4.5.0" />
     <PackageReference Update="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Update="System.Collections" Version="4.3.0" />
+    <PackageReference Update="System.ComponentModel.Annotations" Version="4.7.0" />
     <PackageReference Update="System.Data.SqlClient" Version="4.3.1" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Update="System.Diagnostics.Tools" Version="4.3.0" />
