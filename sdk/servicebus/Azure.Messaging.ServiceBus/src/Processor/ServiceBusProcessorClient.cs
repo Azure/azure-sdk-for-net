@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus
         {
             // TODO implement
             await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace Azure.Messaging.ServiceBus
             // TODO implement
 
             await Task.Delay(1).ConfigureAwait(false);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         /// <summary>
         ///   Closes the consumer.
