@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
@@ -127,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Validate results.
 
-            IEnumerable<PartitionOwnership> ownershipEnumerable = await storageManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
+            IEnumerable<EventProcessorPartitionOwnership> ownershipEnumerable = await storageManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
 
             Assert.That(ownershipEnumerable, Is.Not.Null);
             Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
