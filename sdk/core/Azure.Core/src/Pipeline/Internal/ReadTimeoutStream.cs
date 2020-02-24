@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    internal class ReadTimeoutStream : Stream
+    internal class ReadTimeoutStream : ReadOnlyStream
     {
         private readonly Stream _stream;
         private TimeSpan _readTimeout;
@@ -20,11 +20,6 @@ namespace Azure.Core.Pipeline
             _readTimeout = readTimeout;
             UpdateReadTimeout();
             _cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        public override void Flush()
-        {
-            throw new NotImplementedException();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -87,19 +82,8 @@ namespace Azure.Core.Pipeline
             return _stream.Seek(offset, origin);
         }
 
-        public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool CanRead => _stream.CanRead;
         public override bool CanSeek => _stream.CanSeek;
-        public override bool CanWrite => false;
         public override long Length => _stream.Length;
 
         public override long Position
