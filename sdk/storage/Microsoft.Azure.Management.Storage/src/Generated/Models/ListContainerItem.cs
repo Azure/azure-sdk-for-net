@@ -165,18 +165,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "properties.hasImmutabilityPolicy")]
         public bool? HasImmutabilityPolicy { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ImmutabilityPolicy != null)
-            {
-                ImmutabilityPolicy.Validate();
-            }
-        }
     }
 }
