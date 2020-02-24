@@ -1,8 +1,10 @@
 # Release History
 
 ## 1.1.0-preview.1 (Unreleased)
+
 ### Fixes and improvements
 - Add OPTIONS and TRACE HTTP request methods.
+- Add `TryTimeout` property to `RetryOptions` and apply if to stream reads.
 
 ## 1.0.2 (2020-01-10)
 
