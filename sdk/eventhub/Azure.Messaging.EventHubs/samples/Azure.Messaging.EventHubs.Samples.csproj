@@ -19,10 +19,4 @@
     <PackageReference Include="Azure.Identity" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
-  
-  <!-- Import the references to the Azure client libraries -->
-  <Import Project="$(MSBuildThisFileDirectory)..\Azure.Client.Library.References.props" />
-
-  <!-- Import the Azure.Core project -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />	
 </Project>

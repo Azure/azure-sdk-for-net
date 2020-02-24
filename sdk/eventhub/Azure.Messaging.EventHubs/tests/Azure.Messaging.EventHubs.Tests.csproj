@@ -39,10 +39,4 @@
 
   <!-- Import the Azure.Core test framework (shared source) -->
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
-  
-  <!-- Import the references to the Azure client libraries -->
-  <Import Project="$(MSBuildThisFileDirectory)..\Azure.Client.Library.References.props" />
-
-  <!-- Import the Azure.Core project -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

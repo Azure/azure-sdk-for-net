@@ -4,20 +4,6 @@
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
     <Version>1.0.0-preview</Version>
-    <PackageTags>Microsoft Azure Application Configuration</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      - Enabled conditional requests.
-      - Added support for setting x-ms-client-request-id, x-ms-correlation-request-id, and correlation-context headers.
-      - Added SetReadOnly/ClearReadOnly methods.
-      - Enabled setting service version.
-      - Added support for Sync-Token headers.
-      - Updated authorization header format.
-      - Removed Update methods.
-      ]]>
-    </PackageReleaseNotes>
-
-    <Version>1.0.0</Version>
     <PackageTags>Microsoft Azure Application Configuration;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>

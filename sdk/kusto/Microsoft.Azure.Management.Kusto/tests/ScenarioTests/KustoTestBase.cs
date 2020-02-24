@@ -117,8 +117,8 @@ namespace Kusto.Tests.ScenarioTests
             eventGridConnectinoName = TestUtilities.GenerateName("eventGridConnection");
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
 
-            sku1 = new AzureSku("Standard_D13_v2", "Standard", 2);
-            sku2 = new AzureSku("Standard_D14_v2", "Standard", capacity: 2);
+            sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
+            sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
 
             trustedExternalTenants = new List<TrustedExternalTenant>(1) { new TrustedExternalTenant(this.tenantId) };
 
@@ -131,8 +131,8 @@ namespace Kusto.Tests.ScenarioTests
 
             defaultPrincipalsModificationKind = "Replace";
 
-            cluster = new Cluster(sku: new AzureSku("D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
-            followerCluster = new Cluster(sku: new AzureSku("D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            cluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            followerCluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
             database = new ReadWriteDatabase(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName, dataFormat, location: location);
