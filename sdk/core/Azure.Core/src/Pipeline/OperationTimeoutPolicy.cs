@@ -36,7 +36,7 @@ namespace Azure.Core.Pipeline
                 message.CancellationToken = cts.Token;
                 if (async)
                 {
-                    await ProcessNextAsync(message, pipeline);
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                 }
                 else
                 {

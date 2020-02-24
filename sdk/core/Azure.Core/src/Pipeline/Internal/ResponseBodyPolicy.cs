@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -59,7 +60,7 @@ namespace Azure.Core.Pipeline
                 bufferedStream.Position = 0;
                 message.Response.ContentStream = bufferedStream;
             }
-            else
+            else if (_readTimeout != Timeout.InfiniteTimeSpan)
             {
                 message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, _readTimeout);
             }
