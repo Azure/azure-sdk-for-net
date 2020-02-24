@@ -152,7 +152,6 @@ namespace Azure.Core.Tests
             Assert.That(async () => await getRequestTask, Throws.InstanceOf<OperationCanceledException>());
         }
 
-
         private class SlowReadStream : TestReadStream
         {
             public readonly TaskCompletionSource<object> StartedReader = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -170,6 +169,7 @@ namespace Azure.Core.Tests
                 return 10;
             }
         }
+
         private class HangingReadStream : TestReadStream
         {
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -185,6 +185,7 @@ namespace Azure.Core.Tests
 
             public override int ReadTimeout { get; set; }
         }
+
         private class ReadTrackingStream : TestReadStream
         {
             public const int ContentByteValue = 233;

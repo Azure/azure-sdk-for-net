@@ -90,15 +90,15 @@ namespace Azure.Core.Pipeline
                     }
                     catch (Exception e)
                     {
-                        await RetryAsync(cancellationToken, e, true).ConfigureAwait(false);
+                        await RetryAsync(e, true, cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
 
-            private async Task RetryAsync(CancellationToken customerCancellationToken, Exception exception, bool async)
+            private async Task RetryAsync(Exception exception, bool async, CancellationToken cancellationToken)
             {
                 bool isNonCustomerCancelledException = exception is OperationCanceledException &&
-                                                    !customerCancellationToken.IsCancellationRequested;
+                                                    !cancellationToken.IsCancellationRequested;
 
                 if (!_responseClassifier.IsRetriableException(exception) && !isNonCustomerCancelledException)
                 {
@@ -135,7 +135,7 @@ namespace Azure.Core.Pipeline
                     }
                     catch (Exception e)
                     {
-                        RetryAsync(default, e, false).EnsureCompleted();
+                        RetryAsync(e, false, default).EnsureCompleted();
                     }
                 }
             }

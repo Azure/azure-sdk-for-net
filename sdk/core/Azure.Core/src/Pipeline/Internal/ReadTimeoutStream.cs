@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
     {
         private readonly Stream _stream;
         private TimeSpan _readTimeout;
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public ReadTimeoutStream(Stream stream, TimeSpan readTimeout)
         {
@@ -51,10 +51,15 @@ namespace Azure.Core.Pipeline
 
         private CancellationTokenSource StartTimeout(CancellationToken additionalToken, out bool dispose)
         {
+            if (_cancellationTokenSource.IsCancellationRequested)
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
+            }
+
             CancellationTokenSource source;
             if (additionalToken.CanBeCanceled)
             {
-                source = CancellationTokenSource.CreateLinkedTokenSource(additionalToken);
+                source = CancellationTokenSource.CreateLinkedTokenSource(additionalToken, _cancellationTokenSource.Token);
                 dispose = true;
             }
             else
