@@ -519,7 +519,7 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion Create
 
-        #region Create If Not Exists
+        #region CreateIfNotExists
         /// <summary>
         /// The <see cref="CreateIfNotExists"/> operation creates a new directory,
         /// if it does not already exists.  If the directory already exists, it is not
@@ -676,7 +676,7 @@ namespace Azure.Storage.Files.Shares
                 }
             }
         }
-        #endregion Create If Not exists
+        #endregion CreateIfNotExists
 
         #region Exists
         /// <summary>
@@ -781,7 +781,7 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion Exists
 
-        #region Delete If Exists
+        #region DeleteIfExists
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation removes the specified
         /// empty directory, if it exists.
@@ -883,7 +883,7 @@ namespace Azure.Storage.Files.Shares
                 }
             }
         }
-        #endregion Delete If Exists
+        #endregion DeleteIfExists
 
         #region Delete
         /// <summary>
