@@ -1,5 +1,14 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.7.1
+###  Feature Additions
+- Added additionalColumns for copy source
+- Added validate data consistency for copy activity
+- Added support session log for copy activity
+- Added isolationLevel for sql source
+- Added expiryDateTime for ADLS Gen1 source
+- Added fileListPath for binary sources
+
 ## Version 4.7.0
 ###  Feature Additions
 - Added compute support in execute data flow activity
