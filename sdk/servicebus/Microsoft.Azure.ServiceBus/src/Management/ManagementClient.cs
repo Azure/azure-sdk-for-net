@@ -881,6 +881,37 @@ namespace Microsoft.Azure.ServiceBus.Management
             return true;
         }
 
+        /// <summary>
+        /// Checks whether a given subscription exists or not.
+        /// </summary>
+        /// <param name="topicPath">Path of the topic.</param>
+        /// <param name="subscriptionName">Name of the subscription to check.</param>
+        /// <param name="ruleName">Name of the rule to check.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>True if subscription exists, false otherwise.</returns>
+        /// <exception cref="ArgumentException">topic or subscription path provided is not valid.</exception>
+        /// <exception cref="ServiceBusTimeoutException">The operation times out.</exception>
+        /// <exception cref="UnauthorizedAccessException">No sufficient permission to perform this operation. You should check to ensure that your <see cref="ManagementClient"/> has the correct <see cref="TokenProvider"/> credentials to perform this operation.</exception>
+        /// <exception cref="ServerBusyException">The server is busy. You should wait before you retry the operation.</exception>
+        /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
+        public virtual async Task<bool> RuleExistsAsync(string topicPath, string subscriptionName, string ruleName, CancellationToken cancellationToken = default)
+        {
+            EntityNameHelper.CheckValidTopicName(topicPath);
+            EntityNameHelper.CheckValidSubscriptionName(subscriptionName);
+            EntityNameHelper.CheckValidRuleName(ruleName);
+
+            try
+            {
+                var rd = await GetRuleAsync(topicPath, subscriptionName, ruleName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (MessagingEntityNotFoundException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public Task CloseAsync()
         {
             httpClient?.Dispose();

@@ -286,6 +286,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 var updatedRule2 = await client.UpdateRuleAsync(topicName, subscriptionName, rule2);
                 Assert.Equal(rule2, updatedRule2);
 
+                var exists = await client.RuleExistsAsync(topicName, subscriptionName, rule2.Name);
+                Assert.True(exists);
+
                 var defaultRule = await client.GetRuleAsync(topicName, subscriptionName, "rule0");
                 Assert.NotNull(defaultRule);
                 await client.DeleteRuleAsync(topicName, subscriptionName, "rule0");
