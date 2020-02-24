@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 {
@@ -12,13 +13,16 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// <remarks>
     ///   When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
     ///
-    ///   Do not explicity include the Guid here, since EventSource has a mechanism to automatically
+    ///   Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     ///   map to an EventSource Guid based on the Name (Azure-Messaging-EventHubs-Processor-BlobEventStore).
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs-Processor-BlobEventStore")]
+    [EventSource(Name = EventSourceName)]
     internal class BlobEventStoreEventSource : EventSource
     {
+        /// <summary>The name to use for the event source.</summary>
+        private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-BlobEventStore";
+
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
@@ -31,7 +35,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        internal BlobEventStoreEventSource() { }
+        internal BlobEventStoreEventSource()  : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        {
+        }
 
         /// <summary>
         ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.

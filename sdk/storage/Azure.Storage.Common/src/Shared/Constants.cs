@@ -285,6 +285,8 @@ namespace Azure.Storage
             /// </summary>
             public const int QueueMessageMaxBytes = 64 * Constants.KB;
 
+            public const int StatusCodeNoContent = 204;
+
             public const string MessagesUri = "messages";
 
             public const string UriSubDomain = "queue";

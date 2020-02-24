@@ -243,7 +243,9 @@ namespace Azure.Storage.Blobs
                 IAsyncEnumerator<ChunkedStream> enumerator =
                     PartitionedUploadExtensions.GetBlocksAsync(content, blockSize, async: false, _arrayPool, cancellationToken)
                     .GetAsyncEnumerator(cancellationToken);
+#pragma warning disable AZC0107
                 while (enumerator.MoveNextAsync().EnsureCompleted())
+#pragma warning restore AZC0107
                 {
                     // Dispose the block after the loop iterates and return its
                     // memory to our ArrayPool

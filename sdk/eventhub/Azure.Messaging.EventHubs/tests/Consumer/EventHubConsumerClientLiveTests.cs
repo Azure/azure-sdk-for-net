@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(EventHubsTransportType.AmqpTcp)]
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
-        public async Task ConsumerWithNoOptionsCanReceive(EventHubsTransportType transportType)
+        public async Task ConsumerWithNoOptionsCanRead(EventHubsTransportType transportType)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(EventHubsTransportType.AmqpTcp)]
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
-        public async Task ConsumerWithOptionsCanReceive(EventHubsTransportType transportType)
+        public async Task ConsumerWithOptionsCanRead(EventHubsTransportType transportType)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -115,48 +115,31 @@ namespace Azure.Messaging.EventHubs.Tests
                     await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
-                        // Read the events.
-
-                        var receivedEvents = new List<EventData>();
-                        var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
+                        async Task<bool> PublishEvents()
                         {
-                            // Send a single event to receive.
-
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition });
+                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition }).ConfigureAwait(false);
                                 wereEventsPublished = true;
-                                continue;
                             }
 
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
-
-                                if (receivedEvents.Count < 1)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
+                            return false;
                         }
 
-                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
-                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+                        // Read the events.
+
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Latest, expectedEventCount: eventBatch.Length, iterationCallback: PublishEvents, cancellationToken: cancellationSource.Token);
+
+                        // Validate the events; because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         var index = 0;
 
-                        foreach (EventData receivedEvent in receivedEvents)
+                        foreach (EventData receivedEvent in receivedEvents.Select(item => item.Data))
                         {
                             Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
@@ -192,49 +175,31 @@ namespace Azure.Messaging.EventHubs.Tests
                     await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
-                        /// Read the events.
-
-                        var receivedEvents = new List<EventData>();
-                        var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
+                        async Task<bool> PublishEvents()
                         {
-                            // Send a single event to receive.
-
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition });
-
+                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition }).ConfigureAwait(false);
                                 wereEventsPublished = true;
-                                continue;
                             }
 
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
-
-                                if (receivedEvents.Count < 1)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
+                            return false;
                         }
 
-                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
-                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+                        // Read the events.
+
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Latest, expectedEventCount: eventBatch.Length, iterationCallback: PublishEvents, cancellationToken: cancellationSource.Token);
+
+                        // Validate the events; because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         var index = 0;
 
-                        foreach (EventData receivedEvent in receivedEvents)
+                        foreach (EventData receivedEvent in receivedEvents.Select(item => item.Data))
                         {
                             Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
@@ -270,53 +235,35 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var producer = new EventHubProducerClient(connection))
-                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
+                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
-                        // Read the events.
-
-                        var receivedEvents = new List<EventData>();
-                        var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
+                        async Task<bool> PublishEvents()
                         {
-                            // Send a single event to receive.
-
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventSet, new SendEventOptions { PartitionId = partition });
-
+                                await producer.SendAsync(eventSet, new SendEventOptions { PartitionId = partition }).ConfigureAwait(false);
                                 wereEventsPublished = true;
-                                continue;
                             }
 
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
-
-                                if (receivedEvents.Count < eventSet.Length)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
+                            return false;
                         }
 
-                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
-                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+                        // Read the events.
+
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Latest, expectedEventCount: eventSet.Length, iterationCallback: PublishEvents, cancellationToken: cancellationSource.Token);
+
+                        // Validate the events; because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         var index = 0;
 
                         Assert.That(receivedEvents, Is.Not.Empty, "There should have been a set of events received.");
 
-                        foreach (EventData receivedEvent in receivedEvents)
+                        foreach (EventData receivedEvent in receivedEvents.Select(item => item.Data))
                         {
                             Assert.That(receivedEvent.IsEquivalentTo(eventSet[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
@@ -352,53 +299,35 @@ namespace Azure.Messaging.EventHubs.Tests
                     var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(5) };
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
-                    await using (var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions { RetryOptions = retryOptions }))
-                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection, new EventHubConsumerClientOptions { RetryOptions = retryOptions }))
+                    await using (var producer = new EventHubProducerClient(connection))
+                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
-                        // Read the events.
-
-                        var receivedEvents = new List<EventData>();
-                        var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
                         var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(2) };
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, readOptions))
+                        async Task<bool> PublishEvents()
                         {
-                            // Send a single event to receive.
-
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition });
-
+                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition }).ConfigureAwait(false);
                                 wereEventsPublished = true;
-                                continue;
                             }
 
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                break;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
-
-                                if (receivedEvents.Count < eventBatch.Length)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
+                            return false;
                         }
 
-                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
-                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+                        // Read the events.
+
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Latest, readOptions, expectedEventCount: eventBatch.Length, iterationCallback: PublishEvents, cancellationToken: cancellationSource.Token);
+
+                        // Validate the events; because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         var index = 0;
 
-                        foreach (EventData receivedEvent in receivedEvents)
+                        foreach (EventData receivedEvent in receivedEvents.Select(item => item.Data))
                         {
                             Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
@@ -441,51 +370,33 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var producer = new EventHubProducerClient(connection))
-                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
+                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                     {
-                        // Read the events.
-
-                        var receivedEvents = new List<EventData>();
-                        var consecutiveEmpties = 0;
                         var wereEventsPublished = false;
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
+                        async Task<bool> PublishEvents()
                         {
-                            // Send a single event to receive.
-
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition });
-
+                                await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition }).ConfigureAwait(false);
                                 wereEventsPublished = true;
-                                continue;
                             }
 
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
-
-                                if (receivedEvents.Count < eventBatch.Length)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
+                            return false;
                         }
 
-                        // Validate the events; once nulls have been removed, they should have been received in the order they were added to the batch.
-                        // Because there's a custom equality check, the built-in collection comparison is not adequate.
+                        // Read the events.
+
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Latest, expectedEventCount: eventBatch.Length, iterationCallback: PublishEvents, cancellationToken: cancellationSource.Token);
+
+                        // Validate the events; because there's a custom equality check, the built-in collection comparison is not adequate.
 
                         var index = 0;
 
-                        foreach (EventData receivedEvent in receivedEvents)
+                        foreach (EventData receivedEvent in receivedEvents.Select(item => item.Data))
                         {
                             Assert.That(receivedEvent.IsEquivalentTo(eventBatch[index]), Is.True, $"The received event at index: { index } did not match the sent batch.");
                             ++index;
@@ -512,9 +423,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var connection = new EventHubConnection(connectionString))
                 {
                     var partition = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
-                    var receivedEvents = new List<EventData>();
                     var expectedEventsCount = 1;
-                    var consecutiveEmpties = 0;
                     var wereEventsPublished = false;
 
                     var stampEvent = new EventData(new byte[1]);
@@ -531,39 +440,28 @@ namespace Azure.Messaging.EventHubs.Tests
                             await producer.SendAsync(new EventData(new byte[1]));
                         }
 
-                        await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, DefaultReadOptions))
+                        async Task<bool> PublishStampEvent()
                         {
-                            // Send a single event to receive.
-
                             if (!wereEventsPublished)
                             {
-                                await producer.SendAsync(stampEvent, new SendEventOptions { PartitionId = partition });
-
+                                await producer.SendAsync(stampEvent, new SendEventOptions { PartitionId = partition }).ConfigureAwait(false);
                                 wereEventsPublished = true;
-                                continue;
                             }
 
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
-
-                                if (receivedEvents.Count < expectedEventsCount)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
+                            return false;
                         }
 
+                        // Read the events.
+
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Latest, expectedEventCount: expectedEventsCount, iterationCallback: PublishStampEvent, cancellationToken: cancellationSource.Token);
+
+                        // Validate the events.
+
                         Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
-                        Assert.That(receivedEvents.Single().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+                        Assert.That(receivedEvents.Single().Data.IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
                     }
                 }
             }
@@ -596,29 +494,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         // Read the events.
 
-                        var consecutiveEmpties = 0;
-                        var receivedEvents = new List<EventData>();
+                        using var cancellationSource = new CancellationTokenSource();
+                        cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-                        await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions))
-                        {
-                            if (partitionEvent.Data != null)
-                            {
-                                receivedEvents.Add(partitionEvent.Data);
-                                consecutiveEmpties = 0;
-                            }
-                            else if (++consecutiveEmpties >= 5)
-                            {
-                                if (consecutiveEmpties >= 15)
-                                {
-                                    break;
-                                }
+                        var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Earliest, expectedEventCount: expectedEventsCount, cancellationToken: cancellationSource.Token);
 
-                                if (receivedEvents.Count < expectedEventsCount)
-                                {
-                                    await Task.Delay(150);
-                                }
-                            }
-                        }
+                        // Validate the events.
 
                         Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                     }
@@ -632,7 +513,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerCanReadFromOffset()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ConsumerCanReadFromOffset(bool isInclusive)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -666,34 +549,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             // Read the events.
 
-                            var expectedEventsCount = 2;
-                            var consecutiveEmpties = 0;
-                            var receivedEvents = new List<EventData>();
+                            var expectedEventsCount = isInclusive ? 2 : 1;
                             var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromOffset(offset), readOptions))
-                            {
-                                if (partitionEvent.Data != null)
-                                {
-                                    receivedEvents.Add(partitionEvent.Data);
-                                    consecutiveEmpties = 0;
-                                }
-                                else if (++consecutiveEmpties >= 5)
-                                {
-                                    if (consecutiveEmpties >= 15)
-                                    {
-                                        break;
-                                    }
+                            using var cancellationSource = new CancellationTokenSource();
+                            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-                                    if (receivedEvents.Count < expectedEventsCount)
-                                    {
-                                        await Task.Delay(150);
-                                    }
-                                }
-                            }
+                            var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.FromOffset(offset, isInclusive), readOptions, expectedEventCount: expectedEventsCount, cancellationToken: cancellationSource.Token);
+
+                            // Validate the events.
 
                             Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
-                            Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+                            Assert.That(receivedEvents.Last().Data.IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
                         }
                     }
                 }
@@ -742,33 +609,17 @@ namespace Azure.Messaging.EventHubs.Tests
                             // Read the events.
 
                             var expectedEventsCount = 1;
-                            var consecutiveEmpties = 0;
-                            var receivedEvents = new List<EventData>();
                             var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromEnqueuedTime(enqueuedTime), readOptions))
-                            {
-                                if (partitionEvent.Data != null)
-                                {
-                                    receivedEvents.Add(partitionEvent.Data);
-                                    consecutiveEmpties = 0;
-                                }
-                                else if (++consecutiveEmpties >= 5)
-                                {
-                                    if (consecutiveEmpties >= 15)
-                                    {
-                                        break;
-                                    }
+                            using var cancellationSource = new CancellationTokenSource();
+                            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-                                    if (receivedEvents.Count < expectedEventsCount)
-                                    {
-                                        await Task.Delay(150);
-                                    }
-                                }
-                            }
+                            var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.FromEnqueuedTime(enqueuedTime), readOptions, expectedEventCount: expectedEventsCount, cancellationToken: cancellationSource.Token);
+
+                            // Validate the events.
 
                             Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
-                            Assert.That(receivedEvents.Single().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+                            Assert.That(receivedEvents.Single().Data.IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
                         }
                     }
                 }
@@ -818,33 +669,17 @@ namespace Azure.Messaging.EventHubs.Tests
                             // Read the events.
 
                             var expectedEventsCount = isInclusive ? 2 : 1;
-                            var consecutiveEmpties = 0;
-                            var receivedEvents = new List<EventData>();
                             var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-                            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.FromSequenceNumber(sequenceNumber, isInclusive), readOptions))
-                            {
-                                if (partitionEvent.Data != null)
-                                {
-                                    receivedEvents.Add(partitionEvent.Data);
-                                    consecutiveEmpties = 0;
-                                }
-                                else if (++consecutiveEmpties >= 5)
-                                {
-                                    if (consecutiveEmpties >= 15)
-                                    {
-                                        break;
-                                    }
+                            using var cancellationSource = new CancellationTokenSource();
+                            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-                                    if (receivedEvents.Count < expectedEventsCount)
-                                    {
-                                        await Task.Delay(150);
-                                    }
-                                }
-                            }
+                            var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.FromSequenceNumber(sequenceNumber, isInclusive), readOptions, expectedEventCount: expectedEventsCount, cancellationToken: cancellationSource.Token);
+
+                            // Validate the events.
 
                             Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
-                            Assert.That(receivedEvents.Last().IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
+                            Assert.That(receivedEvents.Last().Data.IsEquivalentTo(stampEvent), Is.True, "The received event did not match the sent event.");
                         }
                     }
                 }
@@ -869,13 +704,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
                     var partitions = await consumer.GetPartitionIdsAsync(cancellationSource.Token);
-                    var receivedEvents = partitions.ToDictionary(partitionId => partitionId, _ => 0);
                     var eventsPerPartition = 10;
                     var expectedCount = (eventsPerPartition * partitions.Length);
-                    var readCount = 0;
-                    var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 15;
-                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events to each partition.  Because reading begins at the beginning of the partition by
                     // default, these should be observed without publishing in the read loop.
@@ -897,37 +727,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read events from all partitions.
 
-                    await foreach (var partitionEvent in consumer.ReadEventsAsync(DefaultReadOptions, cancellationSource.Token))
+                    var receivedEvents = partitions.ToDictionary(partitionId => partitionId, _ => 0);
+                    var receivedPartitionEvents = await ReadUntilEmptyAsync(consumer, expectedEventCount: expectedCount, cancellationToken: cancellationSource.Token);
+
+                    foreach (var partitionEvent in receivedPartitionEvents)
                     {
-                        if (partitionEvent.Data != null)
-                        {
-                            ++receivedEvents[partitionEvent.Partition.PartitionId];
-                            consecutiveEmpties = 0;
-
-                            if (++readCount >= expectedCount)
-                            {
-                                break;
-                            }
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (receivedEvents.Count < expectedCount)
-                            {
-                                await Task.Delay(150);
-                            }
-                        }
+                        ++receivedEvents[partitionEvent.Partition.PartitionId];
                     }
 
                     // Verify the results.
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The publishing and reading should have completed normally.");
-                    Assert.That(readCount, Is.GreaterThanOrEqualTo(expectedCount), "There was an incorrect number of events received.");
-                    Assert.That(consecutiveEmpties, Is.LessThan(maximumConsecutiveEmpties), "Reading should have ended because the events were all read.");
+                    Assert.That(receivedPartitionEvents.Count, Is.GreaterThanOrEqualTo(expectedCount), "There was an incorrect number of events received.");
 
                     foreach (var partition in partitions)
                     {
@@ -956,18 +767,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
                     var partitions = await consumer.GetPartitionIdsAsync(cancellationSource.Token);
-                    var receivedEvents = partitions.ToDictionary(partitionId => partitionId, _ => 0);
                     var eventsPerPartition = 10;
                     var expectedCount = (eventsPerPartition * partitions.Length);
-                    var readCount = 0;
-                    var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 15;
-                    var maximumConsecutiveEmptiesBeforeDelay = 5;
-                    var wereEventsPublished = false;
 
                     // Define a local function to publish events, since it will be done multiple times.
 
-                    async Task publishEvents()
+                    async Task PublishEvents()
                     {
                         foreach (var partition in partitions)
                         {
@@ -979,87 +784,55 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
 
                             await producer.SendAsync(batch, cancellationSource.Token);
-                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            await Task.Delay(TimeSpan.FromSeconds(1), cancellationSource.Token);
                         }
                     }
 
                     // Publish events before reading, then verify that they were not read.
 
-                    await publishEvents();
+                    await PublishEvents();
 
-                    await foreach (var partitionEvent in consumer.ReadEventsAsync(false, new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(50) }, cancellationSource.Token))
+                    // Read events from all partitions.
+
+                    var receivedEvents = partitions.ToDictionary(partitionId => partitionId, _ => 0);
+                    var receivedPartitionEvents = await ReadUntilEmptyAsync(consumer, new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(50) }, startReadingAtFirst: false, expectedEventCount: 0, cancellationToken: cancellationSource.Token);
+
+                    foreach (var partitionEvent in receivedPartitionEvents)
                     {
-                        if (partitionEvent.Data != null)
-                        {
-                            ++receivedEvents[partitionEvent.Partition.PartitionId];
-                            consecutiveEmpties = 0;
-
-                            if (++readCount >= expectedCount)
-                            {
-                                break;
-                            }
-                        }
-                        else if (++consecutiveEmpties >= (maximumConsecutiveEmptiesBeforeDelay))
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (receivedEvents.Count < expectedCount)
-                            {
-                                await Task.Delay(150);
-                            }
-                        }
+                        ++receivedEvents[partitionEvent.Partition.PartitionId];
                     }
 
-                    Assert.That(readCount, Is.EqualTo(0), "No events should have been read.");
-                    Assert.That(consecutiveEmpties, Is.GreaterThanOrEqualTo(maximumConsecutiveEmpties), "The empty events should have caused reading to stop.");
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The publishing and reading should have completed normally.");
+                    Assert.That(receivedPartitionEvents.Count, Is.EqualTo(0), "No events should have been read.");
 
                     // Read events across partitions, starting at the latest.  To ensure that events are observed, publish during the first
                     // empty event emitted.
 
-                    consecutiveEmpties = 0;
-                    readCount = 0;
+                    var wereEventsPublished = false;
 
-                    await foreach (var partitionEvent in consumer.ReadEventsAsync(false, DefaultReadOptions, cancellationSource.Token))
+                    async Task<bool> PublishOnFirstIteration()
                     {
                         if (!wereEventsPublished)
                         {
-                            await publishEvents();
+                            await PublishEvents().ConfigureAwait(false);
                             wereEventsPublished = true;
-                            continue;
                         }
 
-                        if (partitionEvent.Data != null)
-                        {
-                            ++receivedEvents[partitionEvent.Partition.PartitionId];
-                            consecutiveEmpties = 0;
+                        return false;
+                    }
 
-                            if (++readCount >= expectedCount)
-                            {
-                                break;
-                            }
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
+                    receivedEvents = partitions.ToDictionary(partitionId => partitionId, _ => 0);
+                    receivedPartitionEvents = await ReadUntilEmptyAsync(consumer, startReadingAtFirst: false, expectedEventCount: expectedCount, iterationCallback: PublishOnFirstIteration, cancellationToken: cancellationSource.Token);
 
-                            if (receivedEvents.Count < expectedCount)
-                            {
-                                await Task.Delay(150);
-                            }
-                        }
+                    foreach (var partitionEvent in receivedPartitionEvents)
+                    {
+                        ++receivedEvents[partitionEvent.Partition.PartitionId];
                     }
 
                     // Verify the results; events for the partitions should now have been present.
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The publishing and reading should have completed normally.");
-                    Assert.That(readCount, Is.GreaterThanOrEqualTo(expectedCount), "There was an incorrect number of events received.");
-                    Assert.That(consecutiveEmpties, Is.LessThan(maximumConsecutiveEmpties), "Reading should have ended because the events were all read.");
+                    Assert.That(receivedPartitionEvents.Count, Is.GreaterThanOrEqualTo(expectedCount), "There was an incorrect number of events received.");
 
                     foreach (var partition in partitions)
                     {
@@ -1089,10 +862,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitions = await consumer.GetPartitionIdsAsync(cancellationSource.Token);
                     var eventsPerPartition = 5;
                     var expectedCount = (eventsPerPartition * partitions.Length);
-                    var readCount = 0;
-                    var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 15;
-                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events using a set of partition keys.  Routing is controlled by the service and partitions may not
                     // receive an even distribution.  Because reading begins at the beginning of the partition by default, these
@@ -1115,36 +884,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read events from all partitions.
 
-                    await foreach (var partitionEvent in consumer.ReadEventsAsync(DefaultReadOptions, cancellationSource.Token))
-                    {
-                        if (partitionEvent.Data != null)
-                        {
-                            consecutiveEmpties = 0;
-
-                            if (++readCount >= expectedCount)
-                            {
-                                break;
-                            }
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (readCount < expectedCount)
-                            {
-                                await Task.Delay(50);
-                            }
-                        }
-                    }
+                    var receivedEvents = await ReadUntilEmptyAsync(consumer, expectedEventCount: expectedCount, cancellationToken: cancellationSource.Token);
 
                     // Verify the results.
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The publishing and reading should have completed normally.");
-                    Assert.That(readCount, Is.EqualTo(expectedCount), "There was an incorrect number of events received.");
-                    Assert.That(consecutiveEmpties, Is.LessThan(maximumConsecutiveEmpties), "Reading should have ended because the events were all read.");
+                    Assert.That(receivedEvents.Count, Is.EqualTo(expectedCount), "There was an incorrect number of events received.");
                 }
             }
         }
@@ -1170,10 +915,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     var eventsPerPartition = 5;
                     var expectedCount = (eventsPerPartition * partitions.Length);
                     var eventsBatched = 0;
-                    var readCount = 0;
-                    var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 15;
-                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events without influencing the partition.  Routing is controlled by the service and partitions may not
                     // receive an even distribution.  Because reading begins at the beginning of the partition by default, these
@@ -1196,36 +937,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read events from all partitions.
 
-                    await foreach (var partitionEvent in consumer.ReadEventsAsync(DefaultReadOptions, cancellationSource.Token))
-                    {
-                        if (partitionEvent.Data != null)
-                        {
-                            consecutiveEmpties = 0;
-
-                            if (++readCount >= expectedCount)
-                            {
-                                break;
-                            }
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (readCount < expectedCount)
-                            {
-                                await Task.Delay(50);
-                            }
-                        }
-                    }
+                    var receivedEvents = await ReadUntilEmptyAsync(consumer, expectedEventCount: expectedCount, cancellationToken: cancellationSource.Token);
 
                     // Verify the results.
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The publishing and reading should have completed normally.");
-                    Assert.That(readCount, Is.EqualTo(expectedCount), "There was an incorrect number of events received.");
-                    Assert.That(consecutiveEmpties, Is.LessThan(maximumConsecutiveEmpties), "Reading should have ended because the events were all read.");
+                    Assert.That(receivedEvents.Count, Is.EqualTo(expectedCount), "There was an incorrect number of events received.");
                 }
             }
         }
@@ -1255,30 +972,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read the events.
 
-                    var consecutiveEmpties = 0;
-                    var receivedEvents = new List<EventData>();
+                    using var cancellationSource = new CancellationTokenSource();
+                    cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
-                    await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions))
-                    {
-                        if (partitionEvent.Data != null)
-                        {
-                            receivedEvents.Add(partitionEvent.Data);
-                            consecutiveEmpties = 0;
-                        }
-                        else if (++consecutiveEmpties >= 5)
-                        {
-                            if (consecutiveEmpties >= 15)
-                            {
-                                break;
-                            }
-
-                            if (receivedEvents.Count < expectedEventsCount)
-                            {
-                                await Task.Delay(150);
-                            }
-                        }
-                    }
-
+                    var receivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Earliest, expectedEventCount: expectedEventsCount, cancellationToken: cancellationSource.Token);
                     Assert.That(receivedEvents.Count, Is.EqualTo(expectedEventsCount), $"The number of received events should be { expectedEventsCount }.");
                 }
             }
@@ -1304,10 +1001,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partitions = await consumer.GetPartitionIdsAsync(cancellationSource.Token);
                     var eventsPerPartition = 10;
                     var expectedCount = (eventsPerPartition * partitions.Length);
-                    var readCount = 0;
-                    var consecutiveEmpties = 0;
-                    var maximumConsecutiveEmpties = 15;
-                    var maximumConsecutiveEmptiesBeforeDelay = 5;
 
                     // Send events to each partition.  Because reading begins at the beginning of the partition by
                     // default, these should be observed without publishing in the read loop.
@@ -1329,36 +1022,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read events from all partitions.
 
-                    await foreach (var partitionEvent in consumer.ReadEventsAsync(DefaultReadOptions, cancellationSource.Token))
-                    {
-                        if (partitionEvent.Data != null)
-                        {
-                            consecutiveEmpties = 0;
-
-                            if (++readCount >= expectedCount)
-                            {
-                                break;
-                            }
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (readCount < expectedCount)
-                            {
-                                await Task.Delay(50);
-                            }
-                        }
-                    }
+                    var receivedEvents = await ReadUntilEmptyAsync(consumer, expectedEventCount: expectedCount, cancellationToken: cancellationSource.Token);
 
                     // Verify the results.
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The publishing and reading should have completed normally.");
-                    Assert.That(readCount, Is.GreaterThanOrEqualTo(expectedCount), "There was an incorrect number of events received.");
-                    Assert.That(consecutiveEmpties, Is.LessThan(maximumConsecutiveEmpties), "Reading should have ended because the events were all read.");
+                    Assert.That(receivedEvents.Count, Is.GreaterThanOrEqualTo(expectedCount), "There was an incorrect number of events received.");
                 }
             }
         }
@@ -2087,19 +1756,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var connection = new EventHubConnection(connectionString))
                 {
                     var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
-
-                    using var cancellationSource = new CancellationTokenSource();
-                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                    var wereEventsPublished = false;
 
                     await using var producer = new EventHubProducerClient(connection);
                     await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
 
-                    var receivedEvents = new List<EventData>();
-                    var wereEventsPublished = false;
-                    var maximumConsecutiveEmpties = 10;
-                    var consecutiveEmpties = 0;
+                    using var cancellationSource = new CancellationTokenSource();
+                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[1], EventPosition.Latest, DefaultReadOptions, cancellationSource.Token))
+                    async Task<bool> PublishEvents()
                     {
                         if (!wereEventsPublished)
                         {
@@ -2114,20 +1779,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             await Task.Delay(TimeSpan.FromSeconds(1));
                             wereEventsPublished = true;
-                            continue;
                         }
 
-                        if (partitionEvent.Data != null)
-                        {
-                            receivedEvents.Add(partitionEvent.Data);
-                            consecutiveEmpties = 0;
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmpties)
-                        {
-                            break;
-                        }
+                        return false;
                     }
 
+                    var receivedEvents = await ReadUntilEmptyAsync(consumer, partitionIds[1], EventPosition.Latest, expectedEventCount: eventBatch.Length, iterationCallback: PublishEvents, cancellationToken: cancellationSource.Token);
                     Assert.That(receivedEvents, Is.Empty, "There should not have been a set of events received.");
                 }
             }
@@ -2171,55 +1828,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read back the events from two different consumer groups.
 
-                    var maximumConsecutiveEmpties = 15;
-                    var maximumConsecutiveEmptiesBeforeDelay = 5;
-                    var consecutiveEmpties = 0;
-                    var consumerReceivedEvents = new List<EventData>();
-                    var anotherReceivedEvents = new List<EventData>();
                     var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
-
-                    await foreach (var consumerEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, readOptions, cancellationSource.Token))
-                    {
-                        if (consumerEvent.Data != null)
-                        {
-                            consumerReceivedEvents.Add(consumerEvent.Data);
-                            consecutiveEmpties = 0;
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (consumerReceivedEvents.Count < eventBatch.Length)
-                            {
-                                await Task.Delay(50);
-                            }
-                        }
-                    }
-
-                    consecutiveEmpties = 0;
-                    await foreach (var anotherEvent in anotherConsumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, readOptions, cancellationSource.Token))
-                    {
-                        if (anotherEvent.Data != null)
-                        {
-                            anotherReceivedEvents.Add(anotherEvent.Data);
-                            consecutiveEmpties = 0;
-                        }
-                        else if (++consecutiveEmpties >= maximumConsecutiveEmptiesBeforeDelay)
-                        {
-                            if (consecutiveEmpties >= maximumConsecutiveEmpties)
-                            {
-                                break;
-                            }
-
-                            if (anotherReceivedEvents.Count < eventBatch.Length)
-                            {
-                                await Task.Delay(50);
-                            }
-                        }
-                    }
+                    var consumerReceivedEvents = await ReadUntilEmptyAsync(consumer, partition, EventPosition.Earliest, readOptions, expectedEventCount: eventBatch.Length, cancellationToken: cancellationSource.Token);
+                    var anotherReceivedEvents = await ReadUntilEmptyAsync(anotherConsumer, partition, EventPosition.Earliest, readOptions, expectedEventCount: eventBatch.Length, cancellationToken: cancellationSource.Token);
 
                     Assert.That(consumerReceivedEvents.Count, Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { consumer.ConsumerGroup } did not match the batch size.");
                     Assert.That(anotherReceivedEvents.Count, Is.EqualTo(eventBatch.Length), $"The number of received events in consumer group { anotherConsumer.ConsumerGroup } did not match the batch size.");
@@ -2480,6 +2091,139 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Reads from the requested partition until there are no events available for
+        ///   a number of consecutive iterations.
+        /// </summary>
+        ///
+        /// <param name="consumer">The consumer to use for reading.</param>
+        /// <param name="partition">The partition read from.</param>
+        /// <param name="startingPosition">The position in the partition to start reading from.</param>
+        /// <param name="readOptions">The options to apply when reading.</param>
+        /// <param name="expectedEventCount">The expected count of events; when the read count is below this number, the delay will be applied between loop iterations.</param>
+        /// <param name="consecutiveEmptyLimit">The limit for the number of consecutive empty events before reading is terminated.</param>
+        /// <param name="consecutiveEmptyDelayThreshold">The threshold of consecutive empty events to allow before applying the delay or termination; this number should be less than <paramref name="consecutiveEmptyLimit"/>.</param>
+        /// <param name="consecutiveEmptyDelayMilliseconds">The delay, in milliseconds, to apply between iterations when the <paramref name="consecutiveEmptyDelayThreshold"/> is reached and less than the <paramref name="expectedEventCount"/> events have been read.</param>
+        /// <param name="iterationCallback">A callback to invoke at the beginning of each read iteration; if this returns <c>true</c>, reading will be terminated.</param>
+        /// <param name="cancellationToken">The token to consider for cancellation of the operation.</param>
+        ///
+        /// <returns>The set of partition events that were read which contain event data.</returns>
+        ///
+        private async Task<IList<PartitionEvent>> ReadUntilEmptyAsync(EventHubConsumerClient consumer,
+                                                                      string partition,
+                                                                      EventPosition startingPosition,
+                                                                      ReadEventOptions readOptions = default,
+                                                                      int expectedEventCount = int.MaxValue,
+                                                                      int consecutiveEmptyLimit = 15,
+                                                                      int consecutiveEmptyDelayThreshold = 5,
+                                                                      int consecutiveEmptyDelayMilliseconds = 250,
+                                                                      Func<Task<bool>> iterationCallback = default,
+                                                                      CancellationToken cancellationToken = default)
+        {
+            readOptions ??= DefaultReadOptions;
+
+            var readEvents = new List<PartitionEvent>();
+            var consecutiveEmpties = 0;
+            var readAwaitable = consumer.ReadEventsFromPartitionAsync(partition, startingPosition, readOptions, cancellationToken).ConfigureAwait(false);
+
+            await foreach (var partitionEvent in readAwaitable)
+            {
+                if (iterationCallback != null)
+                {
+                    if (await iterationCallback().ConfigureAwait(false))
+                    {
+                        break;
+                    }
+                }
+
+                if (partitionEvent.Data != null)
+                {
+                    readEvents.Add(partitionEvent);
+                    consecutiveEmpties = 0;
+                }
+                else if (++consecutiveEmpties >= consecutiveEmptyDelayThreshold)
+                {
+                    if (consecutiveEmpties >= consecutiveEmptyLimit)
+                    {
+                        break;
+                    }
+
+                    if (readEvents.Count < expectedEventCount)
+                    {
+                        await Task.Delay(consecutiveEmptyDelayMilliseconds, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+            }
+
+            return readEvents;
+        }
+
+        /// <summary>
+        ///   Reads from all partitions until there are no events available for
+        ///   a number of consecutive iterations.
+        /// </summary>
+        ///
+        /// <param name="consumer">The consumer to use for reading.</param>
+        /// <param name="startingPosition">The position in the partition to start reading from.</param>
+        /// <param name="readOptions">The options to apply when reading.</param>
+        /// <param name="startReadingAtFirst"><c>true</c> if reading should begin at the beginning of the event stream; otherwise, reading begins at the end of the stream.</param>
+        /// <param name="expectedEventCount">The expected count of events; when the read count is below this number, the delay will be applied between loop iterations.</param>
+        /// <param name="consecutiveEmptyLimit">The limit for the number of consecutive empty events before reading is terminated.</param>
+        /// <param name="consecutiveEmptyDelayThreshold">The threshold of consecutive empty events to allow before applying the delay or termination; this number should be less than <paramref name="consecutiveEmptyLimit"/>.</param>
+        /// <param name="consecutiveEmptyDelayMilliseconds">The delay, in milliseconds, to apply between iterations when the <paramref name="consecutiveEmptyDelayThreshold"/> is reached and less than the <paramref name="expectedEventCount"/> events have been read.</param>
+        /// <param name="iterationCallback">A callback to invoke at the beginning of each read iteration; if this returns <c>true</c>, reading will be terminated.</param>
+        /// <param name="cancellationToken">The token to consider for cancellation of the operation.</param>
+        ///
+        /// <returns>The set of partition events that were read which contain event data.</returns>
+        ///
+        private async Task<IList<PartitionEvent>> ReadUntilEmptyAsync(EventHubConsumerClient consumer,
+                                                                      ReadEventOptions readOptions = default,
+                                                                      bool startReadingAtFirst = true,
+                                                                      int expectedEventCount = int.MaxValue,
+                                                                      int consecutiveEmptyLimit = 15,
+                                                                      int consecutiveEmptyDelayThreshold = 5,
+                                                                      int consecutiveEmptyDelayMilliseconds = 250,
+                                                                      Func<Task<bool>> iterationCallback = default,
+                                                                      CancellationToken cancellationToken = default)
+        {
+            readOptions ??= DefaultReadOptions;
+
+            var readEvents = new List<PartitionEvent>();
+            var consecutiveEmpties = 0;
+            var readAwaitable = consumer.ReadEventsAsync(startReadingAtFirst, readOptions, cancellationToken).ConfigureAwait(false);
+
+            await foreach (var partitionEvent in readAwaitable)
+            {
+                if (iterationCallback != null)
+                {
+                    if (await iterationCallback().ConfigureAwait(false))
+                    {
+                        break;
+                    }
+                }
+
+                if (partitionEvent.Data != null)
+                {
+                    readEvents.Add(partitionEvent);
+                    consecutiveEmpties = 0;
+                }
+                else if (++consecutiveEmpties >= consecutiveEmptyDelayThreshold)
+                {
+                    if (consecutiveEmpties >= consecutiveEmptyLimit)
+                    {
+                        break;
+                    }
+
+                    if (readEvents.Count < expectedEventCount)
+                    {
+                        await Task.Delay(consecutiveEmptyDelayMilliseconds, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+            }
+
+            return readEvents;
+        }
+
+        /// <summary>
         ///   Iterates a partition for the given consumer a small number of times, ignoring the events.
         /// </summary>
         ///
@@ -2487,6 +2231,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="partition">The partition read from.</param>
         /// <param name="startingPosition">The position in the partition to start reading from.</param>
         /// <param name="iterationCount">The number of iterations to perform.</param>
+        /// <param name="readOptions">The options to apply when reading.</param>
         ///
         private async Task ReadNothingAsync(EventHubConsumerClient consumer,
                                             string partition,

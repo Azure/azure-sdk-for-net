@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 #nullable enable
 
@@ -39,9 +40,8 @@ namespace Azure.Core.Pipeline
 
         public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            ValueTask<string?> contentTask = ReadContentAsync(response, false);
-            Debug.Assert(contentTask.IsCompleted);
-            return CreateRequestFailedExceptionWithContent(response, message, contentTask.GetAwaiter().GetResult(), errorCode, additionalInfo, innerException);
+            string? content = ReadContentAsync(response, false).EnsureCompleted();
+            return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedExceptionWithContent(
@@ -68,14 +68,12 @@ namespace Azure.Core.Pipeline
 
         public ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message = null, string? errorCode= null, IDictionary<string, string>? additionalInfo = null)
         {
-            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, async: true);
+            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, true);
         }
 
         public string CreateRequestFailedMessage(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
         {
-            ValueTask<string> messageTask = CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false);
-            Debug.Assert(messageTask.IsCompleted);
-            return messageTask.GetAwaiter().GetResult();
+            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false).EnsureCompleted();
         }
 
         private async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)

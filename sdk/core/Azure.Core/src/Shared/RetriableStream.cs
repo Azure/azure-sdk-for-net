@@ -132,9 +132,7 @@ namespace Azure.Core.Pipeline
                     }
                     catch (Exception e)
                     {
-                        Task task = RetryAsync(e, false);
-                        Debug.Assert(task.IsCompleted);
-                        task.GetAwaiter().GetResult();
+                        RetryAsync(e, false).EnsureCompleted();
                     }
                 }
             }
