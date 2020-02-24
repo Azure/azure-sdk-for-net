@@ -22,8 +22,27 @@ namespace Azure.Identity
         private const string AzNotLogIn = "Please run 'az login' to setup account";
         private const string WinAzureCLIError = "'az' is not recognized";
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
-
+        private const string AzureCliDefaultPath = "/usr/bin:/usr/local/bin";
+        private static readonly string AzureCliDefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
+        private readonly string _path;
         private const int CliProcessTImeoutMs = 10000;
+
+        public AzureCliCredentialClient(string path = default)
+        {
+            _path = path ?? GetPathFromEnvironment();
+        }
+
+        private static string GetPathFromEnvironment()
+        {
+            string path = EnvironmentVariables.AzureCliPath;
+
+            if (string.IsNullOrEmpty(path))
+            {
+                path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? AzureCliDefaultPathWindows : AzureCliDefaultPath;
+            }
+
+            return path;
+        }
 
         public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
         {
@@ -94,7 +113,8 @@ namespace Azure.Identity
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                Environment = { { "PATH", _path } }
             };
 
             return isAsync ? await RunProcessAsync(isAsync, procStartInfo, cancellationToken).ConfigureAwait(false) : RunProcessAsync(isAsync, procStartInfo, cancellationToken).GetAwaiter().GetResult();
