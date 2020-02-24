@@ -1,4 +1,4 @@
----
+﻿---
 page_type: sample
 languages:
 - csharp
@@ -33,40 +33,40 @@ If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/
 
 ## Available samples
 
-- [Hello world](./Sample01_HelloWorld.cs)  
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample01_HelloWorld.cs)  
   An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.
 
-- [Create an Event Hub client with custom options](./Sample02_ClientWithCustomOptions.cs)  
+- [Create an Event Hub client with custom options](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_ClientWithCustomOptions.cs)  
   An introduction to Event Hubs, exploring additional options for creating the different Event Hub clients.
 
-- [Publish an event batch to an Event Hub](./Sample03_PublishAnEventBatch.cs)  
+- [Publish an event batch to an Event Hub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_PublishAnEventBatch.cs)  
   An introduction to publishing events, using a batch with single event.  
   
-- [Publish multiple event batches to an Event Hub](./Sample04_PublishMultipleEventBatches.cs)  
+- [Publish multiple event batches to an Event Hub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishMultipleEventBatches.cs)  
   An example of publishing events using multiple batches.    
 
-- [Read events from an Event Hub](./Sample05_ReadEvents.cs)  
+- [Read events from an Event Hub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadEvents.cs)  
   An introduction to reading all events available from an Event Hub.
 
-- [Publish an event batch using a partition key](./Sample06_PublishAnEventBatchWithPartitionKey.cs)  
+- [Publish an event batch using a partition key](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_PublishAnEventBatchWithPartitionKey.cs)  
   An introduction to publishing events using a partition key to group batches together.
 
-- [Publish an event batch to a specific partition](./Sample07_PublishAnEventBatchToASpecificPartition.cs)  
+- [Publish an event batch to a specific partition](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_PublishAnEventBatchToASpecificPartition.cs)  
   An introduction to publishing events, specifying a specific partition for the batch to be published to.
 
-- [Publish events with custom metadata](./Sample08_PublishEventsWithCustomMetadata.cs)  
+- [Publish events with custom metadata](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_PublishEventsWithCustomMetadata.cs)  
   An example of publishing events, extending the event data with custom metadata.
 
-- [Read only new events from an Event Hub](./Sample09_ReadOnlyNewEvents.cs)  
+- [Read only new events from an Event Hub](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadOnlyNewEvents.cs)  
   An example of reading events, beginning with only those newly available from an Event Hub.
 
-- [Read events from a known position in an Event Hub partition](./Sample10_ReadEventsFromAKnownPosition.cs)  
+- [Read events from a known position in an Event Hub partition](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_ReadEventsFromAKnownPosition.cs)  
   An example of reading events from a single Event Hub partition, starting at a well-known position.
 
-- [Publish an event batch with a custom size limit](./Sample11_PublishAnEventBatchWithCustomSizeLimit.cs)  
+- [Publish an event batch with a custom size limit](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_PublishAnEventBatchWithCustomSizeLimit.cs)  
   An example of publishing events using a custom size limitation with the batch.
 
-- [Authorize using a service principal with client secret](./Sample12_AuthenticateWithClientSecretCredential.cs)  
+- [Authorize using a service principal with client secret](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample12_AuthenticateWithClientSecretCredential.cs)  
   An example of interacting with an Event Hub using an Azure Active Directory application with client secret for authorization.
 
 ## Contributing  
