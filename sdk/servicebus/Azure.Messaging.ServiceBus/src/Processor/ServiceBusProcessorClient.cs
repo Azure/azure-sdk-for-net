@@ -292,7 +292,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
-        /// <param name="lockToken">The lock token of the <see cref="ServiceBusMessage" />.</param>
+        /// <param name="message">The lock token of the <see cref="ServiceBusMessage" />.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
         /// <param name="cancellationToken"></param>
         /// <remarks>
@@ -303,7 +303,7 @@ namespace Azure.Messaging.ServiceBus
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        public virtual async Task DeferAsync(string lockToken, IDictionary<string, object> propertiesToModify = null,
+        public virtual async Task DeferAsync(ServiceBusReceivedMessage message, IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
             // TODO implement
@@ -314,7 +314,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Moves a message to the deadletter sub-queue.
         /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
         /// <param name="cancellationToken"></param>
         /// <remarks>
@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus
         /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        public virtual async Task DeadLetterAsync(string lockToken, IDictionary<string, object> propertiesToModify = null, CancellationToken cancellationToken = default)
+        public virtual async Task DeadLetterAsync(ServiceBusReceivedMessage message, IDictionary<string, object> propertiesToModify = null, CancellationToken cancellationToken = default)
         {
             // TODO implement
 
@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Moves a message to the deadletter sub-queue.
         /// </summary>
-        /// <param name="lockToken">The lock token of the corresponding message to deadletter.</param>
+        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
         /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
         /// <param name="cancellationToken"></param>
@@ -346,7 +346,7 @@ namespace Azure.Messaging.ServiceBus
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        public virtual async Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null,
+        public virtual async Task DeadLetterAsync(ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null,
             CancellationToken cancellationToken = default)
         {
             // TODO implement
@@ -371,26 +371,26 @@ namespace Azure.Messaging.ServiceBus
             message.LockedUntilUtc = await _receiver.RenewLockAsync(message.LockToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
-        /// <returns>New lock token expiry date and time in UTC format.</returns>
-        /// </summary>
-        /// <param name="lockToken">Lock token associated with the message.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
-        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
-        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
-        /// </remarks>
-        public virtual async Task<DateTime> RenewLockAsync(
-            string lockToken,
-            CancellationToken cancellationToken = default)
-        {
-            // TODO implement
+        ///// <summary>
+        ///// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
+        ///// <returns>New lock token expiry date and time in UTC format.</returns>
+        ///// </summary>
+        ///// <param name="lockToken">Lock token associated with the message.</param>
+        ///// <param name="cancellationToken"></param>
+        ///// <remarks>
+        ///// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        ///// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
+        ///// If processing of the message requires longer than this duration, the lock needs to be renewed.
+        ///// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
+        ///// </remarks>
+        //public virtual async Task<DateTime> RenewLockAsync(
+        //    string lockToken,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    // TODO implement
 
-            return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
-        }
+        //    return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
+        //}
 
 
         /// <summary>
@@ -418,9 +418,9 @@ namespace Azure.Messaging.ServiceBus
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="messages">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task CompleteAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        public virtual async Task CompleteAsync(IEnumerable<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken = default)
         {
             // TODO implement
 

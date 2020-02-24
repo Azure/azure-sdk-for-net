@@ -345,12 +345,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ServiceBusMessage> ReceiveAsync(
+        public virtual async Task<ServiceBusReceivedMessage> ReceiveAsync(
             CancellationToken cancellationToken = default)
         {
             // TODO implement to use ReceiveBatch
-            IEnumerable<ServiceBusMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: 1).ConfigureAwait(false);
-            foreach (ServiceBusMessage message in result)
+            IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: 1).ConfigureAwait(false);
+            foreach (ServiceBusReceivedMessage message in result)
             {
                 return message;
             }
@@ -389,12 +389,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="fromSequenceNumber"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ServiceBusMessage> PeekBySequenceAsync(
+        public virtual async Task<ServiceBusReceivedMessage> PeekBySequenceAsync(
             long fromSequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: fromSequenceNumber).ConfigureAwait(false);
-            foreach (ServiceBusMessage message in result)
+            IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: fromSequenceNumber).ConfigureAwait(false);
+            foreach (ServiceBusReceivedMessage message in result)
             {
                 return message;
             }
@@ -407,11 +407,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusMessage>> PeekBatchAsync(
+        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> PeekBatchAsync(
             int maxMessages,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> messages = null;
+            IEnumerable<ServiceBusReceivedMessage> messages = null;
             await RetryPolicy.RunOperation(
                     async (timeout) =>
                     {
@@ -435,12 +435,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusMessage>> PeekBatchBySequenceAsync(
+        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> PeekBatchBySequenceAsync(
             long fromSequenceNumber,
             int maxMessages = 1,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> messages = null;
+            IEnumerable<ServiceBusReceivedMessage> messages = null;
             await RetryPolicy.RunOperation(
                     async (timeout) =>
                     {
@@ -883,12 +883,12 @@ namespace Azure.Messaging.ServiceBus
                 rejected = new Rejected { Error = new Error { Condition = AmqpClientConstants.DeadLetterName, Info = new Fields() } };
                 if (deadLetterReason != null)
                 {
-                    rejected.Error.Info.Add(ServiceBusMessage.DeadLetterReasonHeader, deadLetterReason);
+                    rejected.Error.Info.Add(ServiceBusReceivedMessage.DeadLetterReasonHeader, deadLetterReason);
                 }
 
                 if (deadLetterErrorDescription != null)
                 {
-                    rejected.Error.Info.Add(ServiceBusMessage.DeadLetterErrorDescriptionHeader, deadLetterErrorDescription);
+                    rejected.Error.Info.Add(ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader, deadLetterErrorDescription);
                 }
 
                 if (propertiesToModify != null)
@@ -918,12 +918,12 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Message identified by sequence number <paramref name="sequenceNumber"/>. Returns null if no such message is found.
         /// Throws if the message has not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public virtual async Task<ServiceBusMessage> ReceiveDeferredMessageAsync(
+        public virtual async Task<ServiceBusReceivedMessage> ReceiveDeferredMessageAsync(
             long sequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> result = await ReceiveDeferredMessageBatchAsync(sequenceNumbers: new long[] { sequenceNumber }).ConfigureAwait(false);
-            foreach (ServiceBusMessage message in result)
+            IEnumerable<ServiceBusReceivedMessage> result = await ReceiveDeferredMessageBatchAsync(sequenceNumbers: new long[] { sequenceNumber }).ConfigureAwait(false);
+            foreach (ServiceBusReceivedMessage message in result)
             {
                 return message;
             }
@@ -938,7 +938,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public virtual async Task<IEnumerable<ServiceBusMessage>> ReceiveDeferredMessageBatchAsync(
+        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveDeferredMessageBatchAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {

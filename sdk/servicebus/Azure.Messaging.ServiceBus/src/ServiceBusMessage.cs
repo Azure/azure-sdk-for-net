@@ -16,16 +16,6 @@ namespace Azure.Messaging.ServiceBus
     /// </remarks>
     public class ServiceBusMessage
     {
-        /// <summary>
-        /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        public static string DeadLetterReasonHeader = "DeadLetterReason";
-
-        /// <summary>
-        /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
-        /// </summary>
-        public static string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
-
         private string messageId;
         private string sessionId;
         private string replyToSessionId;
