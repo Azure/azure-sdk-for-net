@@ -281,7 +281,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(2)]
         [TestCase(4)]
         [TestCase(15)]
-        //[Ignore("Failing test: needs debugging (Tracked by: #7458)")]
         public async Task EventProcessorWaitsMaximumWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
