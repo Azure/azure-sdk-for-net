@@ -13,12 +13,12 @@
 			<![CDATA[
 New features:
 - Added support for failover databases and elastic pools.
-		<Version>1.37.0-preview</Version>
+		<Version>1.38.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-- Added support for failover databases readable secondary.
-- Operations Get, Create, Update and Delete from ManagedInstanceAdministratorsOperations have a different signature. Parameter "administratorName" is omitted.
+- Added PublicNetworkAccess to Server properties
+- Added PrivateEndpointConnections to be returned as part of Server properties
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

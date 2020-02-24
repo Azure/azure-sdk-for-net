@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
@@ -76,6 +77,78 @@ namespace Sql.Tests
 
                 var listServers2 = sqlClient.Servers.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(1, listServers2.Count());
+            }
+        }
+
+        [Fact]
+        public void TestServerPublicNetworkAccess()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string location = TestEnvironmentUtilities.DefaultEuapPrimaryLocationId;
+                string enabled = "Enabled";
+                string disabled = "Disabled";
+
+                string serverName1= SqlManagementTestUtilities.GenerateName();
+                string serverName2 = SqlManagementTestUtilities.GenerateName();
+                string login = "dummylogin";
+                string password = "Un53cuRE!";
+                string version12 = "12.0";
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create server with PublicNetworkAccess disabled and verify its been disabled
+                var server1 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName1, new Server()
+                {
+                    AdministratorLogin = login,
+                    AdministratorLoginPassword = password,
+                    Version = version12,
+                    Tags = tags,
+                    Location = location,
+                    PublicNetworkAccess = disabled
+                });
+                SqlManagementTestUtilities.ValidateServer(server1, serverName1, login, version12, tags, location, disabled);
+
+                // Get server and verify that server is disabled
+                server1 = sqlClient.Servers.Get(resourceGroup.Name, serverName1);
+                SqlManagementTestUtilities.ValidateServer(server1, serverName1, login, version12, tags, location, disabled);
+
+                // Create server with PublicNetworkAccess enabled and verify its been enabled
+                server1 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName1, new Server()
+                {
+                    Location = location,
+                    PublicNetworkAccess = enabled
+                });
+                SqlManagementTestUtilities.ValidateServer(server1, serverName1, login, version12, tags, location, enabled); ;
+
+                // Create second server with no PublicNetworkAccess verify it defaults to enabled
+                var server2 = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName2, new Server()
+                {
+                    AdministratorLogin = login,
+                    AdministratorLoginPassword = password,
+                    Version = version12,
+                    Tags = tags,
+                    Location = location,
+                });
+                SqlManagementTestUtilities.ValidateServer(server2, serverName2, login, version12, tags, location, enabled);
+
+                // Get servers and verify all are enabled
+                var serverList = sqlClient.Servers.List();
+                foreach (var server in serverList)
+                {
+                    if (server.Name.Equals(serverName1) || server.Name.Equals(serverName2))
+                    {
+                        Assert.Equal(enabled, server.PublicNetworkAccess);
+                    }
+                }
+
+                // Drop servers
+                sqlClient.Servers.Delete(resourceGroup.Name, serverName1);
+                sqlClient.Servers.Delete(resourceGroup.Name, serverName2);
             }
         }
     }
