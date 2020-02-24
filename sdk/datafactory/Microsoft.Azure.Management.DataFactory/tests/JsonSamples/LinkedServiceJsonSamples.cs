@@ -2426,6 +2426,23 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string Db2LinkedServiceWithConnectionString = @"
+{
+    name: ""Db2LinkedService"",
+    properties:
+    {
+        type: ""Db2"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString : ""Server=<server>;Database=<database>;AuthenticationType=Basic;UserName=<username>;PackageCollection=<packageCollection>;CertificateCommonName=<certificateCommonName>""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string SapOpenHubLinkedService = @"
 {
     ""name"": ""SapBwOpenHubLinkedService"",
