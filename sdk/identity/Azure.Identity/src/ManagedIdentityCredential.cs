@@ -9,12 +9,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Attempts authentication using a managed identity that has been assigned to the deployment environment.This authentication type works in Azure VMs,
-    /// App Service and Azure Functions applications, as well as inside of Azure Cloud Shell. More information about configuring managed identities can be found here:
+    /// Attempts authentication using a managed identity that has been assigned to the deployment environment. This authentication type works in Azure VMs,
+    /// App Service and Azure Functions applications, as well as the Azure Cloud Shell. More information about configuring managed identities can be found here:
     /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview
     /// </summary>
     public class ManagedIdentityCredential : TokenCredential
@@ -36,10 +37,10 @@ namespace Azure.Identity
         /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
         /// </summary>
         /// <param name="clientId">
-        /// The client id to authenticate for a user assigned managed identity.  More information on user assigned managed identities cam be found here:
+        /// The client id to authenticate for a user assigned managed identity.  More information on user assigned managed identities can be found here:
         /// https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm
         /// </param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(clientId, CredentialPipeline.GetInstance(options))
         {
@@ -77,16 +78,16 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/> if no managed identity is available.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ManagedIdentityCredential.GetToken", requestContext);
 
             try
             {
-                AccessToken result = isAsync ? await _client.AuthenticateAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.Authenticate(requestContext.Scopes, cancellationToken);
+                AccessToken result = async ? await _client.AuthenticateAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.Authenticate(requestContext.Scopes, cancellationToken);
 
                 return scope.Succeeded(result);
             }

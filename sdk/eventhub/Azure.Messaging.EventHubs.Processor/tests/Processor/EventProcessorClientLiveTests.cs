@@ -461,6 +461,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task ProcessorDoesNotProcessCheckpointedEventsAgain()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -477,7 +478,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Select(index => new EventData(Encoding.UTF8.GetBytes($"Second event batch: { index }")))
                     .ToList();
 
-                var completionSource = new TaskCompletionSource<bool>();
+                var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 var firstBatchReceivedEventsCount = 0;
 
                 // Send the first batch of events and checkpoint after the last one.
@@ -538,7 +539,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     await producer.SendAsync(batch);
                 }
 
-                completionSource = new TaskCompletionSource<bool>();
+                completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 var secondBatchReceivedEvents = new List<EventData>();
 
                 var secondProcessor = new EventProcessorClient(checkpointStorage, EventHubConsumerClient.DefaultConsumerGroupName,

@@ -608,7 +608,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
             RequestConditions conditions,
+#pragma warning disable AZC0105
             bool async,
+#pragma warning restore AZC0105
             CancellationToken cancellationToken)
         {
             EnsureClient();

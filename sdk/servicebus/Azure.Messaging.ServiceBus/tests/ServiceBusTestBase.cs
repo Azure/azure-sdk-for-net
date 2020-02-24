@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
@@ -17,6 +18,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                 messages.Add(GetMessage(sessionId, partitionKey));
             }
             return messages;
+        }
+
+        protected Task ExceptionHandler(ExceptionReceivedEventArgs eventArgs)
+        {
+            return Task.CompletedTask;
         }
 
         protected ServiceBusMessage GetMessage(string sessionId = null, string partitionKey = null)

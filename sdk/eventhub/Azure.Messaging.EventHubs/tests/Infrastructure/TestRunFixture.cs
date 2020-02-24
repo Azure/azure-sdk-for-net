@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             try
             {
-                if (TestEnvironment.WasEventHubsNamespaceCreated)
+                if (TestEnvironment.ShouldRemoveNamespaceAfterTestRunCompletion)
                 {
                     EventHubScope.DeleteNamespaceAsync(TestEnvironment.EventHubsNamespace).GetAwaiter().GetResult();
                 }

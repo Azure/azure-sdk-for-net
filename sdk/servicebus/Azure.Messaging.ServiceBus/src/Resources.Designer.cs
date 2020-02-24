@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.Azure.ServiceBus.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Azure.Messaging.ServiceBus.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -120,6 +120,24 @@ namespace Azure.Messaging.ServiceBus {
         internal static string BrokeredMessageListIsNullOrEmpty {
             get {
                 return ResourceManager.GetString("BrokeredMessageListIsNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When using a sessionful entity, the Session event handler must be used..
+        /// </summary>
+        internal static string CannotRegisterNonSessionEventHandlerWhenUsingSession {
+            get {
+                return ResourceManager.GetString("CannotRegisterNonSessionEventHandlerWhenUsingSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When not using a sessionful entity, the non-session event handler must be used..
+        /// </summary>
+        internal static string CannotRegisterSessionEventHandlerWhenNotUsingSessions {
+            get {
+                return ResourceManager.GetString("CannotRegisterSessionEventHandlerWhenNotUsingSessions", resourceCulture);
             }
         }
         

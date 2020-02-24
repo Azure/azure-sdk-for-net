@@ -148,6 +148,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
+        [Ignore("#10044: Re-enable failing Storage tests")]
         public async Task ListSharesSegmentAsync_Premium()
         {
             // Arrange

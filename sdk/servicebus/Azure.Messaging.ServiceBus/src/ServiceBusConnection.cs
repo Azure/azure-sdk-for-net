@@ -12,8 +12,7 @@ using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -54,15 +53,16 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   The endpoint for the Service Bus service to which the connection is associated.
+        ///   This is essentially the <see cref="FullyQualifiedNamespace"/> but with
+        ///   the scheme included.
         /// </summary>
         ///
         internal Uri ServiceEndpoint => InnerClient.ServiceEndpoint;
 
         /// <summary>
-        ///   The set of client options used for creation of this client.
+        /// The transport type used for this connection.
         /// </summary>
-        ///
-        private ServiceBusConnectionOptions Options { get; set; }
+        public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
         ///   An abstracted Service Bus entity Client specific to the active protocol and transport intended to perform delegated operations.
@@ -85,7 +85,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusConnection(string connectionString) : this(connectionString, null, connectionOptions: null)
+        public ServiceBusConnection(string connectionString) :
+            this(connectionString, null, connectionOptions: null)
         {
         }
 
@@ -105,8 +106,10 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusConnection(string connectionString,
-                                  ServiceBusConnectionOptions connectionOptions) : this(connectionString, null, connectionOptions)
+        public ServiceBusConnection(
+            string connectionString,
+            ServiceBusConnectionOptions connectionOptions)
+            : this(connectionString, null, connectionOptions)
         {
         }
 
@@ -123,7 +126,9 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusConnection(string connectionString, string entityName)
+        public ServiceBusConnection(
+            string connectionString,
+            string entityName)
             : this(connectionString, entityName, connectionOptions: null)
         {
         }
@@ -150,6 +155,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
             connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
+
             ValidateConnectionOptions(connectionOptions);
             var builder = new ServiceBusConnectionStringBuilder(connectionString);
 
@@ -172,8 +178,8 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityName = entityName;
-            Options = connectionOptions;
             InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredentials, connectionOptions);
+            TransportType = connectionOptions.TransportType;
         }
 
         /// <summary>
@@ -212,7 +218,7 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityName = entityName;
-            Options = connectionOptions;
+            TransportType = connectionOptions.TransportType;
 
             InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredential, connectionOptions);
         }
@@ -295,7 +301,41 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        /// <param name="retryPolicy"></param>
+        /// <param name="lockTokens"></param>
+        /// <param name="timeout"></param>
+        /// <param name="dispositionStatus"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="isSessionReceiver"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterDescription"></param>
+        /// <returns></returns>
+        internal virtual async Task DisposeMessageRequestResponseAsync(
+            Guid[] lockTokens,
+            TimeSpan timeout,
+            DispositionStatus dispositionStatus,
+            bool isSessionReceiver,
+            string sessionId = null,
+            string receiveLinkName = null,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null) =>
+            await InnerClient.DisposeMessageRequestResponseAsync(
+                lockTokens,
+                timeout,
+                dispositionStatus,
+                isSessionReceiver,
+                sessionId,
+                receiveLinkName,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterDescription).ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="timeout"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
@@ -303,14 +343,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            ServiceBusRetryPolicy retryPolicy,
+            TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
             string receiveLinkName = null,
             CancellationToken cancellationToken = default) =>
             await InnerClient.PeekAsync(
-                retryPolicy,
+                timeout,
                 fromSequenceNumber,
                 messageCount,
                 sessionId,
@@ -341,7 +381,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="retryPolicy"></param>
         /// <param name="sendLinkName"></param>
         /// <param name="cancellationToken"></param>
-        public async Task CancelScheduledMessageAsync(
+        internal async Task CancelScheduledMessageAsync(
             long sequenceNumber,
             ServiceBusRetryPolicy retryPolicy,
             string sendLinkName = null,
