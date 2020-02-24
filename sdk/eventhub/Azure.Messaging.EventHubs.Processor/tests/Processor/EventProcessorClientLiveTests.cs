@@ -31,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class EventProcessorClientLiveTests
     {
-        /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
-        private const int ReceiveRetryLimit = 10;
+        private const string firstBatchBody = "this message is from before your time.";
+        private const string eventBody = "I'm dummy.";
 
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> is able to
@@ -40,97 +40,90 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task PartitionProcessorCanCreateACheckpoint()
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            await using EventHubScope scope = await EventHubScope.CreateAsync(1);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            await using var connection = new EventHubConnection(connectionString);
+            // Send some events.
+
+            EventData lastEvent;
+
+            await using var producer = new EventHubProducerClient(connection);
+            await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
+
+            // Send a few events.  We are only interested in the last one of them.
+
+            var dummyEventsCount = 10;
+
+            using var dummyBatch = await producer.CreateBatchAsync();
+
+            for (int i = 0; i < dummyEventsCount; i++)
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(eventBody)));
+            }
 
-                await using (var connection = new EventHubConnection(connectionString))
+            await producer.SendAsync(dummyBatch);
+
+            var receivedEvents = new List<EventData>();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await foreach (var evt in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(30) }, cancellationSource.Token))
+            {
+                receivedEvents.Add(evt.Data);
+                if (receivedEvents.Count == dummyEventsCount)
                 {
-                    // Send some events.
-
-                    EventData lastEvent;
-
-                    await using (var producer = new EventHubProducerClient(connection))
-                    await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
-                    {
-                        // Send a few events.  We are only interested in the last one of them.
-
-                        var dummyEventsCount = 10;
-
-                        using (var dummyBatch = await producer.CreateBatchAsync())
-                        {
-
-                            for (int i = 0; i < dummyEventsCount; i++)
-                            {
-                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
-                            }
-
-                            await producer.SendAsync(dummyBatch);
-                        }
-
-                        // Receive the events; because there is some non-determinism in the messaging flow, the
-                        // sent events may not be immediately available.  Allow for a small number of attempts to receive, in order
-                        // to account for availability delays.
-
-                        var receivedEvents = new List<EventData>();
-                        var index = 0;
-
-                        while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
-                        {
-                            Assert.Fail("Convert to iterator.");
-                            //receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
-                        }
-
-                        Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
-
-                        lastEvent = receivedEvents.Last();
-                    }
-
-                    // Create a storage manager so we can retrieve the created checkpoint from it.
-
-                    var storageManager = new MockCheckPointStorage();
-
-                    // Create the event processor manager to manage our event processors.
-
-                    var eventProcessorManager = new EventProcessorManager
-                        (
-                            EventHubConsumerClient.DefaultConsumerGroupName,
-                            connectionString,
-                            storageManager,
-                            onProcessEvent: eventArgs =>
-                            {
-                                if (eventArgs.Data != null)
-                                {
-                                    eventArgs.UpdateCheckpointAsync();
-                                }
-                            }
-                        );
-
-                    eventProcessorManager.AddEventProcessors(1);
-
-                    // Start the event processors.
-
-                    await eventProcessorManager.StartAllAsync();
-
-                    // Make sure the event processors have enough time to stabilize and receive events.
-
-                    await eventProcessorManager.WaitStabilization();
-
-                    // Stop the event processors.
-
-                    await eventProcessorManager.StopAllAsync();
-
-                    // Validate results.
-
-                    IEnumerable<PartitionOwnership> ownershipEnumerable = await storageManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
-
-                    Assert.That(ownershipEnumerable, Is.Not.Null);
-                    Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
+                    break;
                 }
             }
+
+            Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
+
+            lastEvent = receivedEvents.Last();
+
+            // Create a storage manager so we can retrieve the created checkpoint from it.
+
+            var storageManager = new MockCheckPointStorage();
+
+            // Create the event processor manager to manage our event processors.
+
+            var eventProcessorManager = new EventProcessorManager
+                (
+                    EventHubConsumerClient.DefaultConsumerGroupName,
+                    connectionString,
+                    storageManager,
+                    onProcessEvent: eventArgs =>
+                    {
+                        if (eventArgs.Data != null)
+                        {
+                            eventArgs.UpdateCheckpointAsync();
+                        }
+                    }
+                );
+
+            eventProcessorManager.AddEventProcessors(1);
+
+            // Start the event processors.
+
+            await eventProcessorManager.StartAllAsync();
+
+            // Make sure the event processors have enough time to stabilize and receive events.
+
+            await eventProcessorManager.WaitStabilization();
+
+            // Stop the event processors.
+
+            await eventProcessorManager.StopAllAsync();
+
+            // Validate results.
+
+            IEnumerable<PartitionOwnership> ownershipEnumerable = await storageManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
+
+            Assert.That(ownershipEnumerable, Is.Not.Null);
+            Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
         }
 
         /// <summary>
@@ -139,91 +132,144 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Tracked by: #7458). See also, line 784.")]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            await using var connection = new EventHubConnection(connectionString);
+            int receivedEventsCount = 0;
+
+            // Send some events.
+
+            var expectedEventsCount = 20;
+            var firstBatchEventCount = 30;
+            DateTimeOffset enqueuedTime = DateTimeOffset.MinValue;
+
+            await using var producer = new EventHubProducerClient(connection);
+            // Send a few dummy events.  We are not expecting to receive these.
+
+            using (var dummyBatch = await producer.CreateBatchAsync())
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                await using (var connection = new EventHubConnection(connectionString))
+                for (int i = 0; i < firstBatchEventCount; i++)
                 {
-                    int receivedEventsCount = 0;
+                    dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(firstBatchBody)));
+                }
 
-                    // Send some events.
+                await producer.SendAsync(dummyBatch);
+            }
 
-                    var expectedEventsCount = 20;
-                    DateTimeOffset enqueuedTime;
+            // Wait a reasonable amount of time so the events are able to reach the service.
 
-                    await using (var producer = new EventHubProducerClient(connection))
+            await Task.Delay(1000);
+
+            // Send the events we expect to receive.
+
+            using (var dummyBatch = await producer.CreateBatchAsync())
+            {
+                for (int i = 0; i < expectedEventsCount; i++)
+                {
+                    dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(eventBody)));
+                }
+
+                await producer.SendAsync(dummyBatch);
+            }
+
+            // Create the event processor manager to manage the event processor which will receive all events and set the enqueuedTime of the latest event from the first batch.
+
+            using var firstBatchCancellationSource = new CancellationTokenSource();
+            firstBatchCancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            var receivedFromFirstBatch = 0;
+
+            var eventProcessorManager = new EventProcessorManager
+                (
+                    EventHubConsumerClient.DefaultConsumerGroupName,
+                    connectionString,
+                    onInitialize: eventArgs =>
+                        eventArgs.DefaultStartingPosition = EventPosition.Earliest,
+                    onProcessEvent: eventArgs =>
                     {
-                        // Send a few dummy events.  We are not expecting to receive these.
-
-                        using (var dummyBatch = await producer.CreateBatchAsync())
+                        if (eventArgs.Data != null)
                         {
-                            for (int i = 0; i < 30; i++)
+                            var dataAsString = Encoding.UTF8.GetString(eventArgs.Data.Body.Span.ToArray());
+                            if (dataAsString == firstBatchBody)
                             {
-                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
-                            }
-
-                            await producer.SendAsync(dummyBatch);
-                        }
-
-                        // Wait a reasonable amount of time so the events are able to reach the service.
-
-                        await Task.Delay(1000);
-
-                        // Send the events we expect to receive.
-
-                        enqueuedTime = DateTimeOffset.UtcNow;
-
-                        using (var dummyBatch = await producer.CreateBatchAsync())
-                        {
-                            for (int i = 0; i < expectedEventsCount; i++)
-                            {
-                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
-                            }
-
-                            await producer.SendAsync(dummyBatch);
-                        }
-                    }
-
-                    // Create the event processor manager to manage our event processors.
-
-                    var eventProcessorManager = new EventProcessorManager
-                        (
-                            EventHubConsumerClient.DefaultConsumerGroupName,
-                            connectionString,
-                            onInitialize: eventArgs =>
-                                eventArgs.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
-                            onProcessEvent: eventArgs =>
-                            {
-                                if (eventArgs.Data != null)
+                                enqueuedTime = enqueuedTime > eventArgs.Data.EnqueuedTime ? enqueuedTime : eventArgs.Data.EnqueuedTime;
+                                receivedFromFirstBatch++;
+                                if (receivedFromFirstBatch == firstBatchEventCount)
                                 {
-                                    Interlocked.Increment(ref receivedEventsCount);
+                                    firstBatchCancellationSource.Cancel();
                                 }
                             }
-                        );
+                        }
+                    }
+                );
 
-                    eventProcessorManager.AddEventProcessors(1);
+            eventProcessorManager.AddEventProcessors(1);
 
-                    // Start the event processors.
+            // Start the event processors.
 
-                    await eventProcessorManager.StartAllAsync();
+            await eventProcessorManager.StartAllAsync();
 
-                    // Make sure the event processors have enough time to stabilize and receive events.
+            // Wait for the event processors to receive events.
 
-                    await eventProcessorManager.WaitStabilization();
-
-                    // Stop the event processors.
-
-                    await eventProcessorManager.StopAllAsync();
-
-                    // Validate results.
-
-                    Assert.That(receivedEventsCount, Is.EqualTo(expectedEventsCount));
-                }
+            while (!firstBatchCancellationSource.IsCancellationRequested)
+            {
+                await Task.Delay(500);
             }
+
+            // Stop the event processors.
+
+            await eventProcessorManager.StopAllAsync();
+
+            // Validate that we set at least one enqueuedTime
+
+            Assert.That(enqueuedTime, Is.GreaterThan(DateTimeOffset.MinValue));
+
+            // Create the event processor manager to manage the event processor which will receive all events FromEnqueuedTime of enqueuedTime.
+
+            using var secondBatchCancellationSource = new CancellationTokenSource();
+            secondBatchCancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            var eventProcessorManager2 = new EventProcessorManager
+                (
+                    EventHubConsumerClient.DefaultConsumerGroupName,
+                    connectionString,
+                    onInitialize: eventArgs =>
+                        eventArgs.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
+                    onProcessEvent: eventArgs =>
+                    {
+                        if (eventArgs.Data != null)
+                        {
+                            Interlocked.Increment(ref receivedEventsCount);
+                            if (receivedEventsCount == expectedEventsCount)
+                            {
+                                secondBatchCancellationSource.Cancel();
+                            }
+                        }
+                    }
+                );
+
+            eventProcessorManager2.AddEventProcessors(1);
+
+            // Start the event processors.
+
+            await eventProcessorManager2.StartAllAsync();
+
+            // Wait for the event processors to receive events.
+
+            while (!secondBatchCancellationSource.IsCancellationRequested)
+            {
+                await Task.Delay(500);
+            }
+
+            // Stop the event processors.
+
+            await eventProcessorManager2.StopAllAsync();
+
+            // Validate results.
+
+            Assert.That(receivedEventsCount, Is.EqualTo(expectedEventsCount));
         }
 
         /// <summary>
@@ -235,74 +281,69 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(2)]
         [TestCase(4)]
         [TestCase(15)]
-        [Ignore("Failing test: needs debugging (Tracked by: #7458)")]
+        //[Ignore("Failing test: needs debugging (Tracked by: #7458)")]
         public async Task EventProcessorWaitsMaximumWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
-            {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-                await using (var connection = new EventHubConnection(connectionString))
-                {
-                    var timestamps = new ConcurrentDictionary<string, List<DateTimeOffset>>();
+            await using var connection = new EventHubConnection(connectionString);
+            var timestamps = new ConcurrentDictionary<string, ConcurrentBag<DateTimeOffset>>();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            var receivedCount = 0;
 
-                    // Create the event processor manager to manage our event processors.
+            // Create the event processor manager to manage our event processors.
 
-                    var eventProcessorManager = new EventProcessorManager
-                        (
-                            EventHubConsumerClient.DefaultConsumerGroupName,
-                            connectionString,
-                            clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
-                            onInitialize: eventArgs =>
-                                timestamps.TryAdd(eventArgs.PartitionId, new List<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                            onProcessEvent: eventArgs =>
-                                timestamps.AddOrUpdate
-                                    (
-                                        // The key already exists, so the 'addValue' factory will never be called.
-
-                                        eventArgs.Partition.PartitionId,
-                                        partitionId => null,
-                                        (partitionId, list) =>
-                                        {
-                                            list.Add(DateTimeOffset.UtcNow);
-                                            return list;
-                                        }
-                                    )
-                        );
-
-                    eventProcessorManager.AddEventProcessors(1);
-
-                    // Start the event processors.
-
-                    await eventProcessorManager.StartAllAsync();
-
-                    // Make sure the event processors have enough time to stabilize.
-
-                    await eventProcessorManager.WaitStabilization();
-
-                    // Stop the event processors.
-
-                    await eventProcessorManager.StopAllAsync();
-
-                    // Validate results.
-
-                    foreach (KeyValuePair<string, List<DateTimeOffset>> kvp in timestamps)
+            var eventProcessorManager = new EventProcessorManager
+                (
+                    EventHubConsumerClient.DefaultConsumerGroupName,
+                    connectionString,
+                    clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
+                    onInitialize: eventArgs =>
+                        timestamps.TryAdd(eventArgs.PartitionId, new ConcurrentBag<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                    onProcessEvent: eventArgs =>
                     {
-                        var partitionId = kvp.Key;
-                        List<DateTimeOffset> partitionTimestamps = kvp.Value;
-
-                        Assert.That(partitionTimestamps.Count, Is.GreaterThan(1), $"{ partitionId }: more time stamp samples were expected.");
-
-                        for (int index = 1; index < partitionTimestamps.Count; index++)
-                        {
-                            var elapsedTime = partitionTimestamps[index].Subtract(partitionTimestamps[index - 1]).TotalSeconds;
-
-                            Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too short.");
-                            Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too long.");
-
-                            ++index;
-                        }
+                        timestamps[eventArgs.Partition.PartitionId].Add(DateTimeOffset.UtcNow);
+                        receivedCount++;
                     }
+                );
+
+            eventProcessorManager.AddEventProcessors(1);
+
+            // Start the event processors.
+
+            await eventProcessorManager.StartAllAsync();
+
+            // Make sure the event processors have enough time to receive some events.
+
+            while (!cancellationSource.IsCancellationRequested && receivedCount < 5)
+            {
+                await Task.Delay(500);
+            }
+
+            // Stop the event processors.
+
+            await eventProcessorManager.StopAllAsync();
+
+            // Validate results.
+
+            foreach (KeyValuePair<string, ConcurrentBag<DateTimeOffset>> kvp in timestamps)
+            {
+                var partitionId = kvp.Key;
+                var partitionTimestamps = kvp.Value.ToList();
+                partitionTimestamps.Sort();
+
+                Assert.That(partitionTimestamps.Count, Is.GreaterThan(1), $"{ partitionId }: more time stamp samples were expected.");
+
+                for (int index = 1; index < partitionTimestamps.Count; index++)
+                {
+                    var elapsedTime = partitionTimestamps[index].Subtract(partitionTimestamps[index - 1]).TotalSeconds;
+
+                    Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too short.");
+                    Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too long.");
+
+                    ++index;
                 }
             }
         }
