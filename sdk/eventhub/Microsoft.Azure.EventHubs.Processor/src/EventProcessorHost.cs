@@ -19,7 +19,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         /// <summary>
         /// Create a new host to process events from an Event Hub.
-        /// 
+        ///
         /// <para>Since Event Hubs are frequently used for scale-out, high-traffic scenarios, generally there will
         /// be only one host per process, and the processes will be run on separate machines. However, it is
         /// supported to run multiple hosts on one machine, or even within one process, if throughput is not
@@ -52,10 +52,10 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         /// <summary>
         /// Create a new host to process events from an Event Hub.
-        /// 
+        ///
         /// <para>This overload of the constructor uses the default, built-in lease and checkpoint managers.</para>
         /// </summary>
-        /// <param name="hostName">A name for this event processor host. See method notes.</param>
+        /// <param name="hostName">Name of the processor host. MUST BE UNIQUE. Strongly recommend including a Guid to ensure uniqueness.</param>
         /// <param name="eventHubPath">The name of the EventHub.</param>
         /// <param name="consumerGroupName">The name of the consumer group within the Event Hub.</param>
         /// <param name="eventHubConnectionString">Connection string for the Event Hub to receive from.</param>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         /// <summary>
         /// Create a new host to process events from an Event Hub.
-        /// 
+        ///
         /// <para>This overload of the constructor allows maximum flexibility.
         /// This one allows the caller to specify the name of the processor host as well.
         /// The overload also allows the caller to provide their own lease and checkpoint managers to replace the built-in
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             ProcessorEventSource.Log.EventProcessorHostCreated(this.HostName, this.EventHubPath);
         }
 
-        // Using this intermediate constructor to create single combined manager to be used as 
+        // Using this intermediate constructor to create single combined manager to be used as
         // both lease manager and checkpoint manager.
         EventProcessorHost(
                 string hostName,
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         {
         }
 
-        // Using this intermediate constructor to create single combined manager to be used as 
+        // Using this intermediate constructor to create single combined manager to be used as
         // both lease manager and checkpoint manager.
         EventProcessorHost(
             string hostName,
@@ -352,9 +352,9 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// </summary>
         public TimeSpan OperationTimeout { get; internal set; }
 
-        /// <summary>Gets or sets the 
-        /// <see cref="PartitionManagerOptions" /> instance used by the 
-        /// <see cref="EventProcessorHost" /> object.</summary> 
+        /// <summary>Gets or sets the
+        /// <see cref="PartitionManagerOptions" /> instance used by the
+        /// <see cref="EventProcessorHost" /> object.</summary>
         /// <value>The <see cref="PartitionManagerOptions" /> instance.</value>
         public PartitionManagerOptions PartitionManagerOptions { get; set; }
 
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         internal PartitionManager PartitionManager { get; private set; }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.  
+        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.
         /// This also starts the host and causes it to start participating in the partition distribution process.
         /// </summary>
         /// <typeparam name="T">Implementation of your application specific <see cref="IEventProcessor"/>.</typeparam>
@@ -381,11 +381,11 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.  
+        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.
         /// This also starts the host and causes it to start participating in the partition distribution process.
         /// </summary>
         /// <typeparam name="T">Implementation of your application specific <see cref="IEventProcessor"/>.</typeparam>
-        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership 
+        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership
         /// is acquired for a particular partition of EventHub.</param>
         /// <returns>A task to indicate EventProcessorHost instance is started.</returns>
         public Task RegisterEventProcessorAsync<T>(EventProcessorOptions processorOptions) where T : IEventProcessor, new()
@@ -395,8 +395,8 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of 
-        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating 
+        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of
+        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating
         /// in the partition distribution process.
         /// </summary>
         /// <param name="factory">Instance of <see cref="IEventProcessorFactory"/> implementation.</param>
@@ -409,12 +409,12 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of 
-        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating 
+        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of
+        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating
         /// in the partition distribution process.
         /// </summary>
         /// <param name="factory">Instance of <see cref="IEventProcessorFactory"/> implementation.</param>
-        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership 
+        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership
         /// is acquired for a particular partition of EventHub.</param>
         /// <returns>A task to indicate EventProcessorHost instance is started.</returns>
         public async Task RegisterEventProcessorFactoryAsync(IEventProcessorFactory factory, EventProcessorOptions processorOptions)
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// <summary>
         /// Convenience method for generating unique host names, safe to pass to the EventProcessorHost constructors
         /// that take a hostName argument.
-        ///  
+        ///
         /// If a prefix is supplied, the constructed name begins with that string. If the prefix argument is null or
         /// an empty string, the constructed name begins with "host". Then a dash '-' and a unique ID are appended to
         /// create a unique name.

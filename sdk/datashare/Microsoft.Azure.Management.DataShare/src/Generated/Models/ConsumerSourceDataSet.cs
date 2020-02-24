@@ -36,16 +36,20 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="name">Name of the azure resource</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="dataSetId">DataSet Id</param>
+        /// <param name="dataSetLocation">Location of the data set.</param>
         /// <param name="dataSetName">DataSet name</param>
-        /// <param name="dataSetType">Type of dataSet. Possible values include:
-        /// 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
+        /// <param name="dataSetPath">DataSet path</param>
+        /// <param name="dataSetType">Type of data set. Possible values
+        /// include: 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
         /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
-        /// 'SqlDBTable', 'SqlDWTable'</param>
-        public ConsumerSourceDataSet(string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetName = default(string), string dataSetType = default(string))
+        /// 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'</param>
+        public ConsumerSourceDataSet(string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetLocation = default(string), string dataSetName = default(string), string dataSetPath = default(string), string dataSetType = default(string))
             : base(id, name, type)
         {
             DataSetId = dataSetId;
+            DataSetLocation = dataSetLocation;
             DataSetName = dataSetName;
+            DataSetPath = dataSetPath;
             DataSetType = dataSetType;
             CustomInit();
         }
@@ -62,16 +66,28 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string DataSetId { get; private set; }
 
         /// <summary>
+        /// Gets location of the data set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataSetLocation")]
+        public string DataSetLocation { get; private set; }
+
+        /// <summary>
         /// Gets dataSet name
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetName")]
         public string DataSetName { get; private set; }
 
         /// <summary>
-        /// Gets type of dataSet. Possible values include: 'Blob', 'Container',
-        /// 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
-        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'SqlDBTable',
-        /// 'SqlDWTable'
+        /// Gets dataSet path
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataSetPath")]
+        public string DataSetPath { get; private set; }
+
+        /// <summary>
+        /// Gets type of data set. Possible values include: 'Blob',
+        /// 'Container', 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
+        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'KustoCluster',
+        /// 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetType")]
         public string DataSetType { get; private set; }

@@ -15,7 +15,6 @@ namespace Azure.Security.KeyVault.Certificates
         internal const string EcHsmValue = "EC-HSM";
         internal const string RsaValue = "RSA";
         internal const string RsaHsmValue = "RSA-HSM";
-        internal const string OctValue = "oct";
 
         private readonly string _value;
 
@@ -29,29 +28,24 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// An EC (EllipticCurve) key
+        /// An Elliptic Curve Cryptographic (ECC) algorithm.
         /// </summary>
-        public static readonly CertificateKeyType Ec = new CertificateKeyType(EcValue);
+        public static CertificateKeyType Ec { get; } = new CertificateKeyType(EcValue);
 
         /// <summary>
-        /// An HSM protected EC (EllipticCurve) key
+        /// An Elliptic Curve Cryptographic (ECC) algorithm backed by HSM.
         /// </summary>
-        public static readonly CertificateKeyType EcHsm = new CertificateKeyType(EcHsmValue);
+        public static CertificateKeyType EcHsm { get; } = new CertificateKeyType(EcHsmValue);
 
         /// <summary>
-        /// A RSA key
+        /// An RSA cryptographic algorithm.
         /// </summary>
-        public static readonly CertificateKeyType Rsa = new CertificateKeyType(RsaValue);
+        public static CertificateKeyType Rsa { get; } = new CertificateKeyType(RsaValue);
 
         /// <summary>
-        /// An HSM protected RSA key
+        /// An RSA cryptographic algorithm backed by HSM.
         /// </summary>
-        public static readonly CertificateKeyType RsaHsm = new CertificateKeyType(RsaHsmValue);
-
-        /// <summary>
-        /// A octal (Symmetric) key
-        /// </summary>
-        public static readonly CertificateKeyType Oct = new CertificateKeyType(OctValue);
+        public static CertificateKeyType RsaHsm { get; } = new CertificateKeyType(RsaHsmValue);
 
         /// <summary>
         /// Determines if two <see cref="CertificateKeyType"/> values are the same.

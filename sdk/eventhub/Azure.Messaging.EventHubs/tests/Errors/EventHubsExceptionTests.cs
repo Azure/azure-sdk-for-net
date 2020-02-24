@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Messaging.EventHubs.Errors;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -26,35 +25,51 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<EventHubsException> constructor;
 
             constructor = () => new EventHubsException(true, "test");
-            yield return new object[] { constructor, true, "test", "constructor with transient and resource" };
+            yield return new object[] { constructor, true, "test", "constructor with transient and resource", default(EventHubsException.FailureReason) };
 
             constructor = () => new EventHubsException(true, "thing", null);
-            yield return new object[] { constructor, true, "thing", "constructor with transient, resource, and message" };
+            yield return new object[] { constructor, true, "thing", "constructor with transient, resource, and message", default(EventHubsException.FailureReason) };
 
             constructor = () => new EventHubsException(true, "bobl", null, new Exception());
-            yield return new object[] { constructor, true, "bobl", "constructor with transient, resource, message, and exception" };
+            yield return new object[] { constructor, true, "bobl", "constructor with transient, resource, message, and exception", default(EventHubsException.FailureReason) };
+
+            constructor = () => new EventHubsException(true, "bobl", null, EventHubsException.FailureReason.ClientClosed, new Exception());
+            yield return new object[] { constructor, true, "bobl", "constructor with transient, resource, message, reason, and exception", EventHubsException.FailureReason.ClientClosed };
+
+            constructor = () => new EventHubsException(true, "bobl", null, EventHubsException.FailureReason.MessageSizeExceeded);
+            yield return new object[] { constructor, true, "bobl", "constructor with transient, resource, message, and reason", EventHubsException.FailureReason.MessageSizeExceeded };
+
+            constructor = () => new EventHubsException(true, "bobl", EventHubsException.FailureReason.QuotaExceeded);
+            yield return new object[] { constructor, true, "bobl", "constructor with transient, resource, and reason", EventHubsException.FailureReason.QuotaExceeded };
+
+            constructor = () => new EventHubsException("bobl", null, EventHubsException.FailureReason.MessageSizeExceeded);
+            yield return new object[] { constructor, false, "bobl", "constructor with resource, message, and reason", EventHubsException.FailureReason.MessageSizeExceeded };
         }
 
         /// <summary>
-        ///   The set of test cases for the well-known types derived from the <see cref="EventHubsException" />
+        ///   The set of test cases for the well-known reasons associated with the <see cref="EventHubsException" />
         ///   and their expected transient status.
         /// </summary>
         ///
-        public static IEnumerable<object[]> DerrivedExceptionTransientTestCases()
+        public static IEnumerable<object[]> ExceptionTransientTestCases()
         {
-            // Transient exceptions
+            foreach (var name in Enum.GetNames(typeof(EventHubsException.FailureReason)))
+            {
+                var item = (EventHubsException.FailureReason)Enum.Parse(typeof(EventHubsException.FailureReason), name);
 
-            yield return new object[] { new EventHubsCommunicationException("resource", "message"), true };
-            yield return new object[] { new EventHubsTimeoutException("resource", "message"), true };
-            yield return new object[] { new ServiceBusyException("resource", "message"), true };
+                switch (item)
+                {
+                    case EventHubsException.FailureReason.ServiceCommunicationProblem:
+                    case EventHubsException.FailureReason.ServiceTimeout:
+                    case EventHubsException.FailureReason.ServiceBusy:
+                        yield return new object[] { item, true };
+                        break;
 
-            // Final exceptions
-
-            yield return new object[] { new MessageSizeExceededException("resource", "message"), false };
-            yield return new object[] { new EventHubsResourceNotFoundException("resource", "message"), false };
-            yield return new object[] { new QuotaExceededException("resource", "message"), false };
-            yield return new object[] { new ConsumerDisconnectedException("resource", "message"), false };
-            yield return new object[] { new EventHubsClientClosedException("resource", "message"), false };
+                    default:
+                        yield return new object[] { item, false };
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -66,11 +81,13 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorSetsCustomProperties(Func<EventHubsException> constructor,
                                                     bool expectedIsTransient,
                                                     string expectedResourceName,
-                                                    string constructorDescription)
+                                                    string constructorDescription,
+                                                    EventHubsException.FailureReason expectedReason)
         {
             EventHubsException instance = constructor();
             Assert.That(instance.IsTransient, Is.EqualTo(expectedIsTransient), $"IsTransient should be set for the { constructorDescription }");
-            Assert.That(instance.ResourceName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
+            Assert.That(instance.EventHubName, Is.EqualTo(expectedResourceName), $"EventHubsNamespace should be set for the { constructorDescription }");
+            Assert.That(instance.Reason, Is.EqualTo(expectedReason), $"Reason should be set for the { constructorDescription }");
         }
 
         /// <summary>
@@ -111,33 +128,34 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(DerrivedExceptionTransientTestCases))]
-        public void DerrivedExceptionsHaveTheCorrectTransientValues(EventHubsException exception,
-                                                                    bool expectedTransient)
+        [TestCaseSource(nameof(ExceptionTransientTestCases))]
+        public void FailureReasonsAreAssociatedWithTheCorrectTransientValues(EventHubsException.FailureReason failureReason,
+                                                                             bool expectedTransient)
         {
-            Assert.That(exception.IsTransient, Is.EqualTo(expectedTransient), $"The { exception.GetType().Name } has an incorrect IsTransient value.");
+            var exception = new EventHubsException("Name", "Message", failureReason);
+            Assert.That(exception.IsTransient, Is.EqualTo(expectedTransient), $"The '{ failureReason }' reason has an incorrect IsTransient value.");
         }
 
         /// <summary>
-        ///   Verifies that derived exception types in the current library are well-known and have a
+        ///   Verifies that defined failure reasons in the current library are well-known and have a
         ///   corresponding test case.
         /// </summary>
         ///
         [Test]
-        public void DerrivedExceptionsAreWellKnown()
+        public void FailureReasonsAreWellKnown()
         {
-            IOrderedEnumerable<string> allDerrivedTypes = typeof(EventHubsException)
-               .Assembly
-               .GetTypes()
-               .Where(type => (type != typeof(EventHubsException) && typeof(EventHubsException).IsAssignableFrom(type)))
-               .Select(type => type.Name)
-               .OrderBy(name => name);
+             var knownReasons = new List<EventHubsException.FailureReason>();
 
-            IOrderedEnumerable<string> knownDerrivedTypes = DerrivedExceptionTransientTestCases()
-                .Select(testCase => testCase[0].GetType().Name)
-                .OrderBy(name => name);
+             foreach (var name in Enum.GetNames(typeof(EventHubsException.FailureReason)))
+             {
+                knownReasons.Add((EventHubsException.FailureReason)Enum.Parse(typeof(EventHubsException.FailureReason), name));
+             }
 
-            Assert.That(allDerrivedTypes, Is.EquivalentTo(knownDerrivedTypes), "All exceptions derived from EventHubsException in the client library should have a matching IsTransient test case.");
+            IOrderedEnumerable<EventHubsException.FailureReason> reasonTestCases = ExceptionTransientTestCases()
+                .Select(testCase => (EventHubsException.FailureReason)testCase[0])
+                .OrderBy(item => item.ToString());
+
+            Assert.That(knownReasons.OrderBy(item => item.ToString()), Is.EquivalentTo(reasonTestCases), "All failure reasons defined by EventHubsException in the client library should have a matching IsTransient test case.");
         }
     }
 }

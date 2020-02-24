@@ -82,14 +82,14 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientSecretCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ClientSecretCredential.GetToken", requestContext);
 
             try
             {
@@ -108,14 +108,14 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified client secret to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientSecretCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ClientSecretCredential.GetToken", requestContext);
 
             try
             {

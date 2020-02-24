@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// share as metadata.</param>
         /// <param name="shareQuota">The maximum size of the share, in
         /// gigabytes. Must be greater than 0, and less than or equal to 5TB
-        /// (5120).</param>
+        /// (5120). For Large File Shares, the maximum size is 102400.</param>
         public FileShare(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
             : base(id, name, type, etag)
         {
@@ -78,7 +78,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the maximum size of the share, in gigabytes. Must be
-        /// greater than 0, and less than or equal to 5TB (5120).
+        /// greater than 0, and less than or equal to 5TB (5120). For Large
+        /// File Shares, the maximum size is 102400.
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareQuota")]
         public int? ShareQuota { get; set; }
@@ -91,9 +92,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ShareQuota > 5120)
+            if (ShareQuota > 102400)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 5120);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
             }
             if (ShareQuota < 1)
             {

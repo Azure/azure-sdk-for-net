@@ -7,9 +7,8 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Files.DataLake.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
@@ -17,5 +16,8 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

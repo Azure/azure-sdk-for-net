@@ -274,30 +274,5 @@ namespace Azure.Core.Tests
             Assert.AreEqual("http://localhost/?a=~!%40%23%24%25^%26*()_%2B", uriBuilder.ToUri().ToString());
 #endif
         }
-
-        [TestCase("?a", "?a")]
-        [TestCase("?a=b", "?a=b")]
-        [TestCase("?a=b&", "?a=b&")]
-        [TestCase("?a=b&d", "?a=b&d")]
-        [TestCase("?a=b&d=1&", "?a=b&d=*&")]
-        [TestCase("?a=b&d=1&a1", "?a=b&d=*&a1")]
-        [TestCase("?a=b&d=1&a1=", "?a=b&d=*&a1=")]
-        [TestCase("?a=b&d=11&a1=&", "?a=b&d=*&a1=&")]
-        [TestCase("?d&d&d&", "?d&d&d&")]
-        [TestCase("?a&a&a&a", "?a&a&a&a")]
-        [TestCase("?&&&&&&&", "?&&&&&&&")]
-        [TestCase("?d", "?d")]
-        public void QueryIsSanitized(string input, string expected)
-        {
-            var uriBuilder = new RequestUriBuilder();
-            uriBuilder.Reset(new Uri("http://localhost/" + input));
-
-            Assert.AreEqual("http://localhost/" + expected, uriBuilder.ToString(new[]
-            {
-                "A",
-                "a1",
-                "a-2"
-            }, "*"));
-        }
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="matchVariable">Request variable to compare with.
         /// Possible values include: 'RemoteAddr', 'RequestMethod',
         /// 'QueryString', 'PostArgs', 'RequestUri', 'RequestHeader',
-        /// 'RequestBody', 'Cookies'</param>
+        /// 'RequestBody', 'Cookies', 'SocketAddr'</param>
         /// <param name="operatorProperty">Comparison type to use for matching
         /// with the variable value. Possible values include: 'Any', 'IPMatch',
         /// 'GeoMatch', 'Equal', 'Contains', 'LessThan', 'GreaterThan',
@@ -67,7 +67,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <summary>
         /// Gets or sets request variable to compare with. Possible values
         /// include: 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs',
-        /// 'RequestUri', 'RequestHeader', 'RequestBody', 'Cookies'
+        /// 'RequestUri', 'RequestHeader', 'RequestBody', 'Cookies',
+        /// 'SocketAddr'
         /// </summary>
         [JsonProperty(PropertyName = "matchVariable")]
         public string MatchVariable { get; set; }

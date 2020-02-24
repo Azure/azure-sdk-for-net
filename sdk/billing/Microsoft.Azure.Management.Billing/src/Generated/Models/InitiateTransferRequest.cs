@@ -32,14 +32,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the InitiateTransferRequest class.
         /// </summary>
-        /// <param name="billingProfileId">Target Usage context for devTest
-        /// subscriptions.</param>
         /// <param name="recipientEmailId">Email Id of recipient for
         /// transfer.</param>
-        public InitiateTransferRequest(string billingProfileId = default(string), string recipientEmailId = default(string))
+        /// <param name="resellerId">Optional reseller Id for transfer.</param>
+        public InitiateTransferRequest(string recipientEmailId = default(string), string resellerId = default(string))
         {
-            BillingProfileId = billingProfileId;
             RecipientEmailId = recipientEmailId;
+            ResellerId = resellerId;
             CustomInit();
         }
 
@@ -49,16 +48,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets target Usage context for devTest subscriptions.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.billingProfileId")]
-        public string BillingProfileId { get; set; }
-
-        /// <summary>
         /// Gets or sets email Id of recipient for transfer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.recipientEmailId")]
         public string RecipientEmailId { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional reseller Id for transfer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resellerId")]
+        public string ResellerId { get; set; }
 
     }
 }

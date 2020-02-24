@@ -15,7 +15,6 @@ trigger:
   branches:
     include:
     - master
-    - feature/*
     - hotfix/*
     - release/*
   paths:
@@ -41,4 +40,3 @@ stages:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-      

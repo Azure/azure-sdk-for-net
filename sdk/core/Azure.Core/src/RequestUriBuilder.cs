@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace Azure.Core
@@ -177,8 +178,8 @@ namespace Azure.Core
             ResetUri();
             if (!HasQuery)
             {
-                _pathAndQuery.Append(QuerySeparator);
                 _queryIndex = _pathAndQuery.Length;
+                _pathAndQuery.Append(QuerySeparator);
             }
             else if (!(QueryLength == 1 && _pathAndQuery[_queryIndex] == QuerySeparator))
             {
@@ -192,6 +193,8 @@ namespace Azure.Core
                 value = Uri.EscapeDataString(value);
             }
             _pathAndQuery.Append(value);
+
+            Debug.Assert(_pathAndQuery[_queryIndex] == QuerySeparator);
         }
 
         /// <summary>
@@ -228,7 +231,7 @@ namespace Azure.Core
                 {
                     substring = Uri.EscapeDataString(substring);
                 }
-                _pathAndQuery.Insert(_queryIndex - 1, substring);
+                _pathAndQuery.Insert(_queryIndex, substring);
                 _queryIndex += value.Length;
             }
             else
@@ -251,11 +254,6 @@ namespace Azure.Core
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-        {
-            return ToString(null, string.Empty);
-        }
-
-        internal string ToString(string[]? allowedQueryParameters, string redactedValue)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(Scheme);
@@ -280,95 +278,10 @@ namespace Azure.Core
             else
             {
                 stringBuilder.Append(_pathAndQuery.ToString(0, _queryIndex));
-                if (allowedQueryParameters == null)
-                {
-                    stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
-                }
-                else
-                {
-                    AppendRedactedQuery(stringBuilder, allowedQueryParameters, redactedValue);
-                }
+                stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
             }
 
             return stringBuilder.ToString();
-        }
-
-        private void AppendRedactedQuery(StringBuilder stringBuilder, string[] allowedQueryParameters, string redactedValue)
-        {
-            string query = _pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex);
-            int queryIndex = 1;
-            stringBuilder.Append('?');
-
-            do
-            {
-                int endOfParameterValue = query.IndexOf('&', queryIndex);
-                int endOfParameterName = query.IndexOf('=', queryIndex);
-                bool noValue = false;
-
-                // Check if we have parameter without value
-                if ((endOfParameterValue == -1 && endOfParameterName == -1) ||
-                    (endOfParameterValue != -1 && (endOfParameterName == -1 || endOfParameterName > endOfParameterValue)))
-                {
-                    endOfParameterName = endOfParameterValue;
-                    noValue = true;
-                }
-
-                if (endOfParameterName == -1)
-                {
-                    endOfParameterName = query.Length;
-                }
-
-                if (endOfParameterValue == -1)
-                {
-                    endOfParameterValue = query.Length;
-                }
-                else
-                {
-                    // include the separator
-                    endOfParameterValue++;
-                }
-
-                ReadOnlySpan<char> parameterName = query.AsSpan(queryIndex, endOfParameterName - queryIndex);
-
-                bool isAllowed = false;
-                foreach (string name in allowedQueryParameters)
-                {
-                    if (parameterName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                    {
-                        isAllowed = true;
-                        break;
-                    }
-                }
-
-                int valueLength = endOfParameterValue - queryIndex;
-                int nameLength = endOfParameterName - queryIndex;
-
-                if (isAllowed)
-                {
-                    stringBuilder.Append(query, queryIndex, valueLength);
-                }
-                else
-                {
-                    if (noValue)
-                    {
-                        stringBuilder.Append(query, queryIndex, valueLength);
-                    }
-                    else
-                    {
-                        stringBuilder.Append(query, queryIndex, nameLength);
-                        stringBuilder.Append("=");
-                        stringBuilder.Append(redactedValue);
-                        if (query[endOfParameterValue - 1] == '&')
-                        {
-                            stringBuilder.Append("&");
-                        }
-                    }
-                }
-
-                queryIndex += valueLength;
-
-            } while (queryIndex < query.Length);
-
         }
 
         private bool HasDefaultPortForScheme =>

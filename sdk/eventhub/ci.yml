@@ -15,7 +15,6 @@ trigger:
   branches:
     include:
     - master
-    - feature/*
     - hotfix/*
     - release/*
   paths:
@@ -41,6 +40,5 @@ stages:
     Artifacts:
     - name: Azure.Messaging.EventHubs
       safeName: AzureMessagingEventHubs
-    - name: Azure.Messaging.EventHubs.CheckpointStore.Blob
-      safeName: AzureMessagingEventHubsCheckpointStoreBlob
-      
+    - name: Azure.Messaging.EventHubs.Processor
+      safeName: AzureMessagingEventHubsProcessor

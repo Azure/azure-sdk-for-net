@@ -32,14 +32,14 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName1, ResourceUtils.accountName1, poolOnly: true);
                 var poolsBefore = netAppMgmtClient.Pools.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
                 Assert.Single(poolsBefore);
-                /*
+
                 // delete the pool and check again
                 netAppMgmtClient.Pools.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 var poolsAfter = netAppMgmtClient.Pools.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
                 Assert.Empty(poolsAfter);
 
                 // cleanup - remove the account
-                ResourceUtils.DeleteAccount(netAppMgmtClient);*/
+                ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
 
@@ -56,7 +56,8 @@ namespace NetApp.Tests.ResourceTests
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag2", "Value2");
                 var resource = ResourceUtils.CreatePool(netAppMgmtClient, tags: dict);
-                Assert.True(resource.Tags.ToString().Contains("Tag2") && resource.Tags.ToString().Contains("Value2"));
+                Assert.True(resource.Tags.ContainsKey("Tag2"));
+                Assert.Equal("Value2", resource.Tags["Tag2"]);
 
                 ResourceUtils.CreatePool(netAppMgmtClient, ResourceUtils.poolName2, poolOnly: true);
 
@@ -205,7 +206,8 @@ namespace NetApp.Tests.ResourceTests
                 var updatedPool = netAppMgmtClient.Pools.CreateOrUpdate(pool, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 Assert.Equal("Standard", updatedPool.ServiceLevel);
                 Assert.Equal(4398046511104, updatedPool.Size); // unchanged
-                Assert.True(updatedPool.Tags.ToString().Contains("Tag3") && updatedPool.Tags.ToString().Contains("Value3"));
+                Assert.True(updatedPool.Tags.ContainsKey("Tag3"));
+                Assert.Equal("Value3", updatedPool.Tags["Tag3"]);
 
                 // cleanup
                 ResourceUtils.DeletePool(netAppMgmtClient);
@@ -241,8 +243,9 @@ namespace NetApp.Tests.ResourceTests
                 var resource = netAppMgmtClient.Pools.Update(poolPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 Assert.Equal("Standard", resource.ServiceLevel);
                 Assert.Equal(4398046511104, resource.Size); // unchanged
-                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
-                
+                Assert.True(resource.Tags.ContainsKey("Tag1"));
+                Assert.Equal("Value1", resource.Tags["Tag1"]);
+
                 // cleanup
                 ResourceUtils.DeletePool(netAppMgmtClient);
                 ResourceUtils.DeleteAccount(netAppMgmtClient);

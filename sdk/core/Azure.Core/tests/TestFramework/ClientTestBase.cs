@@ -6,13 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
-using NUnit.Framework;
 
 namespace Azure.Core.Testing
 {
-    [TestFixture(true)]
-    [TestFixture(false)]
-    public class ClientTestBase
+    [ClientTestFixtureAttribute]
+    public abstract class ClientTestBase
     {
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
 
@@ -35,7 +33,9 @@ namespace Azure.Core.Testing
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class
+        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class => InstrumentClient(client, null);
+
+        public virtual TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class
         {
             Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
 
@@ -60,6 +60,10 @@ namespace Azure.Core.Testing
             }
 
             List<IInterceptor> interceptors = new List<IInterceptor>();
+            if (preInterceptors != null)
+            {
+                interceptors.AddRange(preInterceptors);
+            }
 
             if (TestDiagnostics)
             {

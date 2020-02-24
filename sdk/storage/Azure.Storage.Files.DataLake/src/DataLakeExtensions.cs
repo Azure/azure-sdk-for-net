@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
@@ -16,23 +17,26 @@ namespace Azure.Storage.Files.DataLake
             new FileSystemItem()
             {
                 Name = containerItem.Name,
-                Properties = new FileSystemProperties()
-                {
-                    LastModified = containerItem.Properties.LastModified,
-                    LeaseStatus = containerItem.Properties.LeaseStatus.HasValue
-                        ? (Models.LeaseStatus)containerItem.Properties.LeaseStatus : default,
-                    LeaseState = containerItem.Properties.LeaseState.HasValue
-                        ? (Models.LeaseState)containerItem.Properties.LeaseState : default,
-                    LeaseDuration = containerItem.Properties.LeaseDuration.HasValue
-                        ? (Models.LeaseDurationType)containerItem.Properties.LeaseDuration : default,
-                    PublicAccess = containerItem.Properties.PublicAccess.HasValue
-                        ? (Models.PublicAccessType)containerItem.Properties.PublicAccess : default,
-                    HasImmutabilityPolicy = containerItem.Properties.HasImmutabilityPolicy,
-                    HasLegalHold = containerItem.Properties.HasLegalHold,
-                    ETag = containerItem.Properties.ETag
-                },
-                Metadata = containerItem.Metadata
+                Properties = containerItem.Properties.ToFileSystemProperties()
             };
+
+        internal static FileSystemProperties ToFileSystemProperties(this BlobContainerProperties containerProperties) =>
+                new FileSystemProperties()
+                {
+                    LastModified = containerProperties.LastModified,
+                    LeaseStatus = containerProperties.LeaseStatus.HasValue
+                        ? (Models.DataLakeLeaseStatus)containerProperties.LeaseStatus : default,
+                    LeaseState = containerProperties.LeaseState.HasValue
+                        ? (Models.DataLakeLeaseState)containerProperties.LeaseState : default,
+                    LeaseDuration = containerProperties.LeaseDuration.HasValue
+                        ? (Models.DataLakeLeaseDuration)containerProperties.LeaseDuration : default,
+                    PublicAccess = containerProperties.PublicAccess.HasValue
+                        ? (Models.PublicAccessType)containerProperties.PublicAccess : default,
+                    HasImmutabilityPolicy = containerProperties.HasImmutabilityPolicy,
+                    HasLegalHold = containerProperties.HasLegalHold,
+                    ETag = containerProperties.ETag,
+                    Metadata = containerProperties.Metadata
+                };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
             new FileDownloadDetails()
@@ -49,9 +53,9 @@ namespace Azure.Storage.Files.DataLake
                 CopyId = blobDownloadProperties.CopyId,
                 CopyProgress = blobDownloadProperties.CopyProgress,
                 CopyStatus = (Models.CopyStatus)blobDownloadProperties.CopyStatus,
-                LeaseDuration = (Models.LeaseDurationType)blobDownloadProperties.LeaseDuration,
-                LeaseState = (Models.LeaseState)blobDownloadProperties.LeaseState,
-                LeaseStatus = (Models.LeaseStatus)blobDownloadProperties.LeaseStatus,
+                LeaseDuration = (Models.DataLakeLeaseDuration)blobDownloadProperties.LeaseDuration,
+                LeaseState = (Models.DataLakeLeaseState)blobDownloadProperties.LeaseState,
+                LeaseStatus = (Models.DataLakeLeaseStatus)blobDownloadProperties.LeaseStatus,
                 AcceptRanges = blobDownloadProperties.AcceptRanges,
                 IsServerEncrypted = blobDownloadProperties.IsServerEncrypted,
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
@@ -79,9 +83,9 @@ namespace Azure.Storage.Files.DataLake
                 CopyProgress = blobProperties.CopyProgress,
                 CopySource = blobProperties.CopySource,
                 IsIncrementalCopy = blobProperties.IsIncrementalCopy,
-                LeaseDuration = (Models.LeaseDurationType)blobProperties.LeaseDuration,
-                LeaseStatus = (Models.LeaseStatus)blobProperties.LeaseStatus,
-                LeaseState = (Models.LeaseState)blobProperties.LeaseState,
+                LeaseDuration = (Models.DataLakeLeaseDuration)blobProperties.LeaseDuration,
+                LeaseStatus = (Models.DataLakeLeaseStatus)blobProperties.LeaseStatus,
+                LeaseState = (Models.DataLakeLeaseState)blobProperties.LeaseState,
                 ContentLength = blobProperties.ContentLength,
                 ContentType = blobProperties.ContentType,
                 ETag = blobProperties.ETag,
@@ -98,7 +102,7 @@ namespace Azure.Storage.Files.DataLake
                 AccessTierChangedOn = blobProperties.AccessTierChangedOn
             };
 
-        internal static DataLakeLease ToDataLakeLease(this Blobs.Models.BlobLease blobLease) =>
+        internal static DataLakeLease ToDataLakeLease(this BlobLease blobLease) =>
             new DataLakeLease()
             {
                 ETag = blobLease.ETag,
@@ -107,16 +111,40 @@ namespace Azure.Storage.Files.DataLake
                 LeaseTime = blobLease.LeaseTime
             };
 
-        internal static BlobHttpHeaders ToBlobHttpHeaders(this PathHttpHeaders pathHttpHeaders) =>
-             new BlobHttpHeaders()
-             {
-                 ContentType = pathHttpHeaders.ContentType,
-                 ContentHash = pathHttpHeaders.ContentHash,
-                 ContentEncoding = new string[] { pathHttpHeaders.ContentEncoding },
-                 ContentLanguage = new string[] { pathHttpHeaders.ContentLanguage },
-                 ContentDisposition = pathHttpHeaders.ContentDisposition,
-                 CacheControl = pathHttpHeaders.CacheControl
-             };
+        internal static BlobHttpHeaders ToBlobHttpHeaders(this PathHttpHeaders pathHttpHeaders)
+        {
+            if (pathHttpHeaders == null)
+            {
+                return null;
+            }
+
+            return new BlobHttpHeaders()
+            {
+                ContentType = pathHttpHeaders.ContentType,
+                ContentHash = pathHttpHeaders.ContentHash,
+                ContentEncoding = pathHttpHeaders.ContentEncoding,
+                ContentLanguage = pathHttpHeaders.ContentLanguage,
+                ContentDisposition = pathHttpHeaders.ContentDisposition,
+                CacheControl = pathHttpHeaders.CacheControl
+            };
+        }
+
+        internal static BlobRequestConditions ToBlobRequestConditions(this DataLakeRequestConditions dataLakeRequestConditions)
+        {
+            if (dataLakeRequestConditions == null)
+            {
+                return null;
+            }
+
+            return new BlobRequestConditions()
+            {
+                IfMatch = dataLakeRequestConditions.IfMatch,
+                IfNoneMatch = dataLakeRequestConditions.IfNoneMatch,
+                IfModifiedSince = dataLakeRequestConditions.IfModifiedSince,
+                IfUnmodifiedSince = dataLakeRequestConditions.IfUnmodifiedSince,
+                LeaseId = dataLakeRequestConditions.LeaseId
+            };
+        }
 
         internal static PathItem ToPathItem(this Dictionary<string, string> dictionary)
         {
@@ -203,6 +231,100 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             return metadataDictionary;
+        }
+
+        internal static FileSystemAccessPolicy ToFileSystemAccessPolicy(this BlobContainerAccessPolicy blobContainerAccessPolicy)
+        {
+            if (blobContainerAccessPolicy == null)
+            {
+                return null;
+            }
+
+            return new FileSystemAccessPolicy()
+            {
+                DataLakePublicAccess = (Models.PublicAccessType)blobContainerAccessPolicy.BlobPublicAccess,
+                ETag = blobContainerAccessPolicy.ETag,
+                LastModified = blobContainerAccessPolicy.LastModified,
+                SignedIdentifiers = blobContainerAccessPolicy.SignedIdentifiers.ToDataLakeSignedIdentifiers()
+            };
+        }
+
+        internal static IEnumerable<DataLakeSignedIdentifier> ToDataLakeSignedIdentifiers(this IEnumerable<BlobSignedIdentifier> blobSignedIdentifiers)
+        {
+            if (blobSignedIdentifiers == null)
+            {
+                return null;
+            }
+
+            return blobSignedIdentifiers.ToList().Select(r => r.ToDataLakeSignedIdentifier());
+        }
+
+        internal static DataLakeSignedIdentifier ToDataLakeSignedIdentifier(this BlobSignedIdentifier blobSignedIdentifier)
+        {
+            if (blobSignedIdentifier == null)
+            {
+                return null;
+            }
+
+            return new DataLakeSignedIdentifier()
+            {
+                AccessPolicy = blobSignedIdentifier.AccessPolicy.ToDataLakeAccessPolicy(),
+                Id = blobSignedIdentifier.Id
+            };
+        }
+
+        internal static DataLakeAccessPolicy ToDataLakeAccessPolicy(this BlobAccessPolicy blobAccessPolicy)
+        {
+            if (blobAccessPolicy == null)
+            {
+                return null;
+            }
+
+            return new DataLakeAccessPolicy()
+            {
+                StartsOn = blobAccessPolicy.StartsOn,
+                ExpiresOn = blobAccessPolicy.ExpiresOn,
+                Permissions = blobAccessPolicy.Permissions
+            };
+        }
+
+        internal static IEnumerable<BlobSignedIdentifier> ToBlobSignedIdentifiers(this IEnumerable<DataLakeSignedIdentifier> dataLakeSignedIdentifiers)
+        {
+            if (dataLakeSignedIdentifiers == null)
+            {
+                return null;
+            }
+
+            return dataLakeSignedIdentifiers.ToList().Select(r => r.ToBlobSignedIdentifier());
+        }
+
+        internal static BlobSignedIdentifier ToBlobSignedIdentifier(this DataLakeSignedIdentifier dataLakeSignedIdentifier)
+        {
+            if (dataLakeSignedIdentifier == null)
+            {
+                return null;
+            }
+
+            return new BlobSignedIdentifier()
+            {
+                AccessPolicy = dataLakeSignedIdentifier.AccessPolicy.ToBlobAccessPolicy(),
+                Id = dataLakeSignedIdentifier.Id
+            };
+        }
+
+        internal static BlobAccessPolicy ToBlobAccessPolicy(this DataLakeAccessPolicy dataLakeAccessPolicy)
+        {
+            if (dataLakeAccessPolicy == null)
+            {
+                return null;
+            }
+
+            return new BlobAccessPolicy()
+            {
+                StartsOn = dataLakeAccessPolicy.StartsOn,
+                ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
+                Permissions = dataLakeAccessPolicy.Permissions
+            };
         }
     }
 }

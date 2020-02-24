@@ -45,13 +45,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// transfer.</param>
         /// <param name="initiatorEmailId">Email Id of initiator of
         /// transfer.</param>
+        /// <param name="resellerId">Reseller Id for transfer.</param>
+        /// <param name="resellerName">Reseller name for transfer.</param>
+        /// <param name="initiatorCustomerType">Customer type of the
+        /// initiator.</param>
         /// <param name="canceledBy">Email Id who user canceled the
         /// transfer.</param>
         /// <param name="lastModifiedTime">Transfer last modification
         /// time.</param>
         /// <param name="detailedTransferStatus">Detailed transfer
         /// status.</param>
-        public RecipientTransferDetails(System.DateTime? creationTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), IList<string> allowedProductType = default(IList<string>), string transferStatus = default(string), string recipientEmailId = default(string), string initiatorEmailId = default(string), string canceledBy = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IList<DetailedTransferStatus> detailedTransferStatus = default(IList<DetailedTransferStatus>))
+        public RecipientTransferDetails(System.DateTime? creationTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), IList<string> allowedProductType = default(IList<string>), string transferStatus = default(string), string recipientEmailId = default(string), string initiatorEmailId = default(string), string resellerId = default(string), string resellerName = default(string), string initiatorCustomerType = default(string), string canceledBy = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IList<DetailedTransferStatus> detailedTransferStatus = default(IList<DetailedTransferStatus>))
         {
             CreationTime = creationTime;
             ExpirationTime = expirationTime;
@@ -59,6 +63,9 @@ namespace Microsoft.Azure.Management.Billing.Models
             TransferStatus = transferStatus;
             RecipientEmailId = recipientEmailId;
             InitiatorEmailId = initiatorEmailId;
+            ResellerId = resellerId;
+            ResellerName = resellerName;
+            InitiatorCustomerType = initiatorCustomerType;
             CanceledBy = canceledBy;
             LastModifiedTime = lastModifiedTime;
             DetailedTransferStatus = detailedTransferStatus;
@@ -107,6 +114,24 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.initiatorEmailId")]
         public string InitiatorEmailId { get; private set; }
+
+        /// <summary>
+        /// Gets reseller Id for transfer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resellerId")]
+        public string ResellerId { get; private set; }
+
+        /// <summary>
+        /// Gets reseller name for transfer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resellerName")]
+        public string ResellerName { get; private set; }
+
+        /// <summary>
+        /// Gets customer type of the initiator.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.initiatorCustomerType")]
+        public string InitiatorCustomerType { get; private set; }
 
         /// <summary>
         /// Gets email Id who user canceled the transfer.

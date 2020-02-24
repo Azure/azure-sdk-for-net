@@ -47,7 +47,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully retured <see cref="AccessToken"/>.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -70,15 +70,15 @@ namespace Azure.Identity
                 {
                     exceptions.Add(e);
 
-                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, exceptions);
                 }
             }
 
-            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, exceptions);
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, exceptions);
         }
 
         /// <summary>
-        /// Sequencially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully retured <see cref="AccessToken"/>.
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained <see cref="AccessToken"/>. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -101,11 +101,11 @@ namespace Azure.Identity
                 {
                     exceptions.Add(e);
 
-                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, exceptions);
                 }
             }
 
-            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, _sources, exceptions);
+            throw AuthenticationFailedException.CreateAggregateException(AggregateAllUnavailableErrorMessage, exceptions);
         }
     }
 }

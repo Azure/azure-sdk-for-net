@@ -42,7 +42,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.List(null, "IntegrationAccount",null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.List(Constants.DefaultResourceGroup, "IntegrationAccount"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.List(Constants.DefaultResourceGroup, "IntegrationAccount"));
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.ListNext(Constants.NextPageLink));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.ListNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, null, "MapName", new IntegrationAccountMap(MapType.Xslt)));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", null, new IntegrationAccountMap(MapType.Xslt)));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName", new IntegrationAccountMap(MapType.Xslt)));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName", new IntegrationAccountMap(MapType.Xslt)));
         }
 
         [Fact]
@@ -183,7 +183,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Delete(null, "IntegrationAccountName","MapName"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, null, "MapName"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName"));
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Get(null, "IntegrationAccountName", "MapName"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, null, "MapName"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountMaps.Get(Constants.DefaultResourceGroup, "IntegrationAccountName", "MapName"));
         }
 
         [Fact]

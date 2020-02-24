@@ -115,7 +115,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task SingleProcessorHost()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var eventProcessorHost = new EventProcessorHost(
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task WithBlobPrefix()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 string leaseContainerName = Guid.NewGuid().ToString();
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     TestUtility.StorageConnectionString,
                     leaseContainerName,
                     "secondhost");
-                var runResult2 = await RunGenericScenario(eventProcessorHostSecond, epo, totalNumberOfEventsToSend: 0);
+                var runResult2 = await RunGenericScenario(eventProcessorHostSecond, epo, numberOfEventsToSendPerPartition: 0);
 
                 // Confirm that we are looking at 2 identical sets of messages in the end.
                 foreach (var kvp in runResult1.ReceivedEvents)
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task InvokeAfterReceiveTimeoutTrue()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 string[] PartitionIds = GetPartitionIds(connectionString);
@@ -368,7 +368,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task InvokeAfterReceiveTimeoutFalse()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 const int ReceiveTimeoutInSeconds = 15;
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
               {
                 "notdefault"
               };
-            await using (var scope = await EventHubScope.CreateAsync(1, consumerGroups))
+            await using (var scope = await EventHubScope.CreateAsync(2, consumerGroups))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var epo = await GetOptionsAsync(connectionString);
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task InitialOffsetProviderWithDateTime()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Send and receive single message so we can find out enqueue date-time of the last message.
@@ -493,7 +493,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task InitialOffsetProviderWithOffset()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Send and receive single message so we can find out offset of the last message.
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task InitialOffsetProviderWithEndOfStream()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Use a randomly generated container name so that initial offset provider will be respected.
@@ -561,7 +561,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task InitialOffsetProviderOverrideBehavior()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Generate a new lease container name that will be used through out the test.
@@ -607,7 +607,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task CheckpointEventDataShouldHold()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Generate a new lease container name that will use through out the test.
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task CheckpointBatchShouldHold()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Generate a new lease container name that will use through out the test.
@@ -681,7 +681,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task HostShouldRecoverAfterReceiverDisconnection()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 string[] PartitionIds = GetPartitionIds(connectionString);
@@ -783,7 +783,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task NoCheckpointThenNewHostReadsFromStart()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 // Generate a new lease container name that will be used through out the test.
@@ -826,7 +826,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task CheckpointEveryMessageReceived()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var epo = await GetOptionsAsync(connectionString);
@@ -838,7 +838,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     TestUtility.StorageConnectionString,
                     Guid.NewGuid().ToString());
 
-                var runResult = await RunGenericScenario(eventProcessorHost, epo, totalNumberOfEventsToSend: 10,
+                var runResult = await RunGenericScenario(eventProcessorHost, epo, numberOfEventsToSendPerPartition: 10,
                     checkpointLastEvent: false, checkpoingEveryEvent: true);
 
                 // Validate there were not failures.
@@ -855,7 +855,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task HostShouldRecoverWhenProcessEventsAsyncThrows()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var client = EventHubClient.CreateFromConnectionString(connectionString);
@@ -1006,7 +1006,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task SingleProcessorHostWithAadTokenProvider()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var appAuthority = "";
@@ -1043,7 +1043,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task ReRegister()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var eventProcessorHost = new EventProcessorHost(
@@ -1073,7 +1073,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [DisplayTestMethodName]
         public async Task ReRegisterAfterLeaseExpiry()
         {
-            await using (var scope = await EventHubScope.CreateAsync(1))
+            await using (var scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var hostName = Guid.NewGuid().ToString();
@@ -1102,6 +1102,28 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task LargeHostName()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(2))
+            {
+                var longHostname = StringUtility.GetRandomString(100);
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+                var eventProcessorHost = new EventProcessorHost(
+                    longHostname,
+                    null, // Entity path will be picked from connection string.
+                    PartitionReceiver.DefaultConsumerGroupName,
+                    connectionString,
+                    TestUtility.StorageConnectionString,
+                    Guid.NewGuid().ToString());
+
+                var epo = await GetOptionsAsync(connectionString);
+                await RunGenericScenario(eventProcessorHost, epo);
+            }
+        }
+
         private async Task<Dictionary<string, Tuple<string, DateTime>>> DiscoverEndOfStream(string connectionString)
         {
             string[] PartitionIds = GetPartitionIds(connectionString);
@@ -1118,7 +1140,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         }
 
         private async Task<GenericScenarioResult> RunGenericScenario(EventProcessorHost eventProcessorHost,
-            EventProcessorOptions epo = null, int totalNumberOfEventsToSend = 1, bool checkpointLastEvent = true,
+            EventProcessorOptions epo = null, int numberOfEventsToSendPerPartition = 1, bool checkpointLastEvent = true,
             bool checkpointBatch = false, bool checkpoingEveryEvent = false)
         {
             var runResult = new GenericScenarioResult();
@@ -1181,14 +1203,14 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 // Wait 5 seconds to avoid races in scenarios like EndOfStream.
                 await Task.Delay(5000);
                 string[] PartitionIds = GetPartitionIds(TestUtility.BuildEventHubsConnectionString(eventProcessorHost.EventHubPath));
-                if (totalNumberOfEventsToSend > 0)
+                if (numberOfEventsToSendPerPartition > 0)
                 {
                     var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.BuildEventHubsConnectionString(eventProcessorHost.EventHubPath));
-                    TestUtility.Log($"Sending {totalNumberOfEventsToSend} event(s) to each partition");
+                    TestUtility.Log($"Sending {numberOfEventsToSendPerPartition} event(s) to each partition");
                     var sendTasks = new List<Task>();
                     foreach (var partitionId in PartitionIds)
                     {
-                        sendTasks.Add(TestUtility.SendToPartitionAsync(ehClient, partitionId, $"{partitionId} event.", totalNumberOfEventsToSend));
+                        sendTasks.Add(TestUtility.SendToPartitionAsync(ehClient, partitionId, $"{partitionId} event.", numberOfEventsToSendPerPartition));
                     }
                     await Task.WhenAll(sendTasks);
                 }
@@ -1199,13 +1221,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     await Task.Delay(1000);
                 }
 
-                TestUtility.Log($"Verifying at least {totalNumberOfEventsToSend} event(s) was received by each partition");
+                TestUtility.Log($"Verifying at least {numberOfEventsToSendPerPartition} event(s) was received by each partition");
                 foreach (var partitionId in PartitionIds)
                 {
                     Assert.True(runResult.ReceivedEvents.ContainsKey(partitionId),
-                        $"Partition {partitionId} didn't receive any messages. Expected {totalNumberOfEventsToSend}, received 0.");
-                    Assert.True(runResult.ReceivedEvents[partitionId].Count >= totalNumberOfEventsToSend,
-                        $"Partition {partitionId} didn't receive expected number of messages. Expected {totalNumberOfEventsToSend}, received {runResult.ReceivedEvents[partitionId].Count}.");
+                        $"Partition {partitionId} didn't receive any messages. Expected {numberOfEventsToSendPerPartition}, received 0.");
+                    Assert.True(runResult.ReceivedEvents[partitionId].Count >= numberOfEventsToSendPerPartition,
+                        $"Partition {partitionId} didn't receive expected number of messages. Expected {numberOfEventsToSendPerPartition}, received {runResult.ReceivedEvents[partitionId].Count}.");
                 }
 
                 TestUtility.Log("Success");

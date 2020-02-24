@@ -71,7 +71,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -82,14 +82,14 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified authorization code authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}");
 
             scope.Start();
 

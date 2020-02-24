@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Core.Diagnostics;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
+
+[assembly:AzureResourceProviderNamespace("Microsoft.Azure.Core.Cool.Tests")]
 
 namespace Azure.Core.Tests
 {
@@ -18,7 +20,7 @@ namespace Azure.Core.Tests
         {
 
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -44,13 +46,40 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
+        [Test]
+        public void ResourceNameIsOptional()
+        {
+
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", null, true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+
+            (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
+
+            Activity activity = Activity.Current;
+
+            scope.Dispose();
+
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+
+            Assert.Null(Activity.Current);
+            Assert.AreEqual("ActivityName.Start", startEvent.Key);
+            Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
+
+            Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
+            CollectionAssert.IsEmpty(activity.Tags);
         }
 
         [Test]
         public void AddLinkCallsPassesLinksAsPartOfStartPayload()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests",true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -91,7 +120,7 @@ namespace Azure.Core.Tests
         public void FailedStopsActivityAndWritesExceptionEvent()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -120,18 +149,25 @@ namespace Azure.Core.Tests
 
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
         }
 
         [Test]
         public void NoopsWhenDisabled()
         {
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", false);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
             scope.Failed(new Exception());
             scope.Dispose();
+        }
+
+        [Test]
+        public void GetResourceProviderNamespaceReturnsAttributeValue()
+        {
+            Assert.AreEqual("Microsoft.Azure.Core.Cool.Tests", ClientDiagnostics.GetResourceProviderNamespace(GetType().Assembly));
         }
     }
 }

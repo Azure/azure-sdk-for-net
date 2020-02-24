@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/versions/0.1/closedlists",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3Rz",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/closedlists",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvY2xvc2VkbGlzdHM=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"subLists\": [\r\n    {\r\n      \"canonicalForm\": \"New York\",\r\n      \"list\": [\r\n        \"NY\",\r\n        \"New York\"\r\n      ]\r\n    },\r\n    {\r\n      \"canonicalForm\": \"Washington\",\r\n      \"list\": [\r\n        \"WA\",\r\n        \"Washington\"\r\n      ]\r\n    },\r\n    {\r\n      \"canonicalForm\": \"California\",\r\n      \"list\": [\r\n        \"CA\",\r\n        \"California\",\r\n        \"Calif.\",\r\n        \"Cal.\"\r\n      ]\r\n    }\r\n  ],\r\n  \"name\": \"States\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,16 +30,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/versions/0.1/closedlists/adef599f-281e-41da-944b-0b23fe0c5b68"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/closedlists/ee626b32-8ca6-424a-887c-ff9ead6cc2c5"
         ],
         "Apim-Request-Id": [
-          "8914d6ef-150b-4407-ae59-8f1880851f9a"
+          "5ff59e6d-b826-4df6-b844-a223f9ecfe35"
         ],
         "Request-Id": [
-          "8914d6ef-150b-4407-ae59-8f1880851f9a"
+          "5ff59e6d-b826-4df6-b844-a223f9ecfe35"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/versions/0.1/closedlists/adef599f-281e-41da-944b-0b23fe0c5b68"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/closedlists/ee626b32-8ca6-424a-887c-ff9ead6cc2c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -54,7 +54,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:17:51 GMT"
+          "Tue, 29 Oct 2019 13:19:19 GMT"
         ],
         "Content-Length": [
           "38"
@@ -63,23 +63,23 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "\"adef599f-281e-41da-944b-0b23fe0c5b68\"",
+      "ResponseBody": "\"ee626b32-8ca6-424a-887c-ff9ead6cc2c5\"",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/versions/0.1/closedlists?skip=0&take=100",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3RzP3NraXA9MCZ0YWtlPTEwMA==",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/closedlists?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvY2xvc2VkbGlzdHM/c2tpcD0wJnRha2U9MTAw",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,10 +90,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "90d4740f-073d-44ee-a756-dd07a41dfa97"
+          "6589ace1-39df-45ef-9f41-0ad76e54985e"
         ],
         "Request-Id": [
-          "90d4740f-073d-44ee-a756-dd07a41dfa97"
+          "6589ace1-39df-45ef-9f41-0ad76e54985e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,32 +108,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:17:51 GMT"
+          "Tue, 29 Oct 2019 13:19:19 GMT"
         ],
         "Content-Length": [
-          "335"
+          "543"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"adef599f-281e-41da-944b-0b23fe0c5b68\",\r\n    \"name\": \"States\",\r\n    \"typeId\": 5,\r\n    \"readableType\": \"Closed List Entity Extractor\",\r\n    \"subLists\": [\r\n      {\r\n        \"id\": 93255989,\r\n        \"canonicalForm\": \"New York\",\r\n        \"list\": [\r\n          \"NY\"\r\n        ]\r\n      },\r\n      {\r\n        \"id\": 93255990,\r\n        \"canonicalForm\": \"Washington\",\r\n        \"list\": [\r\n          \"WA\"\r\n        ]\r\n      },\r\n      {\r\n        \"id\": 93255991,\r\n        \"canonicalForm\": \"California\",\r\n        \"list\": [\r\n          \"CA\",\r\n          \"Calif.\",\r\n          \"Cal.\"\r\n        ]\r\n      }\r\n    ],\r\n    \"roles\": []\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"e2b202fc-fcd0-4bb6-bafe-2ada9ba18d40\",\r\n    \"name\": \"closedlist\",\r\n    \"typeId\": 5,\r\n    \"readableType\": \"Closed List Entity Extractor\",\r\n    \"subLists\": [\r\n      {\r\n        \"id\": 102815923,\r\n        \"canonicalForm\": \"a\",\r\n        \"list\": [\r\n          \"b\",\r\n          \"c\",\r\n          \"d\"\r\n        ]\r\n      }\r\n    ],\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"ee626b32-8ca6-424a-887c-ff9ead6cc2c5\",\r\n    \"name\": \"States\",\r\n    \"typeId\": 5,\r\n    \"readableType\": \"Closed List Entity Extractor\",\r\n    \"subLists\": [\r\n      {\r\n        \"id\": 102916839,\r\n        \"canonicalForm\": \"New York\",\r\n        \"list\": [\r\n          \"NY\"\r\n        ]\r\n      },\r\n      {\r\n        \"id\": 102916840,\r\n        \"canonicalForm\": \"Washington\",\r\n        \"list\": [\r\n          \"WA\"\r\n        ]\r\n      },\r\n      {\r\n        \"id\": 102916841,\r\n        \"canonicalForm\": \"California\",\r\n        \"list\": [\r\n          \"CA\",\r\n          \"Calif.\",\r\n          \"Cal.\"\r\n        ]\r\n      }\r\n    ],\r\n    \"roles\": []\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/versions/0.1/closedlists/adef599f-281e-41da-944b-0b23fe0c5b68",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvdmVyc2lvbnMvMC4xL2Nsb3NlZGxpc3RzL2FkZWY1OTlmLTI4MWUtNDFkYS05NDRiLTBiMjNmZTBjNWI2OA==",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/6c859d36-47a0-4dd9-a2ab-7817e211646b/versions/0.1/closedlists/ee626b32-8ca6-424a-887c-ff9ead6cc2c5",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzZjODU5ZDM2LTQ3YTAtNGRkOS1hMmFiLTc4MTdlMjExNjQ2Yi92ZXJzaW9ucy8wLjEvY2xvc2VkbGlzdHMvZWU2MjZiMzItOGNhNi00MjRhLTg4N2MtZmY5ZWFkNmNjMmM1",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -144,10 +144,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "ce600407-3bbc-4da4-b3a9-d9deee1710ca"
+          "0be65c5e-b0fc-4a8e-acdf-0be85b94eda2"
         ],
         "Request-Id": [
-          "ce600407-3bbc-4da4-b3a9-d9deee1710ca"
+          "0be65c5e-b0fc-4a8e-acdf-0be85b94eda2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -162,7 +162,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:17:51 GMT"
+          "Tue, 29 Oct 2019 13:19:20 GMT"
         ],
         "Content-Length": [
           "51"

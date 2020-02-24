@@ -44,14 +44,13 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// include: 'Standard_LRS', 'Standard_GRS', 'Standard_ZRS',
         /// 'Standard_RAGRS', 'Premium_LRS'</param>
         /// <param name="provisioningState">The provisioning state of storage
-        /// account. Possible values include: 'Creating', 'Succeeded',
-        /// 'Suspended'</param>
+        /// account. Possible values include: 'Creating', 'Succeeded'</param>
+        /// <param name="kind">Indicates the type of storage account. Possible
+        /// values include: 'Storage', 'StorageV2', 'BlobStorage'</param>
         /// <param name="primaryEndpoints">The URLs that are used to perform a
         /// retrieval of a public BLOB, queue, or table object.</param>
         /// <param name="creationTime">The creation date and time of storage
         /// account in UTC.</param>
-        /// <param name="alternateName">Alternative storage account name being
-        /// used during undelete operation.</param>
         /// <param name="primaryLocation">The primary location for the storage
         /// account.</param>
         /// <param name="faultDomain">The fault domain for the storage
@@ -69,27 +68,26 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// was deleted.</param>
         /// <param name="accountStatus">The status of storage account. Possible
         /// values include: 'Active', 'Deleted'</param>
-        /// <param name="permissions">The permissions on the storage account.
-        /// Possible values include: 'Empty', 'None', 'Read', 'Delete',
-        /// 'Write', 'Full'</param>
         /// <param name="accountId">Internal storage account ID, which is not
         /// visible to tenant.</param>
-        /// <param name="wacInternalState">The internal state of storage
-        /// account in WAC. Possible values include: 'None', 'Active',
-        /// 'Deleted', 'AboveQuota', 'Suspended', 'All', 'GcReadyState'</param>
         /// <param name="encryption">The storage encryption setting</param>
         /// <param name="supportsHttpsTrafficOnly">Storage account supports
         /// https traffic only or not</param>
+        /// <param name="accessTier">Required for storage accounts where 
+        /// kind = BlobStorage. Possible values include: 'Hot', 'Cool'</param>
+        /// <param name="healthState">The internal health state for storage 
+        /// account. Possible values include: 'Healthy', 'Suspended', 
+        /// 'OverQuota', 'SuspendedAndOverQuota'</param>
         /// <param name="tags">Resource tags.</param>
-        public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tenantViewId = default(string), string accountType = default(string), string provisioningState = default(string), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), string creationTime = default(string), string alternateName = default(string), string primaryLocation = default(string), string faultDomain = default(string), string statusOfPrimary = default(string), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), System.DateTime? deletedTime = default(System.DateTime?), string accountStatus = default(string), string permissions = default(string), string accountId = default(string), string wacInternalState = default(string), StorageEncryption encryption = default(StorageEncryption), bool? supportsHttpsTrafficOnly = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public StorageAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tenantViewId = default(string), string accountType = default(string), string provisioningState = default(string), string kind = default(string), IDictionary<string, string> primaryEndpoints = default(IDictionary<string, string>), string creationTime = default(string), string primaryLocation = default(string), string faultDomain = default(string), string statusOfPrimary = default(string), string tenantSubscriptionId = default(string), string tenantStorageAccountName = default(string), string tenantResourceGroupName = default(string), System.DateTime? deletedTime = default(System.DateTime?), string accountStatus = default(string), string accountId = default(string), StorageEncryption encryption = default(StorageEncryption), bool? supportsHttpsTrafficOnly = default(bool?), string accessTier = default(string), string healthState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, location)
         {
             TenantViewId = tenantViewId;
             AccountType = accountType;
             ProvisioningState = provisioningState;
+            Kind = kind;
             PrimaryEndpoints = primaryEndpoints;
             CreationTime = creationTime;
-            AlternateName = alternateName;
             PrimaryLocation = primaryLocation;
             FaultDomain = faultDomain;
             StatusOfPrimary = statusOfPrimary;
@@ -98,11 +96,11 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
             TenantResourceGroupName = tenantResourceGroupName;
             DeletedTime = deletedTime;
             AccountStatus = accountStatus;
-            Permissions = permissions;
             AccountId = accountId;
-            WacInternalState = wacInternalState;
             Encryption = encryption;
             SupportsHttpsTrafficOnly = supportsHttpsTrafficOnly;
+            AccessTier = accessTier;
+            HealthState = healthState;
             Tags = tags;
             CustomInit();
         }
@@ -127,7 +125,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
 
         /// <summary>
         /// Gets the provisioning state of storage account. Possible values
-        /// include: 'Creating', 'Succeeded', 'Suspended'
+        /// include: 'Creating', 'Succeeded'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -144,13 +142,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
         public string CreationTime { get; private set; }
-
-        /// <summary>
-        /// Gets alternative storage account name being used during undelete
-        /// operation.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.alternateName")]
-        public string AlternateName { get; private set; }
 
         /// <summary>
         /// Gets the primary location for the storage account.
@@ -205,25 +196,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public string AccountStatus { get; set; }
 
         /// <summary>
-        /// Gets the permissions on the storage account. Possible values
-        /// include: 'Empty', 'None', 'Read', 'Delete', 'Write', 'Full'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.permissions")]
-        public string Permissions { get; private set; }
-
-        /// <summary>
         /// Gets internal storage account ID, which is not visible to tenant.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountId")]
         public string AccountId { get; private set; }
-
-        /// <summary>
-        /// Gets the internal state of storage account in WAC. Possible values
-        /// include: 'None', 'Active', 'Deleted', 'AboveQuota', 'Suspended',
-        /// 'All', 'GcReadyState'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.wacInternalState")]
-        public string WacInternalState { get; private set; }
 
         /// <summary>
         /// Gets the storage encryption setting
@@ -238,10 +214,32 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
         public bool? SupportsHttpsTrafficOnly { get; private set; }
 
         /// <summary>
+        /// Required for storage accounts where kind = BlobStorage. Possible values
+        /// include: 'Hot', 'Cool'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accessTier")]
+        public string AccessTier { get; private set; }
+
+        /// <summary>
+        /// Health state for storage account. Possible values
+        /// include: 'Healthy', 'Suspended', 'OverQuota', 
+        /// 'SuspendedAndOverQuota'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.healthState")]
+        public string HealthState { get; private set; }
+
+        /// <summary>
         /// Gets resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; private set; }
+
+        /// <summary>
+        /// Indicates the type of storage account. Possible values
+        /// include: 'Storage', 'StorageV2', 'BlobStorage'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; private set; }
 
     }
 }

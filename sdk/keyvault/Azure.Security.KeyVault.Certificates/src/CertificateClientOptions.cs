@@ -1,21 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
 using System;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Options that allow to configure the management of the request sent to Key Vault
+    /// Options that allow you to configure the requests sent to Key Vault.
     /// </summary>
     public class CertificateClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V7_0;
 
@@ -36,7 +35,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests. For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/keyvault/key-vault-versions"/>.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -54,11 +53,6 @@ namespace Azure.Security.KeyVault.Certificates
 
             this.ConfigureLogging();
         }
-
-        /// <summary>
-        /// The default <see cref="CertificatePolicy"/> to be used when creating certificates with the client
-        /// </summary>
-        public CertificatePolicy DefaultPolicy { get; set; }
 
         internal string GetVersionString()
         {

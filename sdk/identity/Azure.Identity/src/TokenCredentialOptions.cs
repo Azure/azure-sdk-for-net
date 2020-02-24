@@ -14,7 +14,7 @@ namespace Azure.Identity
         private static readonly Uri s_defaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
 
         /// <summary>
-        /// The host of the Azure Active Directory authority.   The default is https://login.microsoft.com/
+        /// The host of the Azure Active Directory authority.   The default is https://login.microsoftonline.com/
         /// </summary>
         public Uri AuthorityHost { get; set; }
 

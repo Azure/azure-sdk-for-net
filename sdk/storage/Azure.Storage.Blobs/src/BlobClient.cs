@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -90,6 +86,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -109,6 +106,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
@@ -131,6 +129,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -153,14 +152,25 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob that includes the
         /// name of the account, the name of the container, and the name of
         /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal BlobClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            string encryptionScope)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
         #endregion ctors
@@ -659,7 +669,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -732,7 +741,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             string path,
             BlobHttpHeaders httpHeaders = default,
@@ -913,7 +921,7 @@ namespace Azure.Storage.Blobs
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="singleBlockThreshold"/>.
+        /// <paramref name="singleUploadThreshold"/>.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -937,7 +945,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="singleBlockThreshold">
+        /// <param name="singleUploadThreshold">
         /// The maximum size stream that we'll upload as a single block.  The
         /// default value is 256MB.
         /// </param>
@@ -966,120 +974,29 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
-            long? singleBlockThreshold = default,
+            long? singleUploadThreshold = default,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
-            var client = new BlockBlobClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
-            singleBlockThreshold ??= client.BlockBlobMaxUploadBlobBytes;
-            Debug.Assert(singleBlockThreshold <= client.BlockBlobMaxUploadBlobBytes);
+            singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
+            Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
 
-            var blockMap = new ConcurrentDictionary<long, string>();
-            var blockName = 0;
-            Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
-                UploadStreamAsync,
-                StageBlockAsync,
-                CommitBlockListAsync,
-                threshold => TryGetStreamLength(content, out var length) && length < threshold,
-                memoryPool => new StreamPartitioner(content, memoryPool),
-                singleBlockThreshold.Value,
+            PartitionedUploader uploader = new PartitionedUploader(
+                client,
                 transferOptions,
-                async,
-                cancellationToken);
-            return async ?
-                await uploadTask.ConfigureAwait(false) :
-                uploadTask.EnsureCompleted();
+                singleUploadThreshold,
+                operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
-            static bool TryGetStreamLength(Stream stream, out long length)
+            if (async)
             {
-                length = 0;
-                try
-                {
-                    length = stream.Length;
-                    return true;
-                }
-                catch
-                {
-                }
-                return false;
+                return await uploader.UploadAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
             }
-
-            // Upload the entire stream
-            Task<Response<BlobContentInfo>> UploadStreamAsync()
+            else
             {
-                (content, metadata) = TransformContent(content, metadata);
-
-                return client.UploadInternal(
-                    content,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
-                    progressHandler,
-                    async,
-                    cancellationToken);
-            }
-
-            string GetNewBase64BlockId(long blockOrdinal)
-            {
-                // Create and record a new block ID, storing the order information
-                // (nominally the block's start position in the original stream)
-
-                var newBlockName = Interlocked.Increment(ref blockName);
-                var blockId = Constants.BlockNameFormat;
-                blockId = string.Format(CultureInfo.InvariantCulture, blockId, newBlockName);
-                blockId = Convert.ToBase64String(Encoding.UTF8.GetBytes(blockId));
-                var success = blockMap.TryAdd(blockOrdinal, blockId);
-
-                Debug.Assert(success);
-
-                return blockId;
-            }
-
-            // Upload a single partition of the stream
-            Task<Response<BlockInfo>> StageBlockAsync(
-                Stream partition,
-                long blockOrdinal,
-                bool async,
-                CancellationToken cancellation)
-            {
-                var base64BlockId = GetNewBase64BlockId(blockOrdinal);
-
-                //var bytes = new byte[10];
-                //partition.Read(bytes, 0, 10);
-                partition.Position = 0;
-                //Console.WriteLine($"Commiting partition {blockOrdinal} => {base64BlockId}, {String.Join(" ", bytes)}");
-
-                // Upload the block
-                return client.StageBlockInternal(
-                    base64BlockId,
-                    partition,
-                    null,
-                    conditions,
-                    progressHandler,
-                    async,
-                    cancellationToken);
-            }
-
-            // Commit a series of partitions
-            Task<Response<BlobContentInfo>> CommitBlockListAsync(
-                bool async,
-                CancellationToken cancellation)
-            {
-                var base64BlockIds = blockMap.OrderBy(kvp => kvp.Key).Select(kvp => kvp.Value).ToArray();
-                //Console.WriteLine($"Commiting block list:\n{String.Join("\n", base64BlockIds)}");
-
-                return
-                    client.CommitBlockListInternal(
-                        base64BlockIds,
-                        blobHttpHeaders,
-                        metadata,
-                        conditions,
-                        accessTier,
-                        async,
-                        cancellationToken);
+                return uploader.Upload(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken);
             }
         }
 
@@ -1087,7 +1004,7 @@ namespace Azure.Storage.Blobs
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="singleBlockThreshold"/>.
+        /// <paramref name="singleUploadThreshold"/>.
         /// </summary>
         /// <param name="path">
         /// A file path of the file to upload.
@@ -1111,7 +1028,7 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
         /// </param>
-        /// <param name="singleBlockThreshold">
+        /// <param name="singleUploadThreshold">
         /// The maximum size stream that we'll upload as a single block.  The
         /// default value is 256MB.
         /// </param>
@@ -1140,7 +1057,7 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
-            long? singleBlockThreshold = default,
+            long? singleUploadThreshold = default,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
@@ -1154,7 +1071,7 @@ namespace Azure.Storage.Blobs
                     conditions,
                     progressHandler,
                     accessTier,
-                    singleBlockThreshold: singleBlockThreshold,
+                    singleUploadThreshold: singleUploadThreshold,
                     transferOptions: transferOptions,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -1162,6 +1079,11 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Upload
+
+        // NOTE: TransformContent is no longer called by the new implementation
+        // of parallel upload.  Leaving the virtual stub in for now to avoid
+        // any confusion.  Will need to be added back for encryption work per
+        // #7127.
 
         /// <summary>
         /// Performs a transform on the data for uploads. It is a no-op by default.

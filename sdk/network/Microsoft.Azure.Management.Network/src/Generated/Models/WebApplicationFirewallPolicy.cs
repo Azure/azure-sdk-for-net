@@ -37,15 +37,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="managedRules">Describes the managedRules
-        /// structure</param>
+        /// structure.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="policySettings">Describes policySettings for
-        /// policy.</param>
-        /// <param name="customRules">Describes custom rules inside the
+        /// <param name="policySettings">The PolicySettings for policy.</param>
+        /// <param name="customRules">The custom rules inside the
         /// policy.</param>
         /// <param name="applicationGateways">A collection of references to
         /// application gateways.</param>
@@ -80,13 +79,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes policySettings for policy.
+        /// Gets or sets the PolicySettings for policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policySettings")]
         public PolicySettings PolicySettings { get; set; }
 
         /// <summary>
-        /// Gets or sets describes custom rules inside the policy.
+        /// Gets or sets the custom rules inside the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customRules")]
         public IList<WebApplicationFirewallCustomRule> CustomRules { get; set; }
@@ -116,7 +115,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes the managedRules structure
+        /// Gets or sets describes the managedRules structure.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedRules")]
         public ManagedRulesDefinition ManagedRules { get; set; }

@@ -15,8 +15,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class ServiceClientTests : BlobTestBase
     {
-        public ServiceClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ServiceClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(connectionString.ToString(true)));
             BlobServiceClient service2 = InstrumentClient(new BlobServiceClient(connectionString.ToString(true), GetOptions()));
@@ -71,6 +71,52 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
@@ -86,6 +132,21 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(containers.Count() >= 1);
             var accountName = new BlobUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
+
+            Assert.IsNotNull(containers[0].Name);
+            Assert.IsNotNull(containers[0].Properties);
+            Assert.IsNotNull(containers[0].Properties.ETag);
+            Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
+            Assert.IsNotNull(containers[0].Properties.HasLegalHold);
+            Assert.IsNotNull(containers[0].Properties.LastModified);
+            Assert.IsNotNull(containers[0].Properties.LeaseState);
+            Assert.IsNotNull(containers[0].Properties.LeaseStatus);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
+            {
+                Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
+                Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
+            }
         }
 
         #region Secondary Storage
@@ -186,6 +247,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreNotEqual(0, items.Count());
             Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
             Assert.IsNotNull(items.Single(c => c.Name == containerName));
+            Assert.IsTrue(items.All(c => c.Properties.Metadata == null));
         }
 
         [Test]
@@ -200,10 +262,12 @@ namespace Azure.Storage.Blobs.Test
             await test.Container.SetMetadataAsync(metadata);
 
             // Act
-            BlobContainerItem first = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).FirstAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
 
             // Assert
-            Assert.IsNotNull(first.Metadata);
+            AssertMetadataEquality(
+                metadata,
+                containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
         }
 
         [Test]
@@ -380,8 +444,14 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.Now.AddHours(1)),
-                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
+                service.GetUserDelegationKeyAsync(
+                    startsOn: null,
+                    // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
+                    // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
+                    expiresOn: TimeZoneInfo.ConvertTime(
+                        Recording.Now.AddHours(1),
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message)); ;
         }
 
         [Test]
@@ -392,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
-                Response<BlobContainerItem> properties = await container.GetPropertiesAsync();
+                Response<BlobContainerProperties> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally

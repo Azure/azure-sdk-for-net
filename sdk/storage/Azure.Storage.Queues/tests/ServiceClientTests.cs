@@ -11,6 +11,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -31,7 +32,7 @@ namespace Azure.Storage.Queues.Test
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, queueStorageUri: (queueEndpoint, queueSecondaryEndpoint));
 
             QueueServiceClient client1 = InstrumentClient(new QueueServiceClient(connectionString.ToString(true), GetOptions()));
 
@@ -43,6 +44,19 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder1.AccountName);
             Assert.IsEmpty(builder2.QueueName);
             Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenCredential_Http()
+        {
+            // Arrange
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new QueueServiceClient(uri, tokenCredential),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
         [Test]

@@ -650,6 +650,49 @@ namespace Microsoft.Azure.Management.Logic
             }
 
             /// <summary>
+            /// Moves an existing workflow.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='move'>
+            /// The workflow to move.
+            /// </param>
+            public static void BeginMove(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move)
+            {
+                operations.BeginMoveAsync(resourceGroupName, workflowName, move).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Moves an existing workflow.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='move'>
+            /// The workflow to move.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginMoveAsync(this IWorkflowsOperations operations, string resourceGroupName, string workflowName, Workflow move, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginMoveWithHttpMessagesAsync(resourceGroupName, workflowName, move, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets a list of workflows by subscription.
             /// </summary>
             /// <param name='operations'>

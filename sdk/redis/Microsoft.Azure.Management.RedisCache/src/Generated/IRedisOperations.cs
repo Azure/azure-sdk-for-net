@@ -24,6 +24,27 @@ namespace Microsoft.Azure.Management.Redis
     public partial interface IRedisOperations
     {
         /// <summary>
+        /// Checks that the redis cache name is valid and is not already in
+        /// use.
+        /// </summary>
+        /// <param name='parameters'>
+        /// Parameters supplied to the CheckNameAvailability Redis operation.
+        /// The only supported resource type is 'Microsoft.Cache/redis'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or replace (overwrite/recreate, with potential downtime) an
         /// existing Redis cache.
         /// </summary>

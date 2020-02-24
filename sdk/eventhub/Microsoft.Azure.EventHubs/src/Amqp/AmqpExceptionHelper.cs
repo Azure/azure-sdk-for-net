@@ -121,6 +121,11 @@ namespace Microsoft.Azure.EventHubs.Amqp
                 return new QuotaExceededException(message);
             }
 
+            if (string.Equals(condition, AmqpClientConstants.PublisherRevokedError.Value))
+            {
+                return new PublisherRevokedException(message);
+            }
+
             return new EventHubsException(true, message);
         }
     }

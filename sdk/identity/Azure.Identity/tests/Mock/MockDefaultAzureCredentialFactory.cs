@@ -13,8 +13,8 @@ namespace Azure.Identity.Tests.Mock
 
         public Action<IExtendedTokenCredential> OnCreateEnvironmentCredential { get; set; }
         public Action<string, IExtendedTokenCredential> OnCreateManagedIdentityCredential { get; set; }
-        public Action<string, IExtendedTokenCredential> OnCreateSharedTokenCacheCredential { get; set; }
-        public Action<IExtendedTokenCredential> OnCreateInteractiveBrowserCredential { get; set; }
+        public Action<string, string, IExtendedTokenCredential> OnCreateSharedTokenCacheCredential { get; set; }
+        public Action<string, IExtendedTokenCredential> OnCreateInteractiveBrowserCredential { get; set; }
 
         public override IExtendedTokenCredential CreateEnvironmentCredential()
         {
@@ -34,20 +34,20 @@ namespace Azure.Identity.Tests.Mock
             return cred;
         }
 
-        public override IExtendedTokenCredential CreateSharedTokenCacheCredential(string username)
+        public override IExtendedTokenCredential CreateSharedTokenCacheCredential(string tenantId, string username)
         {
             IExtendedTokenCredential cred = new MockExtendedTokenCredential();
 
-            OnCreateSharedTokenCacheCredential?.Invoke(username, cred);
+            OnCreateSharedTokenCacheCredential?.Invoke(tenantId, username, cred);
 
             return cred;
         }
 
-        public override IExtendedTokenCredential CreateInteractiveBrowserCredential()
+        public override IExtendedTokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
             IExtendedTokenCredential cred = new MockExtendedTokenCredential();
 
-            OnCreateInteractiveBrowserCredential?.Invoke(cred);
+            OnCreateInteractiveBrowserCredential?.Invoke(tenantId, cred);
 
             return cred;
         }

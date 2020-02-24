@@ -1,6 +1,6 @@
-# Azure Storage Blobs Batching client library for .NET
+# Azure Storage Blobs Batch client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07 and 2019-02-02
 
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.  This
@@ -12,10 +12,10 @@ library allows you to batch multiple Azure Blob Storage operations in a single r
 
 ### Install the package
 
-Install the Azure Storage Blobs Batching client library for .NET with [NuGet][nuget]:
+Install the Azure Storage Blobs Batch client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs.Batching --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Blobs.Batch
 ```
 
 ### Prerequisites
@@ -44,67 +44,81 @@ Batching supports two types of subrequests: SetBlobAccessTier for block blobs an
 
 ### Deleting blobs
 
-```c#
-using Azure.Storage;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Models;
-
-// Get a connection string to our Azure Storage account.  You can
-// obtain your connection string from the Azure Portal (click
-// Access Keys under Settings in the Portal Storage account blade)
-// or using the Azure CLI with:
-//
-//     az storage account show-connection-string --name <account_name> --resource-group <resource_group>
-//
-// And you can provide the connection string to your application
-// using an environment variable.
+```C# Snippet:SampleSnippetsBatch_DeleteBatch
+// Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
-BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
+string containerName = "sample-container";
 
-// Get URIs for a couple of existing blobs
-Uri a = serviceClient.GetBlobContainerClient("letters").GetBlobClient("a").Uri;
-Uri b = serviceClient.GetBlobContainerClient("letters").GetBlobClient("b").Uri;
-Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
+// Get a reference to a container named "sample-container" and then create it
+BlobServiceClient service = new BlobServiceClient(connectionString);
+BlobContainerClient container = service.GetBlobContainerClient(containerName);
+container.Create();
 
-// Create a batch client
-BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
+// Create three blobs named "foo", "bar", and "baz"
+BlobClient foo = container.GetBlobClient("foo");
+BlobClient bar = container.GetBlobClient("bar");
+BlobClient baz = container.GetBlobClient("baz");
+foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-// Delete several blobs in one batched request
-batchClient.DeleteBlobs(new Uri[] { a, b, c });
+// Delete all three blobs at once
+BlobBatchClient batch = service.GetBlobBatchClient();
+batch.DeleteBlobs(new Uri[] { foo.Uri, bar.Uri, baz.Uri });
 ```
 
 ### Setting Access Tiers
-```c#
+
+```C# Snippet:SampleSnippetsBatch_AccessTier
+// Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
-BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
+string containerName = "sample-container";
 
-// Get URIs for a couple of existing blobs
-Uri a = serviceClient.GetBlobContainerClient("letters").GetBlobClient("a").Uri;
-Uri b = serviceClient.GetBlobContainerClient("letters").GetBlobClient("b").Uri;
-Uri c = serviceClient.GetBlobContainerClient("letters").GetBlobClient("c").Uri;
+// Get a reference to a container named "sample-container" and then create it
+BlobServiceClient service = new BlobServiceClient(connectionString);
+BlobContainerClient container = service.GetBlobContainerClient(containerName);
+container.Create();
+// Create three blobs named "foo", "bar", and "baz"
+BlobClient foo = container.GetBlobClient("foo");
+BlobClient bar = container.GetBlobClient("bar");
+BlobClient baz = container.GetBlobClient("baz");
+foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-// Create a batch client
-BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
-
-// Set the access tier for several blobs in one batched request
-batchClient.SetBlobsAccessTier(new Uri[] { a, b, c }, AccessTier.Hot);
+// Set the access tier for all three blobs at once
+BlobBatchClient batch = service.GetBlobBatchClient();
+batch.SetBlobsAccessTier(new Uri[] { foo.Uri, bar.Uri, baz.Uri }, AccessTier.Cool);
 ```
 
 ### Fine-grained control
-```c#
+
+```C# Snippet:SampleSnippetsBatch_FineGrainedBatching
+// Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
-BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
+string containerName = "sample-container";
 
-// Create a batch client
-BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
+// Get a reference to a container named "sample-container" and then create it
+BlobServiceClient service = new BlobServiceClient(connectionString);
+BlobContainerClient container = service.GetBlobContainerClient(containerName);
+container.Create();
 
-// Create a batch
-BlobBatch batch = batchClient.GetBlobBatchClient();
+// Create three blobs named "foo", "bar", and "baz"
+BlobClient foo = container.GetBlobClient("foo");
+BlobClient bar = container.GetBlobClient("bar");
+BlobClient baz = container.GetBlobClient("baz");
+foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+foo.CreateSnapshot();
+bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+bar.CreateSnapshot();
+baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-// Add a few deletions to the batch
-batch.DeleteBlob("letters", "a");
-batch.DeleteBlob("letters", "b", DeleteSnapshotsOption.Include);
+// Create a batch with three deletes
+BlobBatchClient batchClient = service.GetBlobBatchClient();
+BlobBatch batch = batchClient.CreateBatch();
+batch.DeleteBlob(foo.Uri, DeleteSnapshotsOption.IncludeSnapshots);
+batch.DeleteBlob(bar.Uri, DeleteSnapshotsOption.OnlySnapshots);
+batch.DeleteBlob(baz.Uri);
 
 // Submit the batch
 batchClient.SubmitBatch(batch);
@@ -116,23 +130,32 @@ All Blob service operations will throw a
 [RequestFailedException][RequestFailedException] on failure with
 helpful [`ErrorCode`s][error_codes].  Many of these errors are recoverable.  Subrequest failures will be bundled together into an AggregateException.
 
-```c#
+```C# Snippet:SampleSnippetsBatch_Troubleshooting
+// Get a connection string to our Azure Storage account.
 string connectionString = "<connection_string>";
-BlobServiceClient serviceClient = new BlobServiceClient(connectionString);
+string containerName = "sample-container";
 
-// Get URIs for a blob that exists and a blob that doesn't exist
-Uri valid = serviceClient.GetBlobContainerClient("valid").GetBlobClient("a").Uri;
-Uri invalid = serviceClient.GetBlobContainerClient("invalid").GetBlobClient("b").Uri;
+// Get a reference to a container named "sample-container" and then create it
+BlobServiceClient service = new BlobServiceClient(connectionString);
+BlobContainerClient container = service.GetBlobContainerClient(containerName);
+container.Create();
 
-// Create a batch client
-BlobBatchClient batchClient = serviceClient.GetBlobBatchClient();
+// Create a blob named "valid"
+BlobClient valid = container.GetBlobClient("valid");
+valid.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Valid!")));
+
+// Get a reference to a blob named "invalid", but never create it
+BlobClient invalid = container.GetBlobClient("invalid");
+
+// Delete both blobs at the same time
+BlobBatchClient batch = service.GetBlobBatchClient();
 try
 {
-    // Delete several blobs in a single request
-    batchClient.DeleteBlobs(new Uri[] { valid, invalid });
+    batch.DeleteBlobs(new Uri[] { valid.Uri, invalid.Uri });
 }
-catch (AggregateException ex)
+catch (AggregateException)
 {
+    // An aggregate exception is thrown for all the individual failures
     // Check ex.InnerExceptions for RequestFailedException instances
 }
 ```
@@ -161,19 +184,19 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs.Batch/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Blobs.Batch/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Blobs.Batch.html
-[rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api
-[product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-overview
+[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
+[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/blob-service-rest-api
+[product_docs]: https://docs.microsoft.com/azure/storage/blobs/storage-blobs-overview
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-error-codes
+[error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

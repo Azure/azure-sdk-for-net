@@ -5,7 +5,7 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Billing Management Library</Description>
-		<Version>2.1.1-preview</Version>
+		<Version>3.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Billing</PackageId>
 		<PackageTags>Microsoft Azure Billing management;Billing;Billing management;</PackageTags>

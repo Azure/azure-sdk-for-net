@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<WorkflowRunActionRepetitionDefinitionCollection>> ListWithHttpMessagesAsync(string resourceGroupName, string workflowName, string runName, string actionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<WorkflowRunActionRepetitionDefinition>>> ListWithHttpMessagesAsync(string resourceGroupName, string workflowName, string runName, string actionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a workflow run action scoped repetition.
         /// </summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

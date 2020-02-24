@@ -10,15 +10,17 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using client secret
+    /// Enables authentication to Azure Active Directory using client secret, or username and password,
     /// details configured in the following environment variables:
     /// <list type="table">
     /// <listheader><term>Variable</term><description>Description</description></listheader>
     /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
+    /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
+    /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> to
+    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> or <see cref="UsernamePasswordCredential"/> to
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
@@ -26,7 +28,7 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredential _credential;
-        private readonly string _unavailbleErrorMessage;
+        private const string UnavailbleErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -69,37 +71,6 @@ namespace Azure.Identity
                 }
             }
 
-            if (_credential is null)
-            {
-                StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
-
-                if (tenantId != null)
-                {
-                    builder.Append(" AZURE_TENANT_ID");
-                }
-
-                if (clientId != null)
-                {
-                    builder.Append(" AZURE_CLIENT_ID");
-                }
-
-                if (clientSecret != null)
-                {
-                    builder.Append(" AZURE_CLIENT_SECRET");
-                }
-
-                if (username != null)
-                {
-                    builder.Append(" AZURE_USERNAME");
-                }
-
-                if (password != null)
-                {
-                    builder.Append(" AZURE_PASSWORD");
-                }
-
-                _unavailbleErrorMessage = builder.Append(" ]").ToString();
-            }
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
@@ -111,7 +82,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
-        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
+        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
+        /// This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
@@ -126,7 +98,8 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
-        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
+        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
+        /// This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <remarks>
         /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specifeid, the default <see cref="AccessToken"/>
@@ -151,16 +124,16 @@ namespace Azure.Identity
 
         private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage)));
             }
 
             try
             {
-                AccessToken token =  _credential.GetToken(requestContext, cancellationToken);
+                AccessToken token = _credential.GetToken(requestContext, cancellationToken);
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
             }
@@ -178,11 +151,11 @@ namespace Azure.Identity
 
         private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage)));
             }
 
             try

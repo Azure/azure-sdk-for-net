@@ -47,12 +47,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// add to LUIS existing vocabulary features. Think of a
         /// non-exchangeable as set of different words. Default value is
         /// true.</param>
-        public PhraselistUpdateObject(string phrases = default(string), string name = default(string), bool? isActive = default(bool?), bool? isExchangeable = default(bool?))
+        /// <param name="enabledForAllModels">Indicates if the Phraselist is
+        /// enabled for all models in the application.</param>
+        public PhraselistUpdateObject(string phrases = default(string), string name = default(string), bool? isActive = default(bool?), bool? isExchangeable = default(bool?), bool? enabledForAllModels = default(bool?))
         {
             Phrases = phrases;
             Name = name;
             IsActive = isActive;
             IsExchangeable = isExchangeable;
+            EnabledForAllModels = enabledForAllModels;
             CustomInit();
         }
 
@@ -96,6 +99,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "isExchangeable")]
         public bool? IsExchangeable { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates if the Phraselist is enabled for all models
+        /// in the application.
+        /// </summary>
+        [JsonProperty(PropertyName = "enabledForAllModels")]
+        public bool? EnabledForAllModels { get; set; }
 
     }
 }

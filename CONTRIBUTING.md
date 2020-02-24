@@ -3,14 +3,13 @@
 | Component            | Build Status                                                                                                                                                                                                          |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master)   |
-| Client Libraries     | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20client%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) |
 
 # Prerequisites:
 
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3.0.100 SDK ** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
+- Install **.NET Core 3.1.101 SDK** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - Install the latest version of git (https://git-scm.com/downloads)
 
 ## GENERAL THINGS TO KNOW:
@@ -115,6 +114,40 @@ If for any reason there is an update to the build tools, you will then need to f
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
 
+### Testing Against Latest Versions of Client Libraries
+In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
+
+## Public API additions
+
+If you make a public API addition, the `eng\Export-API.ps1` script has to be run to update public API listings.
+
+## API Compatibility Verification
+
+.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
+
+### How it works
+We use a dummy project called [ApiCompat](https://github.com/Azure/azure-sdk-for-net/tree/master/eng/ApiCompat/ApiCompat.csproj) to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. This project includes package references to all GA'ed libraries and to Microsoft.DotNet.ApiCompat.
+Each listed library package is restored from Nuget via the package references listed in the `ApiCompat.csproj` file, in combination with the version listed for that package in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props).
+The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced in the [eng/Directory.Build.Data.targets](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.targets) which causes this target to be executed for each csproj that has the `EnableApiCompat` parameter set to true. The `EnableApiCompat` parameter defaults to the value of the `IsShippingClientLibrary` parameter, which is defined in [eng/Directory.Build.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.props).
+
+### Adding a new GA'ed library
+To include add a new GA'ed library in the `ApiCompatVerification` target, add a package reference for the library to the `ApiCompat.csproj` file. You will also need to include the latest GA version of the library in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props). 
+Finally, include the `ApiCompat.csproj` in your solution so that the project will get automatically restored in Visual Studio.
+
+### Releasing a new version of a GA'ed libary
+Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
+
+## Dev Feed
+We publish nightly built packages to a dev feed which can be consumed by adding the dev feed blob storage as a package source in Visual Studio. 
+
+Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json` as the source.
+
+You can also achieve this from the command line.
+
+```nuget.exe sources add -Name “Azure SDK for Net Dev Feed” -Source “https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json”```
+
+You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
+
 # On-boarding New Libraries
 
 ### Project Structure
@@ -132,17 +165,16 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 
 ### Standard Process
 
-1.  Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-2.  Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3.  Create your Swagger specification for your HTTP API. For more information see
-    [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
-4.  Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest,
-    see the [AutoRest repository](https://github.com/Azure/autorest)
-5.  Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
-6.  **MANDATORY**: Add or update tests for the newly generated code.
-7.  Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8.  A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-9.  The pull requests will be reviewed and merged by the Azure SDK team
+1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
+2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
+4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
+6. **MANDATORY**: Add or update tests for the newly generated code.
+7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+8. For management libraries run `eng\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+9. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+10. The pull requests will be reviewed and merged by the Azure SDK team
 
 ### New Resource Provider
 
@@ -168,8 +200,10 @@ sdk\eventgrid\Microsoft.Azure.Management.EventGrid\src\Microsoft.Azure.Managemen
 sdk\eventgrid\Microsoft.Azure.Management.EventGrid\tests\Microsoft.Azure.Management.EventGrid.Tests.csproj
 ```
 
-> \*Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo, that your csproj files starts with **Microsoft.Azure\***
+> Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo, that your csproj files starts with **Microsoft.Azure**
 > , that test files end with **.Tests** and that management plane project files contain **.Management.**
+If you are adding a new service directory, ensure that it is mapped to a friendly name at [ServiceMapping](https://github.com/Azure/azure-sdk-for-net/blob/8c1f53e9099bd5a674f9e77be7e4b1541cd6ab08/doc/ApiDocGeneration/Generate-DocIndex.ps1#L9-L64)
+
 
 7. Copy .csproj from any other .csproj and update the following information in the new .csproj
 
@@ -233,3 +267,11 @@ Much of the management plane SDK code is generated from metadata specs about the
 - File an issue describing the problem,
 - Refer to the the [AutoRest project](https://github.com/azure/autorest) to view and modify the generator, or
 - Add additional methods, properties, and overloads to the SDK by adding classes in the 'Customizations' folder of a project
+
+## Versioning
+
+For more information on how we version see [Versioning](doc/dev/Versioning.md)
+
+## Breaking Changes
+
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md)

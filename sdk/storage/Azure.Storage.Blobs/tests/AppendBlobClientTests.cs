@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -19,8 +20,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class AppendBlobClientTests : BlobTestBase
     {
-        public AppendBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public AppendBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -34,7 +35,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -46,6 +47,52 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new AppendBlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new AppendBlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new AppendBlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
         [Test]
@@ -132,26 +179,20 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CreateAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task CreateAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            var blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            blob = InstrumentClient(new AppendBlobClient(
-                blob.Uri,
-                blob.Pipeline,
-                blob.ClientDiagnostics,
-                customerProvidedKey));
-            ;
-            Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                blob.CreateAsync(),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<BlobContentInfo> response = await blob.CreateAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         //TODO
@@ -351,29 +392,25 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task AppendBlockAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task AppendBlockAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
             var blobName = GetNewBlobName();
-            AppendBlobClient httpBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new AppendBlobClient(
-                httpBlob.Uri,
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            AppendBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Constants.KB);
-            await httpsBlob.CreateAsync();
+            await blob.CreateAsync();
 
             // Act
             using var stream = new MemoryStream(data);
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                httpBlob.AppendBlockAsync(stream),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                content: stream);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]
@@ -547,7 +584,7 @@ namespace Azure.Storage.Blobs.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
                 await WaitForProgressAsync(progressList, data.LongLength);
@@ -562,6 +599,32 @@ namespace Azure.Storage.Blobs.Test
             await downloadResponse.Value.Content.CopyToAsync(actual);
             Assert.AreEqual(data.Length, actual.Length);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task AppendBlockAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = 4 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.AppendBlockAsync(stream, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         [Test]
@@ -619,7 +682,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task AppendBlockFromUriAsync_CpkHttpError()
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task AppendBlockFromUriAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -634,23 +698,16 @@ namespace Azure.Storage.Blobs.Test
                 await sourceBlob.CreateAsync();
                 await sourceBlob.AppendBlockAsync(stream);
 
-                AppendBlobClient httpDestBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-                httpDestBlob = InstrumentClient(new AppendBlobClient(
-                    httpDestBlob.Uri,
-                    httpDestBlob.Pipeline,
-                    httpDestBlob.ClientDiagnostics,
-                    customerProvidedKey));
-                Assert.AreEqual(Constants.Blob.Http, httpDestBlob.Uri.Scheme);
-                AppendBlobClient httpsDestBlob = InstrumentClient(httpDestBlob.WithCustomerProvidedKey(customerProvidedKey));
-                await httpsDestBlob.CreateAsync();
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+                await destBlob.CreateAsync();
 
                 // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpDestBlob.AppendBlockFromUriAsync(
-                        sourceBlob.Uri,
-                        new HttpRange(0, Constants.KB)),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
+                    sourceBlob.Uri,
+                    new HttpRange(0, Constants.KB));
+
+                Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
             }
         }
 
@@ -741,7 +798,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/8351")]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -851,6 +907,24 @@ namespace Azure.Storage.Blobs.Test
                         actualException => Assert.IsTrue(true)
                     );
                 }
+            }
+        }
+
+        [Test]
+        public async Task AppendBlockAsync_NullStream_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.AppendBlockAsync(content: stream),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 

@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourcegroups/MNCRP_RSG6216?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlZ3JvdXBzL01OQ1JQX1JTRzYyMTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourcegroups/MNCRP_RSG6996?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlZ3JvdXBzL01OQ1JQX1JTRzY5OTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f81c6741-72e8-4586-b0ac-f17574e84b9d"
+          "2c8ee213-a563-4bac-9afe-c20f508eb671"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -33,13 +33,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "303decfd-246a-4212-9577-7897454a935e"
+          "a63bad64-e27d-4cd5-84ce-f92780152ffe"
         ],
         "x-ms-correlation-request-id": [
-          "303decfd-246a-4212-9577-7897454a935e"
+          "a63bad64-e27d-4cd5-84ce-f92780152ffe"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050739Z:303decfd-246a-4212-9577-7897454a935e"
+          "WESTUS:20191107T225120Z:a63bad64-e27d-4cd5-84ce-f92780152ffe"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -48,7 +48,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:38 GMT"
+          "Thu, 07 Nov 2019 22:51:20 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,32 +60,32 @@
           "105"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'MNCRP_RSG6216' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'MNCRP_RSG6996' could not be found.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourcegroups/MNCRP_RSG6216?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlZ3JvdXBzL01OQ1JQX1JTRzYyMTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourcegroups/MNCRP_RSG6996?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlZ3JvdXBzL01OQ1JQX1JTRzY5OTY/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "50acc3fe-4e2d-470a-ae57-976a4c9f9fbe"
+          "4c3c5f5c-91ac-4e83-a428-e12fa673e74d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "29"
+          "32"
         ]
       },
       "ResponseHeaders": {
@@ -99,13 +99,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3cd2e7ee-d3aa-4b93-bd70-ba95bb21ba49"
+          "484af395-bb4c-4246-9619-a39e09af51e5"
         ],
         "x-ms-correlation-request-id": [
-          "3cd2e7ee-d3aa-4b93-bd70-ba95bb21ba49"
+          "484af395-bb4c-4246-9619-a39e09af51e5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050740Z:3cd2e7ee-d3aa-4b93-bd70-ba95bb21ba49"
+          "WESTUS:20191107T225122Z:484af395-bb4c-4246-9619-a39e09af51e5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,10 +114,10 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:40 GMT"
+          "Thu, 07 Nov 2019 22:51:22 GMT"
         ],
         "Content-Length": [
-          "179"
+          "182"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -126,32 +126,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216\",\r\n  \"name\": \"MNCRP_RSG6216\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996\",\r\n  \"name\": \"MNCRP_RSG6996\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzY/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet\"\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"West US\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9\"\r\n        }\r\n      ]\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f7721601-97fe-4506-9773-bb7a184e30b4"
+          "27463825-7dbd-4c37-8599-91c8818ced16"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "618"
+          "619"
         ]
       },
       "ResponseHeaders": {
@@ -171,22 +171,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "1730402e-56da-449d-8a74-9f28a7a9fa53"
+          "f1c9ad89-5789-4097-beb1-db487ede3860"
         ],
         "x-ms-correlation-request-id": [
-          "1730402e-56da-449d-8a74-9f28a7a9fa53"
+          "f1c9ad89-5789-4097-beb1-db487ede3860"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050741Z:1730402e-56da-449d-8a74-9f28a7a9fa53"
+          "WESTUS:20191107T225124Z:f1c9ad89-5789-4097-beb1-db487ede3860"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:41 GMT"
+          "Thu, 07 Nov 2019 22:51:23 GMT"
         ],
         "Content-Length": [
-          "875"
+          "877"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -195,26 +195,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650\",\r\n  \"name\": \"myManagedNetwork4650\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworks\",\r\n  \"location\": \"West US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet\"\r\n        }\r\n      ],\r\n      \"managementGroups\": [],\r\n      \"subscriptions\": [],\r\n      \"subNets\": []\r\n    },\r\n    \"connectivity\": {\r\n      \"peerings\": [],\r\n      \"groups\": []\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576\",\r\n  \"name\": \"myManagedNetwork9576\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworks\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9\"\r\n        }\r\n      ],\r\n      \"managementGroups\": [],\r\n      \"subscriptions\": [],\r\n      \"subnets\": []\r\n    },\r\n    \"connectivity\": {\r\n      \"peerings\": [],\r\n      \"groups\": []\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTAvbWFuYWdlZE5ldHdvcmtHcm91cHMvbXlHcm91cDQ4MD9hcGktdmVyc2lvbj0yMDE5LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzYvbWFuYWdlZE5ldHdvcmtHcm91cHMvbXlHcm91cDY4OTY/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"West US\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "aff13507-0b66-4a60-b863-f59ddb92fce4"
+          "20218ddf-7de4-4267-99e7-f6ce848ade17"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -240,22 +240,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "928f0c06-db0b-4c9d-8e3a-7a3ae43e987d"
+          "061b3864-418a-4268-b3d9-480c6b555c00"
         ],
         "x-ms-correlation-request-id": [
-          "928f0c06-db0b-4c9d-8e3a-7a3ae43e987d"
+          "061b3864-418a-4268-b3d9-480c6b555c00"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050743Z:928f0c06-db0b-4c9d-8e3a-7a3ae43e987d"
+          "WESTUS:20191107T225124Z:061b3864-418a-4268-b3d9-480c6b555c00"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:42 GMT"
+          "Thu, 07 Nov 2019 22:51:24 GMT"
         ],
         "Content-Length": [
-          "715"
+          "718"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,32 +264,32 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\",\r\n  \"name\": \"myGroup480\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkGroups\",\r\n  \"location\": \"West US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n      },\r\n      {\r\n        \"id\": \"subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet\"\r\n      }\r\n    ],\r\n    \"managementGroups\": [],\r\n    \"subscriptions\": [],\r\n    \"subNets\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\",\r\n  \"name\": \"myGroup6896\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkGroups\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"virtualNetworks\": [\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9\"\r\n      }\r\n    ],\r\n    \"managementGroups\": [],\r\n    \"subscriptions\": [],\r\n    \"subnets\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTAvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXMvaHViQW5kU3Bva2U4MzA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzYvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXMvaHViQW5kU3Bva2U0MzQ0P2FwaS12ZXJzaW9uPTIwMTktMDYtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"HubAndSpokeTopology\",\r\n    \"hub\": {\r\n      \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"West US\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"type\": \"HubAndSpokeTopology\",\r\n    \"hub\": {\r\n      \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1f46b97c-9001-4fa6-bf93-131fcb909ba8"
+          "f89ce504-f783-4bfa-8d1a-25517d302797"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "495"
+          "501"
         ]
       },
       "ResponseHeaders": {
@@ -309,22 +309,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "05959f3f-4161-4402-a69d-72d3291ee748"
+          "6b52083b-27dc-4bdf-a8c4-ff8b93156352"
         ],
         "x-ms-correlation-request-id": [
-          "05959f3f-4161-4402-a69d-72d3291ee748"
+          "6b52083b-27dc-4bdf-a8c4-ff8b93156352"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050743Z:05959f3f-4161-4402-a69d-72d3291ee748"
+          "WESTUS:20191107T225125Z:6b52083b-27dc-4bdf-a8c4-ff8b93156352"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:43 GMT"
+          "Thu, 07 Nov 2019 22:51:24 GMT"
         ],
         "Content-Length": [
-          "758"
+          "767"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -333,26 +333,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830\",\r\n  \"name\": \"hubAndSpoke830\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n  \"location\": \"West US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"type\": 1,\r\n    \"hub\": {\r\n      \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\"\r\n      }\r\n    ],\r\n    \"mesh\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344\",\r\n  \"name\": \"hubAndSpoke4344\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"type\": 1,\r\n    \"hub\": {\r\n      \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\"\r\n      }\r\n    ],\r\n    \"mesh\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTAvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXMvaHViQW5kU3Bva2U4MzA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzYvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXMvaHViQW5kU3Bva2U0MzQ0P2FwaS12ZXJzaW9uPTIwMTktMDYtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "42e24720-c3c0-478d-8615-126e4c96dd9a"
+          "516b399c-26c7-4736-9fe8-74601bb006e3"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -372,22 +372,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "8760694f-1567-4e00-8c86-63b6a37a25b1"
+          "8656e12d-022b-49e0-b1bc-6cfe0d6bc417"
         ],
         "x-ms-correlation-request-id": [
-          "8760694f-1567-4e00-8c86-63b6a37a25b1"
+          "8656e12d-022b-49e0-b1bc-6cfe0d6bc417"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050744Z:8760694f-1567-4e00-8c86-63b6a37a25b1"
+          "WESTUS:20191107T225125Z:8656e12d-022b-49e0-b1bc-6cfe0d6bc417"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:43 GMT"
+          "Thu, 07 Nov 2019 22:51:24 GMT"
         ],
         "Content-Length": [
-          "794"
+          "803"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -396,26 +396,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830\",\r\n  \"name\": \"hubAndSpoke830\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n  \"location\": \"West US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"8410fdc4-8709-4af7-8a05-7d2d83bb4e7f\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"type\": 1,\r\n    \"hub\": {\r\n      \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\"\r\n      }\r\n    ],\r\n    \"mesh\": []\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344\",\r\n  \"name\": \"hubAndSpoke4344\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"9a0369db-b52b-4acf-b6fc-43332d799599\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"type\": 1,\r\n    \"hub\": {\r\n      \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n    },\r\n    \"spokes\": [\r\n      {\r\n        \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\"\r\n      }\r\n    ],\r\n    \"mesh\": []\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzY/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "89479411-bd5f-4cb5-b891-917043057283"
+          "ec1842e0-1926-402d-a567-0edde1d539e6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -435,22 +435,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "eeb6ef9c-165f-4360-a1af-c83e8fd248e9"
+          "88d3f477-7b67-45da-9533-8c6e386864a1"
         ],
         "x-ms-correlation-request-id": [
-          "eeb6ef9c-165f-4360-a1af-c83e8fd248e9"
+          "88d3f477-7b67-45da-9533-8c6e386864a1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050744Z:eeb6ef9c-165f-4360-a1af-c83e8fd248e9"
+          "WESTUS:20191107T225125Z:88d3f477-7b67-45da-9533-8c6e386864a1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:44 GMT"
+          "Thu, 07 Nov 2019 22:51:25 GMT"
         ],
         "Content-Length": [
-          "2456"
+          "2470"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -459,26 +459,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650\",\r\n  \"name\": \"myManagedNetwork4650\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworks\",\r\n  \"location\": \"West US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"9eaa07fe-7b95-4e42-9ca7-6142796faab1\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n        },\r\n        {\r\n          \"id\": \"subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet\"\r\n        }\r\n      ],\r\n      \"managementGroups\": [],\r\n      \"subscriptions\": [],\r\n      \"subNets\": []\r\n    },\r\n    \"connectivity\": {\r\n      \"peerings\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830\",\r\n          \"name\": \"hubAndSpoke830\",\r\n          \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n          \"location\": \"West US\",\r\n          \"apiVersion\": \"\",\r\n          \"tags\": {},\r\n          \"resourceGuid\": \"8410fdc4-8709-4af7-8a05-7d2d83bb4e7f\",\r\n          \"provisioningState\": 0,\r\n          \"properties\": {\r\n            \"type\": 1,\r\n            \"hub\": {\r\n              \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n            },\r\n            \"spokes\": [\r\n              {\r\n                \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\"\r\n              }\r\n            ],\r\n            \"mesh\": []\r\n          }\r\n        }\r\n      ],\r\n      \"groups\": [\r\n        {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\",\r\n          \"name\": \"myGroup480\",\r\n          \"type\": \"Microsoft.ManagedNetwork/managedNetworkGroups\",\r\n          \"location\": \"West US\",\r\n          \"apiVersion\": \"\",\r\n          \"tags\": {},\r\n          \"resourceGuid\": \"ec0cbcc5-fbd6-460d-b603-e7199eff1dd5\",\r\n          \"provisioningState\": 0,\r\n          \"properties\": {\r\n            \"virtualNetworks\": [\r\n              {\r\n                \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n              },\r\n              {\r\n                \"id\": \"subscriptions/6bb4a28a-db84-4e8a-b1dc-fabf7bd9f0b2/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/NewTestVNet\"\r\n              }\r\n            ],\r\n            \"managementGroups\": [],\r\n            \"subscriptions\": [],\r\n            \"subNets\": []\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576\",\r\n  \"name\": \"myManagedNetwork9576\",\r\n  \"type\": \"Microsoft.ManagedNetwork/managedNetworks\",\r\n  \"location\": \"Central US\",\r\n  \"apiVersion\": \"\",\r\n  \"tags\": {},\r\n  \"resourceGuid\": \"9143e1c5-ba65-4bda-bc49-6e0d4ce70623\",\r\n  \"provisioningState\": 0,\r\n  \"properties\": {\r\n    \"scope\": {\r\n      \"virtualNetworks\": [\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n        },\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9\"\r\n        }\r\n      ],\r\n      \"managementGroups\": [],\r\n      \"subscriptions\": [],\r\n      \"subnets\": []\r\n    },\r\n    \"connectivity\": {\r\n      \"peerings\": [\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344\",\r\n          \"name\": \"hubAndSpoke4344\",\r\n          \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n          \"location\": \"Central US\",\r\n          \"apiVersion\": \"\",\r\n          \"tags\": {},\r\n          \"resourceGuid\": \"9a0369db-b52b-4acf-b6fc-43332d799599\",\r\n          \"provisioningState\": 0,\r\n          \"properties\": {\r\n            \"type\": 1,\r\n            \"hub\": {\r\n              \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n            },\r\n            \"spokes\": [\r\n              {\r\n                \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\"\r\n              }\r\n            ],\r\n            \"mesh\": []\r\n          }\r\n        }\r\n      ],\r\n      \"groups\": [\r\n        {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\",\r\n          \"name\": \"myGroup6896\",\r\n          \"type\": \"Microsoft.ManagedNetwork/managedNetworkGroups\",\r\n          \"location\": \"Central US\",\r\n          \"apiVersion\": \"\",\r\n          \"tags\": {},\r\n          \"resourceGuid\": \"8dbef840-e724-455c-bac0-fbf02bfc781a\",\r\n          \"provisioningState\": 0,\r\n          \"properties\": {\r\n            \"virtualNetworks\": [\r\n              {\r\n                \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet2\"\r\n              },\r\n              {\r\n                \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/Spoke9\"\r\n              }\r\n            ],\r\n            \"managementGroups\": [],\r\n            \"subscriptions\": [],\r\n            \"subnets\": []\r\n          }\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTAvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXM/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzYvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXM/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7889e51a-fb74-4ce1-91e7-74f36a05f49d"
+          "25eb35ca-0b45-4de2-b626-3c4f651a8510"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -498,22 +498,22 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "ba95b972-2489-4e3c-a711-07a237b5076c"
+          "f2442d1c-9524-4e72-85fc-2085d4605b81"
         ],
         "x-ms-correlation-request-id": [
-          "ba95b972-2489-4e3c-a711-07a237b5076c"
+          "f2442d1c-9524-4e72-85fc-2085d4605b81"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050744Z:ba95b972-2489-4e3c-a711-07a237b5076c"
+          "WESTUS:20191107T225126Z:f2442d1c-9524-4e72-85fc-2085d4605b81"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:44 GMT"
+          "Thu, 07 Nov 2019 22:51:25 GMT"
         ],
         "Content-Length": [
-          "820"
+          "829"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -522,26 +522,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"nextLink\": \"\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830\",\r\n      \"name\": \"hubAndSpoke830\",\r\n      \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n      \"location\": \"West US\",\r\n      \"apiVersion\": \"\",\r\n      \"tags\": {},\r\n      \"resourceGuid\": \"8410fdc4-8709-4af7-8a05-7d2d83bb4e7f\",\r\n      \"provisioningState\": 0,\r\n      \"properties\": {\r\n        \"type\": 1,\r\n        \"hub\": {\r\n          \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        \"spokes\": [\r\n          {\r\n            \"id\": \"subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkGroups/myGroup480\"\r\n          }\r\n        ],\r\n        \"mesh\": []\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"nextLink\": \"\",\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344\",\r\n      \"name\": \"hubAndSpoke4344\",\r\n      \"type\": \"Microsoft.ManagedNetwork/managedNetworkPeeringPolicies\",\r\n      \"location\": \"Central US\",\r\n      \"apiVersion\": \"\",\r\n      \"tags\": {},\r\n      \"resourceGuid\": \"9a0369db-b52b-4acf-b6fc-43332d799599\",\r\n      \"provisioningState\": 0,\r\n      \"properties\": {\r\n        \"type\": 1,\r\n        \"hub\": {\r\n          \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRG/providers/Microsoft.Network/virtualnetworks/testvnet\"\r\n        },\r\n        \"spokes\": [\r\n          {\r\n            \"id\": \"/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkGroups/myGroup6896\"\r\n          }\r\n        ],\r\n        \"mesh\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6216/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork4650/managedNetworkPeeringPolicies/hubAndSpoke830?api-version=2019-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzYyMTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazQ2NTAvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXMvaHViQW5kU3Bva2U4MzA/YXBpLXZlcnNpb249MjAxOS0wNi0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/18ba8369-92e4-4d70-8b1e-937660bde798/resourceGroups/MNCRP_RSG6996/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork9576/managedNetworkPeeringPolicies/hubAndSpoke4344?api-version=2019-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMThiYTgzNjktOTJlNC00ZDcwLThiMWUtOTM3NjYwYmRlNzk4L3Jlc291cmNlR3JvdXBzL01OQ1JQX1JTRzY5OTYvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkTmV0d29yay9tYW5hZ2VkTmV0d29ya3MvbXlNYW5hZ2VkTmV0d29yazk1NzYvbWFuYWdlZE5ldHdvcmtQZWVyaW5nUG9saWNpZXMvaHViQW5kU3Bva2U0MzQ0P2FwaS12ZXJzaW9uPTIwMTktMDYtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1e7b3bb2-9207-4b6f-9cb0-9f1a1b4fcb38"
+          "da5aabd9-6279-4aa7-868c-7d1d314733cb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.0.1"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ManagedNetwork.ManagedNetworkManagementClient/1.0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -561,19 +561,19 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "7669a469-acbf-46bd-9946-0b590e79e421"
+          "4d235471-3181-43eb-8418-42ae91aa8475"
         ],
         "x-ms-correlation-request-id": [
-          "7669a469-acbf-46bd-9946-0b590e79e421"
+          "4d235471-3181-43eb-8418-42ae91aa8475"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190920T050745Z:7669a469-acbf-46bd-9946-0b590e79e421"
+          "WESTUS:20191107T225126Z:4d235471-3181-43eb-8418-42ae91aa8475"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 20 Sep 2019 05:07:45 GMT"
+          "Thu, 07 Nov 2019 22:51:26 GMT"
         ],
         "Expires": [
           "-1"
@@ -588,10 +588,10 @@
   ],
   "Names": {
     "ManagedNetworkGroupTest": [
-      "MNCRP_RSG6216",
-      "myManagedNetwork4650",
-      "myGroup480",
-      "hubAndSpoke830"
+      "MNCRP_RSG6996",
+      "myManagedNetwork9576",
+      "myGroup6896",
+      "hubAndSpoke4344"
     ]
   },
   "Variables": {

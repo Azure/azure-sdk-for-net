@@ -77,17 +77,17 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// When a path is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>
-        public LeaseDurationType LeaseDuration { get; internal set; }
+        public DataLakeLeaseDuration LeaseDuration { get; internal set; }
 
         /// <summary>
         /// Lease state of the path.
         /// </summary>
-        public LeaseState LeaseState { get; internal set; }
+        public DataLakeLeaseState LeaseState { get; internal set; }
 
         /// <summary>
         /// The current lease status of the path.
         /// </summary>
-        public LeaseStatus LeaseStatus { get; internal set; }
+        public DataLakeLeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
         /// The number of bytes present in the response body.
@@ -116,7 +116,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// This header returns the value that was specified for the Content-Encoding request header
         /// </summary>
-        public IEnumerable<string> ContentEncoding { get; internal set; }
+        public string ContentEncoding { get; internal set; }
 
         /// <summary>
         /// This header returns the value that was specified for the 'x-ms-blob-content-disposition' header.
@@ -129,7 +129,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// This header returns the value that was specified for the Content-Language request header.
         /// </summary>
-        public IEnumerable<string> ContentLanguage { get; internal set; }
+        public string ContentLanguage { get; internal set; }
 
         /// <summary>
         /// This header is returned if it was previously specified for the path.

@@ -52,24 +52,24 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of deployments required by the remediation.
+        /// Gets the number of deployments required by the remediation.
         /// </summary>
         [JsonProperty(PropertyName = "totalDeployments")]
-        public int? TotalDeployments { get; set; }
+        public int? TotalDeployments { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of deployments required by the remediation
-        /// that have succeeded.
+        /// Gets the number of deployments required by the remediation that
+        /// have succeeded.
         /// </summary>
         [JsonProperty(PropertyName = "successfulDeployments")]
-        public int? SuccessfulDeployments { get; set; }
+        public int? SuccessfulDeployments { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of deployments required by the remediation
-        /// that have failed.
+        /// Gets the number of deployments required by the remediation that
+        /// have failed.
         /// </summary>
         [JsonProperty(PropertyName = "failedDeployments")]
-        public int? FailedDeployments { get; set; }
+        public int? FailedDeployments { get; private set; }
 
     }
 }

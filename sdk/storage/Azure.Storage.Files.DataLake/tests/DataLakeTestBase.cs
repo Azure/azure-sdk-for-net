@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Files.DataLake.Sas;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -27,6 +26,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentEncoding = "encoding";
         public readonly string ContentLanguage = "language";
         public readonly string ContentType = "type";
+        public readonly IList<PathAccessControlItem> AccessControlList
+            = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
+        public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
         public DataLakeTestBase(bool async) : this(async, null) { }
 
@@ -53,7 +55,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -83,48 +86,52 @@ namespace Azure.Storage.Files.DataLake.Tests
         public DataLakeServiceClient GetServiceClient_OAuth()
             => GetServiceClientFromOauthConfig(TestConfigHierarchicalNamespace);
 
+        public StorageSharedKeyCredential GetStorageSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
 
-        public IDisposable GetNewFileSystem(
-            out FileSystemClient fileSystem,
+        public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
-            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            PublicAccessType publicAccessType = PublicAccessType.None,
             bool premium = default)
         {
             fileSystemName ??= GetNewFileSystemName();
             service ??= GetServiceClient_SharedKey();
-            fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
 
-            if (publicAccessType == Models.PublicAccessType.None)
+            if (publicAccessType == PublicAccessType.None)
             {
-                publicAccessType = premium ? Models.PublicAccessType.None : Models.PublicAccessType.Container;
+                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.FileSystem;
             }
 
-            return new DisposingFileSystem(
-                fileSystem,
-                metadata ?? new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
-                publicAccessType);
-        }
+            DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
 
-        public IDisposable GetNewDirectory(out DirectoryClient directory, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default)
-        {
-            IDisposable disposingFileSystem = GetNewFileSystem(out FileSystemClient fileSystem, service, fileSystemName);
-            directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
-            _ = directory.CreateAsync().Result;
-            return disposingFileSystem;
-        }
+            // due to a service issue, if the initial container creation request times out, subsequent requests
+            // can return a ContainerAlreadyExists code even though the container doesn't really exist.
+            // we delay until after the service cache timeout and then attempt to create the container one more time.
+            // If this attempt still fails, we mark the test as inconclusive.
+            // TODO Remove this handling after the service bug is fixed https://github.com/Azure/azure-sdk-for-net/issues/9399
+            try
+            {
+                await RetryAsync(
+                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType),
+                    ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
+                    retryDelay: TestConstants.DataLakeRetryDelay,
+                    retryAttempts: 1);
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists)
+            {
+                // if we still get this error after retrying, mark the test as inconclusive
+                TestContext.Out.WriteLine(
+                    $"{TestContext.CurrentContext.Test.Name} is inconclusive due to hitting " +
+                    $"the DataLake service bug described in https://github.com/Azure/azure-sdk-for-net/issues/9399");
+                Assert.Inconclusive(); // passing the message in Inconclusive call doesn't show up in Console output.
+            }
 
-        public IDisposable GetNewFile(out FileClient file, DataLakeServiceClient service = default, string fileSystemName = default, string directoryName = default, string fileName = default)
-        {
-            IDisposable disposingFileSystem = GetNewFileSystem(out FileSystemClient fileSystem, service, fileSystemName);
-            DirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(directoryName ?? GetNewDirectoryName()));
-            _ = directory.CreateAsync().Result;
-
-            file = InstrumentClient(directory.GetFileClient(fileName ?? GetNewFileName()));
-            _ = file.CreateAsync().Result;
-
-            return disposingFileSystem;
+            return new DisposingFileSystem(fileSystem);
         }
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
@@ -159,6 +166,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }
             }
+        }
+
+        public void AssertPathPermissionsEquality(PathPermissions expected, PathPermissions actual)
+        {
+            Assert.AreEqual(expected.Owner, actual.Owner);
+            Assert.AreEqual(expected.Group, actual.Group);
+            Assert.AreEqual(expected.Other, actual.Other);
+            Assert.AreEqual(expected.StickyBit, actual.StickyBit);
+            Assert.AreEqual(expected.ExtendedAcls, actual.ExtendedAcls);
         }
 
         public DataLakeServiceClient GetServiceClient_AccountSas(
@@ -219,7 +235,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
+                ResourceTypes = AccountSasResourceTypes.All,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
@@ -231,7 +247,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 AccountSasPermissions.Write |
                 AccountSasPermissions.Delete |
                 AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsFileSystem(string fileSystemName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -303,7 +319,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupPathMatchCondition(PathClient path, string match)
+        public async Task<string> SetupPathMatchCondition(DataLakePathClient path, string match)
         {
             if (match == ReceivedETag)
             {
@@ -317,7 +333,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupPathLeaseCondition(PathClient path, string leaseId, string garbageLeaseId)
+        public async Task<string> SetupPathLeaseCondition(DataLakePathClient path, string leaseId, string garbageLeaseId)
         {
             Models.DataLakeLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
@@ -328,7 +344,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         //TODO consider removing this.
-        public async Task<string> SetupFileSystemLeaseCondition(FileSystemClient fileSystem, string leaseId, string garbageLeaseId)
+        public async Task<string> SetupFileSystemLeaseCondition(DataLakeFileSystemClient fileSystem, string leaseId, string garbageLeaseId)
         {
             Models.DataLakeLease lease = null;
             if (leaseId == ReceivedLeaseId || leaseId == garbageLeaseId)
@@ -338,24 +354,39 @@ namespace Azure.Storage.Files.DataLake.Tests
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
         }
 
-        private class DisposingFileSystem : IDisposable
-        {
-            public FileSystemClient FileSystemClient { get; }
-
-            public DisposingFileSystem(FileSystemClient fileSystem, IDictionary<string, string> metadata, Models.PublicAccessType publicAccessType = default)
+        public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>
+            new[]
             {
-                fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType).Wait();
+                new DataLakeSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy =
+                        new DataLakeAccessPolicy
+                        {
+                            StartsOn = Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = "rcw"
+                        }
+                }
+            };
 
-                FileSystemClient = fileSystem;
+        public class DisposingFileSystem : IAsyncDisposable
+        {
+            public DataLakeFileSystemClient FileSystem;
+
+            public DisposingFileSystem(DataLakeFileSystemClient fileSystem)
+            {
+                FileSystem = fileSystem;
             }
 
-            public void Dispose()
+            public async ValueTask DisposeAsync()
             {
-                if (FileSystemClient != null)
+                if (FileSystem != null)
                 {
                     try
                     {
-                        FileSystemClient.DeleteAsync().Wait();
+                        await FileSystem.DeleteAsync();
+                        FileSystem = null;
                     }
                     catch
                     {

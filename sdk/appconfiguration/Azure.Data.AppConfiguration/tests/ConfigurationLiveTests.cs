@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -28,10 +30,22 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetClient()
         {
-            return InstrumentClient(
-                new ConfigurationClient(
-                    Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING"),
-                    Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
+            var connectionString = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_CONNECTION_STRING");
+            if (Recording.Mode == RecordedTestMode.Playback)
+            {
+                connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
+            }
+
+            var options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(connectionString, options));
+        }
+
+        private ConfigurationClient GetAADClient()
+        {
+            string endpoint = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
+            TokenCredential credential = Recording.GetCredential(new DefaultAzureCredential());
+            ConfigurationClientOptions options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
         private ConfigurationSetting CreateSetting()
@@ -176,7 +190,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
-                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true);
 
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -186,7 +200,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
                 await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
@@ -279,8 +293,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var setting = await service.AddConfigurationSettingAsync(testSetting);
-                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.AddConfigurationSettingAsync(testSetting);
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true);
 
                 testSetting.Value = "new_value";
 
@@ -291,7 +305,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
                 await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
@@ -533,9 +547,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(testSettingUpdate);
 
                 // Test
-                var selector = new SettingSelector(setting.Key)
+                var selector = new SettingSelector
                 {
-                    AsOf = DateTimeOffset.MaxValue
+                    KeyFilter = setting.Key,
+                    AcceptDateTime = DateTimeOffset.MaxValue
                 };
 
                 int resultsReturned = 0;
@@ -553,6 +568,45 @@ namespace Azure.Data.AppConfiguration.Tests
                 }
 
                 Assert.AreEqual(expectedEvents, resultsReturned);
+            }
+            finally
+            {
+                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
+                await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label);
+            }
+        }
+
+        [Test]
+        public async Task GetRevisionsByKeyAndLabel()
+        {
+            // The service keeps revision history even after the key was removed
+            // Avoid reusing ids
+            Recording.DisableIdReuse();
+
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            //Prepare environment
+            ConfigurationSetting setting = testSetting;
+
+            setting.Key = GenerateKeyId("key-");
+            ConfigurationSetting testSettingUpdate = setting.Clone();
+            testSettingUpdate.Label = "test_label_update";
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(setting);
+                await service.SetConfigurationSettingAsync(testSettingUpdate);
+                AsyncPageable<ConfigurationSetting> revisions = service.GetRevisionsAsync(testSettingUpdate.Key, testSettingUpdate.Label, CancellationToken.None);
+
+                int resultsReturned = 0;
+                await foreach (ConfigurationSetting value in revisions)
+                {
+                    Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
+                    resultsReturned++;
+                }
+
+                Assert.AreEqual(1, resultsReturned);
             }
             finally
             {
@@ -636,7 +690,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 // TODO: add a test with a more granular timestamp.
-                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label, DateTimeOffset.MaxValue, requestOptions: default);
+                ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting, DateTimeOffset.MaxValue);
                 Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
@@ -753,7 +807,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var key = await SetMultipleKeys(service, expectedEvents);
 
             int resultsReturned = 0;
-            SettingSelector selector = new SettingSelector(key);
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
 
             await foreach (ConfigurationSetting item in service.GetConfigurationSettingsAsync(selector, CancellationToken.None))
             {
@@ -776,11 +830,10 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var selector = new SettingSelector();
 
-                Assert.AreEqual("*", selector.Keys.First());
-                Assert.AreEqual("*", selector.Labels.First());
+                Assert.AreEqual(null, selector.KeyFilter);
+                Assert.AreEqual(null, selector.LabelFilter);
 
-                var resultsReturned = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .Count();
+                var resultsReturned = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).Count;
 
                 //At least there should be one key available
                 Assert.GreaterOrEqual(resultsReturned, 1);
@@ -801,7 +854,12 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(testSetting.Key, testSetting.Label);
+                var selector = new SettingSelector
+                {
+                    KeyFilter = testSetting.Key,
+                    LabelFilter = testSetting.Label
+                };
+
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
@@ -825,7 +883,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(testSetting.Key);
+                var selector = new SettingSelector { KeyFilter = testSetting.Key };
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
@@ -848,9 +906,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(null, testSetting.Label);
+                var selector = new SettingSelector { LabelFilter = testSetting.Label };
 
-                Assert.AreEqual("*", selector.Keys.First());
+                Assert.AreEqual(null, selector.KeyFilter);
 
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
@@ -875,8 +933,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector(key)
+                SettingSelector selector = new SettingSelector
                 {
+                    KeyFilter = key,
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
                 };
 
@@ -909,8 +968,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector(key)
+                SettingSelector selector = new SettingSelector
                 {
+                    KeyFilter = key,
                     Fields = SettingFields.Key | SettingFields.IsReadOnly
                 };
 
@@ -943,8 +1003,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector(key)
+                SettingSelector selector = new SettingSelector
                 {
+                    KeyFilter = key,
                     Fields = SettingFields.All
                 };
 
@@ -977,7 +1038,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(testSetting.Key);
+                var selector = new SettingSelector { KeyFilter = testSetting.Key };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1002,7 +1063,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector("abc*");
+                var selector = new SettingSelector { KeyFilter = "abc*" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1016,7 +1077,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
 
@@ -1031,7 +1092,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector($"*{endsWith}");
+                var selector = new SettingSelector { KeyFilter = $"*{endsWith}" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1045,7 +1106,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
 
@@ -1059,7 +1120,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector("*abc*");
+                var selector = new SettingSelector { KeyFilter = "*abc*" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1073,7 +1134,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
 
@@ -1090,8 +1151,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector("ab,cd");
-                selector.Keys.Add("wx,yz");
+                var selector = new SettingSelector { KeyFilter = @"ab\,cd,wx\,yz" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1119,7 +1179,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector($"{abcSetting.Key},{xyzSetting.Key}");
+                var selector = new SettingSelector { KeyFilter = $@"{abcSetting.Key}\,{xyzSetting.Key}" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1145,8 +1205,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector("abc");
-                selector.Keys.Add("xyz");
+                var selector = new SettingSelector { KeyFilter = "abc,xyz" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1174,8 +1233,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector(null, "abc");
-                selector.Labels.Add("xyz");
+                var selector = new SettingSelector { LabelFilter = "abc,xyz" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1185,8 +1243,8 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(abcSetting.Key);
-                await service.DeleteConfigurationSettingAsync(xyzSetting.Key);
+                await service.DeleteConfigurationSettingAsync(abcSetting.Key, abcSetting.Label);
+                await service.DeleteConfigurationSettingAsync(xyzSetting.Key, xyzSetting.Label);
             }
         }
 
@@ -1199,12 +1257,12 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
-                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true);
                 Assert.IsTrue(readOnly.Value.IsReadOnly);
             }
             finally
             {
-                await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
                 await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
             }
         }
@@ -1217,9 +1275,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
-                    await service.SetReadOnlyAsync(testSetting.Key);
+                    await service.SetReadOnlyAsync(testSetting.Key, true);
                 });
             }
             finally
@@ -1237,7 +1295,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
-                var readOnly = await service.ClearReadOnlyAsync(testSetting.Key, testSetting.Label);
+                var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
                 Assert.IsFalse(readOnly.Value.IsReadOnly);
             }
             finally
@@ -1256,8 +1314,25 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
-                    await service.SetReadOnlyAsync(testSetting.Key);
+                    await service.SetReadOnlyAsync(testSetting.Key, true);
                 });
+            }
+            finally
+            {
+                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+            }
+        }
+
+        [Test]
+        public async Task AddSettingDefaultAAD()
+        {
+            ConfigurationClient service = GetAADClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {

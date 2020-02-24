@@ -18,28 +18,18 @@ namespace Azure.Core.Pipeline
     {
         public LoggingPolicy(bool logContent, int maxLength, string[] allowedHeaderNames, string[] allowedQueryParameters)
         {
+            _sanitizer = new HttpMessageSanitizer(allowedQueryParameters, allowedHeaderNames);
             _logContent = logContent;
             _maxLength = maxLength;
-            _allowedHeaderNames = new HashSet<string>(allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
-            _logAllHeaders = _allowedHeaderNames.Contains(LogAllValue);
-            _allowedQueryParameters = allowedQueryParameters;
-            _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
         }
 
-        private const string LogAllValue = "*";
-        private const string RedactedPlaceholder = "REDACTED";
         private const double RequestTooLongTime = 3.0; // sec
 
         private static readonly AzureCoreEventSource s_eventSource = AzureCoreEventSource.Singleton;
 
         private readonly bool _logContent;
         private readonly int _maxLength;
-
-        private readonly HashSet<string> _allowedHeaderNames;
-        private readonly string[] _allowedQueryParameters;
-
-        private readonly bool _logAllHeaders;
-        private readonly bool _logFullQueries;
+        private HttpMessageSanitizer _sanitizer;
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -126,7 +116,7 @@ namespace Azure.Core.Pipeline
 
         private string FormatUri(RequestUriBuilder requestUri)
         {
-            return _logFullQueries ? requestUri.ToString() : requestUri.ToString(_allowedQueryParameters, RedactedPlaceholder);
+            return _sanitizer.SanitizeUrl(requestUri.ToString());
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -141,14 +131,8 @@ namespace Azure.Core.Pipeline
             {
                 stringBuilder.Append(header.Name);
                 stringBuilder.Append(':');
-                if (_logAllHeaders || _allowedHeaderNames.Contains(header.Name))
-                {
-                    stringBuilder.AppendLine(header.Value);
-                }
-                else
-                {
-                    stringBuilder.AppendLine(RedactedPlaceholder);
-                }
+                string newValue = _sanitizer.SanitizeHeader(header.Name, header.Value);
+                stringBuilder.AppendLine(newValue);
             }
             return stringBuilder.ToString();
         }

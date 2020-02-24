@@ -47,8 +47,8 @@ export async function create(project: IProject) : Promise<IServiceModel> {
     const models: IModels = { };
     for (const [name, model] of Object.entries(project.cache.customTypes)) {
         if (!model) { continue; }
-        if (model.external) { continue; }
         if (isEnumType(model) && model.constant) { continue; }
+        if (!isEnumType(model) && model.external) { continue; }
         models[name] = model;
     }
 
@@ -369,7 +369,7 @@ function createType(project: IProject, name: string, swagger: any, location: str
     }
 
     // Check if it's only defined to represent an external type
-    if (swagger[`x-ms-external`]) {
+    if (swagger[`x-ms-external`] || swagger[`x-az-external`]) {
         model.external = true;
     }
 
@@ -837,23 +837,44 @@ function getOperationParameters(project: IProject, info: IServiceInfo, path: tem
         ...parameters.filter(p => !p.required)
     ];
 
-    // Inject the Azure.Core pipeline as the first parameter
-    parameters.splice(0, 0, {
-        name: 'pipeline',
-        clientName: 'pipeline',
-        required: true,
-        location: 'path',
-        skipUrlEncoding: true,
-        model: <IObjectType>{
-            name: 'HttpPipeline',
-            type: 'object',
-            external: true,
-            namespace: 'Azure.Core.Pipeline',
-            properties: { },
-            xml: { },
+    // Inject our required parameters
+    parameters.splice(
+        0,
+        0,
+        {
+            name: 'clientDiagnostics',
+            clientName: 'clientDiagnostics',
+            description: 'The ClientDiagnostics instance used for operation reporting.',
+            required: true,
+            location: 'path',
+            skipUrlEncoding: true,
+            model: <IObjectType>{
+                name: 'ClientDiagnostics',
+                type: 'object',
+                external: true,
+                namespace: 'Azure.Core.Pipeline',
+                properties: { },
+                xml: { },
+            },
+            trace: false
         },
-        trace: false
-    });
+        {
+            name: 'pipeline',
+            clientName: 'pipeline',
+            description: 'The pipeline used for sending requests.',
+            required: true,
+            location: 'path',
+            skipUrlEncoding: true,
+            model: <IObjectType>{
+                name: 'HttpPipeline',
+                type: 'object',
+                external: true,
+                namespace: 'Azure.Core.Pipeline',
+                properties: { },
+                xml: { },
+            },
+            trace: false
+        });
 
     return parameters;
 
@@ -907,7 +928,7 @@ function getOperationResponse(project: IProject, responses: IResponses, defaultN
     const successes = all.filter(s => s.code[0] === '2');
     switch (successes.length) {
         case 0:
-            throw `No succesful responses (in ${location})`;
+            throw `No successful responses (in ${location})`;
             break;
         case 1:
             model = successes[0].model = createResponseType(successes[0], defaultName, `${location}['${successes[0].code}']`);

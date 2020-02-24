@@ -6,22 +6,25 @@ using System;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Lease
+    /// Lease.
     /// </summary>
     public class DataLakeLease
     {
         /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// The ETag contains a value that you can use to perform operations conditionally.
+        /// If the request service version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
         public ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// Returns the date and time the file system or path was last modified.
+        /// Any operation that modifies the file system or path, including an update of the its metadata or properties,
+        /// changes the last-modified time of the filesystem or path..
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Uniquely identifies a container's or blob's lease
+        /// Uniquely identifies a file system's or path's lease.
         /// </summary>
         public string LeaseId { get; internal set; }
 

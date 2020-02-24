@@ -39,6 +39,11 @@ namespace Microsoft.Azure.Management.Media.Models
         public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType Undefined = "Undefined";
 
         /// <summary>
+        /// Dual expiry for offline rental.
+        /// </summary>
+        public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType DualExpiry = "DualExpiry";
+
+        /// <summary>
         /// Content key can be persisted with an unlimited duration
         /// </summary>
         public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType PersistentUnlimited = "PersistentUnlimited";

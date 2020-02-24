@@ -3,6 +3,8 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -55,9 +57,24 @@ namespace Azure.Core.Tests
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             var informationalVersion = typeof(TestOptions).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            informationalVersion = informationalVersion.Substring(0, informationalVersion.IndexOf('+'));
 
             Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
             StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
+        }
+
+        [Test]
+        public async Task VersionDoesntHaveCommitHash()
+        {
+            var transport = new MockTransport(new MockResponse(200));
+            var telemetryPolicy = HttpPipelineBuilder.CreateTelemetryPolicy(new TestOptions());
+
+            await SendGetRequest(transport, telemetryPolicy);
+
+            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+            StringAssert.IsMatch(Regex.Escape("azsdk-net-Core.Tests/") +
+                                 "[.\\-0-9a-z]+" +
+                                 Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})"), userAgent);
         }
 
         private class TestOptions : ClientOptions
