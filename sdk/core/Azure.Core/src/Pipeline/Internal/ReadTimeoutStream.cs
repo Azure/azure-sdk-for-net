@@ -110,10 +110,16 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        public override void Close()
+        {
+            _stream.Close();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             _stream.Dispose();
+            _cancellationTokenSource.Dispose();
         }
     }
 }
