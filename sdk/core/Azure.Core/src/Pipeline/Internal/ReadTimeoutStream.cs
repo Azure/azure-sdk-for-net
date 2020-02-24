@@ -32,10 +32,6 @@ namespace Azure.Core.Pipeline
             var source = StartTimeout(cancellationToken, out bool dispose);
             try
             {
-                source.Token.Register(() =>
-                {
-                    Console.WriteLine("Cancelled");
-                });
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
             }
             finally
