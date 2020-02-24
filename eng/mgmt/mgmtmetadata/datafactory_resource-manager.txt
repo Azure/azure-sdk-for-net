@@ -3,12 +3,32 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=D:\Git\Azure\azure-sdk-for-net\sdk
-2020-01-16 03:29:55 UTC
-Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      e6a133198d4bc7e0cc8a3e42f8e10c5353a1d4ed
-AutoRest information
-Requested version: latest
-Bootstrapper version:    autorest@2.0.4407
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06 --csharp-sdks-folder=D:\Projects\azure-sdk-for-net\sdk
+ERROR: Referenced file 'https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Create.json' not found
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/datafactory.json:652:12 ($.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}"].put["x-ms-examples"].IntegrationRuntimes_Create["$ref"])
+FATAL: swagger-document/loader - FAILED
+FATAL: Error: [OperationAbortedException] Error occurred. Exiting.
+Process() cancelled due to exception : [OperationAbortedException] Error occurred. Exiting.
+
+System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
+   at System.Diagnostics.Process.EnsureState(State state)
+   at System.Diagnostics.Process.get_ProcessName()
+   at System.Diagnostics.Process.ToString()
+   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
+   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
+   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
+   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
+   at System.Management.Automation.CommandProcessorBase.Complete()
+AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datafactory/resource-manager/readme.md failed. Please try again
