@@ -852,7 +852,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 conditions,
-                async: false,
+                async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 

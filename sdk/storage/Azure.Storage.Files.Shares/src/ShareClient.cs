@@ -2041,7 +2041,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
-                async: false,
+                async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
                 .ConfigureAwait(false);

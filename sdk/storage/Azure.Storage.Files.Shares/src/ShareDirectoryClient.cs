@@ -848,7 +848,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        public async Task<Response<bool>> DeleteIfExistsInternal(
+        internal async Task<Response<bool>> DeleteIfExistsInternal(
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)

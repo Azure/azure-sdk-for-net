@@ -90,7 +90,6 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string fileName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> DeleteIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsInternal(bool async, System.Threading.CancellationToken cancellationToken, string operationName = null) { throw null; }
         public virtual Azure.Response DeleteSubdirectory(string subdirectoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSubdirectoryAsync(string subdirectoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
