@@ -21,11 +21,11 @@ namespace Azure.Core.Tests
         {
             var ticks = Environment.TickCount;
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequest(new ForeverWaitingTransport(), new OperationTimeoutPolicy(TimeSpan.FromSeconds(1))).TimeoutAfterDefault());
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequest(new ForeverWaitingTransport(), new OperationTimeoutPolicy(TimeSpan.FromMilliseconds(500))).TimeoutAfterDefault());
 
-            ticks = Environment.TickCount;
+            ticks = Environment.TickCount - ticks;
 
-            Assert.Greater((double)ticks / TimeSpan.TicksPerSecond, 1);
+            Assert.Greater(ticks , 500);
         }
 
         private class ForeverWaitingTransport: MockTransport
