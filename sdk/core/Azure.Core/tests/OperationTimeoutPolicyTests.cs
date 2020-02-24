@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
 
             ticks = Environment.TickCount - ticks;
 
-            Assert.Greater(ticks , 500);
+            Assert.GreaterOrEqual(ticks , 500);
         }
 
         private class ForeverWaitingTransport: MockTransport
