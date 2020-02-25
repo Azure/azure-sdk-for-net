@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Core
     ///   class.
     /// </summary>
     ///
-    internal static class ServiceBusConnectionOptionsExtensions
+    internal static class OptionsExtensions
     {
         /// <summary>
         ///   Creates a new copy of the current <see cref="ServiceBusConnectionOptions" />, cloning its attributes into a new instance.
@@ -24,5 +24,17 @@ namespace Azure.Messaging.ServiceBus.Core
                 TransportType = instance.TransportType,
                 Proxy = instance.Proxy
             };
+
+        internal static ServiceBusReceiverClientOptions ToServiceBusReceiverClientOptions(this ServiceBusProcessorClientOptions options)
+        {
+            return new ServiceBusReceiverClientOptions
+            {
+                ConnectionOptions = options.ConnectionOptions.Clone(),
+                RetryOptions = options.RetryOptions.Clone(),
+                ReceiveMode = options.ReceiveMode,
+                IsSessionEntity = options.IsSessionEntity,
+                SessionId = options.SessionId
+            };
+        }
     }
 }
