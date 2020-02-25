@@ -22,9 +22,60 @@ For the best development experience, developers should use the official Microsof
 - The Azure Synapse client library shares the same [Prerequisites](https://github.com/azure/azure-sdk-for-net#prerequisites) as the Microsoft Azure SDK for .NET.
 
 ## Examples
+The Microsoft.Azure.Synapse supports the CRUD of spark batch job.
 
-To Do
+### Spark Batch Job examples
+* [List spark batch job](#list-spark-batch-job)
+* [Create spark batch job](#create-spark-batch-job)
+* [Delete spark batch job](#delete-spark-batch-job)
 
+### List spark batch job
+List the spark batch job under the specific spark pool of a specific synapse workspace
+
+```C#
+ExtendedLivyListBatchResponse listBatchResponse = synapseClient.SparkBatch.List(workspaceName, sparkPoolName);
+
+Console.WriteLine(listBatchResponse.Total);
+```
+
+### Create spark batch job
+Create spark batch job under specific workspace and spark pool.
+
+```C#
+    ExtendedLivyBatchRequest batchRequest = new ExtendedLivyBatchRequest()
+    {
+        Name = "WordCount_Java",
+        ClassName = "WordCount",
+
+        // The abfss path of the file
+        File = "abfss://yourfilesystem@{your adlsgen2 account name}.dfs.core.windows.net/{your path}/wordcount.jar",
+
+        Args= new List<string>
+        {
+            "abfss://yourfilesystem@{your adlsgen2 account name}.dfs.core.windows.net/{your path}/input.txt",
+            "abfss://yourfilesystem@{your adlsgen2 account name}.dfs.core.windows.net/{your path}/result"
+        },
+
+        DriverCores = 2,
+        DriverMemory = "4G",
+        ExecutorCores = 2,
+        NumExecutors = 2,
+        ExecutorMemory = "4G",
+    };
+
+    var batchJob = synapseClient.SparkBatch.Create(workspaceName, sparkPoolName, batchRequest);
+
+    Console.WriteLine(ExtractSparkBatchJobInfomation(batchJob));
+}
+```
+
+### Delete spark batch job
+Delete a spark batch job with spark batch id under specific workspace and spark pool.
+
+```C#
+synapseClient.SparkBatch.Delete(workspaceName, sparkPoolName, sparkBatchId);
+```
+       
 ## To build
 
 For information on building the Azure Synapse client library, please see [Building the Microsoft Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net#to-build)
@@ -43,7 +94,7 @@ Please open issue in github.
 
 ## Next steps
 
-The next step is add Examples
+The next step is adding more examples
 
 ## Contributing
 
