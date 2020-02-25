@@ -4,7 +4,7 @@
 ### Added
 - Testing Changelog added section
 - Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md)
-- Test `Highlighted Code`
+- Test `Highlighted Code Section`
 
 ## 1.0.2-preview.6 (2020-02-24)
 ### Added
