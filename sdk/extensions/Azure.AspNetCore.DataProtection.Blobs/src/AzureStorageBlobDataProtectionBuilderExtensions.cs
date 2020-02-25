@@ -127,6 +127,45 @@ namespace Microsoft.AspNetCore.DataProtection
         /// in Azure Blob Storage.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="connectionString">A connection string includes the authentication information
+        /// required for your application to access data in an Azure Storage
+        /// account at runtime.
+        /// </param>
+        /// <param name="containerName">The container name to use.</param>
+        /// <param name="blobName">The blob name to use.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
+        /// <remarks>
+        /// The container referenced by <paramref name="containerName"/><paramref name="blobName"/> must already exist.
+        /// </remarks>
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, string connectionString, string containerName, string blobName)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (blobName == null)
+            {
+                throw new ArgumentNullException(nameof(blobName));
+            }
+
+            var client = new BlobServiceClient(connectionString).GetBlobContainerClient(containerName).GetBlobClient(blobName);
+
+            return PersistKeysToAzureBlobStorage(builder, client);
+        }
+
+        /// <summary>
+        /// Configures the data protection system to persist keys to the specified path
+        /// in Azure Blob Storage.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
         /// <param name="blobClient">The <see cref="BlobClient"/> in which the
         /// key file should be stored.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
