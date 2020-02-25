@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// An server Active Directory Administrator.
+    /// Azure Active Directory administrator.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ServerAzureADAdministrator : ProxyResource
@@ -32,19 +32,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerAzureADAdministrator class.
         /// </summary>
-        /// <param name="login">The server administrator login value.</param>
-        /// <param name="sid">The server administrator Sid (Secure ID).</param>
-        /// <param name="tenantId">The server Active Directory Administrator
-        /// tenant id.</param>
+        /// <param name="login">Login name of the server administrator.</param>
+        /// <param name="sid">SID (object ID) of the server
+        /// administrator.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public ServerAzureADAdministrator(string login, System.Guid sid, System.Guid tenantId, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="tenantId">Tenant ID of the administrator.</param>
+        /// <param name="azureADOnlyAuthentication">Azure Active Directory only
+        /// Authentication enabled.</param>
+        public ServerAzureADAdministrator(string login, System.Guid sid, string id = default(string), string name = default(string), string type = default(string), System.Guid? tenantId = default(System.Guid?), bool? azureADOnlyAuthentication = default(bool?))
             : base(id, name, type)
         {
             Login = login;
             Sid = sid;
             TenantId = tenantId;
+            AzureADOnlyAuthentication = azureADOnlyAuthentication;
             CustomInit();
         }
         /// <summary>
@@ -61,25 +64,31 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the server administrator login value.
+        /// Gets or sets login name of the server administrator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.login")]
         public string Login { get; set; }
 
         /// <summary>
-        /// Gets or sets the server administrator Sid (Secure ID).
+        /// Gets or sets SID (object ID) of the server administrator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sid")]
         public System.Guid Sid { get; set; }
 
         /// <summary>
-        /// Gets or sets the server Active Directory Administrator tenant id.
+        /// Gets or sets tenant ID of the administrator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantId")]
-        public System.Guid TenantId { get; set; }
+        public System.Guid? TenantId { get; set; }
 
         /// <summary>
-        /// The type of administrator.
+        /// Gets or sets azure Active Directory only Authentication enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureADOnlyAuthentication")]
+        public bool? AzureADOnlyAuthentication { get; set; }
+
+        /// <summary>
+        /// Type of the sever administrator.
         /// </summary>
         [JsonProperty(PropertyName = "properties.administratorType")]
         public static string AdministratorType { get; private set; }
