@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.AspNetCore.DataProtection.Blobs;
+using Azure.Storage;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -84,6 +86,38 @@ namespace Microsoft.AspNetCore.DataProtection
             }
 
             var client = new BlobClient(bloblUri, tokenCredential);
+
+            return PersistKeysToAzureBlobStorage(builder, client);
+        }
+
+        /// <summary>
+        /// Configures the data protection system to persist keys to the specified path
+        /// in Azure Blob Storage.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="sasUri">The full URI where the key file should be stored.
+        /// The URI must contain the SAS token as a query string parameter.</param>
+        /// <param name="sharedKeyCredential">The credentials to connect to the blob.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
+        /// <remarks>
+        /// The container referenced by <paramref name="bloblUri"/> must already exist.
+        /// </remarks>
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri bloblUri, StorageSharedKeyCredential sharedKeyCredential)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+            if (bloblUri == null)
+            {
+                throw new ArgumentNullException(nameof(bloblUri));
+            }
+            if (sharedKeyCredential == null)
+            {
+                throw new ArgumentNullException(nameof(sharedKeyCredential));
+            }
+
+            var client = new BlobClient(bloblUri, sharedKeyCredential);
 
             return PersistKeysToAzureBlobStorage(builder, client);
         }
