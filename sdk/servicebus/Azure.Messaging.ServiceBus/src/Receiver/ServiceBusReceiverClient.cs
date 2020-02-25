@@ -49,17 +49,17 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        internal string EntityName => Connection.EntityName;
+        public string EntityName => Connection.EntityName;
 
         /// <summary>
         ///
         /// </summary>
-        public ReceiveMode ReceiveMode { get; private set; }
+        public ReceiveMode ReceiveMode { get;}
 
         /// <summary>
         ///
         /// </summary>
-        public bool IsSessionReceiver { get; set; }
+        public bool IsSessionReceiver { get; }
 
         /// <summary>
         ///
@@ -296,6 +296,7 @@ namespace Azure.Messaging.ServiceBus
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             ReceiveMode = clientOptions.ReceiveMode;
+            PrefetchCount = clientOptions.PrefetchCount;
             Consumer = Connection.CreateTransportConsumer(
                 retryPolicy: RetryPolicy,
                 receiveMode: ReceiveMode,
@@ -326,7 +327,7 @@ namespace Azure.Messaging.ServiceBus
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed((bool)this.IsClosed, nameof(ServiceBus.ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             try

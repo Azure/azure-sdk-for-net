@@ -33,13 +33,18 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusProcessorClient : IAsyncDisposable
     {
         private Func<ServiceBusMessage, ServiceBusSession, Task> _processMessage;
+
         private Func<ExceptionReceivedEventArgs, Task> _processErrorAsync = default;
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
+
         private readonly object EventHandlerGuard = new object();
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+
         private SemaphoreSlim MessageHandlerSemaphore;
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+
         private readonly SemaphoreSlim ProcessingStartStopSemaphore = new SemaphoreSlim(1, 1);
+
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
         private readonly ServiceBusReceiverClient _receiver;
@@ -58,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
         /// <param name="session"></param>
         ///
-        internal Task OnProcessMessageAsync(ServiceBusMessage message, ServiceBusSession session) => _processMessage(message, session);
+        private Task OnProcessMessageAsync(ServiceBusMessage message, ServiceBusSession session) => _processMessage(message, session);
 
         /// <summary>
         ///   Called when a 'process error' event is triggered.
@@ -80,7 +85,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        internal string EntityName => _receiver.Connection.EntityName;
+        public string EntityName => _receiver.Connection.EntityName;
 
         /// <summary>
         ///
@@ -111,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        internal ServiceBusRetryPolicy RetryPolicy => _receiver.RetryPolicy;
+        private ServiceBusRetryPolicy RetryPolicy => _receiver.RetryPolicy;
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
@@ -222,7 +227,7 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName,
             ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, GetSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            : this(new ServiceBusConnection(connectionString, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
         {
         }
 
@@ -260,13 +265,8 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             TokenCredential credential,
             ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, GetSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
         {
-        }
-
-        private static string GetSubscriptionPath(string topicName, string subscriptionName)
-        {
-            return $"{topicName}/{subscriptionName}";
         }
 
         /// <summary>
