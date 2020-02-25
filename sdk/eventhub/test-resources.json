@@ -57,7 +57,7 @@
       {
         "type": "Microsoft.Authorization/roleAssignments",
         "apiVersion": "2019-04-01-preview",
-        "name": "[guid(resourceGroup().id, deployment().name, variables('eventHubsDataOwnerRoleId'))]",
+        "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('eventHubsDataOwnerRoleId'))]",
         "properties": {
           "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('eventHubsDataOwnerRoleId'))]",
           "principalId": "[parameters('testApplicationOid')]",
@@ -67,7 +67,7 @@
       {
         "type": "Microsoft.Authorization/roleAssignments",
         "apiVersion": "2019-04-01-preview",
-        "name": "[guid(resourceGroup().id, deployment().name, variables('contributorRoleId'))]",
+        "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
         "properties": {
           "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
           "principalId": "[parameters('testApplicationOid')]",
