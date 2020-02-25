@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted table contained in a page. </summary>
     public partial class DataTable
@@ -15,6 +15,6 @@ namespace Azure.Template.Models
         /// <summary> Number of columns. </summary>
         public int Columns { get; set; }
         /// <summary> List of cells contained in the table. </summary>
-        public ICollection<DataTableCell> Cells { get; set; } = new System.Collections.Generic.List<Azure.Template.Models.DataTableCell>();
+        public ICollection<DataTableCell> Cells { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.DataTableCell>();
     }
 }

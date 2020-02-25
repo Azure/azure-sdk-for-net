@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status of the training operation. </summary>
     public enum TrainStatus

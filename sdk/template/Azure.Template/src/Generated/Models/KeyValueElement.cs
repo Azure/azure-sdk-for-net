@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted key or value in a key-value pair. </summary>
     public partial class KeyValueElement

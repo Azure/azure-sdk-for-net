@@ -5,13 +5,13 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Custom model training result. </summary>
     public partial class TrainResult
     {
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
-        public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new System.Collections.Generic.List<Azure.Template.Models.TrainingDocumentInfo>();
+        public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.TrainingDocumentInfo>();
         /// <summary> List of fields used to train the model and the train operation error reported by each. </summary>
         public ICollection<FormFieldsReport> Fields { get; set; }
         /// <summary> Average accuracy. </summary>

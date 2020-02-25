@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Summary of all trained custom models. </summary>
     public partial class ModelsSummary

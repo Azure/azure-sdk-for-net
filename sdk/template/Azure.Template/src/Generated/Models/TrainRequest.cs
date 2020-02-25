@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Request parameter to train a new custom model. </summary>
     public partial class TrainRequest

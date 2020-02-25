@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Basic custom model information. </summary>
     public partial class ModelInfo

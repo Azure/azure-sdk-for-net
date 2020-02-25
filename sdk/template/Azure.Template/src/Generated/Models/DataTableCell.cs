@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted cell in a table. </summary>
     public partial class DataTableCell

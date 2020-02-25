@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
     public partial class DocumentResult
@@ -15,6 +15,6 @@ namespace Azure.Template.Models
         /// <summary> First and last page number where the document is found. </summary>
         public ICollection<int> PageRange { get; set; } = new List<int>();
         /// <summary> Dictionary of named field values. </summary>
-        public IDictionary<string, FieldValue> Fields { get; set; } = new System.Collections.Generic.Dictionary<string, Azure.Template.Models.FieldValue>();
+        public IDictionary<string, FieldValue> Fields { get; set; } = new System.Collections.Generic.Dictionary<string, Azure.AI.FormRecognizer.Models.FieldValue>();
     }
 }

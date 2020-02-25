@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status and result of the queued analyze operation. </summary>
     public partial class AnalyzeOperationResult

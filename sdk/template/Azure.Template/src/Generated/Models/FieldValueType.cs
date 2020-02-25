@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Semantic data type of the field value. </summary>
     public enum FieldValueType

@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Filter to apply to the documents in the source path for training. </summary>
     public partial class TrainSourceFilter

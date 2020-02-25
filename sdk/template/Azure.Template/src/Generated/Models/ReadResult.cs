@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Text extracted from a page in the input document. </summary>
     public partial class ReadResult

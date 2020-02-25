@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo
@@ -15,7 +15,7 @@ namespace Azure.Template.Models
         /// <summary> Total number of pages trained. </summary>
         public int Pages { get; set; }
         /// <summary> List of errors. </summary>
-        public ICollection<ErrorInformation> Errors { get; set; } = new System.Collections.Generic.List<Azure.Template.Models.ErrorInformation>();
+        public ICollection<ErrorInformation> Errors { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.ErrorInformation>();
         /// <summary> Status of the training operation. </summary>
         public TrainStatus Status { get; set; }
     }

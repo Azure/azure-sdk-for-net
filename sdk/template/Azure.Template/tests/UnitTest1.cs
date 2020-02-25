@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Template.Tests
         [Test]
         public void Test1()
         {
-            var c = new TemplateClient(new Uri("http://localhost:3000/"));
+            var c = new CustomFormClient(new Uri("http://localhost:3000/"));
 
             Assert.NotNull(c);
         }

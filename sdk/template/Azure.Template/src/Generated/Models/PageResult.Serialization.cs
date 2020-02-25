@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     public partial class PageResult : IUtf8JsonSerializable
     {

@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing an extracted text line. </summary>
     public partial class TextLine
@@ -17,6 +17,6 @@ namespace Azure.Template.Models
         /// <summary> Language code. </summary>
         public Language? Language { get; set; }
         /// <summary> List of words in the text line. </summary>
-        public ICollection<TextWord> Words { get; set; } = new System.Collections.Generic.List<Azure.Template.Models.TextWord>();
+        public ICollection<TextWord> Words { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.TextWord>();
     }
 }

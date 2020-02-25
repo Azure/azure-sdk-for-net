@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Analyze operation result. </summary>
     public partial class AnalyzeResult
@@ -13,7 +13,7 @@ namespace Azure.Template.Models
         /// <summary> Version of schema used for this result. </summary>
         public string Version { get; set; }
         /// <summary> Text extracted from the input. </summary>
-        public ICollection<ReadResult> ReadResults { get; set; } = new System.Collections.Generic.List<Azure.Template.Models.ReadResult>();
+        public ICollection<ReadResult> ReadResults { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.ReadResult>();
         /// <summary> Page-level information extracted from the input. </summary>
         public ICollection<PageResult> PageResults { get; set; }
         /// <summary> Document-level information extracted from the input. </summary>

@@ -6,7 +6,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.Template
+namespace Azure.AI.FormRecognizer
 {
     internal class AnalyzeReceiptAsyncHeaders
     {

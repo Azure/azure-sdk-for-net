@@ -8,12 +8,13 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Template.Mocdels;
 using Azure.Template.Models;
 
-namespace Azure.Template
+namespace Azure.AI.FormRecognizer
 {
     internal partial class AllOperations
     {
@@ -129,7 +130,7 @@ namespace Azure.Template
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models.Models>> GetCustomModelsAsync(SomeEnum? op, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<CustomModelCollection>> GetCustomModelsAsync(SomeEnum? op, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModels");
@@ -143,7 +144,7 @@ namespace Azure.Template
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Models.Models.DeserializeModels(document.RootElement);
+                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -159,7 +160,7 @@ namespace Azure.Template
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.Models> GetCustomModels(SomeEnum? op, CancellationToken cancellationToken = default)
+        public Response<CustomModelCollection> GetCustomModels(SomeEnum? op, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModels");
@@ -173,7 +174,7 @@ namespace Azure.Template
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Models.Models.DeserializeModels(document.RootElement);
+                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -792,7 +793,7 @@ namespace Azure.Template
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models.Models>> GetCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<CustomModelCollection>> GetCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -810,7 +811,7 @@ namespace Azure.Template
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Models.Models.DeserializeModels(document.RootElement);
+                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -826,7 +827,7 @@ namespace Azure.Template
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.Models> GetCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<CustomModelCollection> GetCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -844,7 +845,7 @@ namespace Azure.Template
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Models.Models.DeserializeModels(document.RootElement);
+                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

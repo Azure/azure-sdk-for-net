@@ -6,7 +6,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     public partial class Model : IUtf8JsonSerializable
     {

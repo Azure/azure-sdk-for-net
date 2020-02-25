@@ -4,11 +4,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.Template.Models
 {
     /// <summary> Response to the list custom models operation. </summary>
-    public partial class Models
+    public partial class CustomModelCollection
     {
         /// <summary> Summary of all trained custom models. </summary>
         public ModelsSummary Summary { get; set; }

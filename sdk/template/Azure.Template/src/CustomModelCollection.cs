@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Template.Mocdels
+namespace Azure.Template.Models
 {
-    [CodeGenSchema("Enum0")]
-    internal partial struct SomeEnum
+    [CodeGenSchema("Models")]
+    public partial class CustomModelCollection
     {
     }
 }
