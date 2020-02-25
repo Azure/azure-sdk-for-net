@@ -8,51 +8,51 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class Model : IUtf8JsonSerializable
+    public partial class TrainRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("modelInfo");
-            writer.WriteObjectValue(ModelInfo);
-            if (Keys != null)
+            writer.WritePropertyName("source");
+            writer.WriteStringValue(Source);
+            if (SourceFilter != null)
             {
-                writer.WritePropertyName("keys");
-                writer.WriteObjectValue(Keys);
+                writer.WritePropertyName("sourceFilter");
+                writer.WriteObjectValue(SourceFilter);
             }
-            if (TrainResult != null)
+            if (UseLabelFile != null)
             {
-                writer.WritePropertyName("trainResult");
-                writer.WriteObjectValue(TrainResult);
+                writer.WritePropertyName("useLabelFile");
+                writer.WriteBooleanValue(UseLabelFile.Value);
             }
             writer.WriteEndObject();
         }
-        internal static Model DeserializeModel(JsonElement element)
+        internal static TrainRequest DeserializeTrainRequest(JsonElement element)
         {
-            Model result = new Model();
+            TrainRequest result = new TrainRequest();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelInfo"))
+                if (property.NameEquals("source"))
                 {
-                    result.ModelInfo = ModelInfo.DeserializeModelInfo(property.Value);
+                    result.Source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("sourceFilter"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    result.Keys = KeysResult.DeserializeKeysResult(property.Value);
+                    result.SourceFilter = TrainSourceFilter.DeserializeTrainSourceFilter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("trainResult"))
+                if (property.NameEquals("useLabelFile"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    result.TrainResult = TrainResult.DeserializeTrainResult(property.Value);
+                    result.UseLabelFile = property.Value.GetBoolean();
                     continue;
                 }
             }

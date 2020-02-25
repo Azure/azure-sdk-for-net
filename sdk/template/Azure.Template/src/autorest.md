@@ -7,5 +7,5 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  $(this-folder)/swagger/TestSwagger.json
+    -  https://raw.githubusercontent.com/kristapratico/azure-rest-api-specs/form-recognizer-patch/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.0/FormRecognizer.json
 ```

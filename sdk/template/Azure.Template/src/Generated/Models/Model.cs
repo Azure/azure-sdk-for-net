@@ -5,14 +5,14 @@
 
 namespace Azure.Template.Models
 {
-    /// <summary> The Model. </summary>
+    /// <summary> Response to the get custom model operation. </summary>
     public partial class Model
     {
-        /// <summary> A description about the set of tags. </summary>
-        public string ModelProperty { get; set; }
-        /// <summary> Fruit. </summary>
-        public Fruit Fruit { get; set; }
-        /// <summary> Day of week. </summary>
-        public DaysOfWeek DaysOfWeek { get; set; }
+        /// <summary> Basic custom model information. </summary>
+        public ModelInfo ModelInfo { get; set; } = new ModelInfo();
+        /// <summary> Keys extracted by the custom model. </summary>
+        public KeysResult Keys { get; set; }
+        /// <summary> Custom model training result. </summary>
+        public TrainResult TrainResult { get; set; }
     }
 }

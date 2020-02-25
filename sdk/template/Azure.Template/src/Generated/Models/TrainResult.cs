@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.Collections.Generic;
+
+namespace Azure.Template.Models
+{
+    /// <summary> Custom model training result. </summary>
+    public partial class TrainResult
+    {
+        /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
+        public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new System.Collections.Generic.List<Azure.Template.Models.TrainingDocumentInfo>();
+        /// <summary> List of fields used to train the model and the train operation error reported by each. </summary>
+        public ICollection<FormFieldsReport> Fields { get; set; }
+        /// <summary> Average accuracy. </summary>
+        public float? AverageModelAccuracy { get; set; }
+        /// <summary> Errors returned during the training operation. </summary>
+        public ICollection<ErrorInformation> Errors { get; set; }
+    }
+}
