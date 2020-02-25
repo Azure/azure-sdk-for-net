@@ -1457,7 +1457,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task PartitionInitializingAsyncIsTriggeredWhenPartitionProcessingIsStarting()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object, mockLoadBalancer.Object);
 
             var partitionIds = new[] { "0", "1" };
 
@@ -1485,6 +1486,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 })
                 .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) =>
                     MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token));
+
+            mockLoadBalancer
+                .SetupGet(m => m.OwnedPartitionIds)
+                .Returns(partitionIds);
+
+            mockLoadBalancer
+                .SetupSequence(m => m.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new PartitionOwnership("namespace", "eventHub", "consumerGroup", mockProcessor.Identifier, partitionIds[0]))
+                .ReturnsAsync(new PartitionOwnership("namespace", "eventHub", "consumerGroup", mockProcessor.Identifier, partitionIds[1]));
 
             // Use the init handler to keep track of the partitions that have been initialized.
 
@@ -3490,7 +3500,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       string eventHubName,
                                                       Func<EventHubConnection> connectionFactory,
                                                       EventProcessorClientOptions clientOptions,
-                                                      EventHubConsumerClient eventSourceConsumer) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
+                                                      EventHubConsumerClient eventSourceConsumer,
+                                                      PartitionLoadBalancer loadBalancer = null) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions, loadBalancer)
             {
                 Argument.AssertNotNull(eventSourceConsumer, nameof(eventSourceConsumer));
                 _consumer = eventSourceConsumer;
