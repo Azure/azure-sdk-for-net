@@ -16,6 +16,7 @@
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
