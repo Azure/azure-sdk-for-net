@@ -125,5 +125,5 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             }
         }
-        }
+    }
 }
