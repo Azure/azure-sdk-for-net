@@ -10,31 +10,27 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// A private endpoint connection
+    /// Properties of a private endpoint connection.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection : ProxyResource
+    public partial class PrivateEndpointConnectionProperties
     {
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the
+        /// PrivateEndpointConnectionProperties class.
         /// </summary>
-        public PrivateEndpointConnection()
+        public PrivateEndpointConnectionProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PrivateEndpointConnection class.
+        /// Initializes a new instance of the
+        /// PrivateEndpointConnectionProperties class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="privateEndpoint">Private endpoint which the connection
         /// belongs to.</param>
         /// <param name="privateLinkServiceConnectionState">Connection state of
@@ -42,8 +38,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="provisioningState">State of the private endpoint
         /// connection. Possible values include: 'Approving', 'Ready',
         /// 'Dropping', 'Failed', 'Rejecting'</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string provisioningState = default(string))
-            : base(id, name, type)
+        public PrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint = default(PrivateEndpointProperty), PrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionStateProperty), string provisioningState = default(string))
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -59,26 +54,26 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets private endpoint which the connection belongs to.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateEndpoint")]
+        [JsonProperty(PropertyName = "privateEndpoint")]
         public PrivateEndpointProperty PrivateEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets connection state of the private endpoint connection.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateLinkServiceConnectionState")]
+        [JsonProperty(PropertyName = "privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary>
         /// Gets state of the private endpoint connection. Possible values
         /// include: 'Approving', 'Ready', 'Dropping', 'Failed', 'Rejecting'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
