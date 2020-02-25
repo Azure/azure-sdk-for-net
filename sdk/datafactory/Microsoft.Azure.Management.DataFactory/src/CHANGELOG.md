@@ -2,6 +2,10 @@
 
 ## Version 4.8.0
 ###  Feature Additions
+- Added new API to query on triggers with filters like type and parentTrigger
+- Fixed offset value validation in self dependency and trigger dependency for tumbling window trigger, now accepts negative offsets
+- Introduced a new rerunTumblingWindowTrigger which can rerun multiple windows of an existing tumblingWindowTrigger with independent concurrency
+- Added rerun from failed activity support for create pipeline run
 - Added apiVersion property and set SecurityToken from required to optional for Salesforce
 - Added connectionString property to DB2 linked service
 - Added useTempFileRename to SFTP sink

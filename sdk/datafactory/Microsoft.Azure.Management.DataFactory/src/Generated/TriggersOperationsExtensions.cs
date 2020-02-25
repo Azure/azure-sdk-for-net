@@ -62,6 +62,52 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Query triggers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='filterParameters'>
+            /// Parameters to filter the triggers.
+            /// </param>
+            public static TriggerQueryResponse QueryByFactory(this ITriggersOperations operations, string resourceGroupName, string factoryName, TriggerFilterParameters filterParameters)
+            {
+                return operations.QueryByFactoryAsync(resourceGroupName, factoryName, filterParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Query triggers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='filterParameters'>
+            /// Parameters to filter the triggers.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TriggerQueryResponse> QueryByFactoryAsync(this ITriggersOperations operations, string resourceGroupName, string factoryName, TriggerFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.QueryByFactoryWithHttpMessagesAsync(resourceGroupName, factoryName, filterParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a trigger.
             /// </summary>
             /// <param name='operations'>
