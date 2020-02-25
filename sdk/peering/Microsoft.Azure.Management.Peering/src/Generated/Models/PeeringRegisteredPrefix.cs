@@ -13,55 +13,48 @@ namespace Microsoft.Azure.Management.Peering.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The peering service prefix class.
+    /// The customer's prefix that is registered by the peering service
+    /// provider.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PeeringServicePrefix : Resource
+    public partial class PeeringRegisteredPrefix : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the PeeringServicePrefix class.
+        /// Initializes a new instance of the PeeringRegisteredPrefix class.
         /// </summary>
-        public PeeringServicePrefix()
+        public PeeringRegisteredPrefix()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PeeringServicePrefix class.
+        /// Initializes a new instance of the PeeringRegisteredPrefix class.
         /// </summary>
         /// <param name="name">The name of the resource.</param>
         /// <param name="id">The ID of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="prefix">The prefix from which your traffic
+        /// <param name="prefix">The customer's prefix from which traffic
         /// originates.</param>
         /// <param name="prefixValidationState">The prefix validation state.
         /// Possible values include: 'None', 'Invalid', 'Verified', 'Failed',
         /// 'Pending', 'Warning', 'Unknown'</param>
-        /// <param name="learnedType">The prefix learned type. Possible values
-        /// include: 'None', 'ViaServiceProvider', 'ViaSession'</param>
-        /// <param name="errorMessage">The error message for validation
-        /// state</param>
-        /// <param name="events">The list of events for peering service
-        /// prefix</param>
         /// <param name="peeringServicePrefixKey">The peering service prefix
-        /// key</param>
+        /// key that is to be shared with the customer.</param>
+        /// <param name="errorMessage">The error message associated with the
+        /// validation state, if any.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
-        public PeeringServicePrefix(string name = default(string), string id = default(string), string type = default(string), string prefix = default(string), string prefixValidationState = default(string), string learnedType = default(string), string errorMessage = default(string), IList<PeeringServicePrefixEvent> events = default(IList<PeeringServicePrefixEvent>), string peeringServicePrefixKey = default(string), string provisioningState = default(string))
+        public PeeringRegisteredPrefix(string name = default(string), string id = default(string), string type = default(string), string prefix = default(string), string prefixValidationState = default(string), string peeringServicePrefixKey = default(string), string errorMessage = default(string), string provisioningState = default(string))
             : base(name, id, type)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
-            LearnedType = learnedType;
-            ErrorMessage = errorMessage;
-            Events = events;
             PeeringServicePrefixKey = peeringServicePrefixKey;
+            ErrorMessage = errorMessage;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -72,7 +65,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the prefix from which your traffic originates.
+        /// Gets or sets the customer's prefix from which traffic originates.
         /// </summary>
         [JsonProperty(PropertyName = "properties.prefix")]
         public string Prefix { get; set; }
@@ -85,29 +78,18 @@ namespace Microsoft.Azure.Management.Peering.Models
         public string PrefixValidationState { get; private set; }
 
         /// <summary>
-        /// Gets the prefix learned type. Possible values include: 'None',
-        /// 'ViaServiceProvider', 'ViaSession'
+        /// Gets the peering service prefix key that is to be shared with the
+        /// customer.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.learnedType")]
-        public string LearnedType { get; private set; }
+        [JsonProperty(PropertyName = "properties.peeringServicePrefixKey")]
+        public string PeeringServicePrefixKey { get; private set; }
 
         /// <summary>
-        /// Gets the error message for validation state
+        /// Gets the error message associated with the validation state, if
+        /// any.
         /// </summary>
         [JsonProperty(PropertyName = "properties.errorMessage")]
         public string ErrorMessage { get; private set; }
-
-        /// <summary>
-        /// Gets the list of events for peering service prefix
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.events")]
-        public IList<PeeringServicePrefixEvent> Events { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the peering service prefix key
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.peeringServicePrefixKey")]
-        public string PeeringServicePrefixKey { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the resource. Possible values

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PrefixesOperations operations.
+    /// RegisteredAsnsOperations operations.
     /// </summary>
-    internal partial class PrefixesOperations : IServiceOperations<PeeringManagementClient>, IPrefixesOperations
+    internal partial class RegisteredAsnsOperations : IServiceOperations<PeeringManagementClient>, IRegisteredAsnsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PrefixesOperations class.
+        /// Initializes a new instance of the RegisteredAsnsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PrefixesOperations(PeeringManagementClient client)
+        internal RegisteredAsnsOperations(PeeringManagementClient client)
         {
             if (client == null)
             {
@@ -51,20 +51,17 @@ namespace Microsoft.Azure.Management.Peering
         public PeeringManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets an existing prefix with the specified name under the given
-        /// subscription, resource group and peering service.
+        /// Gets an existing registered ASN with the specified name under the given
+        /// subscription, resource group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='prefixName'>
-        /// The name of the prefix.
-        /// </param>
-        /// <param name='expand'>
-        /// The properties to be expanded.
+        /// <param name='registeredAsnName'>
+        /// The name of the registered ASN.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,19 +84,19 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeeringServicePrefix>> GetWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeeringRegisteredAsn>> GetWithHttpMessagesAsync(string resourceGroupName, string peeringName, string registeredAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringServiceName == null)
+            if (peeringName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
             }
-            if (prefixName == null)
+            if (registeredAsnName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "prefixName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registeredAsnName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -117,24 +114,19 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringServiceName", peeringServiceName);
-                tracingParameters.Add("prefixName", prefixName);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("registeredAsnName", registeredAsnName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringServiceName}", System.Uri.EscapeDataString(peeringServiceName));
-            _url = _url.Replace("{prefixName}", System.Uri.EscapeDataString(prefixName));
+            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{registeredAsnName}", System.Uri.EscapeDataString(registeredAsnName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -227,7 +219,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PeeringServicePrefix>();
+            var _result = new AzureOperationResponse<PeeringRegisteredAsn>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -240,7 +232,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PeeringServicePrefix>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PeeringRegisteredAsn>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -260,23 +252,20 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Creates a new prefix with the specified name under the given subscription,
-        /// resource group and peering service.
+        /// Creates a new registered ASN with the specified name under the given
+        /// subscription, resource group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='prefixName'>
-        /// The name of the prefix.
+        /// <param name='registeredAsnName'>
+        /// The name of the ASN.
         /// </param>
-        /// <param name='prefix'>
-        /// The prefix from which your traffic originates.
-        /// </param>
-        /// <param name='peeringServicePrefixKey'>
-        /// The peering service prefix key
+        /// <param name='asn'>
+        /// The customer's ASN from which traffic originates.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -299,19 +288,19 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), string peeringServicePrefixKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeeringRegisteredAsn>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringName, string registeredAsnName, int? asn = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringServiceName == null)
+            if (peeringName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
             }
-            if (prefixName == null)
+            if (registeredAsnName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "prefixName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registeredAsnName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -321,11 +310,10 @@ namespace Microsoft.Azure.Management.Peering
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            PeeringServicePrefix peeringServicePrefix = new PeeringServicePrefix();
-            if (prefix != null || peeringServicePrefixKey != null)
+            PeeringRegisteredAsn registeredAsn = new PeeringRegisteredAsn();
+            if (asn != null)
             {
-                peeringServicePrefix.Prefix = prefix;
-                peeringServicePrefix.PeeringServicePrefixKey = peeringServicePrefixKey;
+                registeredAsn.Asn = asn;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -335,18 +323,18 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringServiceName", peeringServiceName);
-                tracingParameters.Add("prefixName", prefixName);
-                tracingParameters.Add("peeringServicePrefix", peeringServicePrefix);
+                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("registeredAsnName", registeredAsnName);
+                tracingParameters.Add("registeredAsn", registeredAsn);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringServiceName}", System.Uri.EscapeDataString(peeringServiceName));
-            _url = _url.Replace("{prefixName}", System.Uri.EscapeDataString(prefixName));
+            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{registeredAsnName}", System.Uri.EscapeDataString(registeredAsnName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -391,9 +379,9 @@ namespace Microsoft.Azure.Management.Peering
 
             // Serialize Request
             string _requestContent = null;
-            if(peeringServicePrefix != null)
+            if(registeredAsn != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(peeringServicePrefix, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(registeredAsn, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -447,7 +435,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PeeringServicePrefix>();
+            var _result = new AzureOperationResponse<PeeringRegisteredAsn>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -460,7 +448,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PeeringServicePrefix>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PeeringRegisteredAsn>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -478,7 +466,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PeeringServicePrefix>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PeeringRegisteredAsn>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -498,17 +486,17 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Deletes an existing prefix with the specified name under the given
-        /// subscription, resource group and peering service.
+        /// Deletes an existing registered ASN with the specified name under the given
+        /// subscription, resource group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='prefixName'>
-        /// The name of the prefix.
+        /// <param name='registeredAsnName'>
+        /// The name of the registered ASN.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -528,19 +516,19 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string peeringName, string registeredAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringServiceName == null)
+            if (peeringName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
             }
-            if (prefixName == null)
+            if (registeredAsnName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "prefixName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registeredAsnName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -558,17 +546,17 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringServiceName", peeringServiceName);
-                tracingParameters.Add("prefixName", prefixName);
+                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("registeredAsnName", registeredAsnName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes/{prefixName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringServiceName}", System.Uri.EscapeDataString(peeringServiceName));
-            _url = _url.Replace("{prefixName}", System.Uri.EscapeDataString(prefixName));
+            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{registeredAsnName}", System.Uri.EscapeDataString(registeredAsnName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -678,17 +666,14 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Lists all prefixes under the given subscription, resource group and peering
-        /// service.
+        /// Lists all registered ASNs under the given subscription, resource group and
+        /// peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
-        /// </param>
-        /// <param name='expand'>
-        /// The properties to be expanded.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -711,15 +696,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringRegisteredAsn>>> ListByPeeringWithHttpMessagesAsync(string resourceGroupName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringServiceName == null)
+            if (peeringName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringServiceName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -737,22 +722,17 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringServiceName", peeringServiceName);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("peeringName", peeringName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringService", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeering", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/prefixes").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringServiceName}", System.Uri.EscapeDataString(peeringServiceName));
+            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -845,7 +825,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PeeringServicePrefix>>();
+            var _result = new AzureOperationResponse<IPage<PeeringRegisteredAsn>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -858,7 +838,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringServicePrefix>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringRegisteredAsn>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -878,8 +858,8 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Lists all prefixes under the given subscription, resource group and peering
-        /// service.
+        /// Lists all registered ASNs under the given subscription, resource group and
+        /// peering.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -905,7 +885,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringRegisteredAsn>>> ListByPeeringNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -920,7 +900,7 @@ namespace Microsoft.Azure.Management.Peering
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringServiceNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPeeringNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1014,7 +994,7 @@ namespace Microsoft.Azure.Management.Peering
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<PeeringServicePrefix>>();
+            var _result = new AzureOperationResponse<IPage<PeeringRegisteredAsn>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1027,7 +1007,7 @@ namespace Microsoft.Azure.Management.Peering
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringServicePrefix>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<PeeringRegisteredAsn>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Peering.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="peerAsnProperty">The Autonomous System Number (ASN) of
         /// the peer.</param>
-        /// <param name="peerContactInfo">The contact information of the
+        /// <param name="peerContactDetail">The contact details of the
         /// peer.</param>
         /// <param name="peerName">The name of the peer.</param>
         /// <param name="validationState">The validation state of the ASN
@@ -45,11 +47,11 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// 'Pending', 'Approved', 'Failed'</param>
         /// <param name="errorMessage">The error message for the validation
         /// state</param>
-        public PeerAsn(string name = default(string), string id = default(string), string type = default(string), int? peerAsnProperty = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string), string validationState = default(string), string errorMessage = default(string))
+        public PeerAsn(string name = default(string), string id = default(string), string type = default(string), int? peerAsnProperty = default(int?), IList<ContactDetail> peerContactDetail = default(IList<ContactDetail>), string peerName = default(string), string validationState = default(string), string errorMessage = default(string))
             : base(name, id, type)
         {
             PeerAsnProperty = peerAsnProperty;
-            PeerContactInfo = peerContactInfo;
+            PeerContactDetail = peerContactDetail;
             PeerName = peerName;
             ValidationState = validationState;
             ErrorMessage = errorMessage;
@@ -68,10 +70,10 @@ namespace Microsoft.Azure.Management.Peering.Models
         public int? PeerAsnProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the contact information of the peer.
+        /// Gets or sets the contact details of the peer.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peerContactInfo")]
-        public ContactInfo PeerContactInfo { get; set; }
+        [JsonProperty(PropertyName = "properties.peerContactDetail")]
+        public IList<ContactDetail> PeerContactDetail { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the peer.

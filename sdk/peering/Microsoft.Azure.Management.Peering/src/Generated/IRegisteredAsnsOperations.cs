@@ -19,25 +19,22 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PrefixesOperations operations.
+    /// RegisteredAsnsOperations operations.
     /// </summary>
-    public partial interface IPrefixesOperations
+    public partial interface IRegisteredAsnsOperations
     {
         /// <summary>
-        /// Gets an existing prefix with the specified name under the given
-        /// subscription, resource group and peering service.
+        /// Gets an existing registered ASN with the specified name under the
+        /// given subscription, resource group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='prefixName'>
-        /// The name of the prefix.
-        /// </param>
-        /// <param name='expand'>
-        /// The properties to be expanded.
+        /// <param name='registeredAsnName'>
+        /// The name of the registered ASN.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,25 +51,22 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeeringServicePrefix>> GetWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeeringRegisteredAsn>> GetWithHttpMessagesAsync(string resourceGroupName, string peeringName, string registeredAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new prefix with the specified name under the given
-        /// subscription, resource group and peering service.
+        /// Creates a new registered ASN with the specified name under the
+        /// given subscription, resource group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='prefixName'>
-        /// The name of the prefix.
+        /// <param name='registeredAsnName'>
+        /// The name of the ASN.
         /// </param>
-        /// <param name='prefix'>
-        /// The prefix from which your traffic originates.
-        /// </param>
-        /// <param name='peeringServicePrefixKey'>
-        /// The peering service prefix key
+        /// <param name='asn'>
+        /// The customer's ASN from which traffic originates.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -89,19 +83,19 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), string peeringServicePrefixKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeeringRegisteredAsn>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringName, string registeredAsnName, int? asn = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an existing prefix with the specified name under the given
-        /// subscription, resource group and peering service.
+        /// Deletes an existing registered ASN with the specified name under
+        /// the given subscription, resource group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
-        /// <param name='prefixName'>
-        /// The name of the prefix.
+        /// <param name='registeredAsnName'>
+        /// The name of the registered ASN.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -115,19 +109,16 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string peeringName, string registeredAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all prefixes under the given subscription, resource group and
-        /// peering service.
+        /// Lists all registered ASNs under the given subscription, resource
+        /// group and peering.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
-        /// The name of the peering service.
-        /// </param>
-        /// <param name='expand'>
-        /// The properties to be expanded.
+        /// <param name='peeringName'>
+        /// The name of the peering.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -144,10 +135,10 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringRegisteredAsn>>> ListByPeeringWithHttpMessagesAsync(string resourceGroupName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all prefixes under the given subscription, resource group and
-        /// peering service.
+        /// Lists all registered ASNs under the given subscription, resource
+        /// group and peering.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -167,6 +158,6 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringRegisteredAsn>>> ListByPeeringNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
