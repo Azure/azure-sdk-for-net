@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The partitionIds currently owned by the associated event processor.
         /// </summary>
         ///
-        public IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
+        public virtual IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
 
         /// <summary>
         ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
