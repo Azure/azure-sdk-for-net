@@ -37,8 +37,8 @@ namespace Azure.Core
         public RetryMode Mode { get; set; } = RetryMode.Exponential;
 
         /// <summary>
-        /// The timeout for a single operation.
+        /// The timeout applied to an individual network operations.
         /// </summary>
-        public TimeSpan TryTimeout { get; set; } = TimeSpan.FromSeconds(100);
+        public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     }
 }

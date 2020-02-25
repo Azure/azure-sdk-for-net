@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
             {
                 Retry =
                 {
-                    TryTimeout = TimeSpan.FromMilliseconds(500)
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500)
                 }
             });
 
@@ -193,7 +193,7 @@ namespace Azure.Core.Tests
             {
                 Retry =
                 {
-                    TryTimeout = TimeSpan.FromMilliseconds(500)
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500)
                 }
             });
 
@@ -238,7 +238,7 @@ namespace Azure.Core.Tests
             {
                 Retry =
                 {
-                    TryTimeout = TimeSpan.FromMilliseconds(500)
+                    NetworkTimeout = TimeSpan.FromMilliseconds(500)
                 }
             });
 

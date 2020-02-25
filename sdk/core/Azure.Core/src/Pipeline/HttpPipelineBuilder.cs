@@ -63,8 +63,6 @@ namespace Azure.Core.Pipeline
             RetryOptions retryOptions = options.Retry;
             policies.Add(new RetryPolicy(retryOptions.Mode, retryOptions.Delay, retryOptions.MaxDelay, retryOptions.MaxRetries));
 
-            policies.Add(new OperationTimeoutPolicy(options.Retry.TryTimeout));
-
             policies.AddRange(perRetryPolicies);
 
             policies.AddRange(options.PerRetryPolicies);
@@ -75,7 +73,7 @@ namespace Azure.Core.Pipeline
                     diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
             }
 
-            policies.Add(new ResponseBodyPolicy(options.Retry.TryTimeout));
+            policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 

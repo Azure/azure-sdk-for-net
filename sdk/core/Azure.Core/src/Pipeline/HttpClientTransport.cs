@@ -81,10 +81,7 @@ namespace Azure.Core.Pipeline
                 httpClientHandler.Proxy = webProxy;
             }
 
-            return new HttpClient(httpClientHandler)
-            {
-                Timeout = Timeout.InfiniteTimeSpan
-            };
+            return new HttpClient(httpClientHandler);
         }
 
         private static HttpRequestMessage BuildRequestMessage(HttpMessage message)
