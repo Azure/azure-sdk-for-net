@@ -31,7 +31,14 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class EventProcessorClientLiveTests
     {
-        private const string firstBatchBody = "this message is from before your time.";
+        /// <summary>
+        /// Body content for the first batch of test messages sent in <see cref="EventProcessorCanReceiveFromSpecifiedInitialEventPosition" />.
+        /// </summary>
+        private const string firstBatchBody = "This message is from before your time.";
+
+        /// <summary>
+        /// Body content for test messages sent.
+        /// </summary>
         private const string eventBody = "I'm dummy.";
 
         /// <summary>
@@ -159,9 +166,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 await producer.SendAsync(dummyBatch);
             }
 
-            // Wait a reasonable amount of time so the events are able to reach the service.
+            // Wait a reasonable amount of time so the there is a time gap between the first and second batch.
 
-            await Task.Delay(1000);
+            await Task.Delay(2000);
 
             // Send the events we expect to receive.
 
@@ -213,10 +220,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Wait for the event processors to receive events.
 
-            while (!firstBatchCancellationSource.IsCancellationRequested)
+            try
             {
-                await Task.Delay(500);
+                await Task.Delay(Timeout.Infinite, firstBatchCancellationSource.Token);
             }
+            catch (TaskCanceledException) { /*expected*/ }
+
 
             // Stop the event processors.
 
@@ -242,7 +251,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         if (eventArgs.Data != null)
                         {
                             Interlocked.Increment(ref receivedEventsCount);
-                            if (receivedEventsCount == expectedEventsCount)
+                            if (receivedEventsCount >= expectedEventsCount)
                             {
                                 secondBatchCancellationSource.Cancel();
                             }
@@ -258,10 +267,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Wait for the event processors to receive events.
 
-            while (!secondBatchCancellationSource.IsCancellationRequested)
+            try
             {
-                await Task.Delay(500);
+                await Task.Delay(Timeout.Infinite, secondBatchCancellationSource.Token);
             }
+            catch (TaskCanceledException) { /*expected*/ }
 
             // Stop the event processors.
 
@@ -295,18 +305,22 @@ namespace Azure.Messaging.EventHubs.Tests
             // Create the event processor manager to manage our event processors.
 
             var eventProcessorManager = new EventProcessorManager
-                (
-                    EventHubConsumerClient.DefaultConsumerGroupName,
-                    connectionString,
-                    clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
-                    onInitialize: eventArgs =>
-                        timestamps.TryAdd(eventArgs.PartitionId, new ConcurrentBag<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                    onProcessEvent: eventArgs =>
+            (
+                EventHubConsumerClient.DefaultConsumerGroupName,
+                connectionString,
+                clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
+                onInitialize: eventArgs =>
+                    timestamps.TryAdd(eventArgs.PartitionId, new ConcurrentBag<DateTimeOffset> { DateTimeOffset.UtcNow }),
+                onProcessEvent: eventArgs =>
+                {
+                    timestamps[eventArgs.Partition.PartitionId].Add(DateTimeOffset.UtcNow);
+                    receivedCount++;
+                    if (receivedCount >= 5)
                     {
-                        timestamps[eventArgs.Partition.PartitionId].Add(DateTimeOffset.UtcNow);
-                        receivedCount++;
+                        cancellationSource.Cancel();
                     }
-                );
+                }
+            );
 
             eventProcessorManager.AddEventProcessors(1);
 
@@ -316,10 +330,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Make sure the event processors have enough time to receive some events.
 
-            while (!cancellationSource.IsCancellationRequested && receivedCount < 5)
+            try
             {
-                await Task.Delay(500);
+                await Task.Delay(Timeout.Infinite, cancellationSource.Token);
             }
+            catch (TaskCanceledException) { /*expected*/ }
+
 
             // Stop the event processors.
 
