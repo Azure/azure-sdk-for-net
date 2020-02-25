@@ -23,9 +23,10 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="GetCurrentReleaseNotes" AfterTargets="Restore" BeforeTargets="Build" Condition="'$(SkipDevBuildNumber)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+  <!--Extract release notes for the current version being built -->
+  <Target Name="GetCurrentReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(SkipDevBuildNumber)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
     <PropertyGroup>
-      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
       <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)Set-PackageReleaseNotes.ps1</GetReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
       <ReleaseNotesPropsPath>$(IntermediateOutputPath)ReleaseNotes.txt</ReleaseNotesPropsPath>
@@ -34,9 +35,9 @@
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
     <Error Condition="'$(SetReleaseNotesErrorCode)' == '94'" Text="Release Notes for the specified version was not found" />
-     <PropertyGroup>
-      <ExtractedReleaseNotes>$([System.IO.File]::ReadAllText('$(ReleaseNotesPropsPath)'))</ExtractedReleaseNotes>
-     </PropertyGroup>
+    <PropertyGroup>
+    <ExtractedReleaseNotes>$([System.IO.File]::ReadAllText('$(ReleaseNotesPropsPath)'))</ExtractedReleaseNotes>
+    </PropertyGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
