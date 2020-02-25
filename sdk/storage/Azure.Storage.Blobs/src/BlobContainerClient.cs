@@ -832,24 +832,41 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobContainerInfo> response;
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                response = await CreateInternal(
-                    publicAccessType,
-                    metadata,
-                    encryptionScopeOptions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
-                    .ConfigureAwait(false);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(publicAccessType)}: {publicAccessType}");
+                Response <BlobContainerInfo> response;
+                try
+                {
+                    response = await CreateInternal(
+                        publicAccessType,
+                        metadata,
+                        encryptionScopeOptions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
+                {
+                    response = default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+                return response;
             }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
-            {
-                response = default;
-            }
-            return response;
         }
 
         /// <summary>
@@ -919,7 +936,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         access: publicAccessType,
                         defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
-                        denyEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride ,
+                        preventEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
@@ -1098,20 +1115,37 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                Response response = await DeleteInternal(
-                    conditions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
-                    .ConfigureAwait(false);
-                return Response.FromValue(true, response);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-            {
-                return Response.FromValue(false, default);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
             }
         }
 
@@ -2373,7 +2407,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown
-        /// if the blob already exists.  To override an existing block blob,
+        /// if the blob already exists.  To overwrite an existing block blob,
         /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
         /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.
@@ -2413,7 +2447,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown
-        /// if the blob already exists.  To override an existing block blob,
+        /// if the blob already exists.  To overwrite an existing block blob,
         /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
         /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.

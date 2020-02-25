@@ -43,10 +43,10 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (AnalyzeSentimentResult result in results)
             {
                 DocumentSentiment docSentiment = result.DocumentSentiment;
-                Debug.WriteLine($"Document sentiment is {docSentiment.Sentiment}, with scores: ");
-                Debug.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
-                Debug.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
-                Debug.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
+                Debug.WriteLine($"Document sentiment is {docSentiment.Sentiment}, with confidence scores: ");
+                Debug.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive:0.00}.");
+                Debug.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral:0.00}.");
+                Debug.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative:0.00}.");
             }
         }
     }

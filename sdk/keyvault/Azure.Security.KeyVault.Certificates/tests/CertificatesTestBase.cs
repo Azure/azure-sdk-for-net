@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -34,11 +35,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             recording ??= Recording;
 
+            CertificateClientOptions options = new CertificateClientOptions
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached,
+                }
+            };
+
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new CertificateClientOptions())));
+                    recording.InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()
@@ -201,6 +210,26 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         protected void RegisterForCleanup(string certificateName)
         {
             _certificatesToDelete.Enqueue(certificateName);
+        }
+
+        protected IAsyncDisposable EnsureDeleted(CertificateOperation operation) => new CertificateOperationDeleter(operation);
+
+        private class CertificateOperationDeleter : IAsyncDisposable
+        {
+            private readonly CertificateOperation _operation;
+
+            public CertificateOperationDeleter(CertificateOperation operation)
+            {
+                _operation = operation;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                if (!_operation.HasCompleted)
+                {
+                    await _operation.DeleteAsync();
+                }
+            }
         }
     }
 }

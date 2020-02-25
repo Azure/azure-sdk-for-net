@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private PartitionManager StorageManager { get; }
+        private StorageManager StorageManager { get; }
 
         /// <summary>
         ///   The set of options to use for consumers responsible for partition processing.
@@ -500,7 +500,7 @@ namespace Azure.Messaging.EventHubs
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(PartitionManager storageManager,
+        internal EventProcessorClient(StorageManager storageManager,
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
@@ -547,53 +547,7 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            if (ActiveLoadBalancingTask == null)
-            {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
-
-                try
-                {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                    lock (StartProcessorGuard)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        if (ActiveLoadBalancingTask == null)
-                        {
-                            if (_processEventAsync == null)
-                            {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
-                            }
-
-                            if (_processErrorAsync == null)
-                            {
-                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
-                            }
-
-                            // We expect the token source to be null, but we are playing safe.
-
-                            RunningTaskTokenSource?.Cancel();
-                            RunningTaskTokenSource?.Dispose();
-                            RunningTaskTokenSource = new CancellationTokenSource();
-
-                            // Start the main running task.  It is responsible for managing the active partition processing tasks and
-                            // for partition load balancing among multiple event processor instances.
-
-                            Logger.EventProcessorStart(Identifier);
-                            ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
-                        }
-                    }
-                }
-                finally
-                {
-                    RunningTaskSemaphore.Release();
-                }
-            }
-        }
+            => await StartProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
@@ -605,7 +559,8 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
-        public virtual void StartProcessing(CancellationToken cancellationToken = default) => StartProcessingAsync(cancellationToken).GetAwaiter().GetResult();
+        public virtual void StartProcessing(CancellationToken cancellationToken = default) =>
+            StartProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
@@ -614,73 +569,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
-        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.EventProcessorStopStart(Identifier);
-            await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
-
-            try
-            {
-                if (ActiveLoadBalancingTask != null)
-                {
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                    // Cancel the current running task.
-
-                    RunningTaskTokenSource.Cancel();
-                    RunningTaskTokenSource.Dispose();
-                    RunningTaskTokenSource = null;
-
-                    // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
-                    // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
-
-                    Exception loadBalancingException = default;
-
-                    try
-                    {
-                        await ActiveLoadBalancingTask.ConfigureAwait(false);
-                    }
-                    catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
-                    {
-                        // Nothing to do here.  These exceptions are expected.
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.LoadBalancingTaskError(Identifier, ex.Message);
-                        loadBalancingException = ex;
-                    }
-
-                    // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
-                    // still running and clear our dictionaries.  ActivePartitionProcessors dictionary is already cleared by the
-                    // StopPartitionProcessingIfRunningAsync method.
-
-                    await Task.WhenAll(ActivePartitionProcessors.Keys
-                        .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None)))
-                        .ConfigureAwait(false);
-
-                    // Stop the LoadBalancer.
-
-                    await LoadBalancer.RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
-
-                    // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
-                    // would have a race condition where the user could update the processing handlers while some pumps are still running.
-
-                    ActiveLoadBalancingTask.Dispose();
-                    ActiveLoadBalancingTask = null;
-
-                    if (loadBalancingException != default)
-                    {
-                        throw loadBalancingException;
-                    }
-                }
-            }
-            finally
-            {
-                RunningTaskSemaphore.Release();
-                Logger.EventProcessorStopComplete(Identifier);
-            }
-        }
+        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
+            await StopProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
@@ -689,7 +579,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
-        public virtual void StopProcessing(CancellationToken cancellationToken = default) => StopProcessingAsync(cancellationToken).GetAwaiter().GetResult();
+        public virtual void StopProcessing(CancellationToken cancellationToken = default)
+            => StopProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -789,14 +680,14 @@ namespace Azure.Messaging.EventHubs
                                                                EventHubConsumerClientOptions options) => new EventHubConsumerClient(consumerGroup, connection, options);
 
         /// <summary>
-        ///   Creates a <see cref="PartitionManager" /> to use for interacting with durable storage.
+        ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         ///
-        /// <returns>A <see cref="PartitionManager" /> with the requested configuration.</returns>
+        /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
         ///
-        internal virtual PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
+        internal virtual StorageManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
 
         /// <summary>
         ///   Starts running a task responsible for receiving and processing events in the context of a specified partition.
@@ -818,6 +709,7 @@ namespace Azure.Messaging.EventHubs
 
             await using var connectionAwaiter = connection.ConfigureAwait(false);
             await using var consumerAwaiter = consumer.ConfigureAwait(false);
+
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
                 using DiagnosticScope diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
@@ -952,7 +844,7 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (EventHubsException ex)
                     {
-                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex, cancellationToken);
+                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex.InnerException ?? ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);
                     }
                     catch (Exception ex)
@@ -1040,7 +932,7 @@ namespace Azure.Messaging.EventHubs
                 // partition.
 
                 Logger.StartPartitionProcessingError(partitionId, ex.Message);
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListCheckpoints, ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationListCheckpoints, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
                 return;
@@ -1122,6 +1014,180 @@ namespace Azure.Messaging.EventHubs
 
             var closingEventArgs = new PartitionClosingEventArgs(partitionId, reason, cancellationToken);
             _ = OnPartitionClosingAsync(closingEventArgs);
+        }
+
+        /// <summary>
+        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events. Should this method be called while the processor is running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
+        ///
+        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
+        ///
+        private async Task StartProcessingInternalAsync(bool async,
+                                                        CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            if (ActiveLoadBalancingTask == null)
+            {
+                if (async)
+                {
+                    await RunningTaskSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    RunningTaskSemaphore.Wait(cancellationToken);
+                }
+
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    lock (StartProcessorGuard)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                        if (ActiveLoadBalancingTask == null)
+                        {
+                            if (_processEventAsync == null)
+                            {
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
+                            }
+
+                            if (_processErrorAsync == null)
+                            {
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                            }
+
+                            // We expect the token source to be null, but we are playing safe.
+
+                            RunningTaskTokenSource?.Cancel();
+                            RunningTaskTokenSource?.Dispose();
+                            RunningTaskTokenSource = new CancellationTokenSource();
+
+                            // Start the main running task.  It is responsible for managing the active partition processing tasks and
+                            // for partition load balancing among multiple event processor instances.
+
+                            Logger.EventProcessorStart(Identifier);
+                            ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
+                        }
+                    }
+                }
+                finally
+                {
+                    RunningTaskSemaphore.Release();
+                }
+            }
+        }
+
+
+        /// <summary>
+        ///   Signals the <see cref="EventProcessorClient" /> to stop processing events. Should this method be called while the processor is not running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
+        ///
+        private async Task StopProcessingInternalAsync(bool async,
+                                                       CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.EventProcessorStopStart(Identifier);
+
+            if (async)
+            {
+                await RunningTaskSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                RunningTaskSemaphore.Wait(cancellationToken);
+            }
+
+            try
+            {
+                if (ActiveLoadBalancingTask != null)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    // Cancel the current running task.
+
+                    RunningTaskTokenSource.Cancel();
+                    RunningTaskTokenSource.Dispose();
+                    RunningTaskTokenSource = null;
+
+                    // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
+                    // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
+
+                    Exception loadBalancingException = default;
+
+                    try
+                    {
+                        if (async)
+                        {
+                            await ActiveLoadBalancingTask.ConfigureAwait(false);
+                        }
+                        else
+                        {
+#pragma warning disable AZC0102
+                            ActiveLoadBalancingTask.GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+                        }
+
+                    }
+                    catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
+                    {
+                        // Nothing to do here.  These exceptions are expected.
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LoadBalancingTaskError(Identifier, ex.Message);
+                        loadBalancingException = ex;
+                    }
+
+                    // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
+                    // still running and clear our dictionaries.  ActivePartitionProcessors dictionary is already cleared by the
+                    // StopPartitionProcessingIfRunningAsync method.
+                    var stopPartitionProcessingTasks = ActivePartitionProcessors.Keys
+                        .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None))
+                        .ToArray();
+
+                    if (async)
+                    {
+                        await Task.WhenAll(stopPartitionProcessingTasks).ConfigureAwait(false);
+
+                        // Stop the LoadBalancer.
+                        await LoadBalancer.RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Task.WaitAll(stopPartitionProcessingTasks);
+
+                        // Stop the LoadBalancer.
+#pragma warning disable AZC0102
+                        LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+                    }
+
+                    // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
+                    // would have a race condition where the user could update the processing handlers while some pumps are still running.
+
+                    ActiveLoadBalancingTask.Dispose();
+                    ActiveLoadBalancingTask = null;
+
+                    if (loadBalancingException != default)
+                    {
+                        throw loadBalancingException;
+                    }
+                }
+            }
+            finally
+            {
+                RunningTaskSemaphore.Release();
+                Logger.EventProcessorStopComplete(Identifier);
+            }
         }
 
         /// <summary>

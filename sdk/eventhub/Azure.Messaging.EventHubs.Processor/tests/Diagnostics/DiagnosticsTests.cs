@@ -43,6 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task UpdateCheckpointAsyncCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
@@ -53,8 +54,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var context = new MockPartitionContext("partition");
             var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var storageManager = new Mock<PartitionManager>();
-            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null, null);
+            var storageManager = new Mock<StorageManager>();
+            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null, null);
 
             // UpdateCheckpointAsync does not invoke the handlers, but we are setting them here in case
             // this fact changes in the future.
@@ -74,6 +75,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
             var mockStorage = new MockCheckPointStorage();

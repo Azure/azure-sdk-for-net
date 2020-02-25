@@ -71,6 +71,9 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='prefix'>
         /// The prefix from which your traffic originates.
         /// </param>
+        /// <param name='peeringServicePrefixKey'>
+        /// The peering service prefix key
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -86,7 +89,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), string peeringServicePrefixKey = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing prefix with the specified name under the given
         /// subscription, resource group and peering service.

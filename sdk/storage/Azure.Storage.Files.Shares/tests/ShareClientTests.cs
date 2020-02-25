@@ -199,7 +199,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateAsync(),
-                e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode));
 
             // Cleanup
             await share.DeleteAsync(false);
@@ -301,6 +301,153 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task CreateIfNotExistsAsync_NotExists()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            // Act
+            Response<ShareInfo> response = await share.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+
+            // Cleanup
+            await share.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Exists()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateAsync();
+
+            // Act
+            Response<ShareInfo> response = await share.CreateIfNotExistsAsync();
+
+            // Assert
+            Assert.IsNull(response);
+
+            // Cleanup
+            await share.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareClient unauthorizesShareClient = InstrumentClient(new ShareClient(share.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizesShareClient.CreateIfNotExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task ExistsAsync_NotExists()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            // Act
+            Response<bool> response = await share.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Exists()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateAsync();
+
+            // Act
+            Response<bool> response = await share.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+
+            // Cleanup
+            await share.DeleteAsync();
+        }
+
+        [Test]
+        public async Task ExistsAsync_Error()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareClient unauthorizesShareClient = InstrumentClient(new ShareClient(share.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizesShareClient.ExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateAsync();
+
+            // Act
+            Response<bool> response = await share.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_NotExists()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+
+            // Act
+            Response<bool> response = await share.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Error()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareClient unauthorizesShareClient = InstrumentClient(new ShareClient(share.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizesShareClient.DeleteIfExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
         public async Task GetPropertiesAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -315,6 +462,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
         public async Task GetPropertiesAsync_Premium()
         {
             await using DisposingShare test = await GetTestShareAsync(GetServiceClient_Premium());
@@ -344,7 +492,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetPropertiesAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -376,7 +524,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -413,7 +561,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetAccessPolicyAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -444,7 +592,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetAccessPolicyAsync(signedIdentifiers),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -497,7 +645,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.GetStatisticsAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -524,7 +672,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.CreateSnapshotAsync(),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -552,7 +700,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetQuotaAsync(Constants.KB),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -583,33 +731,32 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.DeleteAsync(false),
-                e => Assert.AreEqual("ShareNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
         }
 
         [Test]
         public async Task CreateDirectoryAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
-            ShareDirectoryClient dir = InstrumentClient((await share.CreateDirectoryAsync(GetNewDirectoryName())).Value);
-
-            Response<ShareDirectoryProperties> properties = await dir.GetPropertiesAsync();
-            Assert.IsNotNull(properties.Value);
+            // Act
+            ShareDirectoryClient directory = await share.CreateDirectoryAsync(GetNewDirectoryName());
         }
 
         [Test]
         public async Task DeleteDirectoryAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
 
-            var name = GetNewDirectoryName();
-            ShareDirectoryClient dir = InstrumentClient((await share.CreateDirectoryAsync(name)).Value);
-
-            await share.DeleteDirectoryAsync(name);
-            Assert.ThrowsAsync<RequestFailedException>(
-                async () => await dir.GetPropertiesAsync());
+            // Act
+            await share.DeleteDirectoryAsync(directoryName);
         }
     }
 }

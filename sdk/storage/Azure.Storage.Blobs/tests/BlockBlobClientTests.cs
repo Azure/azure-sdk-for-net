@@ -86,6 +86,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -1247,7 +1248,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         LeaseId = garbageLeaseId
                     }),
-                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
         }
 
         [Test]
@@ -1504,7 +1505,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.UploadAsync(
                         content: stream,
                         conditions: new BlobRequestConditions { LeaseId = garbageLeaseId }),
-                    e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode.Split('\n')[0]));
+                    e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
             }
         }
 

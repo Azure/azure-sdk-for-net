@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private readonly PartitionManager StorageManager;
+        private readonly StorageManager StorageManager;
 
         /// <summary>
         ///   A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
         ///
-        public PartitionLoadBalancer(PartitionManager storageManager,
+        public PartitionLoadBalancer(StorageManager storageManager,
                                      string identifier,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,
@@ -167,9 +167,11 @@ namespace Azure.Messaging.EventHubs.Processor
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
-                // without an updated ownership list.
+                // without an updated ownership list.  Set the EventHubName to null so it doesn't modify the exception
+                // message.  This exception message is used so the processor can retrieve the raw Operation string, and
+                // adding the EventHubName would append unwanted info to it.
 
-                throw new EventHubsException(true, EventHubName, Resources.OperationListOwnership, ex);
+                throw new EventHubsException(true, null, Resources.OperationListOwnership, ex);
             }
 
             // There's no point in continuing the current cycle if we failed to fetch the completeOwnershipList.
@@ -192,7 +194,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             foreach (PartitionOwnership ownership in completeOwnershipList)
             {
-                if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrWhiteSpace(ownership.OwnerIdentifier))
+                if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrEmpty(ownership.OwnerIdentifier))
                 {
                     if (ActiveOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
                     {
@@ -416,7 +418,12 @@ namespace Azure.Messaging.EventHubs.Processor
                 // end up losing some of its ownership.
 
                 Logger.RenewOwnershipError(OwnerIdentifier, ex.Message);
-                throw new EventHubsException(true, EventHubName, Resources.OperationRenewOwnership, ex);
+
+                // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
+                // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
+                // unwanted info to it.
+
+                throw new EventHubsException(true, null, Resources.OperationRenewOwnership, ex);
             }
             finally
             {
@@ -472,7 +479,11 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 Logger.ClaimOwnershipError(partitionId, ex.Message);
 
-                throw new EventHubsException(true, EventHubName, Resources.OperationClaimOwnership, ex);
+                // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
+                // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
+                // unwanted info to it.
+
+                throw new EventHubsException(true, null, Resources.OperationClaimOwnership, ex);
             }
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.

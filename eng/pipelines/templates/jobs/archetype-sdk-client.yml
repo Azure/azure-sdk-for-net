@@ -77,12 +77,6 @@ jobs:
           artifact: packages
           path: $(Pipeline.Workspace)/packages
           patterns: "*.nupkg"
-      - pwsh: |
-          mkdir "$(Build.ArtifactStagingDirectory)/reports"
-          Copy-Item -Path "$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html" -Destination "$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html"
-          & "tools/AnalyzeDeps/AnalyzeDeps.ps1" -PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" `
-          -OutPath "$(Build.ArtifactStagingDirectory)/reports/dependencies.html" -DumpPath "$(Build.ArtifactStagingDirectory)/reports/data.js"
-        displayName: "Analyze dependencies"
       - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
@@ -108,12 +102,6 @@ jobs:
           filePath: "eng/CodeChecks.ps1"
           pwsh: true
           failOnStderr:  false
-      - task: PublishPipelineArtifact@1
-        condition: succeeded()
-        displayName: "Publish Report Artifacts"
-        inputs:
-          artifactName: reports
-          path: $(Build.ArtifactStagingDirectory)/reports
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:
@@ -140,7 +128,7 @@ jobs:
           TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
-          OSVmImage: "macOS-10.13"
+          OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"

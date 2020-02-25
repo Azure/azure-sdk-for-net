@@ -38,9 +38,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="platformFaultDomainCount">Number of fault domains that
         /// the host group can span.</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
         /// <param name="hosts">A list of references to all dedicated hosts in
         /// the dedicated host group.</param>
         /// <param name="zones">Availability Zone to use for this host group.
@@ -48,8 +45,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// creation. If not provided, the group supports all zones in the
         /// region. If provided, enforces each host in the group to be in the
         /// same zone.</param>
-        public DedicatedHostGroupUpdate(int platformFaultDomainCount, IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), IList<SubResourceReadOnly> hosts = default(IList<SubResourceReadOnly>), IList<string> zones = default(IList<string>))
-            : base(tags, id, name, type)
+        public DedicatedHostGroupUpdate(int platformFaultDomainCount, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResourceReadOnly> hosts = default(IList<SubResourceReadOnly>), IList<string> zones = default(IList<string>))
+            : base(tags)
         {
             PlatformFaultDomainCount = platformFaultDomainCount;
             Hosts = hosts;

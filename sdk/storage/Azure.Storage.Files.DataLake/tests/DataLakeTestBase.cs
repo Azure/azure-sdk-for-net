@@ -95,13 +95,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType publicAccessType = PublicAccessType.None,
+            PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
             fileSystemName ??= GetNewFileSystemName();
             service ??= GetServiceClient_SharedKey();
 
-            if (publicAccessType == PublicAccessType.None)
+            if (publicAccessType == default)
             {
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.FileSystem;
             }
@@ -116,7 +116,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 await RetryAsync(
-                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType),
+                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value),
                     ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
                     retryDelay: TestConstants.DataLakeRetryDelay,
                     retryAttempts: 1);
