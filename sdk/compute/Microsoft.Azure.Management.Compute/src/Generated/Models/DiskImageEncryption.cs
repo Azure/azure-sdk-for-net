@@ -10,33 +10,30 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The Update Resource model definition.
+    /// This is the disk image encryption base class.
     /// </summary>
-    public partial class UpdateResource : IResource
+    public partial class DiskImageEncryption
     {
         /// <summary>
-        /// Initializes a new instance of the UpdateResource class.
+        /// Initializes a new instance of the DiskImageEncryption class.
         /// </summary>
-        public UpdateResource()
+        public DiskImageEncryption()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpdateResource class.
+        /// Initializes a new instance of the DiskImageEncryption class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        public UpdateResource(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="diskEncryptionSetId">A relative URI containing the
+        /// resource ID of the disk encryption set.</param>
+        public DiskImageEncryption(string diskEncryptionSetId = default(string))
         {
-            Tags = tags;
+            DiskEncryptionSetId = diskEncryptionSetId;
             CustomInit();
         }
 
@@ -46,10 +43,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets a relative URI containing the resource ID of the disk
+        /// encryption set.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
 
     }
 }

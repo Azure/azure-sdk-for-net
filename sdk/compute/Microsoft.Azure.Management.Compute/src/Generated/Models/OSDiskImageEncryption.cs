@@ -10,31 +10,28 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Specifies information about the proximity placement group.
+    /// Contains encryption settings for an OS disk image.
     /// </summary>
-    public partial class ProximityPlacementGroupUpdate : UpdateResource
+    public partial class OSDiskImageEncryption : DiskImageEncryption
     {
         /// <summary>
-        /// Initializes a new instance of the ProximityPlacementGroupUpdate
-        /// class.
+        /// Initializes a new instance of the OSDiskImageEncryption class.
         /// </summary>
-        public ProximityPlacementGroupUpdate()
+        public OSDiskImageEncryption()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ProximityPlacementGroupUpdate
-        /// class.
+        /// Initializes a new instance of the OSDiskImageEncryption class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        public ProximityPlacementGroupUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(tags)
+        /// <param name="diskEncryptionSetId">A relative URI containing the
+        /// resource ID of the disk encryption set.</param>
+        public OSDiskImageEncryption(string diskEncryptionSetId = default(string))
+            : base(diskEncryptionSetId)
         {
             CustomInit();
         }
