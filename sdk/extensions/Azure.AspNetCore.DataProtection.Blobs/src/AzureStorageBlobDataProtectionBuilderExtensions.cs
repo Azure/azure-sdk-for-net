@@ -68,24 +68,24 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <param name="tokenCredential">The credentials to connect to the blob.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         /// <remarks>
-        /// The container referenced by <paramref name="bloblUri"/> must already exist.
+        /// The container referenced by <paramref name="blobUri"/> must already exist.
         /// </remarks>
-        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri bloblUri, TokenCredential tokenCredential)
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri blobUri, TokenCredential tokenCredential)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
-            if (bloblUri == null)
+            if (blobUri == null)
             {
-                throw new ArgumentNullException(nameof(bloblUri));
+                throw new ArgumentNullException(nameof(blobUri));
             }
             if (tokenCredential == null)
             {
                 throw new ArgumentNullException(nameof(tokenCredential));
             }
 
-            var client = new BlobClient(bloblUri, tokenCredential);
+            var client = new BlobClient(blobUri, tokenCredential);
 
             return PersistKeysToAzureBlobStorage(builder, client);
         }
@@ -100,24 +100,24 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <param name="sharedKeyCredential">The credentials to connect to the blob.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         /// <remarks>
-        /// The container referenced by <paramref name="bloblUri"/> must already exist.
+        /// The container referenced by <paramref name="blobUri"/> must already exist.
         /// </remarks>
-        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri bloblUri, StorageSharedKeyCredential sharedKeyCredential)
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri blobUri, StorageSharedKeyCredential sharedKeyCredential)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
-            if (bloblUri == null)
+            if (blobUri == null)
             {
-                throw new ArgumentNullException(nameof(bloblUri));
+                throw new ArgumentNullException(nameof(blobUri));
             }
             if (sharedKeyCredential == null)
             {
                 throw new ArgumentNullException(nameof(sharedKeyCredential));
             }
 
-            var client = new BlobClient(bloblUri, sharedKeyCredential);
+            var client = new BlobClient(blobUri, sharedKeyCredential);
 
             return PersistKeysToAzureBlobStorage(builder, client);
         }
