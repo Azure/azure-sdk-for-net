@@ -15,6 +15,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
+        // Same value as Stream.CopyTo uses by default
         private const int DefaultCopyBufferSize = 81920;
 
         private readonly TimeSpan _networkTimeout;
