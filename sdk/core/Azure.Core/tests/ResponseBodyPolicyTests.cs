@@ -131,6 +131,23 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task SetsReadTimeoutToProvidedValue()
+        {
+            var hangingStream = new HangingReadStream();
+
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = hangingStream
+            };
+
+            MockTransport mockTransport = new MockTransport(mockResponse);
+            Response response = await SendGetRequest(mockTransport, new ResponseBodyPolicy(TimeSpan.FromMilliseconds(1234567)), bufferResponse: false);
+
+            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.AreEqual(1234567, hangingStream.ReadTimeout);
+        }
+
+        [Test]
         public async Task BufferingRespectsCancellationToken()
         {
             var slowReadStream = new SlowReadStream();
