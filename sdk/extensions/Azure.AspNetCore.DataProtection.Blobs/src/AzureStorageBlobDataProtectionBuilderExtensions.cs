@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.AspNetCore.DataProtection.Blobs;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
@@ -24,37 +23,37 @@ namespace Microsoft.AspNetCore.DataProtection
         /// in Azure Blob Storage.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="blobUri">The full URI where the key file should be stored.
+        /// <param name="sasUri">The full URI where the key file should be stored.
         /// The URI must contain the SAS token as a query string parameter.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         /// <remarks>
-        /// The container referenced by <paramref name="blobUri"/> must already exist.
+        /// The container referenced by <paramref name="blobSasUri"/> must already exist.
         /// </remarks>
-        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri blobUri)
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri blobSasUri)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
-            if (blobUri == null)
+            if (blobSasUri == null)
             {
-                throw new ArgumentNullException(nameof(blobUri));
+                throw new ArgumentNullException(nameof(blobSasUri));
             }
 
-            var uriBuilder = new BlobUriBuilder(blobUri);
+            var uriBuilder = new BlobUriBuilder(blobSasUri);
             BlobClient client;
 
             // The SAS token is present in the query string.
             if (uriBuilder.Sas == null)
             {
-                client = new BlobClient(blobUri, new DefaultAzureCredential());
+                throw new ArgumentException($"{nameof(blobSasUri)} is expected to be a SAS URL.", nameof(blobSasUri));
             }
             else
             {
-                client = new BlobClient(blobUri);
+                client = new BlobClient(blobSasUri);
             }
 
-            return PersistKeystoAzureBlobStorageInternal(builder, client);
+            return PersistKeysToAzureBlobStorage(builder, client);
         }
 
         /// <summary>
@@ -62,31 +61,31 @@ namespace Microsoft.AspNetCore.DataProtection
         /// in Azure Blob Storage.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="blobUri">The full URI where the key file should be stored.
+        /// <param name="sasUri">The full URI where the key file should be stored.
         /// The URI must contain the SAS token as a query string parameter.</param>
         /// <param name="tokenCredential">The credentials to connect to the blob.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         /// <remarks>
-        /// The container referenced by <paramref name="blobUri"/> must already exist.
+        /// The container referenced by <paramref name="bloblUri"/> must already exist.
         /// </remarks>
-        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri blobUri, TokenCredential tokenCredential)
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri bloblUri, TokenCredential tokenCredential)
         {
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
-            if (blobUri == null)
+            if (bloblUri == null)
             {
-                throw new ArgumentNullException(nameof(blobUri));
+                throw new ArgumentNullException(nameof(bloblUri));
             }
             if (tokenCredential == null)
             {
                 throw new ArgumentNullException(nameof(tokenCredential));
             }
 
-            var client = new BlobClient(blobUri, tokenCredential);
+            var client = new BlobClient(bloblUri, tokenCredential);
 
-            return PersistKeystoAzureBlobStorageInternal(builder, client);
+            return PersistKeysToAzureBlobStorage(builder, client);
         }
 
         /// <summary>
@@ -110,11 +109,7 @@ namespace Microsoft.AspNetCore.DataProtection
             {
                 throw new ArgumentNullException(nameof(blobClient));
             }
-            return PersistKeystoAzureBlobStorageInternal(builder, blobClient);
-        }
 
-        private static IDataProtectionBuilder PersistKeystoAzureBlobStorageInternal(IDataProtectionBuilder builder, BlobClient blobClient)
-        {
             builder.Services.Configure<KeyManagementOptions>(options =>
             {
                 options.XmlRepository = new AzureBlobXmlRepository(blobClient);
