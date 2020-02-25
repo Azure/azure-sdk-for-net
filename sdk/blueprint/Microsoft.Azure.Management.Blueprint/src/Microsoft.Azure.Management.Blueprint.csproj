@@ -14,9 +14,8 @@
     <PackageReleaseNotes>
 <![CDATA[This is a preview release sdk for Azure Blueprints, allows you to do Blueprint definition and assignment CRUD.
 
-Changes in 0.20.5-preview:
  - This version has addition of excludedActions property to support excluded actions from a blueprint lock. It also has the documentation updates.
- 
+
 ]]>
 </PackageReleaseNotes>
   </PropertyGroup>

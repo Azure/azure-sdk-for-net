@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]
-[assembly: AssemblyVersion("0.20.5.0")]
+[assembly: AssemblyVersion("0.20.0.0")]
 [assembly: AssemblyFileVersion("0.20.5.0")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
