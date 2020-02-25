@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "synapse/resource-manager" -AutoRestVersion "latest"

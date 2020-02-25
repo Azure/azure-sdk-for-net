@@ -6043,7 +6043,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""type"": ""SftpWriteSettings"",
                         ""maxConcurrentConnections"": 3,
                         ""copyBehavior"": ""PreserveHierarchy"",
-                        ""operationTimeout"": ""01:00:00""
+                        ""operationTimeout"": ""01:00:00"",
+                        ""useTempFileRename"": true
                       }
                     }
                   },

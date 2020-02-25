@@ -16,6 +16,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.1" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.0.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.0.1" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.2.0" />
     <PackageReference Update="Azure.Storage.Blobs.Batch" Version="12.1.1" />
     <PackageReference Update="Azure.Storage.Common" Version="12.1.1" />

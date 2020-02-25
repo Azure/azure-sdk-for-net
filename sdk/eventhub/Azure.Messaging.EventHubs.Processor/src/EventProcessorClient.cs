@@ -559,8 +559,8 @@ namespace Azure.Messaging.EventHubs
         /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
-        public virtual void StartProcessing(CancellationToken cancellationToken = default)
-            => StartProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
+        public virtual void StartProcessing(CancellationToken cancellationToken = default) =>
+            StartProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
@@ -569,8 +569,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
-        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
-            => await StopProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
+        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
+            await StopProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
@@ -1017,15 +1017,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        /// Signals the <see cref="EventProcessorClient" /> to begin processing events. Should this method be called while the processor is running, no action is taken.
+        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events. Should this method be called while the processor is running, no action is taken.
         /// </summary>
         ///
-        /// <param name="async">A <see cref="bool"/> flag indicating weather method should be executed synchronously or asynchronously.</param>
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
         /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
-        private async Task StartProcessingInternalAsync(bool async, CancellationToken cancellationToken)
+        ///
+        private async Task StartProcessingInternalAsync(bool async,
+                                                        CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -1081,12 +1083,16 @@ namespace Azure.Messaging.EventHubs
             }
         }
 
+
         /// <summary>
-        /// Signals the <see cref="EventProcessorClient" /> to stop processing events. Should this method be called while the processor is not running, no action is taken.
+        ///   Signals the <see cref="EventProcessorClient" /> to stop processing events. Should this method be called while the processor is not running, no action is taken.
         /// </summary>
-        /// <param name="async">A <see cref="bool"/> flag indicating weather method should be executed synchronously or asynchronously.</param>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
-        private async Task StopProcessingInternalAsync(bool async, CancellationToken cancellationToken)
+        ///
+        private async Task StopProcessingInternalAsync(bool async,
+                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorStopStart(Identifier);
@@ -1164,7 +1170,6 @@ namespace Azure.Messaging.EventHubs
                         LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
                     }
-
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                     // would have a race condition where the user could update the processing handlers while some pumps are still running.
