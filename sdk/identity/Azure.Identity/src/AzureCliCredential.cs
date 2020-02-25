@@ -19,9 +19,9 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredential : TokenCredential, IExtendedTokenCredential
     {
-        private const string AzureCLINotInstalled = "Azure CLI not installed";
+        private const string AzureCliNotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to setup account";
-        private const string WinAzureCLIError = "'az' is not recognized";
+        private const string WinAzureCliError = "'az' is not recognized";
         private const string InvalidResourceMessage = "Resource is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
 
         private readonly CredentialPipeline _pipeline;
@@ -97,13 +97,13 @@ namespace Azure.Identity
                 if (exitCode != 0)
                 {
                     bool isLoginError = output.StartsWith("Please run 'az login'", StringComparison.CurrentCultureIgnoreCase);
-                    bool isWinError = output.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
+                    bool isWinError = output.StartsWith(WinAzureCliError, StringComparison.CurrentCultureIgnoreCase);
                     string pattter = "az:(.*)not found";
                     bool isOtherOsError = Regex.IsMatch(output, pattter);
 
                     if (isWinError || isOtherOsError)
                     {
-                        throw new AuthenticationFailedException(AzureCLINotInstalled);
+                        throw new AuthenticationFailedException(AzureCliNotInstalled);
                     }
                     else if (isLoginError)
                     {

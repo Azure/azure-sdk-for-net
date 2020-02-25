@@ -37,7 +37,7 @@ namespace Azure.Identity
                 {
                     FileName = fileName,
                     Arguments = argument,
-                    UseShellExecute = false,
+                    UseShellExecute = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     CreateNoWindow = true
