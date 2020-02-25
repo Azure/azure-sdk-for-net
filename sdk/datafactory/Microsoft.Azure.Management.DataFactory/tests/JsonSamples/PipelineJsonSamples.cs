@@ -500,7 +500,8 @@ namespace DataFactory.Tests.JsonSamples
                         storedProcedureParameters: {
                             ""stringData"": { value: ""test"", type: ""String""},
                             ""id"": { value: ""3"", type: ""Int""}
-                        }
+                        },
+                        isolationLevel: ""ReadCommitted""
                     },
                     sink:
                     {
@@ -4186,7 +4187,13 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
-}
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
           },
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
@@ -4200,6 +4207,18 @@ namespace DataFactory.Tests.JsonSamples
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logStorageSettings"": {
+            ""linkedServiceName"": {
+              ""referenceName"": ""exampleLinkedService"",
+              ""type"": ""LinkedServiceReference""
+            },
+            ""path"": ""test""
           }
         },
         ""inputs"": [
@@ -4757,7 +4776,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreReadSettings"",
               ""recursive"": true,
-              ""enablePartitionDiscovery"": true
+              ""enablePartitionDiscovery"": true,
+              ""fileListPath"": ""test.txt""
             }
           },
           ""sink"": {
@@ -4765,7 +4785,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
-              ""copyBehavior"": ""PreserveHierarchy""
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""expiryDateTime"": ""2018-12-01T05:00:00Z""
             }
           }
         },

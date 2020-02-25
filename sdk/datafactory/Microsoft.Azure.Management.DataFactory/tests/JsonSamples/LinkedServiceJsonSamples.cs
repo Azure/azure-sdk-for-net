@@ -1127,7 +1127,29 @@ namespace DataFactory.Tests.JsonSamples
             securityToken: {
                 value : ""fakeToken"",
                 type : ""SecureString""
-            }
+            },
+            apiVersion:""47.0""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SalesforceLinkedServiceWithoutSecurityToken = @"
+{
+    name: ""SalesforceLinkedService"",
+    properties:
+    {
+        type: ""Salesforce"",
+        description: ""test description"",
+        typeProperties:
+        {
+            environmentUrl: ""url"",
+            username: ""admin"",
+            password : {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            apiVersion:""47.0""
         }
     }
 }";
@@ -1159,7 +1181,8 @@ namespace DataFactory.Tests.JsonSamples
                     type : ""LinkedServiceReference"",
                     referenceName : ""fakeAKVLinkedService""
                 }
-            }
+            },
+            apiVersion:""47.0""
         }
     }
 }";
@@ -1183,7 +1206,29 @@ namespace DataFactory.Tests.JsonSamples
             securityToken: {
                 value : ""fakeToken"",
                 type : ""SecureString""
-            }
+            },
+            apiVersion:""47.0""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SalesforceServiceCloudLinkedServiceWithoutSecurityToken = @"
+{
+    name: ""SalesforceServiceCloudLinkedService"",
+    properties:
+    {
+        type: ""SalesforceServiceCloud"",
+        description: ""test description"",
+        typeProperties:
+        {
+            environmentUrl: ""url"",
+            username: ""admin"",
+            password : {
+                value : ""fakepassword"",
+                type : ""SecureString""
+            },
+            apiVersion:""47.0""
         }
     }
 }";
