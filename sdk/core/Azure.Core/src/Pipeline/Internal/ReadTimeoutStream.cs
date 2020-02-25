@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
+    /// <summary>
+    /// Read-only Stream that will throw a <see cref="OperationCanceledException"/> if it has to wait longer than a configurable timeout to read more data
+    /// </summary>
     internal class ReadTimeoutStream : ReadOnlyStream
     {
         private readonly Stream _stream;
