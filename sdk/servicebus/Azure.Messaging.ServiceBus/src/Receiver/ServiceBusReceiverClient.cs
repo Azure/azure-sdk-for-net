@@ -327,7 +327,7 @@ namespace Azure.Messaging.ServiceBus
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed((bool)this.IsClosed, nameof(ServiceBus.ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             try
@@ -490,16 +490,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Completes a <see cref="ServiceBusMessage"/> using its lock token. This will delete the message from the service.
+        /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="message">The lock token of the corresponding message to complete.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> message to complete.</param>
         /// <param name="cancellationToken"></param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this receiver.
+        /// This operation can only be performed on a message that was received by this receiver
+        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task CompleteAsync(
             ServiceBusReceivedMessage message,
@@ -509,16 +508,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Completes a series of <see cref="ServiceBusMessage"/>. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="receivedMessages">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="receivedMessages">An <see cref="IEnumerable{T}"/> containing the list of <see cref="ServiceBusReceivedMessage"/> messages to complete.</param>
         /// <param name="cancellationToken"></param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this receiver.
+        /// This operation can only be performed on messages that were received by this receiver
+        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task CompleteAsync(
             IEnumerable<ServiceBusReceivedMessage> receivedMessages,
@@ -551,17 +549,17 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Abandons a <see cref="ServiceBusMessage"/> using a lock token. This will make the message available again for processing.
+        /// Abandons a <see cref="ServiceBusReceivedMessage"/>. This will make the message available again for processing.
         /// </summary>
         ///
-        /// <param name="message">The lock token of the corresponding message to abandon.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
         /// <param name="cancellationToken"></param>
         ///
-        /// <remarks>A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// <remarks>
         /// Abandoning a message will increase the delivery count on the message.
-        /// This operation can only be performed on messages that were received by this receiver.
+        /// This operation can only be performed on messages that were received by this receiver
+        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task AbandonAsync(
             ServiceBusReceivedMessage message,
@@ -597,16 +595,16 @@ namespace Azure.Messaging.ServiceBus
         /// Moves a message to the deadletter sub-queue.
         /// </summary>
         ///
-        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to deadletter.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
         /// <param name="cancellationToken"></param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new IMessageReceiver"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new
+        /// <see cref="ServiceBusReceiverClient"/> with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
+        /// This operation can only be performed on messages that were received by this receiver
+        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
@@ -642,7 +640,7 @@ namespace Azure.Messaging.ServiceBus
         /// Moves a message to the deadletter sub-queue.
         /// </summary>
         ///
-        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to deadletter.</param>
         /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
         /// <param name="cancellationToken"></param>
@@ -959,28 +957,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            message.LockedUntilUtc = await RenewLockAsync(message.LockToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
-        /// <returns>New lock token expiry date and time in UTC format.</returns>
-        /// </summary>
-        /// <param name="lockToken">Lock token associated with the message.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
-        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
-        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
-        /// </remarks>
-        internal virtual async Task<DateTime> RenewLockAsync(
-            string lockToken,
-            CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
+            message.LockedUntilUtc = await Task.FromResult(DateTime.Now).ConfigureAwait(false);
         }
 
         /// <summary>

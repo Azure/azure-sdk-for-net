@@ -368,7 +368,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            message.LockedUntilUtc = await _receiver.RenewLockAsync(message.LockToken).ConfigureAwait(false);
+            await _receiver.RenewLockAsync(message).ConfigureAwait(false);
         }
 
         /// <summary>
