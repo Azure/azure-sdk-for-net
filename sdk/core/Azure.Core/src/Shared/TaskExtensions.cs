@@ -94,6 +94,12 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        /// <summary>
+        /// Both <see cref="Enumerable{T}"/> and <see cref="Enumerator{T}"/> are defined as public structs so that foreach can use duck typing
+        /// to call <see cref="Enumerable{T}.GetEnumerator"/> and avoid heap memory allocation.
+        /// Please don't delete this method and don't make these types private.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public readonly struct Enumerable<T> : IEnumerable<T>
         {
             private readonly IAsyncEnumerable<T> _asyncEnumerable;
@@ -117,7 +123,7 @@ namespace Azure.Core.Pipeline
             public bool MoveNext() => _asyncEnumerator.MoveNextAsync().EnsureCompleted();
 #pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
 
-            public void Reset() => throw new NotSupportedException();
+            public void Reset() => throw new NotSupportedException($"{GetType()} is a synchronous wrapper for {_asyncEnumerator.GetType()} async enumerator, which can't be reset, so IEnumerable.Reset() calls aren't supported.");
 
             public T Current => _asyncEnumerator.Current;
 
