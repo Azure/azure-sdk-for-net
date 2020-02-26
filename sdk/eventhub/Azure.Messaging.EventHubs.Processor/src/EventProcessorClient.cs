@@ -1131,9 +1131,9 @@ namespace Azure.Messaging.EventHubs
                         }
                         else
                         {
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                             ActiveLoadBalancingTask.GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                         }
 
                     }
@@ -1166,9 +1166,9 @@ namespace Azure.Messaging.EventHubs
                         Task.WaitAll(stopPartitionProcessingTasks);
 
                         // Stop the LoadBalancer.
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                         LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     }
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
