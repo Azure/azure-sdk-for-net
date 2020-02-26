@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -119,7 +121,7 @@ namespace Azure.Core.Pipeline
 
             public T Current => _asyncEnumerator.Current;
 
-            object? IEnumerator.Current => Current;
+            object IEnumerator.Current => Current;
 
 #pragma warning disable AZC0107 // Do not call public asynchronous method in synchronous scope.
             public void Dispose() => _asyncEnumerator.DisposeAsync().EnsureCompleted();
