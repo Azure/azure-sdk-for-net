@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus
     ///
     public class ServiceBusProcessorClient : IAsyncDisposable
     {
-        private Func<ServiceBusMessage, ServiceBusSession, Task> _processMessage;
+        private Func<ServiceBusReceivedMessage, ServiceBusSession, Task> _processMessage;
 
         private Func<ExceptionReceivedEventArgs, Task> _processErrorAsync = default;
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
         /// <param name="session"></param>
         ///
-        private Task OnProcessMessageAsync(ServiceBusMessage message, ServiceBusSession session) => _processMessage(message, session);
+        private Task OnProcessMessageAsync(ServiceBusReceivedMessage message, ServiceBusSession session) => _processMessage(message, session);
 
         /// <summary>
         ///   Called when a 'process error' event is triggered.

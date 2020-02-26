@@ -51,9 +51,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
                 {
-                    await processor.CompleteAsync(message.SystemProperties.LockToken);
+                    await processor.CompleteAsync(message);
                     Interlocked.Increment(ref messageCt);
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].TrySetResult(true);
