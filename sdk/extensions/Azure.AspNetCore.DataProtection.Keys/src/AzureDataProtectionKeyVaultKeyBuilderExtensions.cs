@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.AspNetCore.DataProtection.Keys;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,17 +17,6 @@ namespace Microsoft.AspNetCore.DataProtection
     /// </summary>
     public static class AzureDataProtectionKeyVaultKeyBuilderExtensions
     {
-        /// <summary>
-        /// Configures the data protection system to protect keys with specified key in Azure KeyVault.
-        /// </summary>
-        /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
-        /// <returns>The value <paramref name="builder"/>.</returns>
-        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier)
-        {
-            return ProtectKeysWithAzureKeyVault(builder, keyIdentifier, new DefaultAzureCredential());
-        }
-
         /// <summary>
         /// Configures the data protection system to protect keys with specified key in Azure KeyVault.
         /// </summary>
