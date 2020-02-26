@@ -73,7 +73,7 @@ namespace Azure.Core.Pipeline
                     diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
             }
 
-            policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
+            policies.Add(BufferResponsePolicy.Shared);
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 

@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
         public async Task MaintainsGlobalLengthAndPosition()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var stream2 = new MockReadStream(50, offset: 50);
+            var stream2 = new MockReadStream(50, offset: 50, throwIOException: false);
 
             MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
         public async Task DoesntRetryNonRetryableExceptions()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, exceptionType: typeof(InvalidOperationException));
+            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
 
             MockTransport mockTransport = CreateMockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
@@ -83,69 +83,6 @@ namespace Azure.Core.Tests
             Assert.ThrowsAsync<InvalidOperationException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
 
             AssertReads(_buffer, 50);
-        }
-
-        [Test]
-        public async Task DoesntRetryCustomerCancellationTokens()
-        {
-            // not supported on sync
-            if (!IsAsync)
-            {
-                Assert.Ignore();
-            }
-
-            var stream1 = new MockReadStream(100);
-
-            MockTransport mockTransport = CreateMockTransport(
-                new MockResponse(200) { ContentStream = stream1 });
-            var pipeline = new HttpPipeline(mockTransport);
-
-            Stream reliableStream = await CreateAsync(
-                offset => SendTestRequest(pipeline, offset),
-                offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
-                maxRetries: 5);
-
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(25, reliableStream.Position);
-
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await ReadAsync(reliableStream, _buffer, 0, 25, new CancellationToken(true)));
-
-            AssertReads(_buffer, 25);
-        }
-
-        [Test]
-        public async Task RetriesOnNonCustomerCancellationToken()
-        {
-            var stream1 = new MockReadStream(100, throwAfter: 50, exceptionType: typeof(OperationCanceledException));
-            var stream2 = new MockReadStream(50, offset: 50);
-
-            MockTransport mockTransport = CreateMockTransport(
-                new MockResponse(200) { ContentStream = stream1 },
-                new MockResponse(200) { ContentStream = stream2 }
-            );
-            var pipeline = new HttpPipeline(mockTransport);
-
-            Stream reliableStream = await CreateAsync(
-                offset => SendTestRequest(pipeline, offset),
-                offset => SendTestRequestAsync(pipeline, offset),
-                new ResponseClassifier(),
-                maxRetries: 5);
-
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 0, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(25, reliableStream.Position);
-
-            Assert.AreEqual(25, await ReadAsync(reliableStream, _buffer, 25, 25));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(50, reliableStream.Position);
-
-            Assert.AreEqual(50, await ReadAsync(reliableStream, _buffer, 50, 50));
-            Assert.AreEqual(100, reliableStream.Length);
-            Assert.AreEqual(100, reliableStream.Position);
-
-            AssertReads(_buffer, 100);
         }
 
         [Test]
@@ -296,9 +233,9 @@ namespace Azure.Core.Tests
                 Task.FromResult(RetriableStream.Create(streamFactory, asyncStreamFactory, responseClassifier, maxRetries));
         }
 
-        private Task<int> ReadAsync(Stream stream, byte[] buffer, int offset, int length, CancellationToken cancellationToken = default)
+        private Task<int> ReadAsync(Stream stream, byte[] buffer, int offset, int length)
         {
-            return IsAsync ? stream.ReadAsync(buffer, offset, length, cancellationToken) : Task.FromResult(stream.Read(buffer, offset, length));
+            return IsAsync ? stream.ReadAsync(buffer, offset, length) : Task.FromResult(stream.Read(buffer, offset, length));
         }
 
         private static Stream SendTestRequest(HttpPipeline pipeline, long offset)
@@ -349,27 +286,30 @@ namespace Azure.Core.Tests
             private readonly long _throwAfter;
 
             private byte _offset;
-            private readonly Type _exceptionType;
 
-            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, Type exceptionType = null)
+            private readonly bool _throwIOException;
+
+            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, bool throwIOException = true)
             {
                 _throwAfter = throwAfter;
                 _offset = offset;
-                _exceptionType = exceptionType ?? typeof(IOException);
+                _throwIOException = throwIOException;
                 Length = length;
             }
 
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                cancellationToken.ThrowIfCancellationRequested();
-
                 var left = (int)Math.Min(count, Length - Position);
 
                 Position += left;
 
                 if (Position > _throwAfter)
                 {
-                    throw (Exception) Activator.CreateInstance(_exceptionType, $"Failed at {_offset}");
+                    if (_throwIOException)
+                    {
+                        throw new IOException($"Failed at {_offset}");
+                    }
+                    throw new InvalidOperationException();
                 }
 
                 for (int i = 0; i < left; i++)
