@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 // verify peeked == send
                 var ct = 0;
-                foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchBySequenceAsync(
+                foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchBySequenceAsync(
                     fromSequenceNumber: (long)sequenceNumber,
                     maxMessages: messageCt))
                 {
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
                     Assert.AreEqual(Encoding.Default.GetString(sentMsg.Body), peekedText);
                     Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
-                    Assert.IsTrue(peekedMessage.SystemProperties.SequenceNumber >= sequenceNumber);
+                    Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
                     TestContext.Progress.WriteLine($"{peekedMessage.Label}: {peekedText}");
                     ct++;
                 }
@@ -146,15 +146,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                 long seq = 0;
                 for (int i = 0; i < messageCt / peekCt; i++)
                 {
-                    foreach (ServiceBusMessage msg in await receiver.PeekBatchAsync(
+                    foreach (ServiceBusReceivedMessage msg in await receiver.PeekBatchAsync(
                         maxMessages: peekCt))
                     {
-                        Assert.IsTrue(msg.SystemProperties.SequenceNumber > seq);
+                        Assert.IsTrue(msg.SequenceNumber > seq);
                         if (seq > 0)
                         {
-                            Assert.IsTrue(msg.SystemProperties.SequenceNumber == seq + 1);
+                            Assert.IsTrue(msg.SequenceNumber == seq + 1);
                         }
-                        seq = msg.SystemProperties.SequenceNumber;
+                        seq = msg.SequenceNumber;
                     }
                 }
             }
@@ -187,13 +187,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 long seq = 0;
                 for (int i = 0; i < messageCt; i++)
                 {
-                    ServiceBusMessage msg = await receiver.PeekAsync();
-                    Assert.IsTrue(msg.SystemProperties.SequenceNumber > seq);
+                    ServiceBusReceivedMessage msg = await receiver.PeekAsync();
+                    Assert.IsTrue(msg.SequenceNumber > seq);
                     if (seq > 0)
                     {
-                        Assert.IsTrue(msg.SystemProperties.SequenceNumber == seq + 1);
+                        Assert.IsTrue(msg.SequenceNumber == seq + 1);
                     }
-                    seq = msg.SystemProperties.SequenceNumber;
+                    seq = msg.SequenceNumber;
                 }
             }
         }
@@ -267,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
-                    Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
+                    Assert.AreEqual(item.DeliveryCount, 1);
                 }
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
@@ -346,7 +346,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
-                    await receiver.CompleteAsync(item.SystemProperties.LockToken);
+                    await receiver.CompleteAsync(item);
                 }
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
@@ -383,8 +383,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
-                    await receiver.AbandonAsync(item.SystemProperties.LockToken);
-                    Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
+                    await receiver.AbandonAsync(item);
+                    Assert.AreEqual(item.DeliveryCount, 1);
                 }
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
@@ -429,7 +429,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
-                    await receiver.DeadLetterAsync(item.SystemProperties.LockToken);
+                    await receiver.DeadLetterAsync(item);
                 }
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
@@ -486,7 +486,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
                     Assert.AreEqual(item.SessionId, messageEnum.Current.SessionId);
-                    await receiver.DeferAsync(item.SystemProperties.LockToken);
+                    await receiver.DeferAsync(item);
                 }
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
@@ -545,9 +545,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
                 {
-                    await processor.CompleteAsync(message.SystemProperties.LockToken);
+                    await processor.CompleteAsync(message);
                     Interlocked.Increment(ref messageCt);
                     sessions.TryRemove(message.SessionId, out bool _);
                     Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
@@ -619,9 +619,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
                 {
-                    await processor.CompleteAsync(message.SystemProperties.LockToken);
+                    await processor.CompleteAsync(message);
                     sessions.TryRemove(message.SessionId, out bool _);
                     Assert.AreEqual(message.SessionId, await session.GetSessionIdAsync());
                     Assert.IsNotNull(await session.GetLockedUntilUtcAsync());
@@ -705,9 +705,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
                 {
-                    await processor.CompleteAsync(message.SystemProperties.LockToken);
+                    await processor.CompleteAsync(message);
                     Interlocked.Increment(ref messageCt);
                     sessions.TryRemove(message.SessionId, out bool _);
                     Assert.AreEqual(sessionId, message.SessionId);
