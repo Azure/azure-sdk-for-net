@@ -243,19 +243,20 @@ namespace Azure.Storage.Blobs
                 foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
                         content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
-                    // Stage the next block
-                    string blockId = GenerateBlockId(block.AbsolutePosition);
-                    _client.StageBlock(
-                        blockId,
-                        new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        conditions: conditions,
-                        progressHandler: progressHandler,
-                        cancellationToken: cancellationToken);
-
-                    blockIds.Add(blockId);
-
                     // Dispose the block after the loop iterates and return its memory to our ArrayPool
-                    block.Dispose();
+                    using (block)
+                    {
+                        // Stage the next block
+                        string blockId = GenerateBlockId(block.AbsolutePosition);
+                        _client.StageBlock(
+                            blockId,
+                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            conditions: conditions,
+                            progressHandler: progressHandler,
+                            cancellationToken: cancellationToken);
+
+                        blockIds.Add(blockId);
+                    }
                 }
 
                 // Commit the block list after everything has been staged to

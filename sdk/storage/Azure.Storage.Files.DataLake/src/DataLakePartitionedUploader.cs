@@ -259,18 +259,19 @@ namespace Azure.Storage.Files.DataLake
                 foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
                     content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
-                    // Append the next block
-                    _client.Append(
-                        new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        offset: appendedBytes,
-                        leaseId: conditions?.LeaseId,
-                        progressHandler: progressHandler,
-                        cancellationToken: cancellationToken);
-
-                    appendedBytes += block.Length;
-
                     // Dispose the block after the loop iterates and return its memory to our ArrayPool
-                    block.Dispose();
+                    using (block)
+                    {
+                        // Append the next block
+                        _client.Append(
+                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            offset: appendedBytes,
+                            leaseId: conditions?.LeaseId,
+                            progressHandler: progressHandler,
+                            cancellationToken: cancellationToken);
+
+                        appendedBytes += block.Length;
+                    }
                 }
 
                 // Commit the block list after everything has been staged to
