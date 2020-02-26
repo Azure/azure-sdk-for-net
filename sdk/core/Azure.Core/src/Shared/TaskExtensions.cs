@@ -111,9 +111,9 @@ namespace Azure.Core.Pipeline
 
             public Enumerator(IAsyncEnumerator<T> asyncEnumerator) => _asyncEnumerator = asyncEnumerator;
 
-#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+#pragma warning disable AZC0107 // Do not call public asynchronous method in synchronous scope.
             public bool MoveNext() => _asyncEnumerator.MoveNextAsync().EnsureCompleted();
-#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+#pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
 
             public void Reset() => throw new NotSupportedException();
 
@@ -121,9 +121,9 @@ namespace Azure.Core.Pipeline
 
             object IEnumerator.Current => Current;
 
-#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+#pragma warning disable AZC0107 // Do not call public asynchronous method in synchronous scope.
             public void Dispose() => _asyncEnumerator.DisposeAsync().EnsureCompleted();
-#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+#pragma warning restore AZC0107 // Do not call public asynchronous method in synchronous scope.
         }
     }
 }
