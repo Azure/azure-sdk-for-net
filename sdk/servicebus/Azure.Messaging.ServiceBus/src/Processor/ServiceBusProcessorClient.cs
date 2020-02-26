@@ -371,28 +371,6 @@ namespace Azure.Messaging.ServiceBus
             message.LockedUntilUtc = await _receiver.RenewLockAsync(message.LockToken).ConfigureAwait(false);
         }
 
-        ///// <summary>
-        ///// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
-        ///// <returns>New lock token expiry date and time in UTC format.</returns>
-        ///// </summary>
-        ///// <param name="lockToken">Lock token associated with the message.</param>
-        ///// <param name="cancellationToken"></param>
-        ///// <remarks>
-        ///// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
-        ///// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        ///// If processing of the message requires longer than this duration, the lock needs to be renewed.
-        ///// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
-        ///// </remarks>
-        //public virtual async Task<DateTime> RenewLockAsync(
-        //    string lockToken,
-        //    CancellationToken cancellationToken = default)
-        //{
-        //    // TODO implement
-
-        //    return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
-        //}
-
-
         /// <summary>
         /// Completes a <see cref="ServiceBusMessage"/> using its lock token. This will delete the message from the service.
         /// </summary>
