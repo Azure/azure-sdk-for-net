@@ -276,7 +276,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     try
                     {
-                        await Share.DeleteAsync(true);
+                        await Share.DeleteIfExistsAsync(true);
                         Share = null;
                     }
                     catch

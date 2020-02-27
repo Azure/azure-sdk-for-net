@@ -113,8 +113,8 @@ namespace Azure.Storage.Files.Shares.Test
             finally
             {
                 // Clean up
-                await shareClient1.DeleteAsync();
-                await shareClient2.DeleteAsync();
+                await shareClient1.DeleteIfExistsAsync();
+                await shareClient2.DeleteIfExistsAsync();
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.Shares.Test
             }
             finally
             {
-                await share.DeleteAsync(false);
+                await share.DeleteIfExistsAsync(false);
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.Storage.Files.Shares.Test
             AssertMetadataEquality(metadata, response.Value.Metadata);
 
             // Cleanup
-            await share.DeleteAsync(false);
+            await share.DeleteIfExistsAsync(false);
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.Shares.Test
                 e => Assert.AreEqual("ShareAlreadyExists", e.ErrorCode));
 
             // Cleanup
-            await share.DeleteAsync(false);
+            await share.DeleteIfExistsAsync(false);
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace Azure.Storage.Files.Shares.Test
             }
             finally
             {
-                await share.DeleteAsync(false);
+                await share.DeleteIfExistsAsync(false);
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 if (!pass)
                 {
-                    await share.DeleteAsync();
+                    await share.DeleteIfExistsAsync();
                 }
             }
         }
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.IsNotNull(response);
 
             // Cleanup
-            await share.DeleteAsync();
+            await share.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -334,7 +334,7 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.IsNull(response);
 
             // Cleanup
-            await share.DeleteAsync();
+            await share.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -383,7 +383,7 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.IsTrue(response.Value);
 
             // Cleanup
-            await share.DeleteAsync();
+            await share.DeleteIfExistsAsync();
         }
 
         [Test]
