@@ -55,11 +55,11 @@ namespace Azure.Core.Tests
             Assert.Throws<ArgumentNullException>(() => Argument.AssertNotNullOrEmpty(value, "value"));
         }
 
-        [TestCaseSource(nameof(GetNotNullOrEmptyCollectionThrowsOnEmptyCollectionData))]
-        public void NotNullOrEmptyCollectionThrowsOnEmptyCollection(IEnumerable<string>? value)
-        {
-            Assert.Throws<ArgumentException>(() => Argument.AssertNotNullOrEmpty(value, "value"));
-        }
+        // [TestCaseSource(nameof(GetNotNullOrEmptyCollectionThrowsOnEmptyCollectionData))]
+        // public void NotNullOrEmptyCollectionThrowsOnEmptyCollection(IEnumerable<string>? value)
+        // {
+        //     Assert.Throws<ArgumentException>(() => Argument.AssertNotNullOrEmpty(value, "value"));
+        // }
 
         [Test]
         public void NotNullOrEmptyString()
@@ -149,15 +149,15 @@ namespace Azure.Core.Tests
             public bool Equals(TestStructure other) => string.Equals(A, other.A, StringComparison.Ordinal) && B == other.B;
         }
 
-        private static IEnumerable<IEnumerable<string>> GetNotNullOrEmptyCollectionThrowsOnEmptyCollectionData()
-        {
-            static IEnumerable<string> NotNullOrEmptyCollectionThrowsOnEmptyCollection()
-            {
-                yield break;
-            }
-
-            yield return new string[0];
-            yield return NotNullOrEmptyCollectionThrowsOnEmptyCollection();
-        }
+        // private static IEnumerable<IEnumerable<string>> GetNotNullOrEmptyCollectionThrowsOnEmptyCollectionData()
+        // {
+        //     static IEnumerable<string> NotNullOrEmptyCollectionThrowsOnEmptyCollection()
+        //     {
+        //         yield break;
+        //     }
+        //
+        //     yield return new string[0];
+        //     yield return NotNullOrEmptyCollectionThrowsOnEmptyCollection();
+        // }
     }
 }
