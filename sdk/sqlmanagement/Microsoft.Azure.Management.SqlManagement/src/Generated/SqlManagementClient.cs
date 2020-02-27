@@ -83,11 +83,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
         /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
         public virtual IServerConnectionPoliciesOperations ServerConnectionPolicies { get; private set; }
@@ -136,11 +131,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerAzureADAdministratorsOperations.
-        /// </summary>
-        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
 
         /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
@@ -393,11 +383,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolOperations ElasticPoolOperations { get; private set; }
 
         /// <summary>
-        /// Gets the ICapabilitiesOperations.
-        /// </summary>
-        public virtual ICapabilitiesOperations Capabilities { get; private set; }
-
-        /// <summary>
         /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
         /// </summary>
         public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
@@ -483,16 +468,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
-        /// </summary>
-        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
-
-        /// <summary>
-        /// Gets the IManagedDatabasesOperations.
-        /// </summary>
-        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -501,6 +476,46 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IServersOperations.
+        /// </summary>
+        public virtual IServersOperations Servers { get; private set; }
+
+        /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        public virtual ICapabilitiesOperations Capabilities { get; private set; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
+        /// </summary>
+        public virtual ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceLongTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkloadGroupsOperations.
+        /// </summary>
+        public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkloadClassifiersOperations.
+        /// </summary>
+        public virtual IWorkloadClassifiersOperations WorkloadClassifiers { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerAzureADAdministratorsOperations.
+        /// </summary>
+        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -745,7 +760,6 @@ namespace Microsoft.Azure.Management.Sql
         {
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
-            Servers = new ServersOperations(this);
             ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
             DatabaseThreatDetectionPolicies = new DatabaseThreatDetectionPoliciesOperations(this);
             DataMaskingPolicies = new DataMaskingPoliciesOperations(this);
@@ -756,7 +770,6 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPools = new ElasticPoolsOperations(this);
             RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ReplicationLinks = new ReplicationLinksOperations(this);
-            ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
@@ -807,7 +820,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstanceAdministrators = new ManagedInstanceAdministratorsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
-            Capabilities = new CapabilitiesOperations(this);
             DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
             ManagedDatabaseVulnerabilityAssessmentRuleBaselines = new ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
             ManagedDatabaseVulnerabilityAssessmentScans = new ManagedDatabaseVulnerabilityAssessmentScansOperations(this);
@@ -825,10 +837,16 @@ namespace Microsoft.Azure.Management.Sql
             InstancePools = new InstancePoolsOperations(this);
             Usages = new UsagesOperations(this);
             ManagedInstances = new ManagedInstancesOperations(this);
-            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
-            ManagedDatabases = new ManagedDatabasesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Servers = new ServersOperations(this);
+            Capabilities = new CapabilitiesOperations(this);
+            LongTermRetentionManagedInstanceBackups = new LongTermRetentionManagedInstanceBackupsOperations(this);
+            ManagedInstanceLongTermRetentionPolicies = new ManagedInstanceLongTermRetentionPoliciesOperations(this);
+            WorkloadGroups = new WorkloadGroupsOperations(this);
+            WorkloadClassifiers = new WorkloadClassifiersOperations(this);
+            ManagedDatabases = new ManagedDatabasesOperations(this);
+            ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

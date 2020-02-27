@@ -120,41 +120,7 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
       public static readonly String GithubCommidId = "dcd51ecb0bba6cd98f42383f0ef0159efc64a658";
-      public static readonly String CodeGenerationErrors = "FATAL: System.InvalidOperationException: Found incompatible property types ,  for property 'type' in schema inheritance chain 
-   at AutoRest.Modeler.SchemaResolver.ExpandAllOf(Schema schema) in /opt/vsts/work/1/s/src/SchemaResolver.cs:line 157
-   at AutoRest.Modeler.SchemaResolver.Unwrap(Schema schema) in /opt/vsts/work/1/s/src/SchemaResolver.cs:line 75
-   at AutoRest.Modeler.SchemaBuilder.BuildServiceType(String serviceTypeName, Boolean required) in /opt/vsts/work/1/s/src/SchemaBuilder.cs:line 35
-   at AutoRest.Modeler.SwaggerModeler.BuildCompositeTypes() in /opt/vsts/work/1/s/src/SwaggerModeler.cs:line 348
-   at AutoRest.Modeler.SwaggerModeler.Build(ServiceDefinition serviceDefinition) in /opt/vsts/work/1/s/src/SwaggerModeler.cs:line 66
-   at AutoRest.Modeler.Program.<ProcessInternal>d__2.MoveNext() in /opt/vsts/work/1/s/src/Program.cs:line 60
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at NewPlugin.<Process>d__15.MoveNext()
-  Error: Plugin imodeler1 reported failure.
-
-System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
-   at System.Diagnostics.Process.EnsureState(State state)
-   at System.Diagnostics.Process.get_ProcessName()
-   at System.Diagnostics.Process.ToString()
-   at System.Management.Automation.PSObject.ToString(ExecutionContext context, Object obj, String separator, String format, IFormatProvider formatProvider, Boolean recurse, Boolean unravelEnumeratorOnRecurse)
-   --- End of inner exception stack trace ---
-   at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
-   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
-   at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
-   at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   --- End of inner exception stack trace ---
-   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
-   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.Interpreter.Run(InterpretedFrame frame)
-   at System.Management.Automation.Interpreter.LightLambda.RunVoid1[T0](T0 arg0)
-   at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
-   at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
-   at System.Management.Automation.CommandProcessorBase.Complete()
-AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md failed. Please try again"
+      public static readonly String CodeGenerationErrors = ""
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
