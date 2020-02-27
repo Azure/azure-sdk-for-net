@@ -39,18 +39,16 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="type">Gets the resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
-        /// <param name="properties">The integration account properties.</param>
         /// <param name="integrationServiceEnvironment">The integration service
         /// environment.</param>
         /// <param name="state">The workflow state. Possible values include:
         /// 'NotSpecified', 'Completed', 'Enabled', 'Disabled', 'Deleted',
         /// 'Suspended'</param>
         /// <param name="sku">The sku.</param>
-        public IntegrationAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object), IntegrationServiceEnvironment integrationServiceEnvironment = default(IntegrationServiceEnvironment), string state = default(string), IntegrationAccountSku sku = default(IntegrationAccountSku))
+        public IntegrationAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IntegrationServiceEnvironment integrationServiceEnvironment = default(IntegrationServiceEnvironment), string state = default(string), IntegrationAccountSku sku = default(IntegrationAccountSku))
             : base(id, name, type, location, tags)
         {
             IntegrationServiceEnvironment = integrationServiceEnvironment;
-            Properties = properties;
             State = state;
             Sku = sku;
             CustomInit();
@@ -60,13 +58,6 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-
-        /// <summary>
-        /// Gets or sets the integration account properties.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the integration service environment.

@@ -55,7 +55,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// configuration.</param>
         /// <param name="sku">The sku.</param>
         /// <param name="integrationAccount">The integration account.</param>
-        /// <param name="integrationServiceEnvironment">The integration service environment.</param>
+        /// <param name="integrationServiceEnvironment">The integration service
+        /// environment.</param>
         /// <param name="definition">The definition.</param>
         /// <param name="parameters">The parameters.</param>
         public Workflow(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), System.DateTime? createdTime = default(System.DateTime?), System.DateTime? changedTime = default(System.DateTime?), string state = default(string), string version = default(string), string accessEndpoint = default(string), FlowEndpointsConfiguration endpointsConfiguration = default(FlowEndpointsConfiguration), Sku sku = default(Sku), ResourceReference integrationAccount = default(ResourceReference), ResourceReference integrationServiceEnvironment = default(ResourceReference), object definition = default(object), IDictionary<string, WorkflowParameter> parameters = default(IDictionary<string, WorkflowParameter>))
