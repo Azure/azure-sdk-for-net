@@ -1580,7 +1580,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             IDictionary<string, string> metadata = BuildMetadata();
-            await blob.CreateAsync(metadata: metadata);
+            await blob.CreateIfNotExistsAsync(metadata: metadata);
 
             // Act
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
@@ -1599,7 +1599,7 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
@@ -1620,8 +1620,8 @@ namespace Azure.Storage.Blobs.Test
                 await EnableSoftDelete();
                 var blobName = GetNewBlobName();
                 AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                await blob.DeleteAsync();
+                await blob.CreateIfNotExistsAsync();
+                await blob.DeleteIfExistsAsync();
 
                 // Act
                 IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
@@ -1674,7 +1674,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
             Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
             // Act
@@ -1800,7 +1800,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             IDictionary<string, string> metadata = BuildMetadata();
-            await blob.CreateAsync(metadata: metadata);
+            await blob.CreateIfNotExistsAsync(metadata: metadata);
 
             // Act
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
@@ -1818,7 +1818,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
 
             // Act
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
@@ -1839,8 +1839,8 @@ namespace Azure.Storage.Blobs.Test
                 await EnableSoftDelete();
                 var blobName = GetNewBlobName();
                 AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                await blob.DeleteAsync();
+                await blob.CreateIfNotExistsAsync();
+                await blob.DeleteIfExistsAsync();
 
                 // Act
                 IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
@@ -1893,7 +1893,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            await blob.CreateAsync();
+            await blob.CreateIfNotExistsAsync();
             Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
             // Act
