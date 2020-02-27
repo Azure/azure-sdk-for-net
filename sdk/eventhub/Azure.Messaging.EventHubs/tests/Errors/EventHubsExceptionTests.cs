@@ -144,12 +144,12 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void FailureReasonsAreWellKnown()
         {
-             var knownReasons = new List<EventHubsException.FailureReason>();
+            var knownReasons = new List<EventHubsException.FailureReason>();
 
-             foreach (var name in Enum.GetNames(typeof(EventHubsException.FailureReason)))
-             {
+            foreach (var name in Enum.GetNames(typeof(EventHubsException.FailureReason)))
+            {
                 knownReasons.Add((EventHubsException.FailureReason)Enum.Parse(typeof(EventHubsException.FailureReason), name));
-             }
+            }
 
             IOrderedEnumerable<EventHubsException.FailureReason> reasonTestCases = ExceptionTransientTestCases()
                 .Select(testCase => (EventHubsException.FailureReason)testCase[0])

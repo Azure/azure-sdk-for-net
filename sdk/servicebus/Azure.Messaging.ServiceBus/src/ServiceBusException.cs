@@ -212,7 +212,12 @@ namespace Azure.Messaging.ServiceBus
             ServiceTimeout,
 
             /// <summary>There was a general communications error encountered when interacting with the Azure Service Bus service.</summary>
-            ServiceCommunicationProblem
+            ServiceCommunicationProblem,
+
+            /// <summary>
+            ///
+            /// </summary>
+            SessionLockLost
         }
     }
 }

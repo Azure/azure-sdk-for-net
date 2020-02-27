@@ -150,11 +150,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public override async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
+        public override async Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveAsync(
             int maximumMessageCount,
             CancellationToken cancellationToken)
         {
-            IEnumerable<ServiceBusMessage> messages = null;
+            IEnumerable<ServiceBusReceivedMessage> messages = null;
             Task receiveMessageTask = _retryPolicy.RunOperation(async (timeout) =>
             {
                 messages = await ReceiveAsyncInternal(
@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        internal async Task<IEnumerable<ServiceBusMessage>> ReceiveAsyncInternal(
+        internal async Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveAsyncInternal(
             int maximumMessageCount,
             TimeSpan timeout,
             CancellationToken cancellationToken)
@@ -190,7 +190,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
-            var receivedMessages = default(List<ServiceBusMessage>);
+            var receivedMessages = default(List<ServiceBusReceivedMessage>);
 
             var stopWatch = Stopwatch.StartNew();
 
@@ -213,7 +213,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((messagesReceived) && (amqpMessages != null))
             {
-                receivedMessages = new List<ServiceBusMessage>();
+                receivedMessages = new List<ServiceBusReceivedMessage>();
 
                 foreach (AmqpMessage message in amqpMessages)
                 {
@@ -233,7 +233,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             stopWatch.Stop();
 
             // No events were available.
-            return Enumerable.Empty<ServiceBusMessage>();
+            return Enumerable.Empty<ServiceBusReceivedMessage>();
         }
 
         /// <summary>

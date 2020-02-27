@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Primitives;
 using Moq;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
@@ -217,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var stabilizedStatusAchieved = false;
             var consecutiveStabilizedStatus = 0;
-            List<PartitionOwnership> previousActiveOwnership = null;
+            List<EventProcessorPartitionOwnership> previousActiveOwnership = null;
 
             CancellationToken timeoutToken = (new CancellationTokenSource(TimeSpan.FromSeconds(5))).Token;
 
@@ -228,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var activeOwnership = (await StorageManager
                     .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, timeoutToken)
                     .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortOwnershipExpiration)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime) < ShortOwnershipExpiration)
                     .ToList();
 
                 // Increment stabilized status count if current partition distribution matches the previous one.  Reset it otherwise.
@@ -260,29 +261,29 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///   Creates a collection of <see cref="PartitionOwnership" /> based on the specified arguments.
+        ///   Creates a collection of <see cref="EventProcessorPartitionOwnership" /> based on the specified arguments.
         /// </summary>
         ///
         /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
         /// <param name="identifier">The owner identifier of the EventProcessorClient owning the collection.</param>
         ///
-        /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
+        /// <returns>A collection of <see cref="EventProcessorPartitionOwnership" />.</returns>
         ///
-        internal IEnumerable<PartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
-                                                                          string identifier)
+        internal IEnumerable<EventProcessorPartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
+                                                                                        string identifier)
         {
             return partitionIds
                 .Select(partitionId =>
-                    new PartitionOwnership
-                        (
-                            FullyQualifiedNamespace,
-                            EventHubName,
-                            ConsumerGroup,
-                            identifier,
-                            partitionId,
-                            DateTimeOffset.UtcNow,
-                            Guid.NewGuid().ToString()
-                        )).ToList();
+                    new EventProcessorPartitionOwnership
+                    {
+                        FullyQualifiedNamespace = FullyQualifiedNamespace,
+                        EventHubName = EventHubName,
+                        ConsumerGroup = ConsumerGroup,
+                        OwnerIdentifier = identifier,
+                        PartitionId = partitionId,
+                        LastModifiedTime = DateTimeOffset.UtcNow,
+                        Version = Guid.NewGuid().ToString()
+                    }).ToList();
         }
 
         /// <summary>
@@ -299,8 +300,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Filtering expired ownership is assumed to be responsibility of the caller.
         /// </remarks>
         ///
-        private bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
-                                                      IEnumerable<PartitionOwnership> second)
+        private bool AreOwnershipDistributionsTheSame(IEnumerable<EventProcessorPartitionOwnership> first,
+                                                      IEnumerable<EventProcessorPartitionOwnership> second)
         {
             // If the distributions are the same instance, they're equal.  This should only happen
             // if both are null or if they are the exact same instance.

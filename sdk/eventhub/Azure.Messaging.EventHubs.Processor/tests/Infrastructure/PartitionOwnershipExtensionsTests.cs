@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Primitives;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
@@ -97,7 +98,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
 
-            var third = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", lastModifiedTime: null);
+            var third = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
             Assert.That(first.IsEquivalentTo(third), Is.False);
         }
@@ -108,10 +109,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public void IsEquivalentToDetectsETag()
+        public void IsEquivalentToDetectsVersion()
         {
-            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", eTag: "eTag1");
-            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", eTag: "eTag2");
+            var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", version: "eTag1");
+            var second = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId", version: "eTag2");
 
             Assert.That(first.IsEquivalentTo(second), Is.False);
         }
@@ -158,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void IsEquivalentToDetectsTwoNulls()
         {
-            Assert.That(((PartitionOwnership)null).IsEquivalentTo(null), Is.True);
+            Assert.That(((EventProcessorPartitionOwnership)null).IsEquivalentTo(null), Is.True);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var first = new MockPartitionOwnership("namespace", "eventHubName", "consumerGroup", "ownerIdentifier", "partitionId");
 
-            Assert.That(((PartitionOwnership)null).IsEquivalentTo(first), Is.False);
+            Assert.That(((EventProcessorPartitionOwnership)null).IsEquivalentTo(first), Is.False);
         }
 
         /// <summary>
@@ -188,11 +189,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///   A workaround so we can create <see cref="PartitionOwnership"/> instances.
+        ///   A workaround so we can create <see cref="EventProcessorPartitionOwnership"/> instances.
         ///   This class can be removed once the following issue has been closed: https://github.com/Azure/azure-sdk-for-net/issues/7585
         /// </summary>
         ///
-        private class MockPartitionOwnership : PartitionOwnership
+        private class MockPartitionOwnership : EventProcessorPartitionOwnership
         {
             /// <summary>
             ///   Initializes a new instance of the <see cref="MockPartitionOwnership"/> class.
@@ -204,16 +205,23 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessor" /> instance.</param>
             /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
             /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
-            /// <param name="eTag">The entity tag needed to update this ownership.</param>
+            /// <param name="version">The version needed to update this ownership.</param>
             ///
             public MockPartitionOwnership(string fullyQualifiedNamespace,
                                           string eventHubName,
                                           string consumerGroup,
                                           string ownerIdentifier,
                                           string partitionId,
-                                          DateTimeOffset? lastModifiedTime = null,
-                                          string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, lastModifiedTime, eTag)
+                                          DateTimeOffset lastModifiedTime = default,
+                                          string version = default)
             {
+                FullyQualifiedNamespace = fullyQualifiedNamespace;
+                EventHubName = eventHubName;
+                ConsumerGroup = consumerGroup;
+                OwnerIdentifier = ownerIdentifier;
+                PartitionId = partitionId;
+                LastModifiedTime = lastModifiedTime;
+                Version = version;
             }
         }
     }
