@@ -292,7 +292,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<PathInfo> response = await directory.CreateIfNotExistsAsync();
@@ -321,7 +321,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await directory.ExistsAsync();
@@ -364,7 +364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await directory.DeleteIfExistsAsync();
@@ -412,7 +412,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             var name = GetNewDirectoryName();
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(name));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             Response response = await directory.DeleteAsync();
@@ -1144,7 +1144,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
             DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
-            await directoryClient.CreateAsync();
+            await directoryClient.CreateIfNotExistsAsync();
 
             DataLakeSignedIdentifier signedIdentifier = new DataLakeSignedIdentifier
             {
@@ -1767,7 +1767,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string directoryName = GetNewDirectoryName();
             DataLakeDirectoryClient directoryClient = directory.GetSubDirectoryClient(directoryName);
-            await directoryClient.CreateAsync();
+            await directoryClient.CreateIfNotExistsAsync();
 
             // Assert
             await directory.DeleteFileAsync(directoryName);

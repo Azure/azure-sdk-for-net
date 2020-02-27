@@ -1759,7 +1759,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DataLakeDirectoryClient directory = InstrumentClient(fileSystem.GetDirectoryClient(pathNames[i]));
                 directories[i] = directory;
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
             }
         }
 
