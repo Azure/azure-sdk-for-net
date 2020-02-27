@@ -233,7 +233,7 @@ namespace Azure.Storage.Files.Shares.Test
             Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(permission);
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             var smbProperties = new FileSmbProperties
@@ -819,7 +819,7 @@ namespace Azure.Storage.Files.Shares.Test
             Response<PermissionInfo> createPermissionResponse = await share.CreatePermissionAsync(permission);
 
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             var smbProperties = new FileSmbProperties
@@ -1559,7 +1559,7 @@ namespace Azure.Storage.Files.Shares.Test
                     new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     GetFaultyFileConnectionOptions(raiseAt: 256 * Constants.KB)));
 
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Arrange
             var fileName = GetNewFileName();
@@ -1975,7 +1975,7 @@ namespace Azure.Storage.Files.Shares.Test
                         TestConfigDefault.AccountKey),
                     GetFaultyFileConnectionOptions()));
 
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Arrange
             var fileName = GetNewFileName();
@@ -2025,7 +2025,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             var directoryName = this.GetNewDirectoryName();
             var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             var fileName = this.GetNewFileName();
             var data = this.GetRandomBuffer(Constants.KB);
@@ -2078,7 +2078,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             var directoryName = this.GetNewDirectoryName();
             var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             var fileName = this.GetNewFileName();
             var data = this.GetRandomBuffer(Constants.KB);
@@ -2127,7 +2127,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             var directoryName = this.GetNewDirectoryName();
             var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             var fileName = this.GetNewFileName();
             var data = this.GetRandomBuffer(Constants.KB);
@@ -2175,7 +2175,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             var directoryName = this.GetNewDirectoryName();
             var directory = this.InstrumentClient(share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             var fileName = this.GetNewFileName();
             var sourceFile = this.InstrumentClient(directory.GetFileClient(fileName));

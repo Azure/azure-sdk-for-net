@@ -753,7 +753,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
             string directoryName = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(directoryName));
-            await directory.CreateAsync();
+            await directory.CreateIfNotExistsAsync();
 
             // Act
             await share.DeleteDirectoryAsync(directoryName);

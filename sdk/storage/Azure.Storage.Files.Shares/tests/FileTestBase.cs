@@ -296,7 +296,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
             {
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
                 return new DisposingDirectory(test, directory);
             }
 
