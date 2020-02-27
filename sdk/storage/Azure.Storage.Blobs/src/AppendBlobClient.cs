@@ -184,8 +184,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal AppendBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal AppendBlobClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            string encryptionScope)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
         #endregion ctors
@@ -206,7 +213,8 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+
+            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         #region Create
@@ -410,22 +418,41 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
-            try
+            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                return await CreateInternal(
-                    httpHeaders,
-                    metadata,
-                    conditions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
-                    .ConfigureAwait(false);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-            {
-                return default;
+                Pipeline.LogMethodEnter(
+                    nameof(AppendBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(httpHeaders)}: {httpHeaders}");
+                var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                try
+                {
+                    Response<BlobContentInfo> response = await CreateInternal(
+                        httpHeaders,
+                        metadata,
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+
+                    return response;
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                {
+                    return default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                }
             }
         }
 
@@ -501,6 +528,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -713,6 +741,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         appendPosition: conditions?.IfAppendPositionEqual,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -960,6 +989,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope,
                         leaseId: conditions?.LeaseId,
                         maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                         appendPosition: conditions?.IfAppendPositionEqual,
@@ -1016,6 +1046,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Pipeline,
                 client.Version,
                 client.ClientDiagnostics,
-                client.CustomerProvidedKey);
+                client.CustomerProvidedKey,
+                client.EncryptionScope);
     }
 }

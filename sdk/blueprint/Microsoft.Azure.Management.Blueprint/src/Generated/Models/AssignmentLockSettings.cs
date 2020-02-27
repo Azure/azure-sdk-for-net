@@ -35,10 +35,21 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// 'AllResourcesReadOnly', 'AllResourcesDoNotDelete'</param>
         /// <param name="excludedPrincipals">List of AAD principals excluded
         /// from blueprint locks. Up to 5 principals are permitted.</param>
-        public AssignmentLockSettings(string mode = default(string), IList<string> excludedPrincipals = default(IList<string>))
+        /// <param name="excludedActions">List of management operations that
+        /// are excluded from blueprint locks. Up to 200 actions are permitted.
+        /// If the lock mode is set to 'AllResourcesReadOnly', then the
+        /// following actions are automatically appended to 'excludedActions':
+        /// '*/read', 'Microsoft.Network/virtualNetworks/subnets/join/action'
+        /// and 'Microsoft.Authorization/locks/delete'. If the lock mode is set
+        /// to 'AllResourcesDoNotDelete', then the following actions are
+        /// automatically appended to 'excludedActions':
+        /// 'Microsoft.Authorization/locks/delete'. Duplicate actions will get
+        /// removed.</param>
+        public AssignmentLockSettings(string mode = default(string), IList<string> excludedPrincipals = default(IList<string>), IList<string> excludedActions = default(IList<string>))
         {
             Mode = mode;
             ExcludedPrincipals = excludedPrincipals;
+            ExcludedActions = excludedActions;
             CustomInit();
         }
 
@@ -60,6 +71,21 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// </summary>
         [JsonProperty(PropertyName = "excludedPrincipals")]
         public IList<string> ExcludedPrincipals { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of management operations that are excluded from
+        /// blueprint locks. Up to 200 actions are permitted. If the lock mode
+        /// is set to 'AllResourcesReadOnly', then the following actions are
+        /// automatically appended to 'excludedActions': '*/read',
+        /// 'Microsoft.Network/virtualNetworks/subnets/join/action' and
+        /// 'Microsoft.Authorization/locks/delete'. If the lock mode is set to
+        /// 'AllResourcesDoNotDelete', then the following actions are
+        /// automatically appended to 'excludedActions':
+        /// 'Microsoft.Authorization/locks/delete'. Duplicate actions will get
+        /// removed.
+        /// </summary>
+        [JsonProperty(PropertyName = "excludedActions")]
+        public IList<string> ExcludedActions { get; set; }
 
     }
 }

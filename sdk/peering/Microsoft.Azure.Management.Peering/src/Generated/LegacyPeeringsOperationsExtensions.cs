@@ -34,9 +34,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
-            public static IPage<PeeringModel> List(this ILegacyPeeringsOperations operations, string peeringLocation, string kind)
+            /// <param name='asn'>
+            /// The ASN number associated with a legacy peering.
+            /// </param>
+            public static IPage<PeeringModel> List(this ILegacyPeeringsOperations operations, string peeringLocation, string kind, int? asn = default(int?))
             {
-                return operations.ListAsync(peeringLocation, kind).GetAwaiter().GetResult();
+                return operations.ListAsync(peeringLocation, kind, asn).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -52,12 +55,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
+            /// <param name='asn'>
+            /// The ASN number associated with a legacy peering.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringModel>> ListAsync(this ILegacyPeeringsOperations operations, string peeringLocation, string kind, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringModel>> ListAsync(this ILegacyPeeringsOperations operations, string peeringLocation, string kind, int? asn = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(peeringLocation, kind, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(peeringLocation, kind, asn, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

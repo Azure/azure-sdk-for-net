@@ -14,6 +14,7 @@ namespace ApiManagement.Tests.ManagementApiTests
     public class TenantAccessGitTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public async Task GetUpdateKeys()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

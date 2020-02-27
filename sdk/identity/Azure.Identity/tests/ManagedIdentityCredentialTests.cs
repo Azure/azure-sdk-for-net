@@ -306,7 +306,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(ManagedIdentityCredential.MsiUnavailableError, ex.Message);
+            Assert.AreEqual(ManagedIdentityClient.MsiUnavailableError, ex.Message);
 
             await Task.CompletedTask;
         }

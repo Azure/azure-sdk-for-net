@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MessageSizeExceeded" xml:space="preserve">
+    <value>The message (id:{0}, size:{1} bytes) is larger than is currently allowed ({2} bytes).</value>
+  </data>
+  <data name="InvalidEncoding" xml:space="preserve">
+    <value>The string has an invalid encoding format.</value>
+  </data>
+  <data name="InvalidTimePeriod" xml:space="preserve">
+    <value>The time period may not be Zero or Infinite.</value>
+  </data>
+  <data name="ConsumerIdentifierOverMaxValue" xml:space="preserve">
+    <value>The 'identifier' parameter exceeds the maximum allowed size of {0} characters.</value>
+  </data>
+  <data name="TimeoutMustBePositive" xml:space="preserve">
+    <value>A timeout value must be positive. To request using the default timeout, please use TimeSpan.Zero or null.</value>
+  </data>
+  <data name="TimeSpanMustBeNonNegative" xml:space="preserve">
+    <value>Argument {0} must be a non-negative timespan value. The provided value was {1}.</value>
+  </data>
+  <data name="ValueOutOfRange" xml:space="preserve">
+    <value>The value supplied must be between {0} and {1}.</value>
+  </data>
+  <data name="ValueMustBeAtLeast" xml:space="preserve">
+    <value>The value supplied must be greater than or equal to {0}.</value>
+  </data>
+  <data name="ProxyMustUseWebSockets" xml:space="preserve">
+    <value>A proxy may only be used for a web sockets connection.</value>
+  </data>
+  <data name="RetryOptionsMustBeSet" xml:space="preserve">
+    <value>Retry options must be specified; if no retry is desired, please set the maximum number of retries to 0. To provide a custom retry policy, please assign it on the client directly.</value>
+  </data>
+  <data name="InvalidConnectionString" xml:space="preserve">
+    <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
+  </data>
+  <data name="MissingConnectionInformation" xml:space="preserve">
+    <value>The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately.</value>
+  </data>
+  <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
+    <value>The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both.</value>
+  </data>
+  <data name="UnknownConnectionType" xml:space="preserve">
+    <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>
+  </data>
+  <data name="InvalidSharedAccessSignature" xml:space="preserve">
+    <value>The shared access signature could not be parsed; it was either malformed or incorrectly encoded.</value>
+  </data>
+  <data name="SharedAccessKeyIsRequired" xml:space="preserve">
+    <value>In order to update the signature, a shared access key must have been provided when the shared access signature was created.</value>
+  </data>
+  <data name="ResourceMustMatchSharedAccessSignature" xml:space="preserve">
+    <value>The requested resource, '{0}', does not match the resource of the shared access signature, '{1}'. A token cannot be issued.</value>
+  </data>
+  <data name="InvalidTransportType" xml:space="preserve">
+    <value>The requested transport type, '{0}' is not supported.</value>
+  </data>
+  <data name="CannotSendWithPartitionIdAndPartitionKey" xml:space="preserve">
+    <value>A producer created for a specific partition cannot send events using a partition key. This producer is associated with partition '{0}'.</value>
+  </data>
+  <data name="UnsupportedCredential" xml:space="preserve">
+    <value>The credential is not a known and supported credential type. Please use a JWT credential or shared key credential.</value>
+  </data>
+  <data name="SharedKeyCredentialCannotGenerateTokens" xml:space="preserve">
+    <value>A shared key credential is unable to generate a token directly. Please use this credential when creating an Service Bus entity Client, for proper generation of shared key tokens.</value>
+  </data>
+  <data name="CannotParseIntegerType" xml:space="preserve">
+    <value>The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'.</value>
+  </data>
+  <data name="UnknownRetryMode" xml:space="preserve">
+    <value>The requested retry mode, '{0}', is not known; a retry delay canot be determined.</value>
+  </data>
+  <data name="FailedToSerializeUnsupportedType" xml:space="preserve">
+    <value>Serialization failed due to an unsupported type, {0}.</value>
+  </data>
+  <data name="UnsupportedTransportEventType" xml:space="preserve">
+    <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
+  </data>
+  <data name="FailedToCreateReader" xml:space="preserve">
+    <value>Could not create a reader of events for Service Bus entity: '{0}', partition: '{1}', consumer group: '{2}'.</value>
+  </data>
+  <data name="UnrecoverableException" xml:space="preserve">
+    <value>An unrecoverable exception was encountered that left the environment in a bad state.</value>
+  </data>
+  <data name="ClosedInstanceCannotPerformOperation" xml:space="preserve">
+    <value>{0} has already been closed and cannot perform the requested operation.</value>
+  </data>
+  <data name="CouldNotAcquireAccessToken" xml:space="preserve">
+    <value>Unable to acquire an access token using the provided credential.</value>
+  </data>
+  <data name="UnknownCommunicationException" xml:space="preserve">
+    <value>An unknown error was encountered while communicating with the Service Bus service.</value>
+  </data>
+  <data name="InvalidMessageBody" xml:space="preserve">
+    <value>An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}</value>
+  </data>
+  <data name="InvalidEventPositionForFilter" xml:space="preserve">
+    <value>The event position is not valid for filtering.  It must have an offset, sequence number, or enqueued time available to filter against.</value>
+  </data>
+  <data name="CouldNotCreateLink" xml:space="preserve">
+    <value>Unable to create the items needed to communicate with the Service Bus service.</value>
+  </data>
+  <data name="ClosedConnectionCannotPerformOperation" xml:space="preserve">
+    <value>{0} has already been closed and cannot perform the requested operation.</value>
+  </data>
+  <data name="TrackLastEnqueuedEventPropertiesNotSet" xml:space="preserve">
+    <value>This information is only available when TrackLastEnqueuedEventProperties is set on the Service Bus entity consumer options.</value>
+  </data>
+  <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
+    <value>Cannot begin processing without {0} handler set.</value>
+  </data>
+  <data name="RunningMessageProcessor" xml:space="preserve">
+    <value>The message processor is already running and needs to be stopped in order to perform this operation.</value>
+  </data>
+  <data name="ClientNeededForThisInformation" xml:space="preserve">
+    <value>The Service Bus entity client responsible for this information</value>
+  </data>
+  <data name="BlobsResourceDoesNotExist" xml:space="preserve">
+    <value>The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.</value>
+  </data>
+  <data name="CannotCreateCheckpointForEmptyEvent" xml:space="preserve">
+    <value>A checkpoint cannot be created or updated using an empty event.</value>
+  </data>
+  <data name="HandlerHasAlreadyBeenAssigned" xml:space="preserve">
+    <value>Another handler has already been assigned to this event and there can be only one.</value>
+  </data>
+  <data name="HandlerHasNotBeenAssigned" xml:space="preserve">
+    <value>This handler has not been previously assigned to this event.</value>
+  </data>
+  <data name="OperationListOwnership" xml:space="preserve">
+    <value>Retrieving list of ownership from the storage service.</value>
+  </data>
+  <data name="OperationGetPartitionIds" xml:space="preserve">
+    <value>Retrieving list of partition identifiers from a Consumer Client.</value>
+  </data>
+  <data name="OperationListCheckpoints" xml:space="preserve">
+    <value>Retrieving list of checkpoints from the storage service.</value>
+  </data>
+  <data name="OperationClaimOwnership" xml:space="preserve">
+    <value>Attempting to claim a new ownership in the storage service.</value>
+  </data>
+  <data name="OperationRenewOwnership" xml:space="preserve">
+    <value>Attempting to renew all of the processor's partition ownership in the storage service.</value>
+  </data>
+  <data name="OperationReadEvents" xml:space="preserve">
+    <value>Reading events from the Service Bus service.</value>
+  </data>
+  <data name="CannotReadLastEnqueuedEventPropertiesWithoutEvent" xml:space="preserve">
+    <value>The last enqueued event properties cannot be read when an event is not available.</value>
+  </data>
+  <data name="OperationNotSupported" xml:space="preserve">
+    <value>The operation is only supported in 'PeekLock' receive mode.</value>
+  </data>
+  <data name="MaxPermittedLength" xml:space="preserve">
+    <value>Maximum permitted length is {0}</value>
+  </data>
+</root>

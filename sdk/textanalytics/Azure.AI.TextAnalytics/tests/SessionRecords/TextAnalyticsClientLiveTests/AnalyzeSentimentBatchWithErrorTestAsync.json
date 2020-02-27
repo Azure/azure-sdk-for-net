@@ -1,0 +1,115 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/sentiment",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "207",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-cf9c915750071d46845ced2b3836faf9-85e6707a741f844d-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200210.1\u002Be24b043d36f83d9f578fa70a08ce896f4e89c8ca",
+          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d5e2753fdde06b0a3d579c4aa1b24257",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "language": "en",
+            "id": "0",
+            "text": "That was the best day of my life!"
+          },
+          {
+            "language": "en",
+            "id": "1",
+            "text": ""
+          },
+          {
+            "language": "en",
+            "id": "2",
+            "text": "I\u0027m not sure how I feel about this product."
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e829561e-0003-4221-ab61-5d7de3cd8c74",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Mon, 10 Feb 2020 21:20:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "104"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "sentiment": "positive",
+            "documentScores": {
+              "positive": 1.0,
+              "neutral": 0.0,
+              "negative": 0.0
+            },
+            "sentences": [
+              {
+                "sentiment": "positive",
+                "sentenceScores": {
+                  "positive": 1.0,
+                  "neutral": 0.0,
+                  "negative": 0.0
+                },
+                "offset": 0,
+                "length": 33
+              }
+            ]
+          },
+          {
+            "id": "2",
+            "sentiment": "neutral",
+            "documentScores": {
+              "positive": 0.02,
+              "neutral": 0.85,
+              "negative": 0.13
+            },
+            "sentences": [
+              {
+                "sentiment": "neutral",
+                "sentenceScores": {
+                  "positive": 0.02,
+                  "neutral": 0.85,
+                  "negative": 0.13
+                },
+                "offset": 0,
+                "length": 43
+              }
+            ]
+          }
+        ],
+        "errors": [
+          {
+            "id": "1",
+            "error": {
+              "code": "InvalidArgument",
+              "message": "Invalid document in request.",
+              "innerError": {
+                "code": "InvalidDocument",
+                "message": "Document text is empty."
+              }
+            }
+          }
+        ],
+        "modelVersion": "2019-10-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "902220833",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+  }
+}

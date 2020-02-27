@@ -1082,63 +1082,6 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
-        public async Task GetBatchSettingEndsWith()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting("yzabc", "Test of ends with", "yzabc");
-            string endsWith = testSetting.Key.Substring(5);
-
-            try
-            {
-                await service.SetConfigurationSettingAsync(testSetting);
-
-                var selector = new SettingSelector { KeyFilter = $"*{endsWith}" };
-
-                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
-
-                // There should be at least one key available.
-                CollectionAssert.IsNotEmpty(settings);
-
-                foreach (ConfigurationSetting setting in settings)
-                {
-                    StringAssert.EndsWith(endsWith, setting.Key);
-                }
-            }
-            finally
-            {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-            }
-        }
-
-        [Test]
-        public async Task GetBatchSettingContains()
-        {
-            ConfigurationClient service = GetClient();
-            ConfigurationSetting testSetting = CreateSetting("yzabcde", "Contains abc", "yzabcde");
-
-            try
-            {
-                await service.SetConfigurationSettingAsync(testSetting);
-
-                var selector = new SettingSelector { KeyFilter = "*abc*" };
-
-                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
-
-                // There should be at least one key available.
-                CollectionAssert.IsNotEmpty(settings);
-
-                foreach (ConfigurationSetting setting in settings)
-                {
-                    StringAssert.Contains("abc", setting.Key);
-                }
-            }
-            finally
-            {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-            }
-        }
-
-        [Test]
         public async Task GetBatchSettingsWithCommaInSelectorKey()
         {
             ConfigurationClient service = GetClient();

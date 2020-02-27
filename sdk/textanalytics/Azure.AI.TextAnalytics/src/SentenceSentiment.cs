@@ -4,17 +4,16 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment for a given span of text.  This may correspond
-    /// to a full text document input or a substring such as a sentence of that
-    /// input.  For more information regarding text sentiment, see
+    /// The predicted sentiment for a given span of text.
+    /// For more information regarding text sentiment, see
     /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(SentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal SentenceSentiment(SentenceSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
-            SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
+            ConfidenceScores = new SentimentConfidenceScorePerLabel(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
         }
@@ -23,13 +22,13 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public SentimentLabel Sentiment { get; }
+        public SentenceSentimentLabel Sentiment { get; }
 
         /// <summary>
-        /// Gets the sentiment confidence score between 0 and 1,
-        /// for each sentiment label.
+        /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
+        /// for each sentiment label. Higher values signify higher confidence.
         /// </summary>
-        public SentimentScorePerLabel SentimentScores { get; }
+        public SentimentConfidenceScorePerLabel ConfidenceScores { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.

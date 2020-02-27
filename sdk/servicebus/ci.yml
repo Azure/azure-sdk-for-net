@@ -38,5 +38,7 @@ stages:
     ServiceDirectory: servicebus
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Messaging.ServiceBus
+      safeName: AzureMessagingServiceBus
     - name: Microsoft.Azure.ServiceBus
       safeName: MicrosoftAzureServiceBus

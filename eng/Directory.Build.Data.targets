@@ -84,6 +84,8 @@
 
   <Import Project="ApiListing.targets" />
 
+  <Import Project="CodeGeneration.targets" />
+
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
     <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>

@@ -15,22 +15,32 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizePiiEntitiesResult : TextAnalyticsResult
     {
+        private readonly IReadOnlyCollection<PiiEntity> _entities;
+
         internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, IList<PiiEntity> entities)
             : base(id, statistics)
         {
-            Entities = new ReadOnlyCollection<PiiEntity>(entities);
+            _entities = new ReadOnlyCollection<PiiEntity>(entities);
         }
 
-        internal RecognizePiiEntitiesResult(string id, string errorMessage)
-            : base(id, errorMessage)
-        {
-            Entities = Array.Empty<PiiEntity>();
-        }
+        internal RecognizePiiEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// Gets the collection of PII entities containing Personally
         /// Identifiable Information in the input document.
         /// </summary>
-        public IReadOnlyCollection<PiiEntity> Entities { get; }
+        public IReadOnlyCollection<PiiEntity> Entities
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.Code}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _entities;
+            }
+        }
     }
 }

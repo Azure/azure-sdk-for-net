@@ -51,9 +51,11 @@ namespace Microsoft.Azure.Management.Peering
         public PeeringManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available peering service locations for the specified kind
-        /// of peering.
+        /// Lists all of the available locations for peering service.
         /// </summary>
+        /// <param name='country'>
+        /// The country of interest, in which the locations are to be present.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -75,7 +77,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PeeringServiceLocation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringServiceLocation>>> ListWithHttpMessagesAsync(string country = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -92,6 +94,7 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("country", country);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -100,6 +103,10 @@ namespace Microsoft.Azure.Management.Peering
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peeringServiceLocations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (country != null)
+            {
+                _queryParameters.Add(string.Format("country={0}", System.Uri.EscapeDataString(country)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -225,8 +232,7 @@ namespace Microsoft.Azure.Management.Peering
         }
 
         /// <summary>
-        /// Lists all of the available peering service locations for the specified kind
-        /// of peering.
+        /// Lists all of the available locations for peering service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

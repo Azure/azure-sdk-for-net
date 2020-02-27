@@ -55,16 +55,17 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with scores: ");
-                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.SentimentScores.Positive:0.00}.");
-                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.SentimentScores.Neutral:0.00}.");
-                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.SentimentScores.Negative:0.00}.");
+                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
+                    Debug.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive:0.00}.");
+                    Debug.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral:0.00}.");
+                    Debug.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative:0.00}.");
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
@@ -72,10 +73,10 @@ namespace Azure.AI.TextAnalytics.Samples
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 
-                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with scores: ");
-                        Debug.WriteLine($"        Positive score: {sentenceSentiment.SentimentScores.Positive:0.00}.");
-                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.SentimentScores.Neutral:0.00}.");
-                        Debug.WriteLine($"        Negative score: {sentenceSentiment.SentimentScores.Negative:0.00}.");
+                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
+                        Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive:0.00}.");
+                        Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral:0.00}.");
+                        Debug.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative:0.00}.");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

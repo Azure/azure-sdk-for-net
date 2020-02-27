@@ -16,10 +16,12 @@ using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
 {
-    [ClientTestFixture(BlobClientOptions.ServiceVersion.V2019_02_02)]
+    [ClientTestFixture(
+        BlobClientOptions.ServiceVersion.V2019_02_02,
+        BlobClientOptions.ServiceVersion.V2019_07_07)]
     public abstract class BlobTestBase : StorageTestBase
     {
-        private readonly BlobClientOptions.ServiceVersion _serviceVersion;
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";
@@ -161,6 +163,9 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_OauthAccount() =>
             GetServiceClientFromOauthConfig(TestConfigOAuth);
 
+        public BlobServiceClient GetServiceClient_ManagedDisk() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigManagedDisk);
+
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
@@ -254,7 +259,8 @@ namespace Azure.Storage.Test.Shared
                 ResourceTypes = AccountSasResourceTypes.Container | AccountSasResourceTypes.Object,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(
                 AccountSasPermissions.Read |
@@ -274,7 +280,8 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(BlobContainerSasPermissions.All);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
@@ -288,7 +295,8 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(BlobContainerSasPermissions.All);
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
@@ -303,7 +311,8 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(
                 BlobSasPermissions.Read |
@@ -323,7 +332,8 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(
                 BlobSasPermissions.Read |
@@ -344,10 +354,24 @@ namespace Azure.Storage.Test.Shared
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(SnapshotSasPermissions.All);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
+
+        private static string ToSasVersion(BlobClientOptions.ServiceVersion serviceVersion)
+        {
+            switch (serviceVersion)
+            {
+                case BlobClientOptions.ServiceVersion.V2019_02_02:
+                    return "2019-02-02";
+                case BlobClientOptions.ServiceVersion.V2019_07_07:
+                    return "2019-07-07";
+                default:
+                    throw new ArgumentException("Invalid service version");
+            }
         }
 
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)

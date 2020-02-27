@@ -3,10 +3,10 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using Primitives;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Primitives;
 
     /// <summary>Provides options associated with message pump processing using
     /// <see cref="QueueClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" /> and

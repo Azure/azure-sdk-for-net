@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,17 +12,31 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class AnalyzeSentimentResult : TextAnalyticsResult
     {
+        private readonly DocumentSentiment _documentSentiment;
+
         internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
             : base(id, statistics)
         {
-            DocumentSentiment = documentSentiment;
+            _documentSentiment = documentSentiment;
         }
 
-        internal AnalyzeSentimentResult(string id, string errorMessage) : base(id, errorMessage) { }
+        internal AnalyzeSentimentResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// Gets the predicted sentiment for the full document.
         /// </summary>
-        public DocumentSentiment DocumentSentiment { get; }
+        public DocumentSentiment DocumentSentiment
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.Code}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _documentSentiment;
+            }
+        }
     }
 }

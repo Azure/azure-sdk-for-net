@@ -23,13 +23,12 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:AnalyzeSentiment
             string input = "That was the best day of my life!";
 
-            AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
-            DocumentSentiment docSentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
 
-            Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with scores: ");
-            Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
-            Console.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
-            Console.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
+            Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
+            Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive:0.00}.");
+            Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral:0.00}.");
+            Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative:0.00}.");
             #endregion
         }
     }

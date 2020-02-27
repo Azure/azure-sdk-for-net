@@ -46,7 +46,7 @@ jobs:
           OSVmImage: "windows-2019"
         MacOs:
           OSName: "MacOS"
-          OSVmImage: "macOS-10.13"
+          OSVmImage: "macOS-10.15"
     pool:
       vmImage: "$(OSVmImage)"
     steps:

@@ -104,17 +104,17 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// When a file is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>
-        public LeaseDurationType LeaseDuration { get; internal set; }
+        public DataLakeLeaseDuration LeaseDuration { get; internal set; }
 
         /// <summary>
         /// Lease state of the file.
         /// </summary>
-        public LeaseState LeaseState { get; internal set; }
+        public DataLakeLeaseState LeaseState { get; internal set; }
 
         /// <summary>
         /// The current lease status of the file.
         /// </summary>
-        public LeaseStatus LeaseStatus { get; internal set; }
+        public DataLakeLeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
         /// Indicates that the service supports requests for partial file content.

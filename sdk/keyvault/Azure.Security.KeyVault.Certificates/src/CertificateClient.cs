@@ -662,7 +662,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
@@ -691,7 +691,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
+        /// Imports a pre-existing certificate to the key vault. The specified certificate must be in PFX or ASCII PEM format, and must contain the private key as well as the X.509 certificates. This operation requires the
         /// certificates/import permission.
         /// </summary>
         /// <param name="importCertificateOptions">The details of the certificate to import to the key vault.</param>
@@ -1412,7 +1412,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                Response<KeyVaultCertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge");
+                Response<KeyVaultCertificateWithPolicy> certificate = _pipeline.SendRequest(RequestMethod.Post, mergeCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge");
 
                 return Response.FromValue(certificate.Value, certificate.GetRawResponse());
             }
@@ -1440,7 +1440,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                Response<KeyVaultCertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge").ConfigureAwait(false);
+                Response<KeyVaultCertificateWithPolicy> certificate = await _pipeline.SendRequestAsync(RequestMethod.Post, mergeCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, mergeCertificateOptions.Name, "/pending/merge").ConfigureAwait(false);
 
                 return Response.FromValue(certificate.Value, certificate.GetRawResponse());
             }

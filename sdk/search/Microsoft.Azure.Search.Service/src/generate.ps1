@@ -33,7 +33,8 @@ Param(
 $generateFolder = "$PSScriptRoot\Generated"
 $sharedGenerateFolder = "$PSScriptRoot\..\..\Microsoft.Azure.Search.Common\src\Generated"
 
-Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -ConfigFileTag $Tag
+# TODO: Change AutoRestVersion back to "latest" when the crashing issue is fixed.
+Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -AutoRestVersion "2.0.4302" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -ConfigFileTag $Tag
 
 Write-Output "Deleting extra files and cleaning up..."
 

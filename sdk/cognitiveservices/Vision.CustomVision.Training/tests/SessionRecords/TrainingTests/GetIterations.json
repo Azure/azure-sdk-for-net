@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.0/training/projects/7b6d5142-4485-42b4-b468-93cad9087fe7/iterations",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy83YjZkNTE0Mi00NDg1LTQyYjQtYjQ2OC05M2NhZDkwODdmZTcvaXRlcmF0aW9ucw==",
+      "RequestUri": "//customvision/v3.1/training/projects/2591e07c-2a07-4523-ad30-df967153b0cf/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8yNTkxZTA3Yy0yYTA3LTQ1MjMtYWQzMC1kZjk2NzE1M2IwY2YvaXRlcmF0aW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,38 +10,38 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:31:34 GMT"
-        ],
         "apim-request-id": [
-          "da28fa15-0e45-44d3-b6bf-2a88bcbc817e"
+          "823a31fb-f420-49ab-bf84-a0832966a321"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:59 GMT"
+        ],
         "Content-Length": [
-          "668"
+          "656"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"5411366f-6e7c-4c27-abdf-4b0fddd5ec65\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-03-21T01:31:12.22Z\",\r\n    \"lastModified\": \"2019-03-21T01:31:33.47Z\",\r\n    \"trainedAt\": \"2019-03-21T01:31:32.8Z\",\r\n    \"projectId\": \"7b6d5142-4485-42b4-b468-93cad9087fe7\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"d266f9b4-e5a7-4707-a1df-4c410eebba51\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-09-16T14:58:48.613Z\",\r\n    \"lastModified\": \"2019-09-16T14:58:59.316Z\",\r\n    \"trainedAt\": \"2019-09-16T14:58:58.282Z\",\r\n    \"projectId\": \"2591e07c-2a07-4523-ad30-df967153b0cf\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.0/training/projects/7b6d5142-4485-42b4-b468-93cad9087fe7/iterations/5411366f-6e7c-4c27-abdf-4b0fddd5ec65",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy83YjZkNTE0Mi00NDg1LTQyYjQtYjQ2OC05M2NhZDkwODdmZTcvaXRlcmF0aW9ucy81NDExMzY2Zi02ZTdjLTRjMjctYWJkZi00YjBmZGRkNWVjNjU=",
+      "RequestUri": "//customvision/v3.1/training/projects/2591e07c-2a07-4523-ad30-df967153b0cf/iterations/d266f9b4-e5a7-4707-a1df-4c410eebba51",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8yNTkxZTA3Yy0yYTA3LTQ1MjMtYWQzMC1kZjk2NzE1M2IwY2YvaXRlcmF0aW9ucy9kMjY2ZjliNC1lNWE3LTQ3MDctYTFkZi00YzQxMGVlYmJhNTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -49,38 +49,38 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:31:34 GMT"
-        ],
         "apim-request-id": [
-          "649e11d4-3456-41ee-94df-0a02abc104d5"
+          "cceff2d9-5471-4667-a73d-1dc35c1ae71c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:59 GMT"
+        ],
         "Content-Length": [
-          "666"
+          "654"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"5411366f-6e7c-4c27-abdf-4b0fddd5ec65\",\r\n  \"name\": \"Iteration 1\",\r\n  \"status\": \"Completed\",\r\n  \"created\": \"2019-03-21T01:31:12.22Z\",\r\n  \"lastModified\": \"2019-03-21T01:31:33.47Z\",\r\n  \"trainedAt\": \"2019-03-21T01:31:32.8Z\",\r\n  \"projectId\": \"7b6d5142-4485-42b4-b468-93cad9087fe7\",\r\n  \"exportable\": false,\r\n  \"exportableTo\": [],\r\n  \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"classificationType\": \"Multilabel\",\r\n  \"trainingType\": \"Regular\",\r\n  \"reservedBudgetInHours\": 0,\r\n  \"publishName\": \"Training UnitTest Iteration\",\r\n  \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"d266f9b4-e5a7-4707-a1df-4c410eebba51\",\r\n  \"name\": \"Iteration 1\",\r\n  \"status\": \"Completed\",\r\n  \"created\": \"2019-09-16T14:58:48.613Z\",\r\n  \"lastModified\": \"2019-09-16T14:58:59.316Z\",\r\n  \"trainedAt\": \"2019-09-16T14:58:58.282Z\",\r\n  \"projectId\": \"2591e07c-2a07-4523-ad30-df967153b0cf\",\r\n  \"exportable\": false,\r\n  \"exportableTo\": [],\r\n  \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"classificationType\": \"Multilabel\",\r\n  \"trainingType\": \"Regular\",\r\n  \"reservedBudgetInHours\": 0,\r\n  \"trainingTimeInMinutes\": 1,\r\n  \"publishName\": \"Training UnitTest Iteration\",\r\n  \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.0/training/projects/7b6d5142-4485-42b4-b468-93cad9087fe7/iterations/5411366f-6e7c-4c27-abdf-4b0fddd5ec65",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy83YjZkNTE0Mi00NDg1LTQyYjQtYjQ2OC05M2NhZDkwODdmZTcvaXRlcmF0aW9ucy81NDExMzY2Zi02ZTdjLTRjMjctYWJkZi00YjBmZGRkNWVjNjU=",
+      "RequestUri": "//customvision/v3.1/training/projects/2591e07c-2a07-4523-ad30-df967153b0cf/iterations/d266f9b4-e5a7-4707-a1df-4c410eebba51",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8yNTkxZTA3Yy0yYTA3LTQ1MjMtYWQzMC1kZjk2NzE1M2IwY2YvaXRlcmF0aW9ucy9kMjY2ZjliNC1lNWE3LTQ3MDctYTFkZi00YzQxMGVlYmJhNTE=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"name\": \"New Iteration Name\"\r\n}",
       "RequestHeaders": {
@@ -88,9 +88,9 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ],
         "Content-Type": [
@@ -101,26 +101,26 @@
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Thu, 21 Mar 2019 01:31:34 GMT"
-        ],
         "apim-request-id": [
-          "653aebaf-709d-4c0d-9cd8-c1127d6bdc97"
+          "dde77e10-af74-4cb7-99ec-62696cbbace0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Mon, 16 Sep 2019 14:58:59 GMT"
+        ],
         "Content-Length": [
-          "673"
+          "661"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"5411366f-6e7c-4c27-abdf-4b0fddd5ec65\",\r\n  \"name\": \"New Iteration Name\",\r\n  \"status\": \"Completed\",\r\n  \"created\": \"2019-03-21T01:31:12.22Z\",\r\n  \"lastModified\": \"2019-03-21T01:31:34.506Z\",\r\n  \"trainedAt\": \"2019-03-21T01:31:32.8Z\",\r\n  \"projectId\": \"7b6d5142-4485-42b4-b468-93cad9087fe7\",\r\n  \"exportable\": false,\r\n  \"exportableTo\": [],\r\n  \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"classificationType\": \"Multilabel\",\r\n  \"trainingType\": \"Regular\",\r\n  \"reservedBudgetInHours\": 0,\r\n  \"publishName\": \"Training UnitTest Iteration\",\r\n  \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"d266f9b4-e5a7-4707-a1df-4c410eebba51\",\r\n  \"name\": \"New Iteration Name\",\r\n  \"status\": \"Completed\",\r\n  \"created\": \"2019-09-16T14:58:48.613Z\",\r\n  \"lastModified\": \"2019-09-16T14:59:00.02Z\",\r\n  \"trainedAt\": \"2019-09-16T14:58:58.282Z\",\r\n  \"projectId\": \"2591e07c-2a07-4523-ad30-df967153b0cf\",\r\n  \"exportable\": false,\r\n  \"exportableTo\": [],\r\n  \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"classificationType\": \"Multilabel\",\r\n  \"trainingType\": \"Regular\",\r\n  \"reservedBudgetInHours\": 0,\r\n  \"trainingTimeInMinutes\": 1,\r\n  \"publishName\": \"Training UnitTest Iteration\",\r\n  \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n}",
       "StatusCode": 200
     }
   ],

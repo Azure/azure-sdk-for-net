@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="description">Description of this
         /// parameter/resourceGroup.</param>
         /// <param name="strongType">StrongType for UI to render rich
-        /// experience during blueprint assignment.</param>
+        /// experience during blueprint assignment. Supported strong types are
+        /// resourceType, principalId and location.</param>
         /// <param name="defaultValue">Default Value for this
         /// parameter.</param>
         /// <param name="allowedValues">Array of allowed values for this
@@ -85,7 +86,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
         /// <summary>
         /// Gets or sets strongType for UI to render rich experience during
-        /// blueprint assignment.
+        /// blueprint assignment. Supported strong types are resourceType,
+        /// principalId and location.
         /// </summary>
         [JsonProperty(PropertyName = "metadata.strongType")]
         public string StrongType { get; set; }

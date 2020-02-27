@@ -54,6 +54,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Management service.</param>
         /// <param name="managementApiUrl">Management API endpoint URL of the
         /// API Management service.</param>
+        /// <param name="developerPortalUrl">Developer Portal endpoint URL of
+        /// the API Management service.</param>
         /// <param name="scmUrl">SCM endpoint URL of the API Management
         /// service.</param>
         /// <param name="hostnameConfigurations">Custom hostname configuration
@@ -120,7 +122,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Internal means that API Management deployment is setup inside a
         /// Virtual Network having an Intranet Facing Endpoint only. Possible
         /// values include: 'None', 'External', 'Internal'</param>
-        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string))
+        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string developerPortalUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string))
         {
             NotificationSenderEmail = notificationSenderEmail;
             ProvisioningState = provisioningState;
@@ -130,6 +132,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             GatewayRegionalUrl = gatewayRegionalUrl;
             PortalUrl = portalUrl;
             ManagementApiUrl = managementApiUrl;
+            DeveloperPortalUrl = developerPortalUrl;
             ScmUrl = scmUrl;
             HostnameConfigurations = hostnameConfigurations;
             PublicIPAddresses = publicIPAddresses;
@@ -202,6 +205,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "managementApiUrl")]
         public string ManagementApiUrl { get; private set; }
+
+        /// <summary>
+        /// Gets developer Portal endpoint URL of the API Management service.
+        /// </summary>
+        [JsonProperty(PropertyName = "developerPortalUrl")]
+        public string DeveloperPortalUrl { get; private set; }
 
         /// <summary>
         /// Gets SCM endpoint URL of the API Management service.
