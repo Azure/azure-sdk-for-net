@@ -260,27 +260,27 @@ namespace Azure.Storage.Sas
 
             if (!string.IsNullOrWhiteSpace(parameters.CacheControl))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, parameters.CacheControl);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, WebUtility.UrlEncode(parameters.CacheControl));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentDisposition))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, parameters.ContentDisposition);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, WebUtility.UrlEncode(parameters.ContentDisposition));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentEncoding))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, parameters.ContentEncoding);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, WebUtility.UrlEncode(parameters.ContentEncoding));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentLanguage))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, parameters.ContentLanguage);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, WebUtility.UrlEncode(parameters.ContentLanguage));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentType))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, parameters.ContentType);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, WebUtility.UrlEncode(parameters.ContentType));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.Signature))

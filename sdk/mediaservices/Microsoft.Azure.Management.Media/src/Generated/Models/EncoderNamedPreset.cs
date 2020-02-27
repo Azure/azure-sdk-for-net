@@ -76,6 +76,19 @@ namespace Microsoft.Azure.Management.Media.Models
         public static readonly EncoderNamedPreset ContentAwareEncodingExperimental = "ContentAwareEncodingExperimental";
 
         /// <summary>
+        /// Produces a set of GOP-aligned MP4s by using content-aware encoding.
+        /// Given any input content, the service performs an initial
+        /// lightweight analysis of the input content, and uses the results to
+        /// determine the optimal number of layers, appropriate bitrate and
+        /// resolution settings for delivery by adaptive streaming. This preset
+        /// is particularly effective for low and medium complexity videos,
+        /// where the output files will be at lower bitrates but at a quality
+        /// that still delivers a good experience to viewers. The output will
+        /// contain MP4 files with video and audio interleaved.
+        /// </summary>
+        public static readonly EncoderNamedPreset ContentAwareEncoding = "ContentAwareEncoding";
+
+        /// <summary>
         /// Produces a set of 8 GOP-aligned MP4 files, ranging from 6000 kbps
         /// to 400 kbps, and stereo AAC audio. Resolution starts at 1080p and
         /// goes down to 360p.

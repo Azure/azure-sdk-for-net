@@ -92,7 +92,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ClientCertificateCredential.GetToken", requestContext);
 
             try
             {
@@ -106,7 +106,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+                throw scope.FailAndWrap(e);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ClientCertificateCredential.GetToken", requestContext);
 
             try
             {
@@ -132,7 +132,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+                throw scope.FailAndWrap(e);
             }
         }
     }

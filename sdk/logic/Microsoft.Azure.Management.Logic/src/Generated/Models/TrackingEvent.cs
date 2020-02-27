@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The tracking event.
+    /// </summary>
     public partial class TrackingEvent
     {
         /// <summary>
@@ -27,10 +30,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the TrackingEvent class.
         /// </summary>
-        /// <param name="eventLevel">Possible values include: 'LogAlways',
-        /// 'Critical', 'Error', 'Warning', 'Informational', 'Verbose'</param>
-        /// <param name="recordType">Possible values include: 'NotSpecified',
-        /// 'Custom', 'AS2Message', 'AS2MDN', 'X12Interchange',
+        /// <param name="eventLevel">The event level. Possible values include:
+        /// 'LogAlways', 'Critical', 'Error', 'Warning', 'Informational',
+        /// 'Verbose'</param>
+        /// <param name="eventTime">The event time.</param>
+        /// <param name="recordType">The record type. Possible values include:
+        /// 'NotSpecified', 'Custom', 'AS2Message', 'AS2MDN', 'X12Interchange',
         /// 'X12FunctionalGroup', 'X12TransactionSet',
         /// 'X12InterchangeAcknowledgment', 'X12FunctionalGroupAcknowledgment',
         /// 'X12TransactionSetAcknowledgment', 'EdifactInterchange',
@@ -38,6 +43,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'EdifactInterchangeAcknowledgment',
         /// 'EdifactFunctionalGroupAcknowledgment',
         /// 'EdifactTransactionSetAcknowledgment'</param>
+        /// <param name="error">The error.</param>
         public TrackingEvent(EventLevel eventLevel, System.DateTime eventTime, string recordType, TrackingEventErrorInfo error = default(TrackingEventErrorInfo))
         {
             EventLevel = eventLevel;
@@ -53,22 +59,23 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'LogAlways', 'Critical',
-        /// 'Error', 'Warning', 'Informational', 'Verbose'
+        /// Gets or sets the event level. Possible values include: 'LogAlways',
+        /// 'Critical', 'Error', 'Warning', 'Informational', 'Verbose'
         /// </summary>
         [JsonProperty(PropertyName = "eventLevel")]
         public EventLevel EventLevel { get; set; }
 
         /// <summary>
+        /// Gets or sets the event time.
         /// </summary>
         [JsonProperty(PropertyName = "eventTime")]
         public System.DateTime EventTime { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'NotSpecified', 'Custom',
-        /// 'AS2Message', 'AS2MDN', 'X12Interchange', 'X12FunctionalGroup',
-        /// 'X12TransactionSet', 'X12InterchangeAcknowledgment',
-        /// 'X12FunctionalGroupAcknowledgment',
+        /// Gets or sets the record type. Possible values include:
+        /// 'NotSpecified', 'Custom', 'AS2Message', 'AS2MDN', 'X12Interchange',
+        /// 'X12FunctionalGroup', 'X12TransactionSet',
+        /// 'X12InterchangeAcknowledgment', 'X12FunctionalGroupAcknowledgment',
         /// 'X12TransactionSetAcknowledgment', 'EdifactInterchange',
         /// 'EdifactFunctionalGroup', 'EdifactTransactionSet',
         /// 'EdifactInterchangeAcknowledgment',
@@ -79,6 +86,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public string RecordType { get; set; }
 
         /// <summary>
+        /// Gets or sets the error.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public TrackingEventErrorInfo Error { get; set; }

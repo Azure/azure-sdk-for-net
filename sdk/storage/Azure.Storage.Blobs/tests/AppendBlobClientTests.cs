@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class AppendBlobClientTests : BlobTestBase
     {
-        public AppendBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public AppendBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey
             };
@@ -76,6 +76,24 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new AppendBlobClient(httpUri, blobClientOptions),
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new AppendBlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
         [Test]
@@ -159,6 +177,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task CreateAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         //TODO
@@ -358,6 +393,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task AppendBlockAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            var data = GetRandomBuffer(Constants.KB);
+            await blob.CreateAsync();
+
+            // Act
+            using var stream = new MemoryStream(data);
+            Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                content: stream);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [Test]
         public async Task AppendBlockAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -396,7 +453,7 @@ namespace Azure.Storage.Blobs.Test
                     blob.AppendBlockAsync(
                         content: stream,
                         transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
-                    e => Assert.AreEqual("Md5Mismatch", e.ErrorCode.Split('\n')[0]));
+                    e => Assert.AreEqual("Md5Mismatch", e.ErrorCode));
             }
         }
 
@@ -414,7 +471,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.AppendBlockAsync(stream),
-                    e => Assert.AreEqual("BlobNotFound", e.ErrorCode.Split('\n')[0]));
+                    e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
             }
         }
 
@@ -545,6 +602,32 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [LiveOnly]
+        [Test]
+        public async Task AppendBlockAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = 4 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.AppendBlockAsync(stream, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
+        }
+
         [Test]
         public async Task AppendBlockFromUriAsync_Min()
         {
@@ -596,6 +679,36 @@ namespace Azure.Storage.Blobs.Test
                     new HttpRange(0, Constants.KB));
 
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task AppendBlockFromUriAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
+
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+                await destBlob.CreateAsync();
+
+                // Act
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
+                    sourceBlob.Uri,
+                    new HttpRange(0, Constants.KB));
+
+                Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
             }
         }
 
@@ -795,6 +908,24 @@ namespace Azure.Storage.Blobs.Test
                         actualException => Assert.IsTrue(true)
                     );
                 }
+            }
+        }
+
+        [Test]
+        public async Task AppendBlockAsync_NullStream_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.AppendBlockAsync(content: stream),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 

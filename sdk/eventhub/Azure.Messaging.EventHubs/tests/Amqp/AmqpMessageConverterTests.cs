@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Messaging.EventHubs.Amqp;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -1325,7 +1324,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             using var response = AmqpMessage.Create(new AmqpValue { Value = body });
-            Metadata.EventHubProperties properties = converter.CreateEventHubPropertiesFromResponse(response);
+            EventHubProperties properties = converter.CreateEventHubPropertiesFromResponse(response);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created");
             Assert.That(properties.Name, Is.EqualTo(name), "The name should match");

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TagDetails class.
         /// </summary>
-        /// <param name="id">The tag ID.</param>
+        /// <param name="id">The tag name ID.</param>
         /// <param name="tagName">The tag name.</param>
         /// <param name="count">The total number of resources that use the
         /// resource tag. When a tag is initially created and has no associated
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the tag ID.
+        /// Gets the tag name ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }

@@ -3,12 +3,15 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about
-    ///   Event Hubs client
+    ///   Event Hubs client.
     /// </summary>
     ///
     /// <remarks>
@@ -16,9 +19,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs")]
+    [EventSource(Name = EventSourceName)]
     internal sealed class EventHubsEventSource : EventSource
     {
+        /// <summary>The name to use for the event source.</summary>
+        private const string EventSourceName = "Azure-Messaging-EventHubs";
+
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
@@ -31,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        private EventHubsEventSource()
+        private EventHubsEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 

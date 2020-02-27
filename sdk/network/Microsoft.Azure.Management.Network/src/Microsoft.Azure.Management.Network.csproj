@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.17.1-preview</Version>
+		<Version>19.18.1-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Bugfix in PrivateLinkServiceConnectionState: property "ActionRequired" renamed to "ActionsRequired"
+            - Added support for Shareable Links in Bastion
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

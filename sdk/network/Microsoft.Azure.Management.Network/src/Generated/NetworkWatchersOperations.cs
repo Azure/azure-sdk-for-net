@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -895,7 +895,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1087,7 +1087,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1446,8 +1446,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets the relative latency score for internet service providers from a
-        /// specified location to Azure regions.
+        /// NOTE: This feature is currently in preview and still being tested for
+        /// stability. Gets the relative latency score for internet service providers
+        /// from a specified location to Azure regions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -1472,8 +1473,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Lists all available internet service providers for a specified Azure
-        /// region.
+        /// NOTE: This feature is currently in preview and still being tested for
+        /// stability. Lists all available internet service providers for a specified
+        /// Azure region.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -1569,7 +1571,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1752,7 +1754,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1977,7 +1979,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2202,7 +2204,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2427,7 +2429,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2652,7 +2654,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2878,7 +2880,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3105,7 +3107,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3332,7 +3334,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3503,8 +3505,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Gets the relative latency score for internet service providers from a
-        /// specified location to Azure regions.
+        /// NOTE: This feature is currently in preview and still being tested for
+        /// stability. Gets the relative latency score for internet service providers
+        /// from a specified location to Azure regions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -3558,7 +3561,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3729,8 +3732,9 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Lists all available internet service providers for a specified Azure
-        /// region.
+        /// NOTE: This feature is currently in preview and still being tested for
+        /// stability. Lists all available internet service providers for a specified
+        /// Azure region.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -3780,7 +3784,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4011,7 +4015,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

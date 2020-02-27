@@ -5,17 +5,16 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
     <PackageTags>management;kusto</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
-        - Add Managed Service Identity to cluster.
-        - Add Key Vault properties to cluster.
-        - Add Attached Database Configuration resource for database sharing management on the consumer side.
-        - Add cluster operations for follower (shared) database management on the provider side. 
-        - Add two database types: 'ReadWriteDatabase' and 'ReadOnlyFollowingDatabase'.
+        - Add principal assignments resource for managing cluster principals.
+        - Add principal assignments resource for managing database principals.
+		- Support GZip compression in EventHub.
+		- Support Parquet & ORC in all Data-connection kinds (Blob Storage, EventHub, IoThub).
       ]]>
   </PackageReleaseNotes>
   </PropertyGroup>

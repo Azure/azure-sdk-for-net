@@ -1,0 +1,158 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/entities/linking",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "229",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-bd58b62cb1ce1040a55fe83384bafadd-090ed6ea0880cc47-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200210.1\u002Be24b043d36f83d9f578fa70a08ce896f4e89c8ca",
+          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "a31c6139014927c10b81c58c3423ed27",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "language": "en",
+            "id": "0",
+            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+          },
+          {
+            "language": "en",
+            "id": "1",
+            "text": ""
+          },
+          {
+            "language": "en",
+            "id": "2",
+            "text": "Pike place market is my favorite Seattle attraction."
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "56ea1c52-9b2e-4250-bef4-8daf0c85160f",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Mon, 10 Feb 2020 21:20:43 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "entities": [
+              {
+                "name": "Bill Gates",
+                "matches": [
+                  {
+                    "text": "Bill Gates",
+                    "offset": 25,
+                    "length": 10,
+                    "score": 0.45485126470303006
+                  }
+                ],
+                "language": "en",
+                "id": "Bill Gates",
+                "url": "https://en.wikipedia.org/wiki/Bill_Gates",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "name": "Paul Allen",
+                "matches": [
+                  {
+                    "text": "Paul Allen",
+                    "offset": 40,
+                    "length": 10,
+                    "score": 0.46860302900784023
+                  }
+                ],
+                "language": "en",
+                "id": "Paul Allen",
+                "url": "https://en.wikipedia.org/wiki/Paul_Allen",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "name": "Microsoft",
+                "matches": [
+                  {
+                    "text": "Microsoft",
+                    "offset": 0,
+                    "length": 9,
+                    "score": 0.4029093227589069
+                  }
+                ],
+                "language": "en",
+                "id": "Microsoft",
+                "url": "https://en.wikipedia.org/wiki/Microsoft",
+                "dataSource": "Wikipedia"
+              }
+            ]
+          },
+          {
+            "id": "2",
+            "entities": [
+              {
+                "name": "Pike Place Market",
+                "matches": [
+                  {
+                    "text": "Pike place market",
+                    "offset": 0,
+                    "length": 17,
+                    "score": 0.76924872758183072
+                  }
+                ],
+                "language": "en",
+                "id": "Pike Place Market",
+                "url": "https://en.wikipedia.org/wiki/Pike_Place_Market",
+                "dataSource": "Wikipedia"
+              },
+              {
+                "name": "Seattle",
+                "matches": [
+                  {
+                    "text": "Seattle",
+                    "offset": 33,
+                    "length": 7,
+                    "score": 0.2361670688278743
+                  }
+                ],
+                "language": "en",
+                "id": "Seattle",
+                "url": "https://en.wikipedia.org/wiki/Seattle",
+                "dataSource": "Wikipedia"
+              }
+            ]
+          }
+        ],
+        "errors": [
+          {
+            "id": "1",
+            "error": {
+              "code": "InvalidArgument",
+              "message": "Invalid document in request.",
+              "innerError": {
+                "code": "InvalidDocument",
+                "message": "Document text is empty."
+              }
+            }
+          }
+        ],
+        "modelVersion": "2020-02-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "35415180",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+  }
+}

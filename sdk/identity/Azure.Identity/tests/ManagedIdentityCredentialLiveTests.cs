@@ -4,7 +4,6 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using System.Reflection;
 using Azure.Core;
 
 namespace Azure.Identity.Tests
@@ -13,13 +12,6 @@ namespace Azure.Identity.Tests
     {
         public ManagedIdentityCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        [SetUp]
-        public void ResetManagedIdenityClient()
-        {
-            typeof(ManagedIdentityCredential).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
-            typeof(ManagedIdentityCredential).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
         }
 
         [Test]

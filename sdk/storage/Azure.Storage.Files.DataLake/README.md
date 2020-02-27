@@ -1,6 +1,6 @@
 # Azure Storage Files Data Lake client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07 and 2019-02-02
 
 Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists, 
 and analysts to store data of any size, shape, and speed, and do all types of processing and analytics 
@@ -16,7 +16,7 @@ while making it faster to get up and running with batch, streaming, and interact
 Install the Azure Storage Files Data Lake client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.7
+dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.9
 ```
 
 ### Prerequisites
@@ -233,14 +233,14 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
-[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage.files.datalake
-[rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
-[product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
+[docs]: https://docs.microsoft.com/dotnet/api/azure.storage.files.datalake
+[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/datalakestoragegen2/filesystem
+[product_docs]: https://docs.microsoft.com/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md

@@ -15,7 +15,6 @@ trigger:
   branches:
     include:
     - master
-    - feature/*
     - hotfix/*
     - release/*
   paths:

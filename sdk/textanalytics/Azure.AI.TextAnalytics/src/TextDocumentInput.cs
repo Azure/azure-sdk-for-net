@@ -4,13 +4,19 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// An input representing an individual text document to
+    /// be analyzed by the text analytics predictive model for a given operation.
+    /// The document contains the document's id, the full text of the document,
+    /// and the language that the document is written in.
     /// </summary>
     public class TextDocumentInput
     {
         /// <summary>
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="text"></param>
+        /// <param name="id">The id of the document represented by this instance.
+        /// The id must be unique within the batch of documents analyzed in a
+        /// given operation.</param>
+        /// <param name="text">The text of the document.</param>
         public TextDocumentInput(string id, string text)
         {
             Id = id;
@@ -18,18 +24,19 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets unique, non-empty document identifier.
+        /// Gets the unique, non-empty identifier for this input document.
         /// </summary>
         public string Id { get; }
 
         /// <summary>
-        /// Language of the document.
-        /// Gets or sets this is the 2 letter ISO 639-1 representation of a
-        /// language. For example, use "en" for English; "es" for Spanish etc.
+        /// Gets or sets the language the input document is written in.  This
+        /// value is the two letter ISO 639-1 representation of the language
+        /// (for example, "en" for English or "es" for Spanish).
         /// </summary>
         public string Language { get; set; }
 
         /// <summary>
+        /// Gets the text of the document.
         /// </summary>
         public string Text { get; }
     }

@@ -21,14 +21,12 @@ namespace Azure.Core.Testing
             {
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;
-                var expectedEventPrefix = declaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
-                var expectedEvents = new List<string>
-                {
-                    expectedEventPrefix + ".Start"
-                };
-
-                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener(s => s.Name.StartsWith("Azure."));
+                var expectedName = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
+                using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
                 invocation.Proceed();
+
+                bool expectFailure = false;
+                bool skipChecks = false;
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
                 if (invocation.Method.ReturnType.Name.Contains("Pageable") ||
@@ -54,48 +52,49 @@ namespace Azure.Core.Testing
                         getResultMethod.Invoke(
                             getAwaiterMethod.Invoke(returnValue, Array.Empty<object>()),
                             Array.Empty<object>());
-
                     }
-
-                    expectedEvents.Add(expectedEventPrefix + ".Stop");
                 }
                 catch (Exception ex)
                 {
-                    expectedEvents.Add(expectedEventPrefix + ".Exception");
+                    expectFailure = true;
 
                     if (ex is ArgumentException)
                     {
                         // Don't expect scope for argument validation failures
-                        expectedEvents.Clear();
+                        skipChecks = true;
                     }
                 }
                 finally
                 {
                     // Remove subscribers before enumerating events.
                     diagnosticListener.Dispose();
-
-                    if (strict)
+                    if (!skipChecks)
                     {
-                        foreach (var expectedEvent in expectedEvents)
+                        if (strict)
                         {
-                            (string Key, object Value, DiagnosticListener Listener) e = diagnosticListener.Events.FirstOrDefault(e => e.Key == expectedEvent);
+                            ClientDiagnosticListener.ProducedDiagnosticScope e = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == expectedName);
 
                             if (e == default)
                             {
-                                throw new InvalidOperationException($"Expected diagnostic event not fired {expectedEvent} {Environment.NewLine}    fired events {string.Join(", ", diagnosticListener.Events)} {Environment.NewLine}    You may have forgotten to set your operationId to {expectedEvent} in {methodName} or applied the Azure.Core.ForwardsClientCallsAttribute to {methodName}.");
+                                throw new InvalidOperationException($"Expected diagnostic scope not created {expectedName} {Environment.NewLine}    created scopes {string.Join(", ", diagnosticListener.Scopes)} {Environment.NewLine}    You may have forgotten to set your operationId to {expectedName} in {methodName} or applied the Azure.Core.ForwardsClientCallsAttribute to {methodName}.");
                             }
 
-                            if (!ns.StartsWith(e.Listener.Name))
+                            if (!e.Activity.Tags.Any(tag => tag.Key == "az.namespace"))
                             {
-                                throw new InvalidOperationException($"{e.Key} event was written into wrong DiagnosticSource {e.Listener.Name}, expected: {ns}");
+                                throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with AzureResourceProviderNamespaceAttribute");
+                            }
+
+                            if (expectFailure && !e.IsFailed)
+                            {
+                                throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded");
                             }
                         }
-                    }
-                    else
-                    {
-                        if (!diagnosticListener.Events.Any())
+                        else
                         {
-                            throw new InvalidOperationException($"Expected some diagnostic event to fire found none");
+                            if (!diagnosticListener.Scopes.Any())
+                            {
+                                throw new InvalidOperationException($"Expected some diagnostic scopes to be created, found none");
+                            }
                         }
                     }
                 }

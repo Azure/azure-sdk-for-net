@@ -25,7 +25,7 @@ namespace Test.Azure.Management.Logic
         /// <summary>
         /// Default test subscription
         /// </summary>
-        public const string DefaultSubscription = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+        public const string DefaultSubscription = "80d4fe69-c95b-4dd2-a938-9250f1c8ab03";
         
         /// <summary>
         /// Default test resource group

@@ -23,10 +23,10 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         /// <param name="clientId">The Azure Active Directory client identifier of the service principal.</param>
         /// <param name="secret">The Azure Active Directory secret of the service principal.</param>
         ///
-        public Task RunAsync(string fullyQualifiedNamespace,
-                             string eventHubName,
-                             string tenantId,
-                             string clientId,
-                             string secret);
+        Task RunAsync(string fullyQualifiedNamespace,
+                      string eventHubName,
+                      string tenantId,
+                      string clientId,
+                      string secret);
     }
 }

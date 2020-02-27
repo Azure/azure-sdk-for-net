@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 request.Validate();
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

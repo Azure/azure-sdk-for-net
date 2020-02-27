@@ -19,7 +19,7 @@
         {
             try
             {
-                var lines = File.ReadAllLines(GetIdsFileName());
+                var lines = File.ReadAllLines(idFilename);
                 for (var i = 0; i < lines.Length; i++)
                 {
                     var parts = lines[i].Split(',');
@@ -45,13 +45,6 @@
             // Write the info back into the project ids.txt
             File.WriteAllText(GetIdsFileName(), sb.ToString());
 #endif
-        }
-
-        private string GetIdsFileName()
-        {
-            var executingAssemblyPath = new Uri(typeof(BaseTests).GetTypeInfo().Assembly.CodeBase);
-            var projectRoot = Path.Combine(Path.GetDirectoryName(executingAssemblyPath.AbsolutePath), @"..\..\..");
-            return Path.Combine(projectRoot, idFilename);
         }
     }
 }

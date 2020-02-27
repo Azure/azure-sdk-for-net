@@ -1,8 +1,8 @@
 ﻿{
   "TokenProviders": [
     {
-      "Path": "C:\\TokenService\\Microsoft.Asal.TokenService.exe",
-      "Arguments": [ "C:\\servicehub.config.json" ],
+      "Path": "C:\\Users\\johndoe\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_5b4bdc86\\Extensions\\lyzwtlta.zzj\\TokenService\\Microsoft.Asal.TokenService.exe",
+      "Arguments": [ "--serviceConfigFile", "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json" ],
       "Preference": 0
     },
     {
@@ -11,8 +11,8 @@
       "Preference": 1
     },
     {
-      "Path": "C:\\Users\\johndoe\\AppData\\Local\\Microsoft\\VisualStudio\\15.0_5b4bdc86\\Extensions\\lyzwtlta.zzj\\TokenService\\Microsoft.Asal.TokenService.exe",
-      "Arguments": [ "--serviceConfigFile", "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json" ],
+      "Path": "C:\\TokenService\\Microsoft.Asal.TokenService.exe",
+      "Arguments": [ "C:\\servicehub.config.json" ],
       "Preference": 2
     }
   ]

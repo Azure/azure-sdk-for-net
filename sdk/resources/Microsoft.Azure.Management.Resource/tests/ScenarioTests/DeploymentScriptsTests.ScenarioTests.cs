@@ -22,6 +22,9 @@ namespace DeploymentScripts.Tests
         private const string ScriptContent =
             "param([string] $helloWorld) Write-Output $helloWorld; $DeploymentScriptOutputs['output'] = $helloWorld";
 
+        private const string MalformedScriptContent =
+            "This-will-fail.";
+
         private const string ScriptArguments = "'Hello World'";
 
         [Fact]
@@ -52,29 +55,13 @@ namespace DeploymentScripts.Tests
                 var createDeploymentScriptResult =
                     client.DeploymentScripts.Create(ResourceGroupName, deploymentScriptName, deploymentScript) as
                         AzurePowerShellScript;
+
                 Assert.NotNull(createDeploymentScriptResult);
-                Assert.Equal(ScriptProvisioningState.Creating, createDeploymentScriptResult.ProvisioningState);
+                Assert.Equal(ScriptProvisioningState.Succeeded, createDeploymentScriptResult.ProvisioningState);
 
-                AzurePowerShellScript getDeploymentScript;
+                AzurePowerShellScript getDeploymentScript = client.DeploymentScripts.Get(ResourceGroupName, deploymentScriptName) as AzurePowerShellScript;
 
-                // wait until the deployment script provisioning succeeds (this includes script running time too)
-                var MaxPoll = 20;
-                var pollCount = 0;
-
-                do
-                {
-                    Assert.True(pollCount < MaxPoll);
-
-                    getDeploymentScript =
-                        client.DeploymentScripts.Get(ResourceGroupName, deploymentScriptName) as AzurePowerShellScript;
-
-                    TestUtilities.Wait(10000);
-
-                    pollCount++;
-
-                } while (getDeploymentScript.ProvisioningState != ScriptProvisioningState.Succeeded);
-
-                // Validate result
+               // Validate result
                 Assert.NotNull(getDeploymentScript);
                 Assert.Equal(deploymentScript.Location, getDeploymentScript.Location);
                 Assert.Equal(deploymentScript.AzPowerShellVersion, getDeploymentScript.AzPowerShellVersion);
@@ -109,7 +96,6 @@ namespace DeploymentScripts.Tests
                 var listAtResourceGroupResult = client.DeploymentScripts.ListByResourceGroup(ResourceGroupName);
                 Assert.NotEmpty(listAtResourceGroupResult);
                 Assert.NotNull(listAtResourceGroupResult.FirstOrDefault(p => p.Name.Equals(deploymentScriptName)));
-                Assert.Equal(deploymentScriptName, listAtResourceGroupResult.First().Name);
                 Assert.Equal(deploymentScript.AzPowerShellVersion,
                     (listAtResourceGroupResult.First() as AzurePowerShellScript).AzPowerShellVersion);
                 Assert.NotNull((listAtResourceGroupResult.First() as AzurePowerShellScript).ProvisioningState);
@@ -118,7 +104,6 @@ namespace DeploymentScripts.Tests
                 var listAtSubscriptionResult = client.DeploymentScripts.ListBySubscription();
                 Assert.NotEmpty(listAtSubscriptionResult);
                 Assert.NotNull(listAtSubscriptionResult.FirstOrDefault(p => p.Name.Equals(deploymentScriptName)));
-                Assert.Equal(deploymentScriptName, listAtSubscriptionResult.First().Name);
                 Assert.Equal(AzurePowerShellVersion,
                     (listAtSubscriptionResult.First() as AzurePowerShellScript).AzPowerShellVersion);
                 Assert.NotNull((listAtSubscriptionResult.First() as AzurePowerShellScript).ProvisioningState);
@@ -161,11 +146,57 @@ namespace DeploymentScripts.Tests
                     client.DeploymentScripts.Create(ResourceGroupName, deploymentScriptName, deploymentScript) as
                         AzurePowerShellScript;
                 Assert.NotNull(createDeploymentScriptResult);
+                Assert.Equal(ScriptProvisioningState.Succeeded, createDeploymentScriptResult.ProvisioningState);
+
+                AzurePowerShellScript getDeploymentScript = client.DeploymentScripts.Get(ResourceGroupName, deploymentScriptName) as AzurePowerShellScript;
+                Assert.NotNull(getDeploymentScript);
+
+                // Validate getlogs result
+                var getLogsResult = client.DeploymentScripts.GetLogsDefault(ResourceGroupName, deploymentScriptName);
+                Assert.NotNull(getLogsResult);
+
+                // Delete deployments script 
+                client.DeploymentScripts.Delete(ResourceGroupName, deploymentScriptName);
+                var list = client.DeploymentScripts.ListByResourceGroup(ResourceGroupName);
+                Assert.Empty(list.Where(p => p.Name.Equals(deploymentScriptName)));
+            }
+        }
+
+        [Fact]
+        public void CanReturnErrorOnScriptExecutionFailure()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var client = context.GetServiceClient<DeploymentScriptsClient>();
+
+                // create user assigned managed identity during test run since we'll be using dynamic properties, such as subscriptionId from the test 
+                var userAssignedIdentities = new Dictionary<string, UserAssignedIdentity>
+                {
+                    {
+                        $"/subscriptions/{client.SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/filiz-user-assigned-msi",
+                        new UserAssignedIdentity()
+                    }
+                };
+
+                var managedIdentity =
+                    new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned, userAssignedIdentities);
+
+                // Create deployment script object with minimal properties
+                var deploymentScriptName = TestUtilities.GetCurrentMethodName() + "--" + TestUtilities.GenerateName();
+
+                var deploymentScript = new AzurePowerShellScript(managedIdentity, LocationWestUs, RetentionInterval,
+                    AzurePowerShellVersion, scriptContent: MalformedScriptContent);
+
+                var createDeploymentScriptResult =
+                    client.DeploymentScripts.BeginCreate(ResourceGroupName, deploymentScriptName,
+                        deploymentScript) as AzurePowerShellScript;
+
+                Assert.NotNull(createDeploymentScriptResult);
                 Assert.Equal(ScriptProvisioningState.Creating, createDeploymentScriptResult.ProvisioningState);
 
                 AzurePowerShellScript getDeploymentScript;
 
-                // wait until the deployment script provisioning succeeds (this includes script running time too)
+                // wait until the deployment script fails
                 var MaxPoll = 20;
                 var pollCount = 0;
 
@@ -180,13 +211,12 @@ namespace DeploymentScripts.Tests
 
                     pollCount++;
 
-                } while (getDeploymentScript.ProvisioningState != ScriptProvisioningState.Succeeded);
+                } while (getDeploymentScript.ProvisioningState != ScriptProvisioningState.Failed);
 
+                // Validate result
                 Assert.NotNull(getDeploymentScript);
-
-                // Validate getlogs result
-                var getLogsResult = client.DeploymentScripts.GetLogsDefault(ResourceGroupName, deploymentScriptName);
-                Assert.NotNull(getLogsResult);
+                Assert.NotNull(getDeploymentScript.Status.Error);
+                Assert.Equal(typeof(DefaultErrorResponse), getDeploymentScript.Status.Error.GetType());
 
                 // Delete deployments script 
                 client.DeploymentScripts.Delete(ResourceGroupName, deploymentScriptName);

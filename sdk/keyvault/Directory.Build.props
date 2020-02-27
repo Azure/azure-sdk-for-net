@@ -7,12 +7,7 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
   <PropertyGroup Condition="'$(IsDataPlaneProject)' == 'true'">
-    <VersionPrefix>3.0.4</VersionPrefix>
+    <VersionPrefix>3.0.5</VersionPrefix>
     <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/5702
-      ]]>
-    </PackageReleaseNotes>
   </PropertyGroup>
 </Project>

@@ -9,10 +9,10 @@
 /sdk/ @AlexGhiondea
 
 # Core
-/sdk/core/ @pakrym
+/sdk/core/ @pakrym @KrzysztofCwalina
 
 # Service teams
-/sdk/appconfiguration/ @annelo-msft
+/sdk/appconfiguration/ @annelo-msft @AlexanderSher
 
 /sdk/batch/ @matthchr 
 
@@ -32,8 +32,11 @@
 /sdk/search/ @brjohnstmsft @arv100kri @bleroy
 /sdk/servicebus/ @nemakam @jsquire
 /sdk/storage/ @seanmcc-msft @amnguye @tg-msft @JoshLove-msft
+
+/sdk/textanalytics/ @annelo-msft @maririos
+
 # Management Plane
-/**/*Management*/ @erich-wang
+/**/*Management*/ @isra-fel @erich-wang
 
 # Reviewers to double check any API changes
 /sdk/**/api/ @KrzysztofCwalina @pakrym @tg-msft
@@ -42,6 +45,6 @@
 # Eng Sys
 ###########
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
-/eng/mgmt/      @erich-wang
+/eng/mgmt/      @isra-fel @erich-wang
 /**/tests.yml   @danieljurek
 /**/ci.yml      @mitchdenny
