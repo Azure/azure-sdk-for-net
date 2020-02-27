@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionKeysFunctionalTest
+    public class DataProtectionKeysFunctionalTests
     {
         private static readonly string TenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
         private static readonly string ClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
