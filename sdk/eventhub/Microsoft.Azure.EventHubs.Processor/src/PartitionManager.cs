@@ -552,8 +552,8 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// Awaits givent task for provided wait time.
-        /// Throws OperationCanceledException when wait time exceeded.
+        /// Awaits given task up to provided wait time.
+        /// Throws OperationCanceledException when wait time is exhausted.
         /// </summary>
         async Task WaitTaskTimeoutAsync(Task task, TimeSpan waitTime)
         {
