@@ -535,7 +535,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             {
                 if (!capturedPump.IsClosing)
                 {
-                    // Don't block close call more than renew interval if lease is lost.
+                    // Don't block on close call more than renew interval if close reason is lease-lost.
                     // Otherwise we can block indefinetely.
                     var closeTask = capturedPump.CloseAsync(reason);
                     if (reason == CloseReason.LeaseLost)
