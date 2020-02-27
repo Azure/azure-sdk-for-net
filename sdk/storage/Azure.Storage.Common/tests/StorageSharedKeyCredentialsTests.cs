@@ -67,7 +67,8 @@ namespace Azure.Storage.Test
                         GetBlobOptions()));
 
             // Create a child container
-            BlobContainerClient container = await service.CreateBlobContainerAsync(GetNewContainerName());
+            BlobContainerClient container = service.GetBlobContainerClient(GetNewContainerName());
+            await container.CreateIfNotExistsAsync();
             try
             {
                 // Verify the credential works (i.e., doesn't throw)
@@ -89,7 +90,7 @@ namespace Azure.Storage.Test
             finally
             {
                 // Clean up the child container
-                await container.DeleteAsync();
+                await container.DeleteIfExistsAsync();
             }
         }
     }

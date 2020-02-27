@@ -240,7 +240,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
 
@@ -538,7 +538,7 @@ namespace Azure.Storage.Test.Shared
                 {
                     try
                     {
-                        await Container.DeleteAsync();
+                        await Container.DeleteIfExistsAsync();
                         Container = null;
                     }
                     catch
