@@ -658,7 +658,7 @@ namespace Azure.Messaging.EventHubs.Producer
             scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, Connection.ServiceEndpoint);
+            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
             scope.Start();
 
             return scope;
