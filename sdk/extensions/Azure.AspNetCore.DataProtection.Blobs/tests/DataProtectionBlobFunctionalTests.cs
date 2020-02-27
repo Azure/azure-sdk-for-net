@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionBlobFunctionalTest
+    public class DataProtectionBlobFunctionalTests
     {
         private static readonly string StorageAccountName = Environment.GetEnvironmentVariable("BLOB_STORAGE_ACCOUNT_NAME");
         private static readonly string StorageAccountKey = Environment.GetEnvironmentVariable("BLOB_STORAGE_ACCOUNT_KEY");
