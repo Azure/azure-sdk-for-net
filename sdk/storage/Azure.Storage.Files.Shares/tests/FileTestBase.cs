@@ -261,7 +261,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata);
+                await share.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 

@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             async Task<ShareFileClient> GetFileClient(ShareClient share)
             {
-                await share.CreateAsync();
+                await share.CreateIfNotExistsAsync();
                 string dirName = GetNewDirectoryName();
                 await share.CreateDirectoryAsync(dirName);
                 return InstrumentClient(share.GetDirectoryClient(dirName).GetFileClient(GetNewFileName()));
@@ -194,7 +194,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
 
             // Share is intentionally created twice
-            await share.CreateAsync();
+            await share.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -325,7 +325,7 @@ namespace Azure.Storage.Files.Shares.Test
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            await share.CreateAsync();
+            await share.CreateIfNotExistsAsync();
 
             // Act
             Response<ShareInfo> response = await share.CreateIfNotExistsAsync();
@@ -374,7 +374,7 @@ namespace Azure.Storage.Files.Shares.Test
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            await share.CreateAsync();
+            await share.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await share.ExistsAsync();
@@ -408,7 +408,7 @@ namespace Azure.Storage.Files.Shares.Test
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            await share.CreateAsync();
+            await share.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await share.DeleteIfExistsAsync();
@@ -710,7 +710,7 @@ namespace Azure.Storage.Files.Shares.Test
             var shareName = GetNewShareName();
             ShareServiceClient service = GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
-            await share.CreateAsync(quotaInGB: 1);
+            await share.CreateIfNotExistsAsync(quotaInGB: 1);
 
             // Act
             Response response = await share.DeleteAsync(false);
