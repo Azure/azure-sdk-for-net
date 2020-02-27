@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Attestation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for CertsOperations.
+    /// Extension methods for SigningCertificatesOperations.
     /// </summary>
-    public static partial class CertsOperationsExtensions
+    public static partial class SigningCertificatesOperationsExtensions
     {
             /// <summary>
             /// Retrieves the OpenID Configuration data for the Azure Attestation Service
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Attestation
             /// <param name='tenantBaseUrl'>
             /// The tenant name, for example https://mytenant.attest.azure.net.
             /// </param>
-            public static object Get(this ICertsOperations operations, string tenantBaseUrl)
+            public static object Get(this ISigningCertificatesOperations operations, string tenantBaseUrl)
             {
                 return operations.GetAsync(tenantBaseUrl).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Attestation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAsync(this ICertsOperations operations, string tenantBaseUrl, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetAsync(this ISigningCertificatesOperations operations, string tenantBaseUrl, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(tenantBaseUrl, null, cancellationToken).ConfigureAwait(false))
                 {

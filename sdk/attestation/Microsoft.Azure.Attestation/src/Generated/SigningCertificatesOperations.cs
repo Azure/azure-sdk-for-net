@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Attestation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// CertsOperations operations.
+    /// SigningCertificatesOperations operations.
     /// </summary>
-    internal partial class CertsOperations : IServiceOperations<AttestationClient>, ICertsOperations
+    internal partial class SigningCertificatesOperations : IServiceOperations<AttestationClient>, ISigningCertificatesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the CertsOperations class.
+        /// Initializes a new instance of the SigningCertificatesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Attestation
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal CertsOperations(AttestationClient client)
+        internal SigningCertificatesOperations(AttestationClient client)
         {
             if (client == null)
             {
