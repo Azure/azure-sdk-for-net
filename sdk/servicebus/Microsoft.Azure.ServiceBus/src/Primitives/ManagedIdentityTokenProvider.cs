@@ -12,17 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// </summary>
     public class ManagedIdentityTokenProvider : TokenProvider
     {
-        private readonly AzureServiceTokenProvider azureServiceTokenProvider;
-
-        /// <summary>Initializes new instance of <see cref="ManagedIdentityTokenProvider"/> class with default <see cref="AzureServiceTokenProvider"/> configuration.
-        public ManagedIdentityTokenProvider() : this(new AzureServiceTokenProvider()){}
-
-        /// <summary>Initializes new instance of <see cref="ManagedIdentityTokenProvider"/> class with <see cref="AzureServiceTokenProvider"/>.
-        /// <remarks>Call that constructore to set <see cref="AzureServiceTokenProvider"/> with required Managed Identity connection string.</remarks>
-        public ManagedIdentityTokenProvider(AzureServiceTokenProvider azureServiceTokenProvider)
-        {
-            this.azureServiceTokenProvider = azureServiceTokenProvider;
-        }
+        static AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
 
         /// <summary>
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
