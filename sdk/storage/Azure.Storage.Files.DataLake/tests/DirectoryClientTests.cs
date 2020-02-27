@@ -1584,7 +1584,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             string fileName = GetNewFileName();
             DataLakeFileClient fileClient = directory.GetFileClient(fileName);
-            await fileClient.CreateAsync();
+            await fileClient.CreateIfNotExistsAsync();
 
             // Assert
             await directory.DeleteFileAsync(fileName);
