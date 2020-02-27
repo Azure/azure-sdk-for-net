@@ -240,7 +240,7 @@ namespace Azure.Messaging.EventHubs.Tests
             private const string MockConnectionStringFormat = "Endpoint={0};SharedAccessKeyName=[value];SharedAccessKey=[value];";
 
             public MockConnection(string serviceEndpoint,
-                                  string eventHubName) : base(String.Format(MockConnectionStringFormat, serviceEndpoint), eventHubName)
+                                  string eventHubName) : base(string.Format(MockConnectionStringFormat, serviceEndpoint), eventHubName)
             {
             }
 
