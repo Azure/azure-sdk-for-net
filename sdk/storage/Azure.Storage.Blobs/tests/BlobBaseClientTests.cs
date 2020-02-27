@@ -1334,7 +1334,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobBaseClient blob = await GetNewBlobClient(test.Container);
-                await blob.DeleteAsync();
+                await blob.DeleteIfExistsAsync();
 
                 // Act
                 Response response = await blob.UndeleteAsync();
