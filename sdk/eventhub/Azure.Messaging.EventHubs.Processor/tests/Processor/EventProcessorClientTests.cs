@@ -1781,7 +1781,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) =>
                 {
                     // Throw for the faultedPartition, but only after each partition processor has has a chance to start.
-                    
+
                     if (partition == faultedPartitionId && partitionsBeingProcessed == partitionIds.Length)
                     {
                         throw new Exception();
