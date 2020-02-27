@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Attestation.Tests.BasicTests
         [Fact]
         public void UpdatePolicyCertificates()
         {
-            string newCertText = File.ReadAllText(@".\DataFiles\cert2.signed.add.txt");
+            string newCertText = File.ReadAllText(@"./DataFiles/cert2.signed.add.txt");
 
             using (MockContext ctx = MockContext.Start(this.GetType()))
             {
