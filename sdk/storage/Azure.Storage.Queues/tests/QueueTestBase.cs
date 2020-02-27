@@ -202,7 +202,7 @@ namespace Azure.Storage.Queues.Tests
 
             public static async Task<DisposingQueue> CreateAsync(QueueClient queue, IDictionary<string, string> metadata)
             {
-                await queue.CreateAsync(metadata: metadata);
+                await queue.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingQueue(queue);
             }
 
@@ -217,7 +217,7 @@ namespace Azure.Storage.Queues.Tests
                 {
                     try
                     {
-                        await Queue.DeleteAsync();
+                        await Queue.DeleteIfExistsAsync();
                         Queue = null;
                     }
                     catch

@@ -82,8 +82,8 @@ namespace Azure.Storage.Queues.Test
             try
             {
                 // Act
-                await queueClient1.CreateAsync();
-                await queueClient2.CreateAsync();
+                await queueClient1.CreateIfNotExistsAsync();
+                await queueClient2.CreateIfNotExistsAsync();
 
                 var data = GetRandomBuffer(Constants.KB);
 
@@ -97,8 +97,8 @@ namespace Azure.Storage.Queues.Test
             finally
             {
                 // Clean up
-                await queueClient1.DeleteAsync();
-                await queueClient2.DeleteAsync();
+                await queueClient1.DeleteIfExistsAsync();
+                await queueClient2.DeleteIfExistsAsync();
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Storage.Queues.Test
             }
             finally
             {
-                await queue.DeleteAsync();
+                await queue.DeleteIfExistsAsync();
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Storage.Queues.Test
             }
             finally
             {
-                await queue.DeleteAsync();
+                await queue.DeleteIfExistsAsync();
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Storage.Queues.Test
             }
             finally
             {
-                await queue.DeleteAsync();
+                await queue.DeleteIfExistsAsync();
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.Storage.Queues.Test
             {
                 if (!pass)
                 {
-                    await queue.DeleteAsync();
+                    await queue.DeleteIfExistsAsync();
                 }
             }
         }
@@ -254,7 +254,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -277,7 +277,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(response);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -287,7 +287,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response response = await queue.CreateIfNotExistsAsync();
@@ -296,7 +296,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(response);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -307,7 +307,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
-            await queue.CreateAsync(BuildMetadata());
+            await queue.CreateIfNotExistsAsync(BuildMetadata());
 
             // Act
             Response response = await queue.CreateIfNotExistsAsync();
@@ -316,7 +316,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(response);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -341,7 +341,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await queue.ExistsAsync();
@@ -350,7 +350,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(response.Value);
 
             // Cleanup
-            await queue.DeleteAsync();
+            await queue.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -390,7 +390,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response<bool> response = await queue.DeleteIfExistsAsync();
@@ -462,7 +462,7 @@ namespace Azure.Storage.Queues.Test
         public async Task GetPropertiesAsync_SecondaryStorage()
         {
             QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy);
-            await queueClient.CreateAsync();
+            await queueClient.CreateIfNotExistsAsync();
             Response<QueueProperties> properties = await EnsurePropagatedAsync(
                 async () => await queueClient.GetPropertiesAsync(),
                 properties => properties.GetRawResponse().Status != 404);
@@ -470,7 +470,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(properties);
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 
-            await queueClient.DeleteAsync();
+            await queueClient.DeleteIfExistsAsync();
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
         #endregion
@@ -590,7 +590,7 @@ namespace Azure.Storage.Queues.Test
             var queueName = GetNewQueueName();
             QueueServiceClient service = GetServiceClient_SharedKey();
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
-            await queue.CreateAsync();
+            await queue.CreateIfNotExistsAsync();
 
             // Act
             Response result = await queue.DeleteAsync();
