@@ -422,10 +422,10 @@ namespace Azure.Messaging.EventHubs.Producer
                 activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
-
             events = (events as IList<EventData>) ?? events.ToList();
             InstrumentMessages(events);
+
+            using DiagnosticScope scope = CreateDiagnosticScope();
 
             try
             {
