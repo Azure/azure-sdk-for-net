@@ -37,6 +37,10 @@ Libraries which enable you to provision specific server resources. They are dire
 * File an issue via [Github Issues](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
 * Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on StackOverflow using `azure` and `.net` tags.
 
+### Community
+
+* Chat with other community members [![Join the chat at https://gitter.im/azure/azure-sdk-for-net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/azure/azure-sdk-for-net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ### Reporting security issues and security bugs
 
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) <secure@microsoft.com>. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://www.microsoft.com/msrc/faqs-report-an-issue).

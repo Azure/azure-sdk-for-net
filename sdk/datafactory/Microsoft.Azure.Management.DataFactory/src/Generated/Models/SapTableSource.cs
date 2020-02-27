@@ -44,6 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="rowCount">The number of rows to be retrieved. Type:
         /// integer(or Expression with resultType integer).</param>
         /// <param name="rowSkips">The number of rows that will be skipped.
@@ -67,8 +70,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// 'PartitionOnTime'</param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for SAP table source partitioning.</param>
-        public SapTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object rowCount = default(object), object rowSkips = default(object), object rfcTableFields = default(object), object rfcTableOptions = default(object), object batchSize = default(object), object customRfcReadTableFunctionModule = default(object), string partitionOption = default(string), SapTablePartitionSettings partitionSettings = default(SapTablePartitionSettings))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public SapTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object rowCount = default(object), object rowSkips = default(object), object rfcTableFields = default(object), object rfcTableOptions = default(object), object batchSize = default(object), object customRfcReadTableFunctionModule = default(object), string partitionOption = default(string), SapTablePartitionSettings partitionSettings = default(SapTablePartitionSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             RowCount = rowCount;
             RowSkips = rowSkips;

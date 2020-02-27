@@ -179,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+        public override async Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
             TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,
@@ -187,7 +187,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string receiveLinkName = null,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusMessage> messages = await PeekInternal(
+            IEnumerable<ServiceBusReceivedMessage> messages = await PeekInternal(
                     fromSequenceNumber,
                     messageCount,
                     sessionId,
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal async Task<IEnumerable<ServiceBusMessage>> PeekInternal(
+        internal async Task<IEnumerable<ServiceBusReceivedMessage>> PeekInternal(
             long? fromSequenceNumber,
             int messageCount,
             string sessionId,
@@ -254,11 +254,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
 
-            var messages = new List<ServiceBusMessage>();
+            var messages = new List<ServiceBusReceivedMessage>();
             //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
-                ServiceBusMessage message = null;
+                ServiceBusReceivedMessage message = null;
                 IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
                 foreach (AmqpMap entry in messageList)
                 {
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (message != null)
                 {
-                    LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
+                    LastPeekedSequenceNumber = message.SequenceNumber;
                 }
                 return messages;
             }

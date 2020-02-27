@@ -105,9 +105,10 @@ namespace Azure.Identity
             {
                 IAccount account = async
                     ? await _account.Value.ConfigureAwait(false)
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     : _account.Value.GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+
 
                 AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, async, cancellationToken).ConfigureAwait(false);
 

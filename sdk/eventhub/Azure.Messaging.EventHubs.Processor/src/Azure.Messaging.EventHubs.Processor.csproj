@@ -17,6 +17,7 @@
     <!--
     <PackageReference Include="Azure.Messaging.EventHubs" />
     -->
+
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />

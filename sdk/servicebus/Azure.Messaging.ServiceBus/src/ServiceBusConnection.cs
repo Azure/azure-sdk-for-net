@@ -342,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiveLinkName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+        internal virtual async Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
             TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,
@@ -377,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Cancels a message that was scheduled.
         /// </summary>
-        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="retryPolicy"></param>
         /// <param name="sendLinkName"></param>
         /// <param name="cancellationToken"></param>

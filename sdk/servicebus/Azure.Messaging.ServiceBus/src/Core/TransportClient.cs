@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="receiveLinkName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
             TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,

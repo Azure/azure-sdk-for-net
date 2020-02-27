@@ -240,27 +240,23 @@ namespace Azure.Storage.Blobs
                 List<string> blockIds = new List<string>();
 
                 // Partition the stream into individual blocks and stage them
-                IAsyncEnumerator<ChunkedStream> enumerator =
-                    PartitionedUploadExtensions.GetBlocksAsync(content, blockSize, async: false, _arrayPool, cancellationToken)
-                    .GetAsyncEnumerator(cancellationToken);
-#pragma warning disable AZC0107
-                while (enumerator.MoveNextAsync().EnsureCompleted())
-#pragma warning restore AZC0107
+                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                        content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
-                    // Dispose the block after the loop iterates and return its
-                    // memory to our ArrayPool
-                    using ChunkedStream block = enumerator.Current;
+                    // Dispose the block after the loop iterates and return its memory to our ArrayPool
+                    using (block)
+                    {
+                        // Stage the next block
+                        string blockId = GenerateBlockId(block.AbsolutePosition);
+                        _client.StageBlock(
+                            blockId,
+                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            conditions: conditions,
+                            progressHandler: progressHandler,
+                            cancellationToken: cancellationToken);
 
-                    // Stage the next block
-                    string blockId = GenerateBlockId(block.AbsolutePosition);
-                    _client.StageBlock(
-                        blockId,
-                        new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        conditions: conditions,
-                        progressHandler: progressHandler,
-                        cancellationToken: cancellationToken);
-
-                    blockIds.Add(blockId);
+                        blockIds.Add(blockId);
+                    }
                 }
 
                 // Commit the block list after everything has been staged to

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage;
 using Azure.Storage.Blobs;
@@ -128,17 +129,27 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task ClaimOwnershipForNewPartitionLogsOwnershipClaimed()
         {
-            var partitionOwnerships = new List<PartitionOwnership>{
-                new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, PartitionId, DateTime.UtcNow, null )
+            var partitionOwnership = new List<EventProcessorPartitionOwnership>
+            {
+                new EventProcessorPartitionOwnership
+                {
+                    FullyQualifiedNamespace = FullyQualifiedNamespace,
+                    EventHubName = EventHubName,
+                    ConsumerGroup = ConsumerGroup,
+                    OwnerIdentifier = OwnershipIdentifier,
+                    PartitionId = PartitionId,
+                    LastModifiedTime = DateTime.UtcNow
+                }
             };
+
             var target = new BlobsCheckpointStore(new MockBlobContainerClient(),
                                                   new BasicRetryPolicy(new EventHubsRetryOptions()));
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            var result = (await target.ClaimOwnershipAsync(partitionOwnerships, new CancellationToken())).ToList();
+            var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
 
-            CollectionAssert.AreEquivalent(partitionOwnerships, result);
+            CollectionAssert.AreEquivalent(partitionOwnership, result);
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, OwnershipIdentifier));
         }
 
@@ -150,17 +161,29 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public async Task ClaimOwnershipForExistingPartitionLogsOwnershipClaimed()
         {
             var blobInfo = BlobsModelFactory.BlobInfo(new ETag($@"""{MatchingEtag}"""), DateTime.UtcNow);
-            var partitionOwnerships = new List<PartitionOwnership>{
-                new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, PartitionId, DateTime.UtcNow, MatchingEtag )
+
+            var partitionOwnership = new List<EventProcessorPartitionOwnership>
+            {
+                new EventProcessorPartitionOwnership
+                {
+                    FullyQualifiedNamespace = FullyQualifiedNamespace,
+                    EventHubName = EventHubName,
+                    ConsumerGroup = ConsumerGroup,
+                    OwnerIdentifier = OwnershipIdentifier,
+                    PartitionId = PartitionId,
+                    LastModifiedTime = DateTime.UtcNow,
+                    Version = MatchingEtag
+                }
             };
+
             var target = new BlobsCheckpointStore(new MockBlobContainerClient { BlobInfo = blobInfo },
                                                   new BasicRetryPolicy(new EventHubsRetryOptions()));
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            var result = (await target.ClaimOwnershipAsync(partitionOwnerships, new CancellationToken())).ToList();
+            var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
 
-            CollectionAssert.AreEquivalent(partitionOwnerships, result);
+            CollectionAssert.AreEquivalent(partitionOwnership, result);
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, OwnershipIdentifier));
         }
 
@@ -172,15 +195,27 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public async Task ClaimOwnershipForExistingPartitionWithWrongEtagLogsOwnershipNotClaimable()
         {
             var blobInfo = BlobsModelFactory.BlobInfo(new ETag($@"""{WrongEtag}"""), DateTime.UtcNow);
-            var partitionOwnerships = new List<PartitionOwnership>{
-                new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, PartitionId, DateTime.UtcNow, MatchingEtag )
+
+            var partitionOwnership = new List<EventProcessorPartitionOwnership>
+            {
+                new EventProcessorPartitionOwnership
+                {
+                    FullyQualifiedNamespace = FullyQualifiedNamespace,
+                    EventHubName = EventHubName,
+                    ConsumerGroup = ConsumerGroup,
+                    OwnerIdentifier = OwnershipIdentifier,
+                    PartitionId = PartitionId,
+                    LastModifiedTime = DateTime.UtcNow,
+                    Version = MatchingEtag
+                }
             };
+
             var target = new BlobsCheckpointStore(new MockBlobContainerClient { BlobInfo = blobInfo },
                                                   new BasicRetryPolicy(new EventHubsRetryOptions()));
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            var result = (await target.ClaimOwnershipAsync(partitionOwnerships, new CancellationToken())).ToList();
+            var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
 
             CollectionAssert.IsEmpty(result);
             mockLog.Verify(m => m.OwnershipNotClaimable(PartitionId, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.ConditionNotMet.ToString()))));
@@ -193,15 +228,26 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void ClaimOwnershipForMissingPartitionThrowsAndLogsOwnershipNotClaimable()
         {
-            var partitionOwnerships = new List<PartitionOwnership>{
-                new PartitionOwnership(FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, PartitionId, DateTime.UtcNow, MatchingEtag )
+            var partitionOwnership = new List<EventProcessorPartitionOwnership>
+            {
+                new EventProcessorPartitionOwnership
+                {
+                    FullyQualifiedNamespace = FullyQualifiedNamespace,
+                    EventHubName = EventHubName,
+                    ConsumerGroup = ConsumerGroup,
+                    OwnerIdentifier = OwnershipIdentifier,
+                    PartitionId = PartitionId,
+                    LastModifiedTime = DateTime.UtcNow,
+                    Version = MatchingEtag
+                }
             };
+
             var target = new BlobsCheckpointStore(new MockBlobContainerClient(),
                                                   new BasicRetryPolicy(new EventHubsRetryOptions()));
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ClaimOwnershipAsync(partitionOwnerships, new CancellationToken()));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken()));
         }
 
         /// <summary>
@@ -253,7 +299,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task UpdateCheckpointLogsCheckpointUpdated()
         {
-            var checkpoint = new Checkpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 0L, 0L);
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = FullyQualifiedNamespace,
+                EventHubName = EventHubName,
+                ConsumerGroup = ConsumerGroup,
+                PartitionId = PartitionId,
+                Offset = 0L,
+                SequenceNumber = 0L
+            };
+
             var blobList = new List<BlobItem>{
                 BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
                                            false,
@@ -278,7 +333,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void UpdateCheckpointForMissingCheckpointThrowsAndLogsCheckpointUpdateError()
         {
-            var checkpoint = new Checkpoint(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, 0L, 0L);
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = FullyQualifiedNamespace,
+                EventHubName = EventHubName,
+                ConsumerGroup = ConsumerGroup,
+                PartitionId = PartitionId,
+                Offset = 0L,
+                SequenceNumber = 0L
+            };
+
             var ex = new RequestFailedException(404, BlobErrorCode.ContainerNotFound.ToString(), BlobErrorCode.ContainerNotFound.ToString(), null);
             var target = new BlobsCheckpointStore(new MockBlobContainerClient(blobClientUploadBlobException: ex),
                                                   new BasicRetryPolicy(new EventHubsRetryOptions()));
@@ -417,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         [Test]
         [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
-        public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenETagIsNull(Exception exception)
+        public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenVersionIsNull(Exception exception)
         {
             const int maximumRetries = 2;
 
@@ -427,7 +491,15 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
-            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, null);
+
+            var ownership = new EventProcessorPartitionOwnership
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                OwnerIdentifier = "id",
+                PartitionId = "pid"
+            };
 
             mockRetryPolicy
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
@@ -445,7 +517,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
         }
@@ -457,14 +529,22 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         [Test]
         [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
-        public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenETagIsNull(Exception exception)
+        public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenVersionIsNull(Exception exception)
         {
             var expectedServiceCalls = 1;
             var serviceCalls = 0;
 
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
-            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, null);
+
+            var ownership = new EventProcessorPartitionOwnership
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                OwnerIdentifier = "id",
+                PartitionId = "pid"
+            };
 
             mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
             {
@@ -478,7 +558,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
         }
@@ -490,7 +570,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         [Test]
         [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
-        public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenETagIsNotNull(Exception exception)
+        public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenVersionIsNotNull(Exception exception)
         {
             const int maximumRetries = 2;
 
@@ -500,7 +580,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
-            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, "eTag");
+
+            var ownership = new EventProcessorPartitionOwnership
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                OwnerIdentifier = "id",
+                PartitionId = "pid",
+                Version = "eTag"
+            };
 
             mockRetryPolicy
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
@@ -520,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
         }
@@ -532,14 +621,23 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         [Test]
         [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
-        public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenETagIsNotNull(Exception exception)
+        public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenVersionIsNotNull(Exception exception)
         {
             var expectedServiceCalls = 1;
             var serviceCalls = 0;
 
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
-            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, "eTag");
+
+            var ownership = new EventProcessorPartitionOwnership
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                OwnerIdentifier = "id",
+                PartitionId = "pid",
+                Version = "eTag"
+            };
 
             mockContainerClient.BlobInfo = Mock.Of<BlobInfo>();
 
@@ -555,7 +653,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should not have been applied.");
         }
@@ -568,11 +666,20 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         [TestCase(null)]
         [TestCase("eTag")]
-        public async Task ClaimOwnershipAsyncDelegatesTheCancellationToken(string eTag)
+        public async Task ClaimOwnershipAsyncDelegatesTheCancellationToken(string version)
         {
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
-            var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, eTag);
+
+            var ownership = new EventProcessorPartitionOwnership
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                OwnerIdentifier = "id",
+                PartitionId = "pid",
+                Version = version
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             var stateBeforeCancellation = default(bool?);
@@ -580,7 +687,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // UploadAsync will be called if eTag is null; SetMetadataAsync is used otherwise.
 
-            if (eTag == null)
+            if (version == null)
             {
                 mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
                 {
@@ -607,7 +714,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 };
             }
 
-            await checkpointStore.ClaimOwnershipAsync(new List<PartitionOwnership>() { ownership }, cancellationSource.Token);
+            await checkpointStore.ClaimOwnershipAsync(new List<EventProcessorPartitionOwnership>() { ownership }, cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
             Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
@@ -628,7 +735,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(Mock.Of<IEnumerable<PartitionOwnership>>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(Mock.Of<IEnumerable<EventProcessorPartitionOwnership>>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -768,7 +875,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockRetryPolicy = new Mock<EventHubsRetryPolicy>();
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, mockRetryPolicy.Object);
-            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                PartitionId = "pid",
+                Offset = 0,
+                SequenceNumber = 0
+            };
 
             mockRetryPolicy
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
@@ -805,7 +921,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
-            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                PartitionId = "pid",
+                Offset = 0,
+                SequenceNumber = 0
+            };
 
             mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
             {
@@ -834,7 +959,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
-            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                PartitionId = "pid",
+                Offset = 0,
+                SequenceNumber = 0
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             var stateBeforeCancellation = default(bool?);
@@ -867,7 +1001,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public void AlreadyCanceledTokenMakesUpdateCheckpointAsyncThrow()
         {
             var checkpointStore = new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), Mock.Of<EventHubsRetryPolicy>());
-            var checkpoint = new Checkpoint("ns", "eh", "cg", "pid", 0, 0);
+
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = "ns",
+                EventHubName = "eh",
+                ConsumerGroup = "cg",
+                PartitionId = "pid",
+                Offset = 0,
+                SequenceNumber = 0
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -1002,10 +1145,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             public override string ContinuationToken => throw new NotImplementedException();
 
-            public override Response GetRawResponse()
-            {
-                throw new NotImplementedException();
-            }
+            public override Response GetRawResponse() => throw new NotImplementedException();
 
             public MockPage(IEnumerable<T> items)
             {

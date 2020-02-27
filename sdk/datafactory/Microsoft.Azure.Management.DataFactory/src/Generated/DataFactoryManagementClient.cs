@@ -141,11 +141,6 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual ITriggerRunsOperations TriggerRuns { get; private set; }
 
         /// <summary>
-        /// Gets the IRerunTriggersOperations.
-        /// </summary>
-        public virtual IRerunTriggersOperations RerunTriggers { get; private set; }
-
-        /// <summary>
         /// Gets the IDataFlowsOperations.
         /// </summary>
         public virtual IDataFlowsOperations DataFlows { get; private set; }
@@ -409,7 +404,6 @@ namespace Microsoft.Azure.Management.DataFactory
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
             TriggerRuns = new TriggerRunsOperations(this);
-            RerunTriggers = new RerunTriggersOperations(this);
             DataFlows = new DataFlowsOperations(this);
             DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
@@ -461,8 +455,6 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Trigger>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataFlow>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataFlow>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<WebLinkedServiceTypeProperties>("authenticationType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetCompression>("type"));
@@ -471,6 +463,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetLocation>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetLocation>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreReadSettings>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreReadSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FormatReadSettings>("type"));
