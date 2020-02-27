@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using System.Linq;
 
     /// <summary>
-    /// Cosmos DB resource throughput object
+    /// Cosmos DB resource throughput object. Either throughput is required or
+    /// autopilotSettings is required, but not both.
     /// </summary>
     public partial class ThroughputSettingsResource
     {
@@ -30,14 +31,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the ThroughputSettingsResource class.
         /// </summary>
         /// <param name="throughput">Value of the Cosmos DB resource
-        /// throughput</param>
+        /// throughput. Either throughput is required or autopilotSettings is
+        /// required, but not both.</param>
+        /// <param name="autopilotSettings">Cosmos DB resource for Autopilot
+        /// settings. Either throughput is required or autopilotSettings is
+        /// required, but not both.</param>
         /// <param name="minimumThroughput">The minimum throughput of the
         /// resource</param>
         /// <param name="offerReplacePending">The throughput replace is
         /// pending</param>
-        public ThroughputSettingsResource(int throughput, string minimumThroughput = default(string), string offerReplacePending = default(string))
+        public ThroughputSettingsResource(int? throughput = default(int?), AutopilotSettingsResource autopilotSettings = default(AutopilotSettingsResource), string minimumThroughput = default(string), string offerReplacePending = default(string))
         {
             Throughput = throughput;
+            AutopilotSettings = autopilotSettings;
             MinimumThroughput = minimumThroughput;
             OfferReplacePending = offerReplacePending;
             CustomInit();
@@ -49,10 +55,20 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets value of the Cosmos DB resource throughput
+        /// Gets or sets value of the Cosmos DB resource throughput. Either
+        /// throughput is required or autopilotSettings is required, but not
+        /// both.
         /// </summary>
         [JsonProperty(PropertyName = "throughput")]
-        public int Throughput { get; set; }
+        public int? Throughput { get; set; }
+
+        /// <summary>
+        /// Gets or sets cosmos DB resource for Autopilot settings. Either
+        /// throughput is required or autopilotSettings is required, but not
+        /// both.
+        /// </summary>
+        [JsonProperty(PropertyName = "autopilotSettings")]
+        public AutopilotSettingsResource AutopilotSettings { get; set; }
 
         /// <summary>
         /// Gets the minimum throughput of the resource
@@ -74,7 +90,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (AutopilotSettings != null)
+            {
+                AutopilotSettings.Validate();
+            }
         }
     }
 }

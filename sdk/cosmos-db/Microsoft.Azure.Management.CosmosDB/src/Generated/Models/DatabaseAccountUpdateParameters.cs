@@ -68,7 +68,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="disableKeyBasedMetadataWriteAccess">Disable write
         /// operations on metadata resources (databases, containers,
         /// throughput) via account keys</param>
-        public DatabaseAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Location> locations = default(IList<Location>), string ipRangeFilter = default(string), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?))
+        /// <param name="keyVaultKeyUri">The URI of the key vault</param>
+        public DatabaseAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Location> locations = default(IList<Location>), string ipRangeFilter = default(string), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string))
         {
             Tags = tags;
             Location = location;
@@ -83,6 +84,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableCassandraConnector = enableCassandraConnector;
             ConnectorOffer = connectorOffer;
             DisableKeyBasedMetadataWriteAccess = disableKeyBasedMetadataWriteAccess;
+            KeyVaultKeyUri = keyVaultKeyUri;
             CustomInit();
         }
 
@@ -182,6 +184,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.disableKeyBasedMetadataWriteAccess")]
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URI of the key vault
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyVaultKeyUri")]
+        public string KeyVaultKeyUri { get; set; }
 
         /// <summary>
         /// Validate the object.

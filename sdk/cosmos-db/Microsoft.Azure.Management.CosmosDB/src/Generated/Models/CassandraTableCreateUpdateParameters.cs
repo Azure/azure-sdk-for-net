@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public CassandraTableCreateUpdateParameters(CassandraTableResource resource, IDictionary<string, string> options, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public CassandraTableCreateUpdateParameters(CassandraTableResource resource, CreateUpdateOptions options, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, location, tags)
         {
             Resource = resource;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// request. This corresponds to the headers sent with the request.
         /// </summary>
         [JsonProperty(PropertyName = "properties.options")]
-        public IDictionary<string, string> Options { get; set; }
+        public CreateUpdateOptions Options { get; set; }
 
         /// <summary>
         /// Validate the object.

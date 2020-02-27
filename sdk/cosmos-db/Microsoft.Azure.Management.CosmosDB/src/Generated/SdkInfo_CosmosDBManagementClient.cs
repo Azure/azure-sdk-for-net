@@ -19,26 +19,7 @@ namespace Microsoft.Azure.Management.CosmosDB
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "Collection", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "CollectionRegion", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "Database", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "DatabaseAccountRegion", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "DatabaseAccounts", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "GremlinResources", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "MongoDBResources", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "Operations", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeId", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeIdRegion", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "Percentile", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "PercentileSourceTarget", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "PercentileTarget", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "PrivateEndpointConnections", "2019-08-01-preview"),
-                new Tuple<string, string, string>("DocumentDB", "PrivateLinkResources", "2019-08-01-preview"),
-                new Tuple<string, string, string>("DocumentDB", "SqlResources", "2019-08-01"),
-                new Tuple<string, string, string>("DocumentDB", "TableResources", "2019-08-01"),
+
               }.AsEnumerable();
           }
       }
