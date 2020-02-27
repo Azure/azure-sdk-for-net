@@ -252,32 +252,26 @@ namespace Azure.Storage.Files.DataLake
                 }
 
                 // Partition the stream into individual blocks and stage them
-                IAsyncEnumerator<ChunkedStream> enumerator =
-                    PartitionedUploadExtensions.GetBlocksAsync(
-                        content, blockSize, async: false, _arrayPool, cancellationToken)
-                    .GetAsyncEnumerator(cancellationToken);
-
                 // We need to keep track of how much data we have appended to
                 // calculate offsets for the next appends, and the final
                 // position to flush
                 long appendedBytes = 0;
-#pragma warning disable AZC0107
-                while (enumerator.MoveNextAsync().EnsureCompleted())
-#pragma warning restore AZC0107
+                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                    content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
-                    // Dispose the block after the loop iterates and return its
-                    // memory to our ArrayPool
-                    using ChunkedStream block = enumerator.Current;
+                    // Dispose the block after the loop iterates and return its memory to our ArrayPool
+                    using (block)
+                    {
+                        // Append the next block
+                        _client.Append(
+                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            offset: appendedBytes,
+                            leaseId: conditions?.LeaseId,
+                            progressHandler: progressHandler,
+                            cancellationToken: cancellationToken);
 
-                    // Append the next block
-                    _client.Append(
-                        new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        offset: appendedBytes,
-                        leaseId: conditions?.LeaseId,
-                        progressHandler: progressHandler,
-                        cancellationToken: cancellationToken);
-
-                    appendedBytes += block.Length;
+                        appendedBytes += block.Length;
+                    }
                 }
 
                 // Commit the block list after everything has been staged to
