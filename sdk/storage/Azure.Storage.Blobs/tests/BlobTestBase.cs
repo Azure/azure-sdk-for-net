@@ -377,7 +377,7 @@ namespace Azure.Storage.Test.Shared
         public async Task<PageBlobClient> CreatePageBlobClientAsync(BlobContainerClient container, long size)
         {
             PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(GetNewBlobName()));
-            await blob.CreateAsync(size, 0).ConfigureAwait(false);
+            await blob.CreateIfNotExistsAsync(size, 0).ConfigureAwait(false);
             return blob;
         }
 
