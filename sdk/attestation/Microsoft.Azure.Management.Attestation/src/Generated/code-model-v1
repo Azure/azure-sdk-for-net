@@ -1,0 +1,4453 @@
+{
+ "$id": "1",
+ "modelTypes": [
+  {
+   "$id": "2",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "3",
+     "isReadOnly": false,
+     "realPath": [
+      "provider"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "4",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "5",
+      "fixed": false,
+      "raw": "Resource provider of the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "6",
+      "fixed": false,
+      "raw": "provider"
+     },
+     "serializedName": "provider",
+     "modelType": {
+      "$id": "7",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "8",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "9",
+     "isReadOnly": false,
+     "realPath": [
+      "resource"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "10",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "11",
+      "fixed": false,
+      "raw": "Resource for the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "12",
+      "fixed": false,
+      "raw": "resource"
+     },
+     "serializedName": "resource",
+     "modelType": {
+      "$id": "13",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "14",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "15",
+     "isReadOnly": false,
+     "realPath": [
+      "operation"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "16",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "17",
+      "fixed": false,
+      "raw": "Short description of the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "18",
+      "fixed": false,
+      "raw": "operation"
+     },
+     "serializedName": "operation",
+     "modelType": {
+      "$id": "19",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "20",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "21",
+     "isReadOnly": false,
+     "realPath": [
+      "description"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "22",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "23",
+      "fixed": false,
+      "raw": "Description of the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "24",
+      "fixed": false,
+      "raw": "description"
+     },
+     "serializedName": "description",
+     "modelType": {
+      "$id": "25",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "26",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "OperationsDisplayDefinition",
+   "documentation": "Display object with properties of the operation.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "27",
+    "fixed": false,
+    "raw": "OperationsDisplayDefinition"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "OperationsDisplayDefinition",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/OperationsDisplayDefinition"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "28",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "29",
+     "isReadOnly": false,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "30",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "31",
+      "fixed": false,
+      "raw": "Name of the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "32",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "33",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "34",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "35",
+     "isReadOnly": false,
+     "realPath": [
+      "display"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "36",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "37",
+      "fixed": false,
+      "raw": "Display object with properties of the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "38",
+      "fixed": false,
+      "raw": "display"
+     },
+     "serializedName": "display",
+     "modelType": {
+      "$ref": "2"
+     }
+    }
+   ],
+   "serializedName": "OperationsDefinition",
+   "documentation": "Definition object with the name and properties of an operation.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "39",
+    "fixed": false,
+    "raw": "OperationsDefinition"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "OperationsDefinition",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/OperationsDefinition"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "40",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "41",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "42",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "43",
+      "fixed": false,
+      "raw": "List of supported operations."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "44",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "45",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "28"
+      },
+      "name": {
+       "$id": "46",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "OperationList",
+   "documentation": "List of supported operations.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "47",
+    "fixed": false,
+    "raw": "OperationList"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "OperationList",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/OperationList"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "48",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "49",
+     "isReadOnly": false,
+     "realPath": [
+      "trustModel"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "50",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "51",
+      "fixed": false,
+      "raw": "Trust model for the attestation service instance."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "52",
+      "fixed": false,
+      "raw": "trustModel"
+     },
+     "serializedName": "trustModel",
+     "modelType": {
+      "$id": "53",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "54",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "55",
+     "isReadOnly": false,
+     "realPath": [
+      "status"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "56",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "57",
+      "fixed": false,
+      "raw": "Status of attestation service."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "2018-09-01-preview"
+       ],
+       "filename": [
+        "mem:///143?oai3.shaken.json"
+       ],
+       "name": "AttestationServiceStatus",
+       "originalLocations": [
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/StatusResult-status"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "AttestationServiceStatus",
+       "modelAsString": true,
+       "oldModelAsString": true
+      }
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "58",
+      "fixed": false,
+      "raw": "status"
+     },
+     "serializedName": "status",
+     "modelType": {
+      "$id": "59",
+      "$type": "EnumType",
+      "values": [
+       {
+        "$id": "60",
+        "name": "Ready",
+        "serializedName": "Ready"
+       },
+       {
+        "$id": "61",
+        "name": "NotReady",
+        "serializedName": "NotReady"
+       },
+       {
+        "$id": "62",
+        "name": "Error",
+        "serializedName": "Error"
+       }
+      ],
+      "oldModelAsString": true,
+      "modelAsString": true,
+      "underlyingType": {
+       "$id": "63",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "64",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "65",
+       "fixed": false,
+       "raw": "AttestationServiceStatus"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "66",
+     "isReadOnly": false,
+     "realPath": [
+      "attestUri"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "67",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "68",
+      "fixed": false,
+      "raw": "Gets the uri of attestation service"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "69",
+      "fixed": false,
+      "raw": "attestUri"
+     },
+     "serializedName": "attestUri",
+     "modelType": {
+      "$id": "70",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "71",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "StatusResult",
+   "documentation": "Status of attestation service.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "72",
+    "fixed": false,
+    "raw": "StatusResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "StatusResult",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/StatusResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "73",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "74",
+     "isReadOnly": false,
+     "realPath": [
+      "properties"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "75",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "76",
+      "fixed": false,
+      "raw": "Describes Attestation service status."
+     },
+     "extensions": {
+      "x-ms-client-flatten": true
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "77",
+      "fixed": false,
+      "raw": "properties"
+     },
+     "serializedName": "properties",
+     "modelType": {
+      "$ref": "48"
+     }
+    }
+   ],
+   "serializedName": "AttestationProvider",
+   "baseModelType": {
+    "$id": "78",
+    "$type": "CompositeType",
+    "properties": [
+     {
+      "$id": "79",
+      "isReadOnly": false,
+      "realPath": [
+       "tags"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "80",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "81",
+       "fixed": false,
+       "raw": "Resource tags."
+      },
+      "isRequired": false,
+      "isConstant": false,
+      "name": {
+       "$id": "82",
+       "fixed": false,
+       "raw": "tags"
+      },
+      "serializedName": "tags",
+      "modelType": {
+       "$id": "83",
+       "$type": "DictionaryType",
+       "valueType": {
+        "$id": "84",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "85",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       },
+       "supportsAdditionalProperties": false,
+       "name": {
+        "$id": "86",
+        "fixed": false
+       },
+       "deprecated": false
+      }
+     },
+     {
+      "$id": "87",
+      "isReadOnly": false,
+      "realPath": [
+       "location"
+      ],
+      "collectionFormat": "none",
+      "defaultValue": {
+       "$id": "88",
+       "fixed": false
+      },
+      "deprecated": false,
+      "documentation": {
+       "$id": "89",
+       "fixed": false,
+       "raw": "The geo-location where the resource lives"
+      },
+      "isRequired": true,
+      "isConstant": false,
+      "name": {
+       "$id": "90",
+       "fixed": false,
+       "raw": "location"
+      },
+      "serializedName": "location",
+      "modelType": {
+       "$id": "91",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "92",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      }
+     }
+    ],
+    "serializedName": "TrackedResource",
+    "baseModelType": {
+     "$id": "93",
+     "$type": "CompositeType",
+     "properties": [
+      {
+       "$id": "94",
+       "isReadOnly": true,
+       "realPath": [
+        "id"
+       ],
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "95",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "96",
+        "fixed": false,
+        "raw": "Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+       },
+       "isRequired": false,
+       "isConstant": false,
+       "name": {
+        "$id": "97",
+        "fixed": false,
+        "raw": "id"
+       },
+       "serializedName": "id",
+       "modelType": {
+        "$id": "98",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "99",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "100",
+       "isReadOnly": true,
+       "realPath": [
+        "name"
+       ],
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "101",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "102",
+        "fixed": false,
+        "raw": "The name of the resource"
+       },
+       "isRequired": false,
+       "isConstant": false,
+       "name": {
+        "$id": "103",
+        "fixed": false,
+        "raw": "name"
+       },
+       "serializedName": "name",
+       "modelType": {
+        "$id": "104",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "105",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "106",
+       "isReadOnly": true,
+       "realPath": [
+        "type"
+       ],
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "107",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "108",
+        "fixed": false,
+        "raw": "The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts."
+       },
+       "isRequired": false,
+       "isConstant": false,
+       "name": {
+        "$id": "109",
+        "fixed": false,
+        "raw": "type"
+       },
+       "serializedName": "type",
+       "modelType": {
+        "$id": "110",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "111",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "serializedName": "Resource",
+     "containsConstantProperties": false,
+     "name": {
+      "$id": "112",
+      "fixed": false,
+      "raw": "Resource"
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "1.0"
+       ],
+       "filename": [
+        "mem:///144?oai3.shaken.json"
+       ],
+       "name": "Resource",
+       "originalLocations": [
+        "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/schemas/Resource"
+       ]
+      },
+      "x-ms-azure-resource": true
+     },
+     "deprecated": false
+    },
+    "documentation": "The resource model definition for a ARM tracked top level resource",
+    "containsConstantProperties": false,
+    "name": {
+     "$id": "113",
+     "fixed": false,
+     "raw": "TrackedResource"
+    },
+    "extensions": {
+     "x-ms-metadata": {
+      "apiVersions": [
+       "1.0"
+      ],
+      "filename": [
+       "mem:///144?oai3.shaken.json"
+      ],
+      "name": "TrackedResource",
+      "originalLocations": [
+       "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/schemas/TrackedResource"
+      ]
+     }
+    },
+    "deprecated": false
+   },
+   "documentation": "Attestation service response message.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "114",
+    "fixed": false,
+    "raw": "AttestationProvider"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "AttestationProvider",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/AttestationProvider"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "115",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "116",
+     "isReadOnly": false,
+     "realPath": [
+      "code"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "117",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "118",
+      "fixed": false,
+      "raw": "An identifier for the error. Codes are invariant and are intended to be consumed programmatically."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "119",
+      "fixed": false,
+      "raw": "code"
+     },
+     "serializedName": "code",
+     "modelType": {
+      "$id": "120",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "121",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "122",
+     "isReadOnly": false,
+     "realPath": [
+      "message"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "123",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "124",
+      "fixed": false,
+      "raw": "A message describing the error, intended to be suitable for displaying in a user interface."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "125",
+      "fixed": false,
+      "raw": "message"
+     },
+     "serializedName": "message",
+     "modelType": {
+      "$id": "126",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "127",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "CloudErrorBody",
+   "documentation": "An error response from Attestation.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "128",
+    "fixed": false,
+    "raw": "CloudErrorBody"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "CloudErrorBody",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/CloudErrorBody"
+     ]
+    },
+    "x-ms-external": true
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "129",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "130",
+     "isReadOnly": false,
+     "realPath": [
+      "error"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "131",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "132",
+      "fixed": false
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "133",
+      "fixed": false,
+      "raw": "error"
+     },
+     "serializedName": "error",
+     "modelType": {
+      "$ref": "115"
+     }
+    }
+   ],
+   "serializedName": "CloudError",
+   "documentation": "An error response from Attestation.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "134",
+    "fixed": false,
+    "raw": "CloudError"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "CloudError",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/CloudError"
+     ]
+    },
+    "x-ms-external": true
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "135",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "136",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "137",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "138",
+      "fixed": false,
+      "raw": "Attestation Provider array."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "139",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "140",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "73"
+      },
+      "name": {
+       "$id": "141",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "AttestationProviderListResult",
+   "documentation": "Attestation Providers List.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "142",
+    "fixed": false,
+    "raw": "AttestationProviderListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "AttestationProviderListResult",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/AttestationProviderListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "143",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "144",
+     "isReadOnly": false,
+     "realPath": [
+      "tags"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "145",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "146",
+      "fixed": false,
+      "raw": "The tags that will be assigned to the attestation service instance."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "147",
+      "fixed": false,
+      "raw": "tags"
+     },
+     "serializedName": "tags",
+     "modelType": {
+      "$id": "148",
+      "$type": "DictionaryType",
+      "valueType": {
+       "$id": "149",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "150",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "supportsAdditionalProperties": false,
+      "name": {
+       "$id": "151",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "AttestationServicePatchParams",
+   "documentation": "Parameters for patching an attestation service instance",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "152",
+    "fixed": false,
+    "raw": "AttestationServicePatchParams"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "AttestationServicePatchParams",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/AttestationServicePatchParams"
+     ]
+    },
+    "x-ms-azure-resource": true
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "153",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "154",
+     "isReadOnly": false,
+     "realPath": [
+      "alg"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "155",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "156",
+      "fixed": false,
+      "raw": "The \"alg\" (algorithm) parameter identifies the algorithm intended for\nuse with the key.  The values used should either be registered in the\nIANA \"JSON Web Signature and Encryption Algorithms\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "157",
+      "fixed": false,
+      "raw": "alg"
+     },
+     "serializedName": "alg",
+     "modelType": {
+      "$id": "158",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "159",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "160",
+     "isReadOnly": false,
+     "realPath": [
+      "crv"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "161",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "162",
+      "fixed": false,
+      "raw": "The \"crv\" (curve) parameter identifies the curve type"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "163",
+      "fixed": false,
+      "raw": "crv"
+     },
+     "serializedName": "crv",
+     "modelType": {
+      "$id": "164",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "165",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "166",
+     "isReadOnly": false,
+     "realPath": [
+      "d"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "167",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "168",
+      "fixed": false,
+      "raw": "RSA private exponent or ECC private key"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "169",
+      "fixed": false,
+      "raw": "d"
+     },
+     "serializedName": "d",
+     "modelType": {
+      "$id": "170",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "171",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "172",
+     "isReadOnly": false,
+     "realPath": [
+      "dp"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "173",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "174",
+      "fixed": false,
+      "raw": "RSA Private Key Parameter"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "175",
+      "fixed": false,
+      "raw": "dp"
+     },
+     "serializedName": "dp",
+     "modelType": {
+      "$id": "176",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "177",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "178",
+     "isReadOnly": false,
+     "realPath": [
+      "dq"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "179",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "180",
+      "fixed": false,
+      "raw": "RSA Private Key Parameter"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "181",
+      "fixed": false,
+      "raw": "dq"
+     },
+     "serializedName": "dq",
+     "modelType": {
+      "$id": "182",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "183",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "184",
+     "isReadOnly": false,
+     "realPath": [
+      "e"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "185",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "186",
+      "fixed": false,
+      "raw": "RSA public exponent, in Base64"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "187",
+      "fixed": false,
+      "raw": "e"
+     },
+     "serializedName": "e",
+     "modelType": {
+      "$id": "188",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "189",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "190",
+     "isReadOnly": false,
+     "realPath": [
+      "k"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "191",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "192",
+      "fixed": false,
+      "raw": "Symmetric key"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "193",
+      "fixed": false,
+      "raw": "k"
+     },
+     "serializedName": "k",
+     "modelType": {
+      "$id": "194",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "195",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "196",
+     "isReadOnly": false,
+     "realPath": [
+      "kid"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "197",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "198",
+      "fixed": false,
+      "raw": "The \"kid\" (key ID) parameter is used to match a specific key.  This\nis used, for instance, to choose among a set of keys within a JWK Set\nduring key rollover.  The structure of the \"kid\" value is\nunspecified.  When \"kid\" values are used within a JWK Set, different\nkeys within the JWK Set SHOULD use distinct \"kid\" values.  (One\nexample in which different keys might use the same \"kid\" value is if\nthey have different \"kty\" (key type) values but are considered to be\nequivalent alternatives by the application using them.)  The \"kid\"\nvalue is a case-sensitive string."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "199",
+      "fixed": false,
+      "raw": "kid"
+     },
+     "serializedName": "kid",
+     "modelType": {
+      "$id": "200",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "201",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "202",
+     "isReadOnly": false,
+     "realPath": [
+      "kty"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "203",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "204",
+      "fixed": false,
+      "raw": "The \"kty\" (key type) parameter identifies the cryptographic algorithm\nfamily used with the key, such as \"RSA\" or \"EC\". \"kty\" values should\neither be registered in the IANA \"JSON Web Key Types\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.  The \"kty\" value is a case-sensitive string."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "205",
+      "fixed": false,
+      "raw": "kty"
+     },
+     "serializedName": "kty",
+     "modelType": {
+      "$id": "206",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "207",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "208",
+     "isReadOnly": false,
+     "realPath": [
+      "n"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "209",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "210",
+      "fixed": false,
+      "raw": "RSA modulus, in Base64"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "211",
+      "fixed": false,
+      "raw": "n"
+     },
+     "serializedName": "n",
+     "modelType": {
+      "$id": "212",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "213",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "214",
+     "isReadOnly": false,
+     "realPath": [
+      "p"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "215",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "216",
+      "fixed": false,
+      "raw": "RSA secret prime"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "217",
+      "fixed": false,
+      "raw": "p"
+     },
+     "serializedName": "p",
+     "modelType": {
+      "$id": "218",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "219",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "220",
+     "isReadOnly": false,
+     "realPath": [
+      "q"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "221",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "222",
+      "fixed": false,
+      "raw": "RSA secret prime, with p < q"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "223",
+      "fixed": false,
+      "raw": "q"
+     },
+     "serializedName": "q",
+     "modelType": {
+      "$id": "224",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "225",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "226",
+     "isReadOnly": false,
+     "realPath": [
+      "qi"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "227",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "228",
+      "fixed": false,
+      "raw": "RSA Private Key Parameter"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "229",
+      "fixed": false,
+      "raw": "qi"
+     },
+     "serializedName": "qi",
+     "modelType": {
+      "$id": "230",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "231",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "232",
+     "isReadOnly": false,
+     "realPath": [
+      "use"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "233",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "234",
+      "fixed": false,
+      "raw": "Use (\"public key use\") identifies the intended use of\nthe public key. The \"use\" parameter is employed to indicate whether\na public key is used for encrypting data or verifying the signature\non data. Values are commonly \"sig\" (signature) or \"enc\" (encryption)."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "235",
+      "fixed": false,
+      "raw": "use"
+     },
+     "serializedName": "use",
+     "modelType": {
+      "$id": "236",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "237",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "238",
+     "isReadOnly": false,
+     "realPath": [
+      "x"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "239",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "240",
+      "fixed": false,
+      "raw": "X coordinate for the Elliptic Curve point"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "241",
+      "fixed": false,
+      "raw": "x"
+     },
+     "serializedName": "x",
+     "modelType": {
+      "$id": "242",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "243",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "244",
+     "isReadOnly": false,
+     "realPath": [
+      "x5c"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "245",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "246",
+      "fixed": false,
+      "raw": "The \"x5c\" (X.509 certificate chain) parameter contains a chain of one\nor more PKIX certificates [RFC5280].  The certificate chain is\nrepresented as a JSON array of certificate value strings.  Each\nstring in the array is a base64-encoded (Section 4 of [RFC4648] --\nnot base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.\nThe PKIX certificate containing the key value MUST be the first\ncertificate."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "247",
+      "fixed": false,
+      "raw": "x5c"
+     },
+     "serializedName": "x5c",
+     "modelType": {
+      "$id": "248",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "249",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "250",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "251",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "252",
+     "isReadOnly": false,
+     "realPath": [
+      "y"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "253",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "254",
+      "fixed": false,
+      "raw": "Y coordinate for the Elliptic Curve point"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "255",
+      "fixed": false,
+      "raw": "y"
+     },
+     "serializedName": "y",
+     "modelType": {
+      "$id": "256",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "257",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "JSONWebKey",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "258",
+    "fixed": false,
+    "raw": "JSONWebKey"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///145?oai3.shaken.json"
+     ],
+     "name": "JSONWebKey",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/rfcs/rfc7517.json#/components/schemas/JSONWebKey"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "259",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "260",
+     "isReadOnly": false,
+     "realPath": [
+      "keys"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "261",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "262",
+      "fixed": false,
+      "raw": "The value of the \"keys\" parameter is an array of JWK values.  By\ndefault, the order of the JWK values within the array does not imply\nan order of preference among them, although applications of JWK Sets\ncan choose to assign a meaning to the order for their purposes, if\ndesired."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "263",
+      "fixed": false,
+      "raw": "keys"
+     },
+     "serializedName": "keys",
+     "modelType": {
+      "$id": "264",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "153"
+      },
+      "name": {
+       "$id": "265",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "JSONWebKeySet",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "266",
+    "fixed": false,
+    "raw": "JSONWebKeySet"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///145?oai3.shaken.json"
+     ],
+     "name": "JSONWebKeySet",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/rfcs/rfc7517.json#/components/schemas/JSONWebKeySet"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "267",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "268",
+     "isReadOnly": false,
+     "realPath": [
+      "attestationPolicy"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "269",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "270",
+      "fixed": false,
+      "raw": "Name of attestation policy."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "271",
+      "fixed": false,
+      "raw": "attestationPolicy"
+     },
+     "serializedName": "attestationPolicy",
+     "modelType": {
+      "$id": "272",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "273",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "274",
+     "isReadOnly": false,
+     "realPath": [
+      "policySigningCertificates"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "275",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "276",
+      "fixed": false,
+      "raw": "JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "277",
+      "fixed": false,
+      "raw": "policySigningCertificates"
+     },
+     "serializedName": "policySigningCertificates",
+     "modelType": {
+      "$ref": "259"
+     }
+    }
+   ],
+   "serializedName": "AttestationServiceCreationSpecificParams",
+   "documentation": "Client supplied parameters used to create a new attestation service instance.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "278",
+    "fixed": false,
+    "raw": "AttestationServiceCreationSpecificParams"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "AttestationServiceCreationSpecificParams",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/AttestationServiceCreationSpecificParams"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "279",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "280",
+     "isReadOnly": false,
+     "realPath": [
+      "location"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "281",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "282",
+      "fixed": false,
+      "raw": "The supported Azure location where the attestation service instance should be created."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "283",
+      "fixed": false,
+      "raw": "location"
+     },
+     "serializedName": "location",
+     "modelType": {
+      "$id": "284",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "285",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "286",
+     "isReadOnly": false,
+     "realPath": [
+      "tags"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "287",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "288",
+      "fixed": false,
+      "raw": "The tags that will be assigned to the attestation service instance."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "289",
+      "fixed": false,
+      "raw": "tags"
+     },
+     "serializedName": "tags",
+     "modelType": {
+      "$id": "290",
+      "$type": "DictionaryType",
+      "valueType": {
+       "$id": "291",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "292",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "supportsAdditionalProperties": false,
+      "name": {
+       "$id": "293",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "294",
+     "isReadOnly": false,
+     "realPath": [
+      "properties"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "295",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "296",
+      "fixed": false,
+      "raw": "Properties of the attestation service instance"
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "297",
+      "fixed": false,
+      "raw": "properties"
+     },
+     "serializedName": "properties",
+     "modelType": {
+      "$ref": "267"
+     }
+    }
+   ],
+   "serializedName": "AttestationServiceCreationParams",
+   "documentation": "Parameters for creating an attestation service instance",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "298",
+    "fixed": false,
+    "raw": "AttestationServiceCreationParams"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "AttestationServiceCreationParams",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/schemas/AttestationServiceCreationParams"
+     ]
+    },
+    "x-ms-azure-resource": true
+   },
+   "deprecated": false
+  },
+  {
+   "$ref": "93"
+  },
+  {
+   "$id": "299",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "300",
+     "isReadOnly": true,
+     "realPath": [
+      "etag"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "301",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "302",
+      "fixed": false,
+      "raw": "Resource Etag."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "303",
+      "fixed": false,
+      "raw": "etag"
+     },
+     "serializedName": "etag",
+     "modelType": {
+      "$id": "304",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "305",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "AzureEntityResource",
+   "baseModelType": {
+    "$ref": "93"
+   },
+   "documentation": "The resource model definition for a Azure Resource Manager resource with an etag.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "306",
+    "fixed": false,
+    "raw": "AzureEntityResource"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///144?oai3.shaken.json"
+     ],
+     "name": "AzureEntityResource",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/schemas/AzureEntityResource"
+     ]
+    },
+    "x-ms-client-name": "AzureEntityResource"
+   },
+   "deprecated": false
+  },
+  {
+   "$ref": "78"
+  },
+  {
+   "$id": "307",
+   "$type": "CompositeType",
+   "serializedName": "ProxyResource",
+   "baseModelType": {
+    "$ref": "93"
+   },
+   "documentation": "The resource model definition for a ARM proxy resource. It will have everything other than required location and tags",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "308",
+    "fixed": false,
+    "raw": "ProxyResource"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///144?oai3.shaken.json"
+     ],
+     "name": "ProxyResource",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/schemas/ProxyResource"
+     ]
+    }
+   },
+   "deprecated": false
+  }
+ ],
+ "errorTypes": [
+  {
+   "$ref": "129"
+  }
+ ],
+ "enumTypes": [
+  {
+   "$ref": "59"
+  }
+ ],
+ "name": "AttestationManagementClient",
+ "namespace": "Microsoft.Azure.Management.Attestation",
+ "modelsName": "Models",
+ "apiVersion": "2018-09-01-preview",
+ "baseUrl": "https://management.azure.com",
+ "documentation": "Various APIs for managing resources in attestation service. This primarily encompasses per-tenant instance management.",
+ "properties": [
+  {
+   "$id": "309",
+   "isReadOnly": false,
+   "realPath": [
+    "api-version"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "310",
+    "fixed": false,
+    "raw": "2018-09-01-preview"
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "311",
+    "fixed": false,
+    "raw": "Client API version."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "ApiVersionParameter",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/ApiVersionParameter"
+     ]
+    }
+   },
+   "isRequired": true,
+   "isConstant": true,
+   "name": {
+    "$id": "312",
+    "fixed": false,
+    "raw": "api-version"
+   },
+   "serializedName": "api-version",
+   "modelType": {
+    "$id": "313",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "314",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "315",
+   "isReadOnly": false,
+   "realPath": [
+    "providerName"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "316",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "317",
+    "fixed": false,
+    "raw": "Name of the attestation service instance"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "paths·16vyjnz·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·parameters·2",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·16vyjnz·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·parameters·2"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "318",
+    "fixed": false,
+    "raw": "providerName"
+   },
+   "serializedName": "providerName",
+   "modelType": {
+    "$id": "319",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "320",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "321",
+   "isReadOnly": false,
+   "realPath": [
+    "providerName"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "322",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "323",
+    "fixed": false,
+    "raw": "Name of the attestation service"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "paths·1az1mc·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·parameters·2",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·1az1mc·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·parameters·2"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "324",
+    "fixed": false,
+    "raw": "ProviderName1"
+   },
+   "serializedName": "providerName",
+   "modelType": {
+    "$id": "325",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "326",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "327",
+   "isReadOnly": false,
+   "realPath": [
+    "providerName"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "328",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "329",
+    "fixed": false,
+    "raw": "Name of the attestation service"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "paths·2xyvjg·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·parameters·2",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·2xyvjg·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·parameters·2"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "330",
+    "fixed": false,
+    "raw": "ProviderName2"
+   },
+   "serializedName": "providerName",
+   "modelType": {
+    "$id": "331",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "332",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "333",
+   "isReadOnly": false,
+   "realPath": [
+    "providerName"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "334",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "335",
+    "fixed": false,
+    "raw": "Name of the attestation service"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2018-09-01-preview"
+     ],
+     "filename": [
+      "mem:///143?oai3.shaken.json"
+     ],
+     "name": "paths·b831p8·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·parameters·2",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·b831p8·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·parameters·2"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "336",
+    "fixed": false,
+    "raw": "ProviderName3"
+   },
+   "serializedName": "providerName",
+   "modelType": {
+    "$id": "337",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "338",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "339",
+   "isReadOnly": false,
+   "realPath": [
+    "subscriptionId"
+   ],
+   "collectionFormat": "none",
+   "constraints": {
+    "MinLength": "1"
+   },
+   "defaultValue": {
+    "$id": "340",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "341",
+    "fixed": false,
+    "raw": "The ID of the target subscription."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///144?oai3.shaken.json"
+     ],
+     "name": "SubscriptionIdParameter",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+     ]
+    }
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "342",
+    "fixed": false,
+    "raw": "subscriptionId"
+   },
+   "serializedName": "subscriptionId",
+   "modelType": {
+    "$id": "343",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "344",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "345",
+   "isReadOnly": false,
+   "realPath": [
+    "resourceGroupName"
+   ],
+   "collectionFormat": "none",
+   "constraints": {
+    "MaxLength": "90",
+    "MinLength": "1",
+    "Pattern": "^[-\\w\\._\\(\\)]+$"
+   },
+   "defaultValue": {
+    "$id": "346",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "347",
+    "fixed": false,
+    "raw": "The name of the resource group. The name is case insensitive."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "1.0"
+     ],
+     "filename": [
+      "mem:///144?oai3.shaken.json"
+     ],
+     "name": "ResourceGroupNameParameter",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/ResourceGroupNameParameter"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "348",
+    "fixed": false,
+    "raw": "resourceGroupName"
+   },
+   "serializedName": "resourceGroupName",
+   "modelType": {
+    "$id": "349",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "350",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  }
+ ],
+ "operations": [
+  {
+   "$id": "351",
+   "methods": [
+    {
+     "$id": "352",
+     "parameters": [
+      {
+       "$id": "353",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "354",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "355",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "356",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "357",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "358",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "359",
+      "fixed": false,
+      "raw": "List"
+     },
+     "group": {
+      "$id": "360",
+      "fixed": false,
+      "raw": "Operations"
+     },
+     "serializedName": "Operations_List",
+     "url": "/providers/Microsoft.Attestation/operations",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "361",
+       "body": {
+        "$ref": "40"
+       },
+       "extensions": {
+        "$id": "362",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·16lzt9r·providers-microsoft-attestation-operations·get·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·16lzt9r·providers-microsoft-attestation-operations·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "363",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "364",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·1s51yjc·providers-microsoft-attestation-operations·get·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·1s51yjc·providers-microsoft-attestation-operations·get·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "365",
+      "body": {
+       "$ref": "40"
+      },
+      "isNullable": true
+     },
+     "description": "Lists all of the available Azure attestation operations.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ]
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "366",
+    "fixed": false,
+    "raw": "Operations"
+   },
+   "typeName": {
+    "$id": "367",
+    "fixed": false
+   },
+   "nameForProperty": "Operations"
+  },
+  {
+   "$id": "368",
+   "methods": [
+    {
+     "$id": "369",
+     "parameters": [
+      {
+       "$id": "370",
+       "clientProperty": {
+        "$ref": "339"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MinLength": "1"
+       },
+       "defaultValue": {
+        "$id": "371",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "372",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "373",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "374",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "375",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "376",
+       "clientProperty": {
+        "$ref": "345"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MaxLength": "90",
+        "MinLength": "1",
+        "Pattern": "^[-\\w\\._\\(\\)]+$"
+       },
+       "defaultValue": {
+        "$id": "377",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "378",
+        "fixed": false,
+        "raw": "The name of the resource group. The name is case insensitive."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "ResourceGroupNameParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/ResourceGroupNameParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "379",
+        "fixed": false,
+        "raw": "resourceGroupName"
+       },
+       "serializedName": "resourceGroupName",
+       "modelType": {
+        "$id": "380",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "381",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "382",
+       "clientProperty": {
+        "$ref": "315"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "383",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "384",
+        "fixed": false,
+        "raw": "Name of the attestation service instance"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·16vyjnz·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·parameters·2",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·16vyjnz·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·parameters·2"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "385",
+        "fixed": false,
+        "raw": "providerName"
+       },
+       "serializedName": "providerName",
+       "modelType": {
+        "$id": "386",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "387",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "388",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "389",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "390",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "391",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "392",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "393",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "394",
+      "fixed": false,
+      "raw": "Get"
+     },
+     "group": {
+      "$id": "395",
+      "fixed": false,
+      "raw": "AttestationProviders"
+     },
+     "serializedName": "AttestationProviders_Get",
+     "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "396",
+       "body": {
+        "$ref": "73"
+       },
+       "extensions": {
+        "$id": "397",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·1gx4voi·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·1gx4voi·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "398",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "399",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·tm897r·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·tm897r·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·get·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "400",
+      "body": {
+       "$ref": "73"
+      },
+      "isNullable": true
+     },
+     "description": "Get the status of Attestation Provider.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ]
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "401",
+     "parameters": [
+      {
+       "$id": "402",
+       "clientProperty": {
+        "$ref": "339"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MinLength": "1"
+       },
+       "defaultValue": {
+        "$id": "403",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "404",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "405",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "406",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "407",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "408",
+       "clientProperty": {
+        "$ref": "345"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MaxLength": "90",
+        "MinLength": "1",
+        "Pattern": "^[-\\w\\._\\(\\)]+$"
+       },
+       "defaultValue": {
+        "$id": "409",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "410",
+        "fixed": false,
+        "raw": "The name of the resource group. The name is case insensitive."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "ResourceGroupNameParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/ResourceGroupNameParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "411",
+        "fixed": false,
+        "raw": "resourceGroupName"
+       },
+       "serializedName": "resourceGroupName",
+       "modelType": {
+        "$id": "412",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "413",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "414",
+       "clientProperty": {
+        "$ref": "315"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "415",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "416",
+        "fixed": false,
+        "raw": "Name of the attestation service"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·1az1mc·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·parameters·2",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·1az1mc·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·parameters·2"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "417",
+        "fixed": false,
+        "raw": "providerName"
+       },
+       "serializedName": "providerName",
+       "modelType": {
+        "$id": "418",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "419",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "420",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "421",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "422",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "423",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "424",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "425",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "426",
+       "location": "body",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "427",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "428",
+        "fixed": false,
+        "raw": "Client supplied parameters."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·im2e51·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/requestBodies/paths·im2e51·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·requestbody"
+         ]
+        },
+        "x-ms-parameter-location": "method",
+        "x-ms-requestBody-name": "creationParams"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "429",
+        "fixed": false,
+        "raw": "creationParams"
+       },
+       "serializedName": "creationParams",
+       "modelType": {
+        "$ref": "279"
+       }
+      }
+     ],
+     "name": {
+      "$id": "430",
+      "fixed": false,
+      "raw": "Create"
+     },
+     "group": {
+      "$id": "431",
+      "fixed": false,
+      "raw": "AttestationProviders"
+     },
+     "serializedName": "AttestationProviders_Create",
+     "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}",
+     "isAbsoluteUrl": false,
+     "httpMethod": "put",
+     "responses": {
+      "OK": {
+       "$id": "432",
+       "body": {
+        "$ref": "73"
+       },
+       "extensions": {
+        "$id": "433",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·5bz2ae·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·5bz2ae·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      },
+      "Created": {
+       "$id": "434",
+       "body": {
+        "$ref": "73"
+       },
+       "extensions": {
+        "$id": "435",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·ypf45a·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·responses·201",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·ypf45a·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·responses·201"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "436",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "437",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·14ddtmz·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·14ddtmz·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·put·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "438",
+      "body": {
+       "$ref": "73"
+      },
+      "isNullable": true
+     },
+     "description": "Creates or updates the Attestation Provider.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-requestBody-index": "4"
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "439",
+     "parameters": [
+      {
+       "$id": "440",
+       "clientProperty": {
+        "$ref": "339"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MinLength": "1"
+       },
+       "defaultValue": {
+        "$id": "441",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "442",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "443",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "444",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "445",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "446",
+       "clientProperty": {
+        "$ref": "345"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MaxLength": "90",
+        "MinLength": "1",
+        "Pattern": "^[-\\w\\._\\(\\)]+$"
+       },
+       "defaultValue": {
+        "$id": "447",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "448",
+        "fixed": false,
+        "raw": "The name of the resource group. The name is case insensitive."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "ResourceGroupNameParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/ResourceGroupNameParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "449",
+        "fixed": false,
+        "raw": "resourceGroupName"
+       },
+       "serializedName": "resourceGroupName",
+       "modelType": {
+        "$id": "450",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "451",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "452",
+       "clientProperty": {
+        "$ref": "315"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "453",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "454",
+        "fixed": false,
+        "raw": "Name of the attestation service"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·2xyvjg·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·parameters·2",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·2xyvjg·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·parameters·2"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "455",
+        "fixed": false,
+        "raw": "providerName"
+       },
+       "serializedName": "providerName",
+       "modelType": {
+        "$id": "456",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "457",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "458",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "459",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "460",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "461",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "462",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "463",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "464",
+       "location": "body",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "465",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "466",
+        "fixed": false,
+        "raw": "Client supplied parameters."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·1do57h9·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·requestbody",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/requestBodies/paths·1do57h9·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·requestbody"
+         ]
+        },
+        "x-ms-parameter-location": "method",
+        "x-ms-requestBody-name": "updateParams"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "467",
+        "fixed": false,
+        "raw": "updateParams"
+       },
+       "serializedName": "updateParams",
+       "modelType": {
+        "$ref": "143"
+       }
+      }
+     ],
+     "name": {
+      "$id": "468",
+      "fixed": false,
+      "raw": "Update"
+     },
+     "group": {
+      "$id": "469",
+      "fixed": false,
+      "raw": "AttestationProviders"
+     },
+     "serializedName": "AttestationProviders_Update",
+     "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}",
+     "isAbsoluteUrl": false,
+     "httpMethod": "patch",
+     "responses": {
+      "OK": {
+       "$id": "470",
+       "body": {
+        "$ref": "73"
+       },
+       "extensions": {
+        "$id": "471",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·1bxt7ap·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·1bxt7ap·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "472",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "473",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·1drf9mq·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·1drf9mq·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·patch·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "474",
+      "body": {
+       "$ref": "73"
+      },
+      "isNullable": true
+     },
+     "description": "Updates the Attestation Provider.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-requestBody-index": "4"
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "475",
+     "parameters": [
+      {
+       "$id": "476",
+       "clientProperty": {
+        "$ref": "339"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MinLength": "1"
+       },
+       "defaultValue": {
+        "$id": "477",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "478",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "479",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "480",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "481",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "482",
+       "clientProperty": {
+        "$ref": "345"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MaxLength": "90",
+        "MinLength": "1",
+        "Pattern": "^[-\\w\\._\\(\\)]+$"
+       },
+       "defaultValue": {
+        "$id": "483",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "484",
+        "fixed": false,
+        "raw": "The name of the resource group. The name is case insensitive."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "ResourceGroupNameParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/ResourceGroupNameParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "485",
+        "fixed": false,
+        "raw": "resourceGroupName"
+       },
+       "serializedName": "resourceGroupName",
+       "modelType": {
+        "$id": "486",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "487",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "488",
+       "clientProperty": {
+        "$ref": "315"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "489",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "490",
+        "fixed": false,
+        "raw": "Name of the attestation service"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·b831p8·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·parameters·2",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/parameters/paths·b831p8·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·parameters·2"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "491",
+        "fixed": false,
+        "raw": "providerName"
+       },
+       "serializedName": "providerName",
+       "modelType": {
+        "$id": "492",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "493",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "494",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "495",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "496",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "497",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "498",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "499",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "500",
+      "fixed": false,
+      "raw": "Delete"
+     },
+     "group": {
+      "$id": "501",
+      "fixed": false,
+      "raw": "AttestationProviders"
+     },
+     "serializedName": "AttestationProviders_Delete",
+     "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}",
+     "isAbsoluteUrl": false,
+     "httpMethod": "delete",
+     "responses": {
+      "OK": {
+       "$id": "502",
+       "extensions": {
+        "$id": "503",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·16pbv9f·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·16pbv9f·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      },
+      "Accepted": {
+       "$id": "504",
+       "extensions": {
+        "$id": "505",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·3goxkq·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·202",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·3goxkq·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·202"
+         ]
+        }
+       },
+       "isNullable": true
+      },
+      "NoContent": {
+       "$id": "506",
+       "extensions": {
+        "$id": "507",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·1vhswgv·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·204",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·1vhswgv·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·204"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "508",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "509",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·98dpi8·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·98dpi8·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders-providername·delete·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "510",
+      "isNullable": true
+     },
+     "description": "Delete Attestation Service.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ]
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "511",
+     "parameters": [
+      {
+       "$id": "512",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "513",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "514",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "515",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "516",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "517",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "518",
+       "clientProperty": {
+        "$ref": "339"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MinLength": "1"
+       },
+       "defaultValue": {
+        "$id": "519",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "520",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "521",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "522",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "523",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "524",
+      "fixed": false,
+      "raw": "List"
+     },
+     "group": {
+      "$id": "525",
+      "fixed": false,
+      "raw": "AttestationProviders"
+     },
+     "serializedName": "AttestationProviders_List",
+     "url": "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "526",
+       "body": {
+        "$ref": "135"
+       },
+       "extensions": {
+        "$id": "527",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·xxnqvg·subscriptions-subscriptionid-providers-microsoft-attestation-attestationproviders·get·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·xxnqvg·subscriptions-subscriptionid-providers-microsoft-attestation-attestationproviders·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "528",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "529",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·74oexl·subscriptions-subscriptionid-providers-microsoft-attestation-attestationproviders·get·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·74oexl·subscriptions-subscriptionid-providers-microsoft-attestation-attestationproviders·get·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "530",
+      "body": {
+       "$ref": "135"
+      },
+      "isNullable": true
+     },
+     "description": "Returns a list of attestation providers in a subscription.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ]
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "531",
+     "parameters": [
+      {
+       "$id": "532",
+       "clientProperty": {
+        "$ref": "345"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MaxLength": "90",
+        "MinLength": "1",
+        "Pattern": "^[-\\w\\._\\(\\)]+$"
+       },
+       "defaultValue": {
+        "$id": "533",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "534",
+        "fixed": false,
+        "raw": "The name of the resource group. The name is case insensitive."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "ResourceGroupNameParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/ResourceGroupNameParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "535",
+        "fixed": false,
+        "raw": "resourceGroupName"
+       },
+       "serializedName": "resourceGroupName",
+       "modelType": {
+        "$id": "536",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "537",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "538",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "539",
+        "fixed": false,
+        "raw": "2018-09-01-preview"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "540",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "541",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "542",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "543",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "544",
+       "clientProperty": {
+        "$ref": "339"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "constraints": {
+        "MinLength": "1"
+       },
+       "defaultValue": {
+        "$id": "545",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "546",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///144?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/common-types/resource-management/v1/types.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "547",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "548",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "549",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "550",
+      "fixed": false,
+      "raw": "ListByResourceGroup"
+     },
+     "group": {
+      "$id": "551",
+      "fixed": false,
+      "raw": "AttestationProviders"
+     },
+     "serializedName": "AttestationProviders_ListByResourceGroup",
+     "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "552",
+       "body": {
+        "$ref": "135"
+       },
+       "extensions": {
+        "$id": "553",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2018-09-01-preview"
+         ],
+         "filename": [
+          "mem:///143?oai3.shaken.json"
+         ],
+         "name": "paths·1fdfwhs·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders·get·responses·200",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·1fdfwhs·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "554",
+      "body": {
+       "$ref": "129"
+      },
+      "extensions": {
+       "$id": "555",
+       "x-ms-metadata": {
+        "apiVersions": [
+         "2018-09-01-preview"
+        ],
+        "filename": [
+         "mem:///143?oai3.shaken.json"
+        ],
+        "name": "paths·13r0hpp·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders·get·responses·default",
+        "originalLocations": [
+         "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/attestation/resource-manager/Microsoft.Attestation/preview/2018-09-01-preview/attestation.json#/components/responses/paths·13r0hpp·subscriptions-subscriptionid-resourcegroups-resourcegroupname-providers-microsoft-attestation-attestationproviders·get·responses·default"
+        ]
+       }
+      },
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "556",
+      "body": {
+       "$ref": "135"
+      },
+      "isNullable": true
+     },
+     "description": "Returns attestation providers list in a resource group.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ]
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "557",
+    "fixed": false,
+    "raw": "AttestationProviders"
+   },
+   "typeName": {
+    "$id": "558",
+    "fixed": false
+   },
+   "nameForProperty": "AttestationProviders"
+  }
+ ]
+}
