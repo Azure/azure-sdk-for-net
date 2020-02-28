@@ -10,8 +10,7 @@ namespace Azure.AspNetCore.DataProtection.Keys.Tests
 {
     public class Snippets
     {
-
-        public void ConfigureServices()
+        public void ConfigurationHelloWorld()
         {
             #region Snippet:ConfigurationAddAzureKeyVault
             ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -21,6 +20,5 @@ namespace Azure.AspNetCore.DataProtection.Keys.Tests
             Console.WriteLine(configuration["MySecret"]);
             #endregion
         }
-
     }
 }
