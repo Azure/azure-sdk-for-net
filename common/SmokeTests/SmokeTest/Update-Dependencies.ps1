@@ -4,6 +4,8 @@ param(
 
 $PACKAGE_PATTERN = [Regex]::new('>\s(.*?)\s')
 
+dotnet restore
+
 $rawDependencies = dotnet list package --framework $Framework
 $packageNames = $PACKAGE_PATTERN.Matches($rawDependencies) |
     ForEach-Object { $_.Groups[1].Value }
