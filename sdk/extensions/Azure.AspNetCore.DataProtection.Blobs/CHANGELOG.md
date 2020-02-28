@@ -1,5 +1,5 @@
 # Release History
 
-## 1.0.0-preview.1
+## 1.0.0-preview.1 (2020)
 
-Initial version of the package.
+- Initial preview of the Azure.AspNetCore.DataProtection.Blobs library

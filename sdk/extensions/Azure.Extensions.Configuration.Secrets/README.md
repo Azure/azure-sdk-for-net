@@ -1,6 +1,6 @@
 # Azure Storage Blob Key Store for Microsoft.AspNetCore.DataProtection
 
-The `Azure.AspNetCore.DataProtection.Keys` package allows protecting keys at rest using Azure KeyVault Key Encryption/Wrapping feature.
+The `Azure.Extensions.Configuration.Secrets` package allows storing configuration values using Azure KeyVault Secrets.
 
 ## Getting started
 
@@ -9,7 +9,7 @@ The `Azure.AspNetCore.DataProtection.Keys` package allows protecting keys at res
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.AspNetCore.DataProtection.Keys -v 1.0.0-preview.1
+dotnet add package Azure.Extensions.Configuration.Secrets -v 1.0.0-preview.1
 ```
 
 ### Prerequisites
@@ -40,6 +40,10 @@ Console.WriteLine(configuration["MySecret"]);
 
 The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
 
+## Next steps
+
+Read more about [configuration in ASP.NET Core](aspnetcore_configuration_doc).
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require
@@ -52,12 +56,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.AspNetCore.DataProtection.Keys%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.Extensions.Configuration.Secrets%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.AspNetCore.DataProtection.Keys/src
-[package]: https://www.nuget.org/packages/Azure.AspNetCore.DataProtection.Keys/
-[docs]: https://docs.microsoft.com/dotnet/api/Azure.AspNetCore.DataProtection.Keys
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.Configuration.Secrets/src
+[package]: https://www.nuget.org/packages/Azure.Extensions.Configuration.Secrets/
+[docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.Configuration.Secrets
 [nuget]: https://www.nuget.org/storage-quickstart-create-account?tabs=azure-powershell
 [keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
@@ -65,12 +69,8 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[storage_ad]: https://docs.microsoft.com/azure/storage/common/storage-auth-aad
-[storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs
-[RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
+[aspnetcore_configuration_doc]: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
-[samples]: samples/
-[storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
