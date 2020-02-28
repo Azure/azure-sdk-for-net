@@ -11,7 +11,7 @@ $packageNames = $PACKAGE_PATTERN.Matches($rawDependencies) |
 Write-Host Project Packages:
 $packageNames | ForEach-Object { Write-Host $_ }
 
-$availablePackagesList = Find-Package -Source $BLOB_FEED_URL -AllowPrereleaseVersions
+$availablePackagesList = Find-Package -Source NightlyFeed -AllowPrereleaseVersions
 $availablePackages = @{}
 $availablePackagesList | ForEach-Object { $availablePackages[$_.Name] = $_ }
 
