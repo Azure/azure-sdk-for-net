@@ -845,8 +845,8 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (EventHubsException ex)
                     {
-                        var partitionId = ex is EventHubsClaimPartitionException exception ?
-                            exception.PartitionId :
+                        var partitionId = ex.Reason == EventHubsException.FailureReason.ClaimePartitionFailed ?
+                            ex.GetFailureReasonData<string>() :
                             null;
                         var errorEventArgs = new ProcessErrorEventArgs(partitionId, ex.Message, ex.InnerException ?? ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);

@@ -208,7 +208,10 @@ namespace Azure.Messaging.EventHubs
             ServiceTimeout,
 
             /// <summary>There was a general communications error encountered when interacting with the Azure Event Hubs service.</summary>
-            ServiceCommunicationProblem
+            ServiceCommunicationProblem,
+
+            /// <summary>The exception was a result of a failed attempt to claim partition ownership.</summary>
+            ClaimePartitionFailed,
         }
     }
 }

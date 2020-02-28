@@ -482,7 +482,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
                 // unwanted info to it. This exception also communicates the PartitionId to the caller.
 
-                throw new EventHubsClaimPartitionException(partitionId, Resources.OperationClaimOwnership, ex);
+                var exception = new EventHubsException(true, null, Resources.OperationClaimOwnership, EventHubsException.FailureReason.ClaimePartitionFailed, ex);
+                exception.SetFailureReasonData(partitionId);
+                throw exception;
             }
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
