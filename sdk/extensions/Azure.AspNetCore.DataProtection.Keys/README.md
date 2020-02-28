@@ -30,7 +30,7 @@ az keyvault key create --name MyKey --vault-name MyVault
 
 To protect keys using Azure Key Vault Key, configure the system with `ProtectKeysWithAzureKeyVault` when configuring the services:
 
-```C# Snippet:IdentityAuth
+```C# Snippet:ProtectKeysWithAzureKeyVault
 public void ConfigureServices(IServiceCollection services)
 {
     services

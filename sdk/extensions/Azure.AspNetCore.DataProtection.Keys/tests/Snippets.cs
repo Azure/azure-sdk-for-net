@@ -12,7 +12,7 @@ namespace Azure.AspNetCore.DataProtection.Keys.Tests
     {
         private class StartupIdentity
         {
-            #region Snippet:IdentityAuth
+            #region Snippet:ProtectKeysWithAzureKeyVault
             public void ConfigureServices(IServiceCollection services)
             {
                 services
