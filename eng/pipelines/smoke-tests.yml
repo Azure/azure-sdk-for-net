@@ -57,7 +57,12 @@ jobs:
         displayName: Use latest dev feed package versions
         condition: and(succeeded(), eq(variables['UpdateDependencies'], 'true'))
 
-      - script: dotnet list ./common/SmokeTests/SmokeTest/SmokeTest.csproj package --framework $(TestTargetFramework)
+      - script: >
+          dotnet list
+          ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+          package
+          --framework $(TestTargetFramework)
+          --include-transitive
         displayName: dotnet list package
 
       - script: dotnet run .\common\smoketests\SmokeTest\SmokeTest.csproj package --framework $(TestTargetFramework)
