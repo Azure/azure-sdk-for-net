@@ -85,7 +85,7 @@ namespace Azure.Core.Tests
                                 throw new InvalidOperationException("Scope should not be stopped when calling Failed");
                             }
 
-                            producedDiagnosticScope.Exception = (Exception) value.Value;
+                            producedDiagnosticScope.Exception = (Exception)value.Value;
                         }
                     }
                 }

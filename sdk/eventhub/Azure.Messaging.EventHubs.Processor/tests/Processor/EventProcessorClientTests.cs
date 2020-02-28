@@ -2723,6 +2723,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockStorage
                 .Setup(storage => storage.UpdateCheckpointAsync(
                     It.IsAny<EventProcessorCheckpoint>(),
+                    It.IsAny<EventData>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedExceptionReference);
 
@@ -3031,18 +3032,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 FullyQualifiedNamespace = fqNamespace,
                 EventHubName = eventHub,
                 ConsumerGroup = consumerGroup,
-                PartitionId = partitionId,
-                Offset = checkpointOffset,
-                SequenceNumber = 0
+                PartitionId = partitionId
             };
 
             var mockStorage = new MockCheckPointStorage();
+            var mockEvent = new MockEventData(Array.Empty<byte>(), offset: checkpointOffset);
             var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockStorage
-                .Checkpoints.Add((fqNamespace, eventHub, consumerGroup, partitionId), checkpoint);
+                .Checkpoints.Add((fqNamespace, eventHub, consumerGroup, partitionId), new MockCheckPointStorage.CheckpointData(checkpoint, mockEvent));
 
             mockConsumer
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
