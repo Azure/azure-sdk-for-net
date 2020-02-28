@@ -211,7 +211,7 @@ namespace Azure.Messaging.EventHubs
             ServiceCommunicationProblem,
 
             /// <summary>The exception was a result of a failed attempt to claim partition ownership.</summary>
-            ClaimePartitionFailed,
+            ClaimPartitionFailed,
         }
     }
 }
