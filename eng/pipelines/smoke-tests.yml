@@ -47,7 +47,7 @@ jobs:
       - task: PowerShell@2
         inputs:
           targetType: filePath
-          script: common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+          filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
           arguments: -Framework $(TestTargetFramework)
           workingDirectory: common/SmokeTests/SmokeTest
           pwsh: true

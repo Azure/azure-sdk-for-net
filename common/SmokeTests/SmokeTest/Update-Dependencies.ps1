@@ -1,10 +1,10 @@
 param(
-    $framework = 'netcoreapp2.1' # 'netcoreapp2.1' or 'net461'
+    $Framework = 'netcoreapp2.1' # 'netcoreapp2.1' or 'net461'
 )
 
 $PACKAGE_PATTERN = [Regex]::new('>\s(.*?)\s')
 
-$rawDependencies = dotnet list package --framework $framework
+$rawDependencies = dotnet list package --framework $Framework
 $packageNames = $PACKAGE_PATTERN.Matches($rawDependencies) |
     ForEach-Object { $_.Groups[1].Value }
 
