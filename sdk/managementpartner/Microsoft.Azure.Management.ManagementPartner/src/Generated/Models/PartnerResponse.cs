@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ManagementPartner.Models
         /// include: 'Active', 'Deleted'</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.ManagementPartner/partners"</param>
-        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string partnerName = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string state = default(string), string type = default(string))
+        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string partnerName = default(string), string tenantId = default(string), string objectId = default(string), int? version = default(int?), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string state = default(string), string type = default(string))
         {
             Etag = etag;
             Id = id;
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ManagementPartner.Models
         /// Gets or sets this is the version.
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
-        public string Version { get; set; }
+        public int? Version { get; set; }
 
         /// <summary>
         /// Gets or sets this is the DateTime when the partner was updated.
