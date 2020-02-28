@@ -49,19 +49,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include version 2008-10-27 and all more recent versions.</param>
         /// <param name="deleteRetentionPolicy">The blob service properties for
         /// blob soft delete.</param>
-        /// <param name="automaticSnapshotPolicyEnabled">Automatic Snapshot is
-        /// enabled if set to true.</param>
+        /// <param name="isVersioningEnabled">Versioning is enabled if set to
+        /// true.</param>
+        /// <param name="automaticSnapshotPolicyEnabled">Deprecated in favor of
+        /// isVersioningEnabled property.</param>
         /// <param name="changeFeed">The blob service properties for change
         /// feed events.</param>
         /// <param name="restorePolicy">The blob service properties for blob
         /// restore policy.</param>
         /// <param name="sku">Sku name and tier.</param>
-        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), string defaultServiceVersion = default(string), DeleteRetentionPolicy deleteRetentionPolicy = default(DeleteRetentionPolicy), bool? automaticSnapshotPolicyEnabled = default(bool?), ChangeFeed changeFeed = default(ChangeFeed), RestorePolicyProperties restorePolicy = default(RestorePolicyProperties), Sku sku = default(Sku))
+        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), string defaultServiceVersion = default(string), DeleteRetentionPolicy deleteRetentionPolicy = default(DeleteRetentionPolicy), bool? isVersioningEnabled = default(bool?), bool? automaticSnapshotPolicyEnabled = default(bool?), ChangeFeed changeFeed = default(ChangeFeed), RestorePolicyProperties restorePolicy = default(RestorePolicyProperties), Sku sku = default(Sku))
             : base(id, name, type)
         {
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
+            IsVersioningEnabled = isVersioningEnabled;
             AutomaticSnapshotPolicyEnabled = automaticSnapshotPolicyEnabled;
             ChangeFeed = changeFeed;
             RestorePolicy = restorePolicy;
@@ -99,7 +102,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         public DeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets automatic Snapshot is enabled if set to true.
+        /// Gets or sets versioning is enabled if set to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isVersioningEnabled")]
+        public bool? IsVersioningEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets deprecated in favor of isVersioningEnabled property.
         /// </summary>
         [JsonProperty(PropertyName = "properties.automaticSnapshotPolicyEnabled")]
         public bool? AutomaticSnapshotPolicyEnabled { get; set; }

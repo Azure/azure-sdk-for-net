@@ -22,38 +22,41 @@ namespace Microsoft.Azure.Management.Peering
     public static partial class PeeringServiceLocationsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available peering service locations for the specified kind
-            /// of peering.
+            /// Lists all of the available locations for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<PeeringServiceLocation> List(this IPeeringServiceLocationsOperations operations)
+            /// <param name='country'>
+            /// The country of interest, in which the locations are to be present.
+            /// </param>
+            public static IPage<PeeringServiceLocation> List(this IPeeringServiceLocationsOperations operations, string country = default(string))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(country).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available peering service locations for the specified kind
-            /// of peering.
+            /// Lists all of the available locations for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='country'>
+            /// The country of interest, in which the locations are to be present.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringServiceLocation>> ListAsync(this IPeeringServiceLocationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringServiceLocation>> ListAsync(this IPeeringServiceLocationsOperations operations, string country = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(country, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all of the available peering service locations for the specified kind
-            /// of peering.
+            /// Lists all of the available locations for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -67,8 +70,7 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Lists all of the available peering service locations for the specified kind
-            /// of peering.
+            /// Lists all of the available locations for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

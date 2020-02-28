@@ -60,16 +60,10 @@ namespace Azure.Storage.Blobs
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
             // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue)
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                if (transferOptions.MaximumConcurrency < 1)
-                {
-                    _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-                }
-                else
-                {
-                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
-                }
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
             }
             else
             {
@@ -77,16 +71,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _singleUploadThreshold
-            if (transferOptions.InitialTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue
+                && transferOptions.InitialTransferLength.Value > 0)
             {
-                if (transferOptions.InitialTransferLength.Value < 1)
-                {
-                    _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
-                }
-                else
-                {
-                    _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
-                }
+                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
             }
             else
             {
@@ -94,22 +82,12 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _blockSize
-            if (transferOptions.MaximumTransferLength.HasValue)
+            if (transferOptions.MaximumTransferLength.HasValue
+                && transferOptions.MaximumTransferLength > 0)
             {
-                if (transferOptions.MaximumTransferLength < 1)
-                {
-                    _blockSize = Constants.Blob.Block.MaxStageBytes;
-                }
-                else
-                {
-                    _blockSize = Math.Min(
-                        Constants.Blob.Block.MaxStageBytes,
-                        transferOptions.MaximumTransferLength.Value);
-                }
-            }
-            else
-            {
-                _blockSize = Constants.Blob.Block.MaxStageBytes;
+                _blockSize = Math.Min(
+                    Constants.Blob.Block.MaxStageBytes,
+                    transferOptions.MaximumTransferLength.Value);
             }
 
             _operationName = operationName;
@@ -240,27 +218,23 @@ namespace Azure.Storage.Blobs
                 List<string> blockIds = new List<string>();
 
                 // Partition the stream into individual blocks and stage them
-                IAsyncEnumerator<ChunkedStream> enumerator =
-                    PartitionedUploadExtensions.GetBlocksAsync(content, blockSize, async: false, _arrayPool, cancellationToken)
-                    .GetAsyncEnumerator(cancellationToken);
-#pragma warning disable AZC0107
-                while (enumerator.MoveNextAsync().EnsureCompleted())
-#pragma warning restore AZC0107
+                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                        content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
-                    // Dispose the block after the loop iterates and return its
-                    // memory to our ArrayPool
-                    using ChunkedStream block = enumerator.Current;
+                    // Dispose the block after the loop iterates and return its memory to our ArrayPool
+                    using (block)
+                    {
+                        // Stage the next block
+                        string blockId = GenerateBlockId(block.AbsolutePosition);
+                        _client.StageBlock(
+                            blockId,
+                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            conditions: conditions,
+                            progressHandler: progressHandler,
+                            cancellationToken: cancellationToken);
 
-                    // Stage the next block
-                    string blockId = GenerateBlockId(block.AbsolutePosition);
-                    _client.StageBlock(
-                        blockId,
-                        new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        conditions: conditions,
-                        progressHandler: progressHandler,
-                        cancellationToken: cancellationToken);
-
-                    blockIds.Add(blockId);
+                        blockIds.Add(blockId);
+                    }
                 }
 
                 // Commit the block list after everything has been staged to

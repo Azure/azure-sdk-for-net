@@ -454,6 +454,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
         /// created directory.
@@ -462,12 +465,13 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareDirectoryInfo>> CreateInternal(
+        internal async Task<Response<ShareDirectoryInfo>> CreateInternal(
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -496,7 +500,7 @@ namespace Azure.Storage.Files.Shares
                         fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(Create)}",
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -514,6 +518,372 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion Create
+
+        #region CreateIfNotExists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryInfo> CreateIfNotExists(
+            Metadata metadata = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                smbProperties,
+                filePermission,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareDirectoryInfo>> CreateIfNotExistsAsync(
+            Metadata metadata = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                metadata,
+                smbProperties,
+                filePermission,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<ShareDirectoryInfo>> CreateIfNotExistsInternal(
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            bool async,
+            CancellationToken cancellationToken,
+            string operationName = default)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message: $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response<ShareDirectoryInfo> response = await CreateInternal(
+                        metadata,
+                        smbProperties,
+                        filePermission,
+                        async,
+                        cancellationToken,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+
+                    return response;
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceAlreadyExists)
+                {
+                    return default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
+        #endregion CreateIfNotExists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareDirectoryClient"/> to see if the associated directory
+        /// exists in the share on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareDirectoryClient"/> to see if the associated directory
+        /// exists in the share on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="ShareDirectoryClient"/> to see if the associated directory
+        /// exists in the share on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<ShareDirectoryProperties> response = await GetPropertiesInternal(
+                        async,
+                        cancellationToken,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(Exists)}")
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
+        #endregion Exists
+
+        #region DeleteIfExists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation removes the specified
+        /// empty directory, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the directory existed.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation removes the specified
+        /// empty directory, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the directory existed.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation removes the specified
+        /// empty directory, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// True if the directory existed.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        internal async Task<Response<bool>> DeleteIfExistsInternal(
+            bool async,
+            CancellationToken cancellationToken,
+            string operationName = default)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message: $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        async,
+                        cancellationToken,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
+        #endregion DeleteIfExists
 
         #region Delete
         /// <summary>
@@ -573,15 +943,19 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        private async Task<Response> DeleteInternal(
+        internal async Task<Response> DeleteInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -596,7 +970,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}",
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -683,6 +1057,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{StorageDirectoryProperties}"/> describing the
         /// directory and its properties.
@@ -693,7 +1070,8 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareDirectoryProperties>> GetPropertiesInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -709,7 +1087,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}",
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 

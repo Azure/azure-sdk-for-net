@@ -5,7 +5,6 @@
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Remove the project reference and restore the package reference when the next version of the Event Hubs core is published. -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
+    <!--
     <PackageReference Include="Azure.Messaging.EventHubs" />
+    -->
+
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />

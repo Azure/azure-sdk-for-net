@@ -6,6 +6,7 @@ using System.Net.Http;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Attestation.Tests
 {
@@ -25,10 +26,25 @@ namespace Microsoft.Azure.Attestation.Tests
 
         public AttestationClient CreateAttestationClient()
         {
-            string accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkJCOENlRlZxeWFHckdOdWVoSklpTDRkZmp6dyIsImtpZCI6IkJCOENlRlZxeWFHckdOdWVoSklpTDRkZmp6dyJ9.eyJhdWQiOiJodHRwczovL2F0dGVzdC5henVyZS5uZXQiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTc2MDE4MTI1LCJuYmYiOjE1NzYwMTgxMjUsImV4cCI6MTU3NjAyMjAyNSwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzL2U0ZDA2ZWU4LWNhYjctNDc1My1hOThlLTJlNmU0OTM1MjllNS9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVVRQXUvOE5BQUFBelE2a2FNOUlmanV6dlZoK3V5eWlobnhBVHorVURzMHNJUHBNVUZ6b1lJNnFvTEc2ZE82QTh0UTZVbzM1bHJOeXg4bDFZMXlSTTZScG5vM3dWc1psZnc9PSIsImFtciI6WyJyc2EiLCJtZmEiXSwiYXBwaWQiOiJkMzU5MGVkNi01MmIzLTQxMDItYWVmZi1hYWQyMjkyYWIwMWMiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjRhYWIxMjIxLWVlMDktNDFjYi05ODRkLTdlNzQ2OThhNDdlYSIsImZhbWlseV9uYW1lIjoiTGVpIiwiZ2l2ZW5fbmFtZSI6IlNodWFuZ3lhbiIsImlwYWRkciI6IjEzMS4xMDcuMTYwLjE2MyIsIm5hbWUiOiJTaHVhbmd5YW4gTGVpIiwib2lkIjoiZTRkMDZlZTgtY2FiNy00NzUzLWE5OGUtMmU2ZTQ5MzUyOWU1Iiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIxMjc1MjExODQtMTYwNDAxMjkyMC0xODg3OTI3NTI3LTM1MjIzMTc5IiwicHVpZCI6IjEwMDMyMDAwNDQ1Q0Y1MjgiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiI5MTYzMjdMaXJBSkdQSFoyNFNJT1BRa2VYTHQ5Q2ZReF9Nbm8tZ0pvTGY4IiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidW5pcXVlX25hbWUiOiJzaGxlaUBtaWNyb3NvZnQuY29tIiwidXBuIjoic2hsZWlAbWljcm9zb2Z0LmNvbSIsInV0aSI6IlZDQm5DS3pyRGsyMG1oRFhmaDRKQUEiLCJ2ZXIiOiIxLjAifQ.JMuwfFYBecyM73ECf7AHubct8Hpe7cZOVUub9niL6Yid7F3LXQ-wfTgGQlBQV-7gZ6PxTrA3bzFzENw867_mcsKaEdeRT6Wd43-nUjirf8dNz7NCEitGlcVZamLGu0bkiQeTkpPbFg6i_KGKRt4gWHbrZXsFGNBf_VSKtHQZ-Q5F3jIdxcj0fQjt_k7xT1x_901qfWtQl6QrFvloFclR9u_Xwy44GOiU23zkFNolpRc3V1GxlY25IQ3xQb7C8SF-TqGAmo2xBV3MTAwRKexEYrdtB46AOPtR6_A3jLNi62HZG52vmFihFEAT7QFZndVSoketibbniR60fWwMeIGcxg";
-            AttestationCredentials credentials = new AttestationCredentials(accessToken);
-            var myclient = new AttestationClient(credentials, GetHandlers());
-            return myclient;
+            string environmentConnectionString = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+            string accessToken = "fakefakefake";
+
+            // When recording, we should have a connection string passed into the code from the environment
+            if (!string.IsNullOrEmpty(environmentConnectionString))
+            {
+                // Gather test client credential information from the environment
+                var connectionInfo = new ConnectionString(Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION"));
+                string servicePrincipal = connectionInfo.GetValue<string>(ConnectionStringKeys.ServicePrincipalKey);
+                string servicePrincipalSecret = connectionInfo.GetValue<string>(ConnectionStringKeys.ServicePrincipalSecretKey);
+                string aadTenant = connectionInfo.GetValue<string>(ConnectionStringKeys.AADTenantKey);
+
+                // Create credentials
+                var clientCredentials = new ClientCredential(servicePrincipal, servicePrincipalSecret);
+                var authContext = new AuthenticationContext($"https://login.windows.net/{aadTenant}", TokenCache.DefaultShared);
+                accessToken = authContext.AcquireTokenAsync("https://attest.azure.net", clientCredentials).Result.AccessToken;
+            }
+
+            return new AttestationClient(new AttestationCredentials(accessToken), GetHandlers());
         }
 
         public DelegatingHandler[] GetHandlers()

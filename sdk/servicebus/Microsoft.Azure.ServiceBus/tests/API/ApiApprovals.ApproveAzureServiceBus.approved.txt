@@ -881,6 +881,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public class ManagedIdentityTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
     {
         public ManagedIdentityTokenProvider() { }
+        public ManagedIdentityTokenProvider(Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider azureServiceTokenProvider) { }
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
     }
     public class SecurityToken
