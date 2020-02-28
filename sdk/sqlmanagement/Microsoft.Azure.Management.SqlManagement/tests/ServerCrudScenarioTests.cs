@@ -186,7 +186,7 @@ namespace Sql.Tests
 
                 // Get server and verify that minimal TLS version is correct
                 server = sqlClient.Servers.Get(resourceGroup.Name, serverName);
-                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, minTlsVersion1_1);
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, minimalTlsVersion: minTlsVersion1_1);
 
                 // Update TLS version enforcement on the server to > 1.2
                 server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
