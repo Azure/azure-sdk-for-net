@@ -1,4 +1,4 @@
-# Contributing (for `Azure.AI.Search`)
+# Contributing (for `Azure.Search`)
 
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
