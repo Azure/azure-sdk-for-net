@@ -50,27 +50,22 @@
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\Azure.Core\ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="SharedSource\Azure.Core\ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="SharedSource\Azure.Core\ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
 
   </ItemGroup>
-
-  <!--Embed the shared resources -->
-  <!--<ItemGroup>
-    <Compile Update="Resources.Local.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Resources.Designer.cs">
-      <Link>Resources.Designer.cs</Link>
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Resources.resx">
-      <Link>Resources.resx</Link>
-      <CustomToolNamespace>Azure.Messaging.ServiceBus</CustomToolNamespace>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>-->
+  </ItemGroup>
 
   <!-- Import the Azure.Core reference -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />

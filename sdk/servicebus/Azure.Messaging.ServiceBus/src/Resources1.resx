@@ -225,8 +225,8 @@
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
     <value>Cannot begin processing without {0} handler set.</value>
   </data>
-  <data name="RunningEventProcessorCannotPerformOperation" xml:space="preserve">
-    <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
+  <data name="RunningMessageProcessor" xml:space="preserve">
+    <value>The message processor is already running and needs to be stopped in order to perform this operation.</value>
   </data>
   <data name="ClientNeededForThisInformation" xml:space="preserve">
     <value>The Service Bus entity client responsible for this information</value>
@@ -263,5 +263,11 @@
   </data>
   <data name="CannotReadLastEnqueuedEventPropertiesWithoutEvent" xml:space="preserve">
     <value>The last enqueued event properties cannot be read when an event is not available.</value>
+  </data>
+  <data name="OperationNotSupported" xml:space="preserve">
+    <value>The operation is only supported in 'PeekLock' receive mode.</value>
+  </data>
+  <data name="MaxPermittedLength" xml:space="preserve">
+    <value>Maximum permitted length is {0}</value>
   </data>
 </root>

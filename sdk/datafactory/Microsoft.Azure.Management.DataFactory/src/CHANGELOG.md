@@ -1,5 +1,21 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.8.0
+###  Feature Additions
+- Added new API to query on triggers with filters like type and parentTrigger
+- Fixed offset value validation in self dependency and trigger dependency for tumbling window trigger, now accepts negative offsets
+- Introduced a new rerunTumblingWindowTrigger which can rerun multiple windows of an existing tumblingWindowTrigger with independent concurrency
+- Added rerun from failed activity support for create pipeline run
+- Added apiVersion property and set SecurityToken from required to optional for Salesforce
+- Added connectionString property to DB2 linked service
+- Added useTempFileRename to SFTP sink
+- Added additionalColumns for copy source
+- Added validate data consistency for copy activity
+- Added support session log for copy activity
+- Added isolationLevel for sql source
+- Added expiryDateTime for ADLS Gen1 source
+- Added fileListPath for binary sources
+
 ## Version 4.7.0
 ###  Feature Additions
 - Added compute support in execute data flow activity

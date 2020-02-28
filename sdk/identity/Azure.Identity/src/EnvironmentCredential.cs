@@ -6,6 +6,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -93,7 +94,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
 
@@ -123,7 +124,9 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token = isAsync ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
+                AccessToken token = async
+                    ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                    : _credential.GetToken(requestContext, cancellationToken);
 
                 return scope.Succeeded(token);
             }

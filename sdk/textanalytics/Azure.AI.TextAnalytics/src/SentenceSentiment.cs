@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct SentenceSentiment
     {
-        internal SentenceSentiment(SentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal SentenceSentiment(SentenceSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScorePerLabel(positiveScore, neutralScore, negativeScore);
@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public SentimentLabel Sentiment { get; }
+        public SentenceSentimentLabel Sentiment { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,

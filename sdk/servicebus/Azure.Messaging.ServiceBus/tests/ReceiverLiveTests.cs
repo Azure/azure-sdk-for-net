@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -16,32 +19,25 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
 
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt);
-                await sender.SendRangeAsync(sentMessages);
+                await sender.SendBatchAsync(sentMessages);
 
-                await using var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
 
                 Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
                 foreach (ServiceBusMessage message in sentMessages)
                 {
                     sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body));
                 }
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
-                    maxMessages: messageCt);
 
                 var ct = 0;
-                await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAsync(
+                    maxMessages: messageCt))
                 {
                     var peekedText = Encoding.Default.GetString(peekedMessage.Body);
-                    //var sentText = sentMessageIdToLabel[peekedMessage.MessageId];
-
-                    //sentMessageIdToLabel.Remove(peekedMessage.MessageId);
-                    //Assert.AreEqual(sentText, peekedText);
-
-                    TestContext.Progress.WriteLine($"{peekedMessage.Label}: {peekedText}");
                     ct++;
                 }
                 Assert.AreEqual(messageCt, ct);
@@ -53,27 +49,26 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCount = 10;
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                await sender.SendRangeAsync(messages);
+                await sender.SendBatchAsync(messages);
 
-                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
-                    Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
+                    Assert.AreEqual(item.DeliveryCount, 1);
                 }
                 Assert.AreEqual(receivedMessageCount, messageCount);
 
                 messageEnum.Reset();
-                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekRangeAsync(messageCount);
-                await foreach (var item in peekMessages)
+                foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
@@ -82,24 +77,160 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
+        public async Task CompleteMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
+                await sender.SendBatchAsync(messages);
+
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    await receiver.CompleteAsync(item);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                var message = receiver.PeekAsync();
+                Assert.IsNull(message.Result);
+            }
+        }
+
+        [Test]
+        public async Task AbandonMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
+                await sender.SendBatchAsync(messages);
+
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    await receiver.AbandonAsync(item);
+                    Assert.AreEqual(item.DeliveryCount, 1);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                messageEnum.Reset();
+                receivedMessageCount = 0;
+                foreach (var item in await receiver.PeekBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+            }
+        }
+
+        [Test]
+        public async Task DeadLetterMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
+                await sender.SendBatchAsync(messages);
+
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    await receiver.DeadLetterAsync(item);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                var message = receiver.PeekAsync();
+                Assert.IsNull(message.Result);
+
+                messageEnum.Reset();
+                receivedMessageCount = 0;
+                string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
+                var deadLetterReceiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, deadLetterQueuePath);
+
+                foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    await deadLetterReceiver.CompleteAsync(item);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                var deadLetterMessage = deadLetterReceiver.PeekAsync();
+                Assert.IsNull(deadLetterMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task DeferMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 10;
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
+                await sender.SendBatchAsync(messages);
+
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
+                    await receiver.DeferAsync(item);
+                }
+                Assert.AreEqual(receivedMessageCount, messageCount);
+
+                // TODO: Call ReceiveDeferredMessageAsync() to verify the messages
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesInReceiveAndDeleteMode()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCount = 10;
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                await sender.SendRangeAsync(messages);
+                await sender.SendBatchAsync(messages);
 
-                var clientOptions = new QueueReceiverClientOptions()
+                var clientOptions = new ServiceBusReceiverClientOptions()
                 {
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
-                var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount).ConfigureAwait(false))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);

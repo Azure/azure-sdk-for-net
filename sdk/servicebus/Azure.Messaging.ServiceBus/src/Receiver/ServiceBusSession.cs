@@ -2,14 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -19,14 +14,15 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusSession
     {
         private readonly TransportConsumer _consumer;
-        private readonly ServiceBusRetryPolicy _retryPolicy;
+
+        internal string UserSpecifiedSessionId { get; }
 
         internal ServiceBusSession(
             TransportConsumer consumer,
-            ServiceBusRetryPolicy retryPolicy)
+            string sessionId)
         {
             _consumer = consumer;
-            _retryPolicy = retryPolicy;
+            UserSpecifiedSessionId = sessionId;
         }
 
         /// <summary>
@@ -37,6 +33,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             return await Task.FromResult(new byte[4]).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -49,6 +46,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -57,6 +55,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
+            // TODO implement
             await Task.Delay(1).ConfigureAwait(false);
         }
 
@@ -65,7 +64,29 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<string> GetSessionId(CancellationToken cancellationToken = default) =>
-            await _consumer.GetSessionId(cancellationToken).ConfigureAwait(false);
+        public virtual async Task<string> GetSessionIdAsync
+(CancellationToken cancellationToken = default)
+        {
+            // if the user specified a sessionId we can just return
+            // early with that as there is no chance of it changing
+            if (UserSpecifiedSessionId != null)
+            {
+                return UserSpecifiedSessionId;
+            }
+            else
+            {
+                return await _consumer.GetSessionIdAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<DateTimeOffset> GetLockedUntilUtcAsync(CancellationToken cancellationToken = default)
+        {
+            return await _consumer.GetSessionLockedUntilUtcAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 }

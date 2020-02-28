@@ -5,12 +5,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Identity
 {
@@ -35,7 +31,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new DeviceCodeCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
         /// <param name="clientId">The client id of the application to which the users will authenticate</param>
@@ -81,38 +77,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DeviceCodeCredential.GetToken", requestContext);
-
-            try
-            {
-                if (_account != null)
-                {
-                    try
-                    {
-                        AuthenticationResult result = _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).GetAwaiter().GetResult();
-
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
-                    }
-                    catch (MsalUiRequiredException)
-                    {
-                        return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
-                    }
-                }
-                else
-                {
-                    return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
-                }
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
-            catch (Exception e)
-            {
-                throw scope.FailAndWrap(e);
-            }
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -123,6 +88,11 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DeviceCodeCredential.GetToken", requestContext);
 
             try
@@ -131,18 +101,18 @@ namespace Azure.Identity
                 {
                     try
                     {
-                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
                     catch (MsalUiRequiredException)
                     {
-                        return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
+                        return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
                     }
                 }
                 else
                 {
-                    return scope.Succeeded(GetTokenViaDeviceCodeAsync(requestContext.Scopes, cancellationToken).GetAwaiter().GetResult());
+                    return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
                 }
             }
             catch (OperationCanceledException e)
@@ -157,9 +127,9 @@ namespace Azure.Identity
             }
         }
 
-        private async Task<AccessToken> GetTokenViaDeviceCodeAsync(string[] scopes, CancellationToken cancellationToken)
+        private async Task<AccessToken> GetTokenViaDeviceCodeAsync(string[] scopes, bool async, CancellationToken cancellationToken)
         {
-            AuthenticationResult result = await _client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallback(code, cancellationToken), cancellationToken).ConfigureAwait(false);
+            AuthenticationResult result = await _client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallback(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
 
             _account = result.Account;
 

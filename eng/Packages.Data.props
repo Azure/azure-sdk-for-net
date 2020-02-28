@@ -16,6 +16,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.1" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.0.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.0.1" />
     <PackageReference Update="Azure.Storage.Blobs" Version="12.2.0" />
     <PackageReference Update="Azure.Storage.Blobs.Batch" Version="12.1.1" />
     <PackageReference Update="Azure.Storage.Common" Version="12.1.1" />
@@ -114,7 +115,7 @@
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
 
     <!-- Build time packages -->
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200116.2" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200221.1" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" />
     

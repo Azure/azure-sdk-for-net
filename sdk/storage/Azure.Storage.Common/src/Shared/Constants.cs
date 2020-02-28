@@ -252,6 +252,21 @@ namespace Azure.Storage
             /// The key of the error message returned for errors.
             /// </summary>
             public const string ErrorMessageKey = "message";
+
+            /// <summary>
+            /// The Azure Storage error codes for Datalake Client.
+            /// </summary>
+            public const string AlreadyExists = "ContainerAlreadyExists";
+
+            /// <summary>
+            /// Default concurrent transfers count.
+            /// </summary>
+            public const int DefaultConcurrentTransfersCount = 5;
+
+            /// <summary>
+            /// Max upload bytes.
+            /// </summary>
+            public const int MaxAppendBytes = 100 * Constants.MB; // 100 MB
         }
 
         /// <summary>
@@ -269,6 +284,8 @@ namespace Azure.Storage
             /// QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
             /// </summary>
             public const int QueueMessageMaxBytes = 64 * Constants.KB;
+
+            public const int StatusCodeNoContent = 204;
 
             public const string MessagesUri = "messages";
 
