@@ -14,26 +14,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about a tenant managing the subscription.
+    /// The resource Id model.
     /// </summary>
-    public partial class ManagedByTenant
+    public partial class ResourceReference
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedByTenant class.
+        /// Initializes a new instance of the ResourceReference class.
         /// </summary>
-        public ManagedByTenant()
+        public ResourceReference()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedByTenant class.
+        /// Initializes a new instance of the ResourceReference class.
         /// </summary>
-        /// <param name="tenantId">The tenant ID of the managing tenant. This
-        /// is a GUID.</param>
-        public ManagedByTenant(string tenantId = default(string))
+        /// <param name="id">The fully qualified resource Id.</param>
+        public ResourceReference(string id = default(string))
         {
-            TenantId = tenantId;
+            Id = id;
             CustomInit();
         }
 
@@ -43,10 +42,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the tenant ID of the managing tenant. This is a GUID.
+        /// Gets the fully qualified resource Id.
         /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }
