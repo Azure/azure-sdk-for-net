@@ -1,4 +1,4 @@
-# Azure KeyVault Key Encryptor for Microsoft.AspNetCore.DataProtection
+# Azure Storage Blob Key Store for Microsoft.AspNetCore.DataProtection
 
 The `Azure.AspNetCore.DataProtection.Keys` package allows protecting keys at rest using Azure KeyVault Key Encryption/Wrapping feature.
 
@@ -14,8 +14,8 @@ dotnet add package Azure.AspNetCore.DataProtection.Keys -v 1.0.0-preview.1
 
 ### Prerequisites
 
-You need an [Azure subscription][azure_sub],
-[KeyVault Vault][keyvault_doc] and a Key to use this package.
+You need an [Azure subscription][azure_sub] and
+[Azure KeyVault][keyvault_doc] to use this package.
 
 To create a new KeyVault, you can use the [Azure Portal][keyvault_create_portal],
 [Azure PowerShell][keyvault_create_ps], or the [Azure CLI][keyvault_create_cli].
@@ -23,20 +23,19 @@ Here's an example using the Azure CLI:
 
 ```Powershell
 az keyvault create --name MyVault --resource-group MyResourceGroup --location westus
-az keyvault key create --name MyKey --vault-name MyVault
+az keyvault secret set --vault-name MyVault --name MySecret --value "hVFkk965BuUv"
 ```
 
 ## Examples
 
-To protect keys using Azure Key Vault Key, configure the system with `ProtectKeysWithAzureKeyVault` when configuring the services:
+To load initialize configuration from Azure KeyVault secrets call the `AddAzureKeyVault` on `ConfigurationBuilder`:
 
-```C# Snippet:IdentityAuth
-public void ConfigureServices(IServiceCollection services)
-{
-    services
-        .AddDataProtection()
-        .ProtectKeysWithAzureKeyVault("<Key-ID>", new DefaultAzureCredential());
-}
+```C# Snippet:ConfigurationAddAzureKeyVault
+ConfigurationBuilder builder = new ConfigurationBuilder();
+builder.AddAzureKeyVault(new Uri("<Vault URI>"), new DefaultAzureCredential());
+
+IConfiguration configuration = builder.Build();
+Console.WriteLine(configuration["MySecret"]);
 ```
 
 The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
