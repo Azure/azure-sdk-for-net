@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     internal class AmqpConsumer : TransportConsumer
     {
         /// <summary>The default prefetch count to use for the consumer.</summary>
-        private const uint DefaultPrefetchCount = 0;
+        private const int DefaultPrefetchCount = 0;
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpConsumer(
             string entityName,
             ReceiveMode receiveMode,
-            uint? prefetchCount,
+            int? prefetchCount,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
             string sessionId,

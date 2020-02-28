@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public uint PrefetchCount = 0;
+        public int PrefetchCount = 0;
 
         /// <summary>
         ///

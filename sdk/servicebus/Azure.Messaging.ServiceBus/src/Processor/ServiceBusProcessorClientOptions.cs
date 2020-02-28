@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public uint PrefetchCount = 0;
+        public int PrefetchCount = 0;
 
         /// <summary>
         ///
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public string SessionId { get; set; }
+        internal string SessionId { get; set; }
 
         /// <summary>
         ///

@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract TransportConsumer CreateConsumer(
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
-            uint? prefetchCount,
+            int? prefetchCount,
             string sessionId,
             bool isSessionReceiver);
 

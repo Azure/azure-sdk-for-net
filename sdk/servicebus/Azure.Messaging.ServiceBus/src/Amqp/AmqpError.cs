@@ -216,7 +216,7 @@ namespace Azure.Messaging.ServiceBus
                 if (NotFoundExpression.IsMatch(description)
                     || (description.IndexOf(NotFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
                 {
-                    return new ServiceBusException(eventHubsResource, description, ServiceBusException.FailureReason.ResourceNotFound);
+                    return new ServiceBusException(eventHubsResource, description, ServiceBusException.FailureReason.MessageNotFound);
                 }
 
                 return new ServiceBusException(eventHubsResource, description, ServiceBusException.FailureReason.ServiceCommunicationProblem);

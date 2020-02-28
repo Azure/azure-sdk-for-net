@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
@@ -32,15 +33,18 @@ namespace Azure.Messaging.ServiceBus
     ///
     public class ServiceBusProcessorClient : IAsyncDisposable
     {
-        private Func<ServiceBusReceivedMessage, ServiceBusSession, Task> _processMessage;
+        private Func<ProcessMessageEventArgs, Task> _processMessage;
 
-        private Func<ExceptionReceivedEventArgs, Task> _processErrorAsync = default;
+        private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
 
         private readonly object EventHandlerGuard = new object();
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
 
         private SemaphoreSlim MessageHandlerSemaphore;
+        private int _maxConcurrentCalls;
+        private TimeSpan _maxAutoRenewDuration;
+
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
 
         private readonly SemaphoreSlim ProcessingStartStopSemaphore = new SemaphoreSlim(1, 1);
@@ -60,10 +64,9 @@ namespace Azure.Messaging.ServiceBus
         ///   Called when a 'process message' event is triggered.
         /// </summary>
         ///
-        /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
-        /// <param name="session"></param>
+        /// <param name="context">The set of arguments to identify the context of the event to be processed.</param>
         ///
-        private Task OnProcessMessageAsync(ServiceBusReceivedMessage message, ServiceBusSession session) => _processMessage(message, session);
+        private Task OnProcessMessageAsync(ProcessMessageEventArgs context) => _processMessage(context);
 
         /// <summary>
         ///   Called when a 'process error' event is triggered.
@@ -71,7 +74,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
         ///
-        private Task OnProcessErrorAsync(ExceptionReceivedEventArgs eventArgs) => _processErrorAsync(eventArgs);
+        private Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
 
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
@@ -100,7 +103,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public uint PrefetchCount => _receiver.PrefetchCount;
+        public int PrefetchCount => _receiver.PrefetchCount;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusProcessorClient"/> has been closed.
@@ -135,12 +138,64 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public ServiceBusSession Session => _receiver.Session;
+        public ServiceBusSessionManager SessionManager => _receiver.SessionManager;
 
         /// <summary>
         ///
         /// </summary>
-        public ServiceBusSubscription Subscription => _receiver.Subscription;
+        public ServiceBusSubscriptionManager SubscriptionManager => _receiver.SubscriptionManager;
+
+
+        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
+        /// <value>The maximum number of concurrent calls to the callback.</value>
+        public int MaxConcurrentCalls
+        {
+            get => _maxConcurrentCalls;
+
+            set
+            {
+                if (value <= 0)
+                {
+                    //throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
+                }
+
+                _maxConcurrentCalls = value;
+            }
+        }
+
+        /// <summary>Gets or sets a value that indicates whether the message-pump should call
+        ///  cref="QueueClient.CompleteAsync(string)" /> or
+        ///  cref="SubscriptionClient.CompleteAsync(string)" /> on messages after the callback has completed processing.</summary>
+        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
+        public bool AutoComplete { get; set; }
+
+        /// <summary>Gets or sets the maximum duration within which the lock will be renewed automatically. This
+        /// value should be greater than the longest message lock duration; for example, the LockDuration Property. </summary>
+        /// <value>The maximum duration during which locks are automatically renewed.</value>
+        /// <remarks>The message renew can continue for sometime in the background
+        /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        public TimeSpan MaxAutoLockRenewalDuration
+        {
+            get => _maxAutoRenewDuration;
+
+            set
+            {
+                TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
+                _maxAutoRenewDuration = value;
+            }
+        }
+
+        internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public TimeSpan MaxReceiveTimeout { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string SessionId { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
@@ -161,6 +216,54 @@ namespace Azure.Messaging.ServiceBus
             : this(new ServiceBusConnection(connectionString), new ServiceBusProcessorClientOptions())
         {
         }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="queueName"></param>
+        /// <param name="options"></param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
+        /// </remarks>
+        ///
+        public ServiceBusProcessorClient(ServiceBusConnection connection, string queueName, ServiceBusProcessorClientOptions options = default)
+            : this(connection, new ServiceBusProcessorClientOptions())
+        {
+            //OwnsConnection = false;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="topicName"></param>
+        /// <param name="subscriptionName"></param>
+        /// <param name="options"></param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
+        /// </remarks>
+        ///
+        public ServiceBusProcessorClient(ServiceBusConnection connection, string topicName, string subscriptionName, ServiceBusProcessorClientOptions options = default)
+            : this(connection, new ServiceBusProcessorClientOptions())
+        {
+            //OwnsConnection = false;
+        }
+
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
@@ -203,7 +306,7 @@ namespace Azure.Messaging.ServiceBus
             string connectionString,
             string queueOrSubscriptionName,
             ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, queueOrSubscriptionName, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
         {
         }
 
@@ -227,7 +330,7 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName,
             ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
         {
         }
 
@@ -245,7 +348,7 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             TokenCredential credential,
             ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, queueName, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
         {
         }
 
@@ -265,7 +368,7 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             TokenCredential credential,
             ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
         {
         }
 
@@ -276,7 +379,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusProcessorClient(
+        internal ServiceBusProcessorClient(
             ServiceBusConnection connection,
             ServiceBusProcessorClientOptions clientOptions = default)
         {
@@ -486,7 +589,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<ServiceBusReceivedMessage, ServiceBusSession, Task> ProcessMessageAsync
+        public event Func<ProcessMessageEventArgs, Task> ProcessMessageAsync
         {
             add
             {
@@ -523,7 +626,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<ExceptionReceivedEventArgs, Task> ProcessErrorAsync
+        public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
             add
             {
@@ -554,7 +657,6 @@ namespace Azure.Messaging.ServiceBus
         ///   Signals the <see cref="ServiceBusProcessorClient" /> to begin processing events.  Should this method be called while the processor
         ///   is running, no action is taken.
         /// </summary>
-        /// <param name="processingOptions"></param>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="ServiceBusProcessorClient" /> once it starts running.</param>
         ///
@@ -562,15 +664,14 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessMessageAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual async Task StartProcessingAsync(
-            ProcessingOptions processingOptions = default,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             if (ActiveReceiveTask == null && MessageHandlerSemaphore == null)
             {
                 MessageHandlerSemaphore = new SemaphoreSlim(
-                    processingOptions.MaxConcurrentCalls,
-                    processingOptions.MaxConcurrentCalls);
+                    MaxConcurrentCalls,
+                    MaxConcurrentCalls);
                 await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 try
@@ -604,7 +705,6 @@ namespace Azure.Messaging.ServiceBus
 
                             //Logger.EventProcessorStart(Identifier);
                             ActiveReceiveTask = RunReceiveTaskAsync(
-                                processingOptions,
                                 RunningTaskTokenSource.Token);
                         }
                     }
@@ -673,13 +773,11 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Runs the Receive task in as many threads as are
-        ///   specified in the <see cref="ProcessingOptions.MaxConcurrentCalls"/> property.
+        ///   specified in the <see cref="MaxConcurrentCalls"/> property.
         /// </summary>
-        /// <param name="options"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         private async Task RunReceiveTaskAsync(
-            ProcessingOptions options,
             CancellationToken cancellationToken)
         {
             IList<Task> tasks = new List<Task>();
@@ -689,7 +787,7 @@ namespace Azure.Messaging.ServiceBus
 
                 try
                 {
-                    tasks.Add(GetAndProcessMessagesAsync(options, cancellationToken));
+                    tasks.Add(GetAndProcessMessagesAsync(cancellationToken));
                 }
                 catch (Exception)
                 {
@@ -702,7 +800,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         private async Task GetAndProcessMessagesAsync(
-            ProcessingOptions options,
             CancellationToken cancellationToken)
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
@@ -710,7 +807,7 @@ namespace Azure.Messaging.ServiceBus
             TransportConsumer consumer;
             Task renewLock = null;
 
-            if (IsSessionReceiver && Session.UserSpecifiedSessionId == null)
+            if (IsSessionReceiver && SessionManager.UserSpecifiedSessionId == null)
             {
                 // If the user didn't specify a session, but this is a sessionful receiver,
                 // we want to allow each thread to have its own consumer so we can access
@@ -732,7 +829,7 @@ namespace Azure.Messaging.ServiceBus
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     ServiceBusReceivedMessage message = null;
-                    string action = ExceptionReceivedEventArgsAction.Receive;
+                    var action = ExceptionReceivedEventArgsAction.Receive;
                     try
                     {
                         IEnumerable<ServiceBusReceivedMessage> messages = await consumer.ReceiveAsync(
@@ -750,11 +847,11 @@ namespace Azure.Messaging.ServiceBus
                             break;
                         }
 
-                        if (ReceiveMode == ReceiveMode.PeekLock && options.AutoRenewLock)
+                        if (ReceiveMode == ReceiveMode.PeekLock && AutoRenewLock)
                         {
                             action = ExceptionReceivedEventArgsAction.RenewLock;
                             renewLockCancellationTokenSource = new CancellationTokenSource();
-                            renewLockCancellationTokenSource.CancelAfter(options.MaxAutoLockRenewalDuration);
+                            renewLockCancellationTokenSource.CancelAfter(MaxAutoLockRenewalDuration);
                             renewLock = RenewLock(
                                 consumer,
                                 message,
@@ -766,12 +863,12 @@ namespace Azure.Messaging.ServiceBus
 
                         // if this is a session receiver, supply a session object to the callback so that users can
                         // perform operations on this session
-                        ServiceBusSession session = null;
+                        ServiceBusSessionManager session = null;
                         if (IsSessionReceiver)
                         {
-                            session = new ServiceBusSession(consumer, message.SessionId, ReceiveMode, RetryPolicy);
+                            session = new ServiceBusSessionManager(consumer, message.SessionId);
                         }
-                        await OnProcessMessageAsync(message, session).ConfigureAwait(false);
+                        await OnProcessMessageAsync(new ProcessMessageEventArgs() { Message = message, Session = session }).ConfigureAwait(false);
 
                         try
                         {
@@ -786,7 +883,7 @@ namespace Azure.Messaging.ServiceBus
                             // Nothing to do here.  These exceptions are expected.
                         }
 
-                        if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
+                        if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete)
                         {
                             action = ExceptionReceivedEventArgsAction.Complete;
                             await CompleteAsync(
@@ -799,7 +896,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         await RaiseExceptionReceived(
                             // TODO - add clientId implementation and pass as last argument to ExceptionReceivedEventArgs
-                            new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
+                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
                         await AbandonAsync(message).ConfigureAwait(false);
 
                     }
@@ -867,7 +964,7 @@ namespace Azure.Messaging.ServiceBus
 
                     if (IsSessionReceiver)
                     {
-                        await Session.RenewSessionLockAsync(renewLockCancellationToken).ConfigureAwait(false);
+                        await SessionManager.RenewSessionLockAsync(renewLockCancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -885,7 +982,7 @@ namespace Azure.Messaging.ServiceBus
                     if (!(exception is ObjectDisposedException))
                     {
                         await RaiseExceptionReceived(
-                            new ExceptionReceivedEventArgs(
+                            new ProcessErrorEventArgs(
                                 exception,
                                 ExceptionReceivedEventArgsAction.RenewLock,
                                 FullyQualifiedNamespace,
@@ -946,7 +1043,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal async Task RaiseExceptionReceived(ExceptionReceivedEventArgs eventArgs)
+        internal async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
         {
             try
             {

@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             return messages;
         }
 
-        protected Task ExceptionHandler(ExceptionReceivedEventArgs eventArgs)
+        protected Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
             return Task.CompletedTask;
         }

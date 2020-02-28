@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class ServiceBusSession
+    public class ServiceBusSessionManager
     {
         private readonly TransportConsumer _consumer;
 

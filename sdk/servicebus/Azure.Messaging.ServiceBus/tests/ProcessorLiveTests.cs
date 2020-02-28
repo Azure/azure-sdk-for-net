@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await using var sender = new ServiceBusSenderClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
+                var mem = new ReadOnlyMemory<byte>();
+                mem.Span
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
@@ -51,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSessionManager session)
                 {
                     await processor.CompleteAsync(message);
                     Interlocked.Increment(ref messageCt);
@@ -100,7 +103,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSessionManager session)
                 {
                     Interlocked.Increment(ref messageProcessedCt);
                     if (messageProcessedCt == stopAfterMessagesCt)

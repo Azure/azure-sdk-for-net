@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         fromSequenceNumber: 1,
                         maxMessages: 10))
                     {
-                        var sessionId = await receiver.Session.GetSessionIdAsync();
+                        var sessionId = await receiver.SessionManager.GetSessionIdAsync();
                         Assert.AreEqual(sessionId, peekedMessage.SessionId);
                     }
 
@@ -590,7 +590,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSessionManager session)
                 {
                     await processor.CompleteAsync(message);
                     Interlocked.Increment(ref messageCt);
@@ -664,7 +664,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSessionManager session)
                 {
                     await processor.CompleteAsync(message);
                     sessions.TryRemove(message.SessionId, out bool _);
@@ -750,7 +750,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSession session)
+                async Task ProcessMessage(ServiceBusReceivedMessage message, ServiceBusSessionManager session)
                 {
                     await processor.CompleteAsync(message);
                     Interlocked.Increment(ref messageCt);

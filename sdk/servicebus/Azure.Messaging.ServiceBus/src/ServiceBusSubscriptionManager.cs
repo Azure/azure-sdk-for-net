@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class ServiceBusSubscription
+    public class ServiceBusSubscriptionManager
     {
         /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.

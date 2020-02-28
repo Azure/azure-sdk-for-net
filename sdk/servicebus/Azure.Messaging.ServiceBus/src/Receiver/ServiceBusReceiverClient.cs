@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public uint PrefetchCount { get; }
+        public int PrefetchCount { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiverClient"/> has been closed.
@@ -106,12 +106,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public ServiceBusSession Session { get; set; }
+        public ServiceBusSessionManager SessionManager { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public ServiceBusSubscription Subscription { get; set; }
+        public ServiceBusSubscriptionManager SubscriptionManager { get; set; }
 
         /// <summary>
         /// A map of locked messages received using the management client.
@@ -123,6 +123,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="queueName"></param>
+        /// <param name="options"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
@@ -133,7 +135,33 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(ServiceBusConnection connection)
+        public ServiceBusReceiverClient(ServiceBusConnection connection, string queueName,
+            ServiceBusReceiverClientOptions options = default)
+            : this(connection, new ServiceBusReceiverClientOptions())
+        {
+            OwnsConnection = false;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="topicName"></param>
+        /// <param name="subscriptionName"></param>
+        /// <param name="options"></param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
+        /// </remarks>
+        ///
+        public ServiceBusReceiverClient(ServiceBusConnection connection, string topicName, string subscriptionName,
+             ServiceBusReceiverClientOptions options = default)
             : this(connection, new ServiceBusReceiverClientOptions())
         {
             OwnsConnection = false;
@@ -202,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
             string connectionString,
             string queueOrSubscriptionName,
             ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, queueOrSubscriptionName, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
         {
             OwnsConnection = true;
         }
@@ -227,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName,
             ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, GetSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
         {
             OwnsConnection = true;
         }
@@ -246,7 +274,7 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             TokenCredential credential,
             ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, queueName, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
         {
             OwnsConnection = true;
         }
@@ -267,7 +295,7 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             TokenCredential credential,
             ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, GetSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
         {
             OwnsConnection = true;
         }
@@ -284,7 +312,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiverClient(
             ServiceBusConnection connection,
             ServiceBusReceiverClientOptions clientOptions = default)
         {
@@ -303,7 +331,7 @@ namespace Azure.Messaging.ServiceBus
                 prefetchCount: PrefetchCount,
                 sessionId: clientOptions.SessionId,
                 isSessionReceiver: IsSessionReceiver);
-            Session = new ServiceBusSession(
+            SessionManager = new ServiceBusSessionManager(
                 Consumer,
                 clientOptions.SessionId,
                 ReceiveMode,
@@ -485,7 +513,7 @@ namespace Azure.Messaging.ServiceBus
                 timeout,
                 fromSequenceNumber,
                 maxMessages,
-                await Session.GetSessionIdAsync(cancellationToken).ConfigureAwait(false),
+                await SessionManager.GetSessionIdAsync(cancellationToken).ConfigureAwait(false),
                 receiveLinkName,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -743,7 +771,7 @@ namespace Azure.Messaging.ServiceBus
             if (lockTokenGuids.Any(lockToken => RequestResponseLockedMessages.Contains(lockToken)))
             {
                 string receiveLinkName = Consumer.GetReceiveLinkName();
-                return Connection.DisposeMessageRequestResponseAsync(lockTokenGuids, timeout, DispositionStatus.Completed, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName);
+                return Connection.DisposeMessageRequestResponseAsync(lockTokenGuids, timeout, DispositionStatus.Completed, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, receiveLinkName);
             }
             return Consumer.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
         }
@@ -764,7 +792,7 @@ namespace Azure.Messaging.ServiceBus
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
                 string receiveLinkName = Consumer.GetReceiveLinkName();
-                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName, propertiesToModify);
+                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, receiveLinkName, propertiesToModify);
             }
             return Consumer.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
         }
@@ -799,7 +827,7 @@ namespace Azure.Messaging.ServiceBus
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
                 string receiveLinkName = Consumer.GetReceiveLinkName();
-                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
+                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, receiveLinkName, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
             }
 
             return Consumer.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription), timeout);
@@ -820,7 +848,7 @@ namespace Azure.Messaging.ServiceBus
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
                 string receiveLinkName = Consumer.GetReceiveLinkName();
-                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, IsSessionReceiver, Session.UserSpecifiedSessionId, receiveLinkName, propertiesToModify);
+                return Connection.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, receiveLinkName, propertiesToModify);
             }
             return Consumer.DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
         }

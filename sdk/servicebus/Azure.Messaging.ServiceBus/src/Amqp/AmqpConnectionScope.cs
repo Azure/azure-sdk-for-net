@@ -238,7 +238,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(
             TimeSpan timeout,
-            uint prefetchCount,
+            int prefetchCount,
             ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
@@ -484,7 +484,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpConnection connection,
             Uri endpoint,
             TimeSpan timeout,
-            uint prefetchCount,
+            int prefetchCount,
              ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
@@ -523,7 +523,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var linkSettings = new AmqpLinkSettings
                 {
                     Role = true,
-                    TotalLinkCredit = prefetchCount,
+                    TotalLinkCredit = (uint) prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },

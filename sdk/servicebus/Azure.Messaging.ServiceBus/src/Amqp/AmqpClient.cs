@@ -525,7 +525,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override TransportConsumer CreateConsumer(ServiceBusRetryPolicy retryPolicy,
                                                          ReceiveMode receiveMode,
-                                                         uint? prefetchCount,
+                                                         int? prefetchCount,
                                                          string sessionId,
                                                          bool isSessionReceiver)
         {

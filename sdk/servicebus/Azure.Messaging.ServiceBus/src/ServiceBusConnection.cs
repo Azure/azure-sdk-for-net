@@ -70,25 +70,25 @@ namespace Azure.Messaging.ServiceBus
         ///
         private TransportClient InnerClient { get; set; }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusConnection(string connectionString) :
-            this(connectionString, null, connectionOptions: null)
-        {
-        }
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /////
+        ///// <remarks>
+        /////   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        /////   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        /////   connection string.  For example, ";EntityPath=telemetry-hub".
+        /////
+        /////   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        /////   Service Bus entity will result in a connection string that contains the name.
+        ///// </remarks>
+        /////
+        //public ServiceBusConnection(string connectionString) :
+        //    this(connectionString, null, connectionOptions: null)
+        //{
+        //}
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
@@ -108,95 +108,93 @@ namespace Azure.Messaging.ServiceBus
         ///
         public ServiceBusConnection(
             string connectionString,
-            ServiceBusConnectionOptions connectionOptions)
+            ServiceBusConnectionOptions connectionOptions = default)
             : this(connectionString, null, connectionOptions)
         {
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        /// <param name="entityName">The name of the specific entity to associate the connection with.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        ///   passed only once, either as part of the connection string or separately.
-        /// </remarks>
-        ///
-        public ServiceBusConnection(
-            string connectionString,
-            string entityName)
-            : this(connectionString, entityName, connectionOptions: null)
-        {
-        }
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
+        ///// <param name="entityName">The name of the specific entity to associate the connection with.</param>
+        /////
+        ///// <remarks>
+        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        /////   passed only once, either as part of the connection string or separately.
+        ///// </remarks>
+        ///////
+        //public ServiceBusConnection(
+        //    string connectionString)
+        //    : this(connectionString, null, connectionOptions: null)
+        //{
+        //}
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
-        /// <param name="entityName">The name of the specific Service Bus entity to associate the connection with (if not contained in connectionString).</param>
-        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        ///   passed only once, either as part of the connection string or separately.
-        /// </remarks>
-        ///
-        public ServiceBusConnection(
-            string connectionString,
-            string entityName,
-            ServiceBusConnectionOptions connectionOptions)
-        {
-            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
+        ///// <param name="entityName">The name of the specific Service Bus entity to associate the connection with (if not contained in connectionString).</param>
+        ///// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        /////
+        ///// <remarks>
+        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        /////   passed only once, either as part of the connection string or separately.
+        ///// </remarks>
+        /////
+        //internal ServiceBusConnection(
+        //    string connectionString,
+        //    ServiceBusConnectionOptions connectionOptions)
+        //{
+        //    var entityName = "";
+        //    Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
+        //    connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
 
-            ValidateConnectionOptions(connectionOptions);
-            var builder = new ServiceBusConnectionStringBuilder(connectionString);
+        //    ValidateConnectionOptions(connectionOptions);
+        //    var builder = new ServiceBusConnectionStringBuilder(connectionString);
 
-            var fullyQualifiedNamespace = builder.FullyQualifiedNamespace;
+        //    var fullyQualifiedNamespace = builder.FullyQualifiedNamespace;
 
-            if (string.IsNullOrEmpty(entityName))
-            {
-                entityName = builder.EntityName;
-            }
+        //    if (string.IsNullOrEmpty(entityName))
+        //    {
+        //        entityName = builder.EntityName;
+        //    }
 
-            var sharedAccessSignature = new SharedAccessSignature
-            (
-                 BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName),
-                 builder.SasKeyName,
-                 builder.SasKey
-            );
+        //    var sharedAccessSignature = new SharedAccessSignature
+        //    (
+        //         BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName),
+        //         builder.SasKeyName,
+        //         builder.SasKey
+        //    );
 
-            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredentials = new ServiceBusTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName));
+        //    var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
+        //    var tokenCredentials = new ServiceBusTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName));
 
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EntityName = entityName;
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredentials, connectionOptions);
-            TransportType = connectionOptions.TransportType;
-        }
+        //    FullyQualifiedNamespace = fullyQualifiedNamespace;
+        //    EntityName = entityName;
+        //    InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredentials, connectionOptions);
+        //    TransportType = connectionOptions.TransportType;
+        //}
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of the specific Service Bus entity to associate the connection with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         public ServiceBusConnection(
             string fullyQualifiedNamespace,
-            string entityName,
             TokenCredential credential,
             ServiceBusConnectionOptions connectionOptions = default)
         {
+            var entityName = "";
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -420,7 +418,7 @@ namespace Azure.Messaging.ServiceBus
         internal virtual TransportConsumer CreateTransportConsumer(
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode = default,
-            uint? prefetchCount = default,
+            int? prefetchCount = default,
             string sessionId = default,
             bool isSessionReceiver = default)
         {

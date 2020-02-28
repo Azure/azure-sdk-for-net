@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
             ClientDiagnostics = new ClientDiagnostics(clientOptions);
             OwnsConnection = true;
-            Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
+            Connection = new ServiceBusConnection(connectionString, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             InnerSender = Connection.CreateTransportProducer(RetryPolicy);
         }
@@ -189,9 +189,32 @@ namespace Azure.Messaging.ServiceBus
             ClientDiagnostics = new ClientDiagnostics(clientOptions);
 
             OwnsConnection = true;
-            Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
+            Connection = new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             InnerSender = Connection.CreateTransportProducer(RetryPolicy);
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="entityName"></param>
+        /// <param name="options"></param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
+        /// </remarks>
+        ///
+        public ServiceBusSenderClient(ServiceBusConnection connection, string entityName, ServiceBusSenderClientOptions options = default)
+            : this(connection, new ServiceBusSenderClientOptions())
+        {
+            OwnsConnection = false;
         }
 
         /// <summary>
@@ -241,7 +264,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await SendBatchAsync(new ServiceBusMessage[] { message }, cancellationToken).ConfigureAwait(false);
+            await SendBatchAsync(new ServiceBusMessageBatch(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,8 +279,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
         ///
-        public virtual async Task SendBatchAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
-            await SendRangeInternal(messages, cancellationToken).ConfigureAwait(false);
+        public virtual async Task SendBatchAsync(ServiceBusMessageBatch messages, CancellationToken cancellationToken = default) =>
+            await SendRangeInternal(new ServiceBusMessage[] { }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
@@ -316,7 +339,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
 
-        /// <seealso cref="SendBatchAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
         ///
         internal virtual async Task SendRangeInternal(
             IEnumerable<ServiceBusMessage> messages,
