@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.1022
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Synapse", "src\Microsoft.Azure.Synapse.csproj", "{9BB62C96-1BDC-4D50-9FA6-A899B5184454}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Synapse.Tests", "tests\Microsoft.Azure.Synapse.Tests.csproj", "{62C9984A-6D3A-4375-A512-042E935E4D48}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{9BB62C96-1BDC-4D50-9FA6-A899B5184454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BB62C96-1BDC-4D50-9FA6-A899B5184454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BB62C96-1BDC-4D50-9FA6-A899B5184454}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62C9984A-6D3A-4375-A512-042E935E4D48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62C9984A-6D3A-4375-A512-042E935E4D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62C9984A-6D3A-4375-A512-042E935E4D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62C9984A-6D3A-4375-A512-042E935E4D48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
