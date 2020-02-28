@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.Configuration.Secrets.Tests
 {
-    public class AzureKeyVaultConfigurationTest
+    public class AzureKeyVaultConfigurationTests
     {
         private static readonly TimeSpan NoReloadDelay = TimeSpan.FromMilliseconds(1);
 

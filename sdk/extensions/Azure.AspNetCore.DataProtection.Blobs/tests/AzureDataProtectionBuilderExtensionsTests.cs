@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class AzureDataProtectionBuilderExtensionsTest
+    public class AzureDataProtectionBuilderExtensionsTests
     {
         [Test]
         public void PersistKeysToAzureBlobStorage_UsesAzureBlobXmlRepository()

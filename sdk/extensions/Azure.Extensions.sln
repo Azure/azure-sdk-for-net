@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.AspNetCore.DataProtec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Keys", "Azure.AspNetCore.DataProtection.Keys\src\Azure.AspNetCore.DataProtection.Keys.csproj", "{4324C3A5-67DA-4130-B506-69BDB282DB42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Keys.Tests", "Azure.AspNetCore.DataProtection.Keys\test\Azure.AspNetCore.DataProtection.Keys.Tests.csproj", "{0BE93DC0-97FC-48D6-BA9F-482BCF974D83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Keys.Tests", "Azure.AspNetCore.DataProtection.Keys\tests\Azure.AspNetCore.DataProtection.Keys.Tests.csproj", "{0BE93DC0-97FC-48D6-BA9F-482BCF974D83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.Extensions.Configuration.Secrets", "Azure.Extensions.Configuration.Secrets", "{A6B68F68-8FDF-4D1F-9277-BABEE6904DCA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.Configuration.Secrets", "Azure.Extensions.Configuration.Secrets\src\Azure.Extensions.Configuration.Secrets.csproj", "{8EFE342E-7C53-4489-B14B-EB813CE015B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.Configuration.Secrets.Tests", "Azure.Extensions.Configuration.Secrets\test\Azure.Extensions.Configuration.Secrets.Tests.csproj", "{5F56D5D1-670D-4C34-BB1A-E4D46F0CD05E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Extensions.Configuration.Secrets.Tests", "Azure.Extensions.Configuration.Secrets\tests\Azure.Extensions.Configuration.Secrets.Tests.csproj", "{5F56D5D1-670D-4C34-BB1A-E4D46F0CD05E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
