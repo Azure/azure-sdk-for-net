@@ -19,7 +19,7 @@ namespace Azure.AI.Search.Tests
     public abstract partial class SearchTestBase : RecordedTestBase
     {
         /// <summary>
-        /// The maximimum number of retries for service requests.
+        /// The maximum number of retries for service requests.
         /// </summary>
         private const int MaxRetries = 5;
 
@@ -46,7 +46,7 @@ namespace Azure.AI.Search.Tests
         /// Version of the REST API to test against.
         /// </param>
         /// <param name="mode">
-        /// Whether to run in Playback, Record, or Live mode.  The defualt
+        /// Whether to run in Playback, Record, or Live mode.  The default
         /// value is pulled from the AZURE_TEST_MODE environment variable.
         /// </param>
         public SearchTestBase(bool async, SearchClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)

@@ -19,7 +19,7 @@ namespace Azure.AI.Search
         /// <summary>
         /// The versions of Azure Cognitive Search supported by this client
         /// library.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/azure/search/search-api-versions" />.
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
         /// </summary>
         public enum ServiceVersion
         {
@@ -39,7 +39,7 @@ namespace Azure.AI.Search
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/azure/search/search-api-versions" />.
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
         /// </summary>
         public ServiceVersion Version { get; }
 
@@ -50,7 +50,7 @@ namespace Azure.AI.Search
         /// <param name="version">
         /// An optional <see cref="ServiceVersion"/> to specify the version of
         /// the REST API to use.  For more, see
-        /// <see href="https://docs.microsoft.com/en-us/azure/search/search-api-versions" />.
+        /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
         ///
         /// If not provided, the <paramref name="version"/> will default to the
         /// latest supported by this client library.  It is recommended that
@@ -100,7 +100,7 @@ namespace Azure.AI.Search
 
         /// <summary>
         /// Add the allow list query parameters to the
-        /// <see cref="DiagnosticsOptions"/> that  ar considered safe for
+        /// <see cref="DiagnosticsOptions"/> that  are considered safe for
         /// logging/exceptions by default.
         /// </summary>
         private void AddLoggingQueryParameters()

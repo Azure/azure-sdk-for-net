@@ -105,7 +105,7 @@ namespace Azure.AI.Search.Tests
         public string PrimaryApiKey { get; private set; }
 
         /// <summary>
-        /// The Query API key to authenticate requests to the serivce.
+        /// The Query API key to authenticate requests to the service.
         /// </summary>
         public string QueryApiKey { get; private set; }
 

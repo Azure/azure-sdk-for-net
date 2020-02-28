@@ -1,6 +1,6 @@
 # Azure Cognitive Search client library for .NET
 
-Azure Cognitive Search ([formerly known as "Azure Search"](https://docs.microsoft.com/en-us/azure/search/whats-new#new-service-name))
+Azure Cognitive Search ([formerly known as "Azure Search"](https://docs.microsoft.com/azure/search/whats-new#new-service-name))
 is a search-as-a-service cloud solution that gives developers APIs and tools
 for adding a rich search experience over private, heterogeneous content in web,
 mobile, and enterprise applications. Your code or a tool invokes data ingestion
@@ -153,16 +153,16 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Azure.AI.Search/src
 [package]: https://www.nuget.org/packages/Azure.AI.Search/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.ai.search
-[rest_docs]: https://docs.microsoft.com/en-us/rest/api/searchservice/
-[product_docs]: https://docs.microsoft.com/en-us/azure/search/
+[rest_docs]: https://docs.microsoft.com/rest/api/searchservice/
+[product_docs]: https://docs.microsoft.com/azure/search/
 [nuget]: https://www.nuget.org/
-[create_search_service_docs]: https://docs.microsoft.com/en-us/azure/search/search-create-service-portal
-[create_search_service_ps]: https://docs.microsoft.com/en-us/azure/search/search-manage-powershell#create-or-delete-a-service
-[create_search_service_cli]: https://docs.microsoft.com/en-us/cli/azure/search/service?view=azure-cli-latest#az-search-service-create
+[create_search_service_docs]: https://docs.microsoft.com/azure/search/search-create-service-portal
+[create_search_service_ps]: https://docs.microsoft.com/azure/search/search-manage-powershell#create-or-delete-a-service
+[create_search_service_cli]: https://docs.microsoft.com/cli/azure/search/service?view=azure-cli-latest#az-search-service-create
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
-[status_codes]: https://docs.microsoft.com/en-us/rest/api/searchservice/http-status-codes
+[status_codes]: https://docs.microsoft.com/rest/api/searchservice/http-status-codes
 [samples]: samples/
 [search_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

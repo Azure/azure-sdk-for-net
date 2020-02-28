@@ -28,7 +28,7 @@ namespace Azure.AI.Search
             Debug.Assert(endpoint != null);
             if (!string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentException($"{paramName} only supports https.", paramName);
+                throw new ArgumentException($"{paramName} only supports {Uri.UriSchemeHttps}.", paramName);
             }
         }
 

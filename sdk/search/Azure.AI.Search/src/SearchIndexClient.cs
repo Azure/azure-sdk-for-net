@@ -40,7 +40,7 @@ namespace Azure.AI.Search
         public virtual string IndexName { get; }
 
         /// <summary>
-        /// Gets the authenticatd <see cref="HttpPipeline"/> used for sending
+        /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
         /// requests to the Search Service.
         /// </summary>
         private HttpPipeline Pipeline { get; }
@@ -175,7 +175,7 @@ namespace Azure.AI.Search
         /// Required.  The name of the Search Index.
         /// </param>
         /// <param name="pipeline">
-        /// The authenticatd <see cref="HttpPipeline"/> used for sending
+        /// The authenticated <see cref="HttpPipeline"/> used for sending
         /// requests to the Search Service.
         /// </param>
         /// <param name="diagnostics">
@@ -225,7 +225,7 @@ namespace Azure.AI.Search
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be cancelled.
+        /// that the operation should be canceled.
         /// </param>
         /// <returns>The service level statistics.</returns>
         /// <exception cref="RequestFailedException">
@@ -249,7 +249,7 @@ namespace Azure.AI.Search
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be cancelled.
+        /// that the operation should be canceled.
         /// </param>
         /// <returns>The service level statistics.</returns>
         /// <exception cref="RequestFailedException">

@@ -36,7 +36,7 @@ namespace Azure.AI.Search
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
-        /// Gets the authenticatd <see cref="HttpPipeline"/> used for sending
+        /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
         /// requests to the Search Service.
         /// </summary>
         private HttpPipeline Pipeline { get; }
@@ -193,7 +193,7 @@ namespace Azure.AI.Search
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be cancelled.
+        /// that the operation should be canceled.
         /// </param>
         /// <returns>The service level statistics.</returns>
         /// <exception cref="RequestFailedException">
@@ -228,7 +228,7 @@ namespace Azure.AI.Search
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be cancelled.
+        /// that the operation should be canceled.
         /// </param>
         /// <returns>The service level statistics.</returns>
         /// <exception cref="RequestFailedException">
