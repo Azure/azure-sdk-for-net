@@ -62,4 +62,8 @@
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- Pull in shared source Avro dependency -->
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Internal.Avro\src\**\*.cs" Link="Shared\Avro\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

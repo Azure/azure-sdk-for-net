@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Internal.Avro;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -1068,5 +1069,29 @@ namespace Azure.Storage.Blobs
         {
             return (content, metadata); // no-op
         }
+
+        /// <summary>
+        /// Execute a query against the blob.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>Results of the query.</returns>
+        public virtual object Query(string query, CancellationToken cancellationToken = default) =>
+            AvroParser.Parse(query);
+
+        /// <summary>
+        /// Execute a query against the blob.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>Results of the query.</returns>
+        public virtual Task<object> QueryAsync(string query, CancellationToken cancellationToken = default) =>
+            Task.FromResult(AvroParser.Parse(query));
     }
 }

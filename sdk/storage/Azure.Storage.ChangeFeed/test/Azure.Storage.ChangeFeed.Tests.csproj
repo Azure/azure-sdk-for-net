@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.ChangeFeed client library tests</AssemblyTitle>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.ChangeFeed.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.ChangeFeed client library</AssemblyTitle>
+    <Version>12.0.0-preview.1</Version>
+    <GenerateAPIListing>false</GenerateAPIListing>
+    <EnableApiCompat>false</EnableApiCompat>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+
+    <!-- Pull in shared source Avro dependency -->
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Internal.Avro\src\**\*.cs" Link="Shared\Avro\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

@@ -964,5 +964,11 @@ namespace Azure.Storage.Blobs.Test
                         cancellationToken: token));
             }
         }
+
+        [Test]
+        public void GetStarted()
+        {
+            Assert.AreEqual(42, new BlobClient(new Uri("http://azure.com")).Query("SELECT *"));
+        }
     }
 }

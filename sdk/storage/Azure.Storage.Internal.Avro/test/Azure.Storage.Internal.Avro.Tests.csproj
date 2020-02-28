@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Internal Avro client library tests - not for distribution</AssemblyTitle>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Pull in Avro as shared source instead of InternalsVisible since that's how it'll be used -->
+    <Compile Include="$(MSBuildThisFileDirectory)..\src\**\*.cs" Link="Avro\%(RecursiveDir)\%(Filename)%(Extension)" />
+
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

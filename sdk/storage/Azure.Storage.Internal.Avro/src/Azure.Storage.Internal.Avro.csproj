@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Internal Avro client library - not for distribution</AssemblyTitle>
+    <Version>0.0.0-preview.0</Version>
+    <IsPackable>false</IsPackable>
+    <GenerateAPIListing>false</GenerateAPIListing>
+    <EnableApiCompat>false</EnableApiCompat>
+  </PropertyGroup>
+</Project>
