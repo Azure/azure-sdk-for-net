@@ -44,8 +44,8 @@ jobs:
       - pwsh: Register-PackageSource -Name NightlyFeed -Location $(BlobFeedUrl) -ProviderName Nuget
         displayName: Register nightly feed package source
 
-      - script: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: dotnet list package
+      - script: dotnet restore --source '$(BlobFeedUrl)' ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
 
       - task: PowerShell@2
         inputs:
