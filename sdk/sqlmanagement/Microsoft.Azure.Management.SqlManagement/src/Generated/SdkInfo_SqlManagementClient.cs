@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Sql
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
       public static readonly String GithubCommidId = "dcd51ecb0bba6cd98f42383f0ef0159efc64a658";
-      public static readonly String CodeGenerationErrors = ""
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
