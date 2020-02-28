@@ -38,15 +38,23 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="agreementLink">The link to the agreement.</param>
+        /// <param name="category">Category of the agreement signed by
+        /// customer. Possible values include: 'MicrosoftCustomerAgreement',
+        /// 'AffiliatePurchaseTerms', 'Other'</param>
+        /// <param name="acceptanceMode">The mode of acceptance for an
+        /// agreement. Possible values include: 'ClickToAccept',
+        /// 'ESignEmbedded', 'ESignOffline'</param>
         /// <param name="effectiveDate">Effective date.</param>
         /// <param name="expirationDate">Expiration date.</param>
         /// <param name="participants">Participants or signer of the
         /// agreement.</param>
         /// <param name="status">The agreement status</param>
-        public Agreement(string id = default(string), string name = default(string), string type = default(string), string agreementLink = default(string), System.DateTime? effectiveDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), IList<Participants> participants = default(IList<Participants>), string status = default(string))
+        public Agreement(string id = default(string), string name = default(string), string type = default(string), string agreementLink = default(string), string category = default(string), string acceptanceMode = default(string), System.DateTime? effectiveDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), IList<Participants> participants = default(IList<Participants>), string status = default(string))
             : base(id, name, type)
         {
             AgreementLink = agreementLink;
+            Category = category;
+            AcceptanceMode = acceptanceMode;
             EffectiveDate = effectiveDate;
             ExpirationDate = expirationDate;
             Participants = participants;
@@ -64,6 +72,21 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.agreementLink")]
         public string AgreementLink { get; private set; }
+
+        /// <summary>
+        /// Gets category of the agreement signed by customer. Possible values
+        /// include: 'MicrosoftCustomerAgreement', 'AffiliatePurchaseTerms',
+        /// 'Other'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.category")]
+        public string Category { get; private set; }
+
+        /// <summary>
+        /// Gets the mode of acceptance for an agreement. Possible values
+        /// include: 'ClickToAccept', 'ESignEmbedded', 'ESignOffline'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.acceptanceMode")]
+        public string AcceptanceMode { get; private set; }
 
         /// <summary>
         /// Gets effective date.

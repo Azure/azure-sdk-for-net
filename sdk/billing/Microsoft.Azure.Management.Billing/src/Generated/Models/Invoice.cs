@@ -41,39 +41,73 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="invoiceDate">The date when invoice was
         /// created.</param>
         /// <param name="status">Invoice status. Possible values include:
-        /// 'PastDue', 'Due', 'Paid', 'Void'</param>
-        /// <param name="amountDue">Amount due.</param>
-        /// <param name="billedAmount">Amount billed.</param>
+        /// 'Due', 'OverDue', 'Paid'</param>
+        /// <param name="amountDue">The amount due as of now.</param>
+        /// <param name="azurePrepaymentApplied">The amount of Azure prepayment
+        /// applied to the charges. This field is applicable to billing
+        /// accounts with agreement type Microsoft Customer Agreement.</param>
+        /// <param name="billedAmount">The total charges for the invoice
+        /// billing period.</param>
+        /// <param name="creditAmount">The total refund for returns and
+        /// cancellations during the invoice billing period. This field is
+        /// applicable to billing accounts with agreement type Microsoft
+        /// Customer Agreement.</param>
+        /// <param name="freeAzureCreditApplied">The amount of free Azure
+        /// credits applied to the charges. This field is applicable to billing
+        /// accounts with agreement type Microsoft Customer Agreement.</param>
+        /// <param name="subTotal">The pre-tax amount due. This field is
+        /// applicable to billing accounts with agreement type Microsoft
+        /// Customer Agreement.</param>
+        /// <param name="taxAmount">The amount of tax charged for the billing
+        /// period. This field is applicable to billing accounts with agreement
+        /// type Microsoft Customer Agreement.</param>
+        /// <param name="totalAmount">The amount due when the invoice was
+        /// generated. This field is applicable to billing accounts with
+        /// agreement type Microsoft Customer Agreement.</param>
         /// <param name="invoicePeriodStartDate">The start date of the billing
         /// period.</param>
         /// <param name="invoicePeriodEndDate">The end date of the billing
         /// period.</param>
         /// <param name="invoiceType">Invoice type.</param>
+        /// <param name="isMonthlyInvoice">Specifies if the invoice is
+        /// generated as part of monthly invoicing cycle or not. This field is
+        /// applicable to billing accounts with agreement type Microsoft
+        /// Customer Agreement.</param>
         /// <param name="billingProfileId">The billing profile id this invoice
         /// belongs to.</param>
         /// <param name="billingProfileDisplayName">The billing profile display
         /// name this invoice belongs to.</param>
-        /// <param name="purchaseOrderNumber">The purchase identifier for the
-        /// invoice.</param>
+        /// <param name="purchaseOrderNumber">An optional purchase order number
+        /// used for the invoice.</param>
         /// <param name="documents">List of documents available to download
         /// including invoice and tax documents.</param>
         /// <param name="payments">List of payments.</param>
-        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount billedAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), object invoiceType = default(object), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>))
+        /// <param name="subscriptionId">The subscription id this invoice
+        /// belongs to.</param>
+        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount azurePrepaymentApplied = default(Amount), Amount billedAmount = default(Amount), Amount creditAmount = default(Amount), Amount freeAzureCreditApplied = default(Amount), Amount subTotal = default(Amount), Amount taxAmount = default(Amount), Amount totalAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), object invoiceType = default(object), bool? isMonthlyInvoice = default(bool?), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>), string subscriptionId = default(string))
             : base(id, name, type)
         {
             DueDate = dueDate;
             InvoiceDate = invoiceDate;
             Status = status;
             AmountDue = amountDue;
+            AzurePrepaymentApplied = azurePrepaymentApplied;
             BilledAmount = billedAmount;
+            CreditAmount = creditAmount;
+            FreeAzureCreditApplied = freeAzureCreditApplied;
+            SubTotal = subTotal;
+            TaxAmount = taxAmount;
+            TotalAmount = totalAmount;
             InvoicePeriodStartDate = invoicePeriodStartDate;
             InvoicePeriodEndDate = invoicePeriodEndDate;
             InvoiceType = invoiceType;
+            IsMonthlyInvoice = isMonthlyInvoice;
             BillingProfileId = billingProfileId;
             BillingProfileDisplayName = billingProfileDisplayName;
             PurchaseOrderNumber = purchaseOrderNumber;
             Documents = documents;
             Payments = payments;
+            SubscriptionId = subscriptionId;
             CustomInit();
         }
 
@@ -95,23 +129,70 @@ namespace Microsoft.Azure.Management.Billing.Models
         public System.DateTime? InvoiceDate { get; private set; }
 
         /// <summary>
-        /// Gets invoice status. Possible values include: 'PastDue', 'Due',
-        /// 'Paid', 'Void'
+        /// Gets invoice status. Possible values include: 'Due', 'OverDue',
+        /// 'Paid'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets amount due.
+        /// Gets the amount due as of now.
         /// </summary>
         [JsonProperty(PropertyName = "properties.amountDue")]
         public Amount AmountDue { get; private set; }
 
         /// <summary>
-        /// Gets amount billed.
+        /// Gets the amount of Azure prepayment applied to the charges. This
+        /// field is applicable to billing accounts with agreement type
+        /// Microsoft Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azurePrepaymentApplied")]
+        public Amount AzurePrepaymentApplied { get; private set; }
+
+        /// <summary>
+        /// Gets the total charges for the invoice billing period.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billedAmount")]
         public Amount BilledAmount { get; private set; }
+
+        /// <summary>
+        /// Gets the total refund for returns and cancellations during the
+        /// invoice billing period. This field is applicable to billing
+        /// accounts with agreement type Microsoft Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.creditAmount")]
+        public Amount CreditAmount { get; private set; }
+
+        /// <summary>
+        /// Gets the amount of free Azure credits applied to the charges. This
+        /// field is applicable to billing accounts with agreement type
+        /// Microsoft Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.freeAzureCreditApplied")]
+        public Amount FreeAzureCreditApplied { get; private set; }
+
+        /// <summary>
+        /// Gets the pre-tax amount due. This field is applicable to billing
+        /// accounts with agreement type Microsoft Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subTotal")]
+        public Amount SubTotal { get; private set; }
+
+        /// <summary>
+        /// Gets the amount of tax charged for the billing period. This field
+        /// is applicable to billing accounts with agreement type Microsoft
+        /// Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.taxAmount")]
+        public Amount TaxAmount { get; private set; }
+
+        /// <summary>
+        /// Gets the amount due when the invoice was generated. This field is
+        /// applicable to billing accounts with agreement type Microsoft
+        /// Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.totalAmount")]
+        public Amount TotalAmount { get; private set; }
 
         /// <summary>
         /// Gets the start date of the billing period.
@@ -132,6 +213,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         public object InvoiceType { get; private set; }
 
         /// <summary>
+        /// Gets specifies if the invoice is generated as part of monthly
+        /// invoicing cycle or not. This field is applicable to billing
+        /// accounts with agreement type Microsoft Customer Agreement.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isMonthlyInvoice")]
+        public bool? IsMonthlyInvoice { get; private set; }
+
+        /// <summary>
         /// Gets the billing profile id this invoice belongs to.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfileId")]
@@ -144,7 +233,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string BillingProfileDisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the purchase identifier for the invoice.
+        /// Gets an optional purchase order number used for the invoice.
         /// </summary>
         [JsonProperty(PropertyName = "properties.purchaseOrderNumber")]
         public string PurchaseOrderNumber { get; private set; }
@@ -161,6 +250,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.payments")]
         public IList<PaymentProperties> Payments { get; private set; }
+
+        /// <summary>
+        /// Gets the subscription id this invoice belongs to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subscriptionId")]
+        public string SubscriptionId { get; private set; }
 
     }
 }

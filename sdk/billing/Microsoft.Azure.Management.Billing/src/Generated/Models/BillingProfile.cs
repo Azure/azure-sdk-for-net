@@ -49,7 +49,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// plans.</param>
         /// <param name="invoiceSections">The invoice sections associated to
         /// the billing profile.</param>
-        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), AddressDetails address = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>))
+        /// <param name="status">The status of the billing profile.</param>
+        /// <param name="statusReasonCode">Reason for the specified billing
+        /// profile status.</param>
+        /// <param name="spendingLimit">The billing profile spending
+        /// limit.</param>
+        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), AddressDetails address = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>), object status = default(object), object statusReasonCode = default(object), object spendingLimit = default(object))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -60,6 +65,9 @@ namespace Microsoft.Azure.Management.Billing.Models
             Currency = currency;
             EnabledAzurePlans = enabledAzurePlans;
             InvoiceSections = invoiceSections;
+            Status = status;
+            StatusReasonCode = statusReasonCode;
+            SpendingLimit = spendingLimit;
             CustomInit();
         }
 
@@ -117,6 +125,24 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSections")]
         public IList<InvoiceSection> InvoiceSections { get; set; }
+
+        /// <summary>
+        /// Gets the status of the billing profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public object Status { get; private set; }
+
+        /// <summary>
+        /// Gets reason for the specified billing profile status.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.statusReasonCode")]
+        public object StatusReasonCode { get; private set; }
+
+        /// <summary>
+        /// Gets the billing profile spending limit.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.spendingLimit")]
+        public object SpendingLimit { get; private set; }
 
     }
 }

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the Document class.
         /// </summary>
         /// <param name="kind">Document type. Possible values include:
-        /// 'Invoice', 'VoidNote', 'Receipt', 'CreditNote'</param>
+        /// 'Invoice', 'VoidNote', 'TaxReceipt', 'CreditNote'</param>
         /// <param name="url">Document URL.</param>
         public Document(string kind = default(string), string url = default(string))
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Billing.Models
 
         /// <summary>
         /// Gets document type. Possible values include: 'Invoice', 'VoidNote',
-        /// 'Receipt', 'CreditNote'
+        /// 'TaxReceipt', 'CreditNote'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; private set; }
