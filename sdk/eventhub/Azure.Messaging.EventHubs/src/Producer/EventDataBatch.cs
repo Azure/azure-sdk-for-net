@@ -51,8 +51,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the batch is associated with.  To be used
-        ///   during instrumentation.  This is likely to be similar to
-        ///   <c>{yournamespace}.servicebus.windows.net</c>.
+        ///   during instrumentation.
         /// </summary>
         ///
         private string FullyQualifiedNamespace { get; }
@@ -69,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="transportBatch">The  transport-specific batch responsible for performing the batch operations.</param>
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the events with during instrumentation.</param>
         /// <param name="sendOptions">The set of options that should be used when publishing the batch.</param>
         ///

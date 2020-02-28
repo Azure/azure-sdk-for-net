@@ -40,10 +40,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
-            // Seems ExactTypeConstraints is not re-entrant.
-            ExactTypeConstraint TypeConstraint() => fullyQualifiedNamespace is null ? Throws.ArgumentNullException : Throws.ArgumentException;
-
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), TypeConstraint());
+            var expectedType = fullyQualifiedNamespace is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), Throws.TypeOf(expectedType));
         }
 
         /// <summary>
@@ -56,10 +54,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheEventHubName(string eventHubName)
         {
-            // Seems ExactTypeConstraints is not re-entrant.
-            ExactTypeConstraint TypeConstraint() => eventHubName is null ? Throws.ArgumentNullException : Throws.ArgumentException;
-
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), TypeConstraint());
+            var expectedType = eventHubName is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), Throws.TypeOf(expectedType));
         }
 
         /// <summary>
