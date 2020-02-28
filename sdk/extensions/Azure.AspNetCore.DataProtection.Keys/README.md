@@ -41,6 +41,10 @@ public void ConfigureServices(IServiceCollection services)
 
 The [Azure Identity library][identity] provides easy Azure Active Directory support for authentication.
 
+## Next steps
+
+Read more about [DataProtection in ASP.NET Core](aspnetcore_dataprotection_doc).
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require
@@ -66,8 +70,7 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[storage_ad]: https://docs.microsoft.com/azure/storage/common/storage-auth-aad
-[storage_ad_sample]: samples/Sample02c_Auth_ActiveDirectory.cs
+[aspnetcore_dataprotection_doc]: https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/using-data-protection
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/rest/api/storageservices/blob-service-error-codes
 [samples]: samples/
