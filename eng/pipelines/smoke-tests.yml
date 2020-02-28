@@ -1,5 +1,7 @@
 variables:
   - template: ./templates/variables/globals.yml
+  - name: BlobFeedUrl
+    value: 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
 
 jobs:
   - job: SmokeTest
@@ -38,6 +40,17 @@ jobs:
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
+
+      - pwsh: Register-PackageSource -Name NightlyFeed -Location $(BlobFeedUrl) -ProviderName Nuget
+        displayName: Register nightly feed package source
+
+      - pwsh:
+        inputs:
+          targetType: filePath
+          script: common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+          arguments: -Framework $(TestTargetFramework)
+          workingDirectory: common/SmokeTests/SmokeTest
+        displayName: Use latest dev feed package versions
 
       - script: dotnet run -p ./common/SmokeTests/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
