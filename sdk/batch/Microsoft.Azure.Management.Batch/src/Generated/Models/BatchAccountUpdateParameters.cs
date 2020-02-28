@@ -40,10 +40,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="autoStorage">The properties related to the
         /// auto-storage account.</param>
-        public BatchAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties))
+        /// <param name="encryption">The encryption configuration for the Batch
+        /// account.</param>
+        public BatchAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), AutoStorageBaseProperties autoStorage = default(AutoStorageBaseProperties), EncryptionProperties encryption = default(EncryptionProperties))
         {
             Tags = tags;
             AutoStorage = autoStorage;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -63,6 +66,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]
         public AutoStorageBaseProperties AutoStorage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption configuration for the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperties Encryption { get; set; }
 
         /// <summary>
         /// Validate the object.

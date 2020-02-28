@@ -48,7 +48,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// used when deploying the operating system.</param>
         /// <param name="containerConfiguration">The container configuration
         /// for the pool.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration))
+        /// <param name="diskEncryptionConfiguration">The disk encryption
+        /// configuration for the pool.</param>
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration))
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             DataDisks = dataDisks;
             LicenseType = licenseType;
             ContainerConfiguration = containerConfiguration;
+            DiskEncryptionConfiguration = diskEncryptionConfiguration;
             CustomInit();
         }
 
@@ -138,6 +141,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "containerConfiguration")]
         public ContainerConfiguration ContainerConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk encryption configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, encryption is performed on each node in the pool
+        /// during node provisioning.
+        /// </remarks>
+        [JsonProperty(PropertyName = "diskEncryptionConfiguration")]
+        public DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
