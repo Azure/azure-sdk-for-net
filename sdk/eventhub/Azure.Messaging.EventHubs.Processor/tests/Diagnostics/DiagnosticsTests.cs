@@ -79,6 +79,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
+            var enqueuedTime = DateTimeOffset.UtcNow;
 
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -96,8 +97,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     {
                         var context = new MockPartitionContext(partitionId);
 
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id" } } });
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id2" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id2" } } });
 
                         while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
                         {
@@ -153,6 +154,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id"));
             Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id2"));
             Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind)), "The activities tag should be server.");
+            Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeSeconds().ToString())));
         }
 
         private class MockConnection : EventHubConnection
