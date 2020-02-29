@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Template;
@@ -16,9 +17,10 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             Console.WriteLine("Hello World!");
 
-            TrainCustomModel().Wait();
-
+            ExtractCustomModel().Wait();
+            //TrainCustomModel().Wait();
             //GetCustomModelsSummary();
+            //GetCustomModels();
         }
 
         private static async Task TrainCustomModel()
@@ -42,6 +44,30 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
+        private static async Task ExtractCustomModel()
+        {
+            string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
+            string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+
+            using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
+            {
+                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf);
+
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                if (extractFormOperation.HasValue)
+                {
+                    AnalyzeResult result = extractFormOperation.Value;
+                }
+            }
+
+        }
+
         private static void GetCustomModelsSummary()
         {
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
@@ -50,6 +76,20 @@ namespace Azure.AI.FormRecognizer.Samples
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var models = client.GetCustomModelSummary();
+        }
+
+        private static void GetCustomModels()
+        {
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            var models = client.GetCustomModels();
+            foreach (var model in models)
+            {
+                Console.WriteLine($"Model, Id={model.ModelId}, Status={model.Status.ToString()}");
+            }
         }
     }
 }

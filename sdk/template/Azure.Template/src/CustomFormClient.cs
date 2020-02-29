@@ -85,9 +85,10 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeRawPageExtractions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: Make this call an async method instead
+            // TODO: automate content-type detection
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
@@ -95,6 +96,16 @@ namespace Azure.AI.FormRecognizer
         #endregion Analyze
 
         #region CRUD Ops
+
+        public virtual Pageable<ModelInfo_internal> GetCustomModels(CancellationToken cancellationToken = default)
+        {
+            return _operations.GetCustomModelsPageable(GetModelOptions.Full, cancellationToken);
+        }
+
+        public virtual AsyncPageable<ModelInfo_internal> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        {
+            return _operations.GetCustomModelsPageableAsync(GetModelOptions.Full, cancellationToken);
+        }
 
         /// <summary>
         /// Executes a service call that takes and returns the <see cref="CustomModelCollection"/>.

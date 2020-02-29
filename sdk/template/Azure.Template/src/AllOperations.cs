@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer
 {
     internal partial class AllOperations
     {
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType? contentType = null)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -28,16 +28,28 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileStream);
-            request.Content = content;
+            request.Headers.Add("Content-Type", GetContentTypeString(contentType));
+            request.Content = RequestContent.Create(stream);
+            //using var content = new Utf8JsonRequestContent();
+            //content.JsonWriter.WriteObjectValue(fileStream);
+            //request.Content = content;
             return message;
         }
 
-        internal ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType? contentType = null, CancellationToken cancellationToken = default)
+        internal static string GetContentTypeString(FormContentType contentType)
         {
+            return contentType switch
+            {
+                FormContentType.Pdf => "application/pdf",
+                FormContentType.Png => "image/png",
+                FormContentType.Jpeg => "image/jpeg",
+                FormContentType.Tiff => "image/tiff",
+                _ => throw new NotSupportedException($"The content type {contentType} is not supported."),
+            };
+        }
 
+        internal ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeWithCustomModel");
             scope.Start();
             try
@@ -60,9 +72,8 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType? contentType = null, CancellationToken cancellationToken = default)
+        internal async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeWithCustomModel");
             scope.Start();
             try
