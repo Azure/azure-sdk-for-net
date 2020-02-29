@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
     ///   sometimes referred to as "Non-Epoch Consumers."
     /// </summary>
     ///
-    public class ServiceBusReceiverClient : IAsyncDisposable
+    public class ServiceBusReceiver : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusReceiverClient"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
         /// </summary>
         ///
         /// <value>
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
         internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -160,15 +160,14 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(ServiceBusConnection connection, string topicName, string subscriptionName,
-             ServiceBusReceiverClientOptions options = default)
-            : this(connection, new ServiceBusReceiverClientOptions())
+        internal ServiceBusReceiver(ServiceBusConnection connection)
+            : this(connection, new ServiceBusReceiverOptions())
         {
             OwnsConnection = false;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -182,14 +181,14 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(string connectionString)
-            : this(new ServiceBusConnection(connectionString), new ServiceBusReceiverClientOptions())
+        internal ServiceBusReceiver(string connectionString)
+            : this(new ServiceBusConnection(connectionString), new ServiceBusReceiverOptions())
         {
             OwnsConnection = true;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -204,16 +203,16 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string connectionString,
-            ServiceBusReceiverClientOptions clientOptions)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            ServiceBusReceiverOptions clientOptions)
+            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverOptions())
         {
             OwnsConnection = true;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -226,17 +225,17 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string connectionString,
             string queueOrSubscriptionName,
-            ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            ServiceBusReceiverOptions clientOptions = default)
+            : this(new ServiceBusConnection(connectionString, queueOrSubscriptionName, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverOptions())
         {
             OwnsConnection = true;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -250,18 +249,18 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string connectionString,
             string topicName,
             string subscriptionName,
-            ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            ServiceBusReceiverOptions clientOptions = default)
+            : this(new ServiceBusConnection(connectionString, GetSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverOptions())
         {
             OwnsConnection = true;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -269,18 +268,18 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string fullyQualifiedNamespace,
             string queueName,
             TokenCredential credential,
-            ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            ServiceBusReceiverOptions clientOptions = default)
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, queueName, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverOptions())
         {
             OwnsConnection = true;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -289,13 +288,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string fullyQualifiedNamespace,
             string topicName,
             string subscriptionName,
             TokenCredential credential,
-            ServiceBusReceiverClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+            ServiceBusReceiverOptions clientOptions = default)
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, GetSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusReceiverOptions())
         {
             OwnsConnection = true;
         }
@@ -306,18 +305,18 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             ServiceBusConnection connection,
-            ServiceBusReceiverClientOptions clientOptions = default)
+            ServiceBusReceiverOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            clientOptions ??= new ServiceBusReceiverClientOptions();
+            clientOptions ??= new ServiceBusReceiverOptions();
 
             IsSessionReceiver = clientOptions.IsSessionEntity;
             Connection = connection;
@@ -339,10 +338,10 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
-        protected ServiceBusReceiverClient()
+        protected ServiceBusReceiver()
         {
             OwnsConnection = false;
         }
@@ -357,7 +356,7 @@ namespace Azure.Messaging.ServiceBus
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             try
@@ -552,7 +551,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<ServiceBusReceivedMessage> receivedMessages,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             Argument.AssertNotNullOrEmpty(receivedMessages, nameof(receivedMessages));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -596,7 +595,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             try
@@ -631,7 +630,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// In order to receive a message from the deadletter queue, you will need a new
-        /// <see cref="ServiceBusReceiverClient"/> with the corresponding path.
+        /// <see cref="ServiceBusReceiver"/> with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
         /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
@@ -641,7 +640,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             try
@@ -678,7 +677,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiverClient"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -688,7 +687,7 @@ namespace Azure.Messaging.ServiceBus
             string deadLetterErrorDescription = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             try
@@ -732,7 +731,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             try
@@ -1040,7 +1039,7 @@ namespace Azure.Messaging.ServiceBus
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiverClient), EntityName, clientHash);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiver), EntityName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -1054,7 +1053,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EntityName, clientHash, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiver), EntityName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -1070,13 +1069,13 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EntityName, clientHash, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiver), EntityName, clientHash, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiverClient), EntityName, clientHash);
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiver), EntityName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual
@@ -1089,7 +1088,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiverClient" />,
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />,
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///

@@ -9,14 +9,14 @@ using Azure.Messaging.ServiceBus.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusProcessorClient" />
+    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusProcessor" />
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusProcessorClientOptions
+    public class ServiceBusProcessorOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
-        internal ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
+        internal ServiceBusClientOptions _connectionOptions = new ServiceBusClientOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         internal ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Gets or sets the options used for configuring the connection to the Service Bus service.
         /// </summary>
         ///
-        public ServiceBusConnectionOptions ConnectionOptions
+        internal ServiceBusClientOptions ConnectionOptions
         {
             get => _connectionOptions;
             set
@@ -101,13 +101,13 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="ServiceBusReceiverClientOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="ServiceBusReceiverOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ServiceBusReceiverClientOptions" />.</returns>
+        /// <returns>A new copy of <see cref="ServiceBusReceiverOptions" />.</returns>
         ///
-        internal ServiceBusProcessorClientOptions Clone() =>
-            new ServiceBusProcessorClientOptions
+        internal ServiceBusProcessorOptions Clone() =>
+            new ServiceBusProcessorOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),

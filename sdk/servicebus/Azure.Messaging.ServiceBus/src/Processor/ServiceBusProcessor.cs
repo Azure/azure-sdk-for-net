@@ -31,9 +31,9 @@ namespace Azure.Messaging.ServiceBus
     ///   sometimes referred to as "Non-Epoch Consumers."
     /// </summary>
     ///
-    public class ServiceBusProcessorClient : IAsyncDisposable
+    public class ServiceBusProcessor : IAsyncDisposable
     {
-        private Func<ProcessMessageEventArgs, Task> _processMessage;
+        private Func<ServiceBusReceivedMessage, ServiceBusReceiver, Task> _processMessage;
 
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
@@ -51,10 +51,10 @@ namespace Azure.Messaging.ServiceBus
 
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
-        private readonly ServiceBusReceiverClient _receiver;
+        private readonly ServiceBusReceiver _receiver;
 
         /// <summary>
-        ///   The running task responsible for performing partition load balancing between multiple <see cref="ServiceBusProcessorClient" />
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="ServiceBusProcessor" />
         ///   instances, as well as managing partition processing tasks and ownership.
         /// </summary>
         ///
@@ -64,9 +64,10 @@ namespace Azure.Messaging.ServiceBus
         ///   Called when a 'process message' event is triggered.
         /// </summary>
         ///
-        /// <param name="context">The set of arguments to identify the context of the event to be processed.</param>
+        /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
+        /// <param name="receiver"></param>
         ///
-        private Task OnProcessMessageAsync(ProcessMessageEventArgs context) => _processMessage(context);
+        private Task OnProcessMessageAsync(ServiceBusReceivedMessage message, ServiceBusReceiver receiver) => _processMessage(message, receiver);
 
         /// <summary>
         ///   Called when a 'process error' event is triggered.
@@ -106,7 +107,7 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount => _receiver.PrefetchCount;
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusProcessorClient"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
         /// </summary>
         ///
         /// <value>
@@ -198,7 +199,7 @@ namespace Azure.Messaging.ServiceBus
         public string SessionId { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -212,8 +213,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusProcessorClient(string connectionString)
-            : this(new ServiceBusConnection(connectionString), new ServiceBusProcessorClientOptions())
+        internal ServiceBusProcessor(string connectionString)
+            : this(new ServiceBusConnection(connectionString), new ServiceBusProcessorOptions())
         {
         }
 
@@ -281,15 +282,15 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusProcessorClient(
+        internal ServiceBusProcessor(
             string connectionString,
-            ServiceBusProcessorClientOptions clientOptions)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            ServiceBusProcessorOptions clientOptions)
+            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -302,16 +303,16 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusProcessorClient(
+        internal ServiceBusProcessor(
             string connectionString,
             string queueOrSubscriptionName,
-            ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            ServiceBusProcessorOptions clientOptions = default)
+            : this(new ServiceBusConnection(connectionString, queueOrSubscriptionName, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -325,17 +326,17 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusProcessorClient(
+        internal ServiceBusProcessor(
             string connectionString,
             string topicName,
             string subscriptionName,
-            ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            ServiceBusProcessorOptions clientOptions = default)
+            : this(new ServiceBusConnection(connectionString, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -343,17 +344,17 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusProcessorClient(
+        internal ServiceBusProcessor(
             string fullyQualifiedNamespace,
             string queueName,
             TokenCredential credential,
-            ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            ServiceBusProcessorOptions clientOptions = default)
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, queueName, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -362,174 +363,38 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusProcessorClient(
+        internal ServiceBusProcessor(
             string fullyQualifiedNamespace,
             string topicName,
             string subscriptionName,
             TokenCredential credential,
-            ServiceBusProcessorClientOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorClientOptions())
+            ServiceBusProcessorOptions clientOptions = default)
+            : this(new ServiceBusConnection(fullyQualifiedNamespace, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal ServiceBusProcessorClient(
+        internal ServiceBusProcessor(
             ServiceBusConnection connection,
-            ServiceBusProcessorClientOptions clientOptions = default)
+            ServiceBusProcessorOptions clientOptions = default)
         {
-            _receiver = new ServiceBusReceiverClient(connection, clientOptions?.ToServiceBusReceiverClientOptions() ?? new ServiceBusReceiverClientOptions());
+            _receiver = new ServiceBusReceiver(connection, clientOptions?.ToServiceBusReceiverClientOptions() ?? new ServiceBusReceiverOptions());
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
-        protected ServiceBusProcessorClient()
+        protected ServiceBusProcessor()
         {
         }
 
-        /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
-        /// <param name="message">The lock token of the <see cref="ServiceBusMessage" />.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
-        /// and receive it using <see cref="ServiceBusReceiverClient.ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
-        /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public virtual async Task DeferAsync(ServiceBusReceivedMessage message, IDictionary<string, object> propertiesToModify = null,
-            CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-            await Task.Delay(1).ConfigureAwait(false);
-            //throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new IMessageReceiver"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public virtual async Task DeadLetterAsync(ServiceBusReceivedMessage message, IDictionary<string, object> propertiesToModify = null, CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
-            //throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
-        /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusProcessorClient"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public virtual async Task DeadLetterAsync(ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null,
-            CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
-            //throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Renews the lock on the message specified by the lock token. The lock will be renewed based on the setting specified on the queue.
-        /// </summary>
-        /// <remarks>
-        /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
-        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
-        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
-        /// </remarks>
-        public virtual async Task RenewLockAsync(
-            ServiceBusReceivedMessage message,
-            CancellationToken cancellationToken = default)
-        {
-            await _receiver.RenewLockAsync(message).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Completes a <see cref="ServiceBusMessage"/> using its lock token. This will delete the message from the service.
-        /// </summary>
-        /// <param name="message">The lock token of the corresponding message to complete.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public virtual async Task CompleteAsync(ServiceBusReceivedMessage message, CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
-        /// </summary>
-        /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        /// <param name="messages">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
-        /// <param name="cancellationToken"></param>
-        public virtual async Task CompleteAsync(IEnumerable<ServiceBusReceivedMessage> messages, CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
-            //throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Abandons a <see cref="ServiceBusMessage"/> using a lock token. This will make the message available again for processing.
-        /// </summary>
-        /// <param name="message">The lock token of the corresponding message to abandon.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        /// <param name="cancellationToken"></param>
-        /// <remarks>A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// Abandoning a message will increase the delivery count on the message.
-        /// This operation can only be performed on messages that were received by this receiver.
-        /// </remarks>
-        public virtual async Task AbandonAsync(
-            ServiceBusReceivedMessage message,
-            IDictionary<string, object> propertiesToModify = null,
-            CancellationToken cancellationToken = default)
-        {
-            // TODO implement
-
-            await Task.Delay(1).ConfigureAwait(false);
-            //throw new NotImplementedException();
-        }
         /// <summary>
         ///   Closes the consumer.
         /// </summary>
@@ -544,7 +409,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessorClient" />,
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />,
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
@@ -654,13 +519,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Signals the <see cref="ServiceBusProcessorClient" /> to begin processing events.  Should this method be called while the processor
+        ///   Signals the <see cref="ServiceBusProcessor" /> to begin processing events.  Should this method be called while the processor
         ///   is running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="ServiceBusProcessorClient" /> once it starts running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="ServiceBusProcessor" /> once it starts running.</param>
         ///
-        /// exception cref="EventHubsException">Occurs when this <see cref="ServiceBusProcessorClient" /> instance is already closed./exception>
+        /// exception cref="EventHubsException">Occurs when this <see cref="ServiceBusProcessor" /> instance is already closed./exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessMessageAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual async Task StartProcessingAsync(
@@ -721,11 +586,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Signals the <see cref="ServiceBusProcessorClient" /> to stop processing events.  Should this method be called while the processor
+        ///   Signals the <see cref="ServiceBusProcessor" /> to stop processing events.  Should this method be called while the processor
         ///   is not running, no action is taken.
         /// </summary>
         ///
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusProcessorClient" /> will keep running.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusProcessor" /> will keep running.</param>
         ///
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
@@ -804,23 +669,21 @@ namespace Azure.Messaging.ServiceBus
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
             bool useThreadLocalConsumer = false;
-            TransportConsumer consumer;
+            //TransportConsumer consumer;
             Task renewLock = null;
+            ServiceBusReceiver receiver;
 
             if (IsSessionReceiver && SessionManager.UserSpecifiedSessionId == null)
             {
                 // If the user didn't specify a session, but this is a sessionful receiver,
                 // we want to allow each thread to have its own consumer so we can access
                 // multiple sessions concurrently.
-                consumer = Connection.CreateTransportConsumer(
-                    retryPolicy: RetryPolicy,
-                    receiveMode: ReceiveMode,
-                    isSessionReceiver: true);
+                receiver = new ServiceBusReceiver(Connection, new ServiceBusReceiverOptions() { IsSessionEntity = true });
                 useThreadLocalConsumer = true;
             }
             else
             {
-                consumer = Consumer;
+                receiver = _receiver;
             }
 
             try
@@ -832,7 +695,7 @@ namespace Azure.Messaging.ServiceBus
                     var action = ExceptionReceivedEventArgsAction.Receive;
                     try
                     {
-                        IEnumerable<ServiceBusReceivedMessage> messages = await consumer.ReceiveAsync(
+                        IEnumerable<ServiceBusReceivedMessage> messages = await receiver.ReceiveBatchAsync(
                             1,
                             cancellationToken).ConfigureAwait(false);
                         var enumerator = messages.GetEnumerator();
@@ -853,7 +716,7 @@ namespace Azure.Messaging.ServiceBus
                             renewLockCancellationTokenSource = new CancellationTokenSource();
                             renewLockCancellationTokenSource.CancelAfter(MaxAutoLockRenewalDuration);
                             renewLock = RenewLock(
-                                consumer,
+                                receiver,
                                 message,
                                 cancellationToken,
                                 renewLockCancellationTokenSource.Token);
@@ -886,7 +749,7 @@ namespace Azure.Messaging.ServiceBus
                         if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete)
                         {
                             action = ExceptionReceivedEventArgsAction.Complete;
-                            await CompleteAsync(
+                            await receiver.CompleteAsync(
                                 message,
                                 cancellationToken)
                                 .ConfigureAwait(false);
@@ -912,7 +775,7 @@ namespace Azure.Messaging.ServiceBus
                 MessageHandlerSemaphore.Release();
                 if (useThreadLocalConsumer)
                 {
-                    await consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
         }
@@ -931,7 +794,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         private async Task RenewLock(
-            TransportConsumer consumer,
+            ServiceBusReceiver receiver,
             ServiceBusReceivedMessage message,
             CancellationToken eventCancellationToken,
             CancellationToken renewLockCancellationToken)
@@ -943,7 +806,7 @@ namespace Azure.Messaging.ServiceBus
                     DateTimeOffset lockedUntil = default;
                     if (IsSessionReceiver)
                     {
-                        lockedUntil = await consumer.GetSessionLockedUntilUtcAsync(eventCancellationToken).ConfigureAwait(false);
+                        lockedUntil = await receiver.Consumer.GetSessionLockedUntilUtcAsync(eventCancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -968,7 +831,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                     else
                     {
-                        await RenewLockAsync(message, renewLockCancellationToken).ConfigureAwait(false);
+                        await receiver.RenewLockAsync(message, renewLockCancellationToken).ConfigureAwait(false);
                     }
                     //MessagingEventSource.Log.MessageReceiverPumpRenewMessageStop(this.messageReceiver.ClientId, message);
                 }
@@ -1014,7 +877,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Invokes a specified action only if this <see cref="ServiceBusProcessorClient" /> instance is not running.
+        ///   Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
         /// </summary>
         ///
         /// <param name="action">The action to invoke.</param>

@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity (queue or topic).
     /// </summary>
     ///
-    public class ServiceBusSenderClient : IAsyncDisposable
+    public class ServiceBusSender : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the producer is associated with.  This is likely
@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus
         public string EntityName => Connection.EntityName;
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusSenderClient"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
         /// </summary>
         ///
         /// <value>
@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus
         private ClientDiagnostics ClientDiagnostics { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -94,12 +94,12 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusSenderClient(string connectionString) : this(connectionString, null, null)
+        public ServiceBusSender(string connectionString) : this(connectionString, null, null)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -114,13 +114,13 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusSenderClient(string connectionString, ServiceBusSenderClientOptions clientOptions)
+        public ServiceBusSender(string connectionString, ServiceBusSenderOptions clientOptions)
             : this(connectionString, null, clientOptions)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -132,13 +132,13 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusSenderClient(string connectionString, string entityName)
+        public ServiceBusSender(string connectionString, string entityName)
             : this(connectionString, entityName, null)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -151,13 +151,13 @@ namespace Azure.Messaging.ServiceBus
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusSenderClient(
+        public ServiceBusSender(
             string connectionString,
             string entityName,
-            ServiceBusSenderClientOptions clientOptions)
+            ServiceBusSenderOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderOptions();
             ClientDiagnostics = new ClientDiagnostics(clientOptions);
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, clientOptions.ConnectionOptions);
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -174,18 +174,18 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        public ServiceBusSenderClient(
+        public ServiceBusSender(
             string fullyQualifiedNamespace,
             string entityName,
             TokenCredential credential,
-            ServiceBusSenderClientOptions clientOptions = default)
+            ServiceBusSenderOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderOptions();
             ClientDiagnostics = new ClientDiagnostics(clientOptions);
 
             OwnsConnection = true;
@@ -224,12 +224,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        internal ServiceBusSenderClient(
+        internal ServiceBusSender(
             ServiceBusConnection connection,
-            ServiceBusSenderClientOptions clientOptions = default)
+            ServiceBusSenderOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderOptions();
             ClientDiagnostics = new ClientDiagnostics(clientOptions);
 
             OwnsConnection = false;
@@ -239,10 +239,10 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         ///
-        protected ServiceBusSenderClient()
+        protected ServiceBusSender()
         {
             OwnsConnection = false;
         }
@@ -375,7 +375,7 @@ namespace Azure.Messaging.ServiceBus
             IsClosed = true;
 
             var identifier = GetHashCode().ToString();
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusSenderClient), EntityName, identifier);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusSender), EntityName, identifier);
 
             // Attempt to close the active transport producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -388,7 +388,7 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusSenderClient), EntityName, identifier, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusSender), EntityName, identifier, ex.Message);
                 transportProducerException = ex;
             }
 
@@ -404,12 +404,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusSenderClient), EntityName, identifier, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusSender), EntityName, identifier, ex.Message);
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusSenderClient), EntityName, identifier);
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusSender), EntityName, identifier);
             }
 
             // If there was an active exception pending from closing the individual
@@ -422,7 +422,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSenderClient" />,
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />,
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///

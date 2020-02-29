@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpClient(string host,
                           string entityName,
                           ServiceBusTokenCredential credential,
-                          ServiceBusConnectionOptions clientOptions) : this(host, entityName, credential, clientOptions, null)
+                          ServiceBusClientOptions clientOptions) : this(host, entityName, credential, clientOptions, null)
         {
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         protected AmqpClient(string host,
                              string entityName,
                              ServiceBusTokenCredential credential,
-                             ServiceBusConnectionOptions clientOptions,
+                             ServiceBusClientOptions clientOptions,
                              AmqpConnectionScope connectionScope)
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));

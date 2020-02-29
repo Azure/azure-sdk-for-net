@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(
+                await using var sender = new ServiceBusSender(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 var mem = new ReadOnlyMemory<byte>();
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
                 await sender.SendBatchAsync(GetMessages(numThreads * 2));
-                await using var processor = new ServiceBusProcessorClient(
+                await using var processor = new ServiceBusProcessor(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int messageCt = 0;
@@ -80,13 +80,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(
+                await using var sender = new ServiceBusSender(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int numMessages = 50;
                 await sender.SendBatchAsync(GetMessages(numMessages));
 
-                await using var processor = new ServiceBusProcessorClient(
+                await using var processor = new ServiceBusProcessor(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
                 int messageProcessedCt = 0;
@@ -103,7 +103,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync(options);
 
-                async Task ProcessMessage(ServiceBusMessage message, ServiceBusSessionManager session)
+                async Task ProcessMessage(ServiceBusMessage message, ServiceBusReceiver session)
                 {
                     Interlocked.Increment(ref messageProcessedCt);
                     if (messageProcessedCt == stopAfterMessagesCt)
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 }
                 await tcs.Task;
                 var remainingCt = 0;
-                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receiver = new ServiceBusReceiver(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
 
                 foreach (ServiceBusMessage message in await receiver.ReceiveBatchAsync(numMessages))
                 {

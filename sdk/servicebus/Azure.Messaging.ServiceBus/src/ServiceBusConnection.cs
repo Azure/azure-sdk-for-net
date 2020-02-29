@@ -106,54 +106,55 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public ServiceBusConnection(
+        internal ServiceBusConnection(
             string connectionString,
-            ServiceBusConnectionOptions connectionOptions = default)
+            ServiceBusClientOptions connectionOptions)
             : this(connectionString, null, connectionOptions)
         {
         }
 
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        ///// <param name="entityName">The name of the specific entity to associate the connection with.</param>
-        /////
-        ///// <remarks>
-        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        /////   passed only once, either as part of the connection string or separately.
-        ///// </remarks>
-        ///////
-        //public ServiceBusConnection(
-        //    string connectionString)
-        //    : this(connectionString, null, connectionOptions: null)
-        //{
-        //}
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
+        /// <param name="entityName">The name of the specific entity to associate the connection with.</param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        ///   passed only once, either as part of the connection string or separately.
+        /// </remarks>
+        ///
+        internal ServiceBusConnection(
+            string connectionString,
+            string entityName)
+            : this(connectionString, entityName, connectionOptions: null)
+        {
+        }
 
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
-        ///// <param name="entityName">The name of the specific Service Bus entity to associate the connection with (if not contained in connectionString).</param>
-        ///// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
-        /////
-        ///// <remarks>
-        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        /////   passed only once, either as part of the connection string or separately.
-        ///// </remarks>
-        /////
-        //internal ServiceBusConnection(
-        //    string connectionString,
-        //    ServiceBusConnectionOptions connectionOptions)
-        //{
-        //    var entityName = "";
-        //    Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to associate the connection with (if not contained in connectionString).</param>
+        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        ///   passed only once, either as part of the connection string or separately.
+        /// </remarks>
+        ///
+        internal ServiceBusConnection(
+            string connectionString,
+            string entityName,
+            ServiceBusClientOptions connectionOptions)
+        {
+            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-        //    connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
+            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusClientOptions();
 
         //    ValidateConnectionOptions(connectionOptions);
         //    var builder = new ServiceBusConnectionStringBuilder(connectionString);
@@ -189,17 +190,17 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
-        public ServiceBusConnection(
+        internal ServiceBusConnection(
             string fullyQualifiedNamespace,
             TokenCredential credential,
-            ServiceBusConnectionOptions connectionOptions = default)
+            ServiceBusClientOptions connectionOptions = default)
         {
             var entityName = "";
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
+            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusClientOptions();
             ValidateConnectionOptions(connectionOptions);
 
             switch (credential)
@@ -450,7 +451,7 @@ namespace Azure.Messaging.ServiceBus
             string fullyQualifiedNamespace,
             string entityName,
             ServiceBusTokenCredential credential,
-            ServiceBusConnectionOptions options)
+            ServiceBusClientOptions options)
         {
             switch (options.TransportType)
             {
@@ -533,7 +534,7 @@ namespace Azure.Messaging.ServiceBus
         //}
 
         /// <summary>
-        ///   Performs the actions needed to validate the <see cref="ServiceBusConnectionOptions" /> associated
+        ///   Performs the actions needed to validate the <see cref="ServiceBusClientOptions" /> associated
         ///   with this client.
         /// </summary>
         ///
@@ -544,7 +545,7 @@ namespace Azure.Messaging.ServiceBus
         ///   is not permissible, an appropriate exception will be thrown.
         /// </remarks>
         ///
-        private static void ValidateConnectionOptions(ServiceBusConnectionOptions connectionOptions)
+        private static void ValidateConnectionOptions(ServiceBusClientOptions connectionOptions)
         {
             // If there were no options passed, they cannot be in an invalid state.
 

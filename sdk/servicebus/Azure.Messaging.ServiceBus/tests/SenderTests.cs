@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void Send_NullShouldThrow()
         {
-            var mock = new Mock<ServiceBusSenderClient>()
+            var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public async Task Send_DelegatesToSendRange()
         {
-            var mock = new Mock<ServiceBusSenderClient>()
+            var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void SendRange_NullShouldThrow()
         {
-            var mock = new Mock<ServiceBusSenderClient>()
+            var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public async Task SendRange_DelegatesToInnerSender()
         {
-            var mock = new Mock<ServiceBusSenderClient>()
+            var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var sender = new ServiceBusSenderClient(connString, queueName);
+            var sender = new ServiceBusSender(connString, queueName);
             Assert.AreEqual(queueName, sender.EntityName);
             Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
         }

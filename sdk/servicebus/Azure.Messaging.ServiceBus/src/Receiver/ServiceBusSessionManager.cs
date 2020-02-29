@@ -14,10 +14,12 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusSessionManager
     {
-        private readonly TransportConsumer _consumer;
+        private readonly ServiceBusReceiver _consumer;
 
         internal string UserSpecifiedSessionId { get; }
 
+        internal ServiceBusSession(
+            ServiceBusReceiver consumer,
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
@@ -126,7 +128,7 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                return await _consumer.GetSessionIdAsync(cancellationToken).ConfigureAwait(false);
+                return await _consumer.Consumer.GetSessionIdAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -137,7 +139,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task<DateTimeOffset> GetLockedUntilUtcAsync(CancellationToken cancellationToken = default)
         {
-            return await _consumer.GetSessionLockedUntilUtcAsync(cancellationToken).ConfigureAwait(false);
+            return await _consumer.Consumer.GetSessionLockedUntilUtcAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }
