@@ -71,9 +71,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// TODO implement
+        ///
         /// </summary>
-        /// <returns></returns>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(_consumer.IsClosed, nameof(ServiceBusReceiverClient));
@@ -83,9 +82,8 @@ namespace Azure.Messaging.ServiceBus
                 throw new InvalidOperationException(Resources1.OperationNotSupported);
             }
 
-            // MessagingEventSource.Log.MessageRenewLockStart(this.SessionId);
+            // MessagingEventSource.Log.RenewSessionLockStart(this.SessionId);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
             try
             {
                 await RetryPolicy.RunOperation(
@@ -101,12 +99,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                // MessagingEventSource.Log.MessageRenewLockException(this.SessionId, exception);
+                // MessagingEventSource.Log.RenewSessionLockException(this.SessionId, exception);
                 throw exception;
             }
             finally
             {
-                // this.diagnosticSource.MessageRenewLockStop(activity, this.SessionId);
+                // this.diagnosticSource.RenewSessionLockStop(activity, this.SessionId);
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();

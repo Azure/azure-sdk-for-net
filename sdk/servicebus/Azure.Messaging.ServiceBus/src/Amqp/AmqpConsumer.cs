@@ -389,7 +389,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
+        ///
         /// </summary>
         ///
         /// <returns>New lock token expiry date and time in UTC format.</returns>

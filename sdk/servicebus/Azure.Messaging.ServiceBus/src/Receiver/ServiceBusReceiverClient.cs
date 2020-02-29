@@ -969,7 +969,6 @@ namespace Azure.Messaging.ServiceBus
             // MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var lockedUntilUtc = DateTime.MinValue;
-
             try
             {
                 await RetryPolicy.RunOperation(
