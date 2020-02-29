@@ -58,6 +58,14 @@ namespace Azure.Messaging.EventHubs.Core
         ///   Initializes a new instance of the <see cref="TransportProducerPool" /> class.
         /// </summary>
         ///
+        internal TransportProducerPool()
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TransportProducerPool" /> class.
+        /// </summary>
+        ///
         /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
         /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
         /// <param name="pool">The pool of <see cref="PoolItem" /> that is going to be used to store the partition specific <see cref="TransportProducer" />.</param>
@@ -165,7 +173,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task CloseAsync(CancellationToken cancellationToken = default)
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             await EventHubProducer.CloseAsync(true, cancellationToken).ConfigureAwait(false);
 

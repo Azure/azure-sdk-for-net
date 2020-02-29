@@ -187,6 +187,60 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="TransportProducerPool.CloseAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CloseAsyncSurfacesExceptionsForTransportProducer()
+        {
+            var transportProducer = new Mock<TransportProducer>();
+            var partitionProducer = new Mock<TransportProducer>();
+            var connection = new MockConnection(() => partitionProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer.Object)
+            };
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer.Object);
+
+            transportProducer
+                .Setup(producer => producer.CloseAsync(true, It.IsAny<CancellationToken>()))
+                .Returns(Task.FromException(new InvalidCastException()));
+
+            var _ = transportProducerPool.GetPooledProducer(null).TransportProducer as ObservableTransportProducerMock;
+
+            Assert.That(async () => await transportProducerPool.CloseAsync(), Throws.InstanceOf<InvalidCastException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="TransportProducerPool.CloseAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CloseAsyncSurfacesExceptionsForPartitionTransportProducer()
+        {
+            var transportProducer = new Mock<TransportProducer>();
+            var partitionProducer = new Mock<TransportProducer>();
+            var connection = new MockConnection(() => partitionProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer.Object)
+            };
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer.Object);
+
+            partitionProducer
+                .Setup(producer => producer.CloseAsync(true, It.IsAny<CancellationToken>()))
+                .Returns(Task.FromException(new InvalidCastException()));
+
+            var _ = transportProducerPool.GetPooledProducer("0");
+
+            Assert.That(async () => await transportProducerPool.CloseAsync(), Throws.InstanceOf<InvalidCastException>());
+        }
+
+        /// <summary>
         ///   Serves as a non-functional connection for testing producer functionality.
         /// </summary>
         ///

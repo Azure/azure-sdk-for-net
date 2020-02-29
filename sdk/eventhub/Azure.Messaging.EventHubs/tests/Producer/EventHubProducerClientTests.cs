@@ -595,15 +595,16 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CloseAsyncSurfacesExceptionsForTransportConsumers()
+        public async Task CloseAsyncSurfacesExceptionsForTransportProducers()
         {
             var mockTransportProducer = new Mock<TransportProducer>();
             var mockConnection = new MockConnection(() => mockTransportProducer.Object);
+            var mockTransportProducerPool = new Mock<TransportProducerPool>();
             var mockBatch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", new SendEventOptions { PartitionId = "1" });
-            var producer = new EventHubProducerClient(mockConnection);
+            var producer = new EventHubProducerClient(mockConnection, mockTransportProducer.Object, mockTransportProducerPool.Object);
 
-            mockTransportProducer
-                .Setup(producer => producer.CloseAsync(false, It.IsAny<CancellationToken>()))
+            mockTransportProducerPool
+                .Setup(pool => pool.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
             try
