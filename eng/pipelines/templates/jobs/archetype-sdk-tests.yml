@@ -24,13 +24,18 @@ jobs:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+        Windows_NetCoreApp_ProjectReferences:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
-          OSVmImage: "macOS-10.13"
+          OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"
@@ -75,7 +80,16 @@ jobs:
           -Verbose
         displayName: "Create test resources"
 
-      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:BuildInParallel=${{ parameters.BuildInParallel }}
+      - script: >
+          dotnet test eng/service.proj
+          --framework $(TestTargetFramework)
+          --logger "trx;LogFileName=$(TestTargetFramework).trx"
+          --logger:"console;verbosity=normal"
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeSrc=false /p:IncludeSamples=false
+          /p:BuildInParallel=${{ parameters.BuildInParallel }}
+          $(ConvertToProjectReferenceOption)
+
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

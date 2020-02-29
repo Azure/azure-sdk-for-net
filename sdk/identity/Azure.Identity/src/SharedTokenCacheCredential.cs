@@ -8,16 +8,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.Globalization;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Authenticates using tokens in the local cache shared between Microsoft applications.
     /// </summary>
-    public class SharedTokenCacheCredential : TokenCredential, IExtendedTokenCredential
+    public class SharedTokenCacheCredential : TokenCredential
     {
         internal const string NoAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.";
         internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
@@ -28,7 +27,7 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly string _username;
-        private readonly Lazy<Task<(IAccount, Exception)>> _account;
+        private readonly Lazy<Task<IAccount>> _account;
 
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
@@ -73,7 +72,7 @@ namespace Azure.Identity
 
             _client = client;
 
-            _account = new Lazy<Task<(IAccount, Exception)>>(GetAccountAsync);
+            _account = new Lazy<Task<IAccount>>(GetAccountAsync);
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -95,53 +94,42 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            IAccount account = null;
-
-            Exception ex = null;
-
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("SharedTokenCacheCredential.GetToken", requestContext);
 
             try
             {
-                (account, ex) = await _account.Value.ConfigureAwait(false);
+                IAccount account = async
+                    ? await _account.Value.ConfigureAwait(false)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                    : _account.Value.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
 
-                if (account != null)
-                {
-                    AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, cancellationToken).ConfigureAwait(false);
 
-                    return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
-                }
-                else
-                {
-                    return new ExtendedAccessToken(scope.Failed(ex));
-                }
+                AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, account, async, cancellationToken).ConfigureAwait(false);
+
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on.")));
+                throw scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+                throw;
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
+                throw scope.FailAndWrap(e);
             }
         }
 
-        private async Task<(IAccount, Exception)> GetAccountAsync()
+        private async Task<IAccount> GetAccountAsync()
         {
             List<IAccount> accounts = (await _client.GetAccountsAsync().ConfigureAwait(false)).ToList();
 
@@ -149,10 +137,10 @@ namespace Azure.Identity
 
             if (filteredAccounts.Count != 1)
             {
-                return (null, new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts)));
+                throw new CredentialUnavailableException(GetCredentialUnavailableMessage(accounts, filteredAccounts));
             }
 
-            return (filteredAccounts.First(), null);
+            return filteredAccounts.First();
         }
 
         private string GetCredentialUnavailableMessage(List<IAccount> accounts, List<IAccount> filteredAccounts)

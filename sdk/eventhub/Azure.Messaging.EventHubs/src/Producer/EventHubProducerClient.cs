@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub to associated the producer with.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
@@ -403,9 +403,10 @@ namespace Azure.Messaging.EventHubs.Producer
 
             int attempts = 0;
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
             events = (events as IList<EventData>) ?? events.ToList();
             InstrumentMessages(events);
+
+            using DiagnosticScope scope = CreateDiagnosticScope();
 
             TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
@@ -537,7 +538,7 @@ namespace Azure.Messaging.EventHubs.Producer
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             TransportEventBatch transportBatch = await PartitionProducerPool.EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
-            return new EventDataBatch(transportBatch, options.ToSendOptions());
+            return new EventDataBatch(transportBatch, FullyQualifiedNamespace, EventHubName, options.ToSendOptions());
         }
 
         /// <summary>
@@ -652,7 +653,7 @@ namespace Azure.Messaging.EventHubs.Producer
             scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, Connection.ServiceEndpoint);
+            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
             scope.Start();
 
             return scope;

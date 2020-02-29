@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -15,35 +16,65 @@ namespace Azure.Storage.Blobs
 {
     internal class PartitionedDownloader
     {
-        // The client used to download the blob
+        /// <summary>
+        /// The client used to download the blob.
+        /// </summary>
         private readonly BlobBaseClient _client;
 
-        // The maximum number of simultaneous workers
+        /// <summary>
+        /// The maximum number of simultaneous workers.
+        /// </summary>
         private readonly int _maxWorkerCount;
 
-        // The size of the first range requested (which can be larger than the
-        // other ranges)
+        /// <summary>
+        /// The size of the first range requested (which can be larger than the
+        /// other ranges).
+        /// </summary>
         private readonly long _initialRangeSize;
 
-        // The size of subsequent ranges
+        /// <summary>
+        /// The size of subsequent ranges.
+        /// </summary>
         private readonly int _rangeSize;
 
         public PartitionedDownloader(
             BlobBaseClient client,
-            StorageTransferOptions transferOptions = default,
-            long? initialTransferLength = null)
+            StorageTransferOptions transferOptions = default)
         {
             _client = client;
-            _maxWorkerCount =
-                transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _initialRangeSize =
-                initialTransferLength ??
-                ((long?)transferOptions.MaximumTransferLength) ??
-                Constants.DefaultBufferSize;
-            _rangeSize = Math.Min(
-                Constants.Blob.Block.MaxDownloadBytes,
-                transferOptions.MaximumTransferLength ?? Constants.DefaultBufferSize);
+
+            // Set _maxWorkerCount
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
+            {
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            }
+
+            // Set _rangeSize
+            if (transferOptions.MaximumTransferLength.HasValue
+                && transferOptions.MaximumTransferLength.Value > 0)
+            {
+                _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+            }
+            else
+            {
+                _rangeSize = Constants.DefaultBufferSize;
+            }
+
+            // Set _initialRangeSize
+            if (transferOptions.InitialTransferLength.HasValue
+                && transferOptions.InitialTransferLength.Value > 0)
+            {
+                _initialRangeSize = transferOptions.MaximumTransferLength.Value;
+            }
+            else
+            {
+                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+            }
         }
 
         public async Task<Response> DownloadToAsync(

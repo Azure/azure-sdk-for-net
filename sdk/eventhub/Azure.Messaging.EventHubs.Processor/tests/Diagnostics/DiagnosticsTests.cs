@@ -4,14 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Storage.Blobs;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Tests;
 using Moq;
 using NUnit.Framework;
 
@@ -42,6 +41,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task UpdateCheckpointAsyncCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
@@ -52,8 +52,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var context = new MockPartitionContext("partition");
             var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var storageManager = new Mock<PartitionManager>();
-            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            var storageManager = new Mock<StorageManager>();
+            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null, null);
 
             // UpdateCheckpointAsync does not invoke the handlers, but we are setting them here in case
             // this fact changes in the future.
@@ -73,11 +73,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
 
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);

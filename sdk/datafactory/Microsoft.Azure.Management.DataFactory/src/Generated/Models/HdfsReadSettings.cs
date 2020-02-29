@@ -43,6 +43,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="wildcardFileName">HDFS wildcardFileName. Type: string
         /// (or Expression with resultType string).</param>
+        /// <param name="fileListPath">Point to a text file that lists each
+        /// file (relative path to the path configured in the dataset) that you
+        /// want to copy. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="enablePartitionDiscovery">Indicates whether to enable
         /// partition discovery.</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
@@ -53,12 +57,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string).</param>
         /// <param name="distcpSettings">Specifies Distcp-related
         /// settings.</param>
-        public HdfsReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), DistcpSettings distcpSettings = default(DistcpSettings))
+        public HdfsReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), DistcpSettings distcpSettings = default(DistcpSettings))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            FileListPath = fileListPath;
             EnablePartitionDiscovery = enablePartitionDiscovery;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
@@ -92,6 +97,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFileName")]
         public object WildcardFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets point to a text file that lists each file (relative
+        /// path to the path configured in the dataset) that you want to copy.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileListPath")]
+        public object FileListPath { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether to enable partition discovery.

@@ -93,11 +93,18 @@ Function Get-PackageExport($Pkgs, $Internal) {
   foreach ($PkgName in $Pkgs.Keys) {
     $PkgInfo = $Pkgs[$PkgName]
     $Id = $PkgName + ":" + $PkgInfo.Ver
+    $InternalDeps = [System.Collections.ArrayList]@()
+    foreach ($Dep in $PkgInfo.Deps)
+    {
+      if ($Internal.Contains($Dep.name)) {
+        $InternalDeps.Add($Dep) > $Null
+      }
+    }
     $DumpData[$Id] = @{
       name    = $PkgName;
       version = $PkgInfo.Ver;
       type    = "internal";
-      deps    = $PkgInfo.Deps
+      deps    = $InternalDeps
     }
   }
 
@@ -109,13 +116,13 @@ Function Get-PackageExport($Pkgs, $Internal) {
         $DumpData[$DepId] = @{
           name    = $Dep.name;
           version = $Dep.version;
-          type    = If ($Internal.Contains($dep.name)) { "internalbinary" } else { "external" };
+          type    = "internalbinary";
           deps    = @()
         }
       }
     }
   }
-  
+
   return $DumpData
 }
 

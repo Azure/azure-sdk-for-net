@@ -35,21 +35,21 @@ namespace Azure.Core.Testing
             return message.Response;
         }
 
-        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
             await Task.Yield();
 
             var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
-            return await SendRequestAsync(pipeline, requestAction, bufferResponse, CancellationToken.None);
+            return await SendRequestAsync(pipeline, requestAction, bufferResponse, cancellationToken);
         }
 
-        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null)
+        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null, CancellationToken cancellationToken = default)
         {
             return await SendRequestAsync(transport, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(uri ?? new Uri("http://example.com"));
-            }, policy, responseClassifier, bufferResponse);
+            }, policy, responseClassifier, bufferResponse, cancellationToken);
         }
     }
 }
