@@ -56,13 +56,12 @@ namespace Azure.Security.KeyVault.Certificates
 
         internal string GetVersionString()
         {
-            var version = Version switch
+            return Version switch
             {
                 ServiceVersion.V7_0 => "7.0",
 
                 _ => throw new ArgumentException(Version.ToString()),
             };
-            return version;
         }
     }
 }
