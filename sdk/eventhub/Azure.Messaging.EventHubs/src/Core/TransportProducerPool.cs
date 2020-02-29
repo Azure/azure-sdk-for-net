@@ -143,7 +143,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 if (!Pool.TryGetValue(partitionId, out _) && !item.ActiveInstances.Any())
                 {
-                    return producer.CloseAsync(CancellationToken.None);
+                    return producer.CloseAsync(false, CancellationToken.None);
                 }
 
                 return Task.CompletedTask;
@@ -167,13 +167,13 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            await EventHubProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
+            await EventHubProducer.CloseAsync(true, cancellationToken).ConfigureAwait(false);
 
             var pendingCloses = new List<Task>();
 
             foreach (var poolItem in Pool.Values)
             {
-                pendingCloses.Add(poolItem.PartitionProducer.CloseAsync(CancellationToken.None));
+                pendingCloses.Add(poolItem.PartitionProducer.CloseAsync(true, CancellationToken.None));
             }
 
             Pool.Clear();
@@ -206,9 +206,9 @@ namespace Azure.Messaging.EventHubs.Core
                             {
                                 // At this point the pool item may have been closed already
                                 // if there was a context switch between the if conditions
-                                // and the pool item clean up kicked in.
+                                // and the pool item clean up started.
 
-                                poolItem.PartitionProducer.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
+                                poolItem.PartitionProducer.CloseAsync(false, CancellationToken.None);
                             }
                         }
                     }

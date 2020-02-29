@@ -603,7 +603,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(mockConnection);
 
             mockTransportProducer
-                .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
+                .Setup(producer => producer.CloseAsync(false, It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
             try
@@ -1258,7 +1258,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
-            public override Task CloseAsync(CancellationToken cancellationToken)
+            public override Task CloseAsync(bool isAsync,
+                                            CancellationToken cancellationToken)
             {
                 WasCloseCalled = true;
                 ++CloseCallCount;

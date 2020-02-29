@@ -222,9 +222,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   Closes the connection to the transport producer instance.
         /// </summary>
         ///
+        /// <param name="isAsync"><c>true</c> if the method will be executed asynchronously; otherwise, false.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public override async Task CloseAsync(CancellationToken cancellationToken)
+        public override async Task CloseAsync(bool isAsync,
+                                              CancellationToken cancellationToken)
         {
             if (_closed)
             {
@@ -244,7 +246,15 @@ namespace Azure.Messaging.EventHubs.Amqp
                 if (SendLink?.TryGetOpenedObject(out var _) == true)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await SendLink.CloseAsync().ConfigureAwait(false);
+
+                    if (isAsync)
+                    {
+                        await SendLink.CloseAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        SendLink.Close();
+                    }
                 }
 
                 SendLink?.Dispose();
