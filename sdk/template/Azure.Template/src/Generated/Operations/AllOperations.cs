@@ -11,7 +11,6 @@ using Azure;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Template.Mocdels;
 using Azure.Template.Models;
 
 namespace Azure.AI.FormRecognizer

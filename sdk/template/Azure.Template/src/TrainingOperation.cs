@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         private Response _response;
         private CustomModel _value;
         private bool _hasCompleted;
-        private readonly AllOperations _allOperations;
+        private readonly AllOperations _operations;
 
         /// <summary>
         /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         internal TrainingOperation(AllOperations allOperations, string location)
         {
-            _allOperations = allOperations;
+            _operations = allOperations;
             Id = location.Split('/').Last();
 
             // TODO: validate this?
@@ -86,8 +86,8 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 // TODO : when/where do we set includeKeys = true?
                 Response<Model_internal> update = async
-                    ? await _allOperations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
-                    : _allOperations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
+                    ? await _operations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
+                    : _operations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
                 // TODO: check status code?  What if a failure status code is returned?
 

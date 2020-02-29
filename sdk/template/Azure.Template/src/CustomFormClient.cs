@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-// TODO: clean these up.
-using Azure.Template.Mocdels;
+// TODO: Rename to FormRecognizer
 using Azure.Template.Models;
 
 namespace Azure.AI.FormRecognizer
@@ -68,16 +68,30 @@ namespace Azure.AI.FormRecognizer
                 trainRequest.SourceFilter = filter;
             }
 
+            // TODO: Make this call an async method instead - i.e. AsyncAsync :-P
             ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(_operations, response.Headers.Location);
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(new TrainRequest() { Source = source, SourceFilter = filter, UseLabelFile = false });
-            //return new TrainingOperation(_operations, response.Headers.Location);
         }
 
         #endregion Training
 
         #region Analyze
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="stream"></param>
+        /// <param name="contentType"></param>
+        /// <param name="includeRawPageExtractions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            // TODO: Make this call an async method instead
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
         #endregion Analyze
 
         #region CRUD Ops

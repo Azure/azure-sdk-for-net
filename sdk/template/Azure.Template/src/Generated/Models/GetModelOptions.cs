@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Template.Mocdels
+namespace Azure.Template.Models
 {
     /// <summary> The Enum0. </summary>
     internal readonly partial struct GetModelOptions : IEquatable<GetModelOptions>
