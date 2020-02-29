@@ -674,7 +674,7 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             foreach (EventData eventData in events)
             {
-                EventDataInstrumentation.InstrumentEvent(eventData);
+                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
             }
         }
 

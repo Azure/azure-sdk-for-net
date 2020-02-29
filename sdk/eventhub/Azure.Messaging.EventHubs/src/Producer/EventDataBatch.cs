@@ -108,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool TryAdd(EventData eventData)
         {
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
+            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
             bool added = InnerBatch.TryAdd(eventData);
 
             if (!added && instrumented)
