@@ -595,7 +595,7 @@ namespace Compute.Tests.DiskRPTests
 
             Disk disk = GenerateBaseDisk(diskCreateOption);
             disk.CreationData.SourceUri = uri;
-            disk.CreationData.StorageAccountId = "subscriptions/" + subscription + "/resourceGroups/" + rgName + "/providers/Microsoft.Storage/storageAccounts/" + storageAccountName;
+            disk.CreationData.StorageAccountId = "/subscriptions/" + subscription + "/resourceGroups/" + rgName + "/providers/Microsoft.Storage/storageAccounts/" + storageAccountName;
             return disk;
         }
 
