@@ -49,6 +49,47 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Secrets.SecretProperties"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="Secrets.SecretProperties.Id"/> property.</param>
+        /// <param name="vaultUri">Sets the <see cref="Secrets.SecretProperties.VaultUri"/> property.</param>
+        /// <param name="name">Sets the <see cref="Secrets.SecretProperties.Name"/> property.</param>
+        /// <param name="version">Sets the <see cref="Secrets.SecretProperties.Version"/> property.</param>
+        /// <param name="managed">Sets the <see cref="Secrets.SecretProperties.Managed"/> property.</param>
+        /// <param name="keyId">Sets the <see cref="Secrets.SecretProperties.KeyId"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="Secrets.SecretProperties.CreatedOn"/> property.</param>
+        /// <param name="updatedOn">Sets the <see cref="Secrets.SecretProperties.UpdatedOn"/> property.</param>
+        /// <param name="recoveryLevel">Sets the <see cref="Secrets.SecretProperties.RecoveryLevel"/> property.</param>
+        /// <param name="recoverableDays">Sets the <see cref="Secrets.SecretProperties.RecoverableDays"/> property.</param>
+        /// <returns>A new instance of the <see cref="Secrets.SecretProperties"/> for mocking purposes.</returns>
+        public static SecretProperties SecretProperties(
+            Uri id = default,
+            Uri vaultUri = default,
+            string name = default,
+            string version = default,
+            bool managed = default,
+            Uri keyId = default,
+            DateTimeOffset? createdOn = default,
+            DateTimeOffset? updatedOn = default,
+            string recoveryLevel = default,
+            int? recoverableDays = default)
+        {
+            return new SecretProperties
+            {
+                Id = id,
+                VaultUri = vaultUri,
+                Name = name,
+                Version = version,
+                Managed = managed,
+                KeyId = keyId,
+                CreatedOn = createdOn,
+                UpdatedOn = updatedOn,
+                RecoveryLevel = recoveryLevel,
+                RecoverableDays = recoverableDays,
+            };
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Secrets.KeyVaultSecret"/> for mocking purposes.
         /// </summary>
         /// <param name="properties">Sets the <see cref="Secrets.KeyVaultSecret.Properties"/> property, which provides the <see cref="Secrets.KeyVaultSecret.Id"/> and <see cref="Secrets.KeyVaultSecret.Name"/> properties.</param>

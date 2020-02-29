@@ -105,6 +105,44 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="Keys.KeyProperties.Id"/> property.</param>
+        /// <param name="vaultUri">Sets the <see cref="Keys.KeyProperties.VaultUri"/> property.</param>
+        /// <param name="name">Sets the <see cref="Keys.KeyProperties.Name"/> property.</param>
+        /// <param name="version">Sets the <see cref="Keys.KeyProperties.Version"/> property.</param>
+        /// <param name="managed">Sets the <see cref="Keys.KeyProperties.Managed"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="Keys.KeyProperties.CreatedOn"/> property.</param>
+        /// <param name="updatedOn">Sets the <see cref="Keys.KeyProperties.UpdatedOn"/> property.</param>
+        /// <param name="recoveryLevel">Sets the <see cref="Keys.KeyProperties.RecoveryLevel"/> property.</param>
+        /// <param name="recoverableDays">Sets the <see cref="Keys.KeyProperties.RecoverableDays"/> property.</param>
+        /// <returns>A new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.</returns>
+        public static KeyProperties KeyProperties(
+            Uri id = default,
+            Uri vaultUri = default,
+            string name = default,
+            string version = default,
+            bool managed = default,
+            DateTimeOffset? createdOn = default,
+            DateTimeOffset? updatedOn = default,
+            string recoveryLevel = default,
+            int? recoverableDays = default)
+        {
+            return new KeyProperties
+            {
+                Id = id,
+                VaultUri = vaultUri,
+                Name = name,
+                Version = version,
+                Managed = managed,
+                CreatedOn = createdOn,
+                UpdatedOn = updatedOn,
+                RecoveryLevel = recoveryLevel,
+                RecoverableDays = recoverableDays,
+            };
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Keys.KeyVaultKey"/> for mocking purposes.
         /// </summary>
         /// <param name="properties">Sets the <see cref="Keys.KeyVaultKey.Properties"/> property, which provides the <see cref="Keys.KeyVaultKey.Id"/> and <see cref="Keys.KeyVaultKey.Name"/> properties.</param>

@@ -168,6 +168,47 @@ namespace Azure.Security.KeyVault.Certificates
             };
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Certificates.CertificateProperties"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="Certificates.CertificateProperties.Id"/> property.</param>
+        /// <param name="name">Sets the <see cref="Certificates.CertificateProperties.Name"/> property.</param>
+        /// <param name="vaultUri">Sets the <see cref="Certificates.CertificateProperties.VaultUri"/> property.</param>
+        /// <param name="version">Sets the <see cref="Certificates.CertificateProperties.Version"/> property.</param>
+        /// <param name="x509thumbprint">Sets the <see cref="Certificates.CertificateProperties.X509Thumbprint"/> property.</param>
+        /// <param name="notBefore">Sets the <see cref="Certificates.CertificateProperties.NotBefore"/> property.</param>
+        /// <param name="expiresOn">Sets the <see cref="Certificates.CertificateProperties.ExpiresOn"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="Certificates.CertificateProperties.CreatedOn"/> property.</param>
+        /// <param name="updatedOn">Sets the <see cref="Certificates.CertificateProperties.UpdatedOn"/> property.</param>
+        /// <param name="recoveryLevel">Sets the <see cref="Certificates.CertificateProperties.RecoveryLevel"/> property.</param>
+        /// <param name="recoverableDays">Sets the <see cref="Certificates.CertificateProperties.RecoverableDays"/> property.</param>
+        /// <returns>A new instance of the <see cref="Certificates.CertificateProperties"/> for mocking purposes.</returns>
+        public static CertificateProperties CertificateProperties(
+            Uri id = default,
+            string name = default,
+            Uri vaultUri = default,
+            string version = default,
+            byte[] x509thumbprint = default,
+            DateTimeOffset? notBefore = default,
+            DateTimeOffset? expiresOn = default,
+            DateTimeOffset? createdOn = default,
+            DateTimeOffset? updatedOn = default,
+            string recoveryLevel = default,
+            int? recoverableDays = default) => new CertificateProperties
+            {
+                Id = id,
+                Name = name,
+                VaultUri = vaultUri,
+                Version = version,
+                X509Thumbprint = x509thumbprint,
+                NotBefore = notBefore,
+                ExpiresOn = expiresOn,
+                CreatedOn = createdOn,
+                UpdatedOn = updatedOn,
+                RecoveryLevel = recoveryLevel,
+                RecoverableDays = recoverableDays,
+            };
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Certificates.DeletedCertificate"/> for mocking purposes.
         /// </summary>
         /// <param name="properties">Sets the <see cref="Certificates.KeyVaultCertificate.Properties"/> property.</param>
