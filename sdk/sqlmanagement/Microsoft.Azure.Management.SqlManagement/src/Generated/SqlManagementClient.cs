@@ -516,11 +516,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
         public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
-		
-        /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
-        /// </summary>
-        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }		
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.

@@ -36,17 +36,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="name">The server version name.</param>
         /// <param name="supportedEditions">The list of supported managed
         /// instance editions.</param>
-        /// <param name="supportedInstancePoolEditions">The list of supported
-        /// instance pool editions.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ManagedInstanceVersionCapability(string name = default(string), IList<ManagedInstanceEditionCapability> supportedEditions = default(IList<ManagedInstanceEditionCapability>), IList<InstancePoolEditionCapability> supportedInstancePoolEditions = default(IList<InstancePoolEditionCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ManagedInstanceVersionCapability(string name = default(string), IList<ManagedInstanceEditionCapability> supportedEditions = default(IList<ManagedInstanceEditionCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
             SupportedEditions = supportedEditions;
-            SupportedInstancePoolEditions = supportedInstancePoolEditions;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -68,12 +65,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "supportedEditions")]
         public IList<ManagedInstanceEditionCapability> SupportedEditions { get; private set; }
-
-        /// <summary>
-        /// Gets the list of supported instance pool editions.
-        /// </summary>
-        [JsonProperty(PropertyName = "supportedInstancePoolEditions")]
-        public IList<InstancePoolEditionCapability> SupportedInstancePoolEditions { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:
