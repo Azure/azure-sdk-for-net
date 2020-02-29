@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class AnalyzeOperationResult : IUtf8JsonSerializable
+    internal partial class AnalyzeOperationResult_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,9 +26,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static AnalyzeOperationResult DeserializeAnalyzeOperationResult(JsonElement element)
+        internal static AnalyzeOperationResult_internal DeserializeAnalyzeOperationResult_internal(JsonElement element)
         {
-            AnalyzeOperationResult result = new AnalyzeOperationResult();
+            AnalyzeOperationResult_internal result = new AnalyzeOperationResult_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.AnalyzeResult = AnalyzeResult.DeserializeAnalyzeResult(property.Value);
+                    result.AnalyzeResult = AnalyzeResult_internal.DeserializeAnalyzeResult_internal(property.Value);
                     continue;
                 }
             }

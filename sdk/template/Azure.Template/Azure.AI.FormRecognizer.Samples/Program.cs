@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Custom;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Template;
 
@@ -62,10 +63,9 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
                 if (extractFormOperation.HasValue)
                 {
-                    AnalyzeResult result = extractFormOperation.Value;
+                    ExtractedForm form = extractFormOperation.Value;
                 }
             }
-
         }
 
         private static void GetCustomModelsSummary()

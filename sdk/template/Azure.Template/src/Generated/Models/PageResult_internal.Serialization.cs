@@ -5,11 +5,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
-    public partial class PageResult : IUtf8JsonSerializable
+    internal partial class PageResult_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,9 +44,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static PageResult DeserializePageResult(JsonElement element)
+        internal static PageResult_internal DeserializePageResult_internal(JsonElement element)
         {
-            PageResult result = new PageResult();
+            PageResult_internal result = new PageResult_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -68,10 +69,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.KeyValuePairs = new List<KeyValuePair>();
+                    result.KeyValuePairs = new List<KeyValuePair_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.KeyValuePairs.Add(KeyValuePair.DeserializeKeyValuePair(item));
+                        result.KeyValuePairs.Add(KeyValuePair_internal.DeserializeKeyValuePair_internal(item));
                     }
                     continue;
                 }

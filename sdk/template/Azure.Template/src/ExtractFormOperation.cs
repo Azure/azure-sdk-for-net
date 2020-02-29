@@ -12,10 +12,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractFormOperation : Operation<AnalyzeResult>
+    public class ExtractFormOperation : Operation<ExtractedForm>
     {
         private Response _response;
-        private AnalyzeResult _value;
+        private ExtractedForm _value;
         private bool _hasCompleted;
 
         private readonly string _modelId;
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         public override string Id { get; }
 
-        public override AnalyzeResult Value => OperationHelpers.GetValue(ref _value);
+        public override ExtractedForm Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -33,11 +33,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<AnalyzeResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<ExtractedForm>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<AnalyzeResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<ExtractedForm>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                Response<AnalyzeOperationResult> update = async
+                Response<AnalyzeOperationResult_internal> update = async
                     ? await _operations.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _operations.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
 
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = update.Value.AnalyzeResult;
+                    _value = new ExtractedForm(update.Value.AnalyzeResult);
                 }
 
                 _response = update.GetRawResponse();

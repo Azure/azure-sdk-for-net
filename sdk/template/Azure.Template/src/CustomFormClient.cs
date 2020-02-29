@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 // TODO: Rename to FormRecognizer
 using Azure.Template.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary>
     /// The sample client.

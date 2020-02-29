@@ -429,7 +429,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeOperationResult>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetAnalyzeFormResult");
@@ -443,7 +443,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -460,7 +460,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult> GetAnalyzeFormResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult_internal> GetAnalyzeFormResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetAnalyzeFormResult");
@@ -474,7 +474,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -579,7 +579,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeOperationResult>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetAnalyzeReceiptResult");
@@ -593,7 +593,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -609,7 +609,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult> GetAnalyzeReceiptResult(Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult_internal> GetAnalyzeReceiptResult(Guid resultId, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetAnalyzeReceiptResult");
@@ -623,7 +623,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -722,7 +722,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeOperationResult>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetAnalyzeLayoutResult");
@@ -736,7 +736,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -752,7 +752,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult> GetAnalyzeLayoutResult(Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult_internal> GetAnalyzeLayoutResult(Guid resultId, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetAnalyzeLayoutResult");
@@ -766,7 +766,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
+                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
