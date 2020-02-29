@@ -4,15 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
 

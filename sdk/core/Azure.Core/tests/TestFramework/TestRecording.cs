@@ -235,6 +235,18 @@ namespace Azure.Core.Testing
             }
         }
 
+        public void SetVariable(string variableName, string value)
+        {
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    _session.Variables[variableName] = value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public TokenCredential GetCredential(TokenCredential defaultCredential)
         {
             return Mode == RecordedTestMode.Playback ? new TestCredential() : defaultCredential;

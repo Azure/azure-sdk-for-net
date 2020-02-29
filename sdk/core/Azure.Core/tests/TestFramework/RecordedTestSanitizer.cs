@@ -8,7 +8,7 @@ namespace Azure.Core.Testing
 {
     public class RecordedTestSanitizer
     {
-        protected const string SanitizeValue = "Sanitized";
+        public const string SanitizeValue = "Sanitized";
         private static readonly string[] s_sanitizeValueArray = { SanitizeValue };
 
         private static readonly string[] s_sanitizedHeaders = { "Authorization" };

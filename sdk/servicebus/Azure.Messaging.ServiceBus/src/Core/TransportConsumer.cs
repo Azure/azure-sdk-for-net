@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public abstract Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
+        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveAsync(
             int maximumMessageCount,
             CancellationToken cancellationToken);
 

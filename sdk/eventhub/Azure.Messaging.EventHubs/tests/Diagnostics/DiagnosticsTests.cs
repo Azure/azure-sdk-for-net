@@ -45,9 +45,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://endpoint");
+            var endpoint = "endpoint";
             var fakeConnection = new MockConnection(endpoint, eventHubName);
             var transportMock = new Mock<TransportProducer>();
 
@@ -60,17 +61,21 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             await producer.SendAsync(eventData);
 
+            activity.Stop();
+
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
                 new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
-                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
             ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
+            Assert.That(sendScope.Activity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+            Assert.That(messageScope.Activity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
 
         /// <summary>
@@ -82,9 +87,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://endpoint");
+            var endpoint = "endpoint";
             var fakeConnection = new MockConnection(endpoint, eventHubName);
             var eventCount = 0;
             var batchTransportMock = new Mock<TransportEventBatch>();
@@ -115,16 +121,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(batch);
 
+            activity.Stop();
+
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
                 new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
-                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
             ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
+            Assert.That(sendScope.Activity.ParentId, Is.EqualTo(activity.Id), "The send scope's parent identifier should match the activity in the active scope.");
+            Assert.That(messageScope.Activity.ParentId, Is.EqualTo(activity.Id), "The message scope's parent identifier should match the activity in the active scope.");
         }
 
         /// <summary>
@@ -138,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://some.endpoint.com/path");
+            var endpoint = "some.endpoint.com";
             var fakeConnection = new MockConnection(endpoint, eventHubName);
             var transportMock = new Mock<TransportProducer>();
 
@@ -178,7 +188,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://some.endpoint.com/path");
+            var endpoint = "some.endpoint.com";
             var writtenEventsData = new List<EventData>();
             var batchTransportMock = new Mock<TransportEventBatch>();
             var fakeConnection = new MockConnection(endpoint, eventHubName);
@@ -237,28 +247,17 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class MockConnection : EventHubConnection
         {
-            private const string MockConnectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];";
-            private Uri _serviceEndpoint;
+            private const string MockConnectionStringFormat = "Endpoint={0};SharedAccessKeyName=[value];SharedAccessKey=[value];";
 
-            public MockConnection(Uri serviceEndpoint,
-                                  string eventHubName) : base(MockConnectionString, eventHubName)
+            public MockConnection(string serviceEndpoint,
+                                  string eventHubName) : base(string.Format(MockConnectionStringFormat, serviceEndpoint), eventHubName)
             {
-                _serviceEndpoint = serviceEndpoint;
             }
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
                                                                     string eventHubName,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
-            {
-                var mockTransport = new Mock<TransportClient>();
-
-                mockTransport
-                    .Setup(t => t.ServiceEndpoint)
-                    .Returns(() => _serviceEndpoint);
-
-                return mockTransport.Object;
-            }
+                                                                    EventHubConnectionOptions options) => Mock.Of<TransportClient>();
         }
     }
 }

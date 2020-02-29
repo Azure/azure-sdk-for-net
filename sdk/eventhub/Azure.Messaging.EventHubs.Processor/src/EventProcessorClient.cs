@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage.Blobs;
@@ -633,15 +634,15 @@ namespace Azure.Messaging.EventHubs
 
             // Parameter validation is done by Checkpoint constructor.
 
-            var checkpoint = new Checkpoint
-            (
-                FullyQualifiedNamespace,
-                EventHubName,
-                ConsumerGroup,
-                context.PartitionId,
-                eventData.Offset,
-                eventData.SequenceNumber
-            );
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = FullyQualifiedNamespace,
+                EventHubName = EventHubName,
+                ConsumerGroup = ConsumerGroup,
+                PartitionId = context.PartitionId,
+                Offset = eventData.Offset,
+                SequenceNumber = eventData.SequenceNumber
+            };
 
             using DiagnosticScope scope =
                 EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
@@ -836,7 +837,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (partitionIds != default)
                 {
-                    PartitionOwnership claimedOwnership = default;
+                    EventProcessorPartitionOwnership claimedOwnership = default;
 
                     try
                     {
@@ -917,7 +918,7 @@ namespace Azure.Messaging.EventHubs
             await OnPartitionInitializingAsync(initializingEventArgs).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            IEnumerable<Checkpoint> availableCheckpoints;
+            IEnumerable<EventProcessorCheckpoint> availableCheckpoints;
 
             try
             {
@@ -947,9 +948,16 @@ namespace Azure.Messaging.EventHubs
                 if (checkpoint.PartitionId == partitionId)
                 {
                     // When resuming from a checkpoint, the intent to process the next available event in the stream which
-                    // follows the one that was used to create the checkpoint.  Create the position using an exclusive offset.
+                    // follows the one that was used to create the checkpoint.  Create the position using an exclusive offset, if available.
+                    // If there was no offset, fall back to the sequence number and then the default starting position.
 
-                    startingPosition = EventPosition.FromOffset(checkpoint.Offset, false);
+                    startingPosition = checkpoint switch
+                    {
+                        EventProcessorCheckpoint cp when (cp.Offset.HasValue) => EventPosition.FromOffset(cp.Offset.Value, false),
+                        EventProcessorCheckpoint cp when (cp.SequenceNumber.HasValue) => EventPosition.FromSequenceNumber(cp.SequenceNumber.Value, false),
+                        _ => startingPosition
+                    };
+
                     break;
                 }
             }
@@ -1131,9 +1139,9 @@ namespace Azure.Messaging.EventHubs
                         }
                         else
                         {
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                             ActiveLoadBalancingTask.GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                         }
 
                     }
@@ -1166,9 +1174,9 @@ namespace Azure.Messaging.EventHubs
                         Task.WaitAll(stopPartitionProcessingTasks);
 
                         // Stop the LoadBalancer.
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                         LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     }
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we

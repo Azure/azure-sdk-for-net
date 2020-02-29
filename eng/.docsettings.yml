@@ -66,7 +66,6 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search.Data','#5499']
   - ['sdk/search/Microsoft.Azure.Search.Service','#5499']
   - ['sdk/search/Microsoft.Azure.Search','#5499']
-  - ['sdk/search','#5499']
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
   - ['sdk/attestation/Microsoft.Azure.Attestation','#5499']
@@ -137,6 +136,7 @@ known_content_issues:
   - ['sdk/cognitiveservices/Personalizer/src/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
+  - ['sdk/search/README.md','azure-sdk-tools/issues/42']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

@@ -14,9 +14,9 @@ namespace Azure.Identity
         {
             return async
                 ? await builder.ExecuteAsync(cancellationToken).ConfigureAwait(false)
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                 : builder.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
     }
 }

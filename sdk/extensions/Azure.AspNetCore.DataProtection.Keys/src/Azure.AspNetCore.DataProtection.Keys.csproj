@@ -12,7 +12,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
   <ItemGroup>

@@ -44,16 +44,10 @@ namespace Azure.Storage.Blobs
             _client = client;
 
             // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue)
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                if (transferOptions.MaximumConcurrency < 1)
-                {
-                    _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
-                }
-                else
-                {
-                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
-                }
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
             }
             else
             {
@@ -61,16 +55,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _rangeSize
-            if (transferOptions.MaximumTransferLength.HasValue)
+            if (transferOptions.MaximumTransferLength.HasValue
+                && transferOptions.MaximumTransferLength.Value > 0)
             {
-                if (transferOptions.MaximumTransferLength.Value < 1)
-                {
-                    _rangeSize = Constants.DefaultBufferSize;
-                }
-                else
-                {
-                    _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
-                }
+                _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
@@ -78,21 +66,14 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _initialRangeSize
-            if (transferOptions.InitialTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue
+                && transferOptions.InitialTransferLength.Value > 0)
             {
-                if (transferOptions.InitialTransferLength.Value < 1)
-                {
-                    _initialRangeSize = Constants.DefaultBufferSize;
-                }
-                else
-                {
-                    _initialRangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.DefaultBufferSize);
-                }
+                _initialRangeSize = transferOptions.MaximumTransferLength.Value;
             }
             else
             {
-                // Set _initialRangeSize to _rangeSize if it wasn't specified by the customer.  This is by design.
-                _initialRangeSize = _rangeSize;
+                _initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
         }
 
