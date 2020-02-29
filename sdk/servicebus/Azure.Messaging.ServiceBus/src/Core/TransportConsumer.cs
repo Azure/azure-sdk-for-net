@@ -98,6 +98,29 @@ namespace Azure.Messaging.ServiceBus.Core
         internal abstract string GetReceiveLinkName();
 
         /// <summary>
+        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
+        /// </summary>
+        /// <returns>New lock token expiry date and time in UTC format.</returns>
+        ///
+        /// <param name="lockToken">Lock token associated with the message.</param>
+        /// <param name="timeout"></param>
+        public abstract Task<DateTime> RenewLockAsync(
+            string lockToken,
+            TimeSpan timeout);
+
+        /// <summary>
+        ///
+        /// </summary>
+        ///
+        /// <returns>New lock token expiry date and time in UTC format.</returns>
+        ///
+        /// <param name="sessionId"></param>
+        /// <param name="timeout"></param>
+        public abstract Task<DateTime> RenewSessionLockAsync(
+            string sessionId,
+            TimeSpan timeout);
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="timeout"></param>
