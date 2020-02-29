@@ -8,6 +8,6 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> The ErrorResponse. </summary>
     public partial class ErrorResponse
     {
-        public ErrorInformation Error { get; set; } = new ErrorInformation();
+        public FormRecognizerError Error { get; set; } = new FormRecognizerError();
     }
 }

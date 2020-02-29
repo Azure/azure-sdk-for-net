@@ -6,7 +6,7 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> The ErrorInformation. </summary>
-    public partial class ErrorInformation
+    public partial class FormRecognizerError
     {
         public string Code { get; set; }
         public string Message { get; set; }

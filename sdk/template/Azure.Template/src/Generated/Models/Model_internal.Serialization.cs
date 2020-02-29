@@ -4,11 +4,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class Model : IUtf8JsonSerializable
+    internal partial class Model_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,14 +28,14 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static Model DeserializeModel(JsonElement element)
+        internal static Model_internal DeserializeModel_internal(JsonElement element)
         {
-            Model result = new Model();
+            Model_internal result = new Model_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"))
                 {
-                    result.ModelInfo = ModelInfo.DeserializeModelInfo(property.Value);
+                    result.ModelInfo = ModelInfo_internal.DeserializeModelInfo_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keys"))
@@ -43,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Keys = KeysResult.DeserializeKeysResult(property.Value);
+                    result.Keys = KeysResult_internal.DeserializeKeysResult_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trainResult"))
@@ -52,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.TrainResult = TrainResult.DeserializeTrainResult(property.Value);
+                    result.TrainResult = TrainResult_internal.DeserializeTrainResult_internal(property.Value);
                     continue;
                 }
             }

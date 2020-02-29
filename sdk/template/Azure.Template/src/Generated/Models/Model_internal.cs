@@ -3,16 +3,18 @@
 
 #nullable disable
 
+using Azure.AI.FormRecognizer;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Response to the get custom model operation. </summary>
-    public partial class Model
+    internal partial class Model_internal
     {
         /// <summary> Basic custom model information. </summary>
-        public ModelInfo ModelInfo { get; set; } = new ModelInfo();
+        public ModelInfo_internal ModelInfo { get; set; } = new ModelInfo_internal();
         /// <summary> Keys extracted by the custom model. </summary>
-        public KeysResult Keys { get; set; }
+        public KeysResult_internal Keys { get; set; }
         /// <summary> Custom model training result. </summary>
-        public TrainResult TrainResult { get; set; }
+        public TrainResult_internal TrainResult { get; set; }
     }
 }

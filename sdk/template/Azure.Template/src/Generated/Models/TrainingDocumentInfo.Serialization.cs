@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Errors.Add(ErrorInformation.DeserializeErrorInformation(item));
+                        result.Errors.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
                     }
                     continue;
                 }

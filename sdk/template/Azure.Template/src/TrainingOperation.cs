@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Represents a long-running training operation.
     /// </summary>
-    public class TrainingOperation : Operation<Model>
+    public class TrainingOperation : Operation<CustomModel>
     {
         private Response _response;
-        private Model _value;
+        private CustomModel _value;
         private bool _hasCompleted;
         private readonly AllOperations _allOperations;
 
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// The final result of the training operation, if the operation completed successfully.
         /// </summary>
-        public override Model Value => OperationHelpers.GetValue(ref _value);
+        public override CustomModel Value => OperationHelpers.GetValue(ref _value);
 
         /// <summary>
         /// True if the training operation completed.
@@ -46,11 +46,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Model>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Model>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.Models
             if (!_hasCompleted)
             {
                 // TODO : when/where do we set includeKeys = true?
-                Response<Model> update = async
+                Response<Model_internal> update = async
                     ? await _allOperations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
                     : _allOperations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
@@ -94,7 +94,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.ModelInfo.Status != ModelStatus.Creating)
                 {
                     _hasCompleted = true;
-                    _value = update.Value;
+                    _value = new CustomModel(update.Value);
                 }
 
                 _response = update.GetRawResponse();

@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (property.NameEquals("error"))
                 {
-                    result.Error = ErrorInformation.DeserializeErrorInformation(property.Value);
+                    result.Error = FormRecognizerError.DeserializeFormRecognizerError(property.Value);
                     continue;
                 }
             }

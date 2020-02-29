@@ -57,10 +57,10 @@ namespace Azure.Template.Models
                     {
                         continue;
                     }
-                    result.ModelList = new List<ModelInfo>();
+                    result.ModelList = new List<ModelInfo_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ModelList.Add(ModelInfo.DeserializeModelInfo(item));
+                        result.ModelList.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
                     }
                     continue;
                 }

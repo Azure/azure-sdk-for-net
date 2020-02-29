@@ -31,10 +31,10 @@ namespace Azure.AI.FormRecognizer.Samples
             string sasUrl = "https://annelostorage01.blob.core.windows.net/container-formreco?sp=rl&st=2020-02-29T17:07:48Z&se=2020-03-01T17:07:48Z&sv=2019-02-02&sr=c&sig=Ls4zfs2hidZ4VS%2BiEkRv1Y6brqjf0te1VfI72HodsRE%3D";
             var trainingOperation = client.StartTraining(sasUrl);
 
-            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(4));
+            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
             if (trainingOperation.HasValue)
             {
-                Model model = trainingOperation.Value;
+                CustomModel model = trainingOperation.Value;
             }
             else
             {

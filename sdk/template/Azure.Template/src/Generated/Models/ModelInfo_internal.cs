@@ -8,7 +8,7 @@ using System;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Basic custom model information. </summary>
-    public partial class ModelInfo
+    public partial class ModelInfo_internal
     {
         /// <summary> Model identifier. </summary>
         public Guid ModelId { get; set; }

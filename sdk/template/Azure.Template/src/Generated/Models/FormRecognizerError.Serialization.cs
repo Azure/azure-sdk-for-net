@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class ErrorInformation : IUtf8JsonSerializable
+    public partial class FormRecognizerError : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,9 +19,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteStringValue(Message);
             writer.WriteEndObject();
         }
-        internal static ErrorInformation DeserializeErrorInformation(JsonElement element)
+        internal static FormRecognizerError DeserializeFormRecognizerError(JsonElement element)
         {
-            ErrorInformation result = new ErrorInformation();
+            FormRecognizerError result = new FormRecognizerError();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))

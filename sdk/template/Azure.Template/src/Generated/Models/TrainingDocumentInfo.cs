@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Total number of pages trained. </summary>
         public int Pages { get; set; }
         /// <summary> List of errors. </summary>
-        public ICollection<ErrorInformation> Errors { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.ErrorInformation>();
+        public ICollection<FormRecognizerError> Errors { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.FormRecognizerError>();
         /// <summary> Status of the training operation. </summary>
         public TrainStatus Status { get; set; }
     }

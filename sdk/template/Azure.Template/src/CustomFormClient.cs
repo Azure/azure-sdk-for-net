@@ -58,12 +58,12 @@ namespace Azure.AI.FormRecognizer
         public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
-            filter ??= new TrainingFileFilter();
+            //filter ??= new TrainingFileFilter();
 
             TrainRequest trainRequest = new TrainRequest() { Source = source };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            if (filter!= null)
+            if (filter != default)
             {
                 trainRequest.SourceFilter = filter;
             }
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         public virtual Response<CustomModelCollection> GetCustomModelSummary(CancellationToken cancellationToken = default)
         {
-            return _operations.GetCustomModels(SomeEnum.Summary, cancellationToken);
+            return _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         public virtual async Task<Response<CustomModelCollection>> GetCustomModelSummaryAsync(CancellationToken cancellationToken = default)
         {
-            return await _operations.GetCustomModelsAsync(SomeEnum.Summary, cancellationToken).ConfigureAwait(false);
+            return await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
         }
 
         #endregion CRUD Ops

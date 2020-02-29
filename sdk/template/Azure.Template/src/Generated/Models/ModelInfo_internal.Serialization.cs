@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class ModelInfo : IUtf8JsonSerializable
+    public partial class ModelInfo_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,9 +23,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteStringValue(LastUpdatedDateTime, "S");
             writer.WriteEndObject();
         }
-        internal static ModelInfo DeserializeModelInfo(JsonElement element)
+        internal static ModelInfo_internal DeserializeModelInfo_internal(JsonElement element)
         {
-            ModelInfo result = new ModelInfo();
+            ModelInfo_internal result = new ModelInfo_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"))

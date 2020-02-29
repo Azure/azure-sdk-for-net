@@ -105,10 +105,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Errors = new List<ErrorInformation>();
+                    result.Errors = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Errors.Add(ErrorInformation.DeserializeErrorInformation(item));
+                        result.Errors.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
                     }
                     continue;
                 }

@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class TrainResult : IUtf8JsonSerializable
+    internal partial class TrainResult_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,9 +48,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static TrainResult DeserializeTrainResult(JsonElement element)
+        internal static TrainResult_internal DeserializeTrainResult_internal(JsonElement element)
         {
-            TrainResult result = new TrainResult();
+            TrainResult_internal result = new TrainResult_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingDocuments"))
@@ -89,10 +89,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Errors = new List<ErrorInformation>();
+                    result.Errors = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Errors.Add(ErrorInformation.DeserializeErrorInformation(item));
+                        result.Errors.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
                     }
                     continue;
                 }

@@ -111,7 +111,7 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
-        internal HttpMessage CreateGetCustomModelsRequest(SomeEnum? op)
+        internal HttpMessage CreateGetCustomModelsRequest(GetModelOptions? op)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CustomModelCollection>> GetCustomModelsAsync(SomeEnum? op, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<CustomModelCollection>> GetCustomModelsAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModels");
@@ -160,7 +160,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CustomModelCollection> GetCustomModels(SomeEnum? op, CancellationToken cancellationToken = default)
+        public Response<CustomModelCollection> GetCustomModels(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModels");
@@ -208,7 +208,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Model>> GetCustomModelAsync(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModel");
@@ -222,7 +222,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            var value = Model_internal.DeserializeModel_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -239,7 +239,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Model> GetCustomModel(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
+        public Response<Model_internal> GetCustomModel(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModel");
@@ -253,7 +253,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            var value = Model_internal.DeserializeModel_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -861,15 +861,15 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public AsyncPageable<ModelInfo> GetCustomModelsPageableAsync(SomeEnum? op, CancellationToken cancellationToken = default)
+        public AsyncPageable<ModelInfo_internal> GetCustomModelsPageableAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
-            async Task<Page<ModelInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ModelInfo_internal>> FirstPageFunc(int? pageSizeHint)
             {
                 var response = await GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
             }
-            async Task<Page<ModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ModelInfo_internal>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = await GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
@@ -879,15 +879,15 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Pageable<ModelInfo> GetCustomModelsPageable(SomeEnum? op, CancellationToken cancellationToken = default)
+        public Pageable<ModelInfo_internal> GetCustomModelsPageable(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
-            Page<ModelInfo> FirstPageFunc(int? pageSizeHint)
+            Page<ModelInfo_internal> FirstPageFunc(int? pageSizeHint)
             {
                 var response = GetCustomModels(op, cancellationToken);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
             }
-            Page<ModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ModelInfo_internal> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = GetCustomModelsNextPage(nextLink, cancellationToken);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());

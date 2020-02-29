@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Template.Mocdels
+namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("Enum0")]
-    internal partial struct SomeEnum
+    [CodeGenSchema("ErrorInformation")]
+    public partial class FormRecognizerError
     {
     }
 }

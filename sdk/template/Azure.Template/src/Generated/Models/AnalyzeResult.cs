@@ -19,6 +19,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Document-level information extracted from the input. </summary>
         public ICollection<DocumentResult> DocumentResults { get; set; }
         /// <summary> List of errors reported during the analyze operation. </summary>
-        public ICollection<ErrorInformation> Errors { get; set; }
+        public ICollection<FormRecognizerError> Errors { get; set; }
     }
 }
