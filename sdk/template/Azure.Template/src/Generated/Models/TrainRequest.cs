@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.AI.FormRecognizer;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Request parameter to train a new custom model. </summary>
@@ -11,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Source path containing the training documents. </summary>
         public string Source { get; set; }
         /// <summary> Filter to apply to the documents in the source path for training. </summary>
-        public TrainSourceFilter SourceFilter { get; set; }
+        public TrainingFileFilter SourceFilter { get; set; }
         /// <summary> Use label file for training a model. </summary>
         public bool? UseLabelFile { get; set; }
     }

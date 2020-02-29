@@ -1,0 +1,106 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+
+namespace Azure.AI.FormRecognizer.Models
+{
+    /// <summary>
+    /// Represents a long-running training operation.
+    /// </summary>
+    public class TrainingOperation : Operation<Model>
+    {
+        private Response _response;
+        private Model _value;
+        private bool _hasCompleted;
+        private readonly AllOperations _allOperations;
+
+        /// <summary>
+        /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
+        /// </summary>
+        public override string Id { get; }
+
+        /// <summary>
+        /// The final result of the training operation, if the operation completed successfully.
+        /// </summary>
+        public override Model Value => OperationHelpers.GetValue(ref _value);
+
+        /// <summary>
+        /// True if the training operation completed.
+        /// </summary>
+        public override bool HasCompleted => _hasCompleted;
+
+        /// <summary>
+        /// True if the training operation completed successfully.
+        /// </summary>
+        public override bool HasValue => _value != null;
+        // TODO: This will make the model available even if status is failed to train.
+        // is it useful to make the value available if training has failed?
+
+        /// <inheritdoc/>
+        public override Response GetRawResponse() => _response;
+
+        /// <inheritdoc/>
+        public override ValueTask<Response<Model>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc/>
+        public override ValueTask<Response<Model>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrainingOperation"/> class for mocking.
+        /// </summary>
+        protected TrainingOperation()
+        {
+        }
+
+        internal TrainingOperation(AllOperations allOperations, string location)
+        {
+            _allOperations = allOperations;
+            Id = location.Split('/').Last();
+
+            // TODO: validate this?
+            //if (i == -1)
+            //{
+            //    throw new RequestFailedException("Unable to parse train location URL.");
+            //}
+        }
+
+        /// <inheritdoc/>
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+
+        /// <inheritdoc/>
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+
+        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        {
+            if (!_hasCompleted)
+            {
+                // TODO : when/where do we set includeKeys = true?
+                Response<Model> update = async
+                    ? await _allOperations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
+                    : _allOperations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
+
+                // TODO: check status code?  What if a failure status code is returned?
+
+                if (update.Value.ModelInfo.Status != ModelStatus.Creating)
+                {
+                    _hasCompleted = true;
+                    _value = update.Value;
+                }
+
+                _response = update.GetRawResponse();
+            }
+
+            return GetRawResponse();
+        }
+    }
+}

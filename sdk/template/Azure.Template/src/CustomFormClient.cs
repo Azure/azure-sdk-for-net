@@ -4,8 +4,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Template;
+
+// TODO: clean these up.
 using Azure.Template.Mocdels;
 using Azure.Template.Models;
 
@@ -19,6 +22,8 @@ namespace Azure.AI.FormRecognizer
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
         private readonly AllOperations _operations;
+
+        internal const string CustomModelsRoute = "/custom/models";
 
         /// <summary>
         /// Mocking ctor only.
@@ -48,6 +53,35 @@ namespace Azure.AI.FormRecognizer
             _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
         }
 
+        #region Training
+
+        public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        {
+            // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
+            filter ??= new TrainingFileFilter();
+
+            TrainRequest trainRequest = new TrainRequest() { Source = source };
+
+            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            if (filter!= null)
+            {
+                trainRequest.SourceFilter = filter;
+            }
+
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
+            return new TrainingOperation(_operations, response.Headers.Location);
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(new TrainRequest() { Source = source, SourceFilter = filter, UseLabelFile = false });
+            //return new TrainingOperation(_operations, response.Headers.Location);
+        }
+
+        #endregion Training
+
+        #region Analyze
+        #endregion Analyze
+
+        #region CRUD Ops
+
         /// <summary>
         /// Executes a service call that takes and returns the <see cref="CustomModelCollection"/>.
         /// </summary>
@@ -63,5 +97,7 @@ namespace Azure.AI.FormRecognizer
         {
             return await _operations.GetCustomModelsAsync(SomeEnum.Summary, cancellationToken).ConfigureAwait(false);
         }
+
+        #endregion CRUD Ops
     }
 }

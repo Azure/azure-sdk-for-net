@@ -3,10 +3,10 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
     /// <summary> Filter to apply to the documents in the source path for training. </summary>
-    public partial class TrainSourceFilter
+    public partial class TrainingFileFilter
     {
         /// <summary> A case-sensitive prefix string to filter documents in the source path for training. For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for training. </summary>
         public string Prefix { get; set; }

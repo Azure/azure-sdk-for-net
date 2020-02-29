@@ -6,9 +6,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
-    public partial class TrainSourceFilter : IUtf8JsonSerializable
+    public partial class TrainingFileFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static TrainSourceFilter DeserializeTrainSourceFilter(JsonElement element)
+        internal static TrainingFileFilter DeserializeTrainingFileFilter(JsonElement element)
         {
-            TrainSourceFilter result = new TrainSourceFilter();
+            TrainingFileFilter result = new TrainingFileFilter();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"))

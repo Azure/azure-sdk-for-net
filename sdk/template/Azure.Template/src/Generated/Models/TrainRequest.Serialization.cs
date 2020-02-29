@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -43,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.SourceFilter = TrainSourceFilter.DeserializeTrainSourceFilter(property.Value);
+                    result.SourceFilter = TrainingFileFilter.DeserializeTrainingFileFilter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("useLabelFile"))
