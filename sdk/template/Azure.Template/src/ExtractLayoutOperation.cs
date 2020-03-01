@@ -2,27 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    //public class ExtractLayoutOperation : Operation<IReadOnlyCollection<ExtractedLayoutPage>>
-    public class ExtractLayoutOperation : Operation<AnalyzeResult_internal>
+    public class ExtractLayoutOperation : Operation<IReadOnlyList<ExtractedLayoutPage>>
     {
         private Response _response;
-        private AnalyzeResult_internal _value;
+        private IReadOnlyList<ExtractedLayoutPage> _value;
         private bool _hasCompleted;
 
         private readonly AllOperations _operations;
 
         public override string Id { get; }
 
-        public override AnalyzeResult_internal Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<ExtractedLayoutPage> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -32,11 +31,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<AnalyzeResult_internal>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<ExtractedLayoutPage>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<AnalyzeResult_internal>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<ExtractedLayoutPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal ExtractLayoutOperation(AllOperations operations, string operationLocation)
@@ -69,7 +68,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     _hasCompleted = true;
 
-                    _value = update.Value.AnalyzeResult;
+                    _value = SetValue(update.Value.AnalyzeResult.PageResults);
                     //_value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First());
                 }
 
@@ -77,6 +76,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return GetRawResponse();
+        }
+
+        private static IReadOnlyList<ExtractedLayoutPage> SetValue(ICollection<PageResult_internal> pageResults)
+        {
+            List<ExtractedLayoutPage> pages = new List<ExtractedLayoutPage>();
+
+            foreach (var page in pageResults)
+            {
+                pages.Add(new ExtractedLayoutPage(page));
+            }
+
+            return pages.AsReadOnly();
         }
     }
 }

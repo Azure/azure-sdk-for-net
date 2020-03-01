@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Custom;
@@ -147,7 +148,14 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
                 if (extractLayoutOperation.HasValue)
                 {
-                    AnalyzeResult_internal result = extractLayoutOperation.Value;
+                    IReadOnlyList<ExtractedLayoutPage> result = extractLayoutOperation.Value;
+                    foreach (var page in result)
+                    {
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
+                    }
                 }
             }
         }

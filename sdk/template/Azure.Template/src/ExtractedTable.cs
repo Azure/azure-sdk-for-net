@@ -9,6 +9,13 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedTable
     {
+        internal ExtractedTable(DataTable_internal result)
+        {
+            ColumnCount = result.Columns;
+            RowCount = result.Rows;
+            Cells = SetCells(result.Cells);
+        }
+
         public IReadOnlyList<ExtractedTableCell> Cells { get; }
         public int ColumnCount { get; }
         public int RowCount { get; }
@@ -18,130 +25,16 @@ namespace Azure.AI.FormRecognizer.Models
         //public ExtractedTableCell this[int i, int j] { get; set; }
 
 
-        // TODO: Make this internal after testing.
-        public void WriteAscii(TextWriter writer, bool unicode = true, int cellWidth = 15)
+        private static IReadOnlyList<ExtractedTableCell> SetCells(ICollection<DataTableCell_internal> cellsResult)
         {
-            var topLeft = unicode ? '┌' : '|';
-            var topRight = unicode ? '┐' : '|';
-            var topInner = unicode ? '┬' : '|';
-            var bottomLeft = unicode ? '└' : '|';
-            var bottomRight = unicode ? '┘' : '|';
-            var bottomInner = unicode ? '┴' : '|';
-            var innerLeft = unicode ? '├' : '|';
-            var innerRight = unicode ? '┤' : '|';
-            var innerCross = unicode ? '┼' : '|';
-            var innerHeaderLeft = unicode ? '╞' : '|';
-            var innerHeaderRight = unicode ? '╡' : '|';
-            var innerHeaderCross = unicode ? '╪' : '|';
-            var inner = unicode ? '│' : '|';
-            var lineSeparator = unicode ? '─' : '-';
-            var headerSeparator = unicode ? '═' : '=';
-            var footerSeparator = '~';
-            var index = IndexCells();
+            List<ExtractedTableCell> cells = new List<ExtractedTableCell>();
 
-            // write table top border
-            for (var colIndex = 0; colIndex < ColumnCount; colIndex += 1)
+            foreach (var result in cellsResult)
             {
-                var firstCol = colIndex == 0;
-                var line = new string(lineSeparator, cellWidth);
-                var boundary = firstCol ? topLeft : topInner;
-                writer.Write($"{boundary}{line}");
+                cells.Add(new ExtractedTableCell(result));
             }
-            writer.WriteLine($"{topRight}");
 
-            // write table
-            for (var rowIndex = 0; rowIndex < RowCount; rowIndex += 1)
-            {
-                var headerColumnCount = new bool[ColumnCount];
-                var footerColumnCount = new bool[ColumnCount];
-                var lastRow = rowIndex == RowCount - 1;
-
-                // write row
-                for (var colIndex = 0; colIndex < ColumnCount; colIndex += 1)
-                {
-                    var firstCol = colIndex == 0;
-                    var lastCol = colIndex == ColumnCount - 1;
-                    if (index.TryGetValue(rowIndex, out IDictionary<int, ExtractedTableCell> row))
-                    {
-                        if (row.TryGetValue(colIndex, out ExtractedTableCell cell))
-                        {
-                            var colSpan = cell.ColumnSpan.Value;
-                            var maxWidth = cellWidth * colSpan; // TODO
-                            if (maxWidth > cellWidth)
-                            {
-                                maxWidth += 1 * (colSpan - 1);
-                            }
-                            var text = cell.Text.Substring(0, Math.Min(cell.Text.Length, maxWidth));
-                            writer.Write($"{inner}{{0, {maxWidth}}}", text);
-                            for (var i = cell.ColumnIndex; i < cell.ColumnIndex + colSpan; i += 1)
-                            {
-                                headerColumnCount[i] = cell.IsHeader ?? false;
-                                footerColumnCount[i] = cell.IsFooter ?? false;
-                            }
-                            colIndex += colSpan - 1;
-                        }
-                        else
-                        {
-                            writer.Write($"{inner}{{0, {cellWidth}}}", '-');
-                        }
-                    }
-                }
-
-                // write row bottom border
-                writer.WriteLine(inner);
-                for (var colIndex = 0; colIndex < ColumnCount; colIndex += 1)
-                {
-                    var firstCol = colIndex == 0;
-                    var isHeader = headerColumnCount[colIndex];
-                    var isFooter = footerColumnCount[colIndex];
-                    var lineChar = isHeader ? headerSeparator : isFooter ? footerSeparator : lineSeparator;
-                    var line = new string(lineChar, cellWidth);
-                    char boundary;
-                    if (lastRow)
-                    {
-                        if (firstCol)
-                        {
-                            boundary = bottomLeft;
-                        }
-                        else
-                        {
-                            boundary = bottomInner;
-                        }
-                    }
-                    else if (firstCol)
-                    {
-                        boundary = isHeader ? innerHeaderLeft : innerLeft;
-                    }
-                    else
-                    {
-                        boundary = isHeader ? innerHeaderCross : innerCross;
-                    }
-                    writer.Write($"{boundary}{line}");
-                }
-                writer.WriteLine(lastRow ? bottomRight : headerColumnCount[ColumnCount - 1] ? innerHeaderRight : innerRight);
-            }
-        }
-
-        private Dictionary<int, IDictionary<int, ExtractedTableCell>> IndexCells()
-        {
-            var index = new Dictionary<int, IDictionary<int, ExtractedTableCell>>();
-            foreach (var cell in Cells)
-            {
-                var RowCountpan = cell.RowSpan ?? 1;
-                var colSpan = cell.ColumnSpan ?? 1;
-                for (var rowIndex = cell.RowIndex; rowIndex < cell.RowIndex + RowCountpan; rowIndex += 1)
-                {
-                    if (!index.TryGetValue(rowIndex, out IDictionary<int, ExtractedTableCell> row))
-                    {
-                        index[rowIndex] = row = new Dictionary<int, ExtractedTableCell>();
-                    }
-                    for (var i = cell.ColumnIndex; i < cell.ColumnIndex + colSpan; i += 1)
-                    {
-                        row[i] = cell;
-                    }
-                }
-            }
-            return index;
+            return cells.AsReadOnly();
         }
     }
 }
