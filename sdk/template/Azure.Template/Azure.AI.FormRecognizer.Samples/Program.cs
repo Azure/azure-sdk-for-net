@@ -6,7 +6,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Custom;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Template;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
@@ -22,7 +21,8 @@ namespace Azure.AI.FormRecognizer.Samples
             //ExtractCustomModel().Wait();
 
             //TrainCustomLabeledModel().Wait();
-            ExtractCustomLabeledModel().Wait();
+            //ExtractCustomLabeledModel().Wait();
+            ExtractReceipt();
 
             //GetCustomModelsSummary();
             //GetCustomModels();
@@ -111,6 +111,22 @@ namespace Azure.AI.FormRecognizer.Samples
                 {
                     ExtractedForm form = extractFormOperation.Value;
                 }
+            }
+        }
+
+        private static void ExtractReceipt()
+        {
+            string contosoReceipt = @"C:\src\samples\cognitive\formrecognizer\receipt_data\contoso-allinone.jpg";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new ReceiptClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
+            {
+                var analyzeResult = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg);
+
             }
         }
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted table contained in a page. </summary>
-    internal partial class DataTable_internal
+    public partial class DataTable_internal
     {
         /// <summary> Number of rows. </summary>
         public int Rows { get; set; }
