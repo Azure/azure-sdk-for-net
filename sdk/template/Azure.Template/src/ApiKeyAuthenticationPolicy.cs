@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

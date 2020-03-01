@@ -6,7 +6,7 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Report for a custom model training field. </summary>
-    public partial class FormFieldsReport
+    internal partial class FormFieldsReport_internal
     {
         /// <summary> Training field name. </summary>
         public string FieldName { get; set; }

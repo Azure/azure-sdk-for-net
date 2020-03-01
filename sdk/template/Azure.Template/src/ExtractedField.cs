@@ -3,7 +3,7 @@
 
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedField
     {

@@ -5,10 +5,9 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     public partial class CustomModelCollection : IUtf8JsonSerializable
     {

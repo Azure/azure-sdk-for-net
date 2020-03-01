@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class TrainResult_internal : IUtf8JsonSerializable
+    internal partial class TrainResult_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -67,10 +67,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Fields = new List<FormFieldsReport>();
+                    result.Fields = new List<FormFieldsReport_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Fields.Add(FormFieldsReport.DeserializeFormFieldsReport(item));
+                        result.Fields.Add(FormFieldsReport_internal.DeserializeFormFieldsReport_internal(item));
                     }
                     continue;
                 }

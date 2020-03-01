@@ -5,7 +5,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class LabeledFieldAccuracy
     {
-        public LabeledFieldAccuracy(FormFieldsReport field)
+        internal LabeledFieldAccuracy(FormFieldsReport_internal field)
         {
             Accuracy = field.Accuracy;
             Label = field.FieldName;

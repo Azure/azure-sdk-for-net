@@ -82,10 +82,10 @@ namespace Azure.AI.FormRecognizer
                     {
                         continue;
                     }
-                    result.Tables = new List<DataTable>();
+                    result.Tables = new List<DataTable_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Tables.Add(DataTable.DeserializeDataTable(item));
+                        result.Tables.Add(DataTable_internal.DeserializeDataTable_internal(item));
                     }
                     continue;
                 }

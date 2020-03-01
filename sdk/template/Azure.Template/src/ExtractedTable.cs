@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedTable
     {
@@ -12,6 +12,7 @@ namespace Azure.AI.FormRecognizer
         public int RowCount { get; }
 
         // TODO: implement table indexer
+
         //public ExtractedTableCell this[int i, int j] { get; set; }
     }
 }

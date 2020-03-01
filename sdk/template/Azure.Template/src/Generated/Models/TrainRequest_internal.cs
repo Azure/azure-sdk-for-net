@@ -3,12 +3,10 @@
 
 #nullable disable
 
-using Azure.AI.FormRecognizer;
-
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Request parameter to train a new custom model. </summary>
-    public partial class TrainRequest
+    internal partial class TrainRequest_internal
     {
         /// <summary> Source path containing the training documents. </summary>
         public string Source { get; set; }

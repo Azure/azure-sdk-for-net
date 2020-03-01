@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Text;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedForm
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer
             // TODO: how to set PageRange?
         }
 
-        internal ExtractedForm(DocumentResult documentResult)
+        internal ExtractedForm(DocumentResult_internal documentResult)
         {
             // Supervised
             LearnedFormId = documentResult.DocType;
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer
             return pages.AsReadOnly();
         }
 
-        private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult documentResult)
+        private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult_internal documentResult)
         {
             List<ExtractedPage> pages = new List<ExtractedPage>();
 

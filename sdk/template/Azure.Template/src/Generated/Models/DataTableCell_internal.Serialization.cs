@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class DataTableCell : IUtf8JsonSerializable
+    internal partial class DataTableCell_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -61,9 +61,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static DataTableCell DeserializeDataTableCell(JsonElement element)
+        internal static DataTableCell_internal DeserializeDataTableCell_internal(JsonElement element)
         {
-            DataTableCell result = new DataTableCell();
+            DataTableCell_internal result = new DataTableCell_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rowIndex"))

@@ -3,7 +3,7 @@
 
 using System.Threading;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// A <see cref="FormRecognizerApiKeyCredential"/> is an API key use to authenticate

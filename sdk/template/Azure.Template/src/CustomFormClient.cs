@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Custom
             // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
             //filter ??= new TrainingFileFilter();
 
-            TrainRequest trainRequest = new TrainRequest() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             if (filter != default)
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         public virtual TrainingWithLabelsOperation StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest trainRequest = new TrainRequest() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             if (filter != default)

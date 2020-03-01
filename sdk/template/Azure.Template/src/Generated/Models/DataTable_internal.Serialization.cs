@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class DataTable : IUtf8JsonSerializable
+    internal partial class DataTable_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,9 +26,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        internal static DataTable DeserializeDataTable(JsonElement element)
+        internal static DataTable_internal DeserializeDataTable_internal(JsonElement element)
         {
-            DataTable result = new DataTable();
+            DataTable_internal result = new DataTable_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"))
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Cells.Add(DataTableCell.DeserializeDataTableCell(item));
+                        result.Cells.Add(DataTableCell_internal.DeserializeDataTableCell_internal(item));
                     }
                     continue;
                 }

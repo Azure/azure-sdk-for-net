@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedPage
     {

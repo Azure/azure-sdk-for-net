@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class PageRange
     {

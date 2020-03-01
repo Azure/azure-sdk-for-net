@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class FormFieldsReport : IUtf8JsonSerializable
+    internal partial class FormFieldsReport_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,9 +19,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteNumberValue(Accuracy);
             writer.WriteEndObject();
         }
-        internal static FormFieldsReport DeserializeFormFieldsReport(JsonElement element)
+        internal static FormFieldsReport_internal DeserializeFormFieldsReport_internal(JsonElement element)
         {
-            FormFieldsReport result = new FormFieldsReport();
+            FormFieldsReport_internal result = new FormFieldsReport_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"))

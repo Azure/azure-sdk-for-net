@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class FieldValue : IUtf8JsonSerializable
+    internal partial class FieldValue_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -104,9 +104,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static FieldValue DeserializeFieldValue(JsonElement element)
+        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
         {
-            FieldValue result = new FieldValue();
+            FieldValue_internal result = new FieldValue_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -174,10 +174,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.ValueArray = new List<FieldValue>();
+                    result.ValueArray = new List<FieldValue_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ValueArray.Add(DeserializeFieldValue(item));
+                        result.ValueArray.Add(DeserializeFieldValue_internal(item));
                     }
                     continue;
                 }
@@ -187,10 +187,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.ValueObject = new Dictionary<string, FieldValue>();
+                    result.ValueObject = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        result.ValueObject.Add(property0.Name, DeserializeFieldValue(property0.Value));
+                        result.ValueObject.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
                     }
                     continue;
                 }

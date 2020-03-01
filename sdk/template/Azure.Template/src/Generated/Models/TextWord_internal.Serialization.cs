@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class TextWord : IUtf8JsonSerializable
+    internal partial class TextWord_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static TextWord DeserializeTextWord(JsonElement element)
+        internal static TextWord_internal DeserializeTextWord_internal(JsonElement element)
         {
-            TextWord result = new TextWord();
+            TextWord_internal result = new TextWord_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))

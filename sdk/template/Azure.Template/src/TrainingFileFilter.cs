@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("TrainSourceFilter")]
     public partial class TrainingFileFilter

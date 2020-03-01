@@ -4,9 +4,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Response to the list custom models operation. </summary>
     public partial class CustomModelCollection

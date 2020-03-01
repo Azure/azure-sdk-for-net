@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
             ModelId = model.ModelInfo.ModelId.ToString();
             AverageLabelAccuracy = model.TrainResult.AverageModelAccuracy.Value;
             LabelAccuracies = SetLabelAccuracies(model.TrainResult.Fields);
-            TrainingStatus = new ModelTrainingStatus(model.ModelInfo);
+            TrainingStatus = new CustomModelTrainingStatus(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
 
@@ -21,12 +21,12 @@ namespace Azure.AI.FormRecognizer.Models
         public float AverageLabelAccuracy { get; internal set; }
         public IReadOnlyList<LabeledFieldAccuracy> LabelAccuracies { get; internal set; }
         public TrainingInfo TrainingInfo { get; internal set; }
-        public ModelTrainingStatus TrainingStatus { get; internal set; }
+        public CustomModelTrainingStatus TrainingStatus { get; internal set; }
 
-        private static IReadOnlyList<LabeledFieldAccuracy> SetLabelAccuracies(ICollection<FormFieldsReport> fields)
+        private static IReadOnlyList<LabeledFieldAccuracy> SetLabelAccuracies(ICollection<FormFieldsReport_internal> fields)
         {
             List<LabeledFieldAccuracy> accuracies = new List<LabeledFieldAccuracy>();
-            foreach (FormFieldsReport field in fields)
+            foreach (FormFieldsReport_internal field in fields)
             {
                 LabeledFieldAccuracy accuracy = new LabeledFieldAccuracy(field);
                 accuracies.Add(accuracy);

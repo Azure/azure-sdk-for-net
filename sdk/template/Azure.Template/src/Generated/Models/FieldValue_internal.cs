@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Recognized field value. </summary>
-    public partial class FieldValue
+    internal partial class FieldValue_internal
     {
         /// <summary> Semantic data type of the field value. </summary>
         public FieldValueType Type { get; set; }
@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Integer value. </summary>
         public int? ValueInteger { get; set; }
         /// <summary> Array of field values. </summary>
-        public ICollection<FieldValue> ValueArray { get; set; }
+        public ICollection<FieldValue_internal> ValueArray { get; set; }
         /// <summary> Dictionary of named field values. </summary>
-        public IDictionary<string, FieldValue> ValueObject { get; set; }
+        public IDictionary<string, FieldValue_internal> ValueObject { get; set; }
         /// <summary> Text content of the extracted field. </summary>
         public string Text { get; set; }
         /// <summary> Quadrangle bounding box, with coordinates specified relative to the top-left of the original image. The eight numbers represent the four points, clockwise from the top-left corner relative to the text orientation. For image, the (x, y) coordinates are measured in pixels. For PDF, the (x, y) coordinates are measured in inches. </summary>

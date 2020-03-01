@@ -42,12 +42,12 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("key"))
                 {
-                    result.Key = KeyValueElement.DeserializeKeyValueElement(property.Value);
+                    result.Key = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    result.Value = KeyValueElement.DeserializeKeyValueElement(property.Value);
+                    result.Value = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"))

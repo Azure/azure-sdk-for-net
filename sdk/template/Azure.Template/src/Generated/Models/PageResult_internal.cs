@@ -18,6 +18,6 @@ namespace Azure.AI.FormRecognizer
         /// <summary> List of key-value pairs extracted from the page. </summary>
         public ICollection<KeyValuePair_internal> KeyValuePairs { get; set; }
         /// <summary> List of data tables extracted from the page. </summary>
-        public ICollection<DataTable> Tables { get; set; }
+        public ICollection<DataTable_internal> Tables { get; set; }
     }
 }

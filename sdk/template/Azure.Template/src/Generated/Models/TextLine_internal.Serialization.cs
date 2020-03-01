@@ -3,44 +3,42 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class KeyValueElement : IUtf8JsonSerializable
+    internal partial class TextLine_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text");
             writer.WriteStringValue(Text);
-            if (BoundingBox != null)
+            writer.WritePropertyName("boundingBox");
+            writer.WriteStartArray();
+            foreach (var item in BoundingBox)
             {
-                writer.WritePropertyName("boundingBox");
-                writer.WriteStartArray();
-                foreach (var item in BoundingBox)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteNumberValue(item);
             }
-            if (Elements != null)
+            writer.WriteEndArray();
+            if (Language != null)
             {
-                writer.WritePropertyName("elements");
-                writer.WriteStartArray();
-                foreach (var item in Elements)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("language");
+                writer.WriteStringValue(Language.Value.ToString());
             }
+            writer.WritePropertyName("words");
+            writer.WriteStartArray();
+            foreach (var item0 in Words)
+            {
+                writer.WriteObjectValue(item0);
+            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        internal static KeyValueElement DeserializeKeyValueElement(JsonElement element)
+        internal static TextLine_internal DeserializeTextLine_internal(JsonElement element)
         {
-            KeyValueElement result = new KeyValueElement();
+            TextLine_internal result = new TextLine_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -50,27 +48,26 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("boundingBox"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.BoundingBox = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         result.BoundingBox.Add(item.GetSingle());
                     }
                     continue;
                 }
-                if (property.NameEquals("elements"))
+                if (property.NameEquals("language"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    result.Elements = new List<string>();
+                    result.Language = new Language_internal(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("words"))
+                {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Elements.Add(item.GetString());
+                        result.Words.Add(TextWord_internal.DeserializeTextWord_internal(item));
                     }
                     continue;
                 }

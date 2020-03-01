@@ -4,12 +4,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class TrainRequest : IUtf8JsonSerializable
+    internal partial class TrainRequest_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,9 +27,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static TrainRequest DeserializeTrainRequest(JsonElement element)
+        internal static TrainRequest_internal DeserializeTrainRequest_internal(JsonElement element)
         {
-            TrainRequest result = new TrainRequest();
+            TrainRequest_internal result = new TrainRequest_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))

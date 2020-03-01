@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class SourcePath : IUtf8JsonSerializable
+    internal partial class SourcePath_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static SourcePath DeserializeSourcePath(JsonElement element)
+        internal static SourcePath_internal DeserializeSourcePath_internal(JsonElement element)
         {
-            SourcePath result = new SourcePath();
+            SourcePath_internal result = new SourcePath_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))

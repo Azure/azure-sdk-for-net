@@ -7,14 +7,16 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    /// <summary> Information about the extracted key or value in a key-value pair. </summary>
-    public partial class KeyValueElement
+    /// <summary> An object representing an extracted text line. </summary>
+    internal partial class TextLine_internal
     {
-        /// <summary> The text content of the key or value. </summary>
+        /// <summary> The text content of the line. </summary>
         public string Text { get; set; }
         /// <summary> Quadrangle bounding box, with coordinates specified relative to the top-left of the original image. The eight numbers represent the four points, clockwise from the top-left corner relative to the text orientation. For image, the (x, y) coordinates are measured in pixels. For PDF, the (x, y) coordinates are measured in inches. </summary>
-        public ICollection<float> BoundingBox { get; set; }
-        /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this key or value. </summary>
-        public ICollection<string> Elements { get; set; }
+        public ICollection<float> BoundingBox { get; set; } = new List<float>();
+        /// <summary> Language code. </summary>
+        public Language_internal? Language { get; set; }
+        /// <summary> List of words in the text line. </summary>
+        public ICollection<TextWord_internal> Words { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.TextWord_internal>();
     }
 }

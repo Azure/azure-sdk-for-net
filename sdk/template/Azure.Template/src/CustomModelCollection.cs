@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("Models")]
     public partial class CustomModelCollection

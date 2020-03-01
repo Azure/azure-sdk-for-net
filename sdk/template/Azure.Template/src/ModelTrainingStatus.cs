@@ -5,9 +5,9 @@ using System;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class ModelTrainingStatus
+    public class CustomModelTrainingStatus
     {
-        public ModelTrainingStatus(ModelInfo_internal modelInfo)
+        public CustomModelTrainingStatus(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
             CreatedOn = modelInfo.CreatedDateTime;

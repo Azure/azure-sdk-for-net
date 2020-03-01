@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class DocumentResult : IUtf8JsonSerializable
+    internal partial class DocumentResult_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,9 +32,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
-        internal static DocumentResult DeserializeDocumentResult(JsonElement element)
+        internal static DocumentResult_internal DeserializeDocumentResult_internal(JsonElement element)
         {
-            DocumentResult result = new DocumentResult();
+            DocumentResult_internal result = new DocumentResult_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("docType"))
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        result.Fields.Add(property0.Name, FieldValue.DeserializeFieldValue(property0.Value));
+                        result.Fields.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
                     }
                     continue;
                 }

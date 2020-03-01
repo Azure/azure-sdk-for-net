@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ModelId = model.ModelInfo.ModelId.ToString();
             LearnedForms = SetLearnedForms(model.Keys);
-            TrainingStatus = new ModelTrainingStatus(model.ModelInfo);
+            TrainingStatus = new CustomModelTrainingStatus(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
 
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public ModelTrainingStatus TrainingStatus { get; internal set; }
+        public CustomModelTrainingStatus TrainingStatus { get; internal set; }
 
         /// <summary>
         /// </summary>

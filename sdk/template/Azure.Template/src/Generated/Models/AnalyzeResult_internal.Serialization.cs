@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ReadResults.Add(ReadResult.DeserializeReadResult(item));
+                        result.ReadResults.Add(ReadResult_internal.DeserializeReadResult_internal(item));
                     }
                     continue;
                 }
@@ -93,10 +93,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.DocumentResults = new List<DocumentResult>();
+                    result.DocumentResults = new List<DocumentResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.DocumentResults.Add(DocumentResult.DeserializeDocumentResult(item));
+                        result.DocumentResults.Add(DocumentResult_internal.DeserializeDocumentResult_internal(item));
                     }
                     continue;
                 }
