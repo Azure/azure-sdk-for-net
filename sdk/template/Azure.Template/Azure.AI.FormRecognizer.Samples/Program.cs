@@ -19,12 +19,12 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine("Hello World!");
 
             //TrainCustomModel().Wait();
-            //ExtractCustomModel().Wait();
+            ExtractCustomModel().Wait();
 
             //TrainCustomLabeledModel().Wait();
-            //ExtractCustomLabeledModel().Wait();
+            ExtractCustomLabeledModel().Wait();
             //ExtractReceipt();
-            ExtractLayout().Wait();
+            //ExtractLayout().Wait();
 
             //GetCustomModelsSummary();
             //GetCustomModels();
@@ -90,6 +90,13 @@ namespace Azure.AI.FormRecognizer.Samples
                 if (extractFormOperation.HasValue)
                 {
                     ExtractedForm form = extractFormOperation.Value;
+                    foreach (var page in form.Pages)
+                    {
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
+                    }
                 }
             }
         }
@@ -112,6 +119,13 @@ namespace Azure.AI.FormRecognizer.Samples
                 if (extractFormOperation.HasValue)
                 {
                     ExtractedForm form = extractFormOperation.Value;
+                    foreach (var page in form.Pages)
+                    {
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
+                    }
                 }
             }
         }

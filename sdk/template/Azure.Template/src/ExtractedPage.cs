@@ -14,16 +14,15 @@ namespace Azure.AI.FormRecognizer.Models
         {
             PageNumber = pageResult.Page;
             Fields = SetFields(pageResult.KeyValuePairs);
-
-            // TODO: Add tables
-            //Tables = SetTables(pageResult.Tables);
+            Tables = ExtractedLayoutPage.SetTables(pageResult.Tables);
         }
 
         // Supervised
-        public ExtractedPage(int pageNumber, List<ExtractedField> fields)
+        public ExtractedPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult)
         {
             PageNumber = pageNumber;
             Fields = SetFields(fields);
+            Tables = ExtractedLayoutPage.SetTables(pageResult.Tables);
         }
 
         public int PageNumber { get; }

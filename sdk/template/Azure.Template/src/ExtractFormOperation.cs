@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         // TODO: Consider what we'll do when there are multiple DocumentResults
                         // Supervised
-                        _value = new ExtractedForm(update.Value.AnalyzeResult.DocumentResults.First());
+                        _value = new ExtractedForm(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.PageResults);
                     }
                 }
 

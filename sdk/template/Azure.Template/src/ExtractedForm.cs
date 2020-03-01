@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -18,12 +19,12 @@ namespace Azure.AI.FormRecognizer.Models
             // TODO: how to set PageRange?
         }
 
-        internal ExtractedForm(DocumentResult_internal documentResult)
+        internal ExtractedForm(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults)
         {
             // Supervised
             LearnedFormType = documentResult.DocType;
             PageRange = new PageRange(documentResult.PageRange);
-            Pages = SetPages(documentResult);
+            Pages = SetPages(documentResult, pageResults);
         }
 
         public string LearnedFormType { get; internal set; }
@@ -46,9 +47,10 @@ namespace Azure.AI.FormRecognizer.Models
             return pages.AsReadOnly();
         }
 
-        private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult_internal documentResult)
+        private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults)
         {
             List<ExtractedPage> pages = new List<ExtractedPage>();
+            List<PageResult_internal> pageResultsList = pageResults.ToList();
 
             // TODO: improve performance here
             Dictionary<int, List<ExtractedField>> fieldsByPage = new Dictionary<int, List<ExtractedField>>();
@@ -61,6 +63,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     fieldsByPage[field.Value.Page ?? 0] = new List<ExtractedField>();
                 }
+
                 fieldsByPage[field.Value.Page ?? 0].Add(
                         new ExtractedField()
                         {
@@ -73,7 +76,8 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var pageFields in fieldsByPage)
             {
-                var page = new ExtractedPage(pageFields.Key, pageFields.Value);
+                int pageNumber = pageFields.Key;
+                var page = new ExtractedPage(pageNumber, pageFields.Value, pageResultsList[pageNumber - 1]);
                 pages.Add(page);
             }
 

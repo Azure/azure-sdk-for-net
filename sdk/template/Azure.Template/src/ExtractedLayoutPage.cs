@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer
 
         //public RawExtractedPageInfo RawPageInfo { get; }
 
-        private static IReadOnlyList<ExtractedTable> SetTables(ICollection<DataTable_internal> tablesResult)
+        internal static IReadOnlyList<ExtractedTable> SetTables(ICollection<DataTable_internal> tablesResult)
         {
             List<ExtractedTable> tables = new List<ExtractedTable>();
 
