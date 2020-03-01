@@ -420,8 +420,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     return;
                 }
-                catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                   && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
+                catch (EventHubsException eventHubException)
+                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
                 {
                     if (++attempts >= MaximumCreateProducerAttempts)
                     {
@@ -477,8 +477,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     return;
                 }
-                catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                    && ShouldRecreateProducer(pooledProducer.TransportProducer, eventBatch.SendOptions.PartitionId))
+                catch (EventHubsException eventHubException)
+                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed && ShouldRecreateProducer(pooledProducer.TransportProducer, eventBatch.SendOptions.PartitionId))
                 {
                     if (++attempts >= MaximumCreateProducerAttempts)
                     {

@@ -694,8 +694,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()" /> is called
-        ///   to unregister a producer from the pool.
+        ///   to signal the usage of a <see cref="TransportProducerPool.PooledProducer"/> has ended.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   Users of a <see cref="TransportProducerPool"/>, such as <see cref="EventHubProducerClient.SendAsync(EventData, CancellationToken)"/>,
+        ///   can signal their usage of a <see cref="TransportProducerPool.PooledProducer"/> has ended
+        ///   by invoking <see cref="TransportProducerPool.PooledProducer.DisposeAsync"/>.
+        /// </remarks>
         ///
         [Test]
         public async Task EventHubProducerClientShouldCloseAProducer()
@@ -711,13 +717,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producerClient.SendAsync(batch);
 
-            Assert.That(mockPooledProducer.WasClosed, Is.True, $"A { nameof(TransportProducerPool.PooledProducer) } be closed when disposed.");
+            Assert.That(mockPooledProducer.WasClosed, Is.True, $"A { nameof(TransportProducerPool.PooledProducer) } should be closed when disposed.");
         }
 
         /// <summary>
         ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()" /> is called
-        ///   to unregister a producer from the pool.
+        ///   to signal the usage of a <see cref="TransportProducerPool.PooledProducer"/> has ended.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   Users of a <see cref="TransportProducerPool"/>, such as <see cref="EventHubProducerClient.SendAsync(EventDataBatch, CancellationToken)"/>,
+        ///   can signal their usage of a <see cref="TransportProducerPool.PooledProducer"/> has ended
+        ///   by invoking <see cref="TransportProducerPool.PooledProducer.DisposeAsync"/>.
+        /// </remarks>
         ///
         [Test]
         public async Task EventHubProducerClientShouldCloseAProducerWithABatch()
@@ -733,7 +745,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producerClient.SendAsync(events, options);
 
-            Assert.That(mockPooledProducer.WasClosed, Is.True, $"A { nameof(TransportProducerPool.PooledProducer) } be closed when disposed (for a batch).");
+            Assert.That(mockPooledProducer.WasClosed, Is.True, $"A { nameof(TransportProducerPool.PooledProducer) } should be closed when disposed (for a batch).");
         }
 
         /// <summary>
@@ -758,8 +770,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)
@@ -794,8 +805,7 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)
@@ -894,8 +904,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
@@ -925,8 +934,7 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
@@ -956,8 +964,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)
@@ -993,8 +1000,7 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)
@@ -1030,8 +1036,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
                                                                         It.IsAny<SendEventOptions>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)
@@ -1067,8 +1072,7 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(),
                                                                         It.IsAny<CancellationToken>()))
-                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
-                .Verifiable();
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)

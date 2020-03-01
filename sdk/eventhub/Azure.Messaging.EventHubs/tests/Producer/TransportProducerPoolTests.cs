@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
 
-            (transportProducerPool.PerformExpiration())(null);
+            GetExpirationCallBack(transportProducerPool).Invoke(null);
 
             Assert.That(startingPool.TryGetValue("0", out _), Is.False, "PerformExpiration should remove an expired producer from the pool.");
             Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "PerformExpiration should close an expired producer.");
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests
             _ = transportProducerPool.GetPooledProducer("0");
 
             // The expiration call back should not remove the item
-            (transportProducerPool.PerformExpiration())(null);
+            GetExpirationCallBack(transportProducerPool).Invoke(null);
 
             Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The item in the pool should be refreshed and not have been removed.");
         }
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             };
 
-            (transportProducerPool.PerformExpiration())(null);
+            GetExpirationCallBack(transportProducerPool).Invoke(null);
 
             Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1));
         }
@@ -239,6 +239,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(async () => await transportProducerPool.CloseAsync(), Throws.InstanceOf<InvalidCastException>());
         }
+
+        /// <summary>
+        ///   Gets the routine responsible of finding expired producers.
+        /// </summary>
+        ///
+        private static TimerCallback GetExpirationCallBack(TransportProducerPool pool) =>
+            (TimerCallback)
+                typeof(TransportProducerPool)
+                    .GetMethod("CreateExpirationTimerCallback", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .Invoke(pool, null);
 
         /// <summary>
         ///   Serves as a non-functional connection for testing producer functionality.

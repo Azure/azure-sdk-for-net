@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal class TransportProducerPool : IAsyncDisposable
     {
-        /// <summary>The period after which <see cref="PerformExpiration" /> is run.</summary>
+        /// <summary>The period after which <see cref="CreateExpirationTimerCallback" /> is run.</summary>
         private static readonly TimeSpan DefaultPerformExpirationPeriod = TimeSpan.FromMinutes(10);
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
         /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
         /// <param name="pool">The pool of <see cref="PoolItem" /> that is going to be used to store the partition specific <see cref="TransportProducer" />.</param>
-        /// <param name="performExpirationPeriod">The period after which <see cref="PerformExpiration" /> is run. Overrides <see cref="DefaultPerformExpirationPeriod" />.</param>
+        /// <param name="performExpirationPeriod">The period after which <see cref="CreateExpirationTimerCallback" /> is run. Overrides <see cref="DefaultPerformExpirationPeriod" />.</param>
         /// <param name="eventHubProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway rather than a specific partition.</param>
         ///
         public TransportProducerPool(EventHubConnection connection,
@@ -84,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Core
             performExpirationPeriod ??= DefaultPerformExpirationPeriod;
             EventHubProducer = eventHubProducer ?? connection.CreateTransportProducer(null, retryPolicy);
 
-            ExpirationTimer = new Timer(PerformExpiration(),
+            ExpirationTimer = new Timer(CreateExpirationTimerCallback(),
                                         null,
                                         performExpirationPeriod.Value,
                                         performExpirationPeriod.Value);
@@ -181,7 +181,7 @@ namespace Azure.Messaging.EventHubs.Core
 
             foreach (var poolItem in Pool.Values)
             {
-                pendingCloses.Add(poolItem.PartitionProducer.CloseAsync(true, CancellationToken.None));
+                pendingCloses.Add(poolItem.PartitionProducer.CloseAsync(true, cancellationToken));
             }
 
             Pool.Clear();
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>A <see cref="TimerCallback" /> that is periodically run every <see cref="DefaultPerformExpirationPeriod" />.</returns>
         ///
-        internal TimerCallback PerformExpiration()
+        private TimerCallback CreateExpirationTimerCallback()
         {
             return _ =>
             {
