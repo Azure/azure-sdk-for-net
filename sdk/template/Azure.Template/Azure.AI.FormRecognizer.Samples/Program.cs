@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
             if (trainingOperation.HasValue)
             {
-                Model_internal model = trainingOperation.Value;
+                CustomLabeledModel model = trainingOperation.Value;
             }
             else
             {

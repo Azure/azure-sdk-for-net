@@ -10,10 +10,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class TrainingWithLabelsOperation : Operation<Model_internal>
+    public class TrainingWithLabelsOperation : Operation<CustomLabeledModel>
     {
         private Response _response;
-        private Model_internal _value;
+        private CustomLabeledModel _value;
         private bool _hasCompleted;
         private readonly AllOperations _operations;
 
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// The final result of the training operation, if the operation completed successfully.
         /// </summary>
-        public override Model_internal Value => OperationHelpers.GetValue(ref _value);
+        public override CustomLabeledModel Value => OperationHelpers.GetValue(ref _value);
 
         /// <summary>
         /// True if the training operation completed.
@@ -44,11 +44,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Model_internal>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomLabeledModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Model_internal>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomLabeledModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.ModelInfo.Status != ModelStatus.Creating)
                 {
                     _hasCompleted = true;
-                    _value = update.Value;
+                    _value = new CustomLabeledModel(update.Value);
                 }
 
                 _response = update.GetRawResponse();

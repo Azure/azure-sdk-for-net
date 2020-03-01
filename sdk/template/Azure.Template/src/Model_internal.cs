@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("Model")]
-    public partial class Model_internal
+    internal partial class Model_internal
     {
     }
 }
