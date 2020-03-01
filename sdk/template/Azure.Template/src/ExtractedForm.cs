@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
             // Supervised
             LearnedFormType = documentResult.DocType;
             PageRange = new PageRange(documentResult.PageRange);
-            Pages = SetPages(documentResult, pageResults);
+            Pages = ConvertPages(documentResult, pageResults);
         }
 
         public string LearnedFormType { get; internal set; }
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Models
             return pages.AsReadOnly();
         }
 
-        private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults)
+        private static IReadOnlyList<ExtractedPage> ConvertPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults)
         {
             List<ExtractedPage> pages = new List<ExtractedPage>();
             List<PageResult_internal> pageResultsList = pageResults.ToList();

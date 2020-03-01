@@ -52,6 +52,11 @@ namespace Azure.AI.FormRecognizer.Custom
 
         #region Training
 
+        // XX public virtual LabeledTrainingOperation StartLabeledTraining(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
+        // XX public virtual Task<LabeledTrainingOperation> StartLabeledTrainingAsync(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
+        // XX public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
+        // XX public virtual Task<TrainingOperation> StartTrainingAsync(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
+
         public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
@@ -118,6 +123,11 @@ namespace Azure.AI.FormRecognizer.Custom
 
         #region Analyze
 
+        // XX public virtual Response<ExtractedForm> ExtractForm(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
+        //public virtual Response<ExtractedForm> ExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
+        // XX public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
+        //public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
+
         public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -136,12 +146,30 @@ namespace Azure.AI.FormRecognizer.Custom
 
         #region CRUD Ops
 
-        public virtual Pageable<ModelInfo_internal> GetCustomModels(CancellationToken cancellationToken = default)
+        // XX public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default);
+        // XX public virtual Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default);
+        // XX public virtual Response<ModelsSummary> GetModelsSummary(CancellationToken cancellationToken = default);
+        // XX public virtual Task<Response<ModelsSummary>> GetModelsSummaryAsync(CancellationToken cancellationToken = default);
+        // XX public virtual Pageable<ModelTrainingStatus> GetModelsTrainingStatus(CancellationToken cancellationToken = default);
+        // XX public virtual AsyncPageable<ModelTrainingStatus> GetModelsTrainingStatusAsync(CancellationToken cancellationToken = default);
+
+        public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
+        {
+            return _operations.DeleteCustomModel(new Guid(modelId), cancellationToken);
+        }
+
+        public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        {
+            return await _operations.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
+        }
+
+        // TODO: Q8 - How to convert ModelInfo_internal to ModelInfo for Pageables?
+        public virtual Pageable<ModelInfo_internal> GetModels(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageable(GetModelOptions.Full, cancellationToken);
         }
 
-        public virtual AsyncPageable<ModelInfo_internal> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ModelInfo_internal> GetModelsAsync(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageableAsync(GetModelOptions.Full, cancellationToken);
         }
@@ -149,7 +177,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// Executes a service call that takes and returns the <see cref="CustomModelCollection"/>.
         /// </summary>
-        public virtual Response<CustomModelCollection> GetCustomModelSummary(CancellationToken cancellationToken = default)
+        public virtual Response<CustomModelCollection> GetModelsSummary(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
         }
@@ -157,7 +185,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// Executes a service call that takes and returns the <see cref="CustomModelCollection"/>.
         /// </summary>
-        public virtual async Task<Response<CustomModelCollection>> GetCustomModelSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomModelCollection>> GetModelsSummaryAsync(CancellationToken cancellationToken = default)
         {
             return await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
         }

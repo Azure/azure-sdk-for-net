@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal CustomModel(Model_internal model)
         {
             ModelId = model.ModelInfo.ModelId.ToString();
-            LearnedForms = SetLearnedForms(model.Keys);
+            LearnedForms = ConvertLearnedForms(model.Keys);
             TrainingStatus = new CustomModelTrainingStatus(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
         public TrainingInfo TrainingInfo { get; internal set; }
 
 
-        private IReadOnlyList<CustomModelLearnedForm> SetLearnedForms(KeysResult_internal keys)
+        private static IReadOnlyList<CustomModelLearnedForm> ConvertLearnedForms(KeysResult_internal keys)
         {
             List<CustomModelLearnedForm> forms = new List<CustomModelLearnedForm>();
 

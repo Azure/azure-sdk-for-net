@@ -35,24 +35,24 @@ namespace Azure.AI.FormRecognizer.Models
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
-            ReceiptType = SetReceiptType(fields);
+            ReceiptType = ConvertReceiptType(fields);
 
-            MerchantAddress = SetStringValue("MerchantAddress", fields);
-            MerchantName = SetStringValue("MerchantName", fields);
-            MerchantPhoneNumber = SetStringValue("MerchantPhoneNumber", fields);
+            MerchantAddress = ConvertStringValue("MerchantAddress", fields);
+            MerchantName = ConvertStringValue("MerchantName", fields);
+            MerchantPhoneNumber = ConvertStringValue("MerchantPhoneNumber", fields);
 
-            Subtotal = SetFloatValue("Subtotal", fields);
-            Tax = SetFloatValue("Tax", fields);
-            Tip = SetFloatValue("Tip", fields);
-            Total = SetFloatValue("Total", fields);
+            Subtotal = ConvertFloatValue("Subtotal", fields);
+            Tax = ConvertFloatValue("Tax", fields);
+            Tip = ConvertFloatValue("Tip", fields);
+            Total = ConvertFloatValue("Total", fields);
 
-            TransactionDate = SetDateTimeOffsetValue("TransactionDate", fields);
-            TransactionTime = SetDateTimeOffsetValue("TransactionTime", fields);
+            TransactionDate = ConvertDateTimeOffsetValue("TransactionDate", fields);
+            TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
 
-            Items = SetReceiptItems(fields);
+            Items = ConvertReceiptItems(fields);
         }
 
-        private static ReceiptType SetReceiptType(IDictionary<string, FieldValue_internal> fields)
+        private static ReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
         {
             ReceiptType receiptType = ReceiptType.Unrecognized;
 
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Models
             return receiptType;
         }
 
-        private static string SetStringValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static string ConvertStringValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
             string stringValue = default;
 
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Models
             return stringValue;
         }
 
-        private static float SetFloatValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static float ConvertFloatValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
             float floatValue = default;
 
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Models
             return floatValue;
         }
 
-        private static int SetIntValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static int ConvertIntValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
             int intValue = default;
 
@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.Models
             return intValue;
         }
 
-        private static DateTimeOffset SetDateTimeOffsetValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static DateTimeOffset ConvertDateTimeOffsetValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
             DateTimeOffset dateTimeOffsetValue = default;
 
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Models
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<ExtractedReceiptItem> SetReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyList<ExtractedReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
         {
             List<ExtractedReceiptItem> items = new List<ExtractedReceiptItem>();
 
@@ -177,9 +177,9 @@ namespace Azure.AI.FormRecognizer.Models
 
                     IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
-                    string name = SetStringValue("Name", objectValue);
-                    int quantity = SetIntValue("Quantity", objectValue);
-                    float totalPrice = SetFloatValue("TotalPrice", objectValue);
+                    string name = ConvertStringValue("Name", objectValue);
+                    int quantity = ConvertIntValue("Quantity", objectValue);
+                    float totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
                     ExtractedReceiptItem item = new ExtractedReceiptItem(name, quantity, totalPrice);
                     items.Add(item);

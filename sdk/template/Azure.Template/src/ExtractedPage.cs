@@ -14,15 +14,15 @@ namespace Azure.AI.FormRecognizer.Models
         {
             PageNumber = pageResult.Page;
             Fields = SetFields(pageResult.KeyValuePairs);
-            Tables = ExtractedLayoutPage.SetTables(pageResult.Tables);
+            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables);
         }
 
         // Supervised
         internal ExtractedPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult)
         {
             PageNumber = pageNumber;
-            Fields = SetFields(fields);
-            Tables = ExtractedLayoutPage.SetTables(pageResult.Tables);
+            Fields = ConvertFields(fields);
+            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables);
         }
 
         public int PageNumber { get; }
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
             return fields.AsReadOnly();
         }
 
-        private static IReadOnlyList<ExtractedField> SetFields(List<ExtractedField> fields)
+        private static IReadOnlyList<ExtractedField> ConvertFields(List<ExtractedField> fields)
         {
             List<ExtractedField> list = new List<ExtractedField>();
             foreach (var field in fields)
@@ -61,11 +61,5 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return list.AsReadOnly();
         }
-
-
-        //private IReadOnlyList<ExtractedTable> SetTables(ICollection<DataTable> tables)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     _hasCompleted = true;
 
-                    _value = SetValue(update.Value.AnalyzeResult.PageResults);
+                    _value = ConvertValue(update.Value.AnalyzeResult.PageResults);
                     //_value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First());
                 }
 
@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedLayoutPage> SetValue(ICollection<PageResult_internal> pageResults)
+        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(ICollection<PageResult_internal> pageResults)
         {
             List<ExtractedLayoutPage> pages = new List<ExtractedLayoutPage>();
 

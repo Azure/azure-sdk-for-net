@@ -19,15 +19,15 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine("Hello World!");
 
             //TrainCustomModel().Wait();
-            ExtractCustomModel().Wait();
+            //ExtractCustomModel().Wait();
 
             //TrainCustomLabeledModel().Wait();
-            ExtractCustomLabeledModel().Wait();
+            //ExtractCustomLabeledModel().Wait();
             //ExtractReceipt();
             //ExtractLayout().Wait();
 
-            //GetCustomModelsSummary();
-            //GetCustomModels();
+            GetCustomModelsSummary();
+            GetCustomModels();
         }
 
         private static async Task TrainCustomLabeledModel()
@@ -181,7 +181,9 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var models = client.GetCustomModelSummary();
+            // TODO: do better on this type.
+            var modelsSummary = client.GetModelsSummary();
+            Console.WriteLine($"CustomModelCount: {modelsSummary.Value.Summary.Count}");
         }
 
         private static void GetCustomModels()
@@ -191,7 +193,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var models = client.GetCustomModels();
+            var models = client.GetModels();
             foreach (var model in models)
             {
                 Console.WriteLine($"Model, Id={model.ModelId}, Status={model.Status.ToString()}");

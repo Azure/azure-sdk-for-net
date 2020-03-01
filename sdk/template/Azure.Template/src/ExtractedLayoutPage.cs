@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal ExtractedLayoutPage(PageResult_internal pageResult)
         {
             PageNumber = pageResult.Page;
-            Tables = SetTables(pageResult.Tables);
+            Tables = ConvertTables(pageResult.Tables);
         }
 
         public int PageNumber { get; }
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         //public RawExtractedPageInfo RawPageInfo { get; }
 
-        internal static IReadOnlyList<ExtractedTable> SetTables(ICollection<DataTable_internal> tablesResult)
+        internal static IReadOnlyList<ExtractedTable> ConvertTables(ICollection<DataTable_internal> tablesResult)
         {
             List<ExtractedTable> tables = new List<ExtractedTable>();
 

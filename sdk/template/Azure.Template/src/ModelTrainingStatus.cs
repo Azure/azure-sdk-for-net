@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
             ModelId = modelInfo.ModelId.ToString();
             CreatedOn = modelInfo.CreatedDateTime;
             LastUpdatedOn = modelInfo.LastUpdatedDateTime;
-            Status = modelInfo.Status;
+            TrainingStatus = modelInfo.Status;
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public ModelStatus Status { get; }
+        public ModelStatus TrainingStatus { get; }
 
         /// <summary>
         /// </summary>

@@ -11,5 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     [CodeGenSchema("ModelInfo")]
     public partial class ModelInfo_internal
     {
+        // TODO: Once CodeGenSchemaMembers is available, use it to rename members and we
+        // should be able to use the generated type.
     }
 }

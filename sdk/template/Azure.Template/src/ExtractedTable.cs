@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ColumnCount = result.Columns;
             RowCount = result.Rows;
-            Cells = SetCells(result.Cells);
+            Cells = ConvertCells(result.Cells);
         }
 
         public IReadOnlyList<ExtractedTableCell> Cells { get; }
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
         //public ExtractedTableCell this[int i, int j] { get; set; }
 
 
-        private static IReadOnlyList<ExtractedTableCell> SetCells(ICollection<DataTableCell_internal> cellsResult)
+        private static IReadOnlyList<ExtractedTableCell> ConvertCells(ICollection<DataTableCell_internal> cellsResult)
         {
             List<ExtractedTableCell> cells = new List<ExtractedTableCell>();
 
