@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Custom model training result. </summary>
-    internal partial class TrainResult_internal
+    public partial class TrainResult_internal
     {
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
         public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.TrainingDocumentInfo>();

@@ -18,10 +18,34 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             Console.WriteLine("Hello World!");
 
-            ExtractCustomModel().Wait();
             //TrainCustomModel().Wait();
+            //ExtractCustomModel().Wait();
+
+            TrainCustomLabeledModel().Wait();
+
             //GetCustomModelsSummary();
             //GetCustomModels();
+        }
+
+        private static async Task TrainCustomLabeledModel()
+        {
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            string sasUrl = "https://annelostorage01.blob.core.windows.net/formreco-labeled-training?sp=rl&st=2020-02-29T23:40:52Z&se=2020-03-01T23:40:52Z&sv=2019-02-02&sr=c&sig=p2hvqDtcYSONgck6JC48ZJLaxTCKk%2FBNNMVztXs2lnU%3D";
+            var trainingOperation = client.StartTrainingWithLabels(sasUrl);
+
+            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            if (trainingOperation.HasValue)
+            {
+                Model_internal model = trainingOperation.Value;
+            }
+            else
+            {
+                Console.WriteLine("LRO did not return a value.");
+            }
         }
 
         private static async Task TrainCustomModel()
@@ -54,7 +78,6 @@ namespace Azure.AI.FormRecognizer.Samples
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
-
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {

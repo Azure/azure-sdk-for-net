@@ -73,6 +73,21 @@ namespace Azure.AI.FormRecognizer.Custom
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
+        public virtual TrainingWithLabelsOperation StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        {
+            TrainRequest trainRequest = new TrainRequest() { Source = source, UseLabelFile = true };
+
+            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            if (filter != default)
+            {
+                trainRequest.SourceFilter = filter;
+            }
+
+            // TODO: Make this call an async method instead - i.e. AsyncAsync :-P
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
+            return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
+        }
+
         #endregion Training
 
         #region Analyze

@@ -8,7 +8,7 @@ using Azure.AI.FormRecognizer;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Response to the get custom model operation. </summary>
-    internal partial class Model_internal
+    public partial class Model_internal
     {
         /// <summary> Basic custom model information. </summary>
         public ModelInfo_internal ModelInfo { get; set; } = new ModelInfo_internal();

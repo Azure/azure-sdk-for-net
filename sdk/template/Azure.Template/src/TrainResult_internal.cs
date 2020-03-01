@@ -7,7 +7,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
 
     [CodeGenSchema("TrainResult")]
-    internal partial class TrainResult_internal
+    public partial class TrainResult_internal
     {
     }
 }
