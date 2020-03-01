@@ -100,8 +100,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
         {
-            var amqpMessage = sbMessage.Body.IsEmpty ? AmqpMessage.Create() : AmqpMessage.Create(new Data { Value = sbMessage.Body });
-
+            var body = new ArraySegment<byte>((sbMessage.Body.IsEmpty) ? Array.Empty<byte>() : sbMessage.Body.ToArray());
+            var amqpMessage = AmqpMessage.Create(new Data { Value = body });
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;

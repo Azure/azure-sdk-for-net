@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public bool IsSessionEntity { get; set; }
+        internal bool IsSessionEntity { get; set; }
 
         /// <summary>
         ///

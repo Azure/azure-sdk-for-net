@@ -14,12 +14,10 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusSessionManager
     {
-        private readonly ServiceBusReceiver _consumer;
+        private readonly TransportReceiver _receiver;
 
         internal string UserSpecifiedSessionId { get; }
 
-        internal ServiceBusSession(
-            ServiceBusReceiver consumer,
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
@@ -36,13 +34,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         internal ReceiveMode ReceiveMode { get; }
 
-        internal ServiceBusSession(
-            TransportConsumer consumer,
-            string sessionId,
-            ReceiveMode receiveMode,
-            ServiceBusRetryPolicy retryPolicy)
+        internal ServiceBusSessionManager(
+            TransportReceiver receiver,
+            string sessionId)
         {
-            _consumer = consumer;
+            _receiver = receiver;
             UserSpecifiedSessionId = sessionId;
             ReceiveMode = receiveMode;
             RetryPolicy = retryPolicy;
@@ -128,7 +124,7 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                return await _consumer.Consumer.GetSessionIdAsync(cancellationToken).ConfigureAwait(false);
+                return await _receiver.GetSessionIdAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -139,7 +135,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task<DateTimeOffset> GetLockedUntilUtcAsync(CancellationToken cancellationToken = default)
         {
-            return await _consumer.Consumer.GetSessionLockedUntilUtcAsync(cancellationToken).ConfigureAwait(false);
+            return await _receiver.GetSessionLockedUntilUtcAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

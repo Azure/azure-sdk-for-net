@@ -14,10 +14,6 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusClientOptions
     {
         /// <summary>
-        ///
-        /// </summary>
-        public ServiceBusConnection Connection { get; set; }
-        /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
         ///   service.
         /// </summary>

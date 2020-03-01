@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public string SessionId { get; set; }
+        internal string SessionId { get; set; }
 
         /// <summary>
         ///

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
@@ -22,6 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         protected Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
+            Assert.Fail(eventArgs.Exception.ToString());
             return Task.CompletedTask;
         }
 

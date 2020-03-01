@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -33,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
     ///
     public class ServiceBusProcessor : IAsyncDisposable
     {
-        private Func<ServiceBusReceivedMessage, ServiceBusReceiver, Task> _processMessage;
+        private Func<ProcessMessageEventArgs, Task> _processMessage;
 
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
@@ -42,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
 
         private SemaphoreSlim MessageHandlerSemaphore;
-        private int _maxConcurrentCalls;
+        private int _maxConcurrentCalls = 4;
         private TimeSpan _maxAutoRenewDuration;
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
@@ -51,7 +53,7 @@ namespace Azure.Messaging.ServiceBus
 
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
-        private readonly ServiceBusReceiver _receiver;
+        private ServiceBusReceiver Receiver { get; set; }
 
         /// <summary>
         ///   The running task responsible for performing partition load balancing between multiple <see cref="ServiceBusProcessor" />
@@ -64,10 +66,9 @@ namespace Azure.Messaging.ServiceBus
         ///   Called when a 'process message' event is triggered.
         /// </summary>
         ///
-        /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
-        /// <param name="receiver"></param>
+        /// <param name="args">The set of arguments to identify the context of the event to be processed.</param>
         ///
-        private Task OnProcessMessageAsync(ServiceBusReceivedMessage message, ServiceBusReceiver receiver) => _processMessage(message, receiver);
+        private Task OnProcessMessageAsync(ProcessMessageEventArgs args) => _processMessage(args);
 
         /// <summary>
         ///   Called when a 'process error' event is triggered.
@@ -82,29 +83,29 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => _receiver.Connection.FullyQualifiedNamespace;
+        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The name of the Service Bus entity that the consumer is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityName => _receiver.Connection.EntityName;
+        public string EntityName { get; private set; }
 
         /// <summary>
         ///
         /// </summary>
-        public ReceiveMode ReceiveMode => _receiver.ReceiveMode;
+        public ReceiveMode ReceiveMode { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public bool IsSessionReceiver => _receiver.IsSessionReceiver;
+        public bool UseSessions { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public int PrefetchCount => _receiver.PrefetchCount;
+        public int PrefetchCount { get; set; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
@@ -114,37 +115,21 @@ namespace Azure.Messaging.ServiceBus
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed => _receiver.IsClosed;
+        public bool IsClosed => Receiver.IsClosed;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private ServiceBusRetryPolicy RetryPolicy => _receiver.RetryPolicy;
+        private ServiceBusRetryPolicy RetryPolicy => Receiver.RetryPolicy;
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
         ///
-        internal ServiceBusConnection Connection => _receiver.Connection;
-
-        /// <summary>
-        ///   An abstracted Service Bus entity transport-specific producer that is associated with the
-        ///   Service Bus entity gateway rather than a specific partition; intended to perform delegated operations.
-        /// </summary>
-        ///
-        internal TransportConsumer Consumer => _receiver.Consumer;
-
-        /// <summary>
-        ///
-        /// </summary>
-        public ServiceBusSessionManager SessionManager => _receiver.SessionManager;
-
-        /// <summary>
-        ///
-        /// </summary>
-        public ServiceBusSubscriptionManager SubscriptionManager => _receiver.SubscriptionManager;
+        private readonly ServiceBusConnection _connection;
+        private readonly ServiceBusProcessorOptions _options;
 
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
@@ -198,193 +183,23 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public string SessionId { get; set; }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        internal ServiceBusProcessor(string connectionString)
-            : this(new ServiceBusConnection(connectionString), new ServiceBusProcessorOptions())
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusProcessorClient(ServiceBusConnection connection, string queueName, ServiceBusProcessorClientOptions options = default)
-            : this(connection, new ServiceBusProcessorClientOptions())
-        {
-            //OwnsConnection = false;
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="connection">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusProcessorClient(ServiceBusConnection connection, string topicName, string subscriptionName, ServiceBusProcessorClientOptions options = default)
-            : this(connection, new ServiceBusProcessorClientOptions())
-        {
-            //OwnsConnection = false;
-        }
-
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessorClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="clientOptions">The set of options to use for this consumer.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        internal ServiceBusProcessor(
-            string connectionString,
-            ServiceBusProcessorOptions clientOptions)
-            : this(new ServiceBusConnection(connectionString, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        /// <param name="queueOrSubscriptionName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        /// <param name="clientOptions"></param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        ///   and can be used directly without passing the <paramref name="queueOrSubscriptionName" />.  The name of the Service Bus entity should be
-        ///   passed only once, either as part of the connection string or separately.
-        /// </remarks>
-        ///
-        internal ServiceBusProcessor(
-            string connectionString,
-            string queueOrSubscriptionName,
-            ServiceBusProcessorOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, queueOrSubscriptionName, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="clientOptions"></param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        ///   and can be used directly without passing the <paramref name="topicName" />.  The name of the Service Bus entity should be
-        ///   passed only once, either as part of the connection string or separately.
-        /// </remarks>
-        ///
-        internal ServiceBusProcessor(
-            string connectionString,
-            string topicName,
-            string subscriptionName,
-            ServiceBusProcessorOptions clientOptions = default)
-            : this(new ServiceBusConnection(connectionString, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="queueName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
-        ///
-        internal ServiceBusProcessor(
-            string fullyQualifiedNamespace,
-            string queueName,
-            TokenCredential credential,
-            ServiceBusProcessorOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, queueName, credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
-        ///
-        internal ServiceBusProcessor(
-            string fullyQualifiedNamespace,
-            string topicName,
-            string subscriptionName,
-            TokenCredential credential,
-            ServiceBusProcessorOptions clientOptions = default)
-            : this(new ServiceBusConnection(fullyQualifiedNamespace, EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName), credential, clientOptions?.ConnectionOptions), clientOptions?.Clone() ?? new ServiceBusProcessorOptions())
-        {
-        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        /// <param name="entityName"></param>
+        /// <param name="options">A set of options to apply when configuring the consumer.</param>
         ///
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
-            ServiceBusProcessorOptions clientOptions = default)
+            string entityName,
+            ServiceBusProcessorOptions options = default)
         {
-            _receiver = new ServiceBusReceiver(connection, clientOptions?.ToServiceBusReceiverClientOptions() ?? new ServiceBusReceiverOptions());
+            _connection = connection;
+            _options = options?.Clone() ?? new ServiceBusProcessorOptions();
+            EntityName = entityName;
         }
 
         /// <summary>
@@ -405,7 +220,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            await _receiver.CloseAsync(cancellationToken).ConfigureAwait(false);
+            await Receiver.CloseAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -546,6 +361,16 @@ namespace Azure.Messaging.ServiceBus
                     lock (EventHandlerGuard)
                     {
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                        ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
+                        if (UseSessions)
+                        {
+                            receiverOptions.IsSessionEntity = true;
+                        }
+                        receiverOptions.SessionId = SessionId;
+                        Receiver = new ServiceBusReceiver(
+                            _connection,
+                            EntityName,
+                            receiverOptions);
 
                         if (ActiveReceiveTask == null)
                         {
@@ -628,6 +453,7 @@ namespace Azure.Messaging.ServiceBus
                     ActiveReceiveTask.Dispose();
                     ActiveReceiveTask = null;
                 }
+                await Receiver.CloseAsync().ConfigureAwait(false);
             }
             finally
             {
@@ -669,21 +495,22 @@ namespace Azure.Messaging.ServiceBus
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
             bool useThreadLocalConsumer = false;
-            //TransportConsumer consumer;
             Task renewLock = null;
             ServiceBusReceiver receiver;
 
-            if (IsSessionReceiver && SessionManager.UserSpecifiedSessionId == null)
+            if (UseSessions && SessionId == null)
             {
                 // If the user didn't specify a session, but this is a sessionful receiver,
                 // we want to allow each thread to have its own consumer so we can access
                 // multiple sessions concurrently.
-                receiver = new ServiceBusReceiver(Connection, new ServiceBusReceiverOptions() { IsSessionEntity = true });
+                ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
+                receiverOptions.IsSessionEntity = true;
+                receiver = new ServiceBusReceiver(_connection, EntityName, receiverOptions);
                 useThreadLocalConsumer = true;
             }
             else
             {
-                receiver = _receiver;
+                receiver = Receiver;
             }
 
             try
@@ -726,12 +553,12 @@ namespace Azure.Messaging.ServiceBus
 
                         // if this is a session receiver, supply a session object to the callback so that users can
                         // perform operations on this session
-                        ServiceBusSessionManager session = null;
-                        if (IsSessionReceiver)
-                        {
-                            session = new ServiceBusSessionManager(consumer, message.SessionId);
-                        }
-                        await OnProcessMessageAsync(new ProcessMessageEventArgs() { Message = message, Session = session }).ConfigureAwait(false);
+                        //ServiceBusSessionManager session = null;
+                        //if (IsSessionReceiver)
+                        //{
+                        //    session = new ServiceBusSessionManager(receiver, message.SessionId);
+                        //}
+                        await OnProcessMessageAsync(new ProcessMessageEventArgs() { Message = message, Receiver = receiver }).ConfigureAwait(false);
 
                         try
                         {
@@ -757,10 +584,12 @@ namespace Azure.Messaging.ServiceBus
                     }
                     catch (Exception ex)
                     {
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
                         await RaiseExceptionReceived(
                             // TODO - add clientId implementation and pass as last argument to ExceptionReceivedEventArgs
                             new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
-                        await AbandonAsync(message).ConfigureAwait(false);
+                        await receiver.AbandonAsync(message).ConfigureAwait(false);
 
                     }
                     finally
@@ -804,9 +633,9 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     DateTimeOffset lockedUntil = default;
-                    if (IsSessionReceiver)
+                    if (UseSessions)
                     {
-                        lockedUntil = await receiver.Consumer.GetSessionLockedUntilUtcAsync(eventCancellationToken).ConfigureAwait(false);
+                        lockedUntil = await receiver.SessionManager.GetLockedUntilUtcAsync(eventCancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
@@ -825,9 +654,9 @@ namespace Azure.Messaging.ServiceBus
                         break;
                     }
 
-                    if (IsSessionReceiver)
+                    if (UseSessions)
                     {
-                        await SessionManager.RenewSessionLockAsync(renewLockCancellationToken).ConfigureAwait(false);
+                        await receiver.SessionManager.RenewSessionLockAsync(renewLockCancellationToken).ConfigureAwait(false);
                     }
                     else
                     {

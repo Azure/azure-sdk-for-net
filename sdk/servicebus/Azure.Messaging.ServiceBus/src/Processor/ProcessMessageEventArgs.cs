@@ -16,6 +16,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public ServiceBusSessionManager Session { get; set; }
+        public ServiceBusReceiver Receiver { get; set; }
     }
 }

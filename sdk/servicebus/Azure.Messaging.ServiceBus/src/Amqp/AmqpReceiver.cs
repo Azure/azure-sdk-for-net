@@ -11,20 +11,22 @@ using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     ///   A transport client abstraction responsible for brokering operations for AMQP-based connections.
-    ///   It is intended that the public <see cref="ServiceBusProcessor" /> make use of an instance
+    ///   It is intended that the public <see cref="ServiceBusReceiver" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
-    /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportConsumer" />
+    /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportReceiver" />
     ///
-    internal class AmqpConsumer : TransportConsumer
+    internal class AmqpReceiver : TransportReceiver
     {
         /// <summary>The default prefetch count to use for the consumer.</summary>
         private const int DefaultPrefetchCount = 0;
@@ -55,6 +57,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private string PartitionId { get; }
 
+
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
@@ -84,12 +87,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private readonly ReceiveMode _receiveMode;
 
+        private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
+
+        private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+
         /// <inheritdoc/>
         public override TransportConnectionScope ConnectionScope =>
             _connectionScope;
 
+        public long LastPeekedSequenceNumber { get; private set; }
+
         /// <summary>
-        ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
+        ///   Initializes a new instance of the <see cref="AmqpReceiver"/> class.
         /// </summary>
         ///
         /// <param name="entityName">The name of the Service Bus entity from which events will be consumed.</param>
@@ -109,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpConsumer(
+        public AmqpReceiver(
             string entityName,
             ReceiveMode receiveMode,
             int? prefetchCount,
@@ -127,9 +136,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionReceiver = isSessionReceiver;
             _receiveMode = receiveMode;
 
-            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
+            _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    _connectionScope.OpenConsumerLinkAsync(
+                    _connectionScope.OpenReceiverLinkAsync(
+                        entityName: EntityName,
                         timeout: timeout,
                         prefetchCount: prefetchCount ?? DefaultPrefetchCount,
                         receiveMode: receiveMode,
@@ -141,8 +151,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     CloseLink(link);
                 });
 
-            ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                timeout => _connectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
+            _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
+                timeout => _connectionScope.OpenManagementLinkAsync(
+                    EntityName,
+                    timeout,
+                    CancellationToken.None),
                 link =>
                 {
                     link.Session?.SafeClose();
@@ -200,7 +213,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
+            Argument.AssertNotClosed(_closed, nameof(AmqpReceiver));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
 
             var link = default(ReceivingAmqpLink);
@@ -211,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             ServiceBusEventSource.Log.MessageReceiveStart(EntityName);
 
-            link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+            link = await _receiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var messagesReceived = await Task.Factory.FromAsync
@@ -280,9 +293,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, ServiceBusConnection).ConfigureAwait(false);
                 //}
 
-                if (!ReceiveLink.TryGetOpenedObject(out receiveLink))
+                if (!_receiveLink.TryGetOpenedObject(out receiveLink))
                 {
-                    receiveLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                    receiveLink = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 }
 
                 var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
@@ -331,6 +344,207 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     // throw new MessageLockLostException(Resources.MessageLockLost);
                 }
 
+                // throw AmqpExceptionHelper.GetClientException(exception);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
+            TimeSpan timeout,
+            long? fromSequenceNumber,
+            int messageCount = 1,
+            string sessionId = null,
+            CancellationToken cancellationToken = default)
+        {
+            IEnumerable<ServiceBusReceivedMessage> messages = await PeekInternal(
+                    fromSequenceNumber,
+                    messageCount,
+                    sessionId,
+                    timeout,
+                    cancellationToken).ConfigureAwait(false);
+
+            return messages;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task<IEnumerable<ServiceBusReceivedMessage>> PeekInternal(
+            long? fromSequenceNumber,
+            int messageCount,
+            string sessionId,
+            TimeSpan timeout,
+            CancellationToken cancellationToken = default)
+        {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.PeekMessageOperation,
+                    timeout,
+                    null);
+
+            if (_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+            {
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber ?? LastPeekedSequenceNumber + 1;
+            amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+
+            if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+            }
+
+            RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
+                UseMinimum(ConnectionScope.SessionTimeout,
+                timeout.CalculateRemaining(stopWatch.Elapsed)))
+                .ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+                amqpRequestMessage.AmqpMessage,
+                timeout.CalculateRemaining(stopWatch.Elapsed))
+                .ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+
+            var messages = new List<ServiceBusReceivedMessage>();
+            //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                ServiceBusReceivedMessage message = null;
+                IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                foreach (AmqpMap entry in messageList)
+                {
+                    var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
+                    var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                    message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    messages.Add(message);
+                }
+
+                if (message != null)
+                {
+                    LastPeekedSequenceNumber = message.SequenceNumber;
+                }
+                return messages;
+            }
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
+                (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+            {
+                return messages;
+            }
+            // TODO throw correct exception
+            throw new Exception();
+        }
+
+        /// <summary>
+        /// Updates the disposition status of deferred messages.
+        /// </summary>
+        ///
+        /// <param name="lockTokens">Message lock tokens to update disposition status.</param>
+        /// <param name="timeout"></param>
+        /// <param name="dispositionStatus"></param>
+        /// <param name="isSessionReceiver"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterDescription"></param>
+        internal override async Task DisposeMessageRequestResponseAsync(
+            Guid[] lockTokens,
+            TimeSpan timeout,
+            DispositionStatus dispositionStatus,
+            bool isSessionReceiver,
+            string sessionId = null,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null)
+        {
+            try
+            {
+                // Create an AmqpRequest Message to update disposition
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.UpdateDispositionOperation, timeout, null);
+
+                if (_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
+                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens;
+                amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
+
+                if (deadLetterReason != null)
+                {
+                    amqpRequestMessage.Map[ManagementConstants.Properties.DeadLetterReason] = deadLetterReason;
+                }
+
+                if (deadLetterDescription != null)
+                {
+                    amqpRequestMessage.Map[ManagementConstants.Properties.DeadLetterDescription] = deadLetterDescription;
+                }
+
+                if (propertiesToModify != null)
+                {
+                    var amqpPropertiesToModify = new AmqpMap();
+                    foreach (var pair in propertiesToModify)
+                    {
+                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
+                        {
+                            amqpPropertiesToModify[new MapKey(pair.Key)] = amqpObject;
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(
+                                Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
+                        }
+                    }
+
+                    if (amqpPropertiesToModify.Count > 0)
+                    {
+                        amqpRequestMessage.Map[ManagementConstants.Properties.PropertiesToModify] = amqpPropertiesToModify;
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(sessionId))
+                {
+                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+                }
+
+                if (isSessionReceiver)
+                {
+                    // TODO -  ThrowIfSessionLockLost();
+                }
+
+                var amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                    _managementLink,
+                    amqpRequestMessage,
+                    timeout).ConfigureAwait(false);
+                if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+                {
+                    // throw amqpResponseMessage.ToMessagingContractException();
+                }
+            }
+            catch (Exception)
+            {
                 // throw AmqpExceptionHelper.GetClientException(exception);
                 throw;
             }
@@ -488,13 +702,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
+                if (_receiveLink?.TryGetOpenedObject(out var _) == true)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    await ReceiveLink.CloseAsync().ConfigureAwait(false);
+                    await _receiveLink.CloseAsync().ConfigureAwait(false);
                 }
 
-                ReceiveLink?.Dispose();
+                _receiveLink?.Dispose();
             }
             catch (Exception ex)
             {
@@ -566,18 +780,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         internal override async Task<ReceivingAmqpLink> GetOrCreateLinkAsync(TimeSpan timeout)
         {
-            return await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            return await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
         }
 
-        internal override string GetReceiveLinkName()
+
+        public override async Task OpenLinkAsync(CancellationToken cancellationToken)
         {
-            string receiveLinkName = "";
-            if (ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
-            {
-                receiveLinkName = link.Name;
-            }
-            return receiveLinkName;
+            await _retryPolicy.RunOperation(
+               async (timeout) =>
+               await _receiveLink.OpenAsync(timeout).ConfigureAwait(false),
+               EntityName,
+               ConnectionScope,
+               cancellationToken).ConfigureAwait(false);
         }
-
     }
 }
