@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Dynamic;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -27,14 +28,23 @@ namespace Azure.Messaging.ServiceBus
         /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
         public static string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
+
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes</param>
-        public ServiceBusReceivedMessage(byte[] body) :
+        internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body) :
             base(body)
         {
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public static ServiceBusReceivedMessage Create(ReadOnlyMemory<byte> body) =>
+            new ServiceBusReceivedMessage(body);
 
         /// <summary>
         /// Creates a new message from the specified payload.
