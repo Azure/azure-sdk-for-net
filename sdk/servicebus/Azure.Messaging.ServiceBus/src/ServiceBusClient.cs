@@ -174,7 +174,9 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetReceiver(string queueName)
         {
-            return new ServiceBusReceiver(Connection, queueName);
+            return ServiceBusReceiver.CreateReceiver(
+                queueName,
+                Connection);
         }
 
         /// <summary>
@@ -186,7 +188,10 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiver GetReceiver(string queueName, ServiceBusReceiverOptions options)
         {
             ValidateEntityName(queueName);
-            return new ServiceBusReceiver(Connection, queueName, options);
+            return ServiceBusReceiver.CreateReceiver(
+                queueName,
+                Connection,
+                options);
         }
 
 
@@ -198,9 +203,9 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetReceiver(string topicName, string subscriptionName)
         {
-            return new ServiceBusReceiver(
-                Connection,
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
+            return ServiceBusReceiver.CreateReceiver(
+                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                Connection);
         }
 
         /// <summary>
@@ -210,11 +215,16 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string topicName, string subscriptionName, ServiceBusReceiverOptions options)
+        public ServiceBusReceiver GetReceiver(
+            string topicName,
+            string subscriptionName,
+            ServiceBusReceiverOptions options)
         {
-            return new ServiceBusReceiver(
+            return ServiceBusReceiver.CreateReceiver(
+                EntityNameFormatter.FormatSubscriptionPath(
+                    topicName,
+                    subscriptionName),
                 Connection,
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 options);
         }
 
@@ -275,17 +285,13 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             string sessionId = default,
             ServiceBusReceiverOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            options = options?.Clone() ?? new ServiceBusReceiverOptions();
-            options.IsSessionEntity = true;
-            var receiver = new ServiceBusReceiver(
-                Connection,
-                queueName,
-                options);
-            await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
-            return receiver;
-        }
+            CancellationToken cancellationToken = default) =>
+                await ServiceBusReceiver.CreateSessionReceiverAsync(
+                    queueName,
+                    Connection,
+                    sessionId,
+                    options,
+                    cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -298,10 +304,15 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceiverOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            var receiver = new ServiceBusReceiver(
-                Connection,
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
-                new ServiceBusReceiverOptions { IsSessionEntity = true });
+            var receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
+                EntityNameFormatter.FormatSubscriptionPath(
+                    topicName,
+                    subscriptionName),
+                 Connection,
+                 sessionId,
+                 options,
+                 cancellationToken).ConfigureAwait(false);
+
             await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
             return receiver;
         }

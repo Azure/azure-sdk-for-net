@@ -255,12 +255,13 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 1;
                 IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
                 await sender.SendBatchAsync(messages);
 
-                var receiver = new ServiceBusReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var receiver = client.GetReceiver(scope.QueueName);
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveBatchAsync(messageCount)).ToArray();
 
                 var message = receivedMessages.First();

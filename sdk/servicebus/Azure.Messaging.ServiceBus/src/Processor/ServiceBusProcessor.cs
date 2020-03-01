@@ -220,7 +220,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            await Receiver.CloseAsync(cancellationToken).ConfigureAwait(false);
+            if (Receiver != null)
+            {
+                await Receiver.CloseAsync(cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -357,21 +360,34 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
+                    if (UseSessions)
+                    {
+                        if (SessionId != null)
+                        {
+                            // only create a new receiver if a specific session
+                            // is specified, otherwise thread local receivers will be used
+                            Receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
+                                EntityName,
+                                _connection,
+                                SessionId,
+                                receiverOptions,
+                                cancellationToken).ConfigureAwait(false);
+                        }
+                    }
+                    else
+                    {
+                        // even when not using sessions, we create a new receiver
+                        // in case processing options have been changed
+                        Receiver = ServiceBusReceiver.CreateReceiver(
+                            EntityName,
+                            _connection,
+                            receiverOptions);
+                    }
 
                     lock (EventHandlerGuard)
                     {
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                        ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
-                        if (UseSessions)
-                        {
-                            receiverOptions.IsSessionEntity = true;
-                        }
-                        receiverOptions.SessionId = SessionId;
-                        Receiver = new ServiceBusReceiver(
-                            _connection,
-                            EntityName,
-                            receiverOptions);
-
                         if (ActiveReceiveTask == null)
                         {
                             if (_processMessage == null)
@@ -453,7 +469,10 @@ namespace Azure.Messaging.ServiceBus
                     ActiveReceiveTask.Dispose();
                     ActiveReceiveTask = null;
                 }
-                await Receiver.CloseAsync().ConfigureAwait(false);
+                if (Receiver != null)
+                {
+                    await Receiver.CloseAsync().ConfigureAwait(false);
+                }
             }
             finally
             {
@@ -504,8 +523,12 @@ namespace Azure.Messaging.ServiceBus
                 // we want to allow each thread to have its own consumer so we can access
                 // multiple sessions concurrently.
                 ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
-                receiverOptions.IsSessionEntity = true;
-                receiver = new ServiceBusReceiver(_connection, EntityName, receiverOptions);
+                receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
+                    EntityName,
+                    _connection,
+                    SessionId,
+                    receiverOptions,
+                    cancellationToken).ConfigureAwait(false);
                 useThreadLocalConsumer = true;
             }
             else

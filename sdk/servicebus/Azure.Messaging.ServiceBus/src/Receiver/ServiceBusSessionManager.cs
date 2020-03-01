@@ -16,12 +16,15 @@ namespace Azure.Messaging.ServiceBus
     {
         private readonly TransportReceiver _receiver;
 
-        internal string UserSpecifiedSessionId { get; }
+        /// <summary>
+        /// The Session Id associated with the receiver.
+        /// </summary>
+        public string SessionId => _receiver.SessionId;
 
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
-        internal DateTime LockedUntilUtcInternal { get; set; }
+        public DateTime LockedUntilUtc { get; set; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -35,13 +38,9 @@ namespace Azure.Messaging.ServiceBus
         internal ReceiveMode ReceiveMode { get; }
 
         internal ServiceBusSessionManager(
-            TransportReceiver receiver,
-            string sessionId)
+            TransportReceiver receiver)
         {
             _receiver = receiver;
-            UserSpecifiedSessionId = sessionId;
-            ReceiveMode = receiveMode;
-            RetryPolicy = retryPolicy;
         }
 
         /// <summary>
@@ -71,62 +70,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(_consumer.IsClosed, nameof(ServiceBusReceiverClient));
-
-            if (ReceiveMode != ReceiveMode.PeekLock)
-            {
-                throw new InvalidOperationException(Resources1.OperationNotSupported);
-            }
-
-            // MessagingEventSource.Log.RenewSessionLockStart(this.SessionId);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) =>
-                    {
-                        LockedUntilUtcInternal = await _consumer.RenewSessionLockAsync(
-                            UserSpecifiedSessionId,
-                            timeout).ConfigureAwait(false);
-                    },
-                    _consumer.EntityName,
-                    _consumer.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.RenewSessionLockException(this.SessionId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // this.diagnosticSource.RenewSessionLockStop(activity, this.SessionId);
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageRenewLockStop(this.SessionId);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default)
-        {
-            // if the user specified a sessionId we can just return
-            // early with that as there is no chance of it changing
-            if (UserSpecifiedSessionId != null)
-            {
-                return UserSpecifiedSessionId;
-            }
-            else
-            {
-                return await _receiver.GetSessionIdAsync(cancellationToken).ConfigureAwait(false);
-            }
-        }
+        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
+            LockedUntilUtc = await _receiver.RenewSessionLockAsync(SessionId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///

@@ -125,38 +125,81 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        internal static async Task<ServiceBusReceiver> CreateSessionReceiverAsync(
+            string queueName,
+            ServiceBusConnection connection,
+            string sessionId = default,
+            ServiceBusReceiverOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            options = options?.Clone() ?? new ServiceBusReceiverOptions();
+
+            var receiver = new ServiceBusReceiver(
+                connection: connection,
+                entityName: queueName,
+                isSessionEntity: true,
+                sessionId: sessionId,
+                options: options);
+            await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            return receiver;
+        }
+
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        internal static ServiceBusReceiver CreateReceiver(
+            string queueName,
+            ServiceBusConnection connection,
+            ServiceBusReceiverOptions options = default)
+        {
+            options = options?.Clone() ?? new ServiceBusReceiverOptions();
+            return new ServiceBusReceiver(
+                connection: connection,
+                entityName: queueName,
+                isSessionEntity: false,
+                options: options);
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityName"></param>
-        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        /// <param name="isSessionEntity"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="options">A set of options to apply when configuring the consumer.</param>
         ///
-        internal ServiceBusReceiver(
+        private ServiceBusReceiver(
             ServiceBusConnection connection,
             string entityName,
-            ServiceBusReceiverOptions clientOptions = default)
+            bool isSessionEntity,
+            string sessionId = default,
+            ServiceBusReceiverOptions options = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            clientOptions ??= new ServiceBusReceiverOptions();
+            options ??= new ServiceBusReceiverOptions();
 
-            IsSessionReceiver = clientOptions.IsSessionEntity;
+            IsSessionReceiver = isSessionEntity;
             _connection = connection;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
             RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
-            ReceiveMode = clientOptions.ReceiveMode;
-            PrefetchCount = clientOptions.PrefetchCount;
+            ReceiveMode = options.ReceiveMode;
+            PrefetchCount = options.PrefetchCount;
             EntityName = entityName;
             _innerReceiver = _connection.CreateTransportReceiver(
                 entityName: EntityName,
                 retryPolicy: RetryPolicy,
                 receiveMode: ReceiveMode,
                 prefetchCount: PrefetchCount,
-                sessionId: clientOptions.SessionId,
+                sessionId: sessionId,
                 isSessionReceiver: IsSessionReceiver);
-            SessionManager = new ServiceBusSessionManager(
-                _innerReceiver,
-                clientOptions.SessionId);
+            SessionManager = new ServiceBusSessionManager(_innerReceiver);
         }
 
         /// <summary>
@@ -325,17 +368,10 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages = 1,
             CancellationToken cancellationToken = default)
         {
-            //if (IsSessionReceiver)
-            //{
-            //    // if this is a session receiver, the receive link must be open in order to peek messages
-            //    await _innerReceiver.GetOrCreateLinkAsync(timeout).ConfigureAwait(false);
-            //}
-
             return await _innerReceiver.PeekAsync(
                 timeout,
                 fromSequenceNumber,
                 maxMessages,
-                await SessionManager.GetSessionIdAsync(cancellationToken).ConfigureAwait(false),
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -596,7 +632,7 @@ namespace Azure.Messaging.ServiceBus
                     timeout,
                     DispositionStatus.Completed,
                     IsSessionReceiver,
-                    SessionManager.UserSpecifiedSessionId);
+                    SessionManager.SessionId);
             }
             return _innerReceiver.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
         }
@@ -616,7 +652,7 @@ namespace Azure.Messaging.ServiceBus
             var lockTokens = new[] { new Guid(message.LockToken) };
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, propertiesToModify);
+                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, IsSessionReceiver, SessionManager.SessionId, propertiesToModify);
             }
             return _innerReceiver.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
         }
@@ -650,7 +686,7 @@ namespace Azure.Messaging.ServiceBus
             var lockTokens = new[] { new Guid(message.LockToken) };
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
+                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, IsSessionReceiver, SessionManager.SessionId, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
             }
 
             return _innerReceiver.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription), timeout);
@@ -670,7 +706,7 @@ namespace Azure.Messaging.ServiceBus
             var lockTokens = new[] { new Guid(message.LockToken) };
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, IsSessionReceiver, SessionManager.UserSpecifiedSessionId, propertiesToModify);
+                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, IsSessionReceiver, SessionManager.SessionId, propertiesToModify);
             }
             return _innerReceiver.DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
         }
@@ -813,7 +849,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
 
             // MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
@@ -824,12 +860,12 @@ namespace Azure.Messaging.ServiceBus
                 await RetryPolicy.RunOperation(
                     async (timeout) =>
                     {
-                        lockedUntilUtc = await Consumer.RenewLockAsync(
+                        lockedUntilUtc = await _innerReceiver.RenewLockAsync(
                             message.LockToken,
                             timeout).ConfigureAwait(false);
                     },
                     EntityName,
-                    Consumer.ConnectionScope,
+                    _innerReceiver.ConnectionScope,
                     cancellationToken).ConfigureAwait(false);
 
                 message.LockedUntilUtc = lockedUntilUtc;

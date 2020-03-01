@@ -42,6 +42,11 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual string EntityName { get; }
 
         /// <summary>
+        ///
+        /// </summary>
+        public virtual string SessionId { get; protected set; }
+
+        /// <summary>
         ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
         /// </summary>
         ///
@@ -65,13 +70,6 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract Task OpenLinkAsync(CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get the session Id corresponding to this consumer.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// Get the DateTimeOffset for when the session is locked until.
         /// </summary>
         /// <param name="cancellationToken"></param>
@@ -84,14 +82,12 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="timeout"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
-        /// <param name="sessionId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
             TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,
-            string sessionId = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -147,10 +143,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
         /// <param name="sessionId"></param>
-        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
         public abstract Task<DateTime> RenewSessionLockAsync(
             string sessionId,
-            TimeSpan timeout);
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///

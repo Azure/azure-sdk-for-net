@@ -28,16 +28,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        internal bool IsSessionEntity { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        internal string SessionId { get; set; }
-
-        /// <summary>
-        ///
-        /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
@@ -110,9 +100,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone(),
-                ReceiveMode = ReceiveMode,
-                IsSessionEntity = IsSessionEntity,
-                SessionId = SessionId
+                ReceiveMode = ReceiveMode
             };
     }
 }

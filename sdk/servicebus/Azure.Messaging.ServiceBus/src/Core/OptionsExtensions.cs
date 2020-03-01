@@ -31,9 +31,7 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 ConnectionOptions = options.ConnectionOptions.Clone(),
                 RetryOptions = options.RetryOptions.Clone(),
-                ReceiveMode = options.ReceiveMode,
-                IsSessionEntity = options.IsSessionEntity,
-                SessionId = options.SessionId
+                ReceiveMode = options.ReceiveMode
             };
         }
     }
