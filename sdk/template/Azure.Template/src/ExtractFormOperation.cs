@@ -75,7 +75,19 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = new ExtractedForm(update.Value.AnalyzeResult);
+
+                    // Determine if the model was supervised or unsupervised
+                    if (update.Value.AnalyzeResult.DocumentResults.Count == 0)
+                    {
+                        // Unsupervised
+                        _value = new ExtractedForm(update.Value.AnalyzeResult.PageResults);
+                    }
+                    else
+                    {
+                        // TODO: Consider what we'll do when there are multiple DocumentResults
+                        // Supervised
+                        _value = new ExtractedForm(update.Value.AnalyzeResult.DocumentResults.First());
+                    }
                 }
 
                 _response = update.GetRawResponse();

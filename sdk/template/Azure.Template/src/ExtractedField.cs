@@ -7,10 +7,11 @@ namespace Azure.AI.FormRecognizer
 {
     public class ExtractedField
     {
-        public float Confidence { get; internal set; }
+        // TODO: Why can this be nullable on FieldValue.Confidence?
+        public float? Confidence { get; internal set; }
         public string Label { get; internal set; }
 
-        // TODO: How to make these nullable?
+        // TODO: Make this nullable - how?
         public BoundingBox LabelOutline { get; internal set; }
 
         ///public RawExtractedLine RawFieldExtraction { get; internal set; }

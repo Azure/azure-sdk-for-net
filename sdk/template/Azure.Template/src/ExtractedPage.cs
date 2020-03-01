@@ -9,6 +9,7 @@ namespace Azure.AI.FormRecognizer
 {
     public class ExtractedPage
     {
+        // Unsupervised
         internal ExtractedPage(PageResult_internal pageResult)
         {
             PageNumber = pageResult.Page;
@@ -18,7 +19,15 @@ namespace Azure.AI.FormRecognizer
             //Tables = SetTables(pageResult.Tables);
         }
 
+        // Supervised
+        public ExtractedPage(int pageNumber, List<ExtractedField> fields)
+        {
+            PageNumber = pageNumber;
+            Fields = SetFields(fields);
+        }
+
         public int PageNumber { get; }
+
         public IReadOnlyList<ExtractedField> Fields { get; }
         public IReadOnlyList<ExtractedTable> Tables { get; }
 
@@ -43,6 +52,17 @@ namespace Azure.AI.FormRecognizer
 
             return fields.AsReadOnly();
         }
+
+        private static IReadOnlyList<ExtractedField> SetFields(List<ExtractedField> fields)
+        {
+            List<ExtractedField> list = new List<ExtractedField>();
+            foreach (var field in fields)
+            {
+                list.Add(field);
+            }
+            return list.AsReadOnly();
+        }
+
 
         //private IReadOnlyList<ExtractedTable> SetTables(ICollection<DataTable> tables)
         //{

@@ -21,7 +21,8 @@ namespace Azure.AI.FormRecognizer.Samples
             //TrainCustomModel().Wait();
             //ExtractCustomModel().Wait();
 
-            TrainCustomLabeledModel().Wait();
+            //TrainCustomLabeledModel().Wait();
+            ExtractCustomLabeledModel().Wait();
 
             //GetCustomModelsSummary();
             //GetCustomModels();
@@ -73,6 +74,28 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
             string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
+            {
+                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf);
+
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                if (extractFormOperation.HasValue)
+                {
+                    ExtractedForm form = extractFormOperation.Value;
+                }
+            }
+        }
+
+        private static async Task ExtractCustomLabeledModel()
+        {
+            string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
+            string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
