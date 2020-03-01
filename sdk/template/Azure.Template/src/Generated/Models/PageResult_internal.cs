@@ -4,9 +4,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Extracted information from a single page. </summary>
     public partial class PageResult_internal

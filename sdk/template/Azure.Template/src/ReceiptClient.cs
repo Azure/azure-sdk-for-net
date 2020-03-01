@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer
         private readonly HttpPipeline _pipeline;
         private readonly AllOperations _operations;
 
-        internal const string CustomModelsRoute = "/prebuilt/receipt";
+        internal const string ReceiptsRoute = "/prebuilt/receipt";
 
         protected ReceiptClient()
         {

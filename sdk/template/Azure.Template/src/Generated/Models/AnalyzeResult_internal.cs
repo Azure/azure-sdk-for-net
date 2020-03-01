@@ -4,7 +4,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.Models
 {

@@ -22,7 +22,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             //TrainCustomLabeledModel().Wait();
             //ExtractCustomLabeledModel().Wait();
-            ExtractReceipt();
+            //ExtractReceipt();
+            ExtractLayout().Wait();
 
             //GetCustomModelsSummary();
             //GetCustomModels();
@@ -127,6 +128,27 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 var extractedReceipt = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg);
 
+            }
+        }
+
+        private static async Task ExtractLayout()
+        {
+            string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new FormLayoutClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
+            {
+                var extractLayoutOperation = client.StartExtractLayout(stream, contentType: FormContentType.Pdf);
+
+                await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                if (extractLayoutOperation.HasValue)
+                {
+                    AnalyzeResult_internal result = extractLayoutOperation.Value;
+                }
             }
         }
 

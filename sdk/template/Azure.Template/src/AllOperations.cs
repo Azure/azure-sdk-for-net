@@ -100,8 +100,6 @@ namespace Azure.AI.FormRecognizer
         #endregion Custom
 
         #region Receipt
-
-
         internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, Stream stream, FormContentType contentType)
         {
             var message = pipeline.CreateMessage();
@@ -178,6 +176,75 @@ namespace Azure.AI.FormRecognizer
         #endregion Receipt
 
         #region Layout
+
+        // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(Stream stream, FormContentType contentType)
+        {
+            var message = pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethodAdditional.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/layout/analyze", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", GetContentTypeString(contentType));
+            request.Content = RequestContent.Create(stream);
+            //request.Headers.Add("Content-Type", "application/json");
+            //using var content = new Utf8JsonRequestContent();
+            //content.JsonWriter.WriteObjectValue(fileStream);
+            //request.Content = content;
+            return message;
+        }
+
+        // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
+        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        {
+            using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeLayoutAsync");
+            scope.Start();
+            try
+            {
+                using var message = CreateAnalyzeLayoutAsyncRequest(stream, contentType);
+                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 202:
+                        var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
+                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                    default:
+                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        {
+            using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeLayoutAsync");
+            scope.Start();
+            try
+            {
+                using var message = CreateAnalyzeLayoutAsyncRequest(stream, contentType);
+                pipeline.Send(message, cancellationToken);
+                switch (message.Response.Status)
+                {
+                    case 202:
+                        var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
+                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                    default:
+                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
         #endregion Layout
     }
 }
