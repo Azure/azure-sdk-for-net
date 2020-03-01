@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Text extracted from a page in the input document. </summary>
-    internal partial class ReadResult_internal
+    public partial class ReadResult_internal
     {
         /// <summary> The 1-based page number in the input document. </summary>
         public int Page { get; set; }

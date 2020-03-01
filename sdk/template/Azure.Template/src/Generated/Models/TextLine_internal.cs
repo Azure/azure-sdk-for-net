@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing an extracted text line. </summary>
-    internal partial class TextLine_internal
+    public partial class TextLine_internal
     {
         /// <summary> The text content of the line. </summary>
         public string Text { get; set; }

@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("TextLine")]
-    internal partial class TextLine_internal
+    public partial class TextLine_internal
     {
         // TODO: Q6 - I'd like to turn this property into a string.
         //[CodeGenSchemaMember("Language")]

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted cell in a table. </summary>
-    internal partial class DataTableCell_internal
+    public partial class DataTableCell_internal
     {
         /// <summary> Row index of the cell. </summary>
         public int RowIndex { get; set; }

@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Template.Models
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> The Enum0. </summary>
     internal readonly partial struct GetModelOptions : IEquatable<GetModelOptions>

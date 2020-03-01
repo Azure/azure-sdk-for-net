@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Language code. </summary>
-    internal readonly partial struct Language_internal : IEquatable<Language_internal>
+    public readonly partial struct Language_internal : IEquatable<Language_internal>
     {
         private readonly string _value;
 

@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("DocumentResult")]
-    internal partial class DocumentResult_internal
+    public partial class DocumentResult_internal
     {
     }
 }

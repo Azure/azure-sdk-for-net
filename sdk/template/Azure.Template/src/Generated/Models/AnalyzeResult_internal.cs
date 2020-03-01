@@ -9,7 +9,7 @@ using Azure.AI.FormRecognizer;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Analyze operation result. </summary>
-    internal partial class AnalyzeResult_internal
+    public partial class AnalyzeResult_internal
     {
         /// <summary> Version of schema used for this result. </summary>
         public string Version { get; set; }

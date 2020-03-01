@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("DataTableCell")]
-    internal partial class DataTableCell_internal
+    public partial class DataTableCell_internal
     {
     }
 }

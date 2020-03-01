@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
-    internal partial class DocumentResult_internal
+    public partial class DocumentResult_internal
     {
         /// <summary> Document type. </summary>
         public string DocType { get; set; }

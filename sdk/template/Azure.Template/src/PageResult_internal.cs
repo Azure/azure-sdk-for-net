@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer
 {
     [CodeGenSchema("PageResult")]
-    internal partial class PageResult_internal
+    public partial class PageResult_internal
     {
     }
 }

@@ -9,9 +9,6 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-// TODO: Rename to FormRecognizer
-using Azure.Template.Models;
-
 namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary>
@@ -68,8 +65,24 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            // TODO: Make this call an async method instead - i.e. AsyncAsync :-P
             ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
+            return new TrainingOperation(_operations, response.Headers.Location);
+        }
+
+        public virtual async Task<TrainingOperation> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        {
+            // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
+            //filter ??= new TrainingFileFilter();
+
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+
+            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            if (filter != default)
+            {
+                trainRequest.SourceFilter = filter;
+            }
+
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -83,8 +96,21 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            // TODO: Make this call an async method instead - i.e. AsyncAsync :-P
             ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
+            return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
+        }
+
+        public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        {
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+
+            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            if (filter != default)
+            {
+                trainRequest.SourceFilter = filter;
+            }
+
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -92,19 +118,17 @@ namespace Azure.AI.FormRecognizer.Custom
 
         #region Analyze
 
-        /// <summary>
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="stream"></param>
-        /// <param name="contentType"></param>
-        /// <param name="includeRawPageExtractions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
-            // TODO: Make this call an async method instead
             // TODO: automate content-type detection
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
+        public virtual async Task<ExtractFormOperation> StartExtractFormAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            // TODO: automate content-type detection
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 

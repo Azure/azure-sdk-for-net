@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("Language")]
-    internal partial struct Language_internal
+    public partial struct Language_internal
     {
     }
 }

@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("KeyValuePair")]
-    internal partial class KeyValuePair_internal
+    public partial class KeyValuePair_internal
     {
     }
 }

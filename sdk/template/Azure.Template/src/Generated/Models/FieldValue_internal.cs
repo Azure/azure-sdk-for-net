@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Recognized field value. </summary>
-    internal partial class FieldValue_internal
+    public partial class FieldValue_internal
     {
         /// <summary> Semantic data type of the field value. </summary>
         public FieldValueType Type { get; set; }

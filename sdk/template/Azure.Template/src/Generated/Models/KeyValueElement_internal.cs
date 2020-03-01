@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted key or value in a key-value pair. </summary>
-    internal partial class KeyValueElement_internal
+    public partial class KeyValueElement_internal
     {
         /// <summary> The text content of the key or value. </summary>
         public string Text { get; set; }

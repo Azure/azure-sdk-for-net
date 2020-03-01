@@ -9,7 +9,7 @@ using Azure.AI.FormRecognizer.Models;
 namespace Azure.AI.FormRecognizer
 {
     /// <summary> Extracted information from a single page. </summary>
-    internal partial class PageResult_internal
+    public partial class PageResult_internal
     {
         /// <summary> Page number. </summary>
         public int Page { get; set; }
