@@ -10,17 +10,17 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class ExtractReceiptOperation : Operation<AnalyzeResult_internal>
+    public class ExtractReceiptOperation : Operation<ExtractedReceipt>
     {
         private Response _response;
-        private AnalyzeResult_internal _value;
+        private ExtractedReceipt _value;
         private bool _hasCompleted;
 
         private readonly AllOperations _operations;
 
         public override string Id { get; }
 
-        public override AnalyzeResult_internal Value => OperationHelpers.GetValue(ref _value);
+        public override ExtractedReceipt Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -30,11 +30,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<AnalyzeResult_internal>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<ExtractedReceipt>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<AnalyzeResult_internal>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<ExtractedReceipt>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal ExtractReceiptOperation(AllOperations operations, string operationLocation)
@@ -66,7 +66,9 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = update.Value.AnalyzeResult;
+
+                    // TODO: When they support extracting more than one receipt, add a pageable method for this.
+                    _value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First());
                 }
 
                 _response = update.GetRawResponse();

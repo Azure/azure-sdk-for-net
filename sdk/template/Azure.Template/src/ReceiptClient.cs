@@ -50,13 +50,13 @@ namespace Azure.AI.FormRecognizer
         //public virtual Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
         //public virtual Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
 
-        public virtual Response<AnalyzeResult_internal> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
-            ValueTask<Response<AnalyzeResult_internal>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
 
             // TODO: this feels very bad.  Better way?
             task.AsTask().Wait();
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer
             return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
         }
 
-        public virtual async Task<Response<AnalyzeResult_internal>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
@@ -86,5 +86,42 @@ namespace Azure.AI.FormRecognizer
             // TODO: Is this the best way?
             return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
         }
+
+        //public virtual Response<AnalyzeResult_internal> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        //{
+        //    // TODO: automate content-type detection
+        //    ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+        //    var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
+
+        //    ValueTask<Response<AnalyzeResult_internal>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+
+        //    // TODO: this feels very bad.  Better way?
+        //    task.AsTask().Wait();
+
+        //    if (!operation.HasValue)
+        //    {
+        //        throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
+        //    }
+
+        //    // TODO: this is also a mess. Reconcile these together.
+        //    return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
+        //}
+
+        //public virtual async Task<Response<AnalyzeResult_internal>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        //{
+        //    // TODO: automate content-type detection
+        //    ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+        //    var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
+
+        //    var operationResponse = await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+
+        //    if (!operation.HasValue)
+        //    {
+        //        throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
+        //    }
+
+        //    // TODO: Is this the best way?
+        //    return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
+        //}
     }
 }

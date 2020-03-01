@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -22,12 +21,12 @@ namespace Azure.AI.FormRecognizer.Models
         internal ExtractedForm(DocumentResult_internal documentResult)
         {
             // Supervised
-            LearnedFormId = documentResult.DocType;
+            LearnedFormType = documentResult.DocType;
             PageRange = new PageRange(documentResult.PageRange);
             Pages = SetPages(documentResult);
         }
 
-        public string LearnedFormId { get; internal set; }
+        public string LearnedFormType { get; internal set; }
 
         public PageRange PageRange { get; internal set; }
 
@@ -38,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<ExtractedPage> pages = new List<ExtractedPage>();
             foreach (var result in pageResults)
             {
-                SetLearnedFormId(result.ClusterId);
+                SetLearnedFormType(result.ClusterId);
 
                 ExtractedPage page = new ExtractedPage(result);
                 pages.Add(page);
@@ -81,7 +80,37 @@ namespace Azure.AI.FormRecognizer.Models
             return pages.AsReadOnly();
         }
 
-        private void SetLearnedFormId(int? clusterId)
+        //private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult_internal documentResult)
+        //{
+        //    List<ExtractedPage> pages = new List<ExtractedPage>();
+
+        //    // TODO: improve performance here
+        //    Dictionary<int, List<KeyValuePair<string, FieldValue_internal>>> fieldsByPage = new Dictionary<int, List<KeyValuePair<string, FieldValue_internal>>>();
+        //    foreach (var field in documentResult.Fields)
+        //    {
+        //        // TODO: page 0 if null, can we do better?
+        //        int pageNumber = field.Value.Page ?? 0;
+
+        //        // TODO: How should we handle the multiple values per field and the strongly-typed ones?
+        //        List<KeyValuePair<string, FieldValue_internal>> list;
+        //        if (!fieldsByPage.TryGetValue(pageNumber, out list))
+        //        {
+        //            fieldsByPage[pageNumber] = new List<KeyValuePair<string, FieldValue_internal>>();
+        //        }
+
+        //        fieldsByPage[pageNumber].Add(field);
+        //    }
+
+        //    foreach (var pageFields in fieldsByPage)
+        //    {
+        //        var page = new ExtractedPage(pageFields.Key, pageFields.Value);
+        //        pages.Add(page);
+        //    }
+
+        //    return pages.AsReadOnly();
+        //}
+
+        private void SetLearnedFormType(int? clusterId)
         {
             // TODO: Provide IFormatProvider
 #pragma warning disable CA1305 // Specify IFormatProvider
@@ -91,8 +120,8 @@ namespace Azure.AI.FormRecognizer.Models
             // TODO: Does this make sense?
             if (formId != null)
             {
-                Debug.Assert(LearnedFormId == formId, "Multiple form types found in ExtractedForm.");
-                LearnedFormId = formId;
+                Debug.Assert(LearnedFormType == formId, "Multiple form types found in ExtractedForm.");
+                LearnedFormType = formId;
             }
         }
     }
