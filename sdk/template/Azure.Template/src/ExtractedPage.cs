@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         // Supervised
-        public ExtractedPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult)
+        internal ExtractedPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult)
         {
             PageNumber = pageNumber;
             Fields = SetFields(fields);

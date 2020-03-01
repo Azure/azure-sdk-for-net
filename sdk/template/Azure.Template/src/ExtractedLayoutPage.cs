@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedLayoutPage
     {
-        public ExtractedLayoutPage(PageResult_internal pageResult)
+        internal ExtractedLayoutPage(PageResult_internal pageResult)
         {
             PageNumber = pageResult.Page;
             Tables = SetTables(pageResult.Tables);

@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("KeyValueElement")]
-    public partial class KeyValueElement_internal
+    internal partial class KeyValueElement_internal
     {
     }
 }

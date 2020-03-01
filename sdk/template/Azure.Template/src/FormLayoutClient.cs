@@ -61,9 +61,11 @@ namespace Azure.AI.FormRecognizer
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
-        //public virtual async Task<Response<ExtractLayoutOperation>> StartExtractLayoutAsync(Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
-        //{
+        public virtual async Task<ExtractLayoutOperation> StartExtractLayoutAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.AnalyzeLayoutAsyncAsync(stream, contentType, cancellationToken).ConfigureAwait(false);
+            return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
 
-        //}
+        }
     }
 }

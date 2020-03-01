@@ -7,7 +7,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedTableCell
     {
-        public ExtractedTableCell(DataTableCell_internal result)
+        internal ExtractedTableCell(DataTableCell_internal result)
         {
             BoundingBox = new BoundingBox(result.BoundingBox);
             ColumnIndex = result.ColumnIndex;

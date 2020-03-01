@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Analyze operation result. </summary>
-    public partial class AnalyzeResult_internal
+    internal partial class AnalyzeResult_internal
     {
         /// <summary> Version of schema used for this result. </summary>
         public string Version { get; set; }
