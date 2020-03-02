@@ -1,8 +1,11 @@
 # given a CHANGELOG.md file, extract the relevant info we need to decorate a release
 param (
   [Parameter(Mandatory = $true)]
-  [String]$ChangeLogLocation
+  [String]$ChangeLogLocation,
+  [String]$VersionString
 )
+
+$ErrorActionPreference = 'Stop'
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?))"
 
@@ -44,4 +47,28 @@ catch
   Write-Host $_.Exception.Message
 }
 
-return $releaseNotes
+if ([System.String]::IsNullOrEmpty($VersionString)) 
+{
+  return $releaseNotes
+}
+else 
+{
+  if ($releaseNotes.ContainsKey($VersionString)) 
+  {
+    $releaseNotesForVersion = $releaseNotes[$VersionString].ReleaseContent
+    $releaseNotesArray = $releaseNotesForVersion.Split([Environment]::NewLine)
+    $processedNotes = New-Object System.Collections.ArrayList
+    foreach ($line in $releaseNotesArray) 
+    {
+      $lineIsTitle = $line.Startswith('#') -And ($line -match $RELEASE_TITLE_REGEX)
+      if (-Not $lineIsTitle) 
+      {
+        $processedNotes.Add($line) > $null
+      }
+    }
+    return $processedNotes -Join [Environment]::NewLine
+  }
+  Write-Error "Release Notes for the Specified version ${VersionString} was not found"
+  exit 1
+}
+

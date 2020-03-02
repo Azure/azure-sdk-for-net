@@ -8,7 +8,7 @@ using Azure.Messaging.ServiceBus.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiverClient" />
+    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusProcessorClient" />
     ///   to configure its behavior.
     /// </summary>
     ///

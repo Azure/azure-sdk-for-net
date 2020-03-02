@@ -18,8 +18,8 @@ namespace Azure.Identity
     {
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
-        internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable, no managed identity endpoint found.";
-        internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable, the requested identity has not been assigned to this resource.";
+        internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
+        internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
 
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
@@ -83,7 +83,7 @@ namespace Azure.Identity
             throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
-        public async virtual Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
+        public virtual async Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
         {
             MsiType msiType = await GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
 

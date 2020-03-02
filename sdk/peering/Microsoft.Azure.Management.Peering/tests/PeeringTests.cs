@@ -11,147 +11,183 @@ namespace Peering.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Text;
     using System.Threading;
+
     using Microsoft.Azure.Management.Peering;
     using Microsoft.Azure.Management.Peering.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
-    using Microsoft.Azure.Test.HttpRecorder;
-    using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings;
-    using Microsoft.Rest;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
+    using Newtonsoft.Json;
+
     using Xunit;
-    using Xunit.Sdk;
-    using ContactInfo = Microsoft.Azure.Management.Peering.Models.ContactInfo;
+
     using DirectConnection = Microsoft.Azure.Management.Peering.Models.DirectConnection;
+    using MockServer = Microsoft.Azure.Test.HttpRecorder.HttpMockServer;
     using PeeringSku = Microsoft.Azure.Management.Peering.Models.PeeringSku;
     using SubResource = Microsoft.Azure.Management.Peering.Models.SubResource;
 
+    /// <summary>
+    /// The peering tests.
+    /// </summary>
     public class PeeringTests
     {
-        private readonly Random random = new Random();
-        public PeeringManagementClient client { get; set; }
-        public ResourceManagementClient resourcesClient { get; set; }
+        /// <summary>
+        /// The local edge rp uri.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        public static Uri LocalEdgeRpUri = new Uri("https://secrets.wanrr-test.radar.core.azure-test.net/");
 
+        /// <summary>
+        /// The random.
+        /// </summary>
+        private readonly Random random = new Random();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PeeringTests"/> class.
+        /// </summary>
         public PeeringTests()
         {
             // Set the value to false for Playback or True for record.
             this.Setup(false);
         }
 
-        private void Setup(bool isRecord = false)
-        {
-            var mode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+        /// <summary>
+        /// Gets or sets the client.
+        /// </summary>
+        public PeeringManagementClient Client { get; set; }
 
-            var connectionstring = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+        /// <summary>
+        /// Gets or sets the resources client.
+        /// </summary>
+        public ResourceManagementClient ResourcesClient { get; set; }
 
-            if (mode == null)
-                Environment.SetEnvironmentVariable("AZURE_TEST_MODE", isRecord ? "Record" : "Playback");
-            if (connectionstring == null && isRecord)
-            {
-                var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments, Environment.SpecialFolderOption.None);
-                if (path != string.Empty)
-                {
-                    // See the team notes under ibiza SDK update or search connectionString.txt
-                    path += @"\..\.azure\connectionString.txt";
-                    string connection = File.ReadAllText(path);
-                    Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connection);
-                }
-            }
-        }
+        /// <summary>
+        /// Gets or sets the subscription id.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
+        /// <summary>
+        /// The api version latest.
+        /// </summary>
+        public const string ApiVersionLatest = "2020-01-01-preview";
+
+        /// <summary>
+        /// The peering operations test.
+        /// </summary>
         [Fact]
         public void PeeringOperationsTest()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-                var peeringLists = this.client.Operations.List();
+                this.MockClients(context);
+                var peeringLists = this.Client.Operations.List();
                 Assert.NotNull(peeringLists);
             }
         }
 
+        /// <summary>
+        /// The get direct locations.
+        /// </summary>
         [Fact]
         public void GetDirectLocations()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-                var result = this.client.PeeringLocations.List("Direct");
+                this.MockClients(context);
+                var result = this.Client.PeeringLocations.List("Direct");
                 Assert.NotNull(result);
             }
         }
 
+        /// <summary>
+        /// The get exchange locations.
+        /// </summary>
         [Fact]
         public void GetExchangeLocations()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-                var result = this.client.PeeringLocations.List("Exchange");
+                this.MockClients(context);
+                var result = this.Client.PeeringLocations.List("Exchange");
                 Assert.NotNull(result);
             }
         }
 
+        /// <summary>
+        /// The update peer info test.
+        /// </summary>
         [Fact]
         public void UpdatePeerInfoTest()
         {
-            int asn = 65000;
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.updatePeerAsn(context, asn);
-                Assert.True(this.DeletePeerAsn(context, $"Contoso{asn}"));
-                context.Dispose();
+                this.MockClients(context);
+                int asn = 65000;
+                this.updatePeerAsn(asn);
+                Assert.True(this.DeletePeerAsn($"Contoso{asn}"));
             }
         }
 
+        /// <summary>
+        /// The create get remove peer asn.
+        /// </summary>
+        [SuppressMessage(
+            "StyleCop.CSharp.DocumentationRules",
+            "SA1650:ElementDocumentationMustBeSpelledCorrectly",
+            Justification = "Reviewed. Suppression is OK here.")]
         [Fact]
         public void CreateGetRemovePeerAsn()
         {
-            int asn = 65000;
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                try
+                this.MockClients(context);
+                int asn = 65000;
                 {
-                    // Create the peerAsn
-                    var subId = this.CreatePeerAsn(context, asn, $"AS{asn}", isApproved: false);
-                    Assert.NotNull(subId);
-                    // Get the PeerAsn
-                    var peerAsn = this.client.PeerAsns.Get($"AS{asn}");
-                    Assert.NotNull(peerAsn);
-                }
-                catch
-                {
-                    // Should not fail unless connection issue or authentication issue.
-                }
-                finally
-                {
-                    // Delete the PeerAsn
-                    Assert.True(this.DeletePeerAsn(context, $"AS{asn}"));
+                    try
+                    {
+                        // Create the peerAsn
+                        var subId = this.CreatePeerAsn(asn, $"AS{asn}", isApproved: false);
+                        Assert.NotNull(subId);
+                        // Get the PeerAsn
+                        var peerAsn = this.Client.PeerAsns.Get($"AS{asn}");
+                        Assert.NotNull(peerAsn);
+                    }
+                    catch
+                    {
+                        // Should not fail unless connection issue or authentication issue.
+                    }
+                    finally
+                    {
+                        // Delete the PeerAsn
+                        Assert.True(this.DeletePeerAsn($"AS{asn}"));
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// The create direct peering.
+        /// </summary>
         [Fact]
         public void CreateDirectPeering()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-
+                this.MockClients(context);
                 //Create a Resource Group
-                this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
                 var rgname = TestUtilities.GenerateName("res");
-                var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
+                var resourceGroup = this.ResourcesClient.ResourceGroups.CreateOrUpdate(
                     rgname,
-                    new ResourceGroup
-                    {
-                        Location = "centralus"
-                    });
+                    new ResourceGroup { Location = "centralus" });
 
                 //Create Direct Peering
                 var directConnection = new DirectConnection
@@ -168,12 +204,16 @@ namespace Peering.Tests
                     }
                 };
 
-                //Create Asn 
+                // Create Asn 
                 int asn = 65003;
-                var subId = this.CreatePeerAsn(context, asn, $"AS{asn}", isApproved: true);
+                var subId = this.CreatePeerAsn(asn, $"AS{asn}", isApproved: true);
 
                 SubResource asnReference = new SubResource(subId);
-                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), false, asnReference, DirectPeeringType.Edge);
+                var directPeeringProperties = new PeeringPropertiesDirect(
+                    new List<DirectConnection>(),
+                    false,
+                    asnReference,
+                    DirectPeeringType.Edge);
                 directPeeringProperties.Connections.Add(directConnection);
                 var peeringModel = new PeeringModel
                 {
@@ -186,8 +226,8 @@ namespace Peering.Tests
                 var name = $"directpeering3103";
                 try
                 {
-                    var result = this.client.Peerings.CreateOrUpdate(rgname, name, peeringModel);
-                    var peering = this.client.Peerings.Get(rgname, name);
+                    var result = this.Client.Peerings.CreateOrUpdate(rgname, name, peeringModel);
+                    var peering = this.Client.Peerings.Get(rgname, name);
                     Assert.NotNull(peering);
                 }
                 catch (Exception ex)
@@ -196,48 +236,59 @@ namespace Peering.Tests
                 }
                 finally
                 {
-                    Assert.True(this.DeletePeering(context, name, rgname));
-                    Assert.True(this.DeletePeerAsn(context, $"AS{asn}"));
-                    //Assert.True(this.DeleteResourceGroup(context, rgname));
+                    Assert.True(this.DeletePeering(name, rgname));
+                    Assert.True(this.DeletePeerAsn($"AS{asn}"));
+
+                    // Assert.True(this.DeleteResourceGroup(context, rgname));
                 }
             }
         }
 
+        /// <summary>
+        /// The create peering service.
+        /// </summary>
         [Fact]
         public void CreatePeeringService()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-
-                //Create a Resource Group
-                this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
+                this.MockClients(context);
+                // Create a Resource Group
                 var rgname = TestUtilities.GenerateName("res");
-                var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
+                var resourceGroup = this.ResourcesClient.ResourceGroups.CreateOrUpdate(
                     rgname,
-                    new ResourceGroup
-                    {
-                        Location = "centralus"
-                    });
+                    new ResourceGroup { Location = "centralus" });
 
-                //List Locations
-                var peeringServiceLocations = this.client.PeeringServiceLocations.List().ToList();
+                // List Locations
+                var peeringServiceLocations = this.Client.PeeringServiceLocations.List().ToList();
                 Assert.NotNull(peeringServiceLocations);
 
-                var location = peeringServiceLocations.Find(s => s.Name == "New York");
+                var location = peeringServiceLocations.Find(s => s.Name == "Washington");
                 Assert.NotNull(location);
 
-                //List Providers
-                var listProviders = this.client.PeeringServiceProviders.List().ToList();
+                // List Providers
+                var listProviders = this.Client.PeeringServiceProviders.List().ToList();
                 Assert.NotNull(listProviders);
-                var myProvider = listProviders.Find(p => p.ServiceProviderName == "TestPeer1");
+                PeeringServiceProvider myProvider = null;
+                foreach (var provider in listProviders)
+                {
+                    var isAvailable =
+                        this.Client.CheckServiceProviderAvailability(
+                            location.State,
+                            provider.Name);
+                    if (isAvailable == "Available")
+                    {
+                        myProvider = provider;
+                        break;
+                    }
+                }
 
-                //Create Peering Service
+                // Create Peering Service
                 var peeringService = new PeeringService
                 {
                     Location = location.AzureRegion,
                     PeeringServiceLocation = location.Name,
-                    PeeringServiceProvider = myProvider.Name,
+                    PeeringServiceProvider = myProvider?.Name,
                 };
 
                 var name = TestUtilities.GenerateName("myPeeringService");
@@ -245,25 +296,26 @@ namespace Peering.Tests
 
                 try
                 {
-                    var result = this.client.PeeringServices.CreateOrUpdate(rgname, name, peeringService);
+                    var result = this.Client.PeeringServices.CreateOrUpdate(rgname, name, peeringService);
                     Assert.NotNull(result);
                     Assert.Equal(name, result.Name);
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(this.DeletePeeringService(context, name, rgname));
+                    Assert.True(this.DeletePeeringService(name, rgname));
                     Assert.Contains("NotFound", ex.Message);
                 }
+
                 try
                 {
-                    var prefix = "10.10.10.2";
+                    var prefix = new PeeringServicePrefix { Prefix = "10.10.10.0/24", PeeringServicePrefixKey = TestUtilities.GenerateGuid().ToString() };
 
-                    var peeringServicePrefix = this.client.Prefixes.CreateOrUpdate(rgname, name, prefixName, prefix);
+                    var peeringServicePrefix = this.Client.Prefixes.CreateOrUpdate(rgname, name, prefixName, prefix.Prefix, prefix.PeeringServicePrefixKey);
                     Assert.NotNull(peeringServicePrefix);
                     Assert.Equal(prefixName, peeringServicePrefix.Name);
 
-                    //var servicePrefix = this.client.PeeringServicePrefixes.Get(rgname, name, prefixName);
-                    //Assert.NotNull(servicePrefix);
+                    // var servicePrefix = this.client.PeeringServicePrefixes.Get(rgname, name, prefixName);
+                    // Assert.NotNull(servicePrefix);
                 }
                 catch (Exception ex)
                 {
@@ -276,57 +328,131 @@ namespace Peering.Tests
         }
 
         [Fact]
-        public void CreateExchangePeering()
+        public void GetOldPeerAsnContactDetails()
         {
-            using (var context = MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-
-                //Create a Resource Group
-                this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
-                var rgname = TestUtilities.GenerateName("res");
-                var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
-                    rgname,
-                    new ResourceGroup
-                    {
-                        Location = "centralus"
-                    });
-
-                //Create Asn
-                int asn = 65000;
-                var subId = this.CreatePeerAsn(context, asn, $"AS{asn}", isApproved: true);
-
-
-                //Create Exchange Peering
-                var exchangeConnection = new ExchangeConnection
+                this.MockClients(context, true);
+                var peerAsns = this.Client.PeerAsns.ListBySubscription();
+                foreach (var peerAsn in peerAsns)
                 {
-                    ConnectionIdentifier = Guid.NewGuid().ToString(),
-                    PeeringDBFacilityId = 99999,
-                    BgpSession = new Microsoft.Azure.Management.Peering.Models.BgpSession()
-                    {
-                        PeerSessionIPv4Address = $"10.12.97.{this.random.Next(150, 190)}",
-                        MaxPrefixesAdvertisedV4 = 20000
-                    }
-                };
-                SubResource asnReference = new SubResource(subId);
-                var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>(), asnReference);
-                exchangePeeringProperties.Connections.Add(exchangeConnection);
-                var peeringModel = new PeeringModel
-                {
-                    PeeringLocation = "Seattle",
-                    Sku = new PeeringSku("Basic_Exchange_Free"),
-                    Location = "centralus",
-                    Exchange = exchangePeeringProperties,
-                    Kind = "Exchange",
-                    Tags = new Dictionary<string, string> { { TestUtilities.GenerateName("tfs_"), "Active" } }
-                };
-                var name = $"exchangepeering1022";
+                    Assert.True(peerAsn.PeerContactDetail.Any());
+                }
+            }
+        }
+
+        /// <summary>
+        /// The create get list and delete registered prefix.
+        /// </summary>
+        [Fact]
+        public void CreateGetListAndDeleteRegisteredPrefix()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.MockClients(context);
+                PeeringModel peering = null;
+                var asn = int.Parse(TestUtilities.GenerateName("0"));
+                var prefixName = TestUtilities.GenerateName("_prefix");
                 try
                 {
-                    var result = this.client.Peerings.CreateOrUpdate(rgname, name, peeringModel);
-                    var peering = this.client.Peerings.Get(rgname, name);
-                    Assert.NotNull(peering);
-                    Assert.Equal(name, peering.Name);
+                    peering = this.CreateExchangePeeringModel(asn);
+                    var prefix = new PeeringRegisteredPrefix { Prefix = "10.10.0.0/24" };
+                    var resource = this.Client.RegisteredPrefixes.CreateOrUpdate(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{prefixName}",
+                        prefix.Prefix);
+                    Assert.Null(resource);
+                    resource = this.Client.RegisteredPrefixes.Get(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{prefixName}");
+                    Assert.Null(resource);
+                    var list = this.Client.RegisteredPrefixes.ListByPeering(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id));
+                    Assert.Null(list);
+                    this.Client.RegisteredPrefixes.Delete(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{prefixName}");
+                    resource = this.Client.RegisteredPrefixes.Get(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{prefixName}");
+                    Assert.Null(resource);
+                }
+                finally
+                {
+                    Assert.True(this.DeletePeering(peering.Name, this.GetResourceGroup(peering.Id)));
+                    Assert.True(this.DeletePeerAsn($"AS{asn}"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// The create get list and delete registered ans.
+        /// </summary>
+        [Fact]
+        public void CreateGetListAndDeleteRegisteredAns()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.MockClients(context);
+                PeeringModel peering = null;
+                var asn = int.Parse(MockServer.GetVariable("asnInteger", this.random.Next(1, 65000).ToString()));
+                var registeredAsnName = TestUtilities.GenerateName("_asn");
+                try
+                {
+                    peering = this.CreateExchangePeeringModel(asn);
+                    var registeredAsn = new PeeringRegisteredAsn { Asn = asn };
+                    var resource = this.Client.RegisteredAsns.CreateOrUpdate(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{registeredAsnName}",
+                        registeredAsn.Asn);
+                    Assert.Null(resource);
+                    resource = this.Client.RegisteredAsns.Get(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{registeredAsnName}");
+                    Assert.Null(resource);
+                    var list = this.Client.RegisteredAsns.ListByPeering(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id));
+                    Assert.Null(list);
+                    this.Client.RegisteredAsns.Delete(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{registeredAsnName}");
+                    resource = this.Client.RegisteredAsns.Get(
+                        this.GetResourceGroup(peering.Id),
+                        this.GetPeeringName(peering.Id),
+                        $"{peering.Name}{registeredAsnName}");
+                    Assert.Null(resource);
+                }
+                finally
+                {
+                    Assert.True(this.DeletePeering(peering.Name, this.GetResourceGroup(peering.Id)));
+                    Assert.True(this.DeletePeerAsn($"AS{asn}"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// The create exchange peering.
+        /// </summary>
+        [Fact]
+        public void CreateExchangePeering()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.MockClients(context);
+                PeeringModel peering = null;
+                var asn = int.Parse(TestUtilities.GenerateName("0"));
+                try
+                {
+                    peering = this.CreateExchangePeeringModel(asn);
                 }
                 catch (Exception ex)
                 {
@@ -334,10 +460,167 @@ namespace Peering.Tests
                 }
                 finally
                 {
-                    Assert.True(this.DeletePeering(context, name, rgname));
-                    Assert.True(this.DeletePeerAsn(context, $"AS{asn}"));
+                    Assert.True(this.DeletePeering(peering.Name, this.GetResourceGroup(peering.Id)));
+                    Assert.True(this.DeletePeerAsn($"AS{asn}"));
                 }
             }
+        }
+
+        /// <summary>
+        /// The setup.
+        /// </summary>
+        /// <param name="recordMockResults">
+        /// The is record.
+        /// </param>
+        internal void Setup(bool recordMockResults = false)
+        {
+            var mode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+            var connectionstring = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+
+            if (mode == null)
+            {
+                Environment.SetEnvironmentVariable("AZURE_TEST_MODE", recordMockResults ? "Record" : "Playback");
+            }
+
+            if (connectionstring == null && recordMockResults)
+            {
+                var path = Environment.GetFolderPath(
+                    Environment.SpecialFolder.MyDocuments,
+                    Environment.SpecialFolderOption.None);
+                if (path != string.Empty)
+                {
+                    // See the team notes under ibiza SDK update or search connectionString.txt
+                    path += @"\..\.azure\connectionString.txt";
+                    string connection = File.ReadAllText(path);
+                    Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connection);
+                }
+            }
+
+            var subscriptionId = Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION")?.Split(";")[0]
+                .Split("=")[1];
+            if (!string.IsNullOrEmpty(subscriptionId))
+            {
+                this.SubscriptionId = subscriptionId;
+                this.MockRegisterSubscription(subscriptionId);
+            }
+        }
+
+        /// <summary>
+        /// The mock register subscription.
+        /// </summary>
+        /// <param name="subscriptionId">
+        /// The subscription id.
+        /// </param>
+        internal void MockRegisterSubscription(string subscriptionId)
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.RegisterSubscription(subscriptionId);
+            }
+        }
+
+        /// <summary>
+        /// The mock clients.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <param name="isLocal">
+        /// The is Local.
+        /// </param>
+        internal void MockClients(MockContext context, bool isLocal = true)
+        {
+            if (this.Client == null)
+            {
+                this.Client = context.GetServiceClient<PeeringManagementClient>();
+                if (isLocal)
+                {
+                    this.Client.BaseUri = LocalEdgeRpUri;
+                }
+            }
+
+            if (this.ResourcesClient == null)
+            {
+                this.ResourcesClient = context.GetServiceClient<ResourceManagementClient>();
+            }
+        }
+
+        /// <summary>
+        /// The create resource group.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ResourceGroup"/>.
+        /// </returns>
+        private ResourceGroup CreateResourceGroup()
+        {
+            var rgname = TestUtilities.GenerateName("res");
+            var resourceGroup = this.ResourcesClient.ResourceGroups.CreateOrUpdate(
+                rgname,
+                new ResourceGroup { Location = "centralus" });
+            return resourceGroup;
+        }
+
+        /// <summary>
+        /// The create exchange peering.
+        /// </summary>
+        /// <param name="asn">
+        /// The asn.
+        /// </param>
+        /// <returns>
+        /// The <see cref="PeeringModel"/>.
+        /// </returns>
+        private PeeringModel CreateExchangePeeringModel(int asn = 65000)
+        {
+            // create resource group
+            var resourceGroup = this.CreateResourceGroup();
+
+            // Create Asn
+            var subId = this.CreatePeerAsn(asn, $"AS{asn}", isApproved: true);
+
+            // Create Exchange Peering
+            var ipAddress = int.Parse(MockServer.GetVariable("ipAddress", this.random.Next(150, 190).ToString()));
+            var exchangeConnection = new ExchangeConnection
+            {
+                ConnectionIdentifier = Guid.NewGuid().ToString(),
+                PeeringDBFacilityId = 99999,
+                BgpSession = new Microsoft.Azure.Management.Peering.Models.BgpSession()
+                {
+                    PeerSessionIPv4Address = $"10.12.97.{ipAddress}",
+                    MaxPrefixesAdvertisedV4 = 20000
+                }
+            };
+            SubResource asnReference = new SubResource(subId);
+            var exchangePeeringProperties = new PeeringPropertiesExchange(
+                new List<ExchangeConnection>(),
+                asnReference);
+            exchangePeeringProperties.Connections.Add(exchangeConnection);
+            var peeringModel = new PeeringModel
+            {
+                PeeringLocation = "Seattle",
+                Sku = new PeeringSku("Basic_Exchange_Free"),
+                Location = "centralus",
+                Exchange = exchangePeeringProperties,
+                Kind = "Exchange",
+                Tags = new Dictionary<string, string>
+                                                      {
+                                                          { TestUtilities.GenerateName("tfs_"), "Active" }
+                                                      }
+            };
+            var name = $"exchangepeering{asn}";
+            try
+            {
+                var result = this.Client.Peerings.CreateOrUpdate(resourceGroup.Name, name, peeringModel);
+                var peering = this.Client.Peerings.Get(resourceGroup.Name, name);
+                Assert.NotNull(peering);
+                Assert.Equal(name, peering.Name);
+                return peering;
+            }
+            catch (Exception ex)
+            {
+                Assert.Contains("NotFound", ex.Message);
+            }
+            return null;
         }
 
         private string CreateIpv4Address(bool useMaxSubNet = true)
@@ -347,170 +630,125 @@ namespace Peering.Tests
                 : $"{this.random.Next(1, 255)}.{this.random.Next(0, 255)}.{this.random.Next(0, 255)}.0/31";
         }
 
-        private void updatePeerAsn(MockContext context, int asn)
+        private void updatePeerAsn(int asn)
         {
-            string[] phone = { "9999999" };
-            string[] email = { $"noc{asn}@contoso.com" };
-            var contactInfo = new ContactInfo(email, phone);
-            var peerInfo = new PeerAsn(peerAsnProperty: asn, peerContactInfo: contactInfo, peerName: $"Contoso{asn}", validationState: "Approved");
+            string phone = "9999999";
+            string email = $"noc{asn}@contoso.com";
+            var contactInfo = new ContactDetail(Role.Noc, email, phone);
+            var peerInfo = new PeerAsn(peerAsnProperty: asn, peerContactDetail: new List<ContactDetail> { contactInfo }, peerName: $"Contoso{asn}", validationState: "Approved");
 
-            this.client = context.GetServiceClient<PeeringManagementClient>();
             try
             {
-                var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
-                var peerAsn = this.client.PeerAsns.Get(peerInfo.PeerName);
+                var result = this.Client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
+                var peerAsn = this.Client.PeerAsns.Get(peerInfo.PeerName);
                 Assert.NotNull(peerAsn);
             }
             catch (Exception exception)
             {
-                var peerAsn = this.client.PeerAsns.ListBySubscription();
+                var peerAsn = this.Client.PeerAsns.ListBySubscription();
                 Assert.NotNull(peerAsn);
                 Assert.NotNull(exception);
             }
         }
 
-        private string CreatePeerAsn(MockContext context, int asn = 99999, string name = "AS99999", string peerName = "Contoso", bool isApproved = false)
+        private string CreatePeerAsn(int asn = 99999, string name = "AS99999", string peerName = "Contoso", bool isApproved = false)
         {
             var peerAsn = new PeerAsn(name)
             {
                 PeerName = peerName,
                 PeerAsnProperty = asn,
-                PeerContactInfo = new ContactInfo
+                PeerContactDetail = new List<ContactDetail>
 
                 {
-                    Emails = new List<string> { "noc@contoso.net" },
-                    Phone = new List<string> { "8882668676" }
+                    new ContactDetail
+                        {
+                            Role = Role.Noc,
+                            Email = $"noc{asn}@contoso.com",
+                            Phone = "8888988888"
+                        }
                 },
                 ValidationState = isApproved ? ValidationState.Approved : ValidationState.Pending
             };
-            this.client = context.GetServiceClient<PeeringManagementClient>();
+
             try
             {
-                var _name = $"AS{asn}";
-                var result = this.client.PeerAsns.CreateOrUpdate(_name, peerAsn);
-                var _peerAsn = this.client.PeerAsns.Get(_name);
+                name = $"AS{asn}";
+                var result = this.Client.PeerAsns.CreateOrUpdate(name, peerAsn);
+                this.UpdatePeerValidationState(result, ValidationState.Approved);
+                var resultPeerAsn = this.Client.PeerAsns.Get(name);
                 if (isApproved)
                 {
                     Thread.Sleep(100);
-                    Assert.NotNull(_peerAsn);
-                    Assert.Equal(ValidationState.Approved, _peerAsn.ValidationState);
+                    Assert.NotNull(resultPeerAsn);
+                    Assert.Equal(ValidationState.Approved, resultPeerAsn.ValidationState);
                 }
-                Assert.NotNull(_peerAsn);
-                Assert.Equal(_name, _peerAsn.Name);
-                Assert.Equal(asn, _peerAsn.PeerAsnProperty);
-                Assert.Equal(peerName, _peerAsn.PeerName);
-                Assert.NotNull(_peerAsn.Id);
-                return _peerAsn.Id;
+                Assert.NotNull(resultPeerAsn);
+                Assert.Equal(name, resultPeerAsn.Name);
+                Assert.Equal(asn, resultPeerAsn.PeerAsnProperty);
+                Assert.Equal(peerName, resultPeerAsn.PeerName);
+                Assert.NotNull(resultPeerAsn.Id);
+                return resultPeerAsn.Id;
             }
             catch (Exception ex)
             {
                 Assert.Equal("NotFound", ex.Message);
             }
+
             return string.Empty;
         }
 
-        private bool DeletePeering(MockContext context, string name, string resourceGroupName)
+        /// <summary>
+        /// The delete peering.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="resourceGroupName">
+        /// The resource group name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private bool DeletePeering(string name, string resourceGroupName)
         {
-            this.client = context.GetServiceClient<PeeringManagementClient>();
+
             PeeringModel peer = null;
             try
             {
-                this.client.Peerings.Delete(resourceGroupName, name);
-                peer = this.client.Peerings.Get(resourceGroupName, name);
+                this.Client.Peerings.Delete(resourceGroupName, name);
+                peer = this.Client.Peerings.Get(resourceGroupName, name);
                 if (peer == null)
                 {
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return false;
             }
             catch (Exception ex)
             {
                 Assert.Null(peer);
                 Assert.NotNull(ex.Message);
+                Assert.True(this.DeleteResourceGroup(resourceGroupName));
                 return true;
             }
         }
 
-        private bool DeletePrefix(MockContext context, string prefixName, string peeringServiceName, string resourceGroupName)
+        /// <summary>
+        /// The delete resource group.
+        /// </summary>
+        /// <param name="resourceGroupName">
+        /// The resource group name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private bool DeleteResourceGroup(string resourceGroupName)
         {
-            this.client = context.GetServiceClient<PeeringManagementClient>();
-            PeeringServicePrefix service = null;
-            try
-            {
-                this.client.Prefixes.Delete(resourceGroupName, peeringServiceName, prefixName);
-                service = this.client.Prefixes.Get(resourceGroupName, peeringServiceName, prefixName);
-                if (service == null)
-                {
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Assert.Null(service);
-                Assert.NotNull(ex.Message);
-                return false;
-            }
-        }
-
-        private bool DeletePeeringService(MockContext context, string name, string resourceGroupName)
-        {
-            this.client = context.GetServiceClient<PeeringManagementClient>();
-            PeeringService service = null;
-            try
-            {
-                this.client.PeeringServices.Delete(resourceGroupName, name);
-                //service = this.client.PeeringServices.Get(resourceGroupName, name);
-                if (service == null)
-                {
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Assert.Null(service);
-                Assert.NotNull(ex.Message);
-                return false;
-            }
-        }
-
-        private bool DeletePeerAsn(MockContext context, string name)
-        {
-            this.client = context.GetServiceClient<PeeringManagementClient>();
-            PeerAsn peerAsn = null;
-            try
-            {
-                this.client.PeerAsns.Delete(name);
-                peerAsn = this.client.PeerAsns.Get(name);
-                if (peerAsn == null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.Null(peerAsn);
-                Assert.NotNull(ex.Message);
-                return true;
-            }
-        }
-
-        private bool DeleteResourceGroup(MockContext context, string name)
-        {
-            this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
             ResourceGroup resourceGroup = null;
             try
             {
-                //this.resourcesClient.ResourceGroups.Delete(name);
-                resourceGroup = this.resourcesClient.ResourceGroups.Get(name);
+                this.ResourcesClient.ResourceGroups.Delete(resourceGroupName);
+                resourceGroup = this.ResourcesClient.ResourceGroups.Get(resourceGroupName);
                 if (resourceGroup == null)
                 {
                     return true;
@@ -526,6 +764,320 @@ namespace Peering.Tests
                 Assert.NotNull(ex.Message);
                 return true;
             }
+        }
+
+        /// <summary>
+        /// The delete prefix.
+        /// </summary>
+        /// <param name="prefixName">
+        /// The prefix name.
+        /// </param>
+        /// <param name="peeringServiceName">
+        /// The peering service name.
+        /// </param>
+        /// <param name="resourceGroupName">
+        /// The resource group name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private bool DeletePrefix(string prefixName, string peeringServiceName, string resourceGroupName)
+        {
+
+            PeeringServicePrefix service = null;
+            try
+            {
+                this.Client.Prefixes.Delete(resourceGroupName, peeringServiceName, prefixName);
+                service = this.Client.Prefixes.Get(resourceGroupName, peeringServiceName, prefixName);
+                if (service == null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Assert.Null(service);
+                Assert.NotNull(ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// The delete peering service.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="resourceGroupName">
+        /// The resource group name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private bool DeletePeeringService(string name, string resourceGroupName)
+        {
+
+            PeeringService service = null;
+            try
+            {
+                this.Client.PeeringServices.Delete(resourceGroupName, name);
+                //service = this.client.PeeringServices.Get(resourceGroupName, name);
+                return service == null;
+            }
+            catch (Exception ex)
+            {
+                Assert.Null(service);
+                Assert.NotNull(ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// The delete peer asn.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        private bool DeletePeerAsn(string name)
+        {
+
+            PeerAsn peerAsn = null;
+            try
+            {
+                this.Client.PeerAsns.Delete(name);
+                peerAsn = this.Client.PeerAsns.Get(name);
+                return peerAsn == null;
+            }
+            catch (Exception ex)
+            {
+                Assert.Null(peerAsn);
+                Assert.NotNull(ex.Message);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// The delete resource group.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private bool DeleteResourceGroup(MockContext context, string name)
+        {
+            this.ResourcesClient = context.GetServiceClient<ResourceManagementClient>();
+            ResourceGroup resourceGroup = null;
+            try
+            {
+                resourceGroup = this.ResourcesClient.ResourceGroups.Get(name);
+                return resourceGroup == null;
+            }
+            catch (Exception ex)
+            {
+                Assert.Null(resourceGroup);
+                Assert.NotNull(ex.Message);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// The get client certificate.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="X509Certificate2"/>.
+        /// </returns>
+        private X509Certificate2 GetClientCertificate()
+        {
+            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly);
+            foreach (var storeCertificate in store.Certificates)
+            {
+                if (storeCertificate.Thumbprint != null)
+                {
+                    if (storeCertificate.Thumbprint.Equals(
+                        "ebd2bcdaedccaa360e7eb98ac128c7c1ceb34719", //"c189a71f9e6bde7d7c713531007048c22ac5c225", //"72765da05695c17975cfc755c9763eed81b7add7",
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        return storeCertificate;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// The register subscription.
+        /// </summary>
+        /// <param name="subscriptionId">
+        /// The subscription id.
+        /// </param>
+        private void RegisterSubscription(string subscriptionId)
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var cert = GetClientCertificate();
+                var url = new Uri($"{LocalEdgeRpUri}api/v1/subscriptions/{subscriptionId}?api-version=2.0");
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.Expect100Continue = true;
+                var request = (HttpWebRequest)WebRequest.Create(url);
+
+                request.Method = HttpMethod.Put.ToString();
+                request.ClientCertificates = new X509Certificate2Collection(cert);
+                request.ServerCertificateValidationCallback = (a, b, c, d) => true;
+                request.ContentLength = 0;
+                var postData = @"{
+                                'state': 'Registered',
+                                'registrationDate': '2019-03-01T23:57:05.644Z',
+                                'properties': {
+                                    'tenantId': 'string',
+                                    'locationPlacementId': 'string',
+                                    'quotaId': 'string',
+                                    'registeredFeatures': [
+                                        {
+                                        'name': 'Microsoft.Peering/AllowExchangePeering',
+                                        'state': 'Registered'
+                                        },
+                                        {
+                                        'name': 'Microsoft.Peering/AllowDirectPeering',
+                                        'state': 'Registered'
+                                        },
+                                        {
+                                        'name': 'Microsoft.Peering/AllowPeeringService',
+                                        'state': 'Registered'
+                                        }
+                                    ]
+                                }
+                            }";
+                var data = Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/json";
+                request.ContentLength = data.Length;
+                request.GetRequestStream().Write(data, 0, data.Length);
+
+                var responseString = string.Empty;
+
+                using (var response = request.GetResponse())
+                {
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        if (responseStream != null)
+                        {
+                            using (var sr = new StreamReader(responseStream, Encoding.UTF8))
+                            {
+                                responseString = sr.ReadToEnd();
+                                sr.Close();
+                            }
+                        }
+                    }
+                }
+
+                Assert.NotNull(responseString);
+            }
+        }
+
+        /// <summary>
+        /// The update peer validation state.
+        /// </summary>
+        /// <param name="peerAsn">
+        /// The peer asn.
+        /// </param>
+        /// <param name="asnValidationState">
+        /// The asn validation state.
+        /// </param>
+        /// <returns>
+        /// The <see cref="object"/>.
+        /// </returns>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed. Suppression is OK here.")]
+        private object UpdatePeerValidationState(PeerAsn peerAsn, string asnValidationState)
+        {
+            // Patch with correct approval
+            var url =
+                $"api/v1/subscriptions?subscriptionId={this.SubscriptionId}&peerAsnName={peerAsn.Name}&api-version={ApiVersionLatest}&validationState={asnValidationState}";
+            try
+            {
+                var response = this.Send(peerAsn, "PATCH", url);
+                return JsonConvert.DeserializeObject<PeerAsn>(response, this.Client.DeserializationSettings);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private string GetResourceGroup(string id)
+        {
+            return id.Split("/")[4];
+        }
+
+        private string GetPeeringName(string id)
+        {
+            return id.Split("/")[7];
+        }
+
+        /// <summary>
+        /// The send.
+        /// </summary>
+        /// <param name="t">
+        /// The t.
+        /// </param>
+        /// <param name="httpMethod">
+        /// The http method.
+        /// </param>
+        /// <param name="url">
+        /// The url.
+        /// </param>
+        /// <typeparam name="T">
+        /// </typeparam>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        private string Send<T>(T t, string httpMethod, string url)
+        {
+            var cert = this.GetClientCertificate();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.Expect100Continue = true;
+            var path = LocalEdgeRpUri + url;
+            var request = (HttpWebRequest)WebRequest.Create(path);
+
+            request.Method = httpMethod;
+            request.ClientCertificates = new X509Certificate2Collection(cert);
+            request.ServerCertificateValidationCallback = (a, b, c, d) => true;
+            request.ContentLength = 0;
+            var postData = JsonConvert.SerializeObject(t);
+            var data = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/json";
+            request.ContentLength = data.Length;
+            request.GetRequestStream().Write(data, 0, data.Length);
+
+            var responseString = string.Empty;
+
+            using (var response = request.GetResponse())
+            {
+                using (var responseStream = response.GetResponseStream())
+                {
+                    if (responseStream != null)
+                    {
+                        using (var sr = new StreamReader(responseStream, Encoding.UTF8))
+                        {
+                            responseString = sr.ReadToEnd();
+                            sr.Close();
+                        }
+                    }
+                }
+            }
+
+            return responseString;
         }
     }
 }

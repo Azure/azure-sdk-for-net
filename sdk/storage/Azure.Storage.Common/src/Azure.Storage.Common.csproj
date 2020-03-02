@@ -35,7 +35,6 @@
     <Compile Include="Shared\StorageResponseClassifier.cs" />
     <Compile Include="Shared\StorageSharedKeyCredentialInternals.cs" />
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
-    <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
   </ItemGroup>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// want to update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GalleryApplicationVersionUpdate : UpdateResource
+    public partial class GalleryApplicationVersionUpdate : UpdateResourceDefinition
     {
         /// <summary>
         /// Initializes a new instance of the GalleryApplicationVersionUpdate
@@ -37,14 +37,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the GalleryApplicationVersionUpdate
         /// class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">The current state of the gallery
         /// Application Version.</param>
-        public GalleryApplicationVersionUpdate(GalleryApplicationVersionPublishingProfile publishingProfile, IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
-            : base(tags, id, name, type)
+        public GalleryApplicationVersionUpdate(GalleryApplicationVersionPublishingProfile publishingProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
+            : base(id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;

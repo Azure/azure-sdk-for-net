@@ -12,8 +12,7 @@ using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -302,22 +301,56 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        /// <param name="retryPolicy"></param>
+        /// <param name="lockTokens"></param>
+        /// <param name="timeout"></param>
+        /// <param name="dispositionStatus"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="isSessionReceiver"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterDescription"></param>
+        /// <returns></returns>
+        internal virtual async Task DisposeMessageRequestResponseAsync(
+            Guid[] lockTokens,
+            TimeSpan timeout,
+            DispositionStatus dispositionStatus,
+            bool isSessionReceiver,
+            string sessionId = null,
+            string receiveLinkName = null,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null) =>
+            await InnerClient.DisposeMessageRequestResponseAsync(
+                lockTokens,
+                timeout,
+                dispositionStatus,
+                isSessionReceiver,
+                sessionId,
+                receiveLinkName,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterDescription).ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="timeout"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
         /// <param name="receiveLinkName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            ServiceBusRetryPolicy retryPolicy,
+        internal virtual async Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
+            TimeSpan timeout,
             long? fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
             string receiveLinkName = null,
             CancellationToken cancellationToken = default) =>
             await InnerClient.PeekAsync(
-                retryPolicy,
+                timeout,
                 fromSequenceNumber,
                 messageCount,
                 sessionId,
@@ -344,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Cancels a message that was scheduled.
         /// </summary>
-        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="retryPolicy"></param>
         /// <param name="sendLinkName"></param>
         /// <param name="cancellationToken"></param>

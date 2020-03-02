@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Extensions.Configuration.Secrets;
-using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
 #pragma warning disable AZC0001 // Extension methods have to be in the correct namespace to appear in intellisense.
@@ -29,19 +28,6 @@ namespace Microsoft.Extensions.Configuration
             TokenCredential credential)
         {
             return AddAzureKeyVault(configurationBuilder, vaultUri, credential, KeyVaultSecretManager.Instance);
-        }
-
-        /// <summary>
-        /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
-        /// </summary>
-        /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
-        /// <param name="vaultUri">Azure Key Vault uri.</param>
-        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        public static IConfigurationBuilder AddAzureKeyVault(
-            this IConfigurationBuilder configurationBuilder,
-            Uri vaultUri)
-        {
-            return AddAzureKeyVault(configurationBuilder, vaultUri, new DefaultAzureCredential());
         }
 
         /// <summary>
