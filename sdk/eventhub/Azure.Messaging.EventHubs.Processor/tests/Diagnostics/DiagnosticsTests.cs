@@ -82,6 +82,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", fullyQualifiedNamespace, eventHubName, Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
+            var enqueuedTime = DateTimeOffset.UtcNow;
 
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -99,8 +100,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     {
                         var context = new MockPartitionContext(partitionId);
 
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id" } } });
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id2" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id2" } } });
 
                         while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
                         {
@@ -160,7 +161,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             {
                 new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
-                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace)
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace),
+                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeSeconds().ToString())
             };
 
             foreach (var scope in listener.Scopes)
