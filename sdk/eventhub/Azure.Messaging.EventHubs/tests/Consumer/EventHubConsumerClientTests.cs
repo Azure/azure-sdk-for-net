@@ -2320,7 +2320,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Delay execution in this path to prevent a tight loop, starving other Tasks.
 
-                    await Task.Delay(100);
+                    await Task.Delay(100).ConfigureAwait(false);
 
                     return Enumerable.Empty<EventData>();
                 }
