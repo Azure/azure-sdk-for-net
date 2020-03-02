@@ -123,7 +123,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
                 this.CreateOrUpdateTagsTest(resourceScope, context);
             }
         }
@@ -137,7 +137,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d";
+                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
                 this.CreateOrUpdateTagsTest(subscriptionScope, context);
             }
         }
@@ -207,7 +207,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
                 this.UpdateTagsTest(resourceScope, context);
             }
         }
@@ -221,7 +221,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d";
+                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
                 this.UpdateTagsTest(subscriptionScope, context);
             }
         }
@@ -260,7 +260,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
                 this.GetTagsTest(resourceScope, context);
             }
         }
@@ -274,7 +274,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d";
+                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
                 this.GetTagsTest(subscriptionScope, context);
             }
         }
@@ -314,7 +314,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for tracked resources
-                string resourceScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
+                string resourceScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a/resourcegroups/TagsApiSDK/providers/Microsoft.Compute/virtualMachines/TagTestVM";
                 this.DeleteTagsTest(resourceScope, context).Properties.TagsProperty.Should().BeEmpty();
             }
         }
@@ -328,7 +328,7 @@ namespace ResourceGroups.Tests
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // test tags for subscription
-                string subscriptionScope = "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d";
+                string subscriptionScope = "/subscriptions/afe8f803-7190-48e3-b41a-bc454e8aad1a";
                 this.DeleteTagsTest(subscriptionScope, context).Properties.TagsProperty.Should().BeNull();
             }            
         }

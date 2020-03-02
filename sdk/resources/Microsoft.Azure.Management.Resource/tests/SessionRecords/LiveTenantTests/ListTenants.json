@@ -1,69 +1,68 @@
 {
   "Entries": [
     {
-      "RequestUri": "/tenants?api-version=2016-06-01",
-      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestUri": "/tenants?api-version=2019-11-01",
+      "EncodedRequestUri": "L3RlbmFudHM/YXBpLXZlcnNpb249MjAxOS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "937a972d-0682-4b91-95d1-fea98157a1a2"
+          "8fa9773b-956b-4b28-82ac-89021b510e4e"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/1.7.0.0"
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n      \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Thu, 07 Jun 2018 01:07:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "11999"
         ],
         "x-ms-request-id": [
-          "54ce6e7c-41a4-4893-82a5-2f978159fb42"
+          "240598cb-8194-4bda-9979-4d7c40323354"
         ],
         "x-ms-correlation-request-id": [
-          "54ce6e7c-41a4-4893-82a5-2f978159fb42"
+          "240598cb-8194-4bda-9979-4d7c40323354"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180607T010749Z:54ce6e7c-41a4-4893-82a5-2f978159fb42"
+          "WESTUS:20200211T184738Z:240598cb-8194-4bda-9979-4d7c40323354"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 18:47:37 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "140"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/tenants/fdf584f5-e031-4669-88e3-118b47b5eba0\",\r\n      \"tenantId\": \"fdf584f5-e031-4669-88e3-118b47b5eba0\",\r\n      \"tenantCategory\": \"Home\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
+    "SubscriptionId": "afe8f803-7190-48e3-b41a-bc454e8aad1a"
   }
 }

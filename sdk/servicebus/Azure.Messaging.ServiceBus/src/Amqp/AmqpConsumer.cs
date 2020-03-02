@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -72,6 +73,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly AmqpConnectionScope _connectionScope;
 
         /// <summary>
+        ///   The AMQP link intended for use with management operations.
+        /// </summary>
+        ///
+        private FaultTolerantAmqpObject<RequestResponseAmqpLink> ManagementLink { get; }
+
+        /// <summary>
         ///   The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         ///
@@ -132,6 +139,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 link =>
                 {
                     CloseLink(link);
+                });
+
+            ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
+                timeout => _connectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
                 });
         }
 
@@ -324,6 +339,130 @@ namespace Azure.Messaging.ServiceBus.Amqp
         internal List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
         {
             return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
+        }
+
+        /// <summary>
+        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
+        /// </summary>
+        ///
+        /// <returns>New lock token expiry date and time in UTC format.</returns>
+        ///
+        /// <param name="lockToken">Lock token associated with the message.</param>
+        /// <param name="timeout"></param>
+        public override async Task<DateTime> RenewLockAsync(
+            string lockToken,
+            TimeSpan timeout)
+        {
+            DateTime lockedUntilUtc = DateTime.MinValue;
+            try
+            {
+                // Create an AmqpRequest Message to renew  lock
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewLockOperation, timeout, null);
+
+                if (ReceiveLink.TryGetOpenedObject(out var receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+                amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new[] { new Guid(lockToken) };
+
+                var amqpResponseMessage = await ExecuteRequestResponseAsync(
+                    amqpRequestMessage,
+                    timeout).ConfigureAwait(false);
+
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    var lockedUntilUtcTimes = amqpResponseMessage.GetValue<IEnumerable<DateTime>>(ManagementConstants.Properties.Expirations);
+                    lockedUntilUtc = lockedUntilUtcTimes.First();
+                }
+                else
+                {
+                    // throw amqpResponseMessage.ToMessagingContractException();
+                }
+            }
+            catch (Exception exception)
+            {
+                // TODO: throw AmqpExceptionHelper.GetClientException(exception);
+                throw exception;
+            }
+
+            return lockedUntilUtc;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        ///
+        /// <returns>New lock token expiry date and time in UTC format.</returns>
+        ///
+        /// <param name="sessionId"></param>
+        /// <param name="timeout"></param>
+        public override async Task<DateTime> RenewSessionLockAsync(
+            string sessionId,
+            TimeSpan timeout)
+        {
+            DateTime lockedUntilUtc = DateTime.MinValue;
+            try
+            {
+                // Create an AmqpRequest Message to renew  lock
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, timeout, null);
+
+                if (ReceiveLink.TryGetOpenedObject(out var receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+
+                var amqpResponseMessage = await ExecuteRequestResponseAsync(
+                    amqpRequestMessage,
+                    timeout).ConfigureAwait(false);
+
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    lockedUntilUtc = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+                }
+                else
+                {
+                    // TODO: throw amqpResponseMessage.ToMessagingContractException();
+                }
+            }
+            catch (Exception exception)
+            {
+                // TODO: throw AmqpExceptionHelper.GetClientException(exception);
+                throw exception;
+            }
+
+            return lockedUntilUtc;
+        }
+
+        internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(
+            AmqpRequestMessage amqpRequestMessage,
+            TimeSpan timeout)
+        {
+            var amqpMessage = amqpRequestMessage.AmqpMessage;
+            if (_isSessionReceiver)
+            {
+                // TODO: this.ThrowIfSessionLockLost();
+            }
+
+            ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+            var ambientTransaction = Transaction.Current;
+            //if (ambientTransaction != null)
+            //{
+            //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, this.ServiceBusConnection).ConfigureAwait(false);
+            //}
+
+            if (!ManagementLink.TryGetOpenedObject(out var requestResponseAmqpLink))
+            {
+                requestResponseAmqpLink = await ManagementLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            }
+
+            var responseAmqpMessage = await Task.Factory.FromAsync(
+                (c, s) => requestResponseAmqpLink.BeginRequest(amqpMessage, transactionId, timeout, c, s),
+                (a) => requestResponseAmqpLink.EndRequest(a),
+                this).ConfigureAwait(false);
+
+            return AmqpResponseMessage.CreateResponse(responseAmqpMessage);
         }
 
         /// <summary>
