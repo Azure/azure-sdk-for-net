@@ -15,24 +15,26 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// The email actions for auto quota increase.
+    /// </summary>
+    public partial class OnFailureEmailActions
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the OnFailureEmailActions class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public OnFailureEmailActions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the OnFailureEmailActions class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="value">The list of email actions.</param>
+        public OnFailureEmailActions(IList<EmailAction> value = default(IList<EmailAction>))
         {
-            Scopes = scopes;
+            Value = value;
             CustomInit();
         }
 
@@ -42,9 +44,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the list of email actions.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<EmailAction> Value { get; set; }
 
     }
 }
