@@ -29,10 +29,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeeringSku class.
         /// </summary>
-        /// <param name="name">The name of the peering SKU. Possible values
-        /// include: 'Basic_Exchange_Free', 'Basic_Direct_Free',
-        /// 'Premium_Direct_Free', 'Premium_Exchange_Metered',
-        /// 'Premium_Direct_Metered', 'Premium_Direct_Unlimited'</param>
+        /// <param name="name">The name of the peering SKU.</param>
         /// <param name="tier">The tier of the peering SKU. Possible values
         /// include: 'Basic', 'Premium'</param>
         /// <param name="family">The family of the peering SKU. Possible values
@@ -54,10 +51,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the peering SKU. Possible values include:
-        /// 'Basic_Exchange_Free', 'Basic_Direct_Free', 'Premium_Direct_Free',
-        /// 'Premium_Exchange_Metered', 'Premium_Direct_Metered',
-        /// 'Premium_Direct_Unlimited'
+        /// Gets or sets the name of the peering SKU.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

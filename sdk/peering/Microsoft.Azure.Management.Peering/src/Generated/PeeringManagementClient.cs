@@ -97,9 +97,24 @@ namespace Microsoft.Azure.Management.Peering
         public virtual IPeeringLocationsOperations PeeringLocations { get; private set; }
 
         /// <summary>
+        /// Gets the IRegisteredAsnsOperations.
+        /// </summary>
+        public virtual IRegisteredAsnsOperations RegisteredAsns { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegisteredPrefixesOperations.
+        /// </summary>
+        public virtual IRegisteredPrefixesOperations RegisteredPrefixes { get; private set; }
+
+        /// <summary>
         /// Gets the IPeeringsOperations.
         /// </summary>
         public virtual IPeeringsOperations Peerings { get; private set; }
+
+        /// <summary>
+        /// Gets the IPeeringServiceCountriesOperations.
+        /// </summary>
+        public virtual IPeeringServiceCountriesOperations PeeringServiceCountries { get; private set; }
 
         /// <summary>
         /// Gets the IPeeringServiceLocationsOperations.
@@ -366,13 +381,16 @@ namespace Microsoft.Azure.Management.Peering
             Operations = new Operations(this);
             PeerAsns = new PeerAsnsOperations(this);
             PeeringLocations = new PeeringLocationsOperations(this);
+            RegisteredAsns = new RegisteredAsnsOperations(this);
+            RegisteredPrefixes = new RegisteredPrefixesOperations(this);
             Peerings = new PeeringsOperations(this);
+            PeeringServiceCountries = new PeeringServiceCountriesOperations(this);
             PeeringServiceLocations = new PeeringServiceLocationsOperations(this);
             Prefixes = new PrefixesOperations(this);
             PeeringServiceProviders = new PeeringServiceProvidersOperations(this);
             PeeringServices = new PeeringServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-01-preview";
+            ApiVersion = "2020-01-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -411,10 +429,10 @@ namespace Microsoft.Azure.Management.Peering
         /// customer's location
         /// </summary>
         /// <param name='peeringServiceLocation'>
-        /// Gets or sets the PeeringServiceLocation
+        /// Gets or sets the peering service location.
         /// </param>
         /// <param name='peeringServiceProvider'>
-        /// Gets or sets the PeeringServiceProvider
+        /// Gets or sets the peering service provider.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

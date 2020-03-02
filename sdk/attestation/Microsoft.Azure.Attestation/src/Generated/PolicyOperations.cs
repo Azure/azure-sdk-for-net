@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Attestation
         /// <param name='tee'>
         /// Specifies the trusted execution environment to be used to validate the
         /// evidence. Possible values include: 'SgxEnclave', 'OpenEnclave',
-        /// 'CyResComponent', 'AzureGuest'
+        /// 'CyResComponent', 'VSMEnclave'
         /// </param>
         /// <param name='policyJws'>
         /// JSON Web Signature (See RFC7515) expressing the new policy
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Attestation
         /// <param name='tee'>
         /// Specifies the trusted execution environment to be used to validate the
         /// evidence. Possible values include: 'SgxEnclave', 'OpenEnclave',
-        /// 'CyResComponent', 'AzureGuest'
+        /// 'CyResComponent', 'VSMEnclave'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Attestation
         /// <param name='tee'>
         /// Specifies the trusted execution environment to be used to validate the
         /// evidence. Possible values include: 'SgxEnclave', 'OpenEnclave',
-        /// 'CyResComponent', 'AzureGuest'
+        /// 'CyResComponent', 'VSMEnclave'
         /// </param>
         /// <param name='newAttestationPolicy'>
         /// JWT Expressing the new policy
@@ -755,7 +755,7 @@ namespace Microsoft.Azure.Attestation
         /// <param name='tee'>
         /// Specifies the trusted execution environment to be used to validate the
         /// evidence. Possible values include: 'SgxEnclave', 'OpenEnclave',
-        /// 'CyResComponent', 'AzureGuest'
+        /// 'CyResComponent', 'VSMEnclave'
         /// </param>
         /// <param name='policyJws'>
         /// JSON Web Signature with an empty policy document

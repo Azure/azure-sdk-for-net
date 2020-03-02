@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='creationParams'>
             /// Client supplied parameters.
             /// </param>
-            public static AttestationProvider Create(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName, AttestationServiceCreationParams creationParams = default(AttestationServiceCreationParams))
+            public static AttestationProvider Create(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName, AttestationServiceCreationParams creationParams)
             {
                 return operations.CreateAsync(resourceGroupName, providerName, creationParams).GetAwaiter().GetResult();
             }
@@ -99,9 +99,55 @@ namespace Microsoft.Azure.Management.Attestation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AttestationProvider> CreateAsync(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName, AttestationServiceCreationParams creationParams = default(AttestationServiceCreationParams), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AttestationProvider> CreateAsync(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName, AttestationServiceCreationParams creationParams, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, providerName, creationParams, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the Attestation Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='providerName'>
+            /// Name of the attestation service
+            /// </param>
+            /// <param name='updateParams'>
+            /// Client supplied parameters.
+            /// </param>
+            public static AttestationProvider Update(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName, AttestationServicePatchParams updateParams)
+            {
+                return operations.UpdateAsync(resourceGroupName, providerName, updateParams).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the Attestation Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='providerName'>
+            /// Name of the attestation service
+            /// </param>
+            /// <param name='updateParams'>
+            /// Client supplied parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AttestationProvider> UpdateAsync(this IAttestationProvidersOperations operations, string resourceGroupName, string providerName, AttestationServicePatchParams updateParams, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, providerName, updateParams, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

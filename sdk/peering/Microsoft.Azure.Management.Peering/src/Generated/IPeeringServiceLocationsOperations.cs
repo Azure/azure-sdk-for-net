@@ -24,9 +24,11 @@ namespace Microsoft.Azure.Management.Peering
     public partial interface IPeeringServiceLocationsOperations
     {
         /// <summary>
-        /// Lists all of the available peering service locations for the
-        /// specified kind of peering.
+        /// Lists all of the available locations for peering service.
         /// </summary>
+        /// <param name='country'>
+        /// The country of interest, in which the locations are to be present.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -42,10 +44,9 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringServiceLocation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringServiceLocation>>> ListWithHttpMessagesAsync(string country = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the available peering service locations for the
-        /// specified kind of peering.
+        /// Lists all of the available locations for peering service.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

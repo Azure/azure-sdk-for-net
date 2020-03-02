@@ -94,9 +94,24 @@ namespace Microsoft.Azure.Management.Peering
         IPeeringLocationsOperations PeeringLocations { get; }
 
         /// <summary>
+        /// Gets the IRegisteredAsnsOperations.
+        /// </summary>
+        IRegisteredAsnsOperations RegisteredAsns { get; }
+
+        /// <summary>
+        /// Gets the IRegisteredPrefixesOperations.
+        /// </summary>
+        IRegisteredPrefixesOperations RegisteredPrefixes { get; }
+
+        /// <summary>
         /// Gets the IPeeringsOperations.
         /// </summary>
         IPeeringsOperations Peerings { get; }
+
+        /// <summary>
+        /// Gets the IPeeringServiceCountriesOperations.
+        /// </summary>
+        IPeeringServiceCountriesOperations PeeringServiceCountries { get; }
 
         /// <summary>
         /// Gets the IPeeringServiceLocationsOperations.
@@ -123,10 +138,10 @@ namespace Microsoft.Azure.Management.Peering
         /// of customer's location
         /// </summary>
         /// <param name='peeringServiceLocation'>
-        /// Gets or sets the PeeringServiceLocation
+        /// Gets or sets the peering service location.
         /// </param>
         /// <param name='peeringServiceProvider'>
-        /// Gets or sets the PeeringServiceProvider
+        /// Gets or sets the peering service provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

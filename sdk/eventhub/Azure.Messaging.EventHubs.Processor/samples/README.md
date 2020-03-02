@@ -33,31 +33,31 @@ To quickly create the needed resources in Azure and to receive connection string
 
 ## Available samples
 
-- [Hello world](./Sample01_HelloWorld.cs)  
+- [Hello world](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample01_HelloWorld.cs)  
   An introduction to the Event Processor client, illustrating how to create the client and perform basic operations.
   
-- [Create an Event Processor client with custom options](./Sample02_ProcessorWithCustomOptions.cs)  
+- [Create an Event Processor client with custom options](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample02_ProcessorWithCustomOptions.cs)  
   An introduction to the Event Processor client, exploring additional options for creating the processor.
 
-- [Perform basic event processing](./Sample03_BasicEventProcessing.cs)  
+- [Perform basic event processing](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_BasicEventProcessing.cs)  
   An introduction to the Event Processor client, illustrating how to perform basic event processing.
 
-- [Create checkpoints to track processing state](./Sample04_BasicCheckpointing.cs)  
+- [Create checkpoints to track processing state](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_BasicCheckpointing.cs)  
   An introduction to the Event Processor client, illustrating how to create simple checkpoints.
   
-- [Initialize an Event Hub partition for processing by a specific Event Processor client](./Sample05_InitializeAPartition.cs)  
+- [Initialize an Event Hub partition for processing by a specific Event Processor client](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample05_InitializeAPartition.cs)  
   An introduction to the Event Processor client, illustrating how to participate in initialization for a partition.
 
-- [Track when an Event Hub partition will no longer be processed by a specific Event Processor client](./Sample06_TrackWhenAPartitionIsClosed.cs)  
+- [Track when an Event Hub partition will no longer be processed by a specific Event Processor client](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample06_TrackWhenAPartitionIsClosed.cs)  
   An introduction to the Event Processor client, illustrating how to track when processing stops for a partition.
   
-- [Manage the Event Processor when an error is encountered](./Sample07_RestartProcessingOnError.cs)  
+- [Manage the Event Processor when an error is encountered](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample07_RestartProcessingOnError.cs)  
   An example of stopping and restarting the Event Processor client when a specific error is encountered.
 
-- [Send a heartbeat for health monitoring while processing events](./Sample08_EventProcessingHeartbeat.cs)  
+- [Send a heartbeat for health monitoring while processing events](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_EventProcessingHeartbeat.cs)  
   An example of ensuring that the handler for processing events is invoked on a fixed interval when no events are available.
 
-- [Process events in batches](./Sample09_ProcessEventsByBatch.cs)  
+- [Process events in batches](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample09_ProcessEventsByBatch.cs)  
   An example of grouping events into batches for downstream processing.
   
 ## Contributing  

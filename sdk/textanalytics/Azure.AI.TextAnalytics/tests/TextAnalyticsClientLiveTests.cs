@@ -587,7 +587,7 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (CategorizedEntity entity in entities)
             {
                 if (entity.Text == "last week")
-                    Assert.IsTrue(entity.SubCategory != EntitySubCategory.None);
+                    Assert.AreEqual("DateRange", entity.SubCategory);
             }
         }
 
@@ -1013,7 +1013,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeEntitiesCategoriesSubCategories()
+        public async Task RecognizeEntitiesCategories()
         {
             TextAnalyticsClient client = GetClient();
             const string input = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C";
@@ -1024,49 +1024,34 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(15, entities.Count);
 
             Assert.AreEqual(EntityCategory.Person, entities[0].Category);
-            Assert.AreEqual(EntitySubCategory.None, entities[0].SubCategory);
 
             Assert.AreEqual(EntityCategory.Organization, entities[1].Category);
-            Assert.AreEqual(EntitySubCategory.None, entities[1].SubCategory);
 
             Assert.AreEqual(EntityCategory.Location, entities[2].Category);
-            Assert.AreEqual(EntitySubCategory.GPE, entities[2].SubCategory);
 
             Assert.AreEqual(EntityCategory.PhoneNumber, entities[3].Category);
-            Assert.AreEqual(EntitySubCategory.None, entities[3].SubCategory);
 
             Assert.AreEqual(EntityCategory.Email, entities[4].Category);
-            Assert.AreEqual(EntitySubCategory.None, entities[4].SubCategory);
 
             Assert.AreEqual(EntityCategory.DateTime, entities[5].Category);
-            Assert.AreEqual(EntitySubCategory.None, entities[5].SubCategory);
 
             Assert.AreEqual(EntityCategory.DateTime, entities[6].Category);
-            Assert.AreEqual(EntitySubCategory.Date, entities[6].SubCategory);
 
             Assert.AreEqual(EntityCategory.DateTime, entities[7].Category);
-            Assert.AreEqual(EntitySubCategory.Time, entities[7].SubCategory);
 
             Assert.AreEqual(EntityCategory.DateTime, entities[8].Category);
-            Assert.AreEqual(EntitySubCategory.Duration, entities[8].SubCategory);
 
             Assert.AreEqual(EntityCategory.Quantity, entities[9].Category);
-            Assert.AreEqual(EntitySubCategory.Number, entities[9].SubCategory);
 
             Assert.AreEqual(EntityCategory.Quantity, entities[10].Category);
-            Assert.AreEqual(EntitySubCategory.Ordinal, entities[10].SubCategory);
 
             Assert.AreEqual(EntityCategory.Quantity, entities[11].Category);
-            Assert.AreEqual(EntitySubCategory.Percentage, entities[11].SubCategory);
 
             Assert.AreEqual(EntityCategory.Quantity, entities[12].Category);
-            Assert.AreEqual(EntitySubCategory.Currency, entities[12].SubCategory);
 
             Assert.AreEqual(EntityCategory.Quantity, entities[13].Category);
-            Assert.AreEqual(EntitySubCategory.Dimension, entities[13].SubCategory);
 
             Assert.AreEqual(EntityCategory.Quantity, entities[14].Category);
-            Assert.AreEqual(EntitySubCategory.Temperature, entities[14].SubCategory);
         }
 
         [Test]

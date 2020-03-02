@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Peering
         /// </param>
         /// <param name='directPeeringType'>
         /// The type of direct peering. Possible values include: 'Edge',
-        /// 'Transit', 'Cdn', 'Internal'
+        /// 'Transit', 'Cdn', 'Internal', 'Ix', 'IxRs'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

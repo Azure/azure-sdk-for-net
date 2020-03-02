@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -39,9 +40,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="copyBehavior">The type of copy behavior for copy
         /// sink.</param>
-        public AzureDataLakeStoreWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object))
+        /// <param name="expiryDateTime">Specifies the expiry time of the
+        /// written files. The time is applied to the UTC time zone in the
+        /// format of "2018-12-01T05:00:00Z". Default value is NULL. Type:
+        /// integer (or Expression with resultType integer).</param>
+        public AzureDataLakeStoreWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object expiryDateTime = default(object))
             : base(additionalProperties, maxConcurrentConnections, copyBehavior)
         {
+            ExpiryDateTime = expiryDateTime;
             CustomInit();
         }
 
@@ -49,6 +55,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets specifies the expiry time of the written files. The
+        /// time is applied to the UTC time zone in the format of
+        /// "2018-12-01T05:00:00Z". Default value is NULL. Type: integer (or
+        /// Expression with resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "expiryDateTime")]
+        public object ExpiryDateTime { get; set; }
 
     }
 }

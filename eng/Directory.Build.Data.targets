@@ -19,7 +19,26 @@
       <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
       <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
       <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="'@(ExtractedReleaseNotes)' != ''">@(ExtractedReleaseNotes->'%(Identity)', '%0a')%0a%0a$(PackageReleaseNotes)</PackageReleaseNotes>
     </PropertyGroup>
+  </Target>
+
+  <!--Extract release notes for the current version being built -->
+  <Target Name="GetCurrentReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(SkipDevBuildNumber)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+    <PropertyGroup>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
+      <PowerShellExe Condition="!Exists('$(PowerShellExe)')">pwsh</PowerShellExe>
+      <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)/common/Extract-ReleaseNotes.ps1</GetReleaseNotesScriptPath>
+      <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
+    </PropertyGroup>
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(GetReleaseNotesScriptPath) $(ChangeLogPath) $(Version)">
+      <Output TaskParameter="ConsoleOutput" ItemName="ExtractedReleaseNotesTemp" />
+      <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
+    </Exec>
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="Release Notes for the specified version was not found. @(ExtractedReleaseNotesTemp)" />
+    <ItemGroup>
+      <ExtractedReleaseNotes Condition="'$(SetReleaseNotesErrorCode)'=='0'" Include="@(ExtractedReleaseNotesTemp)" />
+    </ItemGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows

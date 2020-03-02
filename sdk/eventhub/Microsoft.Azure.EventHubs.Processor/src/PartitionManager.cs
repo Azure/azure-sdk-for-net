@@ -535,9 +535,42 @@ namespace Microsoft.Azure.EventHubs.Processor
             {
                 if (!capturedPump.IsClosing)
                 {
-                    await capturedPump.CloseAsync(reason).ConfigureAwait(false);
+                    // Don't block on close call more than renew interval if close reason is lease-lost.
+                    // Otherwise we can block indefinetely.
+                    var closeTask = capturedPump.CloseAsync(reason);
+                    if (reason == CloseReason.LeaseLost)
+                    {
+                        await this.WaitTaskTimeoutAsync(closeTask, this.host.LeaseManager.LeaseRenewInterval).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await closeTask.ConfigureAwait(false);
+                    }
                 }
                 // else, pump is already closing/closed, don't need to try to shut it down again
+            }
+        }
+
+        /// <summary>
+        /// Awaits given task up to provided wait time.
+        /// Throws OperationCanceledException when wait time is exhausted.
+        /// </summary>
+        async Task WaitTaskTimeoutAsync(Task task, TimeSpan waitTime)
+        {
+            using (var cts = new CancellationTokenSource())
+            {
+                var timeoutTask = Task.Delay(waitTime, cts.Token);
+                var completedTask = await Task.WhenAny(task, timeoutTask).ConfigureAwait(false);
+
+                if (completedTask == task)
+                {
+                    cts.Cancel();
+                }
+                else
+                {
+                    // Throw OperationCanceledException, caller will log the failures appropriately.
+                    throw new OperationCanceledException();
+                }
             }
         }
 
