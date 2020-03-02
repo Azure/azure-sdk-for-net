@@ -165,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             foreach (var scope in listener.Scopes)
             {
-                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags));
+                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
             }
         }
 
