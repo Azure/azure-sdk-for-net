@@ -126,7 +126,10 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options"></param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential, ServiceBusClientOptions options)
         {
-            Connection = new ServiceBusConnection(fullyQualifiedNamespace, credential, options);
+            Connection = new ServiceBusConnection(
+                fullyQualifiedNamespace,
+                credential,
+                options);
         }
 
         /// <summary>
@@ -136,7 +139,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusSender GetSender(string entityName)
         {
-            ValidateEntityName(entityName);
             return new ServiceBusSender(
                 Connection,
                 new ServiceBusSenderOptions(),
@@ -159,7 +161,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusSender GetSender(string entityName, ServiceBusSenderOptions options)
         {
-            ValidateEntityName(entityName);
             return new ServiceBusSender(
                 Connection,
                 options,
@@ -187,7 +188,6 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetReceiver(string queueName, ServiceBusReceiverOptions options)
         {
-            ValidateEntityName(queueName);
             return ServiceBusReceiver.CreateReceiver(
                 queueName,
                 Connection,
@@ -286,12 +286,12 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             ServiceBusReceiverOptions options = default,
             CancellationToken cancellationToken = default) =>
-                await ServiceBusReceiver.CreateSessionReceiverAsync(
-                    queueName,
-                    Connection,
-                    sessionId,
-                    options,
-                    cancellationToken).ConfigureAwait(false);
+            await ServiceBusReceiver.CreateSessionReceiverAsync(
+                queueName,
+                Connection,
+                sessionId,
+                options,
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -302,19 +302,14 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string sessionId = default,
             ServiceBusReceiverOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            var receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
+            CancellationToken cancellationToken = default) =>
+            await ServiceBusReceiver.CreateSessionReceiverAsync(
                 EntityNameFormatter.FormatSubscriptionPath(
                     topicName,
                     subscriptionName),
-                 Connection,
-                 sessionId,
-                 options,
-                 cancellationToken).ConfigureAwait(false);
-
-            await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
-            return receiver;
-        }
+                Connection,
+                sessionId,
+                options,
+                cancellationToken).ConfigureAwait(false);
     }
 }
