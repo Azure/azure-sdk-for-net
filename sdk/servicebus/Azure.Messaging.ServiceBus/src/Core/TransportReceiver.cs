@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -12,12 +13,12 @@ namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
     ///   Provides an abstraction for generalizing an Event Consumer so that a dedicated instance may provide operations
-    ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusProcessorClient" /> employ
+    ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusProcessor" /> employ
     ///   a transport consumer via containment and delegate operations to it rather than understanding protocol-specific details
     ///   for different transports.
     /// </summary>
     ///
-    internal abstract class TransportConsumer
+    internal abstract class TransportReceiver
     {
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.
@@ -30,13 +31,8 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual bool IsClosed { get; }
 
         /// <summary>
-        ///
-        /// </summary>
-        public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
-
-        /// <summary>
         /// The scope <see cref="TransportConnectionScope"/> associated with the
-        /// <see cref="TransportConsumer"/>.
+        /// <see cref="TransportReceiver"/>.
         /// </summary>
         public virtual TransportConnectionScope ConnectionScope { get; set; }
 
@@ -44,6 +40,11 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// </summary>
         public virtual string EntityName { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public virtual string SessionId { get; protected set; }
 
         /// <summary>
         ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
@@ -66,12 +67,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public abstract Task CloseAsync(CancellationToken cancellationToken);
 
-        /// <summary>
-        /// Get the session Id corresponding to this consumer.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task<string> GetSessionIdAsync(CancellationToken cancellationToken = default);
+        public abstract Task OpenLinkAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Get the DateTimeOffset for when the session is locked until.
@@ -79,6 +75,38 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<DateTimeOffset> GetSessionLockedUntilUtcAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="timeout"></param>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
+            TimeSpan timeout,
+            long? fromSequenceNumber,
+            int messageCount = 1,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="lockTokens"></param>
+        /// <param name="timeout"></param>
+        /// <param name="dispositionStatus"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterDescription"></param>
+        /// <returns></returns>
+        internal abstract Task DisposeMessageRequestResponseAsync(
+            Guid[] lockTokens,
+            TimeSpan timeout,
+            DispositionStatus dispositionStatus,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null);
 
         /// <summary>
         ///
@@ -92,10 +120,6 @@ namespace Azure.Messaging.ServiceBus.Core
             Outcome outcome,
             TimeSpan timeout);
 
-        /// <summary>
-        ///
-        /// </summary>
-        internal abstract string GetReceiveLinkName();
 
         /// <summary>
         /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
@@ -114,11 +138,9 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
-        /// <param name="sessionId"></param>
-        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
         public abstract Task<DateTime> RenewSessionLockAsync(
-            string sessionId,
-            TimeSpan timeout);
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///

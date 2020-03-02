@@ -192,7 +192,7 @@ namespace Azure.Messaging.ServiceBus
             ConsumerDisconnected,
 
             /// <summary>An Service Bus resource, such as an Service Bus entity, consumer group, or partition cannot be found by the Service Bus service.</summary>
-            ResourceNotFound,
+            MessageNotFound,
 
             /// <summary>
             ///
@@ -202,6 +202,15 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>A message is larger than the maximum size allowed for its transport.</summary>
             MessageSizeExceeded,
 
+            /// <summary>
+            ///
+            /// </summary>
+            MessagingEntityDisabled,
+
+            /// <summary>
+            ///
+            /// </summary>
+            MessagingEntityNotFound,
             /// <summary>The quota applied to an Service Bus resource has been exceeded while interacting with the Azure Service Bus service.</summary>
             QuotaExceeded,
 
@@ -217,7 +226,17 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>
             ///
             /// </summary>
-            SessionLockLost
+            SessionCannotBeLocked,
+
+            /// <summary>
+            ///
+            /// </summary>
+            SessionLockLost,
+
+            /// <summary>
+            ///
+            /// </summary>
+            Unauthorized
         }
     }
 }
