@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
             Text = text;
             Category = category;
             SubCategory = subCategory;
-            Offset = offset;
-            Length = length;
+            GraphemeOffset = offset;
+            GraphemeLength = length;
             Score = score;
         }
 
@@ -44,16 +44,14 @@ namespace Azure.AI.TextAnalytics
         public string SubCategory { get; }
 
         /// <summary>
-        /// Gets the start position for the matching text in the input document.
-        /// The offset unit is unicode character count.
+        /// Gets the grapheme starting position for the matching text in the input document.
         /// </summary>
-        public int Offset { get; }
+        public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the input document.
-        /// The length unit is unicode character count.
+        /// Gets the grapheme length of the matching text in the input document.
         /// </summary>
-        public int Length { get; }
+        public int GraphemeLength { get; }
 
         /// <summary>
         /// Gets a score between 0 and 1, indicating the confidence that the
