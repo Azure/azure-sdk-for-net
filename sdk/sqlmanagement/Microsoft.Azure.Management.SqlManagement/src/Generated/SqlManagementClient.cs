@@ -508,6 +508,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IWorkloadClassifiersOperations WorkloadClassifiers { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedDatabasesOperations.
         /// </summary>
         public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
@@ -845,6 +850,7 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstanceLongTermRetentionPolicies = new ManagedInstanceLongTermRetentionPoliciesOperations(this);
             WorkloadGroups = new WorkloadGroupsOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);
+            ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
