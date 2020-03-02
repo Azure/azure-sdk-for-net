@@ -95,8 +95,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         /// <param name="lockTokens"></param>
         /// <param name="timeout"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
         /// <param name="dispositionStatus"></param>
         /// <param name="propertiesToModify"></param>
         /// <param name="deadLetterReason"></param>
@@ -106,8 +104,6 @@ namespace Azure.Messaging.ServiceBus.Core
             Guid[] lockTokens,
             TimeSpan timeout,
             DispositionStatus dispositionStatus,
-            bool isSessionReceiver,
-            string sessionId = null,
             IDictionary<string, object> propertiesToModify = null,
             string deadLetterReason = null,
             string deadLetterDescription = null);
@@ -142,10 +138,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
-        /// <param name="sessionId"></param>
         /// <param name="cancellationToken"></param>
         public abstract Task<DateTime> RenewSessionLockAsync(
-            string sessionId,
             CancellationToken cancellationToken);
 
         /// <summary>

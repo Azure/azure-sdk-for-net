@@ -51,14 +51,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override string EntityName { get; }
 
         /// <summary>
-        ///   The identifier of the Service Bus entity partition that this consumer is associated with.  Events will be read
-        ///   only from this partition.
-        /// </summary>
-        ///
-        private string PartitionId { get; }
-
-
-        /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
@@ -432,8 +424,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="lockTokens">Message lock tokens to update disposition status.</param>
         /// <param name="timeout"></param>
         /// <param name="dispositionStatus"></param>
-        /// <param name="isSessionReceiver"></param>
-        /// <param name="sessionId"></param>
         /// <param name="propertiesToModify"></param>
         /// <param name="deadLetterReason"></param>
         /// <param name="deadLetterDescription"></param>
@@ -441,8 +431,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Guid[] lockTokens,
             TimeSpan timeout,
             DispositionStatus dispositionStatus,
-            bool isSessionReceiver,
-            string sessionId = null,
             IDictionary<string, object> propertiesToModify = null,
             string deadLetterReason = null,
             string deadLetterDescription = null)
@@ -492,12 +480,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(sessionId))
+                if (!string.IsNullOrWhiteSpace(SessionId))
                 {
-                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
                 }
 
-                if (isSessionReceiver)
+                if (_isSessionReceiver)
                 {
                     // TODO -  ThrowIfSessionLockLost();
                 }
@@ -574,7 +562,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///
         /// </summary>
-        public override async Task<DateTime> RenewSessionLockAsync(string sessionId, CancellationToken cancellationToken = default)
+        public override async Task<DateTime> RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
 
@@ -592,7 +580,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     async (timeout) =>
                     {
                             lockedUntil = await RenewSessionLockInternal(
-                            sessionId,
                             timeout).ConfigureAwait(false);
                     },
                     EntityName,
@@ -618,10 +605,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
-        /// <param name="sessionId"></param>
         /// <param name="timeout"></param>
         internal async Task<DateTime> RenewSessionLockInternal(
-            string sessionId,
             TimeSpan timeout)
         {
             DateTime lockedUntilUtc = DateTime.MinValue;
@@ -635,7 +620,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
 
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
 
                 var amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _managementLink,

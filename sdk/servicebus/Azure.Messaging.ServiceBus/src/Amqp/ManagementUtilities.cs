@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     /// <summary>
     /// Utility methods related to the management link
     /// </summary>
-    public static class ManagementUtilities
+    internal static class ManagementUtilities
     {
         /// <summary>
         ///

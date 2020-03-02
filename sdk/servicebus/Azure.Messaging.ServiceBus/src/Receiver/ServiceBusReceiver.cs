@@ -118,12 +118,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
-
-        private static string GetSubscriptionPath(string topicName, string subscriptionName)
-        {
-            return $"{topicName}/{subscriptionName}";
-        }
-
         /// <summary>
         ///
         /// </summary>
@@ -630,9 +624,7 @@ namespace Azure.Messaging.ServiceBus
                 return _innerReceiver.DisposeMessageRequestResponseAsync(
                     lockTokenGuids,
                     timeout,
-                    DispositionStatus.Completed,
-                    IsSessionReceiver,
-                    SessionManager.SessionId);
+                    DispositionStatus.Completed);
             }
             return _innerReceiver.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
         }
@@ -652,7 +644,11 @@ namespace Azure.Messaging.ServiceBus
             var lockTokens = new[] { new Guid(message.LockToken) };
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Abandoned, IsSessionReceiver, SessionManager.SessionId, propertiesToModify);
+                return _innerReceiver.DisposeMessageRequestResponseAsync(
+                    lockTokens,
+                    timeout,
+                    DispositionStatus.Abandoned,
+                    propertiesToModify);
             }
             return _innerReceiver.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
         }
@@ -686,7 +682,13 @@ namespace Azure.Messaging.ServiceBus
             var lockTokens = new[] { new Guid(message.LockToken) };
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Suspended, IsSessionReceiver, SessionManager.SessionId, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
+                return _innerReceiver.DisposeMessageRequestResponseAsync(
+                    lockTokens,
+                    timeout,
+                    DispositionStatus.Suspended,
+                    propertiesToModify,
+                    deadLetterReason,
+                    deadLetterErrorDescription);
             }
 
             return _innerReceiver.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription), timeout);
@@ -706,7 +708,11 @@ namespace Azure.Messaging.ServiceBus
             var lockTokens = new[] { new Guid(message.LockToken) };
             if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
             {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(lockTokens, timeout, DispositionStatus.Defered, IsSessionReceiver, SessionManager.SessionId, propertiesToModify);
+                return _innerReceiver.DisposeMessageRequestResponseAsync(
+                    lockTokens,
+                    timeout,
+                    DispositionStatus.Defered,
+                    propertiesToModify);
             }
             return _innerReceiver.DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
         }
