@@ -192,7 +192,7 @@ namespace Sql.Tests
                 server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
                 {
                     Location = location,
-                    PublicNetworkAccess = minTlsVersion1_2
+                    MinimalTlsVersion = minTlsVersion1_2
                 });
                 SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, minimalTlsVersion: minTlsVersion1_2); ;
 

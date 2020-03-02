@@ -32,10 +32,10 @@ namespace Sql.Tests
                 Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku();
                 sku.Name = "MIGP8G4";
                 sku.Tier = "GeneralPurpose";
-                sku.Family = "Gen4";
+                sku.Family = "Gen5";
 
-                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default";
-                string location = "westcentralus";
+                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/stefanb/providers/Microsoft.Network/virtualNetworks/vnet-testmovemi/subnets/ManagedInstance";
+                string location = "eastus2euap";
 
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
