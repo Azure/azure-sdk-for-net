@@ -204,17 +204,26 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receiver = client.GetReceiver(scope.QueueName);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
+                IList<long> sequenceNumbers = new List<long>();
 
                 foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    sequenceNumbers.Add(item.SequenceNumber);
                     await receiver.DeferAsync(item);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
-                // TODO: Call ReceiveDeferredMessageAsync() to verify the messages
+                IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessageBatchAsync(sequenceNumbers);
+
+                var messageList = messages.ToList();
+                Assert.AreEqual(messageList.Count, deferedMessages.Count);
+                for (int i = 0; i < messageList.Count; i++)
+                {
+                    Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
+                }
             }
         }
 

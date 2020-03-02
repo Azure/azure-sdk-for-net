@@ -440,18 +440,25 @@ namespace Azure.Messaging.ServiceBus.Tests
                     sessionId: useSpecificSession ? sessionId : null);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
-
+                IList<long> sequenceNumbers = new List<long>();
                 foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                    sequenceNumbers.Add(item.SequenceNumber);
                     await receiver.DeferAsync(item);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
+                IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessageBatchAsync(sequenceNumbers);
 
-                // TODO: Call ReceiveDeferredMessageAsync() to verify the messages
+                var messageList = messages.ToList();
+                Assert.AreEqual(messageList.Count, deferedMessages.Count);
+                for (int i = 0; i < messageList.Count; i++)
+                {
+                    Assert.AreEqual(messageList[i].MessageId, deferedMessages[i].MessageId);
+                }
             }
         }
 

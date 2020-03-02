@@ -114,11 +114,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusSubscriptionManager SubscriptionManager { get; set; }
 
         /// <summary>
-        /// A map of locked messages received using the management client.
-        /// </summary>
-        internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
-
-        /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
@@ -182,7 +177,6 @@ namespace Azure.Messaging.ServiceBus
             IsSessionReceiver = isSessionEntity;
             _connection = connection;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             ReceiveMode = options.ReceiveMode;
             PrefetchCount = options.PrefetchCount;
             EntityName = entityName;
@@ -405,28 +399,9 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-            Argument.AssertNotNullOrEmpty(receivedMessages, nameof(receivedMessages));
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await CompleteAsyncInternal(receivedMessages, timeout).ConfigureAwait(false),
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.MessageCompleteException(ClientId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // diagnosticSource.CompleteStop(activity, lockTokenList, completeTask?.Status);
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageCompleteStop(ClientId);
+            await _innerReceiver.CompleteAsync(
+                receivedMessages,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -449,27 +424,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await AbandonAsyncInternal(message, timeout, propertiesToModify).ConfigureAwait(false),
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.MessageAbandonException(ClientId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
-            }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageAbandonStop(ClientId);
+            await _innerReceiver.AbandonAsync(
+                message,
+                propertiesToModify,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -494,27 +453,10 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await DeadLetterAsyncInternal(message, timeout, propertiesToModify).ConfigureAwait(false),
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.MessageDeadLetterException(ClientId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageCompleteStop(ClientId);
+            await _innerReceiver.DeadLetterAsync(
+                message: message,
+                propertiesToModify: propertiesToModify,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -541,27 +483,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await DeadLetterAsyncInternal(message, timeout, null, deadLetterReason, deadLetterErrorDescription).ConfigureAwait(false),
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.MessageDeadLetterException(ClientId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageDeadLetterStop(ClientId);
+            await _innerReceiver.DeadLetterAsync(
+                message: message,
+                deadLetterReason: deadLetterReason,
+                deadLetterErrorDescription: deadLetterErrorDescription,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -585,136 +511,10 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) => await DeferAsyncInternal(message, timeout, propertiesToModify).ConfigureAwait(false),
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.MessageDeferException(ClientId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // diagnosticSource.DisposeStop(activity, lockToken, deferTask?.Status);
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageDeferStop(ClientId);
-        }
-
-        /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
-        /// </summary>
-        ///
-        /// <param name="receivedMessages">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
-        /// <param name="timeout"></param>
-        internal virtual Task CompleteAsyncInternal(
-            IEnumerable<ServiceBusReceivedMessage> receivedMessages,
-            TimeSpan timeout)
-        {
-            var lockTokenGuids = receivedMessages.Select(m => new Guid(m.LockToken)).ToArray();
-            if (lockTokenGuids.Any(lockToken => RequestResponseLockedMessages.Contains(lockToken)))
-            {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
-                    timeout,
-                    DispositionStatus.Completed);
-            }
-            return _innerReceiver.DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout);
-        }
-
-        /// <summary>
-        /// Abandons a <see cref="ServiceBusMessage"/> using a lock token. This will make the message available again for processing.
-        /// </summary>
-        ///
-        /// <param name="message">The lock token of the corresponding message to abandon.</param>
-        /// <param name="timeout"></param>
-        /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        internal virtual Task AbandonAsyncInternal(
-            ServiceBusReceivedMessage message,
-            TimeSpan timeout,
-            IDictionary<string, object> propertiesToModify = null)
-        {
-            var lockTokens = new[] { new Guid(message.LockToken) };
-            if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
-            {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(
-                    lockTokens,
-                    timeout,
-                    DispositionStatus.Abandoned,
-                    propertiesToModify);
-            }
-            return _innerReceiver.DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
-        }
-
-        /// <summary>
-        /// Moves a message to the deadletter sub-queue.
-        /// </summary>
-        ///
-        /// <param name="message">The lock token of the corresponding message to deadletter.</param>
-        /// <param name="timeout"></param>
-        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
-        /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
-        /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
-        internal virtual Task DeadLetterAsyncInternal(
-            ServiceBusReceivedMessage message,
-            TimeSpan timeout,
-            IDictionary<string, object> propertiesToModify = null,
-            string deadLetterReason = null,
-            string deadLetterErrorDescription = null)
-        {
-            if (deadLetterReason != null && deadLetterReason.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), string.Format(Resources1.MaxPermittedLength, Constants.MaxDeadLetterReasonLength));
-            }
-
-            if (deadLetterErrorDescription != null && deadLetterErrorDescription.Length > Constants.MaxDeadLetterReasonLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources1.MaxPermittedLength, Constants.MaxDeadLetterReasonLength));
-            }
-
-            var lockTokens = new[] { new Guid(message.LockToken) };
-            if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
-            {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(
-                    lockTokens,
-                    timeout,
-                    DispositionStatus.Suspended,
-                    propertiesToModify,
-                    deadLetterReason,
-                    deadLetterErrorDescription);
-            }
-
-            return _innerReceiver.DisposeMessagesAsync(lockTokens, GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription), timeout);
-        }
-
-        /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
-        ///
-        /// <param name="message">The lock token of the <see cref="ServiceBusMessage" />.</param>
-        /// <param name="timeout"></param>
-        /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
-        ///
-        internal virtual Task DeferAsyncInternal(
-            ServiceBusReceivedMessage message,
-            TimeSpan timeout,
-            IDictionary<string, object> propertiesToModify = null)
-        {
-            var lockTokens = new[] { new Guid(message.LockToken) };
-            if (lockTokens.Any(lt => RequestResponseLockedMessages.Contains(lt)))
-            {
-                return _innerReceiver.DisposeMessageRequestResponseAsync(
-                    lockTokens,
-                    timeout,
-                    DispositionStatus.Defered,
-                    propertiesToModify);
-            }
-            return _innerReceiver.DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
+            await _innerReceiver.DeferAsync(
+                message,
+                propertiesToModify,
+                cancellationToken).ConfigureAwait(false);
         }
 
         internal void ThrowIfNotPeekLockMode()
@@ -723,83 +523,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 throw new InvalidOperationException(Resources1.OperationNotSupported);
             }
-        }
-
-        internal Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify)
-        {
-            return GetModifiedOutcome(propertiesToModify, false);
-        }
-
-        internal Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify)
-        {
-            return GetModifiedOutcome(propertiesToModify, true);
-        }
-
-        internal Outcome GetModifiedOutcome(
-            IDictionary<string, object> propertiesToModify,
-            bool undeliverableHere)
-        {
-            Modified modified = new Modified();
-            if (undeliverableHere)
-            {
-                modified.UndeliverableHere = true;
-            }
-
-            if (propertiesToModify != null)
-            {
-                modified.MessageAnnotations = new Fields();
-                foreach (var pair in propertiesToModify)
-                {
-                    if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
-                    {
-                        modified.MessageAnnotations.Add(pair.Key, amqpObject);
-                    }
-                    else
-                    {
-                        throw new NotSupportedException(Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
-                    }
-                }
-            }
-
-            return modified;
-        }
-
-        internal Rejected GetRejectedOutcome(
-            IDictionary<string, object> propertiesToModify,
-            string deadLetterReason,
-            string deadLetterErrorDescription)
-        {
-            var rejected = AmqpConstants.RejectedOutcome;
-            if (deadLetterReason != null || deadLetterErrorDescription != null || propertiesToModify != null)
-            {
-                rejected = new Rejected { Error = new Error { Condition = AmqpClientConstants.DeadLetterName, Info = new Fields() } };
-                if (deadLetterReason != null)
-                {
-                    rejected.Error.Info.Add(ServiceBusReceivedMessage.DeadLetterReasonHeader, deadLetterReason);
-                }
-
-                if (deadLetterErrorDescription != null)
-                {
-                    rejected.Error.Info.Add(ServiceBusReceivedMessage.DeadLetterErrorDescriptionHeader, deadLetterErrorDescription);
-                }
-
-                if (propertiesToModify != null)
-                {
-                    foreach (var pair in propertiesToModify)
-                    {
-                        if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
-                        {
-                            rejected.Error.Info.Add(pair.Key, amqpObject);
-                        }
-                        else
-                        {
-                            throw new NotSupportedException(Resources.InvalidAmqpMessageProperty.FormatForUser(pair.Key.GetType()));
-                        }
-                    }
-                }
-            }
-
-            return rejected;
         }
 
         /// <summary>
@@ -830,12 +553,13 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
-        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveDeferredMessageBatchAsync(
+        public virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveDeferredMessageBatchAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            // TODO implement
-            return await PeekBatchAsync(10).ConfigureAwait(false);
+            return await _innerReceiver.ReceiveDeferredMessageBatchAsync(
+                sequenceNumbers,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -914,7 +638,6 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await _innerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                RequestResponseLockedMessages.Close();
             }
             catch (Exception ex)
             {
