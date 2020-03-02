@@ -367,7 +367,7 @@ namespace Azure.Messaging.ServiceBus
                         {
                             // only create a new receiver if a specific session
                             // is specified, otherwise thread local receivers will be used
-                            Receiver = await            ServiceBusReceiver.CreateSessionReceiverAsync(
+                            Receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
                                 EntityName,
                                 _connection,
                                 SessionId,
