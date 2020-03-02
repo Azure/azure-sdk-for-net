@@ -21,8 +21,7 @@ namespace Batch.Tests.ScenarioTests
         [Fact]
         public async Task BatchAccountEndToEndAsync()
         {
-        // dummy update
-            using (MockContext context = StartMockContextAndInitializeClients(this.GetType()))
+            using (MockContext context = StartMockContextAndInitializeClients(this.GetType().FullName))
             {
                 string resourceGroupName = TestUtilities.GenerateName();
                 string batchAccountName = TestUtilities.GenerateName();
