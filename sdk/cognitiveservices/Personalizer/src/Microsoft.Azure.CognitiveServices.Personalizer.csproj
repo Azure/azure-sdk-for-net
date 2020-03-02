@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Personalizer Library</AssemblyTitle>
-    <Description></Description>
     <Description>
 <![CDATA[<h1>Cognitive Services - Personalizer</h1>
 Provides API functions for consuming Microsoft Azure Cognitive Services Personalizer APIs.
