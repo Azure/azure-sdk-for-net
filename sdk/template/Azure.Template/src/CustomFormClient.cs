@@ -124,14 +124,21 @@ namespace Azure.AI.FormRecognizer.Custom
         #region Analyze
 
         // XX public virtual Response<ExtractedForm> ExtractForm(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        //public virtual Response<ExtractedForm> ExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
+        // XX - broken (service issue?) public virtual Response<ExtractedForm> ExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
         // XX public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        //public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
+        // XX - broken (service issue?) public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
 
         public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
+        public virtual ExtractFormOperation StartExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 

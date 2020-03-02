@@ -19,15 +19,18 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine("Hello World!");
 
             //TrainCustomModel().Wait();
-            //ExtractCustomModel().Wait();
+            //ExtractCustomModelStream().Wait();
+            //ExtractCustomModelUri().Wait();
 
             //TrainCustomLabeledModel().Wait();
-            //ExtractCustomLabeledModel().Wait();
+            //ExtractCustomLabeledModelUri().Wait();
             //ExtractReceipt();
+            //ExtractReceiptUri();
             //ExtractLayout().Wait();
+            ExtractLayoutUri().Wait();
 
-            GetCustomModelsSummary();
-            GetCustomModels();
+            //GetCustomModelsSummary();
+            //GetCustomModels();
         }
 
         private static async Task TrainCustomLabeledModel()
@@ -72,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task ExtractCustomModel()
+        private static async Task ExtractCustomModelStream()
         {
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
             string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
@@ -96,6 +99,32 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             table.WriteAscii(Console.Out);
                         }
+                    }
+                }
+            }
+        }
+
+        private static async Task ExtractCustomModelUri()
+        {
+            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
+            string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            var extractFormOperation = client.StartExtractForm(modelId, testFormPath);
+
+            await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            if (extractFormOperation.HasValue)
+            {
+                ExtractedForm form = extractFormOperation.Value;
+                foreach (var page in form.Pages)
+                {
+                    foreach (var table in page.Tables)
+                    {
+                        table.WriteAscii(Console.Out);
                     }
                 }
             }
@@ -130,6 +159,34 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
+
+        private static async Task ExtractCustomLabeledModelUri()
+        {
+            // TODO: This fails, with a URI that works for unsupervised.  What is wrong?
+            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
+            string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            var extractFormOperation = client.StartExtractForm(modelId, testFormPath);
+
+            await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            if (extractFormOperation.HasValue)
+            {
+                ExtractedForm form = extractFormOperation.Value;
+                foreach (var page in form.Pages)
+                {
+                    foreach (var table in page.Tables)
+                    {
+                        table.WriteAscii(Console.Out);
+                    }
+                }
+            }
+        }
+
         private static void ExtractReceipt()
         {
             string contosoReceipt = @"C:\src\samples\cognitive\formrecognizer\receipt_data\contoso-allinone.jpg";
@@ -144,6 +201,17 @@ namespace Azure.AI.FormRecognizer.Samples
                 var extractedReceipt = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg);
 
             }
+        }
+
+        private static void ExtractReceiptUri()
+        {
+            Uri receiptUri = new Uri("https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/media/contoso-allinone.jpg");
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new ReceiptClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var extractedReceipt = client.ExtractReceipt(receiptUri);
         }
 
         private static async Task ExtractLayout()
@@ -169,6 +237,31 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             table.WriteAscii(Console.Out);
                         }
+                    }
+                }
+            }
+        }
+
+        private static async Task ExtractLayoutUri()
+        {
+            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new FormLayoutClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            var extractLayoutOperation = client.StartExtractLayout(testFormPath);
+
+            await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            if (extractLayoutOperation.HasValue)
+            {
+                IReadOnlyList<ExtractedLayoutPage> result = extractLayoutOperation.Value;
+                foreach (var page in result)
+                {
+                    foreach (var table in page.Tables)
+                    {
+                        table.WriteAscii(Console.Out);
                     }
                 }
             }

@@ -71,13 +71,14 @@ namespace Azure.AI.FormRecognizer.Models
                     : _operations.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
 
                 // TODO: check status code?  What if a failure status code is returned?
+                // TODO: Add reasonable null checks.
 
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
 
                     // Determine if the model was supervised or unsupervised
-                    if (update.Value.AnalyzeResult.DocumentResults.Count == 0)
+                    if (update.Value.AnalyzeResult.DocumentResults?.Count == 0)
                     {
                         // Unsupervised
                         _value = new ExtractedForm(update.Value.AnalyzeResult.PageResults);
