@@ -5,6 +5,7 @@
 - In both `DocumentSentiment` and `SentenceSentiment` property `SentimentScores` has been renamed to `ConfidenceScores`.
 - In `LinkedEntity`, property `Id` has been renamed to `DataSourceEntityId`.
 - Added `DetectLanguageInput.None` for user convenience, instead of passing empty string to `CountryHint`.
+- Change wording in all documentation from `text inputs` to `documents`.
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes
@@ -14,7 +15,7 @@ Passing the API key as a string is no longer supported.
 - Reference to `subcription key` changed to `API key`.
 - `DetectLanguages` has been renamed to `DetectLanguage`. Same applies for `DetectLanguagesAsync` to `DetectLanguageAsync`.
 - All batch overload methods have been renamed by adding the suffix `Batch` or `BatchAsync` accordingly. For example, instead of `AnalyzeSentimentAsync` now we have `AnalyzeSentimentBatchAsync`.
-- Added a new parameter `TextAnalyticsRequestOptions` options to batch method overloads accepting a list of text inputs for allowing the users to opt for batch operation statistics.
+- Added a new parameter `TextAnalyticsRequestOptions` options to batch method overloads accepting a list of documents for allowing the users to opt for batch operation statistics.
 - All single text operation methods now return an atomic type of the operation result. For example `DetectLanguage(String text)` returns a `DetectedLanguage` rather than a `DetectLanguageResult`.
 - `NamedEntity.Type` and `NamedEntity.SubType` have been renamed to `NamedEntity.Category` and `NamedEntity.SubCategory`.
 - `NamedEntity` has been renamed to `CategorizedEntity`.
