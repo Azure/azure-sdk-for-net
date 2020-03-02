@@ -28,7 +28,7 @@ az storage container create --account-name MyStorageAccount -n mycontainer
 
 ## Examples
 
-To enable persisting keys to Azure Blob Storage call the `PersistKeysToAzureBlobStorage` method. The `Uri` provided has to be a blob URI in the following form `https://MyStorageAccount.blob.core.windows.net/mycontainer/myblob`.
+To enable persisting keys to Azure Blob Storage call the `PersistKeysToAzureBlobStorage` method. The `Uri` provided has to be a blob URI in the following form `https://{storage_account}.blob.core.windows.net/{container}/{blob}`.
 
 ```C# Snippet:IdentityAuth
 public void ConfigureServices(IServiceCollection services)
