@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
-        public DateTime LockedUntilUtc { get; set; }
+        public DateTime LockedUntilUtc { get; private set; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
