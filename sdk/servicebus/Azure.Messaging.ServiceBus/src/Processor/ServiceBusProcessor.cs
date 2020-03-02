@@ -660,7 +660,7 @@ namespace Azure.Messaging.ServiceBus
                     DateTimeOffset lockedUntil = default;
                     if (UseSessions)
                     {
-                        lockedUntil = await receiver.SessionManager.GetLockedUntilUtcAsync(eventCancellationToken).ConfigureAwait(false);
+                        lockedUntil = receiver.SessionManager.LockedUntilUtc;
                     }
                     else
                     {

@@ -480,7 +480,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveBatchAsync(messageCount)).ToArray();
 
                 var message = receivedMessages.First();
-                var firstLockedUntilUtcTime = await receiver.SessionManager.GetLockedUntilUtcAsync();
+                var firstLockedUntilUtcTime = receiver.SessionManager.LockedUntilUtc;
 
                 // Sleeping for 10 seconds...
                 await Task.Delay(10000);
@@ -555,7 +555,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         Interlocked.Increment(ref messageCt);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(await receiver.SessionManager.GetLockedUntilUtcAsync());
+                        Assert.IsNotNull(receiver.SessionManager.LockedUntilUtc);
                     }
                     finally
                     {
@@ -632,7 +632,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         await receiver.CompleteAsync(message);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId,  receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(await receiver.SessionManager.GetLockedUntilUtcAsync());
+                        Assert.IsNotNull(receiver.SessionManager.LockedUntilUtc);
                     }
                     finally
                     {
@@ -723,7 +723,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(sessionId, message.SessionId);
                         Assert.AreEqual(sessionId, receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(await receiver.SessionManager.GetLockedUntilUtcAsync());
+                        Assert.IsNotNull(receiver.SessionManager.LockedUntilUtc);
                     }
                     finally
                     {

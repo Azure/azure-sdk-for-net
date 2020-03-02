@@ -72,15 +72,5 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
             LockedUntilUtc = await _receiver.RenewSessionLockAsync(SessionId, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<DateTimeOffset> GetLockedUntilUtcAsync(CancellationToken cancellationToken = default)
-        {
-            return await _receiver.GetSessionLockedUntilUtcAsync(cancellationToken).ConfigureAwait(false);
-        }
     }
 }
