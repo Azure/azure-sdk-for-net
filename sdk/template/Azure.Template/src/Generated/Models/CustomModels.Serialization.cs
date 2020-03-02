@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class CustomModelCollection : IUtf8JsonSerializable
+    public partial class CustomModels : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,9 +36,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static CustomModelCollection DeserializeCustomModelCollection(JsonElement element)
+        internal static CustomModels DeserializeCustomModels(JsonElement element)
         {
-            CustomModelCollection result = new CustomModelCollection();
+            CustomModels result = new CustomModels();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Text extracted from a page in the input document. </summary>
-    internal partial class ReadResult_internal
+    public partial class RawExtractedPage
     {
         /// <summary> The 1-based page number in the input document. </summary>
         public int Page { get; set; }
@@ -23,6 +23,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Language code. </summary>
         public Language_internal? Language { get; set; }
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
-        public ICollection<TextLine_internal> Lines { get; set; }
+        public ICollection<RawExtractedLine> Lines { get; set; }
     }
 }

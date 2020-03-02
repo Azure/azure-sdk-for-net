@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Resources;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -30,7 +31,6 @@ namespace Azure.AI.FormRecognizer.Models
         public int RowSpan { get; }
         public string Text { get; }
 
-        // Reason to hold these in parallel is that we could make this a struct then? (Or could we?)
-        //public IReadOnlyList<RawExtractedLine> RawTableCellExtraction { get; }
+        public IReadOnlyList<RawExtractedWordReference> RawWordReferences { get; internal set; }
     }
 }

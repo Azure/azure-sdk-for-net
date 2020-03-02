@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.WriteLine("Hello World!");
 
             //TrainCustomModel().Wait();
-            //ExtractCustomModelStream().Wait();
+            ExtractCustomModelStream().Wait();
             //ExtractCustomModelUri().Wait();
 
             //TrainCustomLabeledModel().Wait();
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Samples
             //ExtractReceipt();
             //ExtractReceiptUri();
             //ExtractLayout().Wait();
-            ExtractLayoutUri().Wait();
+            //ExtractLayoutUri().Wait();
 
             //GetCustomModelsSummary();
             //GetCustomModels();
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf);
+                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf, includeRawPageExtractions:true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
                 if (extractFormOperation.HasValue)
@@ -98,6 +98,27 @@ namespace Azure.AI.FormRecognizer.Samples
                         foreach (var table in page.Tables)
                         {
                             table.WriteAscii(Console.Out);
+                        }
+
+                        if (page.RawExtractedPage != null)
+                        {
+                            foreach (var field in page.Fields)
+                            {
+                                Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+
+                                if (field.LabelRawWordReferences != null)
+                                {
+                                    foreach (var wordReference in field.LabelRawWordReferences)
+                                    {
+                                        Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
+                                    }
+                                }
+
+                                foreach (var wordReference in field.ValueRawWordReferences)
+                                {
+                                    Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
+                                }
+                            }
                         }
                     }
                 }
@@ -276,7 +297,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             // TODO: do better on this type.
             var modelsSummary = client.GetModelsSummary();
-            Console.WriteLine($"CustomModelCount: {modelsSummary.Value.Summary.Count}");
+            Console.WriteLine($"CustomModelCount: {modelsSummary.Value.Count}");
         }
 
         private static void GetCustomModels()

@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ReadResults.Add(ReadResult_internal.DeserializeReadResult_internal(item));
+                        result.ReadResults.Add(RawExtractedPage.DeserializeRawExtractedPage(item));
                     }
                     continue;
                 }

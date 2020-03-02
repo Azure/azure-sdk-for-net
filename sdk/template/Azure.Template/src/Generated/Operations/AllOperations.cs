@@ -128,7 +128,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CustomModelCollection>> GetCustomModelsAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<CustomModels>> GetCustomModelsAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModels");
@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
+                            var value = CustomModels.DeserializeCustomModels(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -158,7 +158,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CustomModelCollection> GetCustomModels(GetModelOptions? op, CancellationToken cancellationToken = default)
+        public Response<CustomModels> GetCustomModels(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.GetCustomModels");
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
+                            var value = CustomModels.DeserializeCustomModels(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -791,7 +791,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<CustomModelCollection>> GetCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<CustomModels>> GetCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -809,7 +809,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
+                            var value = CustomModels.DeserializeCustomModels(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -825,7 +825,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CustomModelCollection> GetCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<CustomModels> GetCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -843,7 +843,7 @@ namespace Azure.AI.FormRecognizer
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = CustomModelCollection.DeserializeCustomModelCollection(document.RootElement);
+                            var value = CustomModels.DeserializeCustomModels(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

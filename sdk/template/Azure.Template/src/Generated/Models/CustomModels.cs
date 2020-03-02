@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Response to the list custom models operation. </summary>
-    public partial class CustomModelCollection
+    public partial class CustomModels
     {
         /// <summary> Summary of all trained custom models. </summary>
         public ModelsSummary Summary { get; set; }

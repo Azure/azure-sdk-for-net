@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
         public string MerchantName { get; internal set; }
         public string MerchantPhoneNumber { get; internal set; }
         //public RawReceiptExtraction RawFields { get; internal set; }
-        public ReceiptType ReceiptType { get; internal set; }
+        public ExtractedReceiptType ReceiptType { get; internal set; }
         public float Subtotal { get; internal set; }
         public float Tax { get; internal set; }
         public float Tip { get; internal set; }
@@ -52,17 +52,17 @@ namespace Azure.AI.FormRecognizer.Models
             Items = ConvertReceiptItems(fields);
         }
 
-        private static ReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
+        private static ExtractedReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
         {
-            ReceiptType receiptType = ReceiptType.Unrecognized;
+            ExtractedReceiptType receiptType = ExtractedReceiptType.Unrecognized;
 
             FieldValue_internal value;
             if (fields.TryGetValue("ReceiptType", out value))
             {
                 receiptType = value.ValueString switch
                 {
-                    "Itemized" => ReceiptType.Itemized,
-                    _ => ReceiptType.Unrecognized,
+                    "Itemized" => ExtractedReceiptType.Itemized,
+                    _ => ExtractedReceiptType.Unrecognized,
                 };
             }
 

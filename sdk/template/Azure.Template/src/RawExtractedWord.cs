@@ -8,8 +8,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("ReadResult")]
-    internal partial class ReadResult_internal
+    [CodeGenSchema("TextWord")]
+    public partial class RawExtractedWord
     {
     }
 }

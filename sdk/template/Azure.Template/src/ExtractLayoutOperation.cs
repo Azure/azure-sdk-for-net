@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     _hasCompleted = true;
 
-                    _value = ConvertValue(update.Value.AnalyzeResult.PageResults);
+                    _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                     //_value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First());
                 }
 
@@ -78,13 +79,16 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(ICollection<PageResult_internal> pageResults)
+        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<RawExtractedPage> rawExtractedPages)
         {
+            Debug.Assert(pageResults.Count == rawExtractedPages.Count);
+
             List<ExtractedLayoutPage> pages = new List<ExtractedLayoutPage>();
+            List<RawExtractedPage> rawPages = rawExtractedPages.ToList();
 
             foreach (var page in pageResults)
             {
-                pages.Add(new ExtractedLayoutPage(page));
+                pages.Add(new ExtractedLayoutPage(page, rawPages[page.Page - 1]));
             }
 
             return pages.AsReadOnly();

@@ -182,19 +182,21 @@ namespace Azure.AI.FormRecognizer.Custom
         }
 
         /// <summary>
-        /// Executes a service call that takes and returns the <see cref="CustomModelCollection"/>.
+        /// Executes a service call that takes and returns the <see cref="ModelsSummary"/>.
         /// </summary>
-        public virtual Response<CustomModelCollection> GetModelsSummary(CancellationToken cancellationToken = default)
+        public virtual Response<ModelsSummary> GetModelsSummary(CancellationToken cancellationToken = default)
         {
-            return _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            Response<CustomModels> response = _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            return Response.FromValue(response.Value.Summary, response.GetRawResponse());
         }
 
         /// <summary>
-        /// Executes a service call that takes and returns the <see cref="CustomModelCollection"/>.
+        /// Executes a service call that takes and returns the <see cref="ModelsSummary"/>.
         /// </summary>
-        public virtual async Task<Response<CustomModelCollection>> GetModelsSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ModelsSummary>> GetModelsSummaryAsync(CancellationToken cancellationToken = default)
         {
-            return await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            Response<CustomModels> response = await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value.Summary, response.GetRawResponse());
         }
 
         #endregion CRUD Ops

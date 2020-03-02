@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     [CodeGenSchema("Models")]
-    public partial class CustomModelCollection
+    public partial class CustomModels
     {
     }
 }

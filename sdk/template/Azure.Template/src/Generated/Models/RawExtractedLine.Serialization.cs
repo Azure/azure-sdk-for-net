@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextLine_internal : IUtf8JsonSerializable
+    public partial class RawExtractedLine : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,9 +36,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        internal static TextLine_internal DeserializeTextLine_internal(JsonElement element)
+        internal static RawExtractedLine DeserializeRawExtractedLine(JsonElement element)
         {
-            TextLine_internal result = new TextLine_internal();
+            RawExtractedLine result = new RawExtractedLine();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
@@ -67,7 +67,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Words.Add(TextWord_internal.DeserializeTextWord_internal(item));
+                        result.Words.Add(RawExtractedWord.DeserializeRawExtractedWord(item));
                     }
                     continue;
                 }
