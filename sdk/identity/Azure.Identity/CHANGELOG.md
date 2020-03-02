@@ -2,6 +2,9 @@
 
 ## 1.2.0-preview.1 (Unreleased)
 
+### Fixes and improvements
+- `ClientCertificateCredential` now supports being constructed with a path to an unencrypted certificate (in either PFX or PEM format)
+- `EnvironmentCredential` now supports reading a certificate path from `AZURE_CLIENT_CERTIFICATE_PATH`
 
 ## 1.1.1
 

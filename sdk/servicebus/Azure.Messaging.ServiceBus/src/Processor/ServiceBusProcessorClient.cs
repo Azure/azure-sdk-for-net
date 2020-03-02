@@ -769,7 +769,7 @@ namespace Azure.Messaging.ServiceBus
                         ServiceBusSession session = null;
                         if (IsSessionReceiver)
                         {
-                            session = new ServiceBusSession(consumer, message.SessionId);
+                            session = new ServiceBusSession(consumer, message.SessionId, ReceiveMode, RetryPolicy);
                         }
                         await OnProcessMessageAsync(message, session).ConfigureAwait(false);
 

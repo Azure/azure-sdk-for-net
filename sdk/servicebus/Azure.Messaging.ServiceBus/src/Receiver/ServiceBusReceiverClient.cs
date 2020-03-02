@@ -54,7 +54,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public ReceiveMode ReceiveMode { get;}
+        public ReceiveMode ReceiveMode { get; }
 
         /// <summary>
         ///
@@ -305,7 +305,9 @@ namespace Azure.Messaging.ServiceBus
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                clientOptions.SessionId);
+                clientOptions.SessionId,
+                ReceiveMode,
+                RetryPolicy);
         }
 
         /// <summary>
@@ -947,17 +949,53 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Renews the lock on the message specified by the lock token. The lock will be renewed based on the setting specified on the queue.
         /// </summary>
+        ///
         /// <remarks>
         /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
+        ///
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
         public virtual async Task RenewLockAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            message.LockedUntilUtc = await Task.FromResult(DateTime.Now).ConfigureAwait(false);
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            ThrowIfNotPeekLockMode();
+
+            // MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            var lockedUntilUtc = DateTime.MinValue;
+            try
+            {
+                await RetryPolicy.RunOperation(
+                    async (timeout) =>
+                    {
+                        lockedUntilUtc = await Consumer.RenewLockAsync(
+                            message.LockToken,
+                            timeout).ConfigureAwait(false);
+                    },
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+
+                message.LockedUntilUtc = lockedUntilUtc;
+            }
+            catch (Exception exception)
+            {
+                // MessagingEventSource.Log.MessageRenewLockException(this.ClientId, exception);
+                throw exception;
+            }
+            finally
+            {
+                // this.diagnosticSource.RenewLockStop(activity, lockToken, renewTask?.Status, lockedUntilUtc);
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            // MessagingEventSource.Log.MessageRenewLockStop(this.ClientId);
         }
 
         /// <summary>
