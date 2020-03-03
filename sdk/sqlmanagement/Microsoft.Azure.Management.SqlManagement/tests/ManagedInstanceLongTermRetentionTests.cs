@@ -57,7 +57,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact] //(Skip = "Manual test due to long setup time required (over 18 hours).")]
+        [Fact (Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestManagedIntanceLongTermRetentionCrud()
         {
             // MANUAL TEST INSTRUCTIONS
@@ -107,7 +107,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact] //(Skip = "Manual test due to long setup time required (over 18 hours).")]
+        [Fact (Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestManagedInstanceLongTermRetentionResourceGroupBasedCrud()
         {
             // MANUAL TEST INSTRUCTIONS
