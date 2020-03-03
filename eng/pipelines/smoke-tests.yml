@@ -44,9 +44,6 @@ jobs:
       - pwsh: Register-PackageSource -Name NightlyFeed -Location $(BlobFeedUrl) -ProviderName Nuget
         displayName: Register nightly feed package source
 
-      - script: dotnet restore --source '$(BlobFeedUrl)' --source 'https://api.nuget.org/v3/index.json' ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: dotnet restore
-
       - task: PowerShell@2
         inputs:
           targetType: filePath
@@ -55,7 +52,15 @@ jobs:
           workingDirectory: common/SmokeTests/SmokeTest
           pwsh: true
         displayName: Use latest dev feed package versions
-        condition: and(succeeded(), eq(variables['UpdateDependencies'], 'true'))
+
+      - task: PowerShell@2
+        inputs:
+          targetType: filePath
+          filePath: ./common/SmokeTests/SmokeTest/Test-DependencyDevVersions.ps1
+          workingDirectory: common/SmokeTests/SmokeTest
+          pwsh: true
+        continueOnError: true
+        displayName: Validate Package Versions
 
       - script: >
           dotnet list
@@ -65,7 +70,7 @@ jobs:
           --include-transitive
         displayName: dotnet list package
 
-      - script: dotnet run .\common\smoketests\SmokeTest\SmokeTest.csproj package --framework $(TestTargetFramework)
+      - script: dotnet run .\common\SmokeTests\SmokeTest\SmokeTest.csproj package --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
         env:
           KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
