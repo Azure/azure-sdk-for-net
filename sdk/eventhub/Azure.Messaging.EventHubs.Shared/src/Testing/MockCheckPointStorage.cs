@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -35,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The set of checkpoints held for this instance.
         /// </summary>
         ///
-        public Dictionary<(string, string, string, string), EventProcessorCheckpoint> Checkpoints { get; }
+        public Dictionary<(string, string, string, string), CheckpointData> Checkpoints { get; }
 
         /// <summary>
         ///   The set of stored ownership.
@@ -54,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
             _logger = logger;
 
             Ownership = new Dictionary<(string, string, string, string), EventProcessorPartitionOwnership>();
-            Checkpoints = new Dictionary<(string, string, string, string), EventProcessorCheckpoint>();
+            Checkpoints = new Dictionary<(string, string, string, string), CheckpointData>();
         }
 
         /// <summary>
@@ -155,12 +156,23 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             List<EventProcessorCheckpoint> checkpointList;
 
+            EventProcessorCheckpoint TransformCheckpointData(CheckpointData data) =>
+                new EventProcessorCheckpoint
+                {
+                    FullyQualifiedNamespace = data.Checkpoint.FullyQualifiedNamespace,
+                    EventHubName = data.Checkpoint.EventHubName,
+                    ConsumerGroup = data.Checkpoint.ConsumerGroup,
+                    PartitionId = data.Checkpoint.PartitionId,
+                    StartingPosition = EventPosition.FromOffset(data.Event.Offset, false)
+                };
+
             lock (_checkpointLock)
             {
                 checkpointList = Checkpoints.Values
-                    .Where(checkpoint => checkpoint.FullyQualifiedNamespace == fullyQualifiedNamespace
-                        && checkpoint.EventHubName == eventHubName
-                        && checkpoint.ConsumerGroup == consumerGroup)
+                    .Where(data => data.Checkpoint.FullyQualifiedNamespace == fullyQualifiedNamespace
+                        && data.Checkpoint.EventHubName == eventHubName
+                        && data.Checkpoint.ConsumerGroup == consumerGroup)
+                    .Select(data => TransformCheckpointData(data))
                     .ToList();
             }
 
@@ -172,15 +184,17 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="eventData">The event to use as the basis for the checkpoint's starting position.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
         ///
         public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+                                                   EventData eventData,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
             {
                 var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
-                Checkpoints[key] = checkpoint;
+                Checkpoints[key] = new CheckpointData(checkpoint, eventData);
 
                 Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
             }
@@ -195,5 +209,23 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="message">The log message to send.</param>
         ///
         private void Log(string message) => _logger?.Invoke(message);
+
+        /// <summary>
+        ///   Serves as a lightweight wrapper for the components that comprise the data
+        ///   observed for a checkpoint.
+        /// </summary>
+        ///
+        public struct CheckpointData
+        {
+            public EventProcessorCheckpoint Checkpoint { get; }
+            public EventData Event { get; }
+
+            public CheckpointData(EventProcessorCheckpoint checkpoint,
+                                  EventData eventData)
+            {
+                Checkpoint = checkpoint;
+                Event = eventData;
+            }
+        }
     }
 }
