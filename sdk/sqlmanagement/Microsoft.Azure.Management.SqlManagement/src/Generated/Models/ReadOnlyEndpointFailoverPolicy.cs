@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for ReplicaType.
+    /// Defines values for ReadOnlyEndpointFailoverPolicy.
     /// </summary>
-    public static class ReplicaType
+    public static class ReadOnlyEndpointFailoverPolicy
     {
-        public const string Primary = "Primary";
-        public const string ReadableSecondary = "ReadableSecondary";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
