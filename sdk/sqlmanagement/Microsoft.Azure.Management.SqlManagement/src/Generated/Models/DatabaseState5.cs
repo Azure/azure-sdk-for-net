@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for ManagedDatabaseCreateMode.
+    /// Defines values for DatabaseState5.
     /// </summary>
-    public static class ManagedDatabaseCreateMode
+    public static class DatabaseState5
     {
-        public const string Default = "Default";
-        public const string RestoreExternalBackup = "RestoreExternalBackup";
-        public const string PointInTimeRestore = "PointInTimeRestore";
-        public const string Recovery = "Recovery";
-        public const string RestoreLongTermRetentionBackup = "RestoreLongTermRetentionBackup";
+        public const string All = "All";
+        public const string Live = "Live";
+        public const string Deleted = "Deleted";
     }
 }

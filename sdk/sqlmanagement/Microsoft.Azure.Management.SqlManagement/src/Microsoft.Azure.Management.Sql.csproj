@@ -7,7 +7,7 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.38.0-preview</Version>
+		<Version>1.39.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
@@ -15,6 +15,8 @@ New features:
 - Added support for Azure SQL Server Azure Active Directory administrator API version 2019-06-01-preview.
 - Added PublicNetworkAccess to Server properties
 - Added PrivateEndpointConnections to be returned as part of Server properties
+- Added Long Term Retention for Managed Instances APIs (2019-06-01-preview)
+- Added a new create mode (restore from LTR backup) to Mangaed Databases
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
