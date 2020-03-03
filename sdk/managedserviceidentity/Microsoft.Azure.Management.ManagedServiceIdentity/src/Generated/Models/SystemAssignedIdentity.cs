@@ -13,13 +13,15 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Describes a system assigned identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SystemAssignedIdentity : Resource
+    public partial class SystemAssignedIdentity : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SystemAssignedIdentity class.
@@ -32,14 +34,15 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <summary>
         /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
-        /// <param name="location">The Azure region where the resource
-        /// lives.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
         /// <param name="principalId">The id of the service principal object
@@ -48,10 +51,11 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// identity. This is a random generated UUID by MSI.</param>
         /// <param name="clientSecretUrl"> The ManagedServiceIdentity DataPlane
         /// URL that can be queried to obtain the identity credentials.</param>
-        public SystemAssignedIdentity(string location, string id = default(string), string name = default(string), string type = default(string), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string clientSecretUrl = default(string))
+        public SystemAssignedIdentity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string clientSecretUrl = default(string))
             : base(id, name, type)
         {
             Location = location;
+            Tags = tags;
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
@@ -65,10 +69,16 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Azure region where the resource lives.
+        /// Gets or sets the geo-location where the resource lives
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the id of the tenant which the identity belongs to.

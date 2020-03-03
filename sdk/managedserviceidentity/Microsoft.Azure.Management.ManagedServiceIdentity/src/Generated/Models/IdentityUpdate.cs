@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="location">The Azure region where the resource
-        /// lives.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Azure region where the resource lives.
+        /// Gets or sets the geo-location where the resource lives
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
