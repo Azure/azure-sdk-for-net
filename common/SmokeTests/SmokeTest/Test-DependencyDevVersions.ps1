@@ -2,6 +2,8 @@ param(
     $ProjectFile = './SmokeTest.csproj'
 )
 
+$PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
+
 # Match the dev.yyyymmdd portion of the version string
 $DEV_DATE_REGEX = 'dev\.(\d{8})'
 
