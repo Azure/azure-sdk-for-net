@@ -39,7 +39,6 @@ namespace Sql.Tests
 
                 bool publicDataEndpointEnabled = true;
                 string proxyOverride = ManagedInstanceProxyOverride.Proxy;
-                string minimalTlsVersion = "1.2"; // TODO: Replace with enum once one is added for this property
 
                 //Create server
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
@@ -65,8 +64,7 @@ namespace Sql.Tests
                     Location = location,
                     DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1", resourceGroup.Name),
                     PublicDataEndpointEnabled = publicDataEndpointEnabled,
-                    ProxyOverride = proxyOverride,
-                    MinimalTlsVersion = minimalTlsVersion
+                    ProxyOverride = proxyOverride
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
 
@@ -86,9 +84,6 @@ namespace Sql.Tests
 
                 // Verify ProxyOverride value for second server
                 Assert.Equal(proxyOverride, getMI2.ProxyOverride);
-
-                // Verify MinimalTlsVersion value for second server
-                Assert.Equal(minimalTlsVersion, getMI2.MinimalTlsVersion);
 
                 var listMI = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listMI.Count());
