@@ -70,7 +70,7 @@ namespace Azure.Identity
                 }
                 else if (username != null && password != null)
                 {
-                    _credential = new UsernamePasswordCredential(username, password, clientId, tenantId, _pipeline);
+                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _pipeline);
                 }
                 else if (clientCertificatePath != null)
                 {
