@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string entityName,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
-            int? prefetchCount,
+            uint prefetchCount,
             string sessionId,
             bool isSessionReceiver);
 

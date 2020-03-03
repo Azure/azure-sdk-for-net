@@ -260,6 +260,29 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
+        public async Task ReceiveSingleMessageInReceiveAndDeleteMode()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusMessage sentMessage = GetMessage();
+                await sender.SendAsync(sentMessage);
+
+                var clientOptions = new ServiceBusReceiverOptions()
+                {
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                };
+                var receiver = client.GetReceiver(scope.QueueName, clientOptions);
+                var receivedMessage = await receiver.ReceiveAsync();
+                Assert.AreEqual(sentMessage.MessageId, receivedMessage.MessageId);
+
+                var message = receiver.PeekAsync();
+                Assert.IsNull(message.Result);
+            }
+        }
+
+        [Test]
         public async Task RenewMessageLock()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

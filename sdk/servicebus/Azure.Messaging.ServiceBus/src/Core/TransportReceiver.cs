@@ -42,11 +42,6 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual string SessionId { get; protected set; }
 
         /// <summary>
-        ///
-        /// </summary>
-        public virtual string SessionId { get; protected set; }
-
-        /// <summary>
         ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
         /// </summary>
         ///
@@ -55,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveAsync(
+        public abstract Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
             int maximumMessageCount,
             CancellationToken cancellationToken);
 
@@ -67,6 +62,11 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public abstract Task CloseAsync(CancellationToken cancellationToken);
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public abstract Task OpenLinkAsync(CancellationToken cancellationToken);
 
         /// <summary>
@@ -101,45 +101,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///
         /// </summary>
-        /// <param name="timeout"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
-            TimeSpan timeout,
-            long? fromSequenceNumber,
-            int messageCount = 1,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="lockTokens"></param>
-        /// <param name="timeout"></param>
-        /// <param name="dispositionStatus"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="deadLetterReason"></param>
-        /// <param name="deadLetterDescription"></param>
-        /// <returns></returns>
-        internal abstract Task DisposeMessageRequestResponseAsync(
-            Guid[] lockTokens,
-            TimeSpan timeout,
-            DispositionStatus dispositionStatus,
-            IDictionary<string, object> propertiesToModify = null,
-            string deadLetterReason = null,
-            string deadLetterDescription = null);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="timeout"></param>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
-            TimeSpan timeout,
+        public abstract Task<IList<ServiceBusReceivedMessage>> PeekBatchBySequenceAsync(
             long? fromSequenceNumber,
             int messageCount = 1,
             CancellationToken cancellationToken = default);
@@ -204,10 +170,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
-        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
         public abstract Task<DateTime> RenewLockAsync(
             string lockToken,
-            TimeSpan timeout);
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///
@@ -218,12 +184,5 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken"></param>
         public abstract Task<DateTime> RenewSessionLockAsync(
             CancellationToken cancellationToken);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="timeout"></param>
-        internal abstract Task<ReceivingAmqpLink> GetOrCreateLinkAsync(TimeSpan timeout);
-
     }
 }

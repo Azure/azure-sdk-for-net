@@ -94,6 +94,8 @@ namespace Azure.Messaging.ServiceBus
         ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
         ///
+        internal ServiceBusConnection Connection => _connection;
+
         private readonly ServiceBusConnection _connection;
 
         /// <summary>
@@ -184,7 +186,7 @@ namespace Azure.Messaging.ServiceBus
                 entityName: EntityName,
                 retryPolicy: RetryPolicy,
                 receiveMode: ReceiveMode,
-                prefetchCount: PrefetchCount,
+                prefetchCount: (uint) PrefetchCount,
                 sessionId: sessionId,
                 isSessionReceiver: IsSessionReceiver);
             SessionManager = new ServiceBusSessionManager(_innerReceiver);
@@ -205,7 +207,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> ReceiveBatchAsync(
+        public virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
@@ -214,7 +216,7 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                return await _innerReceiver.ReceiveAsync(maxMessages, cancellationToken).ConfigureAwait(false);
+                return await _innerReceiver.ReceiveBatchAsync(maxMessages, cancellationToken).ConfigureAwait(false);
             }
             finally
             {
@@ -230,8 +232,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<ServiceBusReceivedMessage> ReceiveAsync(
             CancellationToken cancellationToken = default)
         {
-            // TODO implement to use ReceiveBatch
-            IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: 1).ConfigureAwait(false);
+            IEnumerable<ServiceBusReceivedMessage> result = await ReceiveBatchAsync(maxMessages: 1).ConfigureAwait(false);
             foreach (ServiceBusReceivedMessage message in result)
             {
                 return message;
@@ -244,19 +245,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceivedMessage> PeekAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ServiceBusReceivedMessage> PeekAsync(
+            CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusReceivedMessage> result = null;
-            await RetryPolicy.RunOperation(
-                    async (timeout) =>
-                    {
-                        result = await PeekBatchBySequenceInternalAsync(
-                            timeout,
-                            null).ConfigureAwait(false);
-                    },
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
+            IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchBySequenceInternalAsync(
+                fromSequenceNumber: null,
+                maxMessages: 1,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
 
             foreach (ServiceBusReceivedMessage message in result)
             {
@@ -275,7 +271,11 @@ namespace Azure.Messaging.ServiceBus
             long fromSequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchBySequenceAsync(fromSequenceNumber: fromSequenceNumber).ConfigureAwait(false);
+            IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchBySequenceAsync(
+                fromSequenceNumber: fromSequenceNumber,
+                maxMessages: 1)
+                .ConfigureAwait(false);
+
             foreach (ServiceBusReceivedMessage message in result)
             {
                 return message;
@@ -289,26 +289,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> PeekBatchAsync(
+        public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchAsync(
             int maxMessages,
-            CancellationToken cancellationToken = default)
-        {
-            IEnumerable<ServiceBusReceivedMessage> messages = null;
-            await RetryPolicy.RunOperation(
-                    async (timeout) =>
-                    {
-                        messages = await PeekBatchBySequenceInternalAsync(
-                            timeout,
-                            fromSequenceNumber: null,
-                            maxMessages)
-                            .ConfigureAwait(false);
-                    },
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default) =>
+            await PeekBatchBySequenceInternalAsync(
+                fromSequenceNumber: null,
+                maxMessages: maxMessages,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            return messages;
-        }
 
         /// <summary>
         ///
@@ -317,52 +305,40 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusReceivedMessage>> PeekBatchBySequenceAsync(
+        public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchBySequenceAsync(
             long fromSequenceNumber,
             int maxMessages = 1,
-            CancellationToken cancellationToken = default)
-        {
-            IEnumerable<ServiceBusReceivedMessage> messages = null;
-            await RetryPolicy.RunOperation(
-                    async (timeout) =>
-                    {
-                        messages = await PeekBatchBySequenceInternalAsync(
-                            timeout,
-                            fromSequenceNumber: fromSequenceNumber,
-                            maxMessages: maxMessages)
-                            .ConfigureAwait(false);
-                    },
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-
-            return messages;
-        }
-
-        internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
-            await _innerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default) =>
+            await PeekBatchBySequenceInternalAsync(
+                fromSequenceNumber: fromSequenceNumber,
+                maxMessages: maxMessages,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="timeout"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal async Task<IEnumerable<ServiceBusReceivedMessage>> PeekBatchBySequenceInternalAsync(
-            TimeSpan timeout,
+        public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchBySequenceInternalAsync(
             long? fromSequenceNumber,
-            int maxMessages = 1,
-            CancellationToken cancellationToken = default)
-        {
-            return await _innerReceiver.PeekAsync(
-                timeout,
+            int maxMessages,
+            CancellationToken cancellationToken) =>
+            await _innerReceiver.PeekBatchBySequenceAsync(
                 fromSequenceNumber,
                 maxMessages,
                 cancellationToken)
                 .ConfigureAwait(false);
-        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task OpenLinkAsync(CancellationToken cancellationToken) =>
+            await _innerReceiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -581,37 +557,11 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-
+            DateTime lockedUntilUtc = await _innerReceiver.RenewLockAsync(
+                message.LockToken,
+                cancellationToken).ConfigureAwait(false);
+            message.LockedUntilUtc = lockedUntilUtc;
             // MessagingEventSource.Log.MessageRenewLockStart(this.ClientId, 1, lockToken);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var lockedUntilUtc = DateTime.MinValue;
-            try
-            {
-                await RetryPolicy.RunOperation(
-                    async (timeout) =>
-                    {
-                        lockedUntilUtc = await _innerReceiver.RenewLockAsync(
-                            message.LockToken,
-                            timeout).ConfigureAwait(false);
-                    },
-                    EntityName,
-                    _innerReceiver.ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-
-                message.LockedUntilUtc = lockedUntilUtc;
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.MessageRenewLockException(this.ClientId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // this.diagnosticSource.RenewLockStop(activity, lockToken, renewTask?.Status, lockedUntilUtc);
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            // MessagingEventSource.Log.MessageRenewLockStop(this.ClientId);
         }
 
         /// <summary>

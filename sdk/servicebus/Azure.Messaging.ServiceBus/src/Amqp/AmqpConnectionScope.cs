@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public virtual async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
             string entityName,
             TimeSpan timeout,
-            int prefetchCount,
+            uint prefetchCount,
             ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
@@ -496,7 +496,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpConnection connection,
             Uri endpoint,
             TimeSpan timeout,
-            int prefetchCount,
+            uint prefetchCount,
              ReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,

@@ -9,6 +9,7 @@ using Azure.Messaging.ServiceBus.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
+    /// TODO will be removed
     ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusProcessor" />
     ///   to configure its behavior.
     /// </summary>
