@@ -11,7 +11,7 @@
 - Include resource namespace in diagnostics scope. ([#9655](https://github.com/Azure/azure-sdk-for-net/issues/9655))
 - Sanitize header values in exceptions. ([#9782](https://github.com/Azure/azure-sdk-for-net/issues/9782))
 
-## 4.0.0 (2019-01-08)
+## 4.0.0 (2020-01-08)
 
 ### Minor changes
 
