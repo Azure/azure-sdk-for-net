@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+		public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -501,7 +501,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
-
+        
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>

@@ -151,5 +151,54 @@ namespace Sql.Tests
                 sqlClient.Servers.Delete(resourceGroup.Name, serverName2);
             }
         }
+
+        [Fact]
+        public void TestServerMinimalTlsVersion()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string location = TestEnvironmentUtilities.DefaultEuapPrimaryLocationId;
+                string minTlsVersion1_1 = "1.1";
+                string minTlsVersion1_2 = "1.2";
+
+                string serverName = SqlManagementTestUtilities.GenerateName();
+                string login = "dummylogin";
+                string password = "Un53cuRE!";
+                string version12 = "12.0";
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                    {
+                        { "tagKey1", "TagValue1" }
+                    };
+
+                // Create a server with TLS version enforcement set to > 1.1
+                var server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
+                {
+                    AdministratorLogin = login,
+                    AdministratorLoginPassword = password,
+                    Version = version12,
+                    Tags = tags,
+                    Location = location,
+                    MinimalTlsVersion = minTlsVersion1_1
+                });
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, minimalTlsVersion: minTlsVersion1_1);
+
+                // Get server and verify that minimal TLS version is correct
+                server = sqlClient.Servers.Get(resourceGroup.Name, serverName);
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, minimalTlsVersion: minTlsVersion1_1);
+
+                // Update TLS version enforcement on the server to > 1.2
+                server = sqlClient.Servers.CreateOrUpdate(resourceGroup.Name, serverName, new Server()
+                {
+                    Location = location,
+                    MinimalTlsVersion = minTlsVersion1_2
+                });
+                SqlManagementTestUtilities.ValidateServer(server, serverName, login, version12, tags, location, minimalTlsVersion: minTlsVersion1_2); ;
+
+                // Drop the server
+                sqlClient.Servers.Delete(resourceGroup.Name, serverName);
+            }
+        }
     }
 }

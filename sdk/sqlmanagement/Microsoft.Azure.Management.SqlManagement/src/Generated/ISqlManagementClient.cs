@@ -491,7 +491,7 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedInstanceLongTermRetentionPoliciesOperations.
         /// </summary>
         IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; }
-        
+
         /// <summary>
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
