@@ -19,7 +19,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string SupportedEditions = "supportedEditions";
         public const string SupportedElasticPoolEditions = "supportedElasticPoolEditions";
         public const string SupportedManagedInstanceVersions = "supportedManagedInstanceVersions";
-        public const string SupportedInstancePoolEditions = "supportedInstancePoolEditions";
-        public const string SupportedManagedInstanceEditions = "supportedManagedInstanceEditions";
     }
 }

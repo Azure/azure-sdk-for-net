@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of a name availability check.
+    /// A response indicating whether the specified name for a resource is
+    /// available.
     /// </summary>
     public partial class CheckNameAvailabilityResponse
     {
@@ -31,20 +32,20 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the CheckNameAvailabilityResponse
         /// class.
         /// </summary>
-        /// <param name="name">The name whose availability was checked.</param>
         /// <param name="available">True if the name is available, otherwise
         /// false.</param>
-        /// <param name="reason">The reason code explaining why the name is
-        /// unavailable. Will be undefined if the name is available. Possible
-        /// values include: 'Invalid', 'AlreadyExists'</param>
         /// <param name="message">A message explaining why the name is
-        /// unavailable. Will be undefined if the name is available.</param>
-        public CheckNameAvailabilityResponse(string name = default(string), bool? available = default(bool?), CheckNameAvailabilityReason? reason = default(CheckNameAvailabilityReason?), string message = default(string))
+        /// unavailable. Will be null if the name is available.</param>
+        /// <param name="name">The name whose availability was checked.</param>
+        /// <param name="reason">The reason code explaining why the name is
+        /// unavailable. Will be null if the name is available. Possible values
+        /// include: 'Invalid', 'AlreadyExists'</param>
+        public CheckNameAvailabilityResponse(bool? available = default(bool?), string message = default(string), string name = default(string), CheckNameAvailabilityReason? reason = default(CheckNameAvailabilityReason?))
         {
-            Name = name;
             Available = available;
-            Reason = reason;
             Message = message;
+            Name = name;
+            Reason = reason;
             CustomInit();
         }
 
@@ -54,31 +55,31 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the name whose availability was checked.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
         /// Gets true if the name is available, otherwise false.
         /// </summary>
         [JsonProperty(PropertyName = "available")]
         public bool? Available { get; private set; }
 
         /// <summary>
+        /// Gets a message explaining why the name is unavailable. Will be null
+        /// if the name is available.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
+
+        /// <summary>
+        /// Gets the name whose availability was checked.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
         /// Gets the reason code explaining why the name is unavailable. Will
-        /// be undefined if the name is available. Possible values include:
+        /// be null if the name is available. Possible values include:
         /// 'Invalid', 'AlreadyExists'
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
         public CheckNameAvailabilityReason? Reason { get; private set; }
-
-        /// <summary>
-        /// Gets a message explaining why the name is unavailable. Will be
-        /// undefined if the name is available.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
 
     }
 }

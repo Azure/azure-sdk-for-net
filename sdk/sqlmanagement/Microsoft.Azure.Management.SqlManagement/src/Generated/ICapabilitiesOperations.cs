@@ -33,8 +33,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='include'>
         /// If specified, restricts the response to only include the selected
         /// item. Possible values include: 'supportedEditions',
-        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions',
-        /// 'supportedInstancePoolEditions', 'supportedManagedInstanceEditions'
+        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
