@@ -1,5 +1,8 @@
 # Release History
 
+## 4.1.2
+- Same as version 4.1.1 but has pdb symbols published
+
 ## 4.1.1
 ### Bug fixes
 - Ignore OperationCanceledException while closing Message Pump. [PR 8449](https://github.com/Azure/azure-sdk-for-net/pull/8449)
