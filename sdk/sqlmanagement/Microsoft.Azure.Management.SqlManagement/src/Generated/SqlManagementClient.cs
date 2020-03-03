@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        public virtual IOperations PrivateEndpointConnections { get; private set; }
+		public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
