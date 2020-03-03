@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
@@ -335,7 +336,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 var msg = await qClient.InnerReceiver.ReceiveAsync();
                 await qClient.DeadLetterAsync(msg.SystemProperties.LockToken);
 
-                var runtimeInfo = await client.GetQueueRuntimeInfoAsync(queueName);
+                var runtimeInfos = await client.GetQueuesRuntimeInfoAsync();
+
+                Assert.True(runtimeInfos.Count > 1);
+                var runtimeInfo = runtimeInfos.FirstOrDefault(e => e.Path.Equals(queueName, StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotNull(runtimeInfo);
 
                 Assert.Equal(queueName, runtimeInfo.Path);
                 Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
