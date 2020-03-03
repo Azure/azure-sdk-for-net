@@ -12,9 +12,11 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for Azure SQL Server Azure Active Directory administrator API version 2019-06-01-preview.
+- Added support for Azure SQL Server Azure Active Directory administrator API` version 2019-06-01-preview.
 - Added PublicNetworkAccess to Server properties
 - Added PrivateEndpointConnections to be returned as part of Server properties
+- Added Long Term Retention for Managed Instances APIs (2019-06-01-preview)
+- Added a new create mode (restore from LTR backup) to Mangaed Databases
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
