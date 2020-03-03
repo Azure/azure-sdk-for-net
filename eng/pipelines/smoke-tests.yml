@@ -62,6 +62,10 @@ jobs:
         continueOnError: true
         displayName: Validate Package Versions
 
+      - script: dotnet restore --source '$(BlobFeedUrl)' --source 'https://api.nuget.org/v3/index.json' ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
+
+
       - script: >
           dotnet list
           ./common/SmokeTests/SmokeTest/SmokeTest.csproj
