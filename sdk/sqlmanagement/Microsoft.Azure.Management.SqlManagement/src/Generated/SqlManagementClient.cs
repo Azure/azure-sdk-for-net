@@ -521,18 +521,7 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the I
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        Operations.
+        /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
         public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
 
