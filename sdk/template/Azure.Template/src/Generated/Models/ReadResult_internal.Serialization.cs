@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class RawExtractedPage : IUtf8JsonSerializable
+    public partial class ReadResult_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,9 +41,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
             writer.WriteEndObject();
         }
-        internal static RawExtractedPage DeserializeRawExtractedPage(JsonElement element)
+        internal static ReadResult_internal DeserializeReadResult_internal(JsonElement element)
         {
-            RawExtractedPage result = new RawExtractedPage();
+            ReadResult_internal result = new ReadResult_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
@@ -86,10 +86,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Lines = new List<RawExtractedLine>();
+                    result.Lines = new List<TextLine_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Lines.Add(RawExtractedLine.DeserializeRawExtractedLine(item));
+                        result.Lines.Add(TextLine_internal.DeserializeTextLine_internal(item));
                     }
                     continue;
                 }

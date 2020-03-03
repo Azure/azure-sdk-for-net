@@ -8,17 +8,18 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedTableCell
     {
-        internal ExtractedTableCell(DataTableCell_internal result)
+        internal ExtractedTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, ICollection<string> references)
         {
-            BoundingBox = new BoundingBox(result.BoundingBox);
-            ColumnIndex = result.ColumnIndex;
-            ColumnSpan = result.ColumnSpan.HasValue ? result.ColumnSpan.Value : 1;
-            Confidence = result.Confidence;
-            IsFooter = result.IsFooter.HasValue ? result.IsFooter.Value : false;
-            IsHeader = result.IsHeader.HasValue ? result.IsHeader.Value : false;
-            RowIndex = result.RowIndex;
-            RowSpan = result.RowSpan.HasValue ? result.RowSpan.Value : 1;
-            Text = result.Text;
+            BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
+            ColumnIndex = dataTableCell.ColumnIndex;
+            ColumnSpan = dataTableCell.ColumnSpan.HasValue ? dataTableCell.ColumnSpan.Value : 1;
+            Confidence = dataTableCell.Confidence;
+            IsFooter = dataTableCell.IsFooter.HasValue ? dataTableCell.IsFooter.Value : false;
+            IsHeader = dataTableCell.IsHeader.HasValue ? dataTableCell.IsHeader.Value : false;
+            RowIndex = dataTableCell.RowIndex;
+            RowSpan = dataTableCell.RowSpan.HasValue ? dataTableCell.RowSpan.Value : 1;
+            Text = dataTableCell.Text;
+            RawExtractedItems = ExtractedField.ConvertTextReferences(readResult, references);
         }
 
         public BoundingBox BoundingBox { get; }
@@ -31,6 +32,6 @@ namespace Azure.AI.FormRecognizer.Models
         public int RowSpan { get; }
         public string Text { get; }
 
-        public IReadOnlyList<RawExtractedWordReference> RawWordReferences { get; internal set; }
+        public IReadOnlyList<RawExtractedItem> RawExtractedItems { get; internal set; }
     }
 }

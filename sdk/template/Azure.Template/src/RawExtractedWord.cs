@@ -4,12 +4,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("TextWord")]
-    public partial class RawExtractedWord
+    public class RawExtractedWord : RawExtractedItem
     {
+        public RawExtractedWord(TextWord_internal textWord)
+        {
+            BoundingBox = new BoundingBox(textWord.BoundingBox);
+            Confidence = textWord.Confidence;
+            Text = textWord.Text;
+        }
+
+        public float? Confidence { get; }
+
+        public static implicit operator string(RawExtractedWord word) => word.Text;
     }
 }

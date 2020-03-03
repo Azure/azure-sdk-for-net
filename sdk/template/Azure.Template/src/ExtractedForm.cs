@@ -11,20 +11,20 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedForm
     {
-        internal ExtractedForm(ICollection<PageResult_internal> pageResults, ICollection<RawExtractedPage> rawExtractedPages)
+        internal ExtractedForm(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             // Unsupervised
-            Pages = SetPages(pageResults, rawExtractedPages);
+            Pages = SetPages(pageResults, readResults);
 
             // TODO: how to set PageRange?
         }
 
-        internal ExtractedForm(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<RawExtractedPage> rawExtractedPages)
+        internal ExtractedForm(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             // Supervised
             LearnedFormType = documentResult.DocType;
             PageRange = new PageRange(documentResult.PageRange);
-            Pages = ConvertPages(documentResult, pageResults, rawExtractedPages);
+            Pages = ConvertPages(documentResult, pageResults, readResults);
         }
 
         public string LearnedFormType { get; internal set; }
@@ -33,22 +33,22 @@ namespace Azure.AI.FormRecognizer.Models
 
         public IReadOnlyList<ExtractedPage> Pages { get; }
 
-        private IReadOnlyList<ExtractedPage> SetPages(ICollection<PageResult_internal> pageResults, ICollection<RawExtractedPage> rawExtractedPages)
+        private IReadOnlyList<ExtractedPage> SetPages(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             // TODO: Are OCR results better at the form level?
             // TODO: How bad is the perf here, manipulating collections with Linq?
-            Debug.Assert(pageResults.Count == rawExtractedPages.Count);
+            Debug.Assert(pageResults.Count == readResults.Count);
 
             List<ExtractedPage> pages = new List<ExtractedPage>();
 
             List<PageResult_internal> pageResultList = pageResults.ToList();
-            List<RawExtractedPage> rawExtractedPageList = rawExtractedPages.ToList();
+            List<ReadResult_internal> readResultList = readResults.ToList();
 
             //foreach (var result in pageResults)
             for (int i = 0; i < pageResultList.Count; i++)
             {
                 PageResult_internal pageResult = pageResultList[i];
-                RawExtractedPage rawExtractedPage = rawExtractedPageList[i];
+                ReadResult_internal rawExtractedPage = readResultList[i];
 
                 SetLearnedFormType(pageResult.ClusterId);
 
@@ -59,11 +59,11 @@ namespace Azure.AI.FormRecognizer.Models
             return pages.AsReadOnly();
         }
 
-        private static IReadOnlyList<ExtractedPage> ConvertPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<RawExtractedPage> rawExtractedPages)
+        private static IReadOnlyList<ExtractedPage> ConvertPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             List<ExtractedPage> pages = new List<ExtractedPage>();
             List<PageResult_internal> pageResultsList = pageResults.ToList();
-            List<RawExtractedPage> rawPages = rawExtractedPages.ToList();
+            List<ReadResult_internal> readResultsList = readResults.ToList();
 
             // TODO: improve performance here
             Dictionary<int, List<ExtractedField>> fieldsByPage = new Dictionary<int, List<ExtractedField>>();
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Models
             foreach (var pageFields in fieldsByPage)
             {
                 int pageNumber = pageFields.Key;
-                var page = new ExtractedPage(pageNumber, pageFields.Value, pageResultsList[pageNumber - 1], rawPages[pageNumber - 1]);
+                var page = new ExtractedPage(pageNumber, pageFields.Value, pageResultsList[pageNumber - 1], readResultsList[pageNumber - 1]);
                 pages.Add(page);
             }
 

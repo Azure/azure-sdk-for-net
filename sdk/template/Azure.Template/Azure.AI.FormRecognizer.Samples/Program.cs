@@ -16,14 +16,17 @@ namespace Azure.AI.FormRecognizer.Samples
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //Console.WriteLine("Hello World!");
 
             //TrainCustomModel().Wait();
-            ExtractCustomModelStream().Wait();
+            //ExtractCustomModelStream().Wait();
             //ExtractCustomModelUri().Wait();
+            //ExtractCustomModelPlusOcrData().Wait();
 
             //TrainCustomLabeledModel().Wait();
+            //ExtractCustomLabeledModel().Wait();
             //ExtractCustomLabeledModelUri().Wait();
+            ExtractCustomLabeledModelPlusOcrData().Wait();
             //ExtractReceipt();
             //ExtractReceiptUri();
             //ExtractLayout().Wait();
@@ -87,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf, includeRawPageExtractions:true);
+                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
                 if (extractFormOperation.HasValue)
@@ -102,23 +105,23 @@ namespace Azure.AI.FormRecognizer.Samples
 
                         if (page.RawExtractedPage != null)
                         {
-                            foreach (var field in page.Fields)
-                            {
-                                Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+                            //foreach (var field in page.Fields)
+                            //{
+                            //    Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
 
-                                if (field.LabelRawWordReferences != null)
-                                {
-                                    foreach (var wordReference in field.LabelRawWordReferences)
-                                    {
-                                        Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
-                                    }
-                                }
+                            //    if (field.LabelRawWordReferences != null)
+                            //    {
+                            //        foreach (var wordReference in field.LabelRawWordReferences)
+                            //        {
+                            //            Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
+                            //        }
+                            //    }
 
-                                foreach (var wordReference in field.ValueRawWordReferences)
-                                {
-                                    Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
-                                }
-                            }
+                            //    foreach (var wordReference in field.ValueRawWordReferences)
+                            //    {
+                            //        Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
+                            //    }
+                            //}
                         }
                     }
                 }
@@ -127,6 +130,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
         private static async Task ExtractCustomModelUri()
         {
+            Console.WriteLine("Unsupervised Model Table: ");
+
             Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
             string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
 
@@ -151,8 +156,65 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
+        private static async Task ExtractCustomModelPlusOcrData()
+        {
+            string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
+            string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
+            {
+                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf, includeRawPageExtractions: true);
+
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                if (extractFormOperation.HasValue)
+                {
+                    ExtractedForm form = extractFormOperation.Value;
+                    foreach (var page in form.Pages)
+                    {
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
+
+                        if (page.RawExtractedPage != null)
+                        {
+                            foreach (var field in page.Fields)
+                            {
+                                Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+
+                                if (field.LabelRawExtractedItems != null)
+                                {
+                                    foreach (var extractedItem in field.LabelRawExtractedItems)
+                                    {
+                                        Console.WriteLine(extractedItem.Text);
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("<Unlabeled>");
+                                }
+
+                                foreach (var extractedItem in field.ValueRawExtractedItems)
+                                {
+                                    Console.WriteLine(extractedItem.Text);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         private static async Task ExtractCustomLabeledModel()
         {
+            Console.WriteLine("Supervised Model - Stream Input: ");
+
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
             string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
 
@@ -183,8 +245,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
         private static async Task ExtractCustomLabeledModelUri()
         {
+            Console.WriteLine("Supervised Model - URI Input: ");
+
             // TODO: This fails, with a URI that works for unsupervised.  What is wrong?
-            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
+            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf-INVALID");
             string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
@@ -207,6 +271,65 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
         }
+
+        private static async Task ExtractCustomLabeledModelPlusOcrData()
+        {
+            // TODO: Q14 - currently blocked due to deserialization of array only handles string.
+            Console.WriteLine("Supervised Model - Stream Input: ");
+
+            string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
+            string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
+            {
+                var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf, includeRawPageExtractions: true);
+
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                if (extractFormOperation.HasValue)
+                {
+                    ExtractedForm form = extractFormOperation.Value;
+                    foreach (var page in form.Pages)
+                    {
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
+
+                        if (page.RawExtractedPage != null)
+                        {
+                            foreach (var field in page.Fields)
+                            {
+                                Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+
+                                if (field.LabelRawExtractedItems != null)
+                                {
+                                    foreach (var extractedItem in field.LabelRawExtractedItems)
+                                    {
+                                        Console.WriteLine(extractedItem.Text);
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("<Unlabeled>");
+                                }
+
+                                foreach (var extractedItem in field.ValueRawExtractedItems)
+                                {
+                                    Console.WriteLine(extractedItem.Text);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         private static void ExtractReceipt()
         {

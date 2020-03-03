@@ -4,15 +4,36 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("TextLine")]
-    public partial class RawExtractedLine
+    public class RawExtractedLine : RawExtractedItem
     {
-        // TODO: Q6 - I'd like to turn this property into a string.
-        //[CodeGenSchemaMember("Language")]
-        //internal string CustomizedStringProperty { get; set; }
+        public RawExtractedLine(TextLine_internal textLine)
+        {
+            Text = textLine.Text;
+            BoundingBox = new BoundingBox(textLine.BoundingBox);
+            Language = textLine.Language;
+            Words = ConvertWords(textLine.Words);
+        }
+
+        /// <summary> Language code. </summary>
+        public Language_internal? Language { get; internal set; }
+        /// <summary> List of words in the text line. </summary>
+        public IReadOnlyList<RawExtractedWord> Words { get; internal set; }
+
+        public static implicit operator string(RawExtractedLine line) => line.Text;
+
+        private static IReadOnlyList<RawExtractedWord> ConvertWords(ICollection<TextWord_internal> textWords)
+        {
+            List<RawExtractedWord> rawWords = new List<RawExtractedWord>();
+
+            foreach (TextWord_internal textWord in textWords)
+            {
+                rawWords.Add(new RawExtractedWord(textWord));
+            }
+
+            return rawWords.AsReadOnly();
+        }
     }
 }

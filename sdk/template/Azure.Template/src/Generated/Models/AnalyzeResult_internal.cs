@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Version of schema used for this result. </summary>
         public string Version { get; set; }
         /// <summary> Text extracted from the input. </summary>
-        public ICollection<RawExtractedPage> ReadResults { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.RawExtractedPage>();
+        public ICollection<ReadResult_internal> ReadResults { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.ReadResult_internal>();
         /// <summary> Page-level information extracted from the input. </summary>
         public ICollection<PageResult_internal> PageResults { get; set; }
         /// <summary> Document-level information extracted from the input. </summary>

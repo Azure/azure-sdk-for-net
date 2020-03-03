@@ -79,12 +79,12 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<RawExtractedPage> rawExtractedPages)
+        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
-            Debug.Assert(pageResults.Count == rawExtractedPages.Count);
+            Debug.Assert(pageResults.Count == readResults.Count);
 
             List<ExtractedLayoutPage> pages = new List<ExtractedLayoutPage>();
-            List<RawExtractedPage> rawPages = rawExtractedPages.ToList();
+            List<ReadResult_internal> rawPages = readResults.ToList();
 
             foreach (var page in pageResults)
             {

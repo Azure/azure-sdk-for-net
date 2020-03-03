@@ -10,21 +10,21 @@ namespace Azure.AI.FormRecognizer.Models
     public class ExtractedPage
     {
         // Unsupervised
-        internal ExtractedPage(PageResult_internal pageResult, RawExtractedPage rawExtractedPage)
+        internal ExtractedPage(PageResult_internal pageResult, ReadResult_internal readResult)
         {
             PageNumber = pageResult.Page;
-            Fields = ConvertFields(pageResult.KeyValuePairs);
-            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables);
-            RawExtractedPage = rawExtractedPage;
+            Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
+            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult);
+            RawExtractedPage = new RawExtractedPage(readResult);
         }
 
         // Supervised
-        internal ExtractedPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult, RawExtractedPage rawExtractedPage)
+        internal ExtractedPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult, ReadResult_internal readResult)
         {
             PageNumber = pageNumber;
             Fields = ConvertFields(fields);
-            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables);
-            RawExtractedPage = rawExtractedPage;
+            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult);
+            RawExtractedPage = new RawExtractedPage(readResult);
         }
 
         public int PageNumber { get; }
@@ -34,12 +34,12 @@ namespace Azure.AI.FormRecognizer.Models
 
         public RawExtractedPage RawExtractedPage { get; }
 
-        private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs)
+        private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
         {
             List<ExtractedField> fields = new List<ExtractedField>();
             foreach (var kvp in keyValuePairs)
             {
-                ExtractedField field = new ExtractedField(kvp);
+                ExtractedField field = new ExtractedField(kvp, readResult);
                 fields.Add(field);
             }
             return fields.AsReadOnly();
