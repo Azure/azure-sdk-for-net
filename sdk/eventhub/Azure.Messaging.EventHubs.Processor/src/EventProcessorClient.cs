@@ -848,7 +848,10 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (EventHubsException ex)
                     {
-                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex.InnerException ?? ex, cancellationToken);
+                        var partitionId = Resources.OperationClaimOwnership.Equals(ex.GetFailureOperation()) ?
+                            ex.GetFailureData<string>() :
+                            null;
+                        var errorEventArgs = new ProcessErrorEventArgs(partitionId, ex.Message, ex.InnerException ?? ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);
                     }
                     catch (Exception ex)
