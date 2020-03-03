@@ -12,7 +12,7 @@ namespace Azure.Identity
     public class TokenCredentialOptions : ClientOptions
     {
         /// <summary>
-        /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For common authority hosts for known azure cloud instances see <see cref="KnownAuthorityHosts"/>.
+        /// The host of the Azure Active Directory authority. The default is https://login.microsoftonline.com/. For well known authority hosts for Azure cloud instances see <see cref="KnownAuthorityHosts"/>.
         /// </summary>
         public Uri AuthorityHost { get; set; }
 
