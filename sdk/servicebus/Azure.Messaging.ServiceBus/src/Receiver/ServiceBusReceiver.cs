@@ -5,20 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -75,13 +66,6 @@ namespace Azure.Messaging.ServiceBus
         /// </value>
         ///
         public bool IsClosed { get; protected set; } = false;
-
-        /// <summary>
-        ///   Indicates whether the client has ownership of the associated <see cref="ServiceBusConnection" />
-        ///   and should take responsibility for managing its lifespan.
-        /// </summary>
-        ///
-        internal bool OwnsConnection { get; set; } = false;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -196,10 +180,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
-        protected ServiceBusReceiver()
-        {
-            OwnsConnection = false;
-        }
+        protected ServiceBusReceiver(){}
 
         /// <summary>
         ///  Receives a batch of <see cref="ServiceBusMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
@@ -593,27 +574,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiver), EntityName, clientHash, ex.Message);
                 transportConsumerException = ex;
-            }
-
-            // An exception when closing the connection supersedes one observed when closing the
-            // individual transport clients.
-
-            try
-            {
-                if (OwnsConnection)
-                {
-                    await _connection.CloseAsync().ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiver), EntityName, clientHash, ex.Message);
-                transportConsumerException = null;
-                throw;
-            }
-            finally
-            {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiver), EntityName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual
