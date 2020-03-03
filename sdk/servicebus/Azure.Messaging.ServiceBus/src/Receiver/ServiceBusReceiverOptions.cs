@@ -4,6 +4,7 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -23,7 +24,22 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public int PrefetchCount = 0;
+        public int PrefetchCount
+        {
+            get
+            {
+                return _prefetchCount;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
+                }
+                _prefetchCount = value;
+            }
+        }
+        private int _prefetchCount = 0;
 
         /// <summary>
         ///

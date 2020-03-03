@@ -178,7 +178,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityName,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
-            int? prefetchCount,
+            uint prefetchCount,
             string sessionId,
             bool isSessionReceiver)
         {

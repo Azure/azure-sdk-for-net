@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public ReceiveMode ReceiveMode { get; set; }
+        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
         ///
@@ -105,7 +105,22 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public int PrefetchCount { get; set; }
+        public int PrefetchCount
+        {
+            get
+            {
+                return _prefetchCount;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
+                }
+                _prefetchCount = value;
+            }
+        }
+        private int _prefetchCount = 0;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
@@ -115,7 +130,7 @@ namespace Azure.Messaging.ServiceBus
         ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed => Receiver.IsClosed;
+        public bool IsClosed => Receiver == null || Receiver.IsClosed;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
