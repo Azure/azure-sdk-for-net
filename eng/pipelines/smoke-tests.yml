@@ -41,7 +41,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - pwsh: Register-PackageSource -Name NightlyFeed -Location $(BlobFeedUrl) -ProviderName Nuget
+      - pwsh: Register-PackageSource -Name NightlyFeed -Location '$(BlobFeedUrl)' -ProviderName Nuget
         displayName: Register nightly feed package source
 
       - task: PowerShell@2
@@ -62,11 +62,10 @@ jobs:
         continueOnError: true
         displayName: Validate Package Versions
 
-      - script: dotnet restore --source '$(BlobFeedUrl)' --source 'https://api.nuget.org/v3/index.json' ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
-
-      - script: >
+      - pwsh: >
           dotnet list
           ./common/SmokeTests/SmokeTest/SmokeTest.csproj
           package
@@ -74,7 +73,7 @@ jobs:
           --include-transitive
         displayName: dotnet list package
 
-      - script: dotnet run .\common\SmokeTests\SmokeTest\SmokeTest.csproj package --framework $(TestTargetFramework)
+      - pwsh: dotnet run .\common\SmokeTests\SmokeTest\SmokeTest.csproj package --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
         env:
           KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
