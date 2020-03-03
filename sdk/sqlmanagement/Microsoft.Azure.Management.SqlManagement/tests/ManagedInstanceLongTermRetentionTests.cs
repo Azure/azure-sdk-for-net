@@ -24,9 +24,13 @@ namespace Sql.Tests
         [Fact]
         public void TestManagedInstanceLongTermRetentionPolicies()
         {
+            // MANUAL TEST INSTRUCTIONS
+            // PlayBack Mode:
+            //     Make sure information below matches what is gets recorded in Session Records
+            //
             string locationName = "southeastasia";
-            string resourceGroupName = "cl_stage_sea_cv";
-            string managedInstanceName = "seageodr-gen5-gp";
+            string resourceGroupName = "sdk-test-rg";
+            string managedInstanceName = "sdk-test-mi";
             string defaultPolicy = "PT0S";
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -57,22 +61,22 @@ namespace Sql.Tests
             }
         }
 
-        [Fact (Skip = "Manual test due to long setup time required (over 18 hours).")]
+        [Fact]
         public void TestManagedIntanceLongTermRetentionCrud()
         {
             // MANUAL TEST INSTRUCTIONS
             // PlayBack Mode:
-            //     Remove skip flag
+            //     Make sure information below matches what is gets recorded in Session Records
             // Record Mode:
             //     Create a server and database and fill in the appropriate information below
             //     Set the weekly retention on the database so that the first backup gets picked up
             //     Wait about 18 hours until it gets properly copied and you see the backup when run get backups
             //     OR
-            //     Use existing instance/database that already has LTR backups (Remove skip flag)
+            //     Use existing instance/database that already has LTR backups
             //
             string locationName = "southeastasia";
-            string resourceGroupName = "cl_stage_sea_cv";
-            string managedInstanceName = "seageodr-gen5-gp";
+            string resourceGroupName = "sdk-test-rg";
+            string managedInstanceName = "sdk-test-mi";
             string databaseName = "test";
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -107,22 +111,22 @@ namespace Sql.Tests
             }
         }
 
-        [Fact (Skip = "Manual test due to long setup time required (over 18 hours).")]
+        [Fact]
         public void TestManagedInstanceLongTermRetentionResourceGroupBasedCrud()
         {
             // MANUAL TEST INSTRUCTIONS
             // PlayBack Mode:
-            //     Remove skip flag
+            //     Make sure information below matches what is gets recorded in Session Records
             // Record Mode:
             //     Create a server and database and fill in the appropriate information below
             //     Set the weekly retention on the database so that the first backup gets picked up
             //     Wait about 18 hours until it gets properly copied and you see the backup when run get backups
             //     OR
-            //     Use existing instance/database that already has LTR backups (Remove skip flag)
+            //     Use existing instance/database that already has LTR backups
             //
             string locationName = "southeastasia";
-            string resourceGroupName = "cl_stage_sea_cv";
-            string managedInstanceName = "seageodr-gen5-gp";
+            string resourceGroupName = "sdk-test-rg";
+            string managedInstanceName = "sdk-test-mi";
             string databaseName = "test";
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
