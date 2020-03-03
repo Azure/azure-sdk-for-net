@@ -83,7 +83,10 @@ namespace Azure.Search.Tests
             private static string GetEnvVar(string name)
             {
                 string value = Environment.GetEnvironmentVariable(name);
-                Assert.IsFalse(string.IsNullOrEmpty(value), $"Could not find environment variable {name}");
+                if (string.IsNullOrEmpty(value))
+                {
+                    Assert.Inconclusive($"Could not find environment variable {name} required to run these tests live.");
+                }
                 return value;
             }
         }

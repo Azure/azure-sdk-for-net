@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
-        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+        public virtual IOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -498,30 +498,10 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkloadGroupsOperations.
-        /// </summary>
-        public virtual IWorkloadGroupsOperations WorkloadGroups { get; private set; }
-
-        /// <summary>
-        /// Gets the IWorkloadClassifiersOperations.
-        /// </summary>
-        public virtual IWorkloadClassifiersOperations WorkloadClassifiers { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
-
-        /// <summary>
-        /// Gets the IManagedDatabasesOperations.
-        /// </summary>
-        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerAzureADAdministratorsOperations.
-        /// </summary>
-        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
-
+        
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
@@ -534,6 +514,27 @@ namespace Microsoft.Azure.Management.Sql
         {
             Initialize();
         }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
+
+        /// <summary>
+        /// Gets the I
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        Operations.
+        /// </summary>
+        public virtual IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -752,7 +753,7 @@ namespace Microsoft.Azure.Management.Sql
             {
                 Credentials.InitializeServiceClient(this);
             }
-        }
+        }        
 
         /// <summary>
         /// An optional partial-method to perform custom initialization.
@@ -848,8 +849,6 @@ namespace Microsoft.Azure.Management.Sql
             Capabilities = new CapabilitiesOperations(this);
             LongTermRetentionManagedInstanceBackups = new LongTermRetentionManagedInstanceBackupsOperations(this);
             ManagedInstanceLongTermRetentionPolicies = new ManagedInstanceLongTermRetentionPoliciesOperations(this);
-            WorkloadGroups = new WorkloadGroupsOperations(this);
-            WorkloadClassifiers = new WorkloadClassifiersOperations(this);
             ManagedDatabaseRestoreDetails = new ManagedDatabaseRestoreDetailsOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);

@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusConnectionOptions
+    public class ServiceBusClientOptions
     {
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
@@ -61,13 +61,13 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="ServiceBusConnectionOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="ServiceBusClientOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///        ///
-        /// <returns>A new copy of <see cref="ServiceBusConnectionOptions" />.</returns>
+        /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
         ///
-        public ServiceBusConnectionOptions Clone() =>
-            new ServiceBusConnectionOptions
+        public ServiceBusClientOptions Clone() =>
+            new ServiceBusClientOptions
             {
                 TransportType = TransportType,
                 Proxy = Proxy

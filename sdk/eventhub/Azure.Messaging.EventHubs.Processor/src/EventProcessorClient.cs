@@ -714,13 +714,16 @@ namespace Azure.Messaging.EventHubs
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
                 using DiagnosticScope diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-                diagnosticScope.AddAttribute("kind", DiagnosticProperty.ConsumerKind);
+                diagnosticScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind);
+                diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
+                diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
 
                 if (diagnosticScope.IsEnabled
                     && partitionEvent.Data != null
                     && EventDataInstrumentation.TryExtractDiagnosticId(partitionEvent.Data, out string diagnosticId))
                 {
                     diagnosticScope.AddLink(diagnosticId);
+                    diagnosticScope.AddAttribute(DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds());
                 }
 
                 diagnosticScope.Start();
