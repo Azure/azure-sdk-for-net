@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.0.2-dev.*" />
     <PackageReference Include="Azure.Identity" Version="1.0.0-dev.*" />
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-dev.*" />
     <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.0.0-dev.*" />
