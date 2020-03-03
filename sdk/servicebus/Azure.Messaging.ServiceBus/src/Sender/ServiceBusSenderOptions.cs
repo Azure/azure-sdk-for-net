@@ -12,10 +12,10 @@ namespace Azure.Messaging.ServiceBus
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusSenderClientOptions : ClientOptions
+    public class ServiceBusSenderOptions : ClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
-        private ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
+        private ServiceBusClientOptions _connectionOptions = new ServiceBusClientOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Gets or sets the options used for configuring the connection to the Service Bus service.
         /// </summary>
         ///
-        public ServiceBusConnectionOptions ConnectionOptions
+        internal ServiceBusClientOptions ConnectionOptions
         {
             get => _connectionOptions;
             set
@@ -80,13 +80,13 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="ServiceBusSenderClientOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="ServiceBusSenderOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ServiceBusSenderClientOptions" />.</returns>
+        /// <returns>A new copy of <see cref="ServiceBusSenderOptions" />.</returns>
         ///
-        internal ServiceBusSenderClientOptions Clone() =>
-            new ServiceBusSenderClientOptions
+        internal ServiceBusSenderOptions Clone() =>
+            new ServiceBusSenderOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()

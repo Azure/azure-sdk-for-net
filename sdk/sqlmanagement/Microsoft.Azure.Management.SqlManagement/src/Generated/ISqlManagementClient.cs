@@ -493,16 +493,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; }
 
         /// <summary>
-        /// Gets the IWorkloadGroupsOperations.
-        /// </summary>
-        IWorkloadGroupsOperations WorkloadGroups { get; }
-
-        /// <summary>
-        /// Gets the IWorkloadClassifiersOperations.
-        /// </summary>
-        IWorkloadClassifiersOperations WorkloadClassifiers { get; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }

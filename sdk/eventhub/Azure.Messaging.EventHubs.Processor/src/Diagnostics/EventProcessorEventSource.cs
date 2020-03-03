@@ -196,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(10, Level = EventLevel.Error, Message = "An exception occurred while stopping a partition processing task for partition id '{0}' with reason '{1}'. (Error Message: '{2}')")]
+        [Event(10, Level = EventLevel.Error, Message = "An exception occurred while stopping a partition processing task for partition id '{0}'. (Error Message: '{1}')")]
         public virtual void PartitionProcessingError(string partitionId,
                                                      string errorMessage)
         {
