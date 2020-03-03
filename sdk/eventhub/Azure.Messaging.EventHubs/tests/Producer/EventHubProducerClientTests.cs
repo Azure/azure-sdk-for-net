@@ -779,13 +779,19 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   the producer being tested.
         /// </summary>
         ///
+        /// <remarks>
+        ///   <see cref="AsEnumerable{T}" /> must be overriden because it's called
+        ///   when instrumenting events for distributed tracing.  We can safely return
+        ///   <c>null</c> here because it's not being actually tested by this test class.
+        /// </remarks>
+        ///
         private class MockTransportBatch : TransportEventBatch
         {
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
             public override int Count { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
-            public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
+            public override IEnumerable<T> AsEnumerable<T>() => null;
             public override void Dispose() => throw new NotImplementedException();
         }
     }
