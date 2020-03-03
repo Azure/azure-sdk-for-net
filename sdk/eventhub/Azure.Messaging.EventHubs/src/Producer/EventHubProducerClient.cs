@@ -425,7 +425,7 @@ namespace Azure.Messaging.EventHubs.Producer
             events = (events as IList<EventData>) ?? events.ToList();
             InstrumentMessages(events);
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
+            using DiagnosticScope scope = CreateDiagnosticScope(events);
 
             try
             {
@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
+            using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.AsEnumerable<EventData>());
 
             try
             {
@@ -650,15 +650,29 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   events.
         /// </summary>
         ///
+        /// <param name="events">The events to which the scope will be linked.</param>
+        ///
         /// <returns>The requested <see cref="DiagnosticScope" />.</returns>
         ///
-        private DiagnosticScope CreateDiagnosticScope()
+        private DiagnosticScope CreateDiagnosticScope(IEnumerable<EventData> events)
         {
             DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+
+            if (scope.IsEnabled)
+            {
+                foreach (var eventData in events)
+                {
+                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                    {
+                        scope.AddLink(diagnosticId);
+                    }
+                }
+            }
+
             scope.Start();
 
             return scope;

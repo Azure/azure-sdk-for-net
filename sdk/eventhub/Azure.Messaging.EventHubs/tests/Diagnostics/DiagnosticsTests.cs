@@ -245,6 +245,80 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerLinksSendScopeToMessageScopesOnSend()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+
+            var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
+            var transportMock = new Mock<TransportProducer>();
+
+            transportMock
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+
+            await producer.SendAsync(new[]
+            {
+                new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } }),
+                new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } })
+            });
+
+            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
+
+            var expectedLinks = new List<string>() { "id", "id2" };
+            var links = sendScope.Links.ToList();
+
+            Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+
+            var batchTransportMock = new Mock<TransportEventBatch>();
+            var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
+            var transportMock = new Mock<TransportProducer>();
+
+            batchTransportMock
+                .Setup(m => m.AsEnumerable<EventData>())
+                .Returns(new List<EventData>()
+                {
+                    new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } }),
+                    new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } })
+                });
+
+            transportMock
+                .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+            EventDataBatch batch = await producer.CreateBatchAsync();
+
+            await producer.SendAsync(batch);
+
+            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
+
+            var expectedLinks = new List<string>() { "id", "id2" };
+            var links = sendScope.Links.ToList();
+
+            Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
+        }
+
+        /// <summary>
         ///   A minimal mock connection, allowing the public attributes
         ///   used with diagnostics to be set.
         /// </summary>
