@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an identity resource.
+    /// Describes a system assigned identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Identity : TrackedResource
+    public partial class SystemAssignedIdentity : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
-        public Identity()
+        public SystemAssignedIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -42,19 +42,24 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags.</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
         /// <param name="principalId">The id of the service principal object
         /// associated with the created identity.</param>
         /// <param name="clientId">The id of the app associated with the
         /// identity. This is a random generated UUID by MSI.</param>
-        public Identity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?))
-            : base(location, id, name, type, tags)
+        /// <param name="clientSecretUrl"> The ManagedServiceIdentity DataPlane
+        /// URL that can be queried to obtain the identity credentials.</param>
+        public SystemAssignedIdentity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string clientSecretUrl = default(string))
+            : base(id, name, type)
         {
+            Location = location;
+            Tags = tags;
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
+            ClientSecretUrl = clientSecretUrl;
             CustomInit();
         }
 
@@ -62,6 +67,18 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the id of the tenant which the identity belongs to.
@@ -84,14 +101,24 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         public System.Guid? ClientId { get; private set; }
 
         /// <summary>
+        /// Gets  The ManagedServiceIdentity DataPlane URL that can be queried
+        /// to obtain the identity credentials.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretUrl")]
+        public string ClientSecretUrl { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
         }
     }
 }

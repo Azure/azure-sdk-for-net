@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
 
 
         /// <summary>
+        /// Gets the ISystemAssignedIdentitiesOperations.
+        /// </summary>
+        ISystemAssignedIdentitiesOperations SystemAssignedIdentities { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
