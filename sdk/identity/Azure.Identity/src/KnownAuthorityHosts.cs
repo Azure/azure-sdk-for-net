@@ -28,6 +28,6 @@ namespace Azure.Identity
         /// <summary>
         /// The host of the Azure Active Directory authority for tenants in the Azure US Government Cloud.
         /// </summary>
-        public static readonly Uri AzureUsGovernment = new Uri("https://login.microsoftonline.us/");
+        public static readonly Uri AzureUSGovernment = new Uri("https://login.microsoftonline.us/");
     }
 }
