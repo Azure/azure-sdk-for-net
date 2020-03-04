@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 extractedTexts.Add(ResolveTextReference(readResult, reference));
             }
-            return extractedTexts.AsReadOnly();
+            return extractedTexts;
         }
 
         //private const string SegmentReadResults = "readResults";

@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Models
                 rawLines.Add(new RawExtractedLine(textLine));
             }
 
-            return rawLines.AsReadOnly();
+            return rawLines;
         }
     }
 }

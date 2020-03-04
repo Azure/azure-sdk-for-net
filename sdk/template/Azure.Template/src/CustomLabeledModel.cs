@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 accuracies.Add(accuracy);
             }
 
-            return accuracies.AsReadOnly();
+            return accuracies;
         }
     }
 }

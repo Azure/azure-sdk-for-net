@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
                 rawWords.Add(new RawExtractedWord(textWord));
             }
 
-            return rawWords.AsReadOnly();
+            return rawWords;
         }
     }
 }

@@ -38,6 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         public DateTimeOffset TransactionDate { get; internal set; }
         public DateTimeOffset TransactionTime { get; internal set; }
 
+        // TODO: Have this handle Items correctly
         public IReadOnlyDictionary<string, ExtractedReceiptField> ExtractedFields { get; internal set; }
 
         public RawExtractedPage RawExtractedPage { get; }
@@ -66,7 +67,12 @@ namespace Azure.AI.FormRecognizer.Models
         {
             // TODO: you are here
             Dictionary<string, ExtractedReceiptField> extractedFields = new Dictionary<string, ExtractedReceiptField>();
-            foreach (var kvp in )
+            foreach (var field in fields)
+            {
+                ExtractedReceiptField extractedField = new ExtractedReceiptField(field.Value);
+                extractedFields[field.Key] = extractedField;
+            }
+            return extractedFields;
         }
 
         private static ExtractedReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
@@ -203,7 +209,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
             }
 
-            return items.AsReadOnly();
+            return items;
         }
     }
 }

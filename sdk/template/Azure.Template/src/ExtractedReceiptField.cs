@@ -11,10 +11,13 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal ExtractedReceiptField(FieldValue_internal field)
         {
-
             Text = field.Text;
-            BoundingBox = new BoundingBox(field.BoundingBox);
             Confidence = field.Confidence;
+
+            if (field.BoundingBox != null)
+            {
+                BoundingBox = new BoundingBox(field.BoundingBox);
+            }
         }
 
         public string Text { get; internal set; }

@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
                 tables.Add(new ExtractedTable(result, readResult));
             }
 
-            return tables.AsReadOnly();
+            return tables;
         }
     }
 }

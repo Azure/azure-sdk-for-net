@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.Custom
             this.trainResult = trainResult;
 
             // TODO: Q3 Can we get a List instead of a Collection?
-            this.PerDocumentInfo = new List<TrainingDocumentInfo>(trainResult.TrainingDocuments).AsReadOnly();
-            this.TrainingErrors = new List<FormRecognizerError>(trainResult.Errors).AsReadOnly();
+            this.PerDocumentInfo = new List<TrainingDocumentInfo>(trainResult.TrainingDocuments);
+            this.TrainingErrors = new List<FormRecognizerError>(trainResult.Errors);
         }
 
         /// <summary>

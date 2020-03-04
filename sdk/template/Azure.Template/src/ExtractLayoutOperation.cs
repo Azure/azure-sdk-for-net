@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer.Models
                 pages.Add(new ExtractedLayoutPage(page, rawPages[page.Page - 1]));
             }
 
-            return pages.AsReadOnly();
+            return pages;
         }
     }
 }

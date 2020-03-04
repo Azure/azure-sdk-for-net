@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
                 pages.Add(page);
             }
 
-            return pages.AsReadOnly();
+            return pages;
         }
 
         private static IReadOnlyList<ExtractedPage> ConvertPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Models
                 pages.Add(page);
             }
 
-            return pages.AsReadOnly();
+            return pages;
         }
 
         //private static IReadOnlyList<ExtractedPage> SetPages(DocumentResult_internal documentResult)

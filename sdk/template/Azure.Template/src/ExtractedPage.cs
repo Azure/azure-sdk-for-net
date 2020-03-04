@@ -50,7 +50,7 @@ namespace Azure.AI.FormRecognizer.Models
                 ExtractedField field = new ExtractedField(kvp, readResult);
                 fields.Add(field);
             }
-            return fields.AsReadOnly();
+            return fields;
         }
 
         private static IReadOnlyList<ExtractedField> ConvertFields(List<ExtractedField> fields)
@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 list.Add(field);
             }
-            return list.AsReadOnly();
+            return list;
         }
     }
 }

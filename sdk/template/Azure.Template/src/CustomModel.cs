@@ -45,12 +45,12 @@ namespace Azure.AI.FormRecognizer.Custom
                 {
                     FormTypeId = key.Key,
                     // TODO: Q3
-                    LearnedFields = new List<string>(key.Value).AsReadOnly()
+                    LearnedFields = new List<string>(key.Value)
                 };
                 forms.Add(form);
             }
 
-            return forms.AsReadOnly();
+            return forms;
         }
     }
 }
