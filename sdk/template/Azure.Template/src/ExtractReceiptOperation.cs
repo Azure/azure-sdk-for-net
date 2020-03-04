@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.Models
                     _hasCompleted = true;
 
                     // TODO: When they support extracting more than one receipt, add a pageable method for this.
-                    _value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First());
+                    _value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.ReadResults.First());
                 }
 
                 _response = update.GetRawResponse();

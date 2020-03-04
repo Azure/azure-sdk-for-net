@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.AI.FormRecognizer.Custom;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Request parameter to train a new custom model. </summary>

@@ -4,8 +4,9 @@
 #nullable disable
 
 using System;
+using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Basic custom model information. </summary>
     public partial class ModelInfo_internal

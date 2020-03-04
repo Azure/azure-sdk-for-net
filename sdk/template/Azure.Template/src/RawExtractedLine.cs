@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class RawExtractedLine : RawExtractedItem
     {
-        public RawExtractedLine(TextLine_internal textLine)
+        internal RawExtractedLine(TextLine_internal textLine)
         {
             Text = textLine.Text;
             BoundingBox = new BoundingBox(textLine.BoundingBox);

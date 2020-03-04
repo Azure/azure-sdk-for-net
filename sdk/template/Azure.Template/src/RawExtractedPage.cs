@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class RawExtractedPage
     {
-        public RawExtractedPage(ReadResult_internal readResult)
+        internal RawExtractedPage(ReadResult_internal readResult)
         {
             Page = readResult.Page;
             Angle = readResult.Angle;
@@ -17,7 +17,11 @@ namespace Azure.AI.FormRecognizer.Models
             Height = readResult.Height;
             Unit = readResult.Unit;
             Language = readResult.Language;
-            Lines = ConvertLines(readResult.Lines);
+
+            if (readResult.Lines != null)
+            {
+                Lines = ConvertLines(readResult.Lines);
+            }
         }
 
         /// <summary> The 1-based page number in the input document. </summary>

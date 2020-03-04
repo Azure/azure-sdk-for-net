@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     public class CustomModelTrainingStatus
     {

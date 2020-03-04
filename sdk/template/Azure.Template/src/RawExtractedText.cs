@@ -9,6 +9,8 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class RawExtractedItem
     {
+        internal RawExtractedItem() { }
+
         public BoundingBox BoundingBox { get; internal set; }
         public string Text { get; internal set; }
     }

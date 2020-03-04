@@ -15,7 +15,11 @@ namespace Azure.AI.FormRecognizer.Models
             PageNumber = pageResult.Page;
             Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
             Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult);
-            RawExtractedPage = new RawExtractedPage(readResult);
+
+            if (readResult != null)
+            {
+                RawExtractedPage = new RawExtractedPage(readResult);
+            }
         }
 
         // Supervised
@@ -24,7 +28,11 @@ namespace Azure.AI.FormRecognizer.Models
             PageNumber = pageNumber;
             Fields = ConvertFields(fields);
             Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult);
-            RawExtractedPage = new RawExtractedPage(readResult);
+
+            if (readResult != null)
+            {
+                RawExtractedPage = new RawExtractedPage(readResult);
+            }
         }
 
         public int PageNumber { get; }

@@ -6,7 +6,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     public partial class TrainingFileFilter : IUtf8JsonSerializable
     {

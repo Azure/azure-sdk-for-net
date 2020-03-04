@@ -5,6 +5,7 @@
 
 using System.Text.Json;
 using Azure.AI.FormRecognizer;
+using Azure.AI.FormRecognizer.Custom;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models

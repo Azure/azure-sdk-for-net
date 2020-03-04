@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.FormRecognizer.Models
+using Azure.AI.FormRecognizer.Models;
+
+namespace Azure.AI.FormRecognizer.Custom
 {
     public class LabeledFieldAccuracy
     {

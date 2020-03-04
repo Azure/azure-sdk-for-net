@@ -26,8 +26,8 @@ namespace Azure.AI.FormRecognizer.Samples
             //TrainCustomLabeledModel().Wait();
             //ExtractCustomLabeledModel().Wait();
             //ExtractCustomLabeledModelUri().Wait();
-            ExtractCustomLabeledModelPlusOcrData().Wait();
-            //ExtractReceipt();
+            //ExtractCustomLabeledModelPlusOcrData().Wait();
+            ExtractReceipt();
             //ExtractReceiptUri();
             //ExtractLayout().Wait();
             //ExtractLayoutUri().Wait();
@@ -329,8 +329,6 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-
-
         private static void ExtractReceipt()
         {
             string contosoReceipt = @"C:\src\samples\cognitive\formrecognizer\receipt_data\contoso-allinone.jpg";
@@ -342,7 +340,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractedReceipt = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg);
+                var extractedReceipt = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg, includeRawPageExtractions: true);
 
             }
         }

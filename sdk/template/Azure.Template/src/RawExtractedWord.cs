@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class RawExtractedWord : RawExtractedItem
     {
-        public RawExtractedWord(TextWord_internal textWord)
+        internal RawExtractedWord(TextWord_internal textWord)
         {
             BoundingBox = new BoundingBox(textWord.BoundingBox);
             Confidence = textWord.Confidence;

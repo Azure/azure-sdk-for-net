@@ -10,10 +10,15 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedReceipt
     {
-        internal ExtractedReceipt(DocumentResult_internal documentResult)
+        internal ExtractedReceipt(DocumentResult_internal documentResult, ReadResult_internal readResult)
         {
             PageRange = new PageRange(documentResult.PageRange);
             SetReceiptValues(documentResult.Fields);
+
+            if (readResult != null)
+            {
+                RawExtractedPage = new RawExtractedPage(readResult);
+            }
         }
 
         public PageRange PageRange { get; internal set; }
@@ -32,6 +37,8 @@ namespace Azure.AI.FormRecognizer.Models
         public float Total { get; internal set; }
         public DateTimeOffset TransactionDate { get; internal set; }
         public DateTimeOffset TransactionTime { get; internal set; }
+
+        public RawExtractedPage RawExtractedPage { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {

@@ -14,7 +14,11 @@ namespace Azure.AI.FormRecognizer.Models
         {
             PageNumber = pageResult.Page;
             Tables = ConvertTables(pageResult.Tables, readResult);
-            RawExtractedPage = new RawExtractedPage(readResult);
+
+            if (readResult != null)
+            {
+                RawExtractedPage = new RawExtractedPage(readResult);
+            }
         }
 
         public int PageNumber { get; }

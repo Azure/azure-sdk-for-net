@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     public class CustomModel
     {

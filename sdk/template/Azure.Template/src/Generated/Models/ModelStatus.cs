@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Status of the model. </summary>
     public enum ModelStatus
