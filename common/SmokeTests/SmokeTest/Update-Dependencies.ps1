@@ -83,6 +83,8 @@ $PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
 # List all packages from the source specified by $FeedName. Packages are sorted
 # ascending by version according to semver rules (e.g. 4.0.0-preview.1 comes
 # before 4.0.0) not lexicographically.
+# Packages cannot be filtered at this stage because the sleet feed to which they
+# are published does not support filtering by name. 
 $allPackages = Find-Package -Source $FeedName -AllVersion -AllowPrereleaseVersions
 
 # For each PackageReferecne in the csproj, find the latest version of that
