@@ -9,9 +9,9 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Blob;
     using Newtonsoft.Json;
-    using Microsoft.Azure.Storage;
-    using Microsoft.Azure.Storage.Blob;
 
     class AzureStorageCheckpointLeaseManager : ICheckpointManager, ILeaseManager
     {

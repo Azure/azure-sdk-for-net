@@ -6,7 +6,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
-    using Microsoft.Azure.Storage;
+    using Microsoft.WindowsAzure.Storage;
 
     /// <summary>
     /// Represents a host for processing Event Hubs event data.
