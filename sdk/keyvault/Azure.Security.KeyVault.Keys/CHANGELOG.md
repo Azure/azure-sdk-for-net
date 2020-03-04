@@ -4,6 +4,7 @@
 
 ### Added
 
+- Add "import" value to `KeyOperation` enumeration.
 - Add `RecoverableDays` property to `KeyProperties`.
 
 ## 4.0.2 (2020-03-03)

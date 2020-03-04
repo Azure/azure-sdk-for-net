@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// making requests.
         /// </param>
 #pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
-        public CryptographyClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public CryptographyClientOptions(ServiceVersion version = LatestVersion)
 #pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
             Version = version;

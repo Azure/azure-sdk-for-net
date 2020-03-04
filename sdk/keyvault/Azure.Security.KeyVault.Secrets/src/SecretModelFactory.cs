@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -23,30 +24,27 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="updatedOn">Sets the <see cref="Secrets.SecretProperties.UpdatedOn"/> property.</param>
         /// <param name="recoveryLevel">Sets the <see cref="Secrets.SecretProperties.RecoveryLevel"/> property.</param>
         /// <returns>A new instance of the <see cref="Secrets.SecretProperties"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecretProperties SecretProperties(
-            Uri id = default,
-            Uri vaultUri = default,
-            string name = default,
-            string version = default,
-            bool managed = default,
-            Uri keyId = default,
-            DateTimeOffset? createdOn = default,
-            DateTimeOffset? updatedOn = default,
-            string recoveryLevel = default)
-        {
-            return new SecretProperties
-            {
-                Id = id,
-                VaultUri = vaultUri,
-                Name = name,
-                Version = version,
-                Managed = managed,
-                KeyId = keyId,
-                CreatedOn = createdOn,
-                UpdatedOn = updatedOn,
-                RecoveryLevel = recoveryLevel,
-            };
-        }
+            Uri id,
+            Uri vaultUri,
+            string name,
+            string version,
+            bool managed,
+            Uri keyId,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? updatedOn,
+            string recoveryLevel) => SecretProperties(
+                id,
+                vaultUri,
+                name,
+                version,
+                managed,
+                keyId,
+                createdOn,
+                updatedOn,
+                recoveryLevel,
+                default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Secrets.SecretProperties"/> for mocking purposes.

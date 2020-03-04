@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -81,28 +82,25 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="updatedOn">Sets the <see cref="Keys.KeyProperties.UpdatedOn"/> property.</param>
         /// <param name="recoveryLevel">Sets the <see cref="Keys.KeyProperties.RecoveryLevel"/> property.</param>
         /// <returns>A new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static KeyProperties KeyProperties(
-            Uri id = default,
-            Uri vaultUri = default,
-            string name = default,
-            string version = default,
-            bool managed = default,
-            DateTimeOffset? createdOn = default,
-            DateTimeOffset? updatedOn = default,
-            string recoveryLevel = default)
-        {
-            return new KeyProperties
-            {
-                Id = id,
-                VaultUri = vaultUri,
-                Name = name,
-                Version = version,
-                Managed = managed,
-                CreatedOn = createdOn,
-                UpdatedOn = updatedOn,
-                RecoveryLevel = recoveryLevel,
-            };
-        }
+            Uri id,
+            Uri vaultUri,
+            string name,
+            string version,
+            bool managed,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? updatedOn,
+            string recoveryLevel) => KeyProperties(
+                id,
+                vaultUri,
+                name,
+                version,
+                managed,
+                createdOn,
+                updatedOn,
+                recoveryLevel,
+                default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.

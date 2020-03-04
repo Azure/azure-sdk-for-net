@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -143,29 +144,29 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="updatedOn">Sets the <see cref="Certificates.CertificateProperties.UpdatedOn"/> property.</param>
         /// <param name="recoveryLevel">Sets the <see cref="Certificates.CertificateProperties.RecoveryLevel"/> property.</param>
         /// <returns>A new instance of the <see cref="Certificates.CertificateProperties"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CertificateProperties CertificateProperties(
-            Uri id = default,
-            string name = default,
-            Uri vaultUri = default,
-            string version = default,
-            byte[] x509thumbprint = default,
-            DateTimeOffset? notBefore = default,
-            DateTimeOffset? expiresOn = default,
-            DateTimeOffset? createdOn = default,
-            DateTimeOffset? updatedOn = default,
-            string recoveryLevel = default) => new CertificateProperties
-            {
-                Id = id,
-                Name = name,
-                VaultUri = vaultUri,
-                Version = version,
-                X509Thumbprint = x509thumbprint,
-                NotBefore = notBefore,
-                ExpiresOn = expiresOn,
-                CreatedOn = createdOn,
-                UpdatedOn = updatedOn,
-                RecoveryLevel = recoveryLevel,
-            };
+            Uri id,
+            string name,
+            Uri vaultUri,
+            string version,
+            byte[] x509thumbprint,
+            DateTimeOffset? notBefore,
+            DateTimeOffset? expiresOn,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? updatedOn,
+            string recoveryLevel) => CertificateProperties(
+                id,
+                name,
+                vaultUri,
+                version,
+                x509thumbprint,
+                notBefore,
+                expiresOn,
+                createdOn,
+                updatedOn,
+                recoveryLevel,
+                default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Certificates.CertificateProperties"/> for mocking purposes.
