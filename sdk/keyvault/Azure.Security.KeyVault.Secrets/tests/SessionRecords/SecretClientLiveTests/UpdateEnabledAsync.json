@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -9,7 +9,7 @@
         "Request-Id": "|42984b7-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "19ec10f12e778a77fa49003ba07b62fc",
         "x-ms-return-client-request-id": "true"
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -52,7 +52,7 @@
         "Request-Id": "|42984b7-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "19ec10f12e778a77fa49003ba07b62fc",
         "x-ms-return-client-request-id": "true"
@@ -90,7 +90,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220\u002f19077dc72df54fccbe6d739a85601317?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220\u002f19077dc72df54fccbe6d739a85601317?api-version=7.1-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -100,7 +100,7 @@
         "Request-Id": "|42984b8-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "ceef6f177b2552f50ce8e8bb9eff811f",
         "x-ms-return-client-request-id": "true"
@@ -139,7 +139,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220\u002f?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220\u002f?api-version=7.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -148,7 +148,7 @@
         "Request-Id": "|42984b9-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "b519b2495cb67b40e3c712cc995850af",
         "x-ms-return-client-request-id": "true"
@@ -183,7 +183,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220\u002f19077dc72df54fccbe6d739a85601317?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220\u002f19077dc72df54fccbe6d739a85601317?api-version=7.1-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -193,7 +193,7 @@
         "Request-Id": "|42984ba-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "feaf33501772769f1b990d8e45bcebfa",
         "x-ms-return-client-request-id": "true"
@@ -232,7 +232,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fsecrets\u002f1075585220?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -241,7 +241,7 @@
         "Request-Id": "|42984bb-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "eef2e0c8ac61bb462e73eb5d6928b9b3",
         "x-ms-return-client-request-id": "true"
@@ -279,7 +279,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fdeletedsecrets\u002f1075585220?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fdotnettestvault.vault.azure.net\u002fdeletedsecrets\u002f1075585220?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -288,7 +288,7 @@
         "Request-Id": "|42984c0-4c61899ebaa789f5.",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets\u002f4.0.0-dev.20190806.1\u002b549ac09c0c12d70f945de85b89974088680893d4",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "f53da69629ba5dd56dbe84a6878f90c3",
         "x-ms-return-client-request-id": "true"

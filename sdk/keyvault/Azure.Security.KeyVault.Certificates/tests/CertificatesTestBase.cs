@@ -12,12 +12,16 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
+    [ClientTestFixture(
+        CertificateClientOptions.ServiceVersion.V7_0,
+        CertificateClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
 
@@ -27,15 +31,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
 
-        public CertificatesTestBase(bool isAsync) : base(isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         internal CertificateClient GetClient(TestRecording recording = null)
         {
             recording ??= Recording;
 
-            CertificateClientOptions options = new CertificateClientOptions
+            CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
             {
                 Diagnostics =
                 {

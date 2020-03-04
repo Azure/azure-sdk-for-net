@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class CertificateClientLiveTests : CertificatesTestBase
     {
-        public CertificateClientLiveTests(bool isAsync) : base(isAsync)
+        public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
         }
 
