@@ -288,16 +288,21 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
 
+            var writtenEventsData = 0;
             var batchTransportMock = new Mock<TransportEventBatch>();
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
             var transportMock = new Mock<TransportProducer>();
 
             batchTransportMock
-                .Setup(m => m.AsEnumerable<EventData>())
-                .Returns(new List<EventData>()
+                .Setup(m => m.TryAdd(It.IsAny<EventData>()))
+                .Returns<EventData>(e =>
                 {
-                    new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } }),
-                    new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } })
+                    var hasSpace = writtenEventsData <= 1;
+                    if (hasSpace)
+                    {
+                        ++writtenEventsData;
+                    }
+                    return hasSpace;
                 });
 
             transportMock
@@ -305,7 +310,16 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+
+            var eventData1 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } });
+            var eventData2 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } });
+            var eventData3 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id3" } });
+
             EventDataBatch batch = await producer.CreateBatchAsync();
+
+            Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
+            Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
+            Assert.That(batch.TryAdd(eventData3), Is.False, "The third event should not have been added to the batch.");
 
             await producer.SendAsync(batch);
 
