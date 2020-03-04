@@ -1263,8 +1263,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
-            public override Task CloseAsync(bool isAsync,
-                                            CancellationToken cancellationToken)
+            public override Task CloseAsync(CancellationToken cancellationToken)
             {
                 WasCloseCalled = true;
                 ++CloseCallCount;

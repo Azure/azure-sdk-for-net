@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new AmqpProducer("aHub", "0", Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>());
             Assert.That(producer.IsClosed, Is.False, "The producer should not be closed on creation");
 
-            await producer.CloseAsync(true, CancellationToken.None);
+            await producer.CloseAsync(CancellationToken.None);
             Assert.That(producer.IsClosed, Is.True, "The producer should be marked as closed after closing");
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             cancellationSource.Cancel();
-            Assert.That(async () => await producer.CloseAsync(true, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
+            Assert.That(async () => await producer.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
             Assert.That(producer.IsClosed, Is.False, "Cancellation should have interrupted closing and left the producer in an open state.");
         }
 
@@ -285,7 +285,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendEnumerableEnsuresNotClosed()
         {
             var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
-            await producer.CloseAsync(true, CancellationToken.None);
+            await producer.CloseAsync(CancellationToken.None);
 
             Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
@@ -598,7 +598,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
 
-            await producer.Object.CloseAsync(true, CancellationToken.None);
+            await producer.Object.CloseAsync(CancellationToken.None);
             Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, "ns", "eh", new SendEventOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 

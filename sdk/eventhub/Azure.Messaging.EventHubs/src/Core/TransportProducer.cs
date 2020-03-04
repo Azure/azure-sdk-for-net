@@ -75,10 +75,8 @@ namespace Azure.Messaging.EventHubs.Core
         ///   Closes the connection to the transport producer instance.
         /// </summary>
         ///
-        /// <param name="isAsync"><c>true</c> if the method will be executed asynchronously; otherwise, false.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public abstract Task CloseAsync(bool isAsync,
-                                        CancellationToken cancellationToken);
+        public abstract Task CloseAsync(CancellationToken cancellationToken);
     }
 }
