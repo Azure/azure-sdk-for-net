@@ -591,14 +591,7 @@ namespace Azure.Messaging.ServiceBus
 
                         action = ExceptionReceivedEventArgsAction.UserCallback;
 
-                        // if this is a session receiver, supply a session object to the callback so that users can
-                        // perform operations on this session
-                        //ServiceBusSessionManager session = null;
-                        //if (IsSessionReceiver)
-                        //{
-                        //    session = new ServiceBusSessionManager(receiver, message.SessionId);
-                        //}
-                        await OnProcessMessageAsync(new ProcessMessageEventArgs() { Message = message, Receiver = receiver }).ConfigureAwait(false);
+                        await OnProcessMessageAsync(new ProcessMessageEventArgs(message, receiver, cancellationToken)).ConfigureAwait(false);
 
                         try
                         {

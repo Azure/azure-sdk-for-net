@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string topicName, string subscriptionName)
+        public ServiceBusReceiver GetSubscriptionReceiver(string topicName, string subscriptionName)
         {
             return ServiceBusReceiver.CreateReceiver(
                 EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
@@ -215,7 +215,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(
+        public ServiceBusReceiver GetSubscriptionReceiver(
             string topicName,
             string subscriptionName,
             ServiceBusReceiverOptions options)
@@ -255,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string topicName, string subscriptionName)
+        public ServiceBusProcessor GetSubscriptionProcessor(string topicName, string subscriptionName)
         {
             return new ServiceBusProcessor(
                 Connection,
@@ -269,7 +269,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string topicName, string subscriptionName, ServiceBusProcessorOptions options)
+        public ServiceBusProcessor GetSubscriptionProcessor(string topicName, string subscriptionName, ServiceBusProcessorOptions options)
         {
             return new ServiceBusProcessor(
                 Connection,
