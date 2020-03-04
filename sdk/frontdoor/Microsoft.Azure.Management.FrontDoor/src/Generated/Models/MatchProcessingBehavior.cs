@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for FrontDoorQuery.
+    /// Defines values for MatchProcessingBehavior.
     /// </summary>
-    public static class FrontDoorQuery
+    public static class MatchProcessingBehavior
     {
-        public const string StripNone = "StripNone";
-        public const string StripAll = "StripAll";
-        public const string StripOnly = "StripOnly";
-        public const string StripAllExcept = "StripAllExcept";
+        public const string Continue = "Continue";
+        public const string Stop = "Stop";
     }
 }
