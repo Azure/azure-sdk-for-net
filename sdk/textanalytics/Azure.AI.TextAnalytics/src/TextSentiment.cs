@@ -4,9 +4,9 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment label for a given sentence.
+    /// The predicted sentiment label for a given document.
     /// </summary>
-    public enum SentenceSentimentLabel
+    public enum TextSentiment
     {
         /// <summary>
         /// Indicates that the sentiment is positive.
@@ -22,5 +22,10 @@ namespace Azure.AI.TextAnalytics
         /// Indicates that the sentiment is negative.
         /// </summary>
         Negative,
+
+        /// <summary>
+        /// Indicates that the document contains mixed sentiments.
+        /// </summary>
+        Mixed,
     }
 }

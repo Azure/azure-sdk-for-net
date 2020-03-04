@@ -8,6 +8,8 @@
 - Change wording in all documentation from `text inputs` to `documents`.
 - Properties `Length` and `Offset` have been renamed to `GraphemeLength` and `GraphemeOffset` for the `SentenceSentiment`,
 `CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects, to make it clear that the offsets and lengths are in units of Unicode graphemes.
+- Unify `DocumentSentimentLabel` and `SentenceSentimentLabel` into the same type now called `TextSentiment`.
+- `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScore`.
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes
