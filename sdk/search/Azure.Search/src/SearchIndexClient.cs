@@ -60,7 +60,7 @@ namespace Azure.Search
         /// <summary>
         /// Gets the generated document operations to make requests.
         /// </summary>
-        private DocumentsOperations Operations { get; }
+        private DocumentsClient Operations { get; }
 
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class for
@@ -154,7 +154,7 @@ namespace Azure.Search
             Pipeline = options.Build(credential);
             Version = options.Version;
 
-            Operations = new DocumentsOperations(
+            Operations = new DocumentsClient(
                 ClientDiagnostics,
                 Pipeline,
                 endpoint.ToString(),
@@ -207,7 +207,7 @@ namespace Azure.Search
             Pipeline = pipeline;
             Version = version;
 
-            Operations = new DocumentsOperations(
+            Operations = new DocumentsClient(
                 ClientDiagnostics,
                 Pipeline,
                 endpoint.ToString(),
