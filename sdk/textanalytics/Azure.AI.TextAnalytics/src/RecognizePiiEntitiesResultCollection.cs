@@ -8,8 +8,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Collection of <see cref="RecognizePiiEntitiesResult"/> objects corresponding
-    /// to a batch of input documents, and annotated with information about the
-    /// batch operation.
+    /// to a batch of documents, and information about the batch operation.
     /// </summary>
     public class RecognizePiiEntitiesResultCollection : ReadOnlyCollection<RecognizePiiEntitiesResult>
     {
@@ -20,7 +19,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets statistics about the input document batch and how it was processed
+        /// Gets statistics about the documents and how it was processed
         /// by the service.  This property will have a value when IncludeStatistics
         /// is set to true in the client call.
         /// </summary>
@@ -28,7 +27,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the version of the text analytics model used by this operation
-        /// on this batch of input documents.
+        /// on this batch of documents.
         /// </summary>
         public string ModelVersion { get; }
     }

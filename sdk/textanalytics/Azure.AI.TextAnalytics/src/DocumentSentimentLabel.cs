@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics
         Negative,
 
         /// <summary>
-        /// Indicates that the contains mixed sentiments.
+        /// Indicates that the document contains mixed sentiments.
         /// </summary>
         Mixed,
     }

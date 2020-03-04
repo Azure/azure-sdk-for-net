@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Details regarding the specific substring in the input document matching
+    /// Details regarding the specific substring in the document matching
     /// the linked entity, or well-known item, that the text analytics model
     /// identified.
     /// </summary>
@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the entity text as it appears in the input document.
+        /// Gets the entity text as it appears in the document.
         /// </summary>
         public string Text { get; }
 
@@ -30,13 +30,13 @@ namespace Azure.AI.TextAnalytics
         public double Score { get; }
 
         /// <summary>
-        /// Gets the start position for the matching text in the input document.
+        /// Gets the start position for the matching text in the document.
         /// The offset unit is unicode character count.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the input document.
+        /// Gets the length of the matching text in the document.
         /// The length unit is unicode character count.
         /// </summary>
         public int Length { get; }

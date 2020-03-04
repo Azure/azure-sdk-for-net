@@ -101,20 +101,20 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredenti
 ### TextAnalyticsClient
 A `TextAnalyticsClient` is the primary interface for developers using the Text Analytics client library.  It provides both synchronous and asynchronous operations to access a specific use of Text Analytics, such as language detection or key phrase extraction. 
 
-### Text Input
-A **text input**, sometimes called a **document**, is a single unit of input to be analyzed by the predictive models in the Text Analytics service.  Operations on `TextAnalyticsClient` may take a single text input or a collection of inputs to be analyzed as a batch.
-For text input length limits, maximum batch size, and supported text encoding see [here][data_limits].
+### Input
+A **document**, is a single unit of input to be analyzed by the predictive models in the Text Analytics service.  Operations on `TextAnalyticsClient` may take a single document or a collection of documents to be analyzed as a batch.
+For document length limits, maximum batch size, and supported text encoding see [here][data_limits].
+
+### Operation on multiple documents
+For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of documents as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, indicate that the documents in the batch are written in different languages, or provide a country hint about the language of the document.
+
+**Note:** It is recommended to use the batch methods when working on production environments as they allow you to send one request with multiple documents. This is more performant than sending a request per each document.
 
 ### Return value
-Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's return value also may optionally include information about the input document and how it was processed.
+Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single document.  An operation's return value also may optionally include information about the document and how it was processed.
 
 ### Return value Collection
-A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given text input. It may optionally include information about the input batch and how it was processed.
-
- ### Operation on multiple text inputs
-For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, indicate that the documents in the batch are written in different languages, or provide a country hint about the language of the document.
-
-**Note:** It is recommended to use the batch methods when working on production environments as they allow you to send one request with multiple text inputs. This is more performant than sending a request per each text input.
+A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given document. It may optionally include information about the input batch and how it was processed.
 
 ## Examples
 The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
@@ -132,7 +132,7 @@ The following section provides several code snippets using the `client` [created
 * [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
 
 ### Detect Language
-Run a Text Analytics predictive model to determine the language that the passed-in input text or batch of input text documents are written in.
+Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
 
 ```C# Snippet:DetectLanguage
 string input = "Este documento está en español.";
@@ -146,7 +146,7 @@ For samples on using the production recommended option `DetectLanguageBatch` see
 Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
 ### Analyze Sentiment
-Run a Text Analytics predictive model to identify the positive, negative, neutral or mixed sentiment contained in the passed-in input text or batch of input text documents.
+Run a Text Analytics predictive model to identify the positive, negative, neutral or mixed sentiment contained in the passed-in document or batch of documents.
 
 ```C# Snippet:AnalyzeSentiment
 string input = "That was the best day of my life!";
@@ -163,7 +163,7 @@ For samples on using the production recommended option `AnalyzeSentimentBatch` s
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
 ### Extract Key Phrases
-Run a model to identify a collection of significant phrases found in the passed-in input text or batch of input text documents.
+Run a model to identify a collection of significant phrases found in the passed-in document or batch of documents.
 
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
@@ -182,7 +182,7 @@ For samples on using the production recommended option `ExtractKeyPhrasesBatch` 
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
 ### Recognize Entities
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
+Run a predictive model to identify a collection of named entities in the passed-in document or batch of documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
 
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
@@ -201,7 +201,7 @@ For samples on using the production recommended option `RecognizeEntitiesBatch` 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
 ### Recognize PII Entities
-Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in input text or batch of input text documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
+Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in document or batch of documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
 
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
@@ -219,7 +219,7 @@ foreach (PiiEntity entity in entities)
 For samples on using the production recommended option `RecognizePiiEntitiesBatch` see [here](#recognize-pii-entities-1).
 
 ### Recognize Linked Entities
-Run a predictive model to identify a collection of entities found in the passed-in input text or batch of input text documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
+Run a predictive model to identify a collection of entities found in the passed-in document or batch of documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
 
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
@@ -242,7 +242,7 @@ For samples on using the production recommended option `RecognizeLinkedEntitiesB
 Please refer to the service documentation for a conceptual discussion of [entity linking][named_entity_recognition].
 
 ### Detect Language Asynchronously
-Run a Text Analytics predictive model to determine the language that the passed-in input text or batch of input text documents are written in.
+Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
 
 ```C# Snippet:DetectLanguageAsync
 string input = "Este documento está en español.";
@@ -253,7 +253,7 @@ Console.WriteLine($"Detected language {language.Name} with confidence {language.
 ```
 
 ### Recognize Entities Asynchronously
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
+Run a predictive model to identify a collection of named entities in the passed-in document or batch of documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
 
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
@@ -321,38 +321,39 @@ To learn more about other logging mechanisms see [here][logging].
 ## Next steps
 
 Samples showing how to use the Cognitive Services Text Analytics library are available in this GitHub repository.
-Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single text input, a collection of text input strings, and a collection of text document inputs.
+Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single document, and a collection of documents.
 
 ### Detect Language
-* [Sample1_DetectLanguage.cs][detect_language_sample0] - Detect the language of a single text input.
-* [Sample1_DetectLanguageBatchConvenience.cs][detect_language_sample1] - Detect the language of each input in a collection of text input strings.
-* [Sample1_DetectLanguageBatch.cs][detect_language_sample2] - Detect the language of each input in a collection of text document inputs.
-* [Sample1_DetectLanguageAsync.cs][detect_language_sample_async] - Make an asynchronous call to detect the language of a single text input.
+* [Sample1_DetectLanguage.cs][detect_language_sample0] - Detect the language of a document.
+* [Sample1_DetectLanguageBatchConvenience.cs][detect_language_sample1] - Detect the language of each document in a collection of documents.
+* [Sample1_DetectLanguageBatch.cs][detect_language_sample2] - Detect the language of each document in a collection of documents. This method allows to provide more information about each document.
+* [Sample1_DetectLanguageAsync.cs][detect_language_sample_async] - Make an asynchronous call to detect the language of a document.
 
 ### Analyze Sentiment
-* [Sample2_AnalyzeSentiment.cs][analyze_sentiment_sample0] - Analyze sentiment in a single text input.
-* [Sample2_AnalyzeSentimentBatchConvenience.cs][analyze_sentiment_sample1] - Analyze sentiment in a collection of text input strings.
-* [Sample2_AnalyzeSentimentBatch.cs][analyze_sentiment_sample2] - Analyze sentiment in a collection of text document inputs.
+* [Sample2_AnalyzeSentiment.cs][analyze_sentiment_sample0] - Analyze sentiment in a document.
+* [Sample2_AnalyzeSentimentBatchConvenience.cs][analyze_sentiment_sample1] - Analyze sentiment in a collection of documents.
+* [Sample2_AnalyzeSentimentBatch.cs][analyze_sentiment_sample2] - Analyze the sentiment of a collection of documents in different languages.
 
 ### Extract Key Phrases
-* [Sample3_ExtractKeyPhrases.cs][extract_key_phrases_sample0] - Extract key phrases from a single text input.
-* [Sample3_ExtractKeyPhrasesBatchConvenience.cs][extract_key_phrases_sample1] - Extract key phrases from a each input in a collection of text input strings.
-* [Sample3_ExtractKeyPhrasesBatch.cs][extract_key_phrases_sample2] - Extract key phrases from a each input in a collection of text document inputs.
+* [Sample3_ExtractKeyPhrases.cs][extract_key_phrases_sample0] - Extract key phrases from a document.
+* [Sample3_ExtractKeyPhrasesBatchConvenience.cs][extract_key_phrases_sample1] - Extract key phrases from each document in a collection of documents.
+* [Sample3_ExtractKeyPhrasesBatch.cs][extract_key_phrases_sample2] - Extract the key phrases of a collection of documents in different languages.
 
 ### Recognize Entities
-* [Sample4_RecognizeEntities.cs][recognize_entities_sample0] - Recognize entities in a single text input.
-* [Sample4_RecognizeEntitiesBatchConvenience.cs][recognize_entities_sample1] - Recognize entities in each input in a collection of text input strings.
-* [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities in each input in a collection of text document inputs.
-* [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
+* [Sample4_RecognizeEntities.cs][recognize_entities_sample0] - Recognize entities in a document.
+* [Sample4_RecognizeEntitiesBatchConvenience.cs][recognize_entities_sample1] - Recognize entities in each document in a collection of documents.
+* [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities of a collection of documents in different languages.
+* [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to recognize entities in a document.
 
 ### Recognize PII Entities
-* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a single text input.
-* [Sample5_RecognizePiiEntitiesBatch.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information in each input in a collection of document strings.
-* [Sample5_RecognizePiiEntitiesBatchConvenience.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each input in a collection of text input string.
+* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a document.
+* [Sample5_RecognizePiiEntitiesBatchConvenience.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each document in a collection of documents.
+* [Sample5_RecognizePiiEntitiesBatch.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information of a collection of documents in different languages.
+
 ### Recognize Linked Entities
-* [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a single text input.
-* [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each input in a collection of text input strings.
-* [Sample6_RecognizeLinkedEntitiesBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities in each input in a collection of text document inputs.
+* [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a document.
+* [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each document in a collection of documents.
+* [Sample6_RecognizeLinkedEntitiesBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities of a collection of documents in different languages.
 
 ## Contributing
 

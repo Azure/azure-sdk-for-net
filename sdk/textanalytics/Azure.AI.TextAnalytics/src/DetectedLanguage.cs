@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A prediction of the language in which an input document is written.
+    /// A prediction of the language in which a document is written in.
     /// </summary>
     public readonly struct DetectedLanguage
     {
