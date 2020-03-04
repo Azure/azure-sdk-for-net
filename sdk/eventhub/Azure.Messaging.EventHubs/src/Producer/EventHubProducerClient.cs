@@ -433,7 +433,17 @@ namespace Azure.Messaging.EventHubs.Producer
             events = (events as IList<EventData>) ?? events.ToList();
             InstrumentMessages(events);
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
+            var diagnosticIdentifiers = new List<string>();
+
+            foreach (var eventData in events)
+            {
+                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out var identifier))
+                {
+                    diagnosticIdentifiers.Add(identifier);
+                }
+            }
+
+            using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers);
 
             try
             {
@@ -488,7 +498,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
+            using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.GetEventDiagnosticIdentifiers());
 
             try
             {
@@ -658,15 +668,26 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   events.
         /// </summary>
         ///
+        /// <param name="diagnosticIdentifiers">The set of diagnostic identifiers to which the scope will be linked.</param>
+        ///
         /// <returns>The requested <see cref="DiagnosticScope" />.</returns>
         ///
-        private DiagnosticScope CreateDiagnosticScope()
+        private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers)
         {
             DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+
+            if (scope.IsEnabled)
+            {
+                foreach (var identifier in diagnosticIdentifiers)
+                {
+                    scope.AddLink(identifier);
+                }
+            }
+
             scope.Start();
 
             return scope;
