@@ -1,91 +1,41 @@
 param(
-    $ProjectFile = './SmokeTest.csproj',
-    $FeedName = 'NightlyFeed'
+    [string]$ProjectFile = './SmokeTest.csproj',
+    [switch]$SkipVersionValidation
 )
 
-$PACKAGE_EXCLUSIONS = @{
-    'Azure.Security.Keyvault.Secrets' = @{
-        '4.1.0-dev.20191102.1' = $true;
-        '4.1.0-dev.20191103.1' = $true;
-        '4.1.0-dev.20191104.1' = $true;
-        '4.1.0-dev.20191105.1' = $true;
-        '4.1.0-dev.20191106.1' = $true;
-        '4.1.0-dev.20191107.1' = $true;
-        '4.1.0-dev.20191108.1' = $true;
-        '4.1.0-dev.20191109.2' = $true;
-        '4.1.0-dev.20191110.1' = $true;
-        '4.1.0-dev.20191111.1' = $true;
-        '4.1.0-dev.20191112.1' = $true;
-        '4.1.0-dev.20191113.1' = $true;
-        '4.1.0-dev.20191114.1' = $true;
-        '4.1.0-dev.20191115.1' = $true;
-        '4.1.0-dev.20191116.1' = $true;
-        '4.1.0-dev.20191117.1' = $true;
-        '4.1.0-dev.20191118.1' = $true;
-        '4.1.0-dev.20191119.1' = $true;
-        '4.1.0-dev.20191120.1' = $true;
-        '4.1.0-dev.20191121.1' = $true;
-        '4.1.0-dev.20191122.1' = $true;
-        '4.1.0-dev.20191123.1' = $true;
-        '4.1.0-dev.20191124.1' = $true;
-        '4.1.0-dev.20191125.1' = $true;
-        '4.1.0-dev.20191127.1' = $true;
-        '4.1.0-dev.20191128.1' = $true;
-        '4.1.0-dev.20191129.1' = $true;
-        '4.1.0-dev.20191130.1' = $true;
-        '4.1.0-dev.20191201.1' = $true;
-        '4.1.0-dev.20191202.1' = $true;
-        '4.1.0-dev.20191203.1' = $true;
-        '4.1.0-dev.20191204.1' = $true;
-        '4.1.0-dev.20191205.1' = $true;
-        '4.1.0-dev.20191206.1' = $true;
-        '4.1.0-dev.20191207.1' = $true;
-        '4.1.0-dev.20191208.1' = $true;
-        '4.1.0-dev.20191209.1' = $true;
-        '4.1.0-dev.20191210.1' = $true;
-        '4.1.0-dev.20191211.1' = $true;
-        '4.1.0-dev.20191212.1' = $true;
-        '4.1.0-dev.20191213.1' = $true;
-        '4.1.0-dev.20191214.1' = $true;
-        '4.1.0-dev.20191215.1' = $true;
-        '4.1.0-dev.20191216.1' = $true;
-        '4.1.0-dev.20191217.1' = $true;
-        '4.1.0-dev.20191218.1' = $true;
-        '4.1.0-dev.20191219.1' = $true;
-        '4.1.0-dev.20191220.3' = $true;
-        '4.1.0-dev.20191221.1' = $true;
-        '4.1.0-dev.20191222.1' = $true;
-        '4.1.0-dev.20191223.1' = $true;
-        '4.1.0-dev.20191224.1' = $true;
-        '4.1.0-dev.20191225.1' = $true;
-        '4.1.0-dev.20191226.1' = $true;
-        '4.1.0-dev.20191227.1' = $true;
-        '4.1.0-dev.20191228.1' = $true;
-        '4.1.0-dev.20191229.1' = $true;
-        '4.1.0-dev.20191230.1' = $true;
-        '4.1.0-dev.20191231.1' = $true;
-        '4.1.0-dev.20200101.1' = $true;
-        '4.1.0-dev.20200102.1' = $true;
-        '4.1.0-dev.20200103.1' = $true;
-        '4.1.0-dev.20200104.1' = $true;
-        '4.1.0-dev.20200105.1' = $true;
-        '4.1.0-dev.20200106.1' = $true;
-        '4.1.0-dev.20200107.1' = $true;
-        '4.1.0-dev.20200108.1' = $true;
-        '5.0.0-dev.20190625.1' = $true;
-        '5.0.0-dev.20190626.1' = $true;
-        '5.0.0-dev.20190627.1' = $true;
-    }
-}
+# To exclude a package version create an entry whose key is the package to
+# exclude whose value is a hash table of versions to exclude.
+# Example:
+# $PACKAGE_EXCLUSIONS = @{
+#     'Azure.Security.Keyvault.Secrets' = @{
+#         '4.1.0-dev.20191102.1' = $true;
+#         '4.1.0-dev.20191103.1' = $true;
+#     }
+# }
+$PACKAGE_EXCLUSIONS = @{ }
 
 $PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
+
+# Matches the dev.yyyymmdd portion of the version string
+$DEV_DATE_REGEX = 'dev\.(\d{8})'
+
+$NIGHTLY_FEED_NAME = 'NighlyFeed'
+$NIGHTLY_FEED_URL = 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+
+Register-PackageSource `
+    -Name $NIGHTLY_FEED_NAME `
+    -Location $NIGHTLY_FEED_URL `
+    -ProviderName Nuget `
+    -ErrorAction SilentlyContinue `
 
 # List all packages from the source specified by $FeedName. Packages are sorted
 # ascending by version according to semver rules (e.g. 4.0.0-preview.1 comes
 # before 4.0.0) not lexicographically.
 # Packages cannot be filtered at this stage because the sleet feed to which they
-# are published does not support filtering by name. 
-$allPackages = Find-Package -Source $FeedName -AllVersion -AllowPrereleaseVersions
+# are published does not support filtering by name.
+$allPackages = Find-Package -Source $NIGHTLY_FEED_NAME -AllVersion -AllowPrereleaseVersions
+
+$baselineVersionDate = $null;
 
 # For each PackageReferecne in the csproj, find the latest version of that
 # package from the dev feed which is not in the excluded list.
@@ -95,6 +45,7 @@ $csproj |
     Select-XML $PACKAGE_REFERENCE_XPATH |
     Where-Object { $_.Node.HasAttribute('Version') } |
     ForEach-Object {
+        # Resolve package version:
         $packageName = $_.Node.Include
 
         # This assumes that the versions coming back from Find-Package are
@@ -111,6 +62,23 @@ $csproj |
 
         Write-Host "Setting $packageName to $targetVersion"
         $_.Node.Version = "$targetVersion"
+
+
+        # Validate package version date component matches
+        if ($SkipVersionValidation) {
+            return
+        }
+
+        if ($_.Node.Version -match $DEV_DATE_REGEX) {
+            if ($baselineVersionDate -eq $null) {
+                Write-Host "Using baseline version date: $($matches[1])"
+                $baselineVersionDate = $matches[1]
+            }
+
+            if ($baselineVersionDate -ne $matches[1]) {
+                Write-Warning "WARNING: $($_.Node.Include) uses invalid version. Expected: $baselineVersionDate, Actual: $($_.Node.Version)"
+            }
+        }
     }
 
 $csproj.Save($projectFilePath)
