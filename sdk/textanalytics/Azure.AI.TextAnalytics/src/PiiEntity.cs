@@ -44,12 +44,12 @@ namespace Azure.AI.TextAnalytics
         public string SubCategory { get; }
 
         /// <summary>
-        /// Gets the grapheme starting position for the matching text in the input document.
+        /// Gets the starting position (in Unicode graphemes) for the matching text in the input document.
         /// </summary>
         public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the grapheme length of the matching text in the input document.
+        /// Gets the length (in Unicode graphemes) of the matching text in the input document.
         /// </summary>
         public int GraphemeLength { get; }
 

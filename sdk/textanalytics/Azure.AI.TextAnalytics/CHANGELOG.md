@@ -7,7 +7,7 @@
 - Added `DetectLanguageInput.None` for user convenience, instead of passing empty string to `CountryHint`.
 - Change wording in all documentation from `text inputs` to `documents`.
 - Properties `Length` and `Offset` have been renamed to `GraphemeLength` and `GraphemeOffset` for the `SentenceSentiment`,
-`CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects.
+`CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects, to make it clear that the offsets and lengths are in units of Unicode graphemes.
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes

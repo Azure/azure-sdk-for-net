@@ -30,12 +30,12 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScorePerLabel ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the grapheme starting position for the matching text in the input.
+        /// Gets the starting position (in Unicode graphemes) for the matching text in the input.
         /// </summary>
         public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the grapheme length of the matching text in the input.
+        /// Gets the length (in Unicode graphemes) of the matching text in the input.
         /// </summary>
         public int GraphemeLength { get; }
     }
