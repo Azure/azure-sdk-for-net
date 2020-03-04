@@ -241,17 +241,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName, ServiceBusProcessorOptions options)
-        {
-            return new ServiceBusProcessor(Connection, queueName, options);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
@@ -260,21 +249,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusProcessor(
                 Connection,
                 EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusProcessor GetSubscriptionProcessor(string topicName, string subscriptionName, ServiceBusProcessorOptions options)
-        {
-            return new ServiceBusProcessor(
-                Connection,
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
-                options);
         }
 
         /// <summary>

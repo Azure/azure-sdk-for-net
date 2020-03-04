@@ -123,6 +123,25 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <summary>
+        ///   The set of options to use for determining whether a failed operation should be retried and,
+        ///   if so, the amount of time to wait between retry attempts.  These options also control the
+        ///   amount of time allowed for publishing events and other interactions with the Service Bus service.
+        /// </summary>
+        ///
+        public ServiceBusRetryOptions RetryOptions
+        {
+            get => _retryOptions;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(RetryOptions));
+                _retryOptions = value;
+            }
+        }
+
+        /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
+        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+
+        /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
         /// </summary>
         ///
@@ -144,8 +163,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         private readonly ServiceBusConnection _connection;
-        private readonly ServiceBusProcessorOptions _options;
-
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
@@ -205,15 +222,12 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="entityName"></param>
-        /// <param name="options">A set of options to apply when configuring the consumer.</param>
         ///
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
-            string entityName,
-            ServiceBusProcessorOptions options = default)
+            string entityName)
         {
             _connection = connection;
-            _options = options?.Clone() ?? new ServiceBusProcessorOptions();
             EntityName = entityName;
         }
 
@@ -375,7 +389,8 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
+                    ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
+
                     if (UseSessions)
                     {
                         if (SessionId != null)
@@ -441,6 +456,16 @@ namespace Azure.Messaging.ServiceBus
             {
                 throw new InvalidOperationException();
             }
+        }
+
+        private ServiceBusReceiverOptions CreateReceiverOptions()
+        {
+            return new ServiceBusReceiverOptions()
+            {
+                ReceiveMode = ReceiveMode,
+                RetryOptions = RetryOptions,
+                PrefetchCount = PrefetchCount
+            };
         }
 
         /// <summary>
@@ -539,7 +564,7 @@ namespace Azure.Messaging.ServiceBus
                 // If the user didn't specify a session, but this is a sessionful receiver,
                 // we want to allow each thread to have its own consumer so we can access
                 // multiple sessions concurrently.
-                ServiceBusReceiverOptions receiverOptions = _options.ToServiceBusReceiverClientOptions();
+                ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
                 receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
                     EntityName,
                     _connection,
