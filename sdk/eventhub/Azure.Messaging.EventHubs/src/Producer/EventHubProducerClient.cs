@@ -204,7 +204,6 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = true;
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-
             PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
@@ -249,7 +248,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             OwnsConnection = false;
             Connection = connection;
-            RetryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            RetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
             PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(Connection, RetryPolicy, eventHubProducer: transportProducer);
         }
 

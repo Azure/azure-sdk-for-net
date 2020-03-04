@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Core
     ///   A pool of <see cref="TransportProducer" /> instances that automatically expire after a period of inactivity.
     /// </summary>
     ///
-    internal class TransportProducerPool : IAsyncDisposable
+    internal class TransportProducerPool
     {
         /// <summary>The period after which <see cref="CreateExpirationTimerCallback" /> is run.</summary>
         private static readonly TimeSpan DefaultPerformExpirationPeriod = TimeSpan.FromMinutes(10);
@@ -159,14 +159,6 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="TransportProducerPool" />.
-        /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
-
-        /// <summary>
         ///   Closes the producers in the pool and performs any cleanup necessary
         ///   for resources used by the <see cref="TransportProducerPool" />.
         /// </summary>
@@ -175,9 +167,11 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            await EventHubProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
+            ExpirationTimer.Dispose();
 
             var pendingCloses = new List<Task>();
+
+            pendingCloses.Add(EventHubProducer.CloseAsync(cancellationToken));
 
             foreach (var poolItem in Pool.Values)
             {
@@ -185,7 +179,6 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             Pool.Clear();
-            ExpirationTimer.Dispose();
 
             await Task.WhenAll(pendingCloses).ConfigureAwait(false);
         }
@@ -216,7 +209,9 @@ namespace Azure.Messaging.EventHubs.Core
                                 // if there was a context switch between the if conditions
                                 // and the pool item clean up kicked in.
 
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                                 poolItem.PartitionProducer.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                             }
                         }
                     }
