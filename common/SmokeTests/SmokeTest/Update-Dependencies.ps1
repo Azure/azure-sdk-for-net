@@ -1,6 +1,7 @@
 param(
     [string]$ProjectFile = './SmokeTest.csproj',
-    [switch]$SkipVersionValidation
+    [switch]$SkipVersionValidation,
+    [switch]$CI
 )
 
 # To exclude a package version create an entry whose key is the package to
@@ -21,6 +22,14 @@ $DEV_DATE_REGEX = 'dev\.(\d{8})'
 
 $NIGHTLY_FEED_NAME = 'NighlyFeed'
 $NIGHTLY_FEED_URL = 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+
+function Log-Warning($message) {
+    if ($CI) {
+        Write-Host "##vso[task.logissue type=warning]$message"
+    } else {
+        Write-Warning $message
+    }
+}
 
 Register-PackageSource `
     -Name $NIGHTLY_FEED_NAME `
@@ -76,7 +85,7 @@ $csproj |
             }
 
             if ($baselineVersionDate -ne $matches[1]) {
-                Write-Warning "WARNING: $($_.Node.Include) uses invalid version. Expected: $baselineVersionDate, Actual: $($_.Node.Version)"
+                Log-Warning "$($_.Node.Include) uses invalid version. Expected: $baselineVersionDate, Actual: $($matches[1])"
             }
         }
     }
