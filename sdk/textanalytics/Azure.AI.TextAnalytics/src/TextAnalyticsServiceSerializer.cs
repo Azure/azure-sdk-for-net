@@ -19,16 +19,17 @@ namespace Azure.AI.TextAnalytics
         #region Serialize Inputs
 
         private static readonly JsonEncodedText s_countryHint = JsonEncodedText.Encode("countryHint");
+        private static readonly JsonEncodedText s_documents = JsonEncodedText.Encode("documents");
         private static readonly JsonEncodedText s_id = JsonEncodedText.Encode("id");
-        private static readonly JsonEncodedText s_text = JsonEncodedText.Encode("text");
         private static readonly JsonEncodedText s_language = JsonEncodedText.Encode("language");
+        private static readonly JsonEncodedText s_text = JsonEncodedText.Encode("text");
 
         public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs, string defaultCountryHint)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
             json.WriteStartObject();
-            json.WriteStartArray("documents");
+            json.WriteStartArray(s_documents);
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
@@ -48,7 +49,7 @@ namespace Azure.AI.TextAnalytics
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
             json.WriteStartObject();
-            json.WriteStartArray("documents");
+            json.WriteStartArray(s_documents);
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
