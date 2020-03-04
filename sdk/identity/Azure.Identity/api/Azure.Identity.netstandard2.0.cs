@@ -102,7 +102,7 @@ namespace Azure.Identity
         public static readonly System.Uri AzureChinaCloud;
         public static readonly System.Uri AzureCloud;
         public static readonly System.Uri AzureGermanCloud;
-        public static readonly System.Uri AzureUsGovernment;
+        public static readonly System.Uri AzureUSGovernment;
     }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
