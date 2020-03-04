@@ -7,7 +7,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
     <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);AZC0001; CA1507;CA1812</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001; CA1507;CA1812;AZC0003</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

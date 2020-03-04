@@ -13,13 +13,13 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    public partial class ServiceClient
+    public partial class TemplateClient
     {
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal ServiceRestClient RestClient { get; }
-        /// <summary> Initializes a new instance of ServiceClient. </summary>
-        internal ServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "http://localhost:3000")
+        /// <summary> Initializes a new instance of TemplateClient. </summary>
+        internal TemplateClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "http://localhost:3000")
         {
             RestClient = new ServiceRestClient(clientDiagnostics, pipeline, host);
             this.clientDiagnostics = clientDiagnostics;
