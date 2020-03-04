@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         public string MerchantAddress { get; internal set; }
         public string MerchantName { get; internal set; }
         public string MerchantPhoneNumber { get; internal set; }
-        //public RawReceiptExtraction RawFields { get; internal set; }
+
         public ExtractedReceiptType ReceiptType { get; internal set; }
         public float Subtotal { get; internal set; }
         public float Tax { get; internal set; }
@@ -37,6 +37,8 @@ namespace Azure.AI.FormRecognizer.Models
         public float Total { get; internal set; }
         public DateTimeOffset TransactionDate { get; internal set; }
         public DateTimeOffset TransactionTime { get; internal set; }
+
+        public IReadOnlyDictionary<string, ExtractedReceiptField> ExtractedFields { get; internal set; }
 
         public RawExtractedPage RawExtractedPage { get; }
 
@@ -57,6 +59,14 @@ namespace Azure.AI.FormRecognizer.Models
             TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
 
             Items = ConvertReceiptItems(fields);
+            ExtractedFields = ConvertExtractedFields(fields);
+        }
+
+        private static IReadOnlyDictionary<string, ExtractedReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
+        {
+            // TODO: you are here
+            Dictionary<string, ExtractedReceiptField> extractedFields = new Dictionary<string, ExtractedReceiptField>();
+            foreach (var kvp in )
         }
 
         private static ExtractedReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)

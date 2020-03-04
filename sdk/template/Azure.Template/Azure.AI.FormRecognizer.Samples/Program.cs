@@ -340,7 +340,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractedReceipt = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg, includeRawPageExtractions: true);
+                var extractedReceipt = client.ExtractReceipt(stream, contentType: FormContentType.Jpeg, includeRawPageExtractions: false);
 
             }
         }
