@@ -7,10 +7,10 @@
         "Content-Length": "96",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9cc14bc07ee84e469fc4307f2864e365-ca5a899ab1d24b4f-00",
+        "traceparent": "00-37abcad565773643879c4446ca2a782f-d2245305cb971b4a-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200129.1\u002Bde158ae83419f2c1742186e0eeb82a6896a1fdd0",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200227.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1e1bd581c2eac5df2fe8a3e72b124e2c",
         "x-ms-return-client-request-id": "true"
@@ -26,14 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "74c87d0a-5462-4a92-bd70-680966c11e09",
+        "apim-request-id": "991b8af9-93dd-463e-907a-e033df744699",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 30 Jan 2020 05:54:02 GMT",
+        "Date": "Thu, 27 Feb 2020 17:33:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "18"
+        "x-envoy-upstream-service-time": "61"
       },
       "ResponseBody": {
         "documents": [
@@ -43,9 +43,10 @@
               {
                 "text": "Seattle",
                 "type": "Location",
+                "subtype": "GPE",
                 "offset": 26,
                 "length": 7,
-                "score": 0.80624294281005859
+                "score": 0.92
               },
               {
                 "text": "last week",
@@ -59,7 +60,7 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-02-01"
       }
     }
   ],

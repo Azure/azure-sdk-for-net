@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage.Blobs;
@@ -323,6 +324,8 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
                                     string connectionString) : this(checkpointStore, consumerGroup, connectionString, null, null)
@@ -347,6 +350,8 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
                                     string connectionString,
@@ -368,6 +373,8 @@ namespace Azure.Messaging.EventHubs
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
+        ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -391,6 +398,8 @@ namespace Azure.Messaging.EventHubs
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
+        ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
@@ -543,11 +552,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
-        public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
-            => await StartProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
+        public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default) =>
+            await StartProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
@@ -556,7 +564,6 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual void StartProcessing(CancellationToken cancellationToken = default) =>
@@ -579,8 +586,8 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="EventProcessorClient" /> will keep running.</param>
         ///
-        public virtual void StopProcessing(CancellationToken cancellationToken = default)
-            => StopProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
+        public virtual void StopProcessing(CancellationToken cancellationToken = default) =>
+            StopProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -633,15 +640,13 @@ namespace Azure.Messaging.EventHubs
 
             // Parameter validation is done by Checkpoint constructor.
 
-            var checkpoint = new Checkpoint
-            (
-                FullyQualifiedNamespace,
-                EventHubName,
-                ConsumerGroup,
-                context.PartitionId,
-                eventData.Offset,
-                eventData.SequenceNumber
-            );
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = FullyQualifiedNamespace,
+                EventHubName = EventHubName,
+                ConsumerGroup = ConsumerGroup,
+                PartitionId = context.PartitionId
+            };
 
             using DiagnosticScope scope =
                 EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
@@ -649,7 +654,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                return StorageManager.UpdateCheckpointAsync(checkpoint, cancellationToken);
+                return StorageManager.UpdateCheckpointAsync(checkpoint, eventData, cancellationToken);
             }
             catch (Exception e)
             {
@@ -713,13 +718,16 @@ namespace Azure.Messaging.EventHubs
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
                 using DiagnosticScope diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-                diagnosticScope.AddAttribute("kind", DiagnosticProperty.ConsumerKind);
+                diagnosticScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind);
+                diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
+                diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
 
                 if (diagnosticScope.IsEnabled
                     && partitionEvent.Data != null
                     && EventDataInstrumentation.TryExtractDiagnosticId(partitionEvent.Data, out string diagnosticId))
                 {
                     diagnosticScope.AddLink(diagnosticId);
+                    diagnosticScope.AddAttribute(DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds());
                 }
 
                 diagnosticScope.Start();
@@ -836,7 +844,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (partitionIds != default)
                 {
-                    PartitionOwnership claimedOwnership = default;
+                    EventProcessorPartitionOwnership claimedOwnership = default;
 
                     try
                     {
@@ -844,7 +852,10 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (EventHubsException ex)
                     {
-                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex.InnerException ?? ex, cancellationToken);
+                        var partitionId = Resources.OperationClaimOwnership.Equals(ex.GetFailureOperation()) ?
+                            ex.GetFailureData<string>() :
+                            null;
+                        var errorEventArgs = new ProcessErrorEventArgs(partitionId, ex.Message, ex.InnerException ?? ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);
                     }
                     catch (Exception ex)
@@ -917,7 +928,7 @@ namespace Azure.Messaging.EventHubs
             await OnPartitionInitializingAsync(initializingEventArgs).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            IEnumerable<Checkpoint> availableCheckpoints;
+            IEnumerable<EventProcessorCheckpoint> availableCheckpoints;
 
             try
             {
@@ -946,11 +957,7 @@ namespace Azure.Messaging.EventHubs
             {
                 if (checkpoint.PartitionId == partitionId)
                 {
-                    // When resuming from a checkpoint, the intent to process the next available event in the stream which
-                    // follows the one that was used to create the checkpoint.  Create the position using an exclusive offset.
-
-                    startingPosition = EventPosition.FromOffset(checkpoint.Offset, false);
-                    break;
+                    startingPosition = checkpoint.StartingPosition;
                 }
             }
 
@@ -1131,9 +1138,9 @@ namespace Azure.Messaging.EventHubs
                         }
                         else
                         {
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                             ActiveLoadBalancingTask.GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                         }
 
                     }
@@ -1166,9 +1173,9 @@ namespace Azure.Messaging.EventHubs
                         Task.WaitAll(stopPartitionProcessingTasks);
 
                         // Stop the LoadBalancer.
-#pragma warning disable AZC0102
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                         LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     }
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we

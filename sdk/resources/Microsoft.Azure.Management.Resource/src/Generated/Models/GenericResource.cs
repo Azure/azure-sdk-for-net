@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -97,21 +96,5 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Kind != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Kind, "^[-\\w\\._,\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Kind", "^[-\\w\\._,\\(\\)]+$");
-                }
-            }
-        }
     }
 }

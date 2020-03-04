@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
 {
     public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
     {
-        private static HttpPipelinePolicy NoTimeoutPolicy = new ResponseBodyPolicy(TimeSpan.MaxValue);
+        private static HttpPipelinePolicy NoTimeoutPolicy = new ResponseBodyPolicy(Timeout.InfiniteTimeSpan);
 
         private static HttpPipelinePolicy TimeoutPolicy = new ResponseBodyPolicy(TimeSpan.FromMilliseconds(50));
 

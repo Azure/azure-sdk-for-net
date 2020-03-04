@@ -24,8 +24,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed input document
-        /// or substring.
+        /// Gets the predicted sentiment for the analyzed document.
         /// </summary>
         public DocumentSentimentLabel Sentiment { get; }
 

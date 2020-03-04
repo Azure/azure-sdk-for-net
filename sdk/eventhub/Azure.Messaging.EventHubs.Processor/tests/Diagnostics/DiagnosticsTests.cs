@@ -4,15 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
 
@@ -78,9 +76,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Ignore("Unstable test. (Tracked by: #10067)")]
         public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
+            string fullyQualifiedNamespace = "namespace";
+            string eventHubName = "eventHub";
+
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", fullyQualifiedNamespace, eventHubName, Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
+            var enqueuedTime = DateTimeOffset.UtcNow;
 
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -98,8 +100,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     {
                         var context = new MockPartitionContext(partitionId);
 
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id" } } });
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id2" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id2" } } });
 
                         while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
                         {
@@ -154,7 +156,19 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.That(listener.Scopes.Select(s => s.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
             Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id"));
             Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id2"));
-            Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind)), "The activities tag should be server.");
+
+            var expectedTags = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind),
+                new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace),
+                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeSeconds().ToString())
+            };
+
+            foreach (var scope in listener.Scopes)
+            {
+                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+            }
         }
 
         private class MockConnection : EventHubConnection
@@ -166,19 +180,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                   string eventHubName) : base(MockConnectionString, eventHubName)
             {
                 ServiceEndpoint = serviceEndpoint;
-            }
-        }
-
-        private class MockEventData : EventData
-        {
-            public MockEventData(ReadOnlyMemory<byte> eventBody,
-                                 IDictionary<string, object> properties = null,
-                                 IReadOnlyDictionary<string, object> systemProperties = null,
-                                 long sequenceNumber = long.MinValue,
-                                 long offset = long.MinValue,
-                                 DateTimeOffset enqueuedTime = default,
-                                 string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
-            {
             }
         }
 

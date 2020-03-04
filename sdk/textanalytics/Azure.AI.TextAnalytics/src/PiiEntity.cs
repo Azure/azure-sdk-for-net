@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics
         /// subcategories is described at
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
-        public EntitySubCategory SubCategory { get; }
+        public string SubCategory { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.

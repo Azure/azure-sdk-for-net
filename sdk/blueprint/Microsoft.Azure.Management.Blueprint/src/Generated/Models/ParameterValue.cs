@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the ParameterValue class.
         /// </summary>
-        /// <param name="value">Parameter value as value type.</param>
+        /// <param name="value">Parameter value. Any valid JSON value is
+        /// allowed including objects, arrays, strings, numbers and
+        /// booleans.</param>
         /// <param name="reference">Parameter value as reference type.</param>
         public ParameterValue(object value = default(object), SecretValueReference reference = default(SecretValueReference))
         {
@@ -45,7 +47,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets parameter value as value type.
+        /// Gets or sets parameter value. Any valid JSON value is allowed
+        /// including objects, arrays, strings, numbers and booleans.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public object Value { get; set; }

@@ -76,7 +76,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null)
+        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null, string minimalTlsVersion = null)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
@@ -90,6 +90,11 @@ namespace Sql.Tests
             if (publicNetworkAccess != null)
             {
                 Assert.Equal(publicNetworkAccess, actual.PublicNetworkAccess);
+            }
+
+            if (minimalTlsVersion != null)
+            {
+                Assert.Equal(minimalTlsVersion, actual.MinimalTlsVersion);
             }
         }
 
