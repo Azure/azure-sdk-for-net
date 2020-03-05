@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Samples
         public static void Main(string[] args)
         {
             //string sasUrlUnsupervised = "https://annelostorage01.blob.core.windows.net/container-formreco?sp=rl&st=2020-03-05T17:51:47Z&se=2020-03-06T17:51:47Z&sv=2019-02-02&sr=c&sig=vDE74j%2FsOohf5zLhJr9Y2Xf2dQnwkELvqu3PPPVW7Yc%3D";
-            //string unsupervisedModelId = "fddc5f4d-06da-4bac-b368-15522b733c73";
+            string unsupervisedModelId = "fddc5f4d-06da-4bac-b368-15522b733c73";
 
             //string sasUrlSupervised = "https://annelostorage01.blob.core.windows.net/formreco-labeled-training?sp=rl&st=2020-03-05T18:09:38Z&se=2020-03-06T18:09:38Z&sv=2019-02-02&sr=c&sig=mYpNFe9%2BV9y6UVXOLwwqVNCNG1Kr38tZhqWkc%2BF321o%3D";
             //string supervisedModelId = "178c93a0-c522-4862-a8c8-57ef873c6168";
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Samples
             //Console.WriteLine("Hello World!");
 
             //TrainCustomModel(sasUrl).Wait();
-            //ExtractCustomModelStream(unsupervisedModelId).Wait();
+            ExtractCustomModelStream(unsupervisedModelId).Wait();
             //ExtractCustomModelUri(unsupervisedModelId).Wait();
             //ExtractCustomModelPlusOcrData(unsupervisedModelId).Wait();
 
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Samples
             //ExtractLayoutUri().Wait();
 
             //GetCustomModelsSummary();
-            GetCustomModels();
+            //GetCustomModels();
         }
 
         private static async Task TrainCustomLabeledModel(string sasUrl)
