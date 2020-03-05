@@ -107,17 +107,17 @@ namespace Azure.AI.TextAnalytics
         #region Detect Language
 
         /// <summary>
-        /// Runs a predictive model to determine the language that the passed-in
-        /// input text is written in, and returns the detected language as well
+        /// Runs a predictive model to determine the language the passed-in
+        /// document is written in, and returns the detected language as well
         /// as a score indicating the model's confidence that the inferred
         /// language is correct.  Scores close to 1 indicate high certainty in
         /// the result.  120 languages are supported.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="countryHint">Indicates the country of origin of the text
-        /// input to assist the text analytics model in predicting the language
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="countryHint">Indicates the country of origin of the
+        /// document to assist the text analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -125,7 +125,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
-        /// the model could not analyze the input text.</returns>
+        /// the model could not analyze the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
@@ -166,17 +166,17 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Runs a predictive model to determine the language that the passed-in
-        /// input text is written in, and returns the detected language as well
+        /// Runs a predictive model to determine the language the passed-in
+        /// document is written in, and returns the detected language as well
         /// as a score indicating the model's confidence that the inferred
         /// language is correct.  Scores close to 1 indicate high certainty in
         /// the result.  120 languages are supported.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="countryHint">Indicates the country of origin of the text
-        /// input to assist the text analytics model in predicting the language
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="countryHint">Indicates the country of origin of the
+        /// document to assist the text analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
@@ -184,7 +184,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
-        /// the model could not analyze the input text.</returns>
+        /// the model could not analyze the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<DetectedLanguage> DetectLanguage(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
@@ -225,18 +225,18 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Runs a predictive model to determine the language that the passed-in
-        /// input strings are written in, and returns, for each one, the detected
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">A collection of input strings to analyze.</param>
+        /// <param name="inputs">A collection of documents to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
-        /// the input strings to assist the text analytics model in predicting
-        /// the language they is written in.  If unspecified, this value will be
+        /// the documents to assist the text analytics model in predicting
+        /// the language they are written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
         /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
@@ -246,7 +246,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
-        /// the model could not analyze the input text.</returns>
+        /// the model could not analyze the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> inputs, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -259,18 +259,18 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Runs a predictive model to determine the language that the passed-in
-        /// input strings are written in, and returns, for each one, the detected
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">A collection of input strings to analyze.</param>
+        /// <param name="inputs">A collection of documents to analyze.</param>
         /// <param name="countryHint">Indicates the country of origin of all of
-        /// the input strings to assist the text analytics model in predicting
-        /// the language they is written in.  If unspecified, this value will be
+        /// the documents to assist the text analytics model in predicting
+        /// the language they are written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.
         /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
@@ -280,7 +280,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
-        /// the model could not analyze the input text.</returns>
+        /// the model could not analyze the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> inputs, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -293,22 +293,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Runs a predictive model to determine the language that the passed-in
-        /// input documents are written in, and returns, for each one, the detected
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">A collection of input documents to analyze.</param>
+        /// <param name="inputs">A collection of documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
-        /// the model could not analyze the input text.</returns>
+        /// the model could not analyze the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -341,22 +341,22 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Runs a predictive model to determine the language that the passed-in
-        /// input documents are written in, and returns, for each one, the detected
+        /// Runs a predictive model to determine the language the passed-in
+        /// documents are written in, and returns, for each one, the detected
         /// language as well as a score indicating the model's confidence that
         /// the inferred language is correct.  Scores close to 1 indicate high
         /// certainty in the result.  120 languages are supported.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">A collection of input documents to analyze.</param>
+        /// <param name="inputs">A collection of documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
-        /// the model could not analyze the input text.</returns>
+        /// the model could not analyze the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -394,7 +394,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in input text, and categorize those entities into types
+        /// in the passed-in document, and categorize those entities into types
         /// such as person, location, or organization.  For more information on
         /// available categories, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
@@ -403,8 +403,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -412,7 +412,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// in the input text, as well as a score indicating the confidence
+        /// in the document, as well as a score indicating the confidence
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -455,7 +455,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in input text, and categorize those entities into types
+        /// in the passed-in document, and categorize those entities into types
         /// such as person, location, or organization.  For more information on
         /// available categories, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
@@ -465,7 +465,7 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -473,7 +473,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// in the input text, as well as a score indicating the confidence
+        /// in the document, as well as a score indicating the confidence
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -516,7 +516,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in input strings, and categorize those entities into types
+        /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// For more information on available categories, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
@@ -525,8 +525,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that all the input strings are
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
@@ -537,7 +537,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -552,7 +552,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in input strings, and categorize those entities into types
+        /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// For more information on available categories, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
@@ -561,8 +561,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that all the input strings are
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
@@ -573,7 +573,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -588,7 +588,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in input documents, and categorize those entities into types
+        /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// For more information on available categories, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
@@ -597,14 +597,14 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -639,7 +639,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of named entities
-        /// in the passed-in input documents, and categorize those entities into types
+        /// in the passed-in documents, and categorize those entities into types
         /// such as person, location, or organization.
         /// For more information on available categories, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
@@ -648,14 +648,14 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -694,22 +694,22 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative, neutral
-        /// or mixed sentiment contained in the input text, as well as a score
+        /// or mixed sentiment contained in the document, as well as a score
         /// indicating the model's confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
         /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
-        /// <returns>A result containing sentiment predictions for the input text
+        /// <returns>A result containing sentiment predictions for the document
         /// and each of the sentences it contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -752,7 +752,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the input text, as well as a score indicating the model's
+        /// sentiment contained in the document, as well as a score indicating the model's
         /// confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
@@ -760,14 +760,14 @@ namespace Azure.AI.TextAnalytics
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
         /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
-        /// <returns>A result containing sentiment predictions for the input text
+        /// <returns>A result containing sentiment predictions for the document
         /// and each of the sentences it contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -810,15 +810,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the input strings, as well as scores indicating
+        /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that all of the input strings are written in.
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that all of the documents are written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -828,8 +828,8 @@ namespace Azure.AI.TextAnalytics
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
-        /// <returns>A result containing sentiment predictions for each of the input strings
-        /// and predictions for each of the sentences each input contains.</returns>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> inputs, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -843,15 +843,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the input strings, as well as scores indicating
+        /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that all of the input strings are written in.
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that all of the documents are written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -861,8 +861,8 @@ namespace Azure.AI.TextAnalytics
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
-        /// <returns>A result containing sentiment predictions for each of the input strings
-        /// and predictions for each of the sentences each input contains.</returns>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> inputs, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -876,21 +876,21 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the input documents, as well as scores indicating
+        /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
-        /// <returns>A result containing sentiment predictions for each of the input documents
-        /// and predictions for each of the sentences each input contains.</returns>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -924,21 +924,21 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the input documents, as well as scores indicating
+        /// sentiment contained in the documents, as well as scores indicating
         /// the model's confidence in each of the predicted sentiments.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
-        /// <returns>A result containing sentiment predictions for each of the input documents
-        /// and predictions for each of the sentences each input contains.</returns>
+        /// <returns>A result containing sentiment predictions for each of the documents
+        /// and predictions for each of the sentences each document contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -976,8 +976,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in input text.
-        /// For example, for the input text "The food was delicious and there
+        /// found in the passed-in document.
+        /// For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
@@ -985,8 +985,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -994,7 +994,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
-        /// in the input text.</returns>
+        /// in the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<string>>> ExtractKeyPhrasesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
@@ -1036,8 +1036,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in input text.
-        /// For example, for the input text "The food was delicious and there
+        /// found in the passed-in document.
+        /// For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
@@ -1045,8 +1045,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1054,7 +1054,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
-        /// in the input text.</returns>
+        /// in the document.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<string>> ExtractKeyPhrases(string inputText, string language = default, CancellationToken cancellationToken = default)
@@ -1096,8 +1096,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in input text.
-        /// For example, for the input text "The food was delicious and there
+        /// found in the passed-in documents.
+        /// For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
@@ -1105,8 +1105,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that all the input strings are
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
@@ -1117,7 +1117,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
-        /// in each of the inputs.</returns>
+        /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> inputs, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -1131,8 +1131,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in input text.
-        /// For example, for the input text "The food was delicious and there
+        /// found in the passed-in documents.
+        /// For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
@@ -1140,8 +1140,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that all the input strings are
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that all the documents are
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
@@ -1152,7 +1152,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
-        /// in each of the inputs.</returns>
+        /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> inputs, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -1166,8 +1166,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in input text.
-        /// For example, for the input text "The food was delicious and there
+        /// found in the passed-in documents.
+        /// For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
@@ -1175,14 +1175,14 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
-        /// in each of the input documents.</returns>
+        /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -1216,8 +1216,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a model to identify a collection of significant phrases
-        /// found in the passed-in input text.
-        /// For example, for the input text "The food was delicious and there
+        /// found in the passed-in documents.
+        /// For example, for the document "The food was delicious and there
         /// were wonderful staff", the API returns the main talking points: "food"
         /// and "wonderful staff".
         /// For a list of languages supported by this operation, see
@@ -1225,14 +1225,14 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
-        /// in each of the input documents.</returns>
+        /// in each of the documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
@@ -1270,7 +1270,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in input text,
+        /// Personally Identifiable Information found in the passed-in document,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1278,8 +1278,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1287,7 +1287,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// in the input text, as well as a score indicating the confidence
+        /// in the document, as well as a score indicating the confidence
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1330,7 +1330,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in input text,
+        /// Personally Identifiable Information found in the passed-in document,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1338,8 +1338,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1347,7 +1347,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// in the input text, as well as a score indicating the confidence
+        /// in the document, as well as a score indicating the confidence
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1390,7 +1390,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in input strings,
+        /// Personally Identifiable Information found in the passed-in documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1398,8 +1398,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1410,7 +1410,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1425,7 +1425,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in input strings,
+        /// Personally Identifiable Information found in the passed-in documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1433,8 +1433,8 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1445,7 +1445,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1460,7 +1460,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in input documents,
+        /// Personally Identifiable Information found in the passed-in documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1468,14 +1468,14 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1510,7 +1510,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in input documents,
+        /// Personally Identifiable Information found in the passed-in documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1518,14 +1518,14 @@ namespace Azure.AI.TextAnalytics
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1564,15 +1564,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities
-        /// found in the passed-in input text, and include information linking the
+        /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1580,7 +1580,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of linked entities identified
-        /// in the input text, as well as scores indicating the confidence
+        /// in the document, as well as scores indicating the confidence
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1623,15 +1623,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities
-        /// found in the passed-in input text, and include information linking the
+        /// found in the passed-in document, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputText">The text to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputText">The document to analyze.</param>
+        /// <param name="language">The language that the document is written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1639,7 +1639,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of linked entities identified
-        /// in the input text, as well as scores indicating the confidence
+        /// in the document, as well as scores indicating the confidence
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1682,15 +1682,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities
-        /// found in the passed-in input strings, and include information linking the
+        /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1701,7 +1701,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1716,15 +1716,15 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities
-        /// found in the passed-in input strings, and include information linking the
+        /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input strings to analyze.</param>
-        /// <param name="language">The language that the input text is written in.
+        /// <param name="inputs">The documents to analyze.</param>
+        /// <param name="language">The language that the documents are written in.
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
@@ -1735,7 +1735,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1750,21 +1750,21 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities
-        /// found in the passed-in input documents, and include information linking the
+        /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
@@ -1799,21 +1799,21 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities
-        /// found in the passed-in input documents, and include information linking the
+        /// found in the passed-in documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// For document length limits, maximum batch size, and supported text encoding, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
         /// </summary>
-        /// <param name="inputs">The input documents to analyze.</param>
+        /// <param name="inputs">The documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
-        /// for each of the inputs, as well as scores indicating the confidence
+        /// for each of the documents, as well as scores indicating the confidence
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>

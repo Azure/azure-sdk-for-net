@@ -18,18 +18,24 @@ namespace Azure.AI.TextAnalytics
 
         #region Serialize Inputs
 
+        private static readonly JsonEncodedText s_countryHint = JsonEncodedText.Encode("countryHint");
+        private static readonly JsonEncodedText s_documents = JsonEncodedText.Encode("documents");
+        private static readonly JsonEncodedText s_id = JsonEncodedText.Encode("id");
+        private static readonly JsonEncodedText s_language = JsonEncodedText.Encode("language");
+        private static readonly JsonEncodedText s_text = JsonEncodedText.Encode("text");
+
         public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs, string defaultCountryHint)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
             json.WriteStartObject();
-            json.WriteStartArray("documents");
+            json.WriteStartArray(s_documents);
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("countryHint", input.CountryHint ?? defaultCountryHint);
-                json.WriteString("id", input.Id);
-                json.WriteString("text", input.Text);
+                json.WriteString(s_countryHint, input.CountryHint ?? defaultCountryHint);
+                json.WriteString(s_id, input.Id);
+                json.WriteString(s_text, input.Text);
                 json.WriteEndObject();
             }
             json.WriteEndArray();
@@ -43,13 +49,13 @@ namespace Azure.AI.TextAnalytics
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
             json.WriteStartObject();
-            json.WriteStartArray("documents");
+            json.WriteStartArray(s_documents);
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("language", input.Language ?? defaultLanguage);
-                json.WriteString("id", input.Id);
-                json.WriteString("text", input.Text);
+                json.WriteString(s_language, input.Language ?? defaultLanguage);
+                json.WriteString(s_id, input.Id);
+                json.WriteString(s_text, input.Text);
                 json.WriteEndObject();
             }
             json.WriteEndArray();

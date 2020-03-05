@@ -39,7 +39,22 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: dotnet run -p ./common/SmokeTests/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
+      - task: PowerShell@2
+        inputs:
+          targetType: filePath
+          filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+          arguments: -CI
+          workingDirectory: common/SmokeTests/SmokeTest
+          pwsh: true
+        displayName: Use latest dev feed package versions
+
+      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: Show SmokeTest.csproj
+
+      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
+
+      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
         env:
           KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)

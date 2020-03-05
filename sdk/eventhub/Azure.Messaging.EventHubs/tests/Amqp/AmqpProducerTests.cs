@@ -117,6 +117,43 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateBatchAsyncEnsuresNotClosed(bool createLinkBeforehand)
+        {
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            if (createLinkBeforehand)
+            {
+                producer
+                    .Protected()
+                    .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                        ItExpr.IsAny<string>(),
+                        ItExpr.IsAny<TimeSpan>(),
+                        ItExpr.IsAny<CancellationToken>())
+                    .Callback(() => SetMaximumMessageSize(producer.Object, 100))
+                    .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                    .Verifiable();
+
+                Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None), Throws.Nothing);
+            }
+
+            await producer.Object.CloseAsync(CancellationToken.None);
+
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreateBatchAsyncEnsuresMaximumMessageSizeIsPopulated()
         {
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
@@ -265,6 +302,226 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CreateBatchAsyncRespectsTheCancellationTokenIfSetWhenCalled(bool createLinkBeforehand)
+        {
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetMaximumMessageSize(producer.Object, 100))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                .Verifiable();
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            if (createLinkBeforehand)
+            {
+                Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationTokenSource.Token), Throws.Nothing);
+            }
+
+            cancellationTokenSource.Cancel();
+
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationTokenSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void CreateBatchAsyncAppliesTheRetryPolicy(EventHubsRetryOptions retryOptions)
+        {
+            var partitionId = "testMe";
+            var retriableException = new EventHubsException(true, "Test");
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                 .Throws(retriableException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
+                    ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void CreateBatchAsyncConsidersOperationCanceledExceptionAsRetriable(EventHubsRetryOptions retryOptions)
+        {
+            var partitionId = "testMe";
+            var retriableException = new OperationCanceledException();
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(retriableException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
+                    ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void CreateBatchAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
+        {
+            var partitionId = "testMe";
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(retriableException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
+                    ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchAsyncDetectsAnEmbeddedErrorForOperationCanceled()
+        {
+            var embeddedException = new OperationCanceledException("", new ArgumentNullException());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(embeddedException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
+                    ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
+        {
+            var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(embeddedException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
+                    ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpProducer.SendAsync" />
         ///   method.
         /// </summary>
@@ -328,7 +585,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("somekEy")]
+        [TestCase("someKey")]
         public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitonKey)
         {
             var messageFactory = default(Func<AmqpMessage>);
@@ -491,8 +748,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendEnumerableDetectsAnEmbeddedErrorForOperationCanceled()
         {
-            var partitionKey = "testMe";
-            var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
@@ -528,8 +783,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendEnumerableDetectsAnEmbeddedAmqpErrorForOperationCanceled()
         {
-            var partitionKey = "testMe";
-            var options = new CreateBatchOptions { PartitionKey = partitionKey };
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
@@ -548,7 +801,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using CancellationTokenSource cancellationSource = new CancellationTokenSource();
             Assert.That(async () => await producer.Object.SendAsync(new[] { new EventData(new byte[] { 0x65 }) }, new SendEventOptions(), cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
-
 
             producer
                 .Protected()
@@ -652,7 +904,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("somekEy")]
+        [TestCase("someKey")]
         public async Task SendBatchCreatesTheAmqpMessageFromTheBatch(string partitonKey)
         {
             var messageFactory = default(Func<AmqpMessage>);

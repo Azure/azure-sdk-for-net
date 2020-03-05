@@ -64,6 +64,13 @@ namespace Azure.Messaging.EventHubs.Producer
         private string EventHubName { get; }
 
         /// <summary>
+        ///   The list of diagnostic identifiers of events added to this batch.  To be used during
+        ///   instrumentation.
+        /// </summary>
+        ///
+        private List<string> EventDiagnosticIdentifiers { get; } = new List<string>();
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch"/> class.
         /// </summary>
         ///
@@ -111,7 +118,14 @@ namespace Azure.Messaging.EventHubs.Producer
             bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
             bool added = InnerBatch.TryAdd(eventData);
 
-            if (!added && instrumented)
+            if (added)
+            {
+                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                {
+                    EventDiagnosticIdentifiers.Add(diagnosticId);
+                }
+            }
+            else if (instrumented)
             {
                 EventDataInstrumentation.ResetEvent(eventData);
             }
@@ -134,5 +148,13 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
         internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+
+        /// <summary>
+        ///   Gets the list of diagnostic identifiers of events added to this batch.
+        /// </summary>
+        ///
+        /// <returns>A read-only list of diagnostic identifiers.</returns>
+        ///
+        internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
     }
 }

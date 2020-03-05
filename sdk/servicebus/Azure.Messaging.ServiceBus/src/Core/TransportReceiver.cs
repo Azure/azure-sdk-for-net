@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="cancellationToken"></param>
-        public abstract Task<DateTime> RenewLockAsync(
+        public abstract Task<DateTime> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken);
 

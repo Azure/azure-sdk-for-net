@@ -234,7 +234,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                 {
-                    throw new ServiceBusException(_entityName, string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), ServiceBusException.FailureReason.MessageSizeExceeded);
+                    throw new ServiceBusException(string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize, _entityName), ServiceBusException.FailureReason.MessageSizeExceeded);
                 }
 
                 // Attempt to send the message batch.
@@ -306,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (amqpMessage.SerializedMessageSize > MaximumMessageSize)
                 {
-                    throw new ServiceBusException(_entityName, string.Format(Resources1.MessageSizeExceeded, messageHash, amqpMessage.SerializedMessageSize, MaximumMessageSize), ServiceBusException.FailureReason.MessageSizeExceeded);
+                    throw new ServiceBusException(string.Format(Resources1.MessageSizeExceeded, messageHash, amqpMessage.SerializedMessageSize, MaximumMessageSize), ServiceBusException.FailureReason.MessageSizeExceeded, _entityName);
                 }
 
                 // Attempt to send the message batch.

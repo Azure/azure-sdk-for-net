@@ -238,9 +238,9 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                Assert.IsNotNull(sentence.Offset);
-                Assert.IsNotNull(sentence.Length);
-                Assert.AreEqual(input.Length, sentence.Length);
+                Assert.IsNotNull(sentence.GraphemeOffset);
+                Assert.IsNotNull(sentence.GraphemeLength);
+                Assert.Greater(sentence.GraphemeLength, 0);
             }
         }
 
@@ -282,8 +282,8 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                     Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                     Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                    Assert.IsNotNull(sentence.Offset);
-                    Assert.IsNotNull(sentence.Length);
+                    Assert.IsNotNull(sentence.GraphemeOffset);
+                    Assert.IsNotNull(sentence.GraphemeLength);
                 }
             }
         }
@@ -342,8 +342,8 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                     Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                     Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                    Assert.IsNotNull(sentence.Offset);
-                    Assert.IsNotNull(sentence.Length);
+                    Assert.IsNotNull(sentence.GraphemeOffset);
+                    Assert.IsNotNull(sentence.GraphemeLength);
                 }
             }
         }
@@ -555,9 +555,9 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
                 Assert.IsNotNull(entity.Score);
-                Assert.IsNotNull(entity.Offset);
-                Assert.IsNotNull(entity.Length);
-                Assert.Greater(entity.Length, 0);
+                Assert.IsNotNull(entity.GraphemeOffset);
+                Assert.IsNotNull(entity.GraphemeLength);
+                Assert.Greater(entity.GraphemeLength, 0);
             }
         }
 
@@ -723,9 +723,9 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
                 Assert.IsNotNull(entity.Score);
-                Assert.IsNotNull(entity.Offset);
-                Assert.IsNotNull(entity.Length);
-                Assert.Greater(entity.Length, 0);
+                Assert.IsNotNull(entity.GraphemeOffset);
+                Assert.IsNotNull(entity.GraphemeLength);
+                Assert.Greater(entity.GraphemeLength, 0);
             }
         }
 
@@ -877,8 +877,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.Language);
                 Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);
-                Assert.IsNotNull(entity.Matches.First().Length);
-                Assert.IsNotNull(entity.Matches.First().Offset);
+                Assert.IsNotNull(entity.Matches.First().GraphemeLength);
+                Assert.IsNotNull(entity.Matches.First().GraphemeOffset);
                 Assert.IsNotNull(entity.Matches.First().Score);
                 Assert.IsNotNull(entity.Matches.First().Text);
             }

@@ -3,9 +3,10 @@
 
 namespace Microsoft.Azure.EventHubs.Processor
 {
-    using System.Threading.Tasks;
+	using System;
+	using System.Threading.Tasks;
+	using Microsoft.WindowsAzure.Storage.Blob;
 	using Newtonsoft.Json;
-	using Microsoft.Azure.Storage.Blob;
 
 	class AzureBlobLease : Lease
 	{

@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The sentiment confidence scores, by sentiment class label.
+    /// The sentiment confidence scores, by sentiment label.
     /// </summary>
     public class SentimentConfidenceScorePerLabel
     {

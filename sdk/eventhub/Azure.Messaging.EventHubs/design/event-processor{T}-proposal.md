@@ -90,10 +90,10 @@ public class CustomProcessor : EventProcessor<EventProcessorPartition>
     protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
         CustomStorage.GetCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
     
-    protected override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
+    protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
         CustomStorage.GetOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier);
     
-    protected override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
+    protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
         CustomStorage.TryUpdateOwnershipAsync(desiredOwnership);
 }
 ```
@@ -132,10 +132,10 @@ public class CustomProcessor : EventProcessor<CustomPartition>
     protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
         CustomStorage.GetCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
     
-    protected override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
+    protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
         CustomStorage.GetOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier);
     
-    protected override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
+    protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
         CustomStorage.TryUpdateOwnershipAsync(desiredOwnership);
 }
 ```
@@ -238,17 +238,17 @@ public class CustomProcessor : EventProcessor<EventProcessorPartition>
     protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
         Storage.GetCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
     
-    protected override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
+    protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
         Storage.GetOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier);
     
-    protected override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
+    protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) =>
         Storage.TryClaimOwnershipAsync(desiredOwnership);
 }
 
 public class InMemoryStorage
 {
     private ConcurrentDictionary<string, ConcurrentDictionary<string, EventProcessorCheckpoint>> Checkpoints { get; } = new ConcurrentDictionary<string, ConcurrentDictionary<string, EventProcessorCheckpoint>>();
-    private ConcurrentDictionary<string, ConcurrentDictionary<string, PartitionOwnership>> Ownership { get; } = new ConcurrentDictionary<string, ConcurrentDictionary<string, PartitionOwnership>>();
+    private ConcurrentDictionary<string, ConcurrentDictionary<string, EventProcessorPartitionOwnership>> Ownership { get; } = new ConcurrentDictionary<string, ConcurrentDictionary<string, EventProcessorPartitionOwnership>>();
 
     public Task CreateCheckpointAsync(
         string fullyQualifiedNamespace,
@@ -269,8 +269,14 @@ public class InMemoryStorage
             PartitionId = partitionId
         });
         
-        partitionCheckpoint.Offset = offset;
-        partitionCheckpoint.SequenceNumber = sequenceNumber;
+        if (offset.HasValue)
+        {
+            partitionCheckpoint.StartingPosition = EventPosition.FromOffset(offset.Value, false);
+        }
+        else
+        {
+            partitionCheckpoint.StartingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
+        }
         
         return Task.CompletedTask;
     }
@@ -285,34 +291,34 @@ public class InMemoryStorage
         return Task.FromResult((IEnumerable<EventProcessorCheckpoint>)checkpoints.Values);
     }
 
-    public Task<IEnumerable<PartitionOwnership>> GetOwnershipAsync(
+    public Task<IEnumerable<EventProcessorPartitionOwnership>> GetOwnershipAsync(
         string fullyQualifiedNamespace,
         string eventHubName,
         string consumerGroup)
     {
         var key = CreateKey(fullyQualifiedNamespace, eventHubName, consumerGroup);
-        var ownership = Ownership.GetOrAdd(key, newKey => new ConcurrentDictionary<string, PartitionOwnership>());
+        var ownership = Ownership.GetOrAdd(key, newKey => new ConcurrentDictionary<string, EventProcessorPartitionOwnership>());
         return Task.FromResult(ownership.Values.Where(item => item.OwnerIdentifier != identifier));
     }
     
-    public Task<IEnumerable<PartitionOwnership>> TryClaimOwnershipAsync(
-        IEnumerable<PartitionOwnership> desiredOwnership)
+    public Task<IEnumerable<EventProcessorPartitionOwnership>> TryClaimOwnershipAsync(
+        IEnumerable<EventProcessorPartitionOwnership> desiredOwnership)
     {
         if (desiredOwnership == null)
         {
-            return Task.FromResult(Enumerable.Empty<PartitionOwnership>());
+            return Task.FromResult(Enumerable.Empty<EventProcessorPartitionOwnership>());
         }
         
-        var claimedOwnership = new List<PartitionOwnership>();
+        var claimedOwnership = new List<EventProcessorPartitionOwnership>();
 
         foreach (var claim in desiredOwnership)
         {
             var key = CreateKey(claim.FullyQualifiedNamespace, claim.EventHubName, claim.ConsumerGroup);
-            var claimedPartitions = Ownership.GetOrAdd(key, newKey => new ConcurrentDictionary<string, PartitionOwnership>());
+            var claimedPartitions = Ownership.GetOrAdd(key, newKey => new ConcurrentDictionary<string, EventProcessorPartitionOwnership>());
             var nextVersion = new Version(Guid.NewGuid().ToString());
 
             var ownership = claimedPartitions.AddOrUpdate(claim.PartitionId,
-                partitionId => new PartitionOwnership
+                partitionId => new EventProcessorPartitionOwnership
                 (
                     claim.FullyQualifiedNamespace,
                     claim.EventHubName,
@@ -329,7 +335,7 @@ public class InMemoryStorage
                         return existingOwnership;
                     }
 
-                    return new PartitionOwnership
+                    return new EventProcessorPartitionOwnership
                     (
                         claim.FullyQualifiedNamespace,
                         claim.EventHubName,
@@ -348,7 +354,7 @@ public class InMemoryStorage
             }
         }
 
-        return Task.FromResult((IEnumerable<PartitionOwnership>)claimedOwnership);
+        return Task.FromResult((IEnumerable<EventProcessorPartitionOwnership>)claimedOwnership);
     }
 
     private string CreateKey(
@@ -360,7 +366,7 @@ public class InMemoryStorage
 
 ## API skeleton
 
-### `Azure.Messaging.EventHubs.Specialized`
+### `Azure.Messaging.EventHubs.Primitives`
 
 ```csharp
 public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
@@ -372,20 +378,20 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public bool IsRunning { get; protected set; }
     
     protected EventProcessor(
-        int eventBatchSize,
+        int eventBatchMaximumCount,
         string consumerGroup, 
         string connectionString, 
         EventProcessorOptions options = default);
         
     protected EventProcessor(
-        int eventBatchSize,
+        int eventBatchMaximumCount,
         string consumerGroup, 
         string connectionString, 
         string eventHubName, 
         EventProcessorOptions options = default);
     
     protected EventProcessor(
-        int eventBatchSize,
+        int eventBatchMaximumCount,
         string consumerGroup,  
         string fullyQualifiedNamespace, 
         string eventHubName, 
@@ -407,8 +413,8 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     
     // Required extension points (storage operations)
     protected abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken);
-    protected abstract Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken);
-    protected abstract Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> desiredOwnership, CancellationToken cancellationToken);
+    protected abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken);
+    protected abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken);
     
     // Infrastructure
     protected virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties(string partitionId);
@@ -429,7 +435,7 @@ public class EventProcessorOptions
 
 public class EventProcessorPartition
 {
-    public string PartitionId { get; set; }
+    public string PartitionId { get; internal set; }
 }
 
 public class EventProcessorCheckpoint
@@ -438,11 +444,10 @@ public class EventProcessorCheckpoint
     public string EventHubName { get; set; }
     public string ConsumerGroup { get; set; }
     public string PartitionId { get; set; }
-    public long? Offset { get; set; }
-    public long? SequenceNumber { get; set; }
+    public EventPosition StartingPosition { get; set; }
 }
 
-public class PartitionOwnership
+public class EventProcessorPartitionOwnership
 {
     public string FullyQualifiedNamespace { get; set; }
     public string EventHubName { get; set; }
@@ -458,15 +463,15 @@ public class PartitionOwnership
 
 ### Package: Azure.Messaging.EventHubs
 
-#### `Azure.Messaging.EventHubs.Specialized`
+#### `Azure.Messaging.EventHubs.Primitives`
 ```csharp
 public class EventProcessor<TPartition> {}
 public class EventProcessorOptions {}
 public class EventProcessorCheckpoint {}
 public class EventProcessorPartition {}
-public class PartitionOwnership {}
-public class PartitionReceiverClient {}
-public class PartitionReceiverClientOptions {}
+public class EventProcessorPartitionOwnership {}
+public class PartitionReceiver {}
+public class PartitionReceiverOptions {}
 ```
 
 #### `Azure.Messaging.EventHubs.Processor`
