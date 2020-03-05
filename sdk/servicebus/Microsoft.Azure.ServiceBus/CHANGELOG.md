@@ -1,5 +1,8 @@
 # Release History
 
+## 4.2.0-preview.1 (Unreleased)
+
+
 ## 4.1.2
 - Same as version 4.1.1 but has pdb symbols published
 
