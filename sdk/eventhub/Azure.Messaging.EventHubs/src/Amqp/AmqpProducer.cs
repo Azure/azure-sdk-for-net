@@ -199,6 +199,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                               CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
