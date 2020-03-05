@@ -92,28 +92,5 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         [JsonProperty(PropertyName = "properties.template")]
         public string Template { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (DisplayName != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(DisplayName, "^.{1,200}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "DisplayName", "^.{1,200}$");
-                }
-            }
-            if (Subdomain != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Subdomain, "^[a-z0-9-]{1,63}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Subdomain", "^[a-z0-9-]{1,63}$");
-                }
-            }
-        }
     }
 }
