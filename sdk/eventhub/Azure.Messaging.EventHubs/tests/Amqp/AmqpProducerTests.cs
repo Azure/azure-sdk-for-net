@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void CreateBatchAsyncRespectsTheCancellationTokenIfSetWhenCalled(bool createLink)
+        public void CreateBatchAsyncRespectsTheCancellationTokenIfSetWhenCalled(bool createLinkBeforehand)
         {
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
@@ -293,7 +293,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-            if (createLink)
+            if (createLinkBeforehand)
             {
                 Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationTokenSource.Token), Throws.Nothing);
             }
