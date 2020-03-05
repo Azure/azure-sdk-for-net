@@ -60,16 +60,10 @@ namespace Azure.Storage.Files.DataLake
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
             // Set _maxWorkerCount
-            if (transferOptions.MaximumConcurrency.HasValue)
+            if (transferOptions.MaximumConcurrency.HasValue
+                && transferOptions.MaximumConcurrency > 0)
             {
-                if (transferOptions.MaximumConcurrency < 1)
-                {
-                    _maxWorkerCount = Constants.DataLake.DefaultConcurrentTransfersCount;
-                }
-                else
-                {
-                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
-                }
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
             }
             else
             {
@@ -77,16 +71,10 @@ namespace Azure.Storage.Files.DataLake
             }
 
             // Set _singleUploadThreshold
-            if (transferOptions.InitialTransferLength.HasValue)
+            if (transferOptions.InitialTransferLength.HasValue
+                && transferOptions.InitialTransferLength.Value > 0)
             {
-                if (transferOptions.InitialTransferLength.Value < 1)
-                {
-                    _singleUploadThreshold = Constants.DataLake.MaxAppendBytes;
-                }
-                else
-                {
-                    _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.DataLake.MaxAppendBytes);
-                }
+                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.DataLake.MaxAppendBytes);
             }
             else
             {
@@ -94,22 +82,12 @@ namespace Azure.Storage.Files.DataLake
             }
 
             // Set _blockSize
-            if (transferOptions.MaximumTransferLength.HasValue)
+            if (transferOptions.MaximumTransferLength.HasValue
+                && transferOptions.MaximumTransferLength > 0)
             {
-                if (transferOptions.MaximumTransferLength < 1)
-                {
-                    _blockSize = Constants.DataLake.MaxAppendBytes;
-                }
-                else
-                {
-                    _blockSize = Math.Min(
-                        Constants.DataLake.MaxAppendBytes,
-                        transferOptions.MaximumTransferLength.Value);
-                }
-            }
-            else
-            {
-                _blockSize = Constants.DataLake.MaxAppendBytes;
+                _blockSize = Math.Min(
+                    Constants.DataLake.MaxAppendBytes,
+                    transferOptions.MaximumTransferLength.Value);
             }
 
             _operationName = operationName;
@@ -252,31 +230,26 @@ namespace Azure.Storage.Files.DataLake
                 }
 
                 // Partition the stream into individual blocks and stage them
-                IAsyncEnumerator<ChunkedStream> enumerator =
-                    PartitionedUploadExtensions.GetBlocksAsync(
-                        content, blockSize, async: false, _arrayPool, cancellationToken)
-                    .GetAsyncEnumerator(cancellationToken);
-
                 // We need to keep track of how much data we have appended to
                 // calculate offsets for the next appends, and the final
                 // position to flush
                 long appendedBytes = 0;
-
-                while (enumerator.MoveNextAsync().EnsureCompleted())
+                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                    content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
-                    // Dispose the block after the loop iterates and return its
-                    // memory to our ArrayPool
-                    using ChunkedStream block = enumerator.Current;
+                    // Dispose the block after the loop iterates and return its memory to our ArrayPool
+                    using (block)
+                    {
+                        // Append the next block
+                        _client.Append(
+                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            offset: appendedBytes,
+                            leaseId: conditions?.LeaseId,
+                            progressHandler: progressHandler,
+                            cancellationToken: cancellationToken);
 
-                    // Append the next block
-                    _client.Append(
-                        new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        offset: appendedBytes,
-                        leaseId: conditions?.LeaseId,
-                        progressHandler: progressHandler,
-                        cancellationToken: cancellationToken);
-
-                    appendedBytes += block.Length;
+                        appendedBytes += block.Length;
+                    }
                 }
 
                 // Commit the block list after everything has been staged to

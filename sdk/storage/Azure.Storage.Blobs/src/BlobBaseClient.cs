@@ -677,7 +677,7 @@ namespace Azure.Storage.Blobs.Specialized
                                     startOffset,
                                     async,
                                     cancellationToken)
-                                .ConfigureAwait(false).GetAwaiter().GetResult()
+                                .EnsureCompleted()
                             .Item2,
                         async startOffset =>
                             (await StartDownloadAsync(

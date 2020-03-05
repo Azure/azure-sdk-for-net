@@ -128,6 +128,6 @@ namespace Azure.Core.Testing
 
         bool IPreFilter.IsMatch(Type type) => true;
 
-        bool IPreFilter.IsMatch(Type type, MethodInfo method)  => true;
+        bool IPreFilter.IsMatch(Type type, MethodInfo method) => true;
     }
 }

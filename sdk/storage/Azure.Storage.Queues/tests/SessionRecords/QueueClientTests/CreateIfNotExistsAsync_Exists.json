@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://seandevtest.queue.core.windows.net/test-queue-1645a443-ccae-9dea-1faf-1b2f37b934e3",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-7c5df53cf8cc0a478942337176214435-e495bc2bbfe31f4d-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.3.0-dev.20200219.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3287851e-9c80-8ceb-b4a2-528fdb1ff65f",
+        "x-ms-date": "Wed, 19 Feb 2020 23:38:18 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 19 Feb 2020 23:38:18 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "82868b50-0003-0066-627d-e7b850000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://seandevtest.queue.core.windows.net/test-queue-1645a443-ccae-9dea-1faf-1b2f37b934e3",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-27a23fe39103f34fb6f14ac4060b5408-b466991d517fcd4b-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.3.0-dev.20200219.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "b11175d4-0131-bd63-c0e3-424cb48e46e6",
+        "x-ms-date": "Wed, 19 Feb 2020 23:38:18 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 19 Feb 2020 23:38:18 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "82868b63-0003-0066-737d-e7b850000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://seandevtest.queue.core.windows.net/test-queue-1645a443-ccae-9dea-1faf-1b2f37b934e3",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-de4f043b763643488a0967b96b20111b-afcce3143367284c-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Queues/12.3.0-dev.20200219.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "66badddf-440e-d12d-73ae-efe6d75187f7",
+        "x-ms-date": "Wed, 19 Feb 2020 23:38:19 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2018-11-09"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 19 Feb 2020 23:38:18 GMT",
+        "Server": [
+          "Windows-Azure-Queue/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": "82868b6a-0003-0066-7a7d-e7b850000000",
+        "x-ms-version": "2018-11-09"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1981242330",
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
+  }
+}

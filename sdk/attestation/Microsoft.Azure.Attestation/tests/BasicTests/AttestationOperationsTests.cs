@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -9,17 +10,139 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Xunit;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using Microsoft.Rest.Azure;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Microsoft.Azure.Attestation.Tests.BasicTests
 {
     public class AttestationOperationsTests : IClassFixture<AttestationTestFixture> 
     {
         private AttestationTestFixture fixture;
+        private const string tenantBaseUrl = "https://tradewinds4.us.attest.azure.net";
+        private const string tenantBaseUrlWithTrustedSigners = "https://tradewinds3.us.attest.azure.net";
+
+        // Get-AzAttestation -Name tradewinds3 -ResourceGroupName sdk-test-do-not-delete
+        //
+        //    Id         : subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/sdk-test-do-not-delete/providers/Microsoft.Attestation/attestationProviders/tradewinds3
+        //    Location   : East US
+        //    Name       : tradewinds3
+        //    Status     : Ready
+        //    TrustModel : Isolated
+        //    AttestUri  : https://tradewinds3.us.attest.azure.net
+        //    Tags       : {Test}
+        //    TagsTable  :
+        //                 Name Value
+        //                 ====  =====
+        //                 Test yes
+        //
+        // Get-AzAttestation -Name tradewinds4 -ResourceGroupName sdk-test-do-not-delete
+        //
+        //    Id         : subscriptions/a724c543-53ce-44a6-b633-e11ef27839b7/resourceGroups/sdk-test-do-not-delete/providers/Microsoft.Attestation/attestationProviders/tradewinds4
+        //    Location   : East US
+        //    Name       : tradewinds4
+        //    Status     : Ready
+        //    TrustModel : AAD
+        //    AttestUri  : https://tradewinds4.us.attest.azure.net
+        //    TagsTable  :
+        //                 Name Value
+        //                 ====  =====
+        //                 Test yes
+        //
 
         public AttestationOperationsTests(AttestationTestFixture fixture)
         {
             this.fixture = fixture;
         }
+
+        [Fact]
+        public void UpdatePolicyCertificates()
+        {
+            string newCertText = File.ReadAllText(@"./DataFiles/cert2.signed.add.txt");
+
+            using (MockContext ctx = MockContext.Start(this.GetType()))
+            {
+                var attestationClient = GetAttestationClient();
+
+                // Test Get (tenantBaseUrl should have no trusted policy signers)
+                var serviceCallResult = attestationClient.PolicyCertificates.GetWithHttpMessagesAsync(tenantBaseUrl);
+                Assert.Equal(HttpStatusCode.OK, serviceCallResult.Result.Response.StatusCode);
+
+                var jsonBody = ExtractJoseBody(serviceCallResult);
+                Assert.Equal(JTokenType.Array, jsonBody["aas-policyCertificates"]["keys"].Type);
+                Assert.Empty(jsonBody["aas-policyCertificates"]["keys"].ToArray());
+
+                // Test Get (tenantBaseUrlWithTrustedSigners should have one trusted policy signers)
+                serviceCallResult = attestationClient.PolicyCertificates.GetWithHttpMessagesAsync(tenantBaseUrlWithTrustedSigners);
+                Assert.Equal(HttpStatusCode.OK, serviceCallResult.Result.Response.StatusCode);
+                Assert.NotNull(serviceCallResult.Result.Body as string);
+                Assert.True((serviceCallResult.Result.Body as string).Length > 0);
+
+                jsonBody = ExtractJoseBody(serviceCallResult);
+                Assert.Equal(JTokenType.Array, jsonBody["aas-policyCertificates"]["keys"].Type);
+                Assert.Single(jsonBody["aas-policyCertificates"]["keys"].ToArray());
+
+                var certificateText = (string) jsonBody["aas-policyCertificates"]["keys"][0]["x5c"][0];
+                X509Certificate2 certificateObject = new X509Certificate2(Convert.FromBase64String(certificateText));
+                Assert.NotNull(certificateObject.SubjectName);
+                Assert.Equal("CN=MaaTestCert1", certificateObject.SubjectName.Name);
+
+                // Test Add
+                serviceCallResult = attestationClient.PolicyCertificates.AddWithHttpMessagesAsync(tenantBaseUrlWithTrustedSigners, newCertText);
+                Assert.Equal(HttpStatusCode.OK, serviceCallResult.Result.Response.StatusCode);
+                Assert.NotNull(serviceCallResult.Result.Body as string);
+                Assert.True((serviceCallResult.Result.Body as string).Length > 0);
+
+                jsonBody = ExtractJoseBody(serviceCallResult);
+                Assert.Equal(JTokenType.Array, jsonBody["aas-policyCertificates"]["keys"].Type);
+                Assert.Equal(2, jsonBody["aas-policyCertificates"]["keys"].ToArray().Length);
+
+                string expectedSubjectName = "MaaTestCert2";
+                bool expectedSubjectNameFound = false;
+                foreach (var trustedSigningKey in jsonBody["aas-policyCertificates"]["keys"].ToArray())
+                {
+                    foreach (var certificate in trustedSigningKey["x5c"])
+                    {
+                        certificateObject = new X509Certificate2(Convert.FromBase64String((string)certificate));
+                        if (certificateObject.SubjectName.Name.Contains(expectedSubjectName))
+                        {
+                            expectedSubjectNameFound = true;
+                            break;
+                        }
+                    }
+
+                    if (expectedSubjectNameFound)
+                        break;
+                }
+                Assert.True(expectedSubjectNameFound);
+
+                // Test Remove
+                serviceCallResult = attestationClient.PolicyCertificates.RemoveWithHttpMessagesAsync(tenantBaseUrlWithTrustedSigners, newCertText);
+                Assert.Equal(HttpStatusCode.OK, serviceCallResult.Result.Response.StatusCode);
+                Assert.NotNull(serviceCallResult.Result.Body as string);
+                Assert.True((serviceCallResult.Result.Body as string).Length > 0);
+
+                jsonBody = ExtractJoseBody(serviceCallResult);
+                Assert.Equal(JTokenType.Array, jsonBody["aas-policyCertificates"]["keys"].Type);
+                Assert.Single(jsonBody["aas-policyCertificates"]["keys"].ToArray());
+
+                certificateText = (string)jsonBody["aas-policyCertificates"]["keys"][0]["x5c"][0];
+                certificateObject = new X509Certificate2(Convert.FromBase64String(certificateText));
+                Assert.NotNull(certificateObject.SubjectName);
+                Assert.Equal("CN=MaaTestCert1", certificateObject.SubjectName.Name);
+            }
+        }
+
+        private static JObject ExtractJoseBody(Task<AzureOperationResponse<object>> serviceCallResult)
+        {
+            string[] joseParts = (serviceCallResult.Result.Body as string).Split('.');
+            var decodedBody = Base64UrlEncoder.Decode(joseParts[1]);
+            JObject jsonBody = JObject.Parse(decodedBody);
+            return jsonBody;
+        }
+
         [Fact]
         public void UpdatePolicy()
         {
@@ -27,7 +150,6 @@ namespace Microsoft.Azure.Attestation.Tests.BasicTests
             {
                 var attestationClient = GetAttestationClient();
 
-                string tenantBaseUrl = "https://tradewinds.us.attest.azure.net";
                 string policyJws =
                     "eyJhbGciOiJub25lIn0.eyJBdHRlc3RhdGlvblBvbGljeSI6ICJ7XHJcbiAgICBcIiR2ZXJzaW9uXCI6IDEsXHJcbiAgICBcIiRhbGxvdy1kZWJ1Z2dhYmxlXCIgOiB0cnVlLFxyXG4gICAgXCIkY2xhaW1zXCI6W1xyXG4gICAgICAgIFwiaXMtZGVidWdnYWJsZVwiICxcclxuICAgICAgICBcInNneC1tcnNpZ25lclwiLFxyXG4gICAgICAgIFwic2d4LW1yZW5jbGF2ZVwiLFxyXG4gICAgICAgIFwicHJvZHVjdC1pZFwiLFxyXG4gICAgICAgIFwic3ZuXCIsXHJcbiAgICAgICAgXCJ0ZWVcIixcclxuICAgICAgICBcIk5vdERlYnVnZ2FibGVcIlxyXG4gICAgXSxcclxuICAgIFwiTm90RGVidWdnYWJsZVwiOiB7XCJ5ZXNcIjp7XCIkaXMtZGVidWdnYWJsZVwiOnRydWUsIFwiJG1hbmRhdG9yeVwiOnRydWUsIFwiJHZpc2libGVcIjpmYWxzZX19LFxyXG4gICAgXCJpcy1kZWJ1Z2dhYmxlXCIgOiBcIiRpcy1kZWJ1Z2dhYmxlXCIsXHJcbiAgICBcInNneC1tcnNpZ25lclwiIDogXCIkc2d4LW1yc2lnbmVyXCIsXHJcbiAgICBcInNneC1tcmVuY2xhdmVcIiA6IFwiJHNneC1tcmVuY2xhdmVcIixcclxuICAgIFwicHJvZHVjdC1pZFwiIDogXCIkcHJvZHVjdC1pZFwiLFxyXG4gICAgXCJzdm5cIiA6IFwiJHN2blwiLFxyXG4gICAgXCJ0ZWVcIiA6IFwiJHRlZVwiXHJcbn0ifQ.";
                 
@@ -60,7 +182,6 @@ namespace Microsoft.Azure.Attestation.Tests.BasicTests
             using (MockContext ctx = MockContext.Start(this.GetType()))
             {
                 var attestationClient = GetAttestationClient();
-                string tenantBaseUrl = "https://tradewinds.us.test.attest.azure.net";
                 var response = attestationClient.MetadataConfiguration.Get(tenantBaseUrl);
                 var json = JsonConvert.DeserializeObject(response.ToString()) as JObject;
                 Assert.NotNull(json);
@@ -115,8 +236,7 @@ namespace Microsoft.Azure.Attestation.Tests.BasicTests
             using (MockContext ctx = MockContext.Start(this.GetType()))
             {
                 var attestationClient = GetAttestationClient();
-                string tenantBaseUrl = "https://tradewinds.us.test.attest.azure.net";
-                var response = attestationClient.Certs.Get(tenantBaseUrl);
+                var response = attestationClient.SigningCertificates.Get(tenantBaseUrl);
 
                 var json = JsonConvert.DeserializeObject(response.ToString()) as JObject;
                 Assert.NotNull(json);
@@ -133,7 +253,7 @@ namespace Microsoft.Azure.Attestation.Tests.BasicTests
 
         }
 
-        public AttestationClient GetAttestationClient()
+        private AttestationClient GetAttestationClient()
         {
             return fixture.CreateAttestationClient();
         }

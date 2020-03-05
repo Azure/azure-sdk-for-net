@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 {
@@ -12,13 +13,16 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// <remarks>
     ///   When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
     ///
-    ///   Do not explicity include the Guid here, since EventSource has a mechanism to automatically
+    ///   Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     ///   map to an EventSource Guid based on the Name (Azure-Messaging-EventHubs-Processor-BlobEventStore).
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs-Processor-BlobEventStore")]
+    [EventSource(Name = EventSourceName)]
     internal class BlobEventStoreEventSource : EventSource
     {
+        /// <summary>The name to use for the event source.</summary>
+        private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-BlobEventStore";
+
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
@@ -31,7 +35,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        internal BlobEventStoreEventSource() { }
+        internal BlobEventStoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        {
+        }
 
         /// <summary>
         ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.
@@ -216,6 +222,27 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(10, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that invalid checkpoint data was found during an attempt to retrieve a list of checkpoints.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the data is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the data is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the data is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition the data is associated with.</param>
+        ///
+        [Event(11, Level = EventLevel.Error, Message = "Invalid checkpoint data found when listing checkpoints; this checkpoint is not valid and will be ignored.  FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'.")]
+        public virtual void InvalidCheckpointFound(string fullyQualifiedNamespace,
+                                                   string eventHubName,
+                                                   string consumerGroup,
+                                                   string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(11, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
             }
         }
     }

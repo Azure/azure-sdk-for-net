@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Peering
             /// </param>
             /// <param name='directPeeringType'>
             /// The type of direct peering. Possible values include: 'Edge', 'Transit',
-            /// 'Cdn', 'Internal'
+            /// 'Cdn', 'Internal', 'Ix', 'IxRs'
             /// </param>
             public static IPage<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind, string directPeeringType = default(string))
             {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Peering
             /// </param>
             /// <param name='directPeeringType'>
             /// The type of direct peering. Possible values include: 'Edge', 'Transit',
-            /// 'Cdn', 'Internal'
+            /// 'Cdn', 'Internal', 'Ix', 'IxRs'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

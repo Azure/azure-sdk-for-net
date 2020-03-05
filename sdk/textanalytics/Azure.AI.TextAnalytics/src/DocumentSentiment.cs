@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -24,8 +22,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed input document
-        /// or substring.
+        /// Gets the predicted sentiment for the analyzed document.
         /// </summary>
         public DocumentSentimentLabel Sentiment { get; }
 

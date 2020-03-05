@@ -5,8 +5,8 @@ using System;
 
 namespace Azure.Messaging.ServiceBus
 {
-    /// <summary>Context provided for <see cref="ExceptionReceivedEventArgs"/> exception raised by the client.</summary>
-    public class ExceptionReceivedContext
+    /// <summary>Context provided for <see cref="ProcessErrorEventArgs"/> exception raised by the client.</summary>
+    internal class ExceptionReceivedContext
     {
         /// <summary>Initializes a new instance of the <see cref="ExceptionReceivedContext" /> class.</summary>
         /// <param name="action">The action associated with the exception.</param>

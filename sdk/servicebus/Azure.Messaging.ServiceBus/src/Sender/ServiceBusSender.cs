@@ -15,27 +15,27 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 
-namespace Azure.Messaging.ServiceBus.Core
+namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity (queue or topic).
     /// </summary>
     ///
-    public abstract class ServiceBusSender : IAsyncDisposable
+    public class ServiceBusSender : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the producer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
+        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The name of the entity that the producer is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityName => Connection.EntityName;
+        public string EntityName { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
@@ -52,28 +52,27 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   and should take responsibility for managing its lifespan.
         /// </summary>
         ///
-        private bool OwnsConnection { get; } = true;
+        private bool OwnsConnection { get; } = false;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private ServiceBusRetryPolicy RetryPolicy { get; }
+        private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
-        ///   about the associated Service Bus entity and access to a transport-aware sender.
+        ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
         ///
-        private ServiceBusConnection Connection { get; }
+        private readonly ServiceBusConnection _connection;
 
         /// <summary>
         ///   An abstracted Service Bus entity transport-specific sender that is associated with the
         ///   Service Bus entity gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
-        internal virtual TransportSender InnerSender { get; }
-
+        private readonly TransportSender _innerSender;
         /// <summary>
         ///
         /// </summary>
@@ -82,137 +81,34 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=orders-queue".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusSender(string connectionString) : this(connectionString, null, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="clientOptions">The set of options to use for this consumer.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=orders-queue".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusSender(string connectionString, ServiceBusSenderClientOptions clientOptions)
-            : this(connectionString, null, clientOptions)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        /// <param name="entityName">The name of the specific Service Bus entity to associate the producer with.</param>
-        ///
+        /// <param name="connection"></param>
+        /// <param name="options">A set of options to apply when configuring the producer.</param>
+        /// <param name="entityName"></param>
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        ///   and can be used directly without passing the  name="entityName" />.  The name of the Service Bus entity should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
-        ///
-        public ServiceBusSender(string connectionString, string entityName)
-            : this(connectionString, entityName, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
-        /// <param name="entityName">The name of the specific Service Bus entity to associate the producer with.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
-        ///   passed only once, either as part of the connection string or separately.
-        /// </remarks>
-        ///
-        public ServiceBusSender(
-            string connectionString,
-            string entityName,
-            ServiceBusSenderClientOptions clientOptions)
-        {
-            Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
-            ClientDiagnostics = new ClientDiagnostics(clientOptions);
-            OwnsConnection = true;
-            Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            InnerSender = Connection.CreateTransportProducer(RetryPolicy);
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of the specific Service Bus entity to associated the producer with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
-        ///
-        public ServiceBusSender(
-            string fullyQualifiedNamespace,
-            string entityName,
-            TokenCredential credential,
-            ServiceBusSenderClientOptions clientOptions = default)
-        {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
-            ClientDiagnostics = new ClientDiagnostics(clientOptions);
-
-            OwnsConnection = true;
-            Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            InnerSender = Connection.CreateTransportProducer(RetryPolicy);
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
-        /// </summary>
-        ///
-        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         internal ServiceBusSender(
             ServiceBusConnection connection,
-            ServiceBusSenderClientOptions clientOptions = default)
+            ServiceBusSenderOptions options,
+            string entityName)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
-            clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
-            ClientDiagnostics = new ClientDiagnostics(clientOptions);
+            if (entityName == null)
+            {
+                throw new ArgumentException();
+            }
 
+            options = options?.Clone() ?? new ServiceBusSenderOptions();
+            ClientDiagnostics = new ClientDiagnostics(options);
             OwnsConnection = false;
-            Connection = connection;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            InnerSender = Connection.CreateTransportProducer(RetryPolicy);
+            EntityName = entityName;
+            _connection = connection;
+            _retryPolicy = options.RetryOptions.ToRetryPolicy();
+            _innerSender = _connection.CreateTransportSender(
+                entityName,
+                _retryPolicy);
         }
 
         /// <summary>
@@ -221,7 +117,6 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         protected ServiceBusSender()
         {
-            OwnsConnection = false;
         }
 
         /// <summary>
@@ -241,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Core
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await SendRangeAsync(new ServiceBusMessage[] { message }, cancellationToken).ConfigureAwait(false);
+            await SendBatchAsync(new ServiceBusMessage[]{message}, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,8 +151,23 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
         ///
-        public virtual async Task SendRangeAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
+        public virtual async Task SendBatchAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
             await SendRangeInternal(messages, cancellationToken).ConfigureAwait(false);
+
+        ///// <summary>
+        /////   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
+        /////   maximum size of a single batch, an exception will be triggered and the send will fail.
+        ///// </summary>
+        /////
+        ///// <param name="messages">The set of event data to send.</param>
+        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /////
+        ///// <returns>A task to be resolved on when the operation has completed.</returns>
+        /////
+        ///// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
+        /////
+        //public virtual async Task SendBatchAsync(ServiceBusMessageBatch messages, CancellationToken cancellationToken = default) =>
+        //    await SendRangeInternal(new ServiceBusMessage[] { }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
@@ -274,35 +184,18 @@ namespace Azure.Messaging.ServiceBus.Core
             //this.ThrowIfClosed();
             Argument.AssertNotNull(message, nameof(message));
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
-            return await Connection.ScheduleMessageAsync(message, RetryPolicy, GetSendLinkName(), cancellationToken).ConfigureAwait(false);
+            return await _innerSender.ScheduleMessageAsync(message, _retryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Cancels a message that was scheduled.
         /// </summary>
-        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="cancellationToken"></param>
         public virtual async Task CancelScheduledMessageAsync(long sequenceNumber, CancellationToken cancellationToken = default)
         {
             //this.ThrowIfClosed();
-            await Connection.CancelScheduledMessageAsync(sequenceNumber, RetryPolicy, GetSendLinkName(), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the send link name if the send link is already open.
-        /// </summary>
-        /// <returns></returns>
-        private string GetSendLinkName()
-        {
-            string sendLinkName = null;
-            if (InnerSender.SendLink.TryGetOpenedObject(out SendingAmqpLink openedLink))
-            {
-                if (openedLink != null)
-                {
-                    sendLinkName = openedLink.Name;
-                }
-            }
-            return sendLinkName;
+            await _innerSender.CancelScheduledMessageAsync(sequenceNumber, _retryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -316,7 +209,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
 
-        /// <seealso cref="SendRangeAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
         ///
         internal virtual async Task SendRangeInternal(
             IEnumerable<ServiceBusMessage> messages,
@@ -330,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             try
             {
-                await InnerSender.SendAsync(messages, cancellationToken).ConfigureAwait(false);
+                await _innerSender.SendAsync(messages, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -362,7 +254,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
             try
             {
-                await InnerSender.CloseAsync(cancellationToken).ConfigureAwait(false);
+                await _innerSender.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -377,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync().ConfigureAwait(false);
+                    await _connection.CloseAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -451,7 +343,7 @@ namespace Azure.Messaging.ServiceBus.Core
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.ServiceBusSenderType);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext);
             scope.AddAttribute(DiagnosticProperty.ServiceBusAttribute, EntityName);
-            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, Connection.ServiceEndpoint);
+            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _connection.ServiceEndpoint);
             scope.Start();
 
             return scope;

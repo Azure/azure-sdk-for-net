@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -37,27 +38,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>The environment variable value for the namespace connection string, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsNamespaceConnectionString =
-            new Lazy<string>(() => ReadConnectionStringFromEnvironment("EVENT_HUBS_OVERRIDE_NAMESPACE_CONNECTION_STRING"), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => Environment.GetEnvironmentVariable("EVENT_HUBS_NAMESPACE_CONNECTION_STRING"), LazyThreadSafetyMode.PublicationOnly);
 
         /// <summary>The environment variable value for the event hub name, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsEventHubName =
-            new Lazy<string>(() => ReadEnvironmentVariable("EVENT_HUBS_OVERRIDE_EVENT_HUB_NAME"), LazyThreadSafetyMode.PublicationOnly);
+            new Lazy<string>(() => Environment.GetEnvironmentVariable("EVENT_HUBS_OVERRIDE_EVENT_HUB_NAME"), LazyThreadSafetyMode.PublicationOnly);
 
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
-        private static readonly Lazy<EventHubScope.NamespaceProperties> ActiveEventHubsNamespace =
-            new Lazy<EventHubScope.NamespaceProperties>(CreateNamespaceIfMissing, LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly Lazy<NamespaceProperties> ActiveEventHubsNamespace =
+            new Lazy<NamespaceProperties>(EnsureEventHubsNamespace, LazyThreadSafetyMode.ExecutionAndPublication);
 
-        /// <summary>The fully qualified namespace contained within the active connection string, lazily created.</summary>
-        private static readonly Lazy<string> FullyQualifiedNamespaceInstance =
-            new Lazy<string>(() => ParseFullyQualifiedNamespace(EventHubsConnectionString), LazyThreadSafetyMode.PublicationOnly);
-
-        /// <summary>The shared access key name contained within the active connection string, lazily created.</summary>
-        private static readonly Lazy<string> SharedAccessKeyNameInstance =
-            new Lazy<string>(() => ParseSharedAccessKeyName(EventHubsConnectionString), LazyThreadSafetyMode.PublicationOnly);
-
-        /// <summary>The shared access key contained within the active connection string, lazily created.</summary>
-        private static readonly Lazy<string> SharedAccessKeyInstance =
-            new Lazy<string>(() => ParseSharedAccessKey(EventHubsConnectionString), LazyThreadSafetyMode.PublicationOnly);
+        /// <summary>The connection string for the active Event Hubs namespace for this test run, lazily created.</summary>
+        private static readonly Lazy<ConnectionStringProperties> ParsedConnectionString =
+            new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
         public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
@@ -66,9 +59,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Indicates whether or not an ephemeral namespace was created for the current test execution.
         /// </summary>
         ///
-        /// <value><c>true</c> if an Event Hubs namespace was created for the current test run; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if an Event Hubs namespace should be removed after the current test run; otherwise, <c>false</c>.</value>
         ///
-        public static bool WasEventHubsNamespaceCreated => ActiveEventHubsNamespace.IsValueCreated && ActiveEventHubsNamespace.Value.WasNamespaceCreated;
+        public static bool ShouldRemoveNamespaceAfterTestRunCompletion => (ActiveEventHubsNamespace.IsValueCreated && ActiveEventHubsNamespace.Value.ShouldRemoveAtCompletion);
 
         /// <summary>
         ///   The connection string for the Event Hubs namespace instance to be used for
@@ -138,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The fully qualified namespace, as contained within the associated connection string.</value>
         ///
-        public static string FullyQualifiedNamespace => FullyQualifiedNamespaceInstance.Value;
+        public static string FullyQualifiedNamespace => ParsedConnectionString.Value.Endpoint.Host;
 
         /// <summary>
         ///   The name of the Event Hub to use during Live tests.
@@ -154,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The shared access key name, as contained within the associated connection string.</value>
         ///
-        public static string SharedAccessKeyName => SharedAccessKeyNameInstance.Value;
+        public static string SharedAccessKeyName => ParsedConnectionString.Value.SharedAccessKeyName;
 
         /// <summary>
         ///   The shared access key for the Event Hubs namespace represented by this scope.
@@ -162,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The shared access key, as contained within the associated connection string.</value>
         ///
-        public static string SharedAccessKey => SharedAccessKeyInstance.Value;
+        public static string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
 
         /// <summary>
         ///   Builds a connection string for a specific Event Hub instance under the Event Hubs namespace used for
@@ -172,17 +165,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <value>The namespace connection string is based on the dynamic Event Hubs scope.</value>
         ///
         public static string BuildConnectionStringForEventHub(string eventHubName) => $"{ EventHubsConnectionString };EntityPath={ eventHubName }";
-
-        /// <summary>
-        ///   Reads an environment variable.
-        /// </summary>
-        ///
-        /// <param name="variableName">The name of the environment variable to read.</param>
-        ///
-        /// <returns>The value of the environment variable, if present and populated; null otherwise</returns>
-        ///
-        private static string ReadEnvironmentVariable(string variableName) =>
-            Environment.GetEnvironmentVariable(variableName);
 
         /// <summary>
         ///   Reads an environment variable, ensuring that it is populated.
@@ -211,103 +193,59 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The active Event Hubs namespace for this test run.</returns>
         ///
-        private static EventHubScope.NamespaceProperties CreateNamespaceIfMissing()
+        private static NamespaceProperties EnsureEventHubsNamespace()
         {
             if (!string.IsNullOrEmpty(EventHubsNamespaceConnectionString.Value))
             {
-                return EventHubScope.PopulateNamespacePropertiesFromConnectionString(EventHubsNamespaceConnectionString.Value);
+                var parsed = ConnectionStringParser.Parse(EventHubsNamespaceConnectionString.Value);
+
+                return new NamespaceProperties
+                (
+                    parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
+                    EventHubsNamespaceConnectionString.Value.Replace($";EntityPath={ parsed.EventHubName }", string.Empty),
+                    shouldRemoveAtCompletion: false
+                );
             }
 
-            return CreateNamespace();
-        }
-
-        /// <summary>
-        ///   Parses a well-formed connection string to extract the fully qualified namespace.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to parse.</param>
-        ///
-        /// <returns>The fully qualified namespace contained in the connection string if the connection string is well-formed; otherwise, a <see cref="InvalidOperationException" /> is thrown.</returns>
-        ///
-        private static string ParseFullyQualifiedNamespace(string connectionString) =>
-            new Uri(ConnectionStringTokenParser.ParseTokenAndReturnValue(connectionString, "Endpoint")).Host;
-
-        /// <summary>
-        ///   Parses a well-formed connection string to extract the shared access key name.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to parse.</param>
-        ///
-        /// <returns>The fully qualified namespace contained in the connection string if the connection string is well-formed; otherwise, a <see cref="InvalidOperationException" /> is thrown.</returns>
-        ///
-        private static string ParseSharedAccessKeyName(string connectionString) =>
-            ConnectionStringTokenParser.ParseTokenAndReturnValue(connectionString, "SharedAccessKeyName");
-
-        /// <summary>
-        ///   Parses a well-formed connection string to extract the shared access key.
-        /// </summary>
-        /// <param name="connectionString"></param>
-        ///
-        /// <returns>The fully qualified namespace contained in the connection string if the connection string is well-formed; otherwise, a <see cref="InvalidOperationException" /> is thrown.</returns>
-        ///
-        private static string ParseSharedAccessKey(string connectionString) =>
-            ConnectionStringTokenParser.ParseTokenAndReturnValue(connectionString, "SharedAccessKey");
-
-        /// <summary>
-        ///   Reads a connection string from environment.
-        ///   If any is found it removes the entity path from it.
-        /// </summary>
-        ///
-        /// <param name="environmentVariable">The name of the environment variable containing the connection string.</param>
-        ///
-        /// <returns>The connection string without the entity path.</returns>
-        ///
-        private static string ReadConnectionStringFromEnvironment(string environmentVariable)
-        {
-            string connectionString = ReadEnvironmentVariable(environmentVariable);
-
-            if (!string.IsNullOrEmpty(connectionString))
-            {
-                return ParseNamespaceConnectionString(connectionString);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        ///   It removes the entity path from a event hub connection string if found.
-        ///   It returns the same connection string.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to parse.</param>
-        ///
-        /// <returns>A namespace scoped connection string.</returns>
-        ///
-        private static string ParseNamespaceConnectionString(string connectionString)
-        {
-            string entityPath = ConnectionStringTokenParser.ParseToken(connectionString, "EntityPath");
-
-            if (!string.IsNullOrEmpty(entityPath))
-            {
-                return connectionString.Replace(entityPath, string.Empty);
-            }
-
-            return connectionString;
-        }
-
-        /// <summary>
-        ///   Requests creation of an Event Hubs namespace to use for a specific test run,
-        ///   transforming the asynchronous request into a synchronous one that can be used with
-        ///   lazy instantiation.
-        /// </summary>
-        ///
-        /// <returns>The active Event Hubs namespace for this test run.</returns>
-        ///
-        private static EventHubScope.NamespaceProperties CreateNamespace() =>
-            Task
+            return Task
                 .Run(async () => await EventHubScope.CreateNamespaceAsync().ConfigureAwait(false))
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
+        }
+
+        /// <summary>
+        ///   The key attributes for identifying and accessing a dynamically created Event Hubs namespace,
+        ///   intended to serve as an ephemeral container for the Event Hub instances used during a test run.
+        /// </summary>
+        ///
+        public struct NamespaceProperties
+        {
+            /// <summary>The name of the Event Hubs namespace that was dynamically created.</summary>
+            public readonly string Name;
+
+            /// <summary>The connection string to use for accessing the dynamically created namespace.</summary>
+            public readonly string ConnectionString;
+
+            /// <summary>A flag indicating if the namespace was created or referenced from environment variables.</summary>
+            public readonly bool ShouldRemoveAtCompletion;
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="NamespaceProperties"/> struct.
+            /// </summary>
+            ///
+            /// <param name="name">The name of the namespace.</param>
+            /// <param name="connectionString">The connection string to use for accessing the namespace.</param>
+            /// <param name="shouldRemoveAtCompletion">A flag indicating if the namespace should be removed when the test run has completed.</param>
+            ///
+            internal NamespaceProperties(string name,
+                                         string connectionString,
+                                         bool shouldRemoveAtCompletion)
+            {
+                Name = name;
+                ConnectionString = connectionString;
+                ShouldRemoveAtCompletion = shouldRemoveAtCompletion;
+            }
+        }
     }
 }

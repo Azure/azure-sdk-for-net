@@ -26,16 +26,16 @@ namespace Azure.Storage.Test.Shared
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            await InjectFaultAsync(message, isAsync: true).ConfigureAwait(false);
+            await InjectFaultAsync(message, async: true).ConfigureAwait(false);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
-            InjectFaultAsync(message, isAsync: false).EnsureCompleted();
+            InjectFaultAsync(message, async: false).EnsureCompleted();
         }
 
-        private async Task InjectFaultAsync(HttpMessage message, bool isAsync)
+        private async Task InjectFaultAsync(HttpMessage message, bool async)
         {
             if (message.Response != null)
             {
@@ -44,7 +44,7 @@ namespace Azure.Storage.Test.Shared
                 var intermediate = new MemoryStream();
                 if (message.Response.ContentStream != null)
                 {
-                    if (isAsync)
+                    if (async)
                     {
                         await message.Response.ContentStream.CopyToAsync(intermediate).ConfigureAwait(false);
                     }

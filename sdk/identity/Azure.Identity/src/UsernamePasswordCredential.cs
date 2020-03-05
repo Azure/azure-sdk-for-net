@@ -7,6 +7,7 @@ using System;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -17,9 +18,9 @@ namespace Azure.Identity
     /// </summary>
     public class UsernamePasswordCredential : TokenCredential
     {
-        private readonly MsalPublicClient _client = null;
-        private readonly CredentialPipeline _pipeline = null;
-        private readonly string _username = null;
+        private readonly MsalPublicClient _client;
+        private readonly CredentialPipeline _pipeline;
+        private readonly string _username;
         private readonly SecureString _password;
 
 
@@ -84,7 +85,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -96,11 +97,18 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async Task<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("UsernamePasswordCredential.GetToken", requestContext);
 
             try
             {
-                AuthenticationResult result = await _client.AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await _client
+                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, async, cancellationToken)
+                    .ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

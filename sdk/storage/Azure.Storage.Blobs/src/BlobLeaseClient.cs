@@ -608,7 +608,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
             RequestConditions conditions,
+#pragma warning disable AZC0105 // DO NOT add 'async' parameter to public methods. This method is published, so it can't be modified.
             bool async,
+#pragma warning restore AZC0105 // DO NOT add 'async' parameter to public methods.
             CancellationToken cancellationToken)
         {
             EnsureClient();

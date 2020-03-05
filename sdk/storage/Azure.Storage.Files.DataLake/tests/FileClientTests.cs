@@ -2544,29 +2544,19 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
-            var data = GetRandomBuffer(200 * Constants.MB);
+            var data = GetRandomBuffer(300 * Constants.MB);
 
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadAsync(
-                    stream,
-                    transferOptions: new StorageTransferOptions
-                    {
-                        MaximumTransferLength = 1 * Constants.MB,
-                        InitialTransferLength = 1 * Constants.MB
-                    });
+                    stream);
             }
 
             // Assert
             using var actual = new MemoryStream();
             await file.ReadToAsync(
-                actual,
-                transferOptions: new StorageTransferOptions
-                {
-                    MaximumTransferLength = 1 * Constants.MB,
-                    InitialTransferLength = 1 * Constants.MB
-                });
+                actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
@@ -2649,7 +2639,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
-            var data = GetRandomBuffer(200 * Constants.MB);
+            var data = GetRandomBuffer(300 * Constants.MB);
 
 
             using (var stream = new MemoryStream(data))

@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the unique, non-empty identifier for this input document.
+        /// Gets the unique, non-empty identifier for this document.
         /// </summary>
         public string Id { get; }
 

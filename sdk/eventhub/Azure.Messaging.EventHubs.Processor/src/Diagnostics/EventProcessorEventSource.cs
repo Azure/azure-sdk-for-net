@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 {
@@ -16,9 +16,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs-Processor-EventProcessorClient")]
+    [EventSource(Name = EventSourceName)]
     internal class EventProcessorEventSource : EventSource
     {
+        /// <summary>The name to use for the event source.</summary>
+        private const string EventSourceName = "Azure-Messaging-EventHubs-Processor-EventProcessorClient";
+
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
@@ -31,7 +34,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        internal EventProcessorEventSource() { }
+        internal EventProcessorEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        {
+        }
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.
@@ -191,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(10, Level = EventLevel.Error, Message = "An exception occurred while stopping a partition processing task for partition id '{0}' with reason '{1}'. (Error Message: '{2}')")]
+        [Event(10, Level = EventLevel.Error, Message = "An exception occurred while stopping a partition processing task for partition id '{0}'. (Error Message: '{1}')")]
         public virtual void PartitionProcessingError(string partitionId,
                                                      string errorMessage)
         {

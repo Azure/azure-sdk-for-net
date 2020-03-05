@@ -11,4 +11,4 @@ Branch:      master
 Commit:      34ea001f2c8b49411863b571d3c66de8d80ca30b
 AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4413
+Bootstrapper version:    autorest@3.0.6187

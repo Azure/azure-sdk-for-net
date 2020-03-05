@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Tests;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
@@ -217,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var stabilizedStatusAchieved = false;
             var consecutiveStabilizedStatus = 0;
-            List<PartitionOwnership> previousActiveOwnership = null;
+            List<EventProcessorPartitionOwnership> previousActiveOwnership = null;
 
             CancellationToken timeoutToken = (new CancellationTokenSource(TimeSpan.FromMinutes(1))).Token;
 
@@ -228,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var activeOwnership = (await InnerStorageManager
                     .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, timeoutToken)
                     .ConfigureAwait(false))
-                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
+                    .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime) < ShortWaitTimeMock.ShortOwnershipExpiration)
                     .ToList();
 
                 // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
@@ -274,8 +275,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Filtering expired ownership is assumed to be responsibility of the caller.
         /// </remarks>
         ///
-        private bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
-                                                      IEnumerable<PartitionOwnership> second)
+        private bool AreOwnershipDistributionsTheSame(IEnumerable<EventProcessorPartitionOwnership> first,
+                                                      IEnumerable<EventProcessorPartitionOwnership> second)
         {
             // If the distributions are the same instance, they're equal.  This should only happen
             // if both are null or if they are the exact same instance.

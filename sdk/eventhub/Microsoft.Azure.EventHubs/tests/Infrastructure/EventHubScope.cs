@@ -1,31 +1,31 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Security.Authentication;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.EventHub;
-using Microsoft.Azure.Management.EventHub.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Storage;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure;
-using Polly;
-
-using StorageManagement = Microsoft.Azure.Management.Storage.Models;
-
 namespace Microsoft.Azure.EventHubs.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Sockets;
+    using System.Runtime.CompilerServices;
+    using System.Security.Authentication;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.EventHub.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.Storage;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
+    using Microsoft.WindowsAzure.Storage;
+    using Polly;
+
+    using StorageManagement = Microsoft.Azure.Management.Storage.Models;
+
     internal sealed class EventHubScope : IAsyncDisposable
     {
         private const int RetryMaximumAttempts = 20;

@@ -167,6 +167,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// In recovery mode, the rerun will start from this activity. If not
         /// specified, all activities will run.
         /// </param>
+        /// <param name='startFromFailure'>
+        /// In recovery mode, if set to true, the rerun will start from failed
+        /// activities. The property will be used only if startActivityName is
+        /// not specified.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters of the pipeline run. These parameters will be used only
         /// if the runId is not specified.
@@ -186,7 +191,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CreateRunResponse>> CreateRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), bool? isRecovery = default(bool?), string startActivityName = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CreateRunResponse>> CreateRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), bool? isRecovery = default(bool?), string startActivityName = default(string), bool? startFromFailure = default(bool?), IDictionary<string, object> parameters = default(IDictionary<string, object>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists pipelines.
         /// </summary>

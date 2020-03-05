@@ -50,6 +50,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="prefix">The prefix filter for the Google Cloud Storage
         /// object name. Type: string (or Expression with resultType
         /// string).</param>
+        /// <param name="fileListPath">Point to a text file that lists each
+        /// file (relative path to the path configured in the dataset) that you
+        /// want to copy. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="enablePartitionDiscovery">Indicates whether to enable
         /// partition discovery.</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
@@ -58,13 +62,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public GoogleCloudStorageReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public GoogleCloudStorageReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
             Prefix = prefix;
+            FileListPath = fileListPath;
             EnablePartitionDiscovery = enablePartitionDiscovery;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
@@ -104,6 +109,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "prefix")]
         public object Prefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets point to a text file that lists each file (relative
+        /// path to the path configured in the dataset) that you want to copy.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileListPath")]
+        public object FileListPath { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether to enable partition discovery.
