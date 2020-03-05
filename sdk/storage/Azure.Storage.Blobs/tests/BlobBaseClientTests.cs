@@ -523,6 +523,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Don't want to record 300 MB of data in the tests")]
+        public async Task DownloadToAsync_LargeStream()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(300 * Constants.MB);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream(data))
+            {
+                await blob.DownloadToAsync(resultStream);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [Test]
         public async Task DownloadTo_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -580,7 +600,8 @@ namespace Azure.Storage.Blobs.Test
                             new StorageTransferOptions
                             {
                                 MaximumConcurrency = 1,
-                                MaximumTransferLength = Constants.KB
+                                MaximumTransferLength = Constants.KB,
+                                InitialTransferLength = Constants.KB
                             });
                 });
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);

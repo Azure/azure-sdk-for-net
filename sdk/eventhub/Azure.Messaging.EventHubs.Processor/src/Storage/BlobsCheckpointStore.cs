@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
@@ -272,29 +273,36 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listCheckpointsToken).ConfigureAwait(false))
                 {
-                    long offset = 0;
-                    long sequenceNumber = 0;
+                    var partitionId = blob.Name.Substring(prefix.Length);
+                    var startingPosition = default(EventPosition?);
 
                     if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, out var result))
                     {
-                        offset = result;
+                        startingPosition = EventPosition.FromOffset(result, false);
+                    }
+                    else if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
+                    {
+                        startingPosition = EventPosition.FromSequenceNumber(result, false);
                     }
 
-                    if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
+                    // If either the offset or the sequence number was not populated,
+                    // this is not a valid checkpoint.
+
+                    if (startingPosition.HasValue)
                     {
-                        sequenceNumber = result;
+                        checkpoints.Add(new EventProcessorCheckpoint
+                        {
+                            FullyQualifiedNamespace = fullyQualifiedNamespace,
+                            EventHubName = eventHubName,
+                            ConsumerGroup = consumerGroup,
+                            PartitionId = partitionId,
+                            StartingPosition = startingPosition.Value
+                        });
                     }
-
-
-                    checkpoints.Add(new EventProcessorCheckpoint
+                    else
                     {
-                        FullyQualifiedNamespace = fullyQualifiedNamespace,
-                        EventHubName = eventHubName,
-                        ConsumerGroup = consumerGroup,
-                        PartitionId = blob.Name.Substring(prefix.Length),
-                        Offset = offset,
-                        SequenceNumber = sequenceNumber
-                    });
+                        Logger.InvalidCheckpointFound(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+                    }
                 }
 
                 Logger.ListCheckpointsAsyncComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpoints.Count);
@@ -316,11 +324,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="eventData">The event to use as the basis for the checkpoint's starting position.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public override async Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+                                                         EventData eventData,
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -330,8 +340,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, checkpoint.Offset.ToString() },
-                { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
+                { BlobMetadataKey.Offset, eventData.Offset.ToString() },
+                { BlobMetadataKey.SequenceNumber, eventData.SequenceNumber.ToString() }
             };
 
             Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>
@@ -364,10 +374,10 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task ApplyRetryPolicy(Func<CancellationToken, Task> functionToRetry,
                                             CancellationToken cancellationToken)
         {
-            var failedAttemptCount = 0;
-            var retryDelay = default(TimeSpan?);
-            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+            TimeSpan? retryDelay;
 
+            var failedAttemptCount = 0;
+            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
             var stopWatch = Stopwatch.StartNew();
 
             while (!cancellationToken.IsCancellationRequested)
@@ -377,7 +387,6 @@ namespace Azure.Messaging.EventHubs.Processor
                 try
                 {
                     using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutTokenSource.Token);
-
                     await functionToRetry(linkedTokenSource.Token).ConfigureAwait(false);
 
                     return;
@@ -436,7 +445,6 @@ namespace Azure.Messaging.EventHubs.Processor
             };
 
             await ApplyRetryPolicy(wrapper, cancellationToken).ConfigureAwait(false);
-
             return result;
         }
     }

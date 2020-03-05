@@ -6,11 +6,11 @@ using System;
 namespace Azure.Messaging.EventHubs.Primitives
 {
     /// <summary>
-    ///   Contains all the information needed to describe the status of the owner of a partition.  It's used by
-    ///   an <c>EventProcessor</c> for cooperative distribution of processing for the associated Event Hub.
+    ///   The set of information for describing the status of the partition ownership between <see cref="EventProcessor{TPartition}" />
+    ///   instances cooperating for distribution of processing for a given Event Hub.
     /// </summary>
     ///
-    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    /// <seealso cref="EventProcessor{TPartition}" />
     ///
     public class EventProcessorPartitionOwnership
     {
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string ConsumerGroup { get; set; }
 
         /// <summary>
-        ///   The identifier of the associated <c>EventProcessor</c> instance.
+        ///   The identifier of the associated <see cref="EventProcessor{TPartition}" /> instance.
         /// </summary>
         ///
         public string OwnerIdentifier { get; set; }

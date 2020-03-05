@@ -69,7 +69,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
-            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
+            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName,
+                new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind)), "The activities tag should be internal.");
@@ -129,7 +131,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
-            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName);
+            ClientDiagnosticListener.ProducedDiagnosticScope messageScope = testListener.AssertScope(DiagnosticProperty.EventActivityName,
+                new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint));
 
             Assert.That(eventData.Properties[DiagnosticProperty.DiagnosticIdAttribute], Is.EqualTo(messageScope.Activity.Id), "The diagnostics identifier should match.");
             Assert.That(messageScope.Activity, Is.Not.SameAs(sendScope.Activity), "The activities should not be the same instance.");
@@ -238,6 +242,94 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(eventData3.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute), Is.False, "Events that were not accepted into the batch should not have been instrumented.");
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerLinksSendScopeToMessageScopesOnSend()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+
+            var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
+            var transportMock = new Mock<TransportProducer>();
+
+            transportMock
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+
+            await producer.SendAsync(new[]
+            {
+                new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } }),
+                new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } })
+            });
+
+            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
+
+            var expectedLinks = new List<string>() { "id", "id2" };
+            var links = sendScope.Links.ToList();
+
+            Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+
+            var writtenEventsData = 0;
+            var batchTransportMock = new Mock<TransportEventBatch>();
+            var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
+            var transportMock = new Mock<TransportProducer>();
+
+            batchTransportMock
+                .Setup(m => m.TryAdd(It.IsAny<EventData>()))
+                .Returns<EventData>(e =>
+                {
+                    var hasSpace = writtenEventsData <= 1;
+                    if (hasSpace)
+                    {
+                        ++writtenEventsData;
+                    }
+                    return hasSpace;
+                });
+
+            transportMock
+                .Setup(m => m.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<TransportEventBatch>(Task.FromResult(batchTransportMock.Object)));
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+
+            var eventData1 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id" } });
+            var eventData2 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } });
+            var eventData3 = new EventData(ReadOnlyMemory<byte>.Empty, new Dictionary<string, object> { { DiagnosticProperty.DiagnosticIdAttribute, "id3" } });
+
+            EventDataBatch batch = await producer.CreateBatchAsync();
+
+            Assert.That(batch.TryAdd(eventData1), Is.True, "The first event should have been added to the batch.");
+            Assert.That(batch.TryAdd(eventData2), Is.True, "The second event should have been added to the batch.");
+            Assert.That(batch.TryAdd(eventData3), Is.False, "The third event should not have been added to the batch.");
+
+            await producer.SendAsync(batch);
+
+            ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.Scopes.Single(s => s.Name == DiagnosticProperty.ProducerActivityName);
+
+            var expectedLinks = new List<string>() { "id", "id2" };
+            var links = sendScope.Links.ToList();
+
+            Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
+            Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
         }
 
         /// <summary>

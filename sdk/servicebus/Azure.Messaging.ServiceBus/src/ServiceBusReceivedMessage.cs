@@ -10,14 +10,8 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ServiceBusReceivedMessage : ServiceBusMessage
     {
-        private int _deliveryCount;
-        private DateTime _lockedUntilUtc;
-        private long _sequenceNumber = -1;
-        private short _partitionId;
-        private long _enqueuedSequenceNumber;
-        private DateTime _enqueuedTimeUtc;
         private Guid _lockTokenGuid;
-        private string _deadLetterSource;
+
         /// <summary>
         /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
@@ -27,14 +21,23 @@ namespace Azure.Messaging.ServiceBus
         /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
         public static string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
+
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes</param>
-        public ServiceBusReceivedMessage(byte[] body) :
+        internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body) :
             base(body)
         {
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public static ServiceBusReceivedMessage Create(ReadOnlyMemory<byte> body) =>
+            new ServiceBusReceivedMessage(body);
 
         /// <summary>
         /// Creates a new message from the specified payload.
@@ -48,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         /// Specifies whether or not there is a lock token set on the current message.
         /// </summary>
         /// <remarks>A lock token will only be specified if the message was received using ReceiveMode.PeekLock</remarks>
-        public bool IsLockTokenSet => this._lockTokenGuid != default;
+        public bool IsLockTokenSet => _lockTokenGuid != default;
 
         /// <summary>
         /// Gets the lock token for the current message.
@@ -59,10 +62,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The token can also be used to pin the lock permanently through the <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-deferral">Deferral API</a> and, with that, take the message out of the
         ///   regular delivery state flow. This property is read-only.
         /// </remarks>
-        public string LockToken => this.LockTokenGuid.ToString();
-
-        /// <summary>Specifies if the message has been obtained from the broker.</summary>
-        public bool IsReceived => this._sequenceNumber > -1;
+        public string LockToken => LockTokenGuid.ToString();
 
         /// <summary>
         /// Get the current delivery count.
@@ -72,16 +72,7 @@ namespace Azure.Messaging.ServiceBus
         ///    Number of deliveries that have been attempted for this message. The count is incremented when a message lock expires,
         ///    or the message is explicitly abandoned by the receiver. This property is read-only.
         /// </remarks>
-        public int DeliveryCount
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._deliveryCount;
-            }
-
-            internal set => this._deliveryCount = value;
-        }
+        public int DeliveryCount { get; internal set; }
 
         /// <summary>Gets the date and time in UTC until which the message will be locked in the queue/subscription.</summary>
         /// <value>The date and time until which the message will be locked in the queue/subscription.</value>
@@ -90,16 +81,7 @@ namespace Azure.Messaging.ServiceBus
         ///     instant until which the message is held locked in the queue/subscription. When the lock expires, the <see cref="DeliveryCount"/>
         ///     is incremented and the message is again available for retrieval. This property is read-only.
         /// </remarks>
-        public DateTime LockedUntilUtc
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._lockedUntilUtc;
-            }
-
-            internal set => this._lockedUntilUtc = value;
-        }
+        public DateTime LockedUntilUtc { get; internal set; }
 
         /// <summary>Gets the unique number assigned to a message by Service Bus.</summary>
         /// <remarks>
@@ -108,16 +90,7 @@ namespace Azure.Messaging.ServiceBus
         ///     the topmost 16 bits reflect the partition identifier. Sequence numbers monotonically increase.
         ///     They roll over to 0 when the 48-64 bit range is exhausted. This property is read-only.
         /// </remarks>
-        public long SequenceNumber
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._sequenceNumber;
-            }
-
-            internal set => this._sequenceNumber = value;
-        }
+        public long SequenceNumber { get; internal set; } = -1;
 
         /// <summary>
         /// Gets the name of the queue or subscription that this message was enqueued on, before it was deadlettered.
@@ -126,27 +99,9 @@ namespace Azure.Messaging.ServiceBus
         /// 	Only set in messages that have been dead-lettered and subsequently auto-forwarded from the dead-letter queue
         ///     to another entity. Indicates the entity in which the message was dead-lettered. This property is read-only.
         /// </remarks>
-        public string DeadLetterSource
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._deadLetterSource;
-            }
+        public string DeadLetterSource { get; internal set; }
 
-            internal set => this._deadLetterSource = value;
-        }
-
-        internal short PartitionId
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._partitionId;
-            }
-
-            set => this._partitionId = value;
-        }
+        internal short PartitionId { get; set; }
 
         /// <summary>Gets or sets the original sequence number of the message.</summary>
         /// <value>The enqueued sequence number of the message.</value>
@@ -154,16 +109,7 @@ namespace Azure.Messaging.ServiceBus
         /// For messages that have been auto-forwarded, this property reflects the sequence number
         /// that had first been assigned to the message at its original point of submission. This property is read-only.
         /// </remarks>
-        public long EnqueuedSequenceNumber
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._enqueuedSequenceNumber;
-            }
-
-            internal set => this._enqueuedSequenceNumber = value;
-        }
+        public long EnqueuedSequenceNumber { get; internal set; }
 
         /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
         /// <value>The enqueue time in UTC. </value>
@@ -172,26 +118,17 @@ namespace Azure.Messaging.ServiceBus
         ///    This value can be used as an authoritative and neutral arrival time indicator when
         ///    the receiver does not want to trust the sender's clock. This property is read-only.
         /// </remarks>
-        public DateTime EnqueuedTimeUtc
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return this._enqueuedTimeUtc;
-            }
-
-            internal set => this._enqueuedTimeUtc = value;
-        }
+        public DateTime EnqueuedTimeUtc { get; internal set; }
 
         internal Guid LockTokenGuid
         {
             get
             {
                 //this.ThrowIfNotReceived();
-                return this._lockTokenGuid;
+                return _lockTokenGuid;
             }
 
-            set => this._lockTokenGuid = value;
+            set => _lockTokenGuid = value;
         }
 
         internal object BodyObject
@@ -210,12 +147,12 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (this.TimeToLive >= DateTime.MaxValue.Subtract(EnqueuedTimeUtc))
+                if (TimeToLive >= DateTime.MaxValue.Subtract(EnqueuedTimeUtc))
                 {
                     return DateTime.MaxValue;
                 }
 
-                return EnqueuedTimeUtc.Add(this.TimeToLive);
+                return EnqueuedTimeUtc.Add(TimeToLive);
             }
         }
     }
