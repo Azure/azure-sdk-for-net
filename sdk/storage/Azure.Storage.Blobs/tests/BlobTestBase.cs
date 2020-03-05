@@ -18,7 +18,8 @@ namespace Azure.Storage.Test.Shared
 {
     [ClientTestFixture(
         BlobClientOptions.ServiceVersion.V2019_02_02,
-        BlobClientOptions.ServiceVersion.V2019_07_07)]
+        BlobClientOptions.ServiceVersion.V2019_07_07,
+        BlobClientOptions.ServiceVersion.V2019_12_12)]
     public abstract class BlobTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -369,6 +370,9 @@ namespace Azure.Storage.Test.Shared
                     return "2019-02-02";
                 case BlobClientOptions.ServiceVersion.V2019_07_07:
                     return "2019-07-07";
+                // TODO update this to 2019-12-12 when 73 goes to stage.
+                case BlobClientOptions.ServiceVersion.V2019_12_12:
+                    return "2019-10-10";
                 default:
                     throw new ArgumentException("Invalid service version");
             }

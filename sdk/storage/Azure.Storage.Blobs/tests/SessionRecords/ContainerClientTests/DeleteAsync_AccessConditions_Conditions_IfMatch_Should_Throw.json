@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "d52abcf6-4e53-a46d-519a-0378f56aeb48",
         "x-ms-date": "Wed, 11 Dec 2019 04:02:25 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-10-10"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "d52abcf6-4e53-a46d-519a-0378f56aeb48",
         "x-ms-request-id": "db366c4e-d01e-0015-26d7-af8588000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-10-10"
       },
       "ResponseBody": []
     }

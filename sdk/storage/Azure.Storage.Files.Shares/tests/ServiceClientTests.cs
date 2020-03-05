@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
 
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetSharesAsync().ToListAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
+                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode));
         }
 
         [Test]

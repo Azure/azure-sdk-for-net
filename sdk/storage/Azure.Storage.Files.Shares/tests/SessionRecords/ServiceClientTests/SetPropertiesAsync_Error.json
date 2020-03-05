@@ -1,72 +1,72 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seanmccuswest2.file.core.windows.net/?restype=service\u0026comp=properties",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f7b1630715da2c4f949b2f4f688a6b64-5f24b9f6ac72d24a-00",
+        "traceparent": "00-fbaa352e9040f248b52cdfc19c8cffcf-694653ed2aa9984c-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.1-dev.20200210.1\u002B009707a3b348edcec7ca1b3c52e1b54e760d2c43",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200305.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f758c1a1-c3fb-8301-7e1f-9cdd6e11ec1a",
-        "x-ms-date": "Mon, 10 Feb 2020 21:16:36 GMT",
+        "x-ms-date": "Thu, 05 Mar 2020 21:48:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-10-10"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/xml",
-        "Date": "Mon, 10 Feb 2020 21:16:35 GMT",
+        "Date": "Thu, 05 Mar 2020 21:48:19 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "f758c1a1-c3fb-8301-7e1f-9cdd6e11ec1a",
-        "x-ms-request-id": "9e118c35-901a-0096-7757-e0780c000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-request-id": "c9ef6d73-f01a-0012-7a37-f3e9eb000000",
+        "x-ms-version": "2019-10-10"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003C/StorageServiceProperties\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E1\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CIncludeAPIs\u003Efalse\u003C/IncludeAPIs\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E8\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedMethods\u003EPUT,GET\u003C/AllowedMethods\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedHeaders\u003Ex-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003Ex-ms-meta-*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E1000\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E"
     },
     {
       "RequestUri": "https://error.file.core.windows.net/?restype=service\u0026comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "372",
+        "Content-Length": "649",
         "Content-Type": "application/xml",
-        "traceparent": "00-2070897453c12d4d8321a8b5b3fa7083-0e7a07ac93021c4e-00",
+        "traceparent": "00-b9ce53e42ccde241b8efe8634c849c0e-aa0764486b585845-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.1-dev.20200210.1\u002B009707a3b348edcec7ca1b3c52e1b54e760d2c43",
-          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Files.Shares/12.2.0-dev.20200305.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bcdcf536-ccda-5df4-ea18-9440674b7cc1",
-        "x-ms-date": "Mon, 10 Feb 2020 21:16:36 GMT",
+        "x-ms-date": "Thu, 05 Mar 2020 21:48:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-10-10"
       },
-      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E7\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Etrue\u003C/IncludeAPIs\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CCors /\u003E\u003C/StorageServiceProperties\u003E",
-      "StatusCode": 403,
+      "RequestBody": "\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E1\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003CDays\u003E8\u003C/Days\u003E\u003C/RetentionPolicy\u003E\u003CIncludeAPIs\u003Efalse\u003C/IncludeAPIs\u003E\u003C/MinuteMetrics\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EPUT,GET\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003Ex-ms-meta-abc,x-ms-meta-data*,x-ms-meta-target*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003Ex-ms-meta-*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E1000\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
+      "StatusCode": 400,
       "ResponseHeaders": {
-        "Content-Length": "467",
+        "Content-Length": "328",
         "Content-Type": "application/xml",
-        "Date": "Mon, 10 Feb 2020 21:16:35 GMT",
+        "Date": "Thu, 05 Mar 2020 21:48:18 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-error-code": "AuthenticationFailed",
-        "x-ms-request-id": "b5b37adb-401a-00ef-0557-e0527d000000"
+        "x-ms-request-id": "6bc4772d-a01a-0104-4537-f3ead4000000"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthenticationFailed\u003C/Code\u003E\u003CMessage\u003EServer failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\n",
-        "RequestId:b5b37adb-401a-00ef-0557-e0527d000000\n",
-        "Time:2020-02-10T21:16:36.6831477Z\u003C/Message\u003E\u003CAuthenticationErrorDetail\u003ECannot find the claimed account when trying to GetProperties for the account seanmccuswest2.\u003C/AuthenticationErrorDetail\u003E\u003C/Error\u003E"
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
+        "RequestId:6bc4772d-a01a-0104-4537-f3ead4000000\n",
+        "Time:2020-03-05T21:48:19.6411305Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-10-10\u003C/HeaderValue\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
     "RandomSeed": "2027460530",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmccuswest2\nU2FuaXRpemVk\nhttps://seanmccuswest2.blob.core.windows.net\nhttp://seanmccuswest2.file.core.windows.net\nhttp://seanmccuswest2.queue.core.windows.net\nhttp://seanmccuswest2.table.core.windows.net\n\n\n\n\nhttp://seanmccuswest2-secondary.blob.core.windows.net\nhttp://seanmccuswest2-secondary.file.core.windows.net\nhttp://seanmccuswest2-secondary.queue.core.windows.net\nhttp://seanmccuswest2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmccuswest2.blob.core.windows.net/;QueueEndpoint=http://seanmccuswest2.queue.core.windows.net/;FileEndpoint=http://seanmccuswest2.file.core.windows.net/;BlobSecondaryEndpoint=http://seanmccuswest2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanmccuswest2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanmccuswest2-secondary.file.core.windows.net/;AccountName=seanmccuswest2;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttps://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized\nseanscope1"
   }
 }

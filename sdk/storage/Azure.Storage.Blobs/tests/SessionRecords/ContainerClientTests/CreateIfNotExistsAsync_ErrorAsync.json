@@ -11,7 +11,7 @@
         ],
         "x-ms-client-request-id": "37b7d1ca-ad4d-a6ad-3f16-6ff0e7314c65",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-10-10"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -26,7 +26,7 @@
         "x-ms-client-request-id": "37b7d1ca-ad4d-a6ad-3f16-6ff0e7314c65",
         "x-ms-error-code": "ResourceNotFound",
         "x-ms-request-id": "e598b510-101e-003d-197c-e7bf2c000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-10-10"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
