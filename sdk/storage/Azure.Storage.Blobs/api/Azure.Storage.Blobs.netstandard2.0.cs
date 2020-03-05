@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_12_12) { }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Uri GeoRedundantSecondaryUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
@@ -36,6 +36,7 @@ namespace Azure.Storage.Blobs
         {
             V2019_02_02 = 1,
             V2019_07_07 = 2,
+            V2019_12_12 = 3,
         }
     }
     public partial class BlobContainerClient
@@ -779,6 +780,13 @@ namespace Azure.Storage.Blobs.Models
         Aborted = 2,
         Failed = 3,
     }
+    public enum CopyStatusType
+    {
+        Pending = 0,
+        Success = 1,
+        Aborted = 2,
+        Failed = 3,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomerProvidedKey : System.IEquatable<Azure.Storage.Blobs.Models.CustomerProvidedKey>
     {
@@ -802,9 +810,23 @@ namespace Azure.Storage.Blobs.Models
         IncludeSnapshots = 1,
         OnlySnapshots = 2,
     }
+    public partial class DelimitedTextConfiguration
+    {
+        public DelimitedTextConfiguration() { }
+        public string ColumnSeparator { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string EscapeChar { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string FieldQuote { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string HasHeaders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string RecordSeparator { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+    }
     public enum EncryptionAlgorithmType
     {
         Aes256 = 0,
+    }
+    public partial class JsonTextConfiguration
+    {
+        public JsonTextConfiguration() { }
+        public string RecordSeparator { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
     public enum LeaseDurationType
     {
@@ -819,7 +841,20 @@ namespace Azure.Storage.Blobs.Models
         Breaking = 3,
         Broken = 4,
     }
+    public enum LeaseStateType
+    {
+        Available = 0,
+        Leased = 1,
+        Expired = 2,
+        Breaking = 3,
+        Broken = 4,
+    }
     public enum LeaseStatus
+    {
+        Locked = 0,
+        Unlocked = 1,
+    }
+    public enum LeaseStatusType
     {
         Locked = 0,
         Unlocked = 1,
@@ -868,6 +903,31 @@ namespace Azure.Storage.Blobs.Models
         None = 0,
         BlobContainer = 1,
         Blob = 2,
+    }
+    public partial class QueryRequest
+    {
+        public QueryRequest() { }
+        public string Expression { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Blobs.Models.QuickQuerySerialization InputSerialization { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Blobs.Models.QuickQuerySerialization OutputSerialization { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string QueryType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+    }
+    public partial class QuickQueryFormat
+    {
+        public QuickQueryFormat() { }
+        public Azure.Storage.Blobs.Models.DelimitedTextConfiguration DelimitedTextConfiguration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Blobs.Models.JsonTextConfiguration JsonTextConfiguration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Blobs.Models.QuickQueryType QuickQueryType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+    }
+    public partial class QuickQuerySerialization
+    {
+        public QuickQuerySerialization() { }
+        public Azure.Storage.Blobs.Models.QuickQueryFormat Format { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+    }
+    public enum QuickQueryType
+    {
+        Delimited = 0,
+        Json = 1,
     }
     public enum RehydratePriority
     {
