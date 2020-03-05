@@ -80,34 +80,6 @@ namespace IotCentral.Tests.ScenarioTests
         }
 
         [Fact]
-        public void TestIotCentralCreateWithInvalidSubdomain()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                using (MockContext context = MockContext.Start(this.GetType()))
-                {
-                    Initialize(context);
-
-                    var invalidSubdomain = "SOME-INVALID-SUBDOMAIN";
-                    // Create Resource Group
-                    var resourceGroup = CreateResourceGroup(IotCentralTestUtilities.DefaultResourceGroupName);
-
-                    // Create App
-                    var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultResourceName, invalidSubdomain);
-
-                }
-            }
-            catch (CloudException ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal("400.200.006.021", ex.Body.Code);
-            }
-            Assert.True(exceptionThrown);
-
-        }
-
-        [Fact]
         public void TestIotCentralUpdateLifeCycle()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
