@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment label for a given document.
+    /// The predicted sentiment for a given document.
     /// </summary>
     public enum TextSentiment
     {

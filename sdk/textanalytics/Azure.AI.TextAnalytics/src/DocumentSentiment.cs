@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
-        /// for each sentiment label. Higher values signify higher confidence.
+        /// for each sentiment. Higher values signify higher confidence.
         /// </summary>
         public SentimentConfidenceScore ConfidenceScores { get; }
 
