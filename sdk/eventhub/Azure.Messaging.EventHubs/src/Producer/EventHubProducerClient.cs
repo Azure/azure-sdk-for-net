@@ -559,7 +559,7 @@ namespace Azure.Messaging.EventHubs.Producer
             // Attempt to close the pool of producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
 
-            var transportProducerException = default(Exception);
+            var transportProducerPoolException = default(Exception);
 
             try
             {
@@ -568,7 +568,7 @@ namespace Azure.Messaging.EventHubs.Producer
             catch (Exception ex)
             {
                 EventHubsEventSource.Log.ClientCloseError(typeof(EventHubProducerClient), EventHubName, identifier, ex.Message);
-                transportProducerException = ex;
+                transportProducerPoolException = ex;
             }
 
             // An exception when closing the connection supersedes one observed when closing the
@@ -591,12 +591,12 @@ namespace Azure.Messaging.EventHubs.Producer
                 EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubProducerClient), EventHubName, identifier);
             }
 
-            // If there was an active exception pending from closing the individual
-            // transport producers, surface it now.
+            // If there was an active exception pending from closing the
+            // transport producer pool, surface it now.
 
-            if (transportProducerException != default)
+            if (transportProducerPoolException != default)
             {
-                throw transportProducerException;
+                throw transportProducerPoolException;
             }
         }
 
