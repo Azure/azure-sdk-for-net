@@ -605,26 +605,20 @@ namespace Azure.Messaging.ServiceBus.Tests
                     sessions.TryAdd(sessionId, true);
                 }
 
-                var options = new ServiceBusProcessorOptions()
-                {
-                    ReceiveMode = ReceiveMode.PeekLock,
-                    RetryOptions = new ServiceBusRetryOptions()
-                    {
-                        // to prevent the receive batch from taking a long time when we
-                        // expect it to fail
-                        MaximumRetries = 0,
-                        TryTimeout = TimeSpan.FromSeconds(5)
-                    }
-                };
-
                 int messageCt = 0;
 
                 TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                await using var processor = client.GetProcessor(
-                    scope.QueueName,
-                    options);
+                await using var processor = client.GetProcessor(scope.QueueName);
 
                 processor.UseSessions = true;
+                processor.RetryOptions = new ServiceBusRetryOptions()
+                {
+                    // to prevent the receive batch from taking a long time when we
+                    // expect it to fail
+                    MaximumRetries = 0,
+                    TryTimeout = TimeSpan.FromSeconds(5)
+                };
+
                 processor.MaxConcurrentCalls = numThreads;
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;

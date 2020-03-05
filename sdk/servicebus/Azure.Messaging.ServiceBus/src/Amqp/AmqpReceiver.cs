@@ -931,7 +931,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="cancellationToken"></param>
-        public override async Task<DateTime> RenewLockAsync(
+        public override async Task<DateTime> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken)
         {

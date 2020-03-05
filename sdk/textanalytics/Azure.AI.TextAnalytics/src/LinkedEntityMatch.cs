@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics
         {
             Text = text;
             Score = score;
-            Offset = offset;
-            Length = length;
+            GraphemeOffset = offset;
+            GraphemeLength = length;
         }
 
         /// <summary>
@@ -30,15 +30,13 @@ namespace Azure.AI.TextAnalytics
         public double Score { get; }
 
         /// <summary>
-        /// Gets the start position for the matching text in the document.
-        /// The offset unit is unicode character count.
+        /// Gets the starting position (in Unicode graphemes) for the matching text in the document.
         /// </summary>
-        public int Offset { get; }
+        public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the document.
-        /// The length unit is unicode character count.
+        /// Gets the length (in Unicode graphemes) of the matching text in the document.
         /// </summary>
-        public int Length { get; }
+        public int GraphemeLength { get; }
     }
 }

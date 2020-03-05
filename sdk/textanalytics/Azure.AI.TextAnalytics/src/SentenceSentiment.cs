@@ -14,12 +14,12 @@ namespace Azure.AI.TextAnalytics
         {
             Sentiment = sentiment;
             ConfidenceScores = new SentimentConfidenceScorePerLabel(positiveScore, neutralScore, negativeScore);
-            Offset = offset;
-            Length = length;
+            GraphemeOffset = offset;
+            GraphemeLength = length;
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed sentence.
+        /// Gets the predicted sentiment for the analyzed input.
         /// </summary>
         public SentenceSentimentLabel Sentiment { get; }
 
@@ -30,15 +30,13 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScorePerLabel ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the start position for the matching text in the input document.
-        /// The offset unit is unicode character count.
+        /// Gets the starting position (in Unicode graphemes) for the matching text in the input.
         /// </summary>
-        public int Offset { get; }
+        public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the input document.
-        /// The length unit is unicode character count.
+        /// Gets the length (in Unicode graphemes) of the matching text in the input.
         /// </summary>
-        public int Length { get; }
+        public int GraphemeLength { get; }
     }
 }

@@ -210,7 +210,7 @@ namespace Azure.Messaging.ServiceBus
         ///
 
         ///
-        internal virtual async Task SendRangeInternal(
+        internal async Task SendRangeInternal(
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
