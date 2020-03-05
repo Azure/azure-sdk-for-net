@@ -59,8 +59,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (PiiEntity entity in result.Entities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}" +
-                            $"");
+                        Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");
