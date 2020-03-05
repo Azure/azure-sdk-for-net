@@ -214,6 +214,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     try
                     {
                         await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        break;
                     }
                     catch (Exception ex)
                     {
