@@ -270,13 +270,37 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateBatchAsyncRespectsTheCancellationTokenIfSetWhenCalled()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CreateBatchAsyncRespectsTheCancellationTokenIfSetWhenCalled(bool createLink)
         {
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetMaximumMessageSize(producer.Object, 100))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                .Verifiable();
+
             using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            if (createLink)
+            {
+                Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationTokenSource.Token), Throws.Nothing);
+            }
+
             cancellationTokenSource.Cancel();
 
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
-            Assert.That(async () => await producer.CreateBatchAsync(new CreateBatchOptions(), cancellationTokenSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), cancellationTokenSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
