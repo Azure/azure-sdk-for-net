@@ -7,7 +7,7 @@
 - Change wording in all documentation from `text inputs` to `documents`.
 - Properties `Length` and `Offset` have been renamed to `GraphemeLength` and `GraphemeOffset` for the `SentenceSentiment`,
 `CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects, to make it clear that the offsets and lengths are in units of Unicode graphemes.
-- Unify `DocumentSentimentLabel` and `SentenceSentimentLabel` into the same type now called `TextSentiment`.
+- Unified `DocumentSentimentLabel` and `SentenceSentimentLabel` into `TextSentiment`.
 - `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScore`.
 - Extensible ENUM `SubCategory` has been deleted and managed as a string trhought the code.
 

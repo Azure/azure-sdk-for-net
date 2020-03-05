@@ -23,7 +23,7 @@ IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
 }
 ```
 

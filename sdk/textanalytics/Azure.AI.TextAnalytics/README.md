@@ -191,7 +191,7 @@ IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
 }
 ```
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
@@ -209,7 +209,7 @@ IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Val
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
 }
 ```
 
@@ -229,7 +229,7 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score}, Offset: {match.GraphemeOffset}, Length: {match.GraphemeLength}.");
+        Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score}");
     }
 }
 ```
@@ -259,7 +259,7 @@ Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.Recogni
 Console.WriteLine($"Recognized {entities.Value.Count} entities:");
 foreach (CategorizedEntity entity in entities.Value)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
 }
 ```
 

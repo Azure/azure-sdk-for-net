@@ -71,8 +71,6 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
-                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.GraphemeOffset, sentenceSentiment.GraphemeLength)}\"");
-
                         Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
                         Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
                         Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
