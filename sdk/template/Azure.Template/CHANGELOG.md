@@ -1,4 +1,6 @@
 # Release History
+## 1.0.2-preview.7 (Unreleased)
+- Testing versioning of azure-sdk-tools repo
 
 ## 1.0.2-preview.6 (2020-02-24)
 ### Added
