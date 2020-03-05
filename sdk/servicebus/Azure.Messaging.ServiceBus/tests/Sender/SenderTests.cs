@@ -26,22 +26,22 @@ namespace Azure.Messaging.ServiceBus.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(null));
         }
 
-        [Test]
-        public async Task Send_DelegatesToSendRange()
-        {
-            var mock = new Mock<ServiceBusSender>()
-            {
-                CallBase = true
-            };
-            mock
-               .Setup(m => m.SendBatchAsync(
-                   It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
-                   It.IsAny<CancellationToken>()))
-               .Returns(Task.CompletedTask)
-               .Verifiable("The single send should delegate to the batch send.");
+        //[Test]
+        //public async Task Send_DelegatesToSendRange()
+        //{
+        //    var mock = new Mock<ServiceBusSender>()
+        //    {
+        //        CallBase = true
+        //    };
+        //    mock
+        //       .Setup(m => m.SendBatchAsync(
+        //           It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
+        //           It.IsAny<CancellationToken>()))
+        //       .Returns(Task.CompletedTask)
+        //       .Verifiable("The single send should delegate to the batch send.");
 
-            await mock.Object.SendAsync(new ServiceBusMessage());
-        }
+        //    await mock.Object.SendAsync(new ServiceBusMessage());
+        //}
 
         [Test]
         public void SendRange_NullShouldThrow()

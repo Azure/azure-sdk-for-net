@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -30,7 +26,11 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
-                await sender.SendBatchAsync(GetMessages(numThreads * 2));
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                ServiceBusMessageBatch messageBatch = AddMessages(batch, numThreads * 2);
+
+                await sender.SendBatchAsync(messageBatch);
+
                 await using var processor = client.GetProcessor(scope.QueueName);
                 int messageCt = 0;
 
@@ -83,7 +83,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
                 int numMessages = 50;
-                await sender.SendBatchAsync(GetMessages(numMessages));
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                ServiceBusMessageBatch messageBatch = AddMessages(batch, numMessages);
+
+                await sender.SendBatchAsync(messageBatch);
 
                 await using var processor = client.GetProcessor(scope.QueueName);
                 int messageProcessedCt = 0;
