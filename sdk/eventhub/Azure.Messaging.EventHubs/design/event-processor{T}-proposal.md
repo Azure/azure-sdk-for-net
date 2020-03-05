@@ -378,20 +378,20 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public bool IsRunning { get; protected set; }
     
     protected EventProcessor(
-        int eventBatchMaximumSize,
+        int eventBatchMaximumCount,
         string consumerGroup, 
         string connectionString, 
         EventProcessorOptions options = default);
         
     protected EventProcessor(
-        int eventBatchMaximumSize,
+        int eventBatchMaximumCount,
         string consumerGroup, 
         string connectionString, 
         string eventHubName, 
         EventProcessorOptions options = default);
     
     protected EventProcessor(
-        int eventBatchMaximumSize,
+        int eventBatchMaximumCount,
         string consumerGroup,  
         string fullyQualifiedNamespace, 
         string eventHubName, 

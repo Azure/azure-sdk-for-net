@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs.Primitives
@@ -76,10 +77,40 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
+
+        /// <summary>
+        ///   A factory used to create new <see cref="EventHubConnection" /> instances.
+        /// </summary>
+        ///
+        private Func<EventHubConnection> ConnectionFactory { get; }
+
+        /// <summary>
+        ///   Responsible for ownership claim for load balancing.
+        /// </summary>
+        ///
+        private PartitionLoadBalancer LoadBalancer { get; }
+
+        /// <summary>
+        ///   The set of options to use with the <see cref="EventProcessor{TPartition}" />  instance.
+        /// </summary>
+        ///
+        private EventProcessorOptions Options { get; }
+
+        /// <summary>
+        ///   The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch.
+        /// </summary>
+        ///
+        private int EventBatchMaximumCount { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="eventBatchMaximumSize">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
         /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="options">The set of options to use for the processor.</param>
@@ -95,10 +126,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
         ///
-        protected EventProcessor(int eventBatchMaximumSize,
+        protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
                                  string connectionString,
-                                 EventProcessorOptions options = default) : this(eventBatchMaximumSize, consumerGroup, connectionString, null, options)
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, connectionString, null, options)
         {
         }
 
@@ -106,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="eventBatchMaximumSize">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
         /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -120,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
         ///
-        protected EventProcessor(int eventBatchMaximumSize,
+        protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
                                  string connectionString,
                                  string eventHubName,
@@ -129,30 +160,53 @@ namespace Azure.Messaging.EventHubs.Primitives
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            // TODO: Implement
-            throw new NotImplementedException();
+            options = options?.Clone() ?? new EventProcessorOptions();
+
+            var connectionStringProperties = ConnectionStringParser.Parse(connectionString);
+
+            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
+            FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
+            EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
+            ConsumerGroup = consumerGroup;
+            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            Options = options;
+            EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
         /// </summary>
         ///
-        /// <param name="eventBatchMaximumSize">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
         /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
-        protected EventProcessor(int eventBatchMaximumSize,
+        protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
                                  string fullyQualifiedNamespace,
                                  string eventHubName,
                                  TokenCredential credential,
                                  EventProcessorOptions options = default)
         {
-            // TODO: Implement
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new EventProcessorOptions();
+
+            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            Options = options;
+            EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
         }
 
         /// <summary>
@@ -231,6 +285,57 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => $"Event Processor<{ typeof(TPartition).Name }>: { Identifier }";
+
+        /// <summary>
+        ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
+        /// </summary>
+        ///
+        /// <returns>The requested <see cref="EventHubConnection" />.</returns>
+        ///
+        internal virtual EventHubConnection CreateConnection() => ConnectionFactory();
+
+        /// <summary>
+        ///   Creates an <see cref="EventHubConsumerClient" /> to use for processing.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group to associate with the consumer client.</param>
+        /// <param name="connection">The connection to use for the consumer client.</param>
+        /// <param name="options">The options to use for configuring the consumer client.</param>
+        ///
+        /// <returns>An <see cref="EventHubConsumerClient" /> with the requested configuration.</returns>
+        ///
+        internal virtual EventHubConsumerClient CreateConsumer(string consumerGroup,
+                                                               EventHubConnection connection,
+                                                               EventHubConsumerClientOptions options) => new EventHubConsumerClient(consumerGroup, connection, options);
+
+        /// <summary>
+        ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
+        /// </summary>
+        ///
+        /// <param name="instance">The <see cref="EventProcessor{TPartition}" /> instance to associate with the storage manager.</param>
+        ///
+        /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
+        ///
+        internal virtual StorageManager CreateStorageManager(EventProcessor<TPartition> instance) => new DelegatingStorageManager(instance);
+
+        /// <summary>
+        ///   Creates a <see cref="PartitionLoadBalancer"/> for managing partition ownership for the event processor.
+        /// </summary>
+        ///
+        /// <param name="storageManager">Responsible for managing persistence of the partition ownership data.</param>
+        /// <param name="identifier">The identifier of the event processor associated with the load balancer.</param>
+        /// <param name="consumerGroup">The name of the consumer group this load balancer is associated with.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace that the processor is associated with.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
+        ///
+        internal virtual PartitionLoadBalancer CreatePartitionLoadBalancer(StorageManager storageManager,
+                                                                           string identifier,
+                                                                           string consumerGroup,
+                                                                           string fullyQualifiedNamespace,
+                                                                           string eventHubName,
+                                                                           TimeSpan ownershipExpiration) =>
+            new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration);
 
         /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
@@ -428,6 +533,125 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   A virtual <see cref="StorageManager" /> instance that delegates calls to the
+        ///   <see cref="EventProcessor{TPartition}" /> to which it is associated.
+        /// </summary>
+        ///
+        private class DelegatingStorageManager : StorageManager
+        {
+            /// <summary>
+            ///   The <see cref="EventProcessor{TPartition}" /> that the storage manager is associated with.
+            /// </summary>
+            ///
+            private WeakReference<EventProcessor<TPartition>> Processor { get; }
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="DelegatingStorageManager"/> class.
+            /// </summary>
+            ///
+            /// <param name="processor">The <see cref="EventProcessor{TPartition}" /> to associate the storage manager with.</param>
+            ///
+            public DelegatingStorageManager(EventProcessor<TPartition> processor) => Processor = new WeakReference<EventProcessor<TPartition>>(processor);
+
+            /// <summary>
+            ///   Retrieves a complete ownership list from the data store.
+            /// </summary>
+            ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with. This is ignored in favor of the value from the <see cref="Processor"/>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with.  This is ignored in favor of the value from the <see cref="Processor"/>.</param>
+            /// <param name="consumerGroup">The name of the consumer group the ownership are associated with. This is ignored in favor of the value from the <see cref="Processor"/>.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
+            ///
+            public override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                                         string eventHubName,
+                                                                                                         string consumerGroup,
+                                                                                                         CancellationToken cancellationToken)
+            {
+                var processor = default(EventProcessor<TPartition>);
+
+                if ((Processor?.TryGetTarget(out processor) == false) || (processor == null))
+                {
+                    // If the processor instance was not available, treat it as a closed instance for
+                    // messaging consistency.
+
+                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
+                }
+
+                return await processor.ListOwnershipAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            ///   Attempts to claim ownership of partitions for processing.
+            /// </summary>
+            ///
+            /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <returns>An enumerable containing the successfully claimed ownership.</returns>
+            ///
+            public override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> partitionOwnership,
+                                                                                                          CancellationToken cancellationToken)
+            {
+                var processor = default(EventProcessor<TPartition>);
+
+                if ((Processor?.TryGetTarget(out processor) == false) || (processor == null))
+                {
+                    // If the processor instance was not available, treat it as a closed instance for
+                    // messaging consistency.
+
+                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
+                }
+
+                return await processor.ClaimOwnershipAsync(partitionOwnership, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            ///   Retrieves a list of all the checkpoints in a data store for a given namespace, Event Hub and consumer group.
+            /// </summary>
+            ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with. This is ignored in favor of the value from the <see cref="Processor"/>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with. This is ignored in favor of the value from the <see cref="Processor"/>.</param>
+            /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with. This is ignored in favor of the value from the <see cref="Processor"/>.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
+            ///
+            public override async Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                                                   string eventHubName,
+                                                                                                   string consumerGroup,
+                                                                                                   CancellationToken cancellationToken)
+            {
+                var processor = default(EventProcessor<TPartition>);
+
+                if ((Processor?.TryGetTarget(out processor) == false) || (processor == null))
+                {
+                    // If the processor instance was not available, treat it as a closed instance for
+                    // messaging consistency.
+
+                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
+                }
+
+                return await processor.ListCheckpointsAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            ///   This method is not implemented for this type.
+            /// </summary>
+            ///
+            /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+            /// <param name="eventData">The event to use as the basis for the checkpoint's starting position.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <exception cref="NotImplementedException">The method is not implemented for this type.</exception>
+            ///
+            public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+                                                       EventData eventData,
+                                                       CancellationToken cancellationToken) => throw new NotImplementedException();
         }
     }
 }

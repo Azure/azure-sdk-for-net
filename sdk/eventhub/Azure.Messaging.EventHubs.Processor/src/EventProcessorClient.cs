@@ -245,10 +245,10 @@ namespace Azure.Messaging.EventHubs
         internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///   The instance of <see cref="EventProcessorEventSource" /> which can be mocked for testing.
+        ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
-        internal EventProcessorEventSource Logger { get; set; } = EventProcessorEventSource.Log;
+        internal EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
 
         /// <summary>
         ///   Responsible for ownership claim for load balancing.

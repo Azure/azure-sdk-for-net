@@ -1425,7 +1425,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default);
 
-            var mockLog = new Mock<EventProcessorEventSource>();
+            var mockLog = new Mock<EventProcessorClientEventSource>();
             mockProcessor.CallBase = true;
             mockProcessor.Object.Logger = mockLog.Object;
 
