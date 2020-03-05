@@ -43,7 +43,7 @@ jobs:
         inputs:
           targetType: filePath
           filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-          arguments: -CI -Framework $(TestTargetFramework)
+          arguments: -CI
           workingDirectory: common/SmokeTests/SmokeTest
           pwsh: true
         displayName: Use latest dev feed package versions
