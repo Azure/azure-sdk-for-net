@@ -10,6 +10,7 @@
 `CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects, to make it clear that the offsets and lengths are in units of Unicode graphemes.
 - Unify `DocumentSentimentLabel` and `SentenceSentimentLabel` into the same type now called `TextSentiment`.
 - `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScore`.
+- Extensible ENUM `SubCategory` has been deleted and managed as a string trhought the code.
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes
