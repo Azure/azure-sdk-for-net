@@ -67,7 +67,13 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusException(
             string message,
             FailureReason reason,
-            string entityName = default) : this(default, entityName, message, reason, null)
+            string entityName = default) :
+            this(
+                isTransient: default,
+                message: message,
+                entityName: entityName,
+                reason: reason,
+                innerException: null)
         {
             switch (reason)
             {
@@ -120,7 +126,7 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>A client was forcefully disconnected from an Service Bus entity instance.</summary>
             ReceiverDisconnected,
 
-            /// <summary>An Service Bus resource, such as an Service Bus entity, consumer group, or partition cannot be found by the Service Bus service.</summary>
+            /// <summary>An Service Bus resource cannot be found by the Service Bus service.</summary>
             MessagingEntityNotFound,
 
             /// <summary>
