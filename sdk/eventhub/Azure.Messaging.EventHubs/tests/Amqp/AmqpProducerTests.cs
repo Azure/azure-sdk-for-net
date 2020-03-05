@@ -265,6 +265,81 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncRespectsTheCancellationTokenIfSetWhenCalled()
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public async Task CreateBatchAsyncAppliesTheRetryPolicy(EventHubsRetryOptions retryOptions)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public async Task CreateBatchAsyncConsidersOperationCanceledExceptionAsRetriable(EventHubsRetryOptions retryOptions)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public async Task CreateBatchAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncDetectsAnEmbeddedErrorForOperationCanceled()
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateBatchAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpProducer.SendAsync" />
         ///   method.
         /// </summary>
@@ -328,7 +403,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("somekEy")]
+        [TestCase("someKey")]
         public async Task SendEnumerableCreatesTheAmqpMessageFromTheEnumerable(string partitonKey)
         {
             var messageFactory = default(Func<AmqpMessage>);
@@ -652,7 +727,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("somekEy")]
+        [TestCase("someKey")]
         public async Task SendBatchCreatesTheAmqpMessageFromTheBatch(string partitonKey)
         {
             var messageFactory = default(Func<AmqpMessage>);
