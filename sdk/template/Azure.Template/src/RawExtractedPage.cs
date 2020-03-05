@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
-            Language = readResult.Language;
+            Language = readResult.Language.ToString();
 
             if (readResult.Lines != null)
             {
@@ -34,8 +34,11 @@ namespace Azure.AI.FormRecognizer.Models
         public float Height { get; set; }
         /// <summary> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
         public LengthUnit Unit { get; set; }
+
+        // TODO: Make language nullable?
+
         /// <summary> Language code. </summary>
-        public Language_internal? Language { get; set; }
+        public string Language { get; set; }
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
         public ICollection<RawExtractedLine> Lines { get; set; }
 

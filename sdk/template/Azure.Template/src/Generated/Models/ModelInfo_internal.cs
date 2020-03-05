@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Basic custom model information. </summary>
-    public partial class ModelInfo_internal
+    internal partial class ModelInfo_internal
     {
         /// <summary> Model identifier. </summary>
         public Guid ModelId { get; set; }

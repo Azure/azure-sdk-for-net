@@ -13,12 +13,13 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Text = textLine.Text;
             BoundingBox = new BoundingBox(textLine.BoundingBox);
-            Language = textLine.Language;
+            Language = textLine.Language.ToString();
             Words = ConvertWords(textLine.Words);
         }
 
         /// <summary> Language code. </summary>
-        public Language_internal? Language { get; internal set; }
+        //public Language_internal? Language { get; internal set; }
+        public string Language { get; internal set; }
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<RawExtractedWord> Words { get; internal set; }
 

@@ -171,32 +171,30 @@ namespace Azure.AI.FormRecognizer.Custom
         }
 
         // TODO: Q8 - How to convert ModelInfo_internal to ModelInfo for Pageables?
-        public virtual Pageable<ModelInfo_internal> GetModels(CancellationToken cancellationToken = default)
+        public virtual Pageable<ModelInfo> GetModels(CancellationToken cancellationToken = default)
         {
-            return _operations.GetCustomModelsPageable(GetModelOptions.Full, cancellationToken);
+            return _operations.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
         }
 
-        public virtual AsyncPageable<ModelInfo_internal> GetModelsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ModelInfo> GetModelsAsync(CancellationToken cancellationToken = default)
         {
-            return _operations.GetCustomModelsPageableAsync(GetModelOptions.Full, cancellationToken);
-        }
-
-        /// <summary>
-        /// Executes a service call that takes and returns the <see cref="ModelsSummary"/>.
-        /// </summary>
-        public virtual Response<ModelsSummary> GetModelsSummary(CancellationToken cancellationToken = default)
-        {
-            Response<CustomModels> response = _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
-            return Response.FromValue(response.Value.Summary, response.GetRawResponse());
+            return _operations.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
         }
 
         /// <summary>
-        /// Executes a service call that takes and returns the <see cref="ModelsSummary"/>.
         /// </summary>
-        public virtual async Task<Response<ModelsSummary>> GetModelsSummaryAsync(CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionProperties> GetModelSubscriptionProperties(CancellationToken cancellationToken = default)
         {
-            Response<CustomModels> response = await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(response.Value.Summary, response.GetRawResponse());
+            Response<Models_internal> response = _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual async Task<Response<SubscriptionProperties>> GetModelSubscriptionPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            Response<Models_internal> response = await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         #endregion CRUD Ops

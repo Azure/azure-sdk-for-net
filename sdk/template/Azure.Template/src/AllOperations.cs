@@ -5,8 +5,10 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Custom;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer
 {
@@ -97,6 +99,44 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Pageable<ModelInfo> GetCustomModelsPageableModelInfo(GetModelOptions? op, CancellationToken cancellationToken = default)
+        {
+            Page<ModelInfo> FirstPageFunc(int? pageSizeHint)
+            {
+                var response = GetCustomModels(op, cancellationToken);
+                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            Page<ModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                var response = GetCustomModelsNextPage(nextLink, cancellationToken);
+                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public AsyncPageable<ModelInfo> GetCustomModelsPageableModelInfoAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
+        {
+
+            async Task<Page<ModelInfo>> FirstPageFunc(int? pageSizeHint)
+            {
+                var response = await GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            async Task<Page<ModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                var response = await GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         #endregion Custom
 
         #region Receipt

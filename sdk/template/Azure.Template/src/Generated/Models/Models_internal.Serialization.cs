@@ -5,12 +5,13 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    public partial class CustomModels : IUtf8JsonSerializable
+    internal partial class Models_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,9 +38,9 @@ namespace Azure.AI.FormRecognizer.Custom
             }
             writer.WriteEndObject();
         }
-        internal static CustomModels DeserializeCustomModels(JsonElement element)
+        internal static Models_internal DeserializeModels_internal(JsonElement element)
         {
-            CustomModels result = new CustomModels();
+            Models_internal result = new Models_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))
@@ -48,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Custom
                     {
                         continue;
                     }
-                    result.Summary = ModelsSummary.DeserializeModelsSummary(property.Value);
+                    result.Summary = ModelsSummary_internal.DeserializeModelsSummary_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelList"))

@@ -8,8 +8,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    [CodeGenSchema("ModelsSummary")]
-    public partial class CustomModelsSummary
+    [CodeGenSchema("TrainingDocumentInfo")]
+    public partial class TrainingDocumentInfo
     {
     }
 }

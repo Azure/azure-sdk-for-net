@@ -4,7 +4,6 @@
 #nullable disable
 
 using Azure.AI.FormRecognizer;
-using Azure.AI.FormRecognizer.Custom;
 
 namespace Azure.AI.FormRecognizer.Models
 {

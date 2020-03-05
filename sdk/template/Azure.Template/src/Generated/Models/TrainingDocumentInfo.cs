@@ -4,8 +4,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo

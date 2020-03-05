@@ -5,10 +5,10 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
     /// <summary> Summary of all trained custom models. </summary>
-    public partial class ModelsSummary
+    internal partial class ModelsSummary_internal
     {
         /// <summary> Current count of trained custom models. </summary>
         public int Count { get; set; }

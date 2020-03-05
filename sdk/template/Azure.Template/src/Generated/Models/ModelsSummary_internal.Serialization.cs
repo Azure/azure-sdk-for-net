@@ -6,9 +6,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer
 {
-    public partial class ModelsSummary : IUtf8JsonSerializable
+    internal partial class ModelsSummary_internal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteStringValue(LastUpdatedDateTime, "S");
             writer.WriteEndObject();
         }
-        internal static ModelsSummary DeserializeModelsSummary(JsonElement element)
+        internal static ModelsSummary_internal DeserializeModelsSummary_internal(JsonElement element)
         {
-            ModelsSummary result = new ModelsSummary();
+            ModelsSummary_internal result = new ModelsSummary_internal();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))

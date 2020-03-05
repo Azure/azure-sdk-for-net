@@ -4,9 +4,10 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     public partial class TrainingDocumentInfo : IUtf8JsonSerializable
     {

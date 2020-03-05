@@ -8,7 +8,7 @@ namespace Azure.AI.FormRecognizer.Custom
 {
     public class CustomModelTrainingStatus
     {
-        public CustomModelTrainingStatus(ModelInfo_internal modelInfo)
+        internal CustomModelTrainingStatus(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
             CreatedOn = modelInfo.CreatedDateTime;

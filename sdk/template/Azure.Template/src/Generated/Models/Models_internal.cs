@@ -4,15 +4,16 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Response to the list custom models operation. </summary>
-    public partial class CustomModels
+    internal partial class Models_internal
     {
         /// <summary> Summary of all trained custom models. </summary>
-        public ModelsSummary Summary { get; set; }
+        public ModelsSummary_internal Summary { get; set; }
         /// <summary> Collection of trained custom models. </summary>
         public ICollection<ModelInfo_internal> ModelList { get; set; }
         /// <summary> Link to the next page of custom models. </summary>

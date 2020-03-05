@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Models
 {
     internal static class ModelStatusExtensions
     {

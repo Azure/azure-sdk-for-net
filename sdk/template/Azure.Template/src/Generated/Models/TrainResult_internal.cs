@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Custom;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -11,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class TrainResult_internal
     {
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
-        public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Models.TrainingDocumentInfo>();
+        public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new System.Collections.Generic.List<Azure.AI.FormRecognizer.Custom.TrainingDocumentInfo>();
         /// <summary> List of fields used to train the model and the train operation error reported by each. </summary>
         public ICollection<FormFieldsReport_internal> Fields { get; set; }
         /// <summary> Average accuracy. </summary>

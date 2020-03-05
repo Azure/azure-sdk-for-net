@@ -6,11 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
-    [CodeGenSchema("Language")]
-    internal partial struct Language_internal
+    [CodeGenSchema("Models")]
+    internal partial class Models_internal
     {
-        // TODO: I want to map this to a string, rather than an enum
     }
 }

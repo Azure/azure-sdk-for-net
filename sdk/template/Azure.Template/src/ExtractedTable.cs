@@ -24,7 +24,23 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: implement table indexer
         // TODO: Handling column-span?
 
-        //public ExtractedTableCell this[int i, int j] { get; set; }
+
+#pragma warning disable CA1822 // Mark as static
+        public ExtractedTableCell this[int row, int column]
+#pragma warning restore CA1822 // Mark as static
+        {
+            get
+            {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                throw new NotImplementedException();
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         private static IReadOnlyList<ExtractedTableCell> ConvertCells(ICollection<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
         {

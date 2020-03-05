@@ -416,9 +416,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            // TODO: do better on this type.
-            var modelsSummary = client.GetModelsSummary();
-            Console.WriteLine($"CustomModelCount: {modelsSummary.Value.Count}");
+            var modelCount = client.GetModelSubscriptionProperties();
+            Console.WriteLine($"CustomModelCount: {modelCount.Value.Count}");
         }
 
         private static void GetCustomModels()
@@ -431,7 +430,7 @@ namespace Azure.AI.FormRecognizer.Samples
             var models = client.GetModels();
             foreach (var model in models)
             {
-                Console.WriteLine($"Model, Id={model.ModelId}, Status={model.Status.ToString()}");
+                Console.WriteLine($"Model, Id={model.ModelId}, Status={model.TrainingStatus.ToString()}");
             }
         }
     }
