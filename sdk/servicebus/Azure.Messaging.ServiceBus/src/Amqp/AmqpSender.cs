@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -478,8 +479,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 else
                 {
-                    throw new Exception();
-                    //throw response.ToMessagingContractException();
+                    throw amqpResponseMessage.ToMessagingContractException();
                 }
             }
         }
@@ -547,17 +547,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             stopWatch.Stop();
             AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
 
-
             if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
             {
-                throw new Exception();
-                //throw response.ToMessagingContractException();
+                throw amqpResponseMessage.ToMessagingContractException();
             }
-            return;
         }
-
-
-
 
         /// <summary>
         ///   Creates the AMQP link to be used for producer-related operations and ensures

@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             IList<ServiceBusReceivedMessage> messages = null;
-            Task receiveMessageTask = _retryPolicy.RunOperation(async (timeout) =>
+            await _retryPolicy.RunOperation(async (timeout) =>
             {
                 messages = await ReceiveBatchAsyncInternal(
                     maximumMessageCount,
@@ -177,8 +177,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             },
             EntityName,
             _connectionScope,
-            cancellationToken);
-            await receiveMessageTask.ConfigureAwait(false);
+            cancellationToken).ConfigureAwait(false);
+            //await receiveMessageTask.ConfigureAwait(false);
 
             return messages;
         }

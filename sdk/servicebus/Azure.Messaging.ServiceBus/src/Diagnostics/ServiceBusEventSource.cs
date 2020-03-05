@@ -610,5 +610,20 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(100, errorMessage);
             }
         }
+
+        [NonEvent]
+        public void RunOperationExceptionEncountered(Exception exception)
+        {
+            if (IsEnabled())
+            {
+                RunOperationExceptionEncountered(exception.ToString());
+            }
+        }
+
+        [Event(77, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
+        private void RunOperationExceptionEncountered(string exception)
+        {
+            WriteEvent(77, exception);
+        }
     }
 }

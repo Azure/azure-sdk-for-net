@@ -15,7 +15,6 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using Microsoft.Azure.Amqp.Sasl;
 using Microsoft.Azure.Amqp.Transport;
@@ -77,13 +76,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
-
-        /// <summary>
-        ///   The recommended timeout to associate with an AMQP session.  It is recommended that this
-        ///   interval be used when creating or opening AMQP links and related constructs.
-        /// </summary>
-        ///
-        public override TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///   Indicates whether this <see cref="AmqpConnectionScope"/> has been disposed.
@@ -251,7 +243,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var link = await CreateReceivingLinkAsync(
+            ReceivingAmqpLink link = await CreateReceivingLinkAsync(
                 entityName,
                 connection,
                 consumerEndpoint,
@@ -292,10 +284,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var stopWatch = Stopwatch.StartNew();
             var producerEndpoint = new Uri(ServiceEndpoint, entityName);
 
-            var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            var link = await CreateSendingLinkAsync(
+            SendingAmqpLink link = await CreateSendingLinkAsync(
                 entityName,
                 connection,
                 producerEndpoint,
@@ -444,7 +436,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Track the link before returning it, so that it can be managed with the scope.
                 var refreshTimer = default(Timer);
 
-                var refreshHandler = CreateAuthorizationRefreshHandler
+                TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
                     entityName,
                     connection,
@@ -553,7 +545,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var refreshTimer = default(Timer);
 
-                var refreshHandler = CreateAuthorizationRefreshHandler
+                TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
                     entityName,
                     connection,
@@ -647,7 +639,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var refreshTimer = default(Timer);
 
-                var refreshHandler = CreateAuthorizationRefreshHandler
+                TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
                     entityName,
                     connection,
@@ -789,7 +781,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         return;
                     }
 
-                    var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, tokenProvider, endpoint, audience, resource, requiredClaims, refreshTimeout).ConfigureAwait(false);
+                    DateTime authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, tokenProvider, endpoint, audience, resource, requiredClaims, refreshTimeout).ConfigureAwait(false);
 
                     // Reset the timer for the next refresh.
 
