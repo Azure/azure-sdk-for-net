@@ -1,0 +1,33 @@
+parameters:
+    ServiceDirectory: not-specified
+    TenantId: not-specified
+    TestApplicationId: not-specified
+    TestApplicationSecret: not-specified
+    TestApplicationObjectId: not-specified
+    ProvisionerApplicationId: not-specified
+    ProvisionerApplicationSecret: not-specified
+    DeleteAfterHours: 24
+
+
+steps:
+    # New-TestResources command requires Az module
+    - pwsh: Install-Module -Name Az -Scope CurrentUser -Force
+      displayName: Install Azure PowerShell module
+
+    # Command sets an environment variable in the pipeline's context:
+    # AZURE_RESOURCEGROUP_NAME
+    - pwsh: >
+        eng/common/TestResources/New-TestResources.ps1
+        -BaseName 'Generated'
+        -ServiceDirectory '${{ parameters.ServiceDirectory }}'
+        -TenantId '${{ parameters.TenantId }}'
+        -TestApplicationId '${{ parameters.TestApplicationId }}'
+        -TestApplicationSecret '${{ parameters.TestApplicationSecret }}'
+        -TestApplicationOid '${{ parameters.TestApplicationObjectId }}'
+        -ProvisionerApplicationId '${{ parameters.ProvisionerApplicationId }}'
+        -ProvisionerApplicationSecret '${{ parameters.ProvisionerApplicationSecret }}'
+        -DeleteAfterHours ${{ parameters.DeleteAfterHours }}
+        -CI
+        -Force
+        -Verbose
+      displayName: Deploy test resources
