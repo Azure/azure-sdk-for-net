@@ -117,6 +117,43 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateBatchAsyncEnsuresNotClosed(bool createLinkBeforehand)
+        {
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            {
+                CallBase = true
+            };
+
+            if (createLinkBeforehand)
+            {
+                producer
+                    .Protected()
+                    .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                        ItExpr.IsAny<string>(),
+                        ItExpr.IsAny<TimeSpan>(),
+                        ItExpr.IsAny<CancellationToken>())
+                    .Callback(() => SetMaximumMessageSize(producer.Object, 100))
+                    .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                    .Verifiable();
+
+                Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None), Throws.Nothing);
+            }
+
+            await producer.Object.CloseAsync(CancellationToken.None);
+
+            Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreateBatchAsyncEnsuresMaximumMessageSizeIsPopulated()
         {
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
