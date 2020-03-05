@@ -30,7 +30,15 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
-                await sender.SendBatchAsync(GetMessages(numThreads * 2));
+                IEnumerable<ServiceBusMessage> messages = GetMessages(numThreads * 2);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+
+                foreach (ServiceBusMessage message in messages)
+                {
+                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                }
+                await sender.SendBatchAsync(batch);
+
                 await using var processor = client.GetProcessor(scope.QueueName);
                 int messageCt = 0;
 
@@ -83,7 +91,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
                 int numMessages = 50;
-                await sender.SendBatchAsync(GetMessages(numMessages));
+                IEnumerable<ServiceBusMessage> messages = GetMessages(numMessages);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+
+                foreach (ServiceBusMessage message in messages)
+                {
+                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                }
+                await sender.SendBatchAsync(batch);
 
                 await using var processor = client.GetProcessor(scope.QueueName);
                 int messageProcessedCt = 0;

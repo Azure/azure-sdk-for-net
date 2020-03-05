@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Messaging.ServiceBus;
@@ -20,7 +22,7 @@ namespace Microsoft.Azure.Template.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).GetSender(scope.QueueName);
-                await sender.SendBatchAsync(GetMessages(10));
+                await sender.SendAsync(GetMessage());
             }
         }
 
@@ -85,6 +87,71 @@ namespace Microsoft.Azure.Template.Tests
                 };
                 ServiceBusSender sender = client.GetSender(scope.TopicName, senderOptions);
                 await sender.SendAsync(GetMessage("sessionId"));
+            }
+        }
+
+        [Test]
+        public async Task SenderCanSendAMessageBatch()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+
+                batch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("This is a message")));
+                batch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("This is another message")));
+                batch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("So many messages")));
+
+                await sender.SendBatchAsync(batch);
+            }
+        }
+
+        [Test]
+        public async Task SenderCanSendZeroLengthMessageBatch()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>()));
+
+                await sender.SendBatchAsync(batch);
+            }
+        }
+
+        [Test]
+        public async Task SenderCanSendLargeMessageBatch()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+
+                // Actual limit is 262144 bytes for a single message.
+                batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
+                batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
+                batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
+
+                await sender.SendBatchAsync(batch);
+            }
+        }
+
+        [Test]
+        public async Task SenderCannotSendLargerThanMaximumSize()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+
+                // Actual limit is 262144 bytes for a single message.
+                ServiceBusMessage message = new ServiceBusMessage(new byte[300000]);
+
+                Assert.That(async () => await sender.SendAsync(message), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageSizeExceeded));
             }
         }
 
