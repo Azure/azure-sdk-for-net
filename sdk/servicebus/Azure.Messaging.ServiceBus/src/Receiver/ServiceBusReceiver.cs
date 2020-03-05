@@ -538,7 +538,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
-            DateTime lockedUntilUtc = await _innerReceiver.RenewLockAsync(
+            DateTime lockedUntilUtc = await _innerReceiver.RenewMessageLockAsync(
                 message.LockToken,
                 cancellationToken).ConfigureAwait(false);
             message.LockedUntilUtc = lockedUntilUtc;

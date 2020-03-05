@@ -221,7 +221,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new ServiceBusException(_entityName, string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), ServiceBusException.FailureReason.MessageSizeExceeded);
+                            throw new ServiceBusException(
+                                string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize),
+                                ServiceBusException.FailureReason.MessageSizeExceeded,
+                                _entityName);
                         }
 
                         // Attempt to send the message batch.

@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (response == null)
             {
-                return new ServiceBusException(serviceBusResource, Resources1.UnknownCommunicationException, ServiceBusException.FailureReason.ServiceCommunicationProblem);
+                return new ServiceBusException(Resources1.UnknownCommunicationException, ServiceBusException.FailureReason.ServiceCommunicationProblem, serviceBusResource);
             }
 
             if (!response.ApplicationProperties.Map.TryGetValue<string>(AmqpResponse.StatusDescription, out var description))
@@ -154,14 +154,14 @@ namespace Azure.Messaging.ServiceBus
 
             if (string.Equals(condition, TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.ServiceTimeout);
+                return new ServiceBusException(description, ServiceBusException.FailureReason.ServiceTimeout, serviceBusResource);
             }
 
             // The Service Bus service was busy.
 
             if (string.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.ServiceBusy);
+                return new ServiceBusException(description, ServiceBusException.FailureReason.ServiceBusy, serviceBusResource);
             }
 
             // An argument was rejected by the Service Bus service.
@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (string.Equals(condition, AmqpErrorCode.Stolen.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.ConsumerDisconnected);
+                return new ServiceBusException(description, ServiceBusException.FailureReason.ReceiverDisconnected, serviceBusResource);
             }
 
             // Authorization was denied.
@@ -194,7 +194,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.QuotaExceeded);
+                return new ServiceBusException(description, ServiceBusException.FailureReason.QuotaExceeded, serviceBusResource);
             }
 
             // The service does not understand how to process the request.
@@ -216,15 +216,15 @@ namespace Azure.Messaging.ServiceBus
                 if (NotFoundExpression.IsMatch(description)
                     || (description.IndexOf(NotFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
                 {
-                    return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.MessageNotFound);
+                    return new ServiceBusException(description, ServiceBusException.FailureReason.MessagingEntityNotFound, serviceBusResource);
                 }
 
-                return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.ServiceCommunicationProblem);
+                return new ServiceBusException(description, ServiceBusException.FailureReason.ServiceCommunicationProblem, serviceBusResource);
             }
 
             // There was no specific exception that could be determined; fall back to a generic one.
 
-            return new ServiceBusException(serviceBusResource, description, ServiceBusException.FailureReason.ServiceCommunicationProblem);
+            return new ServiceBusException(description, ServiceBusException.FailureReason.ServiceCommunicationProblem, serviceBusResource);
         }
 
         /// <summary>
