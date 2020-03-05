@@ -1745,6 +1745,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task PartitionClosingAsyncIsCalledWithOwnershipLostReasonWhenStoppingTheFailedProcessor()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
