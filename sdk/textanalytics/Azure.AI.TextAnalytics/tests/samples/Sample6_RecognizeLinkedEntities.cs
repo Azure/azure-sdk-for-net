@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
                 foreach (LinkedEntityMatch match in linkedEntity.Matches)
                 {
-                    Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score:0.00}, Offset: {match.GraphemeOffset}, Length: {match.GraphemeLength}.");
+                    Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score}, Offset: {match.GraphemeOffset}, Length: {match.GraphemeLength}.");
                 }
             }
             #endregion
