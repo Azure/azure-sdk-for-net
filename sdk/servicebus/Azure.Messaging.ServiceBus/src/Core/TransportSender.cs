@@ -51,12 +51,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         /// <param name="message">A message to send.</param>
-        /// <param name="retryPolicy"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task SendAsync(
             ServiceBusMessage message,
-            ServiceBusRetryPolicy retryPolicy,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -64,38 +62,32 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         /// <param name="messageBatch">The set of messages to send.</param>
-        /// <param name="retryPolicy"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public abstract Task SendBatchAsync(
             ServiceBusMessageBatch messageBatch,
-            ServiceBusRetryPolicy retryPolicy,
             CancellationToken cancellationToken);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="retryPolicy"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
-            ServiceBusRetryPolicy retryPolicy,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="sequenceNumber"></param>
-        /// <param name="retryPolicy"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task CancelScheduledMessageAsync(
             long sequenceNumber,
-            ServiceBusRetryPolicy retryPolicy,
             CancellationToken cancellationToken = default);
 
         /// <summary>

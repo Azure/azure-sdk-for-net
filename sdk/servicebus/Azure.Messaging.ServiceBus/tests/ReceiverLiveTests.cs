@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -20,16 +18,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCt = 10;
 
-                IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
 
-                foreach (ServiceBusMessage message in sentMessages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
                 await sender.SendBatchAsync(batch);
 
                 await using var receiver = client.GetReceiver(scope.QueueName);
@@ -57,15 +51,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
-                foreach (ServiceBusMessage message in messages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
@@ -96,15 +87,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
-                foreach (ServiceBusMessage message in messages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
@@ -131,15 +119,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
-                foreach (ServiceBusMessage message in messages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
@@ -174,15 +159,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
-                foreach (ServiceBusMessage message in messages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
@@ -226,15 +208,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
-                foreach (ServiceBusMessage message in messages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
@@ -269,15 +248,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
                 var messageCount = 10;
-                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
-                foreach (ServiceBusMessage message in messages)
-                {
-                    Assert.That(() => batch.TryAdd(message), Is.True, "A message was rejected by the batch; all messages should be accepted.");
-                }
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+
                 await sender.SendBatchAsync(batch);
 
                 var clientOptions = new ServiceBusReceiverOptions()

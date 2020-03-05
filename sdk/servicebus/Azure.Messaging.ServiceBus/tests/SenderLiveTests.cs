@@ -98,17 +98,14 @@ namespace Microsoft.Azure.Template.Tests
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                ServiceBusMessageBatch messageBatch = AddMessages(batch, 3);
 
-                batch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("This is a message")));
-                batch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("This is another message")));
-                batch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("So many messages")));
-
-                await sender.SendBatchAsync(batch);
+                await sender.SendBatchAsync(messageBatch);
             }
         }
 
         [Test]
-        public async Task SenderCanSendZeroLengthMessageBatch()
+        public async Task SenderCanSendAnEmptyBodyMessageBatch()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
@@ -152,6 +149,23 @@ namespace Microsoft.Azure.Template.Tests
                 ServiceBusMessage message = new ServiceBusMessage(new byte[300000]);
 
                 Assert.That(async () => await sender.SendAsync(message), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessageSizeExceeded));
+            }
+        }
+
+        [Test]
+        public async Task TryAddReturnsFalseIfSizeExceed()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+
+                // Actual limit is 262144 bytes for a single message.
+                Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.False, "A message was rejected by the batch; message size exceed.");
+
+                await sender.SendBatchAsync(batch);
             }
         }
 

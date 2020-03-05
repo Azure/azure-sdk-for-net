@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             AmqpMessage firstAmqpMessage = null;
             SBMessage firstMessage = null;
 
-            AmqpMessage amqpMessage = BuildAmqpBatchFromMessages(
+            return BuildAmqpBatchFromMessages(
                 source.Select(sbMessage =>
                 {
                     if (firstAmqpMessage == null)
@@ -69,30 +69,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         return SBMessageToAmqpMessage(sbMessage);
                     }
-                }));
-
-            if (firstMessage != null && firstMessage.MessageId != null)
-            {
-                amqpMessage.Properties.MessageId = firstMessage.MessageId;
-            }
-            if (firstMessage != null && firstMessage.SessionId != null)
-            {
-                amqpMessage.Properties.GroupId = firstMessage.SessionId;
-            }
-
-            if (firstMessage != null && firstMessage.PartitionKey != null)
-            {
-                amqpMessage.MessageAnnotations.Map[AmqpMessageConverter.PartitionKeyName] =
-                    firstMessage.PartitionKey;
-            }
-
-            if (firstMessage != null && firstMessage.ViaPartitionKey != null)
-            {
-                amqpMessage.MessageAnnotations.Map[AmqpMessageConverter.ViaPartitionKeyName] =
-                    firstMessage.ViaPartitionKey;
-            }
-
-            return amqpMessage;
+                }), firstMessage);
         }
 
         /// <summary>
@@ -100,10 +77,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="source">The set of messages to use as the body of the batch message.</param>
+        /// <param name="firstMessage"></param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessages(IEnumerable<AmqpMessage> source)
+        private static AmqpMessage BuildAmqpBatchFromMessages(
+            IEnumerable<AmqpMessage> source,
+            SBMessage firstMessage = null)
         {
             AmqpMessage batchEnvelope;
 
@@ -123,6 +103,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }));
 
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
+            }
+
+            if (firstMessage?.MessageId != null)
+            {
+                batchEnvelope.Properties.MessageId = firstMessage.MessageId;
+            }
+            if (firstMessage?.SessionId != null)
+            {
+                batchEnvelope.Properties.GroupId = firstMessage.SessionId;
+            }
+
+            if (firstMessage?.PartitionKey != null)
+            {
+                batchEnvelope.MessageAnnotations.Map[AmqpMessageConverter.PartitionKeyName] =
+                    firstMessage.PartitionKey;
+            }
+
+            if (firstMessage?.ViaPartitionKey != null)
+            {
+                batchEnvelope.MessageAnnotations.Map[AmqpMessageConverter.ViaPartitionKeyName] =
+                    firstMessage.ViaPartitionKey;
             }
 
             batchEnvelope.Batchable = true;

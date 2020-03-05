@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await _innerSender.SendAsync(message, _retryPolicy, cancellationToken).ConfigureAwait(false);
+            await _innerSender.SendAsync(message, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
-            await _innerSender.SendBatchAsync(messageBatch, _retryPolicy, cancellationToken).ConfigureAwait(false);
+            await _innerSender.SendBatchAsync(messageBatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.Messaging.ServiceBus
             //this.ThrowIfClosed();
             Argument.AssertNotNull(message, nameof(message));
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
-            return await _innerSender.ScheduleMessageAsync(message, _retryPolicy, cancellationToken).ConfigureAwait(false);
+            return await _innerSender.ScheduleMessageAsync(message, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task CancelScheduledMessageAsync(long sequenceNumber, CancellationToken cancellationToken = default)
         {
             //this.ThrowIfClosed();
-            await _innerSender.CancelScheduledMessageAsync(sequenceNumber, _retryPolicy, cancellationToken).ConfigureAwait(false);
+            await _innerSender.CancelScheduledMessageAsync(sequenceNumber, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
