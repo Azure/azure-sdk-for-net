@@ -16,34 +16,41 @@ namespace Azure.AI.FormRecognizer.Samples
     {
         public static void Main(string[] args)
         {
+            //string sasUrlUnsupervised = "https://annelostorage01.blob.core.windows.net/container-formreco?sp=rl&st=2020-03-05T17:51:47Z&se=2020-03-06T17:51:47Z&sv=2019-02-02&sr=c&sig=vDE74j%2FsOohf5zLhJr9Y2Xf2dQnwkELvqu3PPPVW7Yc%3D";
+            //string unsupervisedModelId = "fddc5f4d-06da-4bac-b368-15522b733c73";
+
+            //string sasUrlSupervised = "https://annelostorage01.blob.core.windows.net/formreco-labeled-training?sp=rl&st=2020-03-05T18:09:38Z&se=2020-03-06T18:09:38Z&sv=2019-02-02&sr=c&sig=mYpNFe9%2BV9y6UVXOLwwqVNCNG1Kr38tZhqWkc%2BF321o%3D";
+            //string supervisedModelId = "178c93a0-c522-4862-a8c8-57ef873c6168";
+
             //Console.WriteLine("Hello World!");
 
-            //TrainCustomModel().Wait();
-            //ExtractCustomModelStream().Wait();
-            //ExtractCustomModelUri().Wait();
-            //ExtractCustomModelPlusOcrData().Wait();
+            //TrainCustomModel(sasUrl).Wait();
+            //ExtractCustomModelStream(unsupervisedModelId).Wait();
+            //ExtractCustomModelUri(unsupervisedModelId).Wait();
+            //ExtractCustomModelPlusOcrData(unsupervisedModelId).Wait();
 
-            //TrainCustomLabeledModel().Wait();
-            //ExtractCustomLabeledModel().Wait();
-            //ExtractCustomLabeledModelUri().Wait();
-            //ExtractCustomLabeledModelPlusOcrData().Wait();
-            ExtractReceipt();
+            //TrainCustomLabeledModel(sasUrlSupervised).Wait();
+            //ExtractCustomLabeledModel(supervisedModelId).Wait();
+            //ExtractCustomLabeledModelUri(supervisedModelId).Wait();
+            //ExtractCustomLabeledModelPlusOcrData(supervisedModelId).Wait();
+
+            //ExtractReceipt();
             //ExtractReceiptUri();
+
             //ExtractLayout().Wait();
             //ExtractLayoutUri().Wait();
 
             //GetCustomModelsSummary();
-            //GetCustomModels();
+            GetCustomModels();
         }
 
-        private static async Task TrainCustomLabeledModel()
+        private static async Task TrainCustomLabeledModel(string sasUrl)
         {
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            string sasUrl = "https://annelostorage01.blob.core.windows.net/formreco-labeled-training?sp=rl&st=2020-02-29T23:40:52Z&se=2020-03-01T23:40:52Z&sv=2019-02-02&sr=c&sig=p2hvqDtcYSONgck6JC48ZJLaxTCKk%2FBNNMVztXs2lnU%3D";
             var trainingOperation = client.StartTrainingWithLabels(sasUrl);
 
             await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
@@ -57,14 +64,13 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task TrainCustomModel()
+        private static async Task TrainCustomModel(string sasUrl)
         {
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
             var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            string sasUrl = "https://annelostorage01.blob.core.windows.net/container-formreco?sp=rl&st=2020-02-29T17:07:48Z&se=2020-03-01T17:07:48Z&sv=2019-02-02&sr=c&sig=Ls4zfs2hidZ4VS%2BiEkRv1Y6brqjf0te1VfI72HodsRE%3D";
             var trainingOperation = client.StartTraining(sasUrl);
 
             await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
@@ -78,10 +84,9 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task ExtractCustomModelStream()
+        private static async Task ExtractCustomModelStream(string modelId)
         {
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
-            string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
@@ -128,12 +133,11 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task ExtractCustomModelUri()
+        private static async Task ExtractCustomModelUri(string modelId)
         {
             Console.WriteLine("Unsupervised Model Table: ");
 
             Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
-            string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
@@ -156,10 +160,9 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task ExtractCustomModelPlusOcrData()
+        private static async Task ExtractCustomModelPlusOcrData(string modelId)
         {
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
-            string modelId = "6973638e-91e6-4f51-89d6-8198afaefecf";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
@@ -211,12 +214,11 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
 
-        private static async Task ExtractCustomLabeledModel()
+        private static async Task ExtractCustomLabeledModel(string modelId)
         {
             Console.WriteLine("Supervised Model - Stream Input: ");
 
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
-            string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
@@ -243,13 +245,12 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
 
-        private static async Task ExtractCustomLabeledModelUri()
+        private static async Task ExtractCustomLabeledModelUri(string modelId)
         {
             Console.WriteLine("Supervised Model - URI Input: ");
 
             // TODO: This fails, with a URI that works for unsupervised.  What is wrong?
-            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf-INVALID");
-            string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
+            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
@@ -272,13 +273,12 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task ExtractCustomLabeledModelPlusOcrData()
+        private static async Task ExtractCustomLabeledModelPlusOcrData(string modelId)
         {
             // TODO: Q14 - currently blocked due to deserialization of array only handles string.
             Console.WriteLine("Supervised Model - Stream Input: ");
 
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";
-            string modelId = "be5360ca-9742-4bc8-b6ef-a16e40a6c64f";
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");

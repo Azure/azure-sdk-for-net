@@ -19,7 +19,11 @@ namespace Azure.AI.FormRecognizer.Models
             RowIndex = dataTableCell.RowIndex;
             RowSpan = dataTableCell.RowSpan.HasValue ? dataTableCell.RowSpan.Value : 1;
             Text = dataTableCell.Text;
-            RawExtractedItems = ExtractedField.ConvertTextReferences(readResult, references);
+
+            if (references != null)
+            {
+                RawExtractedItems = ExtractedField.ConvertTextReferences(readResult, references);
+            }
         }
 
         public BoundingBox BoundingBox { get; }
