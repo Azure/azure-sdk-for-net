@@ -200,6 +200,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(options, nameof(options));
 
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             // Ensure that maximum message size has been determined; this depends on the underlying
             // AMQP link, so if not set, requesting the link will ensure that it is populated.
 
