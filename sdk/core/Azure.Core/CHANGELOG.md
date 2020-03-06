@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.3 (2020-03-05)
+## 1.1.0 (2020-03-05)
 
 ### Fixes and improvements
 - Add OPTIONS and TRACE HTTP request methods.
