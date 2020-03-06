@@ -8,7 +8,7 @@ using Azure.Messaging.EventHubs.Consumer;
 namespace Azure.Messaging.EventHubs.Primitives
 {
     /// <summary>
-    ///   Allows events from a specific partition of an Event Hub, and in the context
+    ///   Allows reading events from a specific partition of an Event Hub, and in the context
     ///   of a specific consumer group, to be read with a greater level of control over
     ///   communication with the Event Hubs service than is offered by other event consumers.
     /// </summary>

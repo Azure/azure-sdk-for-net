@@ -89,9 +89,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         public long? OwnerLevel { get; set; }
 
         /// <summary>
-        ///   The count used by the partition receiver to control the number of messages it will actively
-        ///   read and queue locally without regard to whether a read operation is currently active.
+        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing the partition receiver
+        ///   to read from a local cache rather than waiting on a service request.
         /// </summary>
+        ///
+        /// <value>
+        ///   The <see cref="PrefetchCount" /> is a control that developers can use to help tune performance for the specific
+        ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
+        ///   Event Hubs.
+        /// </value>
         ///
         public int? PrefetchCount
         {
