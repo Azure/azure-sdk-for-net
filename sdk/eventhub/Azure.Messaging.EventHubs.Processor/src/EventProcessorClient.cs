@@ -726,8 +726,12 @@ namespace Azure.Messaging.EventHubs
                     && partitionEvent.Data != null
                     && EventDataInstrumentation.TryExtractDiagnosticId(partitionEvent.Data, out string diagnosticId))
                 {
-                    diagnosticScope.AddLink(diagnosticId);
-                    diagnosticScope.AddAttribute(DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds());
+                    var attributes = new Dictionary<string, string>()
+                    {
+                        { DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds().ToString() }
+                    };
+
+                    diagnosticScope.AddLink(diagnosticId, attributes);
                 }
 
                 diagnosticScope.Start();
