@@ -3,28 +3,28 @@
 
 namespace Azure.Messaging.ServiceBus
 {
-    /// <summary>Action taking place when <see cref="ExceptionReceivedEventArgs"/> is raised.</summary>
-    public static class ExceptionReceivedEventArgsAction
+    /// <summary>Action taking place when <see cref="ProcessErrorEventArgs"/> is raised.</summary>
+    public enum ExceptionReceivedEventArgsAction
     {
         /// <summary>Message completion operation</summary>
-        public const string Complete = "Complete";
+        Complete,
 
         /// <summary>Message abandon operation</summary>
-        public const string Abandon = "Abandon";
+        Abandon,
 
         /// <summary>User message handler invocation</summary>
-        public const string UserCallback = "UserCallback";
+        UserCallback,
 
         /// <summary>Message receive operation</summary>
-        public const string Receive = "Receive";
+        Receive,
 
         /// <summary>Message lock renewal operation</summary>
-        public const string RenewLock = "RenewLock";
+        RenewLock,
 
         /// <summary>Session start operation</summary>
-        public const string AcceptMessageSession = "AcceptMessageSession";
+        AcceptMessageSession,
 
         /// <summary>Session close operation</summary>
-        public const string CloseMessageSession = "CloseMessageSession";
+        CloseMessageSession
     }
 }

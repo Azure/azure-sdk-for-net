@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Template;
 using Azure.Template.Models;
@@ -13,12 +14,9 @@ namespace Azure.Template
     /// <summary>
     /// The sample client.
     /// </summary>
-    public class TemplateClient
+    [CodeGenClient("")]
+    public partial class TemplateClient
     {
-        private readonly ClientDiagnostics _diagnostics;
-        private readonly HttpPipeline _pipeline;
-        private readonly AllOperations _operations;
-
         /// <summary>
         /// Mocking ctor only.
         /// </summary>
@@ -36,27 +34,11 @@ namespace Azure.Template
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateClient"/>.
         /// </summary>
-        public TemplateClient(Uri endpoint, TemplateClientOptions options)
+        public TemplateClient(Uri endpoint, TemplateClientOptions options): this(
+            new ClientDiagnostics(options),
+            HttpPipelineBuilder.Build(options /* Add an auth policy here*/),
+            endpoint.ToString())
         {
-            _diagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options /* Add an auth policy here*/);
-            _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
-        }
-
-        /// <summary>
-        /// Executes a service call that takes and returns the <see cref="Model"/>.
-        /// </summary>
-        public virtual Response<Model> Transform(Model input, CancellationToken cancellationToken = default)
-        {
-            return _operations.Operation(input, cancellationToken);
-        }
-
-        /// <summary>
-        /// Executes a service call that takes and returns the <see cref="Model"/>.
-        /// </summary>
-        public virtual async Task<Response<Model>> TransformAsync(Model input, CancellationToken cancellationToken = default)
-        {
-            return await _operations.OperationAsync(input, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -74,7 +75,7 @@ namespace Azure.Identity
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -89,10 +90,10 @@ namespace Azure.Identity
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await GetTokenAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DefaultAzureCredential.GetToken", requestContext);
 
@@ -102,11 +103,11 @@ namespace Azure.Identity
 
                 if (_credential != null)
                 {
-                    token = isAsync ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
+                    token = async ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
                 }
                 else
                 {
-                    token = isAsync ? await GetTokenFromSourcesAsync(isAsync, requestContext, cancellationToken).ConfigureAwait(false) : GetTokenFromSourcesAsync(isAsync, requestContext, cancellationToken).GetAwaiter().GetResult();
+                    token = await GetTokenFromSourcesAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 }
 
                 return scope.Succeeded(token);
@@ -114,7 +115,6 @@ namespace Azure.Identity
             catch (OperationCanceledException e)
             {
                 scope.Failed(e);
-
                 throw;
             }
             catch (Exception e) when (!(e is CredentialUnavailableException))
@@ -123,7 +123,7 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
 
             int i;
@@ -134,7 +134,9 @@ namespace Azure.Identity
             {
                 try
                 {
-                    AccessToken token = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
+                    AccessToken token = async
+                        ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                        : _sources[i].GetToken(requestContext, cancellationToken);
 
                     _credential = _sources[i];
 

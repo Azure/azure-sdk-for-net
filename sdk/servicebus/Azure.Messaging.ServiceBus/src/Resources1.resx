@@ -264,4 +264,10 @@
   <data name="CannotReadLastEnqueuedEventPropertiesWithoutEvent" xml:space="preserve">
     <value>The last enqueued event properties cannot be read when an event is not available.</value>
   </data>
+  <data name="OperationNotSupported" xml:space="preserve">
+    <value>The operation is only supported in 'PeekLock' receive mode.</value>
+  </data>
+  <data name="MaxPermittedLength" xml:space="preserve">
+    <value>Maximum permitted length is {0}</value>
+  </data>
 </root>

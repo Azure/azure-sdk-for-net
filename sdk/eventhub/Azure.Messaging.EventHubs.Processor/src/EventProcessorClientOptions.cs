@@ -5,11 +5,12 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating an <see cref="EventProcessorClient" />
+    ///   The set of options that can be specified when creating an <see cref="EventProcessorClient" />
     ///   to configure its behavior.
     /// </summary>
     ///
@@ -49,13 +50,21 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   The maximum amount of time to wait for an event to become available for a given partition before emitting
-        ///   a <c>null</c> event.
+        ///   an empty event.
         /// </summary>
         ///
         /// <value>
         ///   If <c>null</c>, the processor will wait indefinitely for an event to become available; otherwise, a value will
         ///   always be emitted within this interval, whether an event was available or not.
         /// </value>
+        ///
+        /// <remarks>
+        ///   When set, if no events are received before the timeout, <see cref="EventProcessorClient.ProcessEventAsync" />
+        ///   is called with a <see cref="ProcessEventArgs" /> instance that does not contain any event data. The
+        ///   <see cref="ProcessEventArgs.HasEvent" /> property is intended to help detect this.
+        /// </remarks>
+        ///
+        /// <seealso cref="ProcessEventArgs.HasEvent" />
         ///
         public TimeSpan? MaximumWaitTime
         {

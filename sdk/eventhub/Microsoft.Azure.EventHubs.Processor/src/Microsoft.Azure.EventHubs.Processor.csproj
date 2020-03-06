@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" />
-    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="WindowsAzure.Storage" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 </Project>

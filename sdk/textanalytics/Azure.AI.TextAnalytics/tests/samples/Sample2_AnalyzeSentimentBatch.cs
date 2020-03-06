@@ -63,24 +63,22 @@ namespace Azure.AI.TextAnalytics.Samples
                 else
                 {
                     Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                    Debug.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive:0.00}.");
-                    Debug.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral:0.00}.");
-                    Debug.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative:0.00}.");
+                    Debug.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
+                    Debug.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
+                    Debug.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
                     foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
-                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
-
                         Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
-                        Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive:0.00}.");
-                        Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral:0.00}.");
-                        Debug.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative:0.00}.");
+                        Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
+                        Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
+                        Debug.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative}.");
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
                     Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }

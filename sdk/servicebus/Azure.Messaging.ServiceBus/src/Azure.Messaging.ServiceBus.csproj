@@ -50,6 +50,7 @@
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\Azure.Core\ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="SharedSource\Azure.Core\ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="SharedSource\Azure.Core\ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
 
   </ItemGroup>
   <ItemGroup>

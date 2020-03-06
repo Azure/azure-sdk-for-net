@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Compute Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Compute Resources.")]
 
-[assembly: AssemblyVersion("31.0.0.0")]
-[assembly: AssemblyFileVersion("31.1.0.0")]
+[assembly: AssemblyVersion("32.0.0.0")]
+[assembly: AssemblyFileVersion("32.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

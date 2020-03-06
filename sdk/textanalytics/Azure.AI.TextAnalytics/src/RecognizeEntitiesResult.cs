@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the recognize entities operation on a single document,
+    /// The result of the recognize entities operation on a document,
     /// containing a collection of the <see cref="CategorizedEntity"/> objects
     /// identified in that document.
     /// </summary>
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         internal RecognizeEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Gets the collection of named entities identified in the input document.
+        /// Gets the collection of named entities identified in the document.
         /// </summary>
         public IReadOnlyCollection<CategorizedEntity> Entities
         {

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GalleryImageVersionUpdate : UpdateResource
+    public partial class GalleryImageVersionUpdate : UpdateResourceDefinition
     {
         /// <summary>
         /// Initializes a new instance of the GalleryImageVersionUpdate class.
@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the GalleryImageVersionUpdate class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">The current state of the gallery
         /// Image Version.</param>
-        public GalleryImageVersionUpdate(GalleryImageVersionStorageProfile storageProfile, IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
-            : base(tags, id, name, type)
+        public GalleryImageVersionUpdate(GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
+            : base(id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;

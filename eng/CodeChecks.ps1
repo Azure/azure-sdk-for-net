@@ -10,12 +10,6 @@ param (
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
 
-$root = "$PSScriptRoot/../sdk"
-if ($ServiceDirectory) {
-    $root += '/' + $ServiceDirectory
-}
-
-$repoRoot = Resolve-Path "$root"
 
 [string[]] $errors = @()
 
@@ -45,14 +39,15 @@ function Invoke-Block([scriptblock]$cmd) {
 
 try {
 
-    Write-Host "Checking that solutions are up to date"
-
     Write-Host "Force .NET Welcome experience"
     Invoke-Block {
         & dotnet msbuild -version
     }
 
-    Get-ChildItem "$repoRoot/Azure.*.sln" -Recurse `
+    Write-Host "Checking that solutions are up to date"
+    Join-Path "$PSScriptRoot/../sdk" $ServiceDirectory  `
+        | Resolve-Path `
+        | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
         | % {
             Write-Host "  Checking $(Split-Path -Leaf $_)"
             $slnDir = Split-Path -Parent $_
@@ -79,6 +74,8 @@ try {
 
     Write-Host "Re-generating clients"
     Invoke-Block {
+        & dotnet msbuild $PSScriptRoot\service.proj /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
+
         # https://github.com/Azure/azure-sdk-for-net/issues/8584
         # & $repoRoot\storage\generate.ps1
     }

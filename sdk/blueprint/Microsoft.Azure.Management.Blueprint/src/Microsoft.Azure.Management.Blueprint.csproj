@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Blueprint</PackageId>
     <Description>Provides Microsoft Azure Blueprint management operations including the ability to create, update and delete Blueprint definition and assignment.</Description>
-    <Version>0.20.0-preview</Version>
+    <Version>0.20.5-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Blueprint Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Blueprint</AssemblyName>
@@ -14,8 +14,8 @@
     <PackageReleaseNotes>
 <![CDATA[This is a preview release sdk for Azure Blueprints, allows you to do Blueprint definition and assignment CRUD.
 
-Changes in 0.20.0-preview:
- - This version has breaking changes in ParameterValue model used in artifacts and blueprint assignment parameters.
+ - This version has addition of excludedActions property to support excluded actions from a blueprint lock. It also has the documentation updates.
+
 ]]>
 </PackageReleaseNotes>
   </PropertyGroup>

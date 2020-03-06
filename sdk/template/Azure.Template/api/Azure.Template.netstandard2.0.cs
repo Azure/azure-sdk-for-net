@@ -1,18 +1,3 @@
-namespace Azure.Core
-{
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-    public readonly partial struct RequestMethodAdditional
-    {
-        public static Azure.Core.RequestMethod Delete { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Get { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Head { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Options { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Patch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Post { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Put { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Trace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-    }
-}
 namespace Azure.Template
 {
     public partial class TemplateClient
@@ -20,8 +5,8 @@ namespace Azure.Template
         protected TemplateClient() { }
         public TemplateClient(System.Uri endpoint) { }
         public TemplateClient(System.Uri endpoint, Azure.Template.TemplateClientOptions options) { }
-        public virtual Azure.Response<Azure.Template.Models.Model> Transform(Azure.Template.Models.Model input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.Model>> TransformAsync(Azure.Template.Models.Model input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.Response<Azure.Template.Models.Model> Operation(Azure.Template.Models.Model body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.Response<Azure.Template.Models.Model>> OperationAsync(Azure.Template.Models.Model body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateClientOptions : Azure.Core.ClientOptions
     {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -33,21 +34,18 @@ namespace Azure.Storage.Blobs.Models
         public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<BlobsHierarchySegment>> task = _client.GetBlobsByHierarchyInternal(
+            Response<BlobsHierarchySegment> response = await _client.GetBlobsByHierarchyInternal(
                 continuationToken,
                 _delimiter,
                 _traits,
                 _states,
                 _prefix,
                 pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<BlobsHierarchySegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             var items = new List<BlobHierarchyItem>();
             items.AddRange(response.Value.BlobPrefixes.Select(p => new BlobHierarchyItem(p.Name, null)));

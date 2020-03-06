@@ -1,43 +1,42 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://amandadev2.blob.core.windows.net/test-container-f6f04e82-4ed3-bc74-d762-bcdc62de15d7?sv=2019-02-02\u0026st=2020-01-21T19%3A47%3A32Z\u0026se=2020-01-21T21%3A47%3A32Z\u0026sr=c\u0026sp=racwdl\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://seandevtest.blob.core.windows.net/test-container-f6f04e82-4ed3-bc74-d762-bcdc62de15d7?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-39255ebdae65ab44a021985799ebc505-d7ee284ea3ced545-00",
+        "traceparent": "00-812f71975571074989d0ed813e521b73-e819f809ccdf9148-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.2.0-dev.20200121.1\u002B8d7fa7d96f76dac230022d76dcd20dcc172dfce8",
+          "azsdk-net-Storage.Blobs/12.4.0-dev.20200219.1",
           "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "118583b9-b8c2-b697-d77a-08a1aa921b7c",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-02-02"
+        "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
-      "StatusCode": 403,
+      "StatusCode": 404,
       "ResponseHeaders": {
-        "Content-Length": "246",
+        "Content-Length": "223",
         "Content-Type": "application/xml",
-        "Date": "Tue, 21 Jan 2020 20:47:32 GMT",
+        "Date": "Wed, 19 Feb 2020 23:31:52 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "118583b9-b8c2-b697-d77a-08a1aa921b7c",
-        "x-ms-error-code": "AuthorizationFailure",
-        "x-ms-request-id": "de8f63db-501e-00c9-6a9c-d002d1000000",
-        "x-ms-version": "2019-02-02"
+        "x-ms-error-code": "ResourceNotFound",
+        "x-ms-request-id": "4bd7437d-d01e-006f-2c7c-e7a2de000000",
+        "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",
-        "RequestId:de8f63db-501e-00c9-6a9c-d002d1000000\n",
-        "Time:2020-01-21T20:47:32.6853684Z\u003C/Message\u003E\u003C/Error\u003E"
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
+        "RequestId:4bd7437d-d01e-006f-2c7c-e7a2de000000\n",
+        "Time:2020-02-19T23:31:53.0307293Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-01-21T12:47:32.3298336-08:00",
     "RandomSeed": "1778751716",
-    "Storage_TestConfigDefault": "ProductionTenant\namandadev2\nU2FuaXRpemVk\nhttp://amandadev2.blob.core.windows.net\nhttp://amandadev2.file.core.windows.net\nhttp://amandadev2.queue.core.windows.net\nhttp://amandadev2.table.core.windows.net\n\n\n\n\nhttp://amandadev2-secondary.blob.core.windows.net\nhttp://amandadev2-secondary.file.core.windows.net\nhttp://amandadev2-secondary.queue.core.windows.net\nhttp://amandadev2-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://amandadev2.blob.core.windows.net/;QueueEndpoint=http://amandadev2.queue.core.windows.net/;FileEndpoint=http://amandadev2.file.core.windows.net/;BlobSecondaryEndpoint=http://amandadev2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandadev2-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandadev2-secondary.file.core.windows.net/;AccountName=amandadev2;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttps://seandevtest.blob.core.windows.net\nhttp://seandevtest.file.core.windows.net\nhttp://seandevtest.queue.core.windows.net\nhttp://seandevtest.table.core.windows.net\n\n\n\n\nhttp://seandevtest-secondary.blob.core.windows.net\nhttp://seandevtest-secondary.file.core.windows.net\nhttp://seandevtest-secondary.queue.core.windows.net\nhttp://seandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seandevtest.blob.core.windows.net/;QueueEndpoint=http://seandevtest.queue.core.windows.net/;FileEndpoint=http://seandevtest.file.core.windows.net/;BlobSecondaryEndpoint=http://seandevtest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seandevtest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seandevtest-secondary.file.core.windows.net/;AccountName=seandevtest;AccountKey=Sanitized\nseanscope1"
   }
 }

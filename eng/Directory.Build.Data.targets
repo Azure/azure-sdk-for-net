@@ -11,15 +11,33 @@
   </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
-  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and
-   '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(SourceRevisionId)' != ''">
+  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingDataPlaneLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
     <Error Condition="'$(IsClientLibrary)' == 'true' and '$(PackageReleaseNotes)' != ''" Text="Do NOT set PackageReleaseNotes property in the project. Release notes are added automatically from package changelog" />
     <PropertyGroup>
       <PackageRootPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))</PackageRootPath>
       <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
       <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
       <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="'@(ExtractedReleaseNotes)' != ''">@(ExtractedReleaseNotes->'%(Identity)', '%0a')%0a%0a$(PackageReleaseNotes)</PackageReleaseNotes>
     </PropertyGroup>
+  </Target>
+
+  <!--Extract release notes for the current version being built -->
+  <Target Name="GetCurrentReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(SkipDevBuildNumber)' == 'true' and '$(IsShippingDataPlaneLibrary)' == 'true'" >
+    <PropertyGroup>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
+      <PowerShellExe Condition="!Exists('$(PowerShellExe)')">pwsh</PowerShellExe>
+      <GetReleaseNotesScriptPath Condition=" '$(GetReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)/common/Extract-ReleaseNotes.ps1</GetReleaseNotesScriptPath>
+      <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
+    </PropertyGroup>
+    <Exec Condition="Exists('$(ChangeLogPath)')" ContinueOnError="true" ConsoleToMSBuild="true" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -File $(GetReleaseNotesScriptPath) $(ChangeLogPath) $(Version)">
+      <Output TaskParameter="ConsoleOutput" ItemName="ExtractedReleaseNotesTemp" />
+      <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
+    </Exec>
+    <Error Condition="Exists('$(ChangeLogPath)') and '$(SetReleaseNotesErrorCode)' != '0'" Text="Release Notes for the specified version was not found. @(ExtractedReleaseNotesTemp)" />
+    <ItemGroup Condition="Exists('$(ChangeLogPath)')">
+      <ExtractedReleaseNotes Condition="'$(SetReleaseNotesErrorCode)'=='0'" Include="@(ExtractedReleaseNotesTemp)" />
+    </ItemGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows

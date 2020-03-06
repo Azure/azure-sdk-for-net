@@ -43,14 +43,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="wildcardFileName">Ftp wildcardFileName. Type: string
         /// (or Expression with resultType string).</param>
+        /// <param name="fileListPath">Point to a text file that lists each
+        /// file (relative path to the path configured in the dataset) that you
+        /// want to copy. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="useBinaryTransfer">Specify whether to use binary
         /// transfer mode for FTP stores.</param>
-        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? useBinaryTransfer = default(bool?))
+        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object fileListPath = default(object), bool? useBinaryTransfer = default(bool?))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            FileListPath = fileListPath;
             UseBinaryTransfer = useBinaryTransfer;
             CustomInit();
         }
@@ -81,6 +86,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFileName")]
         public object WildcardFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets point to a text file that lists each file (relative
+        /// path to the path configured in the dataset) that you want to copy.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "fileListPath")]
+        public object FileListPath { get; set; }
 
         /// <summary>
         /// Gets or sets specify whether to use binary transfer mode for FTP

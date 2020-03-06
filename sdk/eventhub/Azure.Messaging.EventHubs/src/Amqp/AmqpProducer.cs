@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -200,13 +199,59 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                               CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             // Ensure that maximum message size has been determined; this depends on the underlying
             // AMQP link, so if not set, requesting the link will ensure that it is populated.
 
             if (!MaximumMessageSize.HasValue)
             {
-                await SendLink.GetOrCreateAsync(RetryPolicy.CalculateTryTimeout(0)).ConfigureAwait(false);
+                var failedAttemptCount = 0;
+                var retryDelay = default(TimeSpan?);
+                var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
+                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                        // Otherwise, bubble the exception.
+
+                        ++failedAttemptCount;
+                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
+
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        {
+                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
+                            tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+
+                // If MaximumMessageSize has not been populated nor exception thrown
+                // by this point, then cancellation has been requested.
+
+                if (!MaximumMessageSize.HasValue)
+                {
+                    throw new TaskCanceledException();
+                }
             }
 
             // Ensure that there was a maximum size populated; if none was provided,

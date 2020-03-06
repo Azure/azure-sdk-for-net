@@ -1,0 +1,166 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationId": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client ID used to run tests."
+            }
+        },
+        "testApplicationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client secret used to run tests."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        }
+    },
+    "variables": {
+        "azureKeyVaultUrl": "[format('https://{0}.vault.azure.net', parameters('baseName'))]",
+        "mgmtApiVersion": "2019-04-01",
+        "blobAccountName": "[parameters('baseName')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2016-10-01",
+            "name": "[parameters('baseName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "premium"
+                },
+                "tenantId": "[parameters('tenantId')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[parameters('tenantId')]",
+                        "objectId": "[parameters('testApplicationOid')]",
+                        "permissions": {
+                            "keys": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore",
+                                "decrypt",
+                                "encrypt",
+                                "unwrapKey",
+                                "wrapKey",
+                                "verify",
+                                "sign",
+                                "purge"
+                            ],
+                            "secrets": [
+                                "get",
+                                "list",
+                                "set",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore",
+                                "purge"
+                            ],
+                            "certificates": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "delete",
+                                "recover",
+                                "backup",
+                                "restore",
+                                "managecontacts",
+                                "manageissuers",
+                                "getissuers",
+                                "listissuers",
+                                "setissuers",
+                                "deleteissuers",
+                                "purge"
+                            ]
+                        }
+                    }
+                ],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": false,
+                "enableSoftDelete": true
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[variables('blobAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "supportsHttpsTrafficOnly": true,
+                "accessTier": "Hot"
+            }
+        }
+    ],
+  "outputs": {
+    "AZURE_TENANT_ID": {
+        "type": "string",
+        "value": "[parameters('tenantId')]"
+    },
+    "AZURE_CLIENT_ID": {
+        "type": "string",
+        "value": "[parameters('testApplicationId')]"
+    },
+    "AZURE_CLIENT_SECRET": {
+        "type": "string",
+        "value": "[parameters('testApplicationSecret')]"
+    },
+    "AZURE_KEYVAULT_URL": {
+        "type": "string",
+        "value": "[variables('azureKeyVaultUrl')]"
+    },
+
+    "BLOB_STORAGE_ACCOUNT_NAME": {
+      "type": "string",
+      "value": "[variables('blobAccountName')]"
+    },
+    "BLOB_STORAGE_ACCOUNT_KEY": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('blobAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+    }
+  }
+}

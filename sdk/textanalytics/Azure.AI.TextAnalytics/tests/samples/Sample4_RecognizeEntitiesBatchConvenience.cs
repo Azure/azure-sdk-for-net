@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 foreach (CategorizedEntity entity in result.Entities)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
                 }
             }
         }

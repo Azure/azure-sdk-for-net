@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IEncryptionScopesOperations.
+        /// </summary>
+        public virtual IEncryptionScopesOperations EncryptionScopes { get; private set; }
+
+        /// <summary>
         /// Gets the IBlobServicesOperations.
         /// </summary>
         public virtual IBlobServicesOperations BlobServices { get; private set; }
@@ -377,6 +382,7 @@ namespace Microsoft.Azure.Management.Storage
             ManagementPolicies = new ManagementPoliciesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            EncryptionScopes = new EncryptionScopesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             FileServices = new FileServicesOperations(this);

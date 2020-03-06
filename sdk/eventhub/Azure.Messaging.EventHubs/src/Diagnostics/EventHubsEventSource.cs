@@ -3,14 +3,15 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
-    ///   Serves as an ETW event source for logging of information about
-    ///   Event Hubs client.
+    ///   Serves as an ETW event source for logging of information about the
+    ///   Event Hubs client types.
     /// </summary>
     ///
     /// <remarks>
@@ -18,9 +19,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs")]
+    [EventSource(Name = EventSourceName)]
     internal sealed class EventHubsEventSource : EventSource
     {
+        /// <summary>The name to use for the event source.</summary>
+        private const string EventSourceName = "Azure-Messaging-EventHubs";
+
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
@@ -33,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        private EventHubsEventSource()
+        private EventHubsEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
@@ -259,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
         ///
-        [Event(12, Level = EventLevel.Informational, Message = "Retrieving properties for Event Hub: {0} (Partition Id: '{1}').")]
+        [Event(12, Level = EventLevel.Informational, Message = "Retrieving properties for Event Hub: {0}.")]
         public void GetPropertiesStart(string eventHubName)
         {
             if (IsEnabled())
@@ -290,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Event Hub: {0}. Error Message: '{2}'")]
+        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Event Hub: {0}. Error Message: '{1}'")]
         public void GetPropertiesError(string eventHubName,
                                        string errorMessage)
         {
