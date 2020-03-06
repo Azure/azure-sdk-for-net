@@ -29,6 +29,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.</value>
         ///
+        /// <seealso cref="EventHubsException.FailureReason.ConsumerDisconnected"/>
+        ///
         public long? OwnerLevel { get; set; }
 
         /// <summary>
