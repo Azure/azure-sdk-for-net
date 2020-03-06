@@ -10,12 +10,6 @@ param (
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
 
-$root = "$PSScriptRoot/../sdk"
-if ($ServiceDirectory) {
-    $root += '/' + $ServiceDirectory
-}
-
-$repoRoot = Resolve-Path "$root"
 
 [string[]] $errors = @()
 
@@ -52,7 +46,13 @@ try {
         & dotnet msbuild -version
     }
 
-    Get-ChildItem "$repoRoot/Azure.*.sln" -Recurse `
+    $root = "$PSScriptRoot/../sdk"
+    if ($ServiceDirectory) {
+        $root += '/' + $ServiceDirectory
+    }
+
+    Resolve-Path "$root" `
+        | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
         | % {
             Write-Host "  Checking $(Split-Path -Leaf $_)"
             $slnDir = Split-Path -Parent $_
@@ -69,12 +69,12 @@ try {
 
     Write-Host "Re-generating readmes"
     Invoke-Block {
-        & $PSScriptRoot\Update-Snippets.ps1 @script:PSBoundParameters
+        & $PSScriptRoot\Update-Snippets.ps1 $ServiceDirectory
     }
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 @script:PSBoundParameters
+        & $PSScriptRoot\Export-API.ps1 $ServiceDirectory
     }
 
     Write-Host "Re-generating clients"
