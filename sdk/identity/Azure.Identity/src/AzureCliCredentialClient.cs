@@ -32,6 +32,8 @@ namespace Azure.Identity
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
         private const string DefaultPath = "/usr/bin:/usr/local/bin";
 
+        private static readonly Regex AzNotFoundPattern = new Regex("az:(.*)not found");
+
         public AzureCliCredentialClient()
         {
             _path = EnvironmentVariables.Path;
@@ -66,8 +68,8 @@ namespace Azure.Identity
             {
                 bool isLoginError = output.StartsWith("Please run 'az login'", StringComparison.CurrentCultureIgnoreCase);
                 bool isWinError = output.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
-                string pattter = "az:(.*)not found";
-                bool isOtherOsError = Regex.IsMatch(output, pattter);
+
+                bool isOtherOsError = AzNotFoundPattern.IsMatch(output);
 
                 if (isWinError || isOtherOsError)
                 {
