@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   against periodically making requests for partition properties using one of the Event Hub clients.
         /// </remarks>
         ///
-        public bool TrackLastEnqueuedEventInformation { get; set; } = true;
+        public bool TrackLastEnqueuedEventProperties { get; set; } = true;
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _defaultMaximumReceiveWaitTime = DefaultMaximumReceiveWaitTime,
                 OwnerLevel = OwnerLevel,
                 _prefetchCount = PrefetchCount,
-                TrackLastEnqueuedEventInformation = TrackLastEnqueuedEventInformation
+                TrackLastEnqueuedEventProperties = TrackLastEnqueuedEventProperties
             };
     }
 }
