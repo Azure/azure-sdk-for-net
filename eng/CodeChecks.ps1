@@ -64,12 +64,12 @@ try {
 
     Write-Host "Re-generating readmes"
     Invoke-Block {
-        & $PSScriptRoot\Update-Snippets.ps1 $ServiceDirectory
+        & $PSScriptRoot\Update-Snippets.ps1 @script:PSBoundParameters
     }
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 $ServiceDirectory
+        & $PSScriptRoot\Export-API.ps1 @script:PSBoundParameters
     }
 
     Write-Host "Re-generating clients"
