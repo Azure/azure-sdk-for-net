@@ -19,75 +19,18 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfilesOperations operations.
+    /// RecipientTransfersOperations operations.
     /// </summary>
-    public partial interface IBillingProfilesOperations
+    public partial interface IRecipientTransfersOperations
     {
         /// <summary>
-        /// Lists all billing profiles for a user which that user has access
-        /// to.
+        /// Accepts the transfer with given transfer Id.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<BillingProfileListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get the billing profile by id.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<BillingProfile>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// The operation to create a BillingProfile.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// <param name='transferName'>
+        /// Transfer Name.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters supplied to the Create BillingProfile operation.
+        /// Parameters supplied to accept the transfer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,19 +47,16 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfile,BillingProfilesCreateHeaders>> CreateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfileCreationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecipientTransferDetails>> AcceptWithHttpMessagesAsync(string transferName, AcceptTransferRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to update a billing profile.
+        /// Validates if the products can be transferred in the context of the
+        /// given transfer name.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// <param name='transferName'>
+        /// Transfer Name.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters supplied to the update billing profile
-        /// operation.
+        /// Parameters supplied to validate the transfer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -133,18 +73,12 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ValidateTransferListResponse>> ValidateWithHttpMessagesAsync(string transferName, AcceptTransferRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to create a BillingProfile.
+        /// Declines the transfer with given transfer Id.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Request parameters supplied to the Create BillingProfile operation.
+        /// <param name='transferName'>
+        /// Transfer Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -161,19 +95,12 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfile,BillingProfilesCreateHeaders>> BeginCreateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfileCreationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecipientTransferDetails>> DeclineWithHttpMessagesAsync(string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to update a billing profile.
+        /// Gets the transfer with given transfer Id.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Request parameters supplied to the update billing profile
-        /// operation.
+        /// <param name='transferName'>
+        /// Transfer Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -190,6 +117,44 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecipientTransferDetails>> GetWithHttpMessagesAsync(string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the transfers received by caller.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        Task<AzureOperationResponse<IPage<RecipientTransferDetails>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the transfers received by caller.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<RecipientTransferDetails>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

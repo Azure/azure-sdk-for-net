@@ -22,7 +22,10 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class TransactionsOperationsExtensions
     {
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -52,7 +55,10 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -88,8 +94,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -116,8 +125,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -150,8 +162,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing profile name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing profile name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -181,8 +196,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing profile name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing profile name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -218,8 +236,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by invoice section name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by invoice section name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -252,8 +273,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by invoice section name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by invoice section name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -286,6 +310,56 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<TransactionListResult> ListByInvoiceSectionAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByInvoiceSectionWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, periodStartDate, periodEndDate, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the transactions by invoice. Transactions include purchases, refunds
+            /// and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// Invoice Id.
+            /// </param>
+            public static IPage<Transaction> ListByInvoice(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
+            {
+                return operations.ListByInvoiceAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the transactions by invoice. Transactions include purchases, refunds
+            /// and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// Invoice Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Transaction>> ListByInvoiceAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInvoiceWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -352,7 +426,10 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -367,7 +444,10 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -388,8 +468,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -404,8 +487,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -420,6 +506,44 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<IPage<Transaction>> ListByBillingAccountNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the transactions by invoice. Transactions include purchases, refunds
+            /// and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Transaction> ListByInvoiceNext(this ITransactionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByInvoiceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the transactions by invoice. Transactions include purchases, refunds
+            /// and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Transaction>> ListByInvoiceNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInvoiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

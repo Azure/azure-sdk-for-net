@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// 'MicrosoftPartnerAgreement'</param>
         /// <param name="customerType">The type of customer. Possible values
         /// include: 'Enterprise', 'Individual', 'Partner'</param>
+        /// <param name="accountType">The type of customer. Possible values
+        /// include: 'Enterprise', 'Individual', 'Partner'</param>
         /// <param name="billingProfiles">The billing profiles associated to
         /// the billing account. By default this is not populated, unless it's
         /// specified in $expand.</param>
@@ -57,13 +59,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="enrollmentAccounts">The accounts associated to the
         /// enrollment.</param>
         /// <param name="organizationId">Organization id.</param>
-        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails address = default(AddressDetails), string agreementType = default(string), string customerType = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), string organizationId = default(string))
+        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), AddressDetails address = default(AddressDetails), string agreementType = default(string), string customerType = default(string), string accountType = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), string organizationId = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
             Address = address;
             AgreementType = agreementType;
             CustomerType = customerType;
+            AccountType = accountType;
             BillingProfiles = billingProfiles;
             EnrollmentDetails = enrollmentDetails;
             Departments = departments;
@@ -103,6 +106,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.customerType")]
         public string CustomerType { get; private set; }
+
+        /// <summary>
+        /// Gets the type of customer. Possible values include: 'Enterprise',
+        /// 'Individual', 'Partner'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accountType")]
+        public string AccountType { get; private set; }
 
         /// <summary>
         /// Gets or sets the billing profiles associated to the billing

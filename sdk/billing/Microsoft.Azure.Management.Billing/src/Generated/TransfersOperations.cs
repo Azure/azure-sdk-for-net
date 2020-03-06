@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfilesOperations operations.
+    /// TransfersOperations operations.
     /// </summary>
-    internal partial class BillingProfilesOperations : IServiceOperations<BillingManagementClient>, IBillingProfilesOperations
+    internal partial class TransfersOperations : IServiceOperations<BillingManagementClient>, ITransfersOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BillingProfilesOperations class.
+        /// Initializes a new instance of the TransfersOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BillingProfilesOperations(BillingManagementClient client)
+        internal TransfersOperations(BillingManagementClient client)
         {
             if (client == null)
             {
@@ -51,13 +51,19 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all billing profiles for a user which that user has access to.
+        /// Initiates the request to transfer the legacy subscriptions or RIs.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to initiate the transfer.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,15 +86,23 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingProfileListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TransferDetails>> InitiateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, InitiateTransferRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+            }
+            if (billingProfileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
+            }
+            if (invoiceSectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
+            }
+            if (parameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -98,23 +112,19 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("billingProfileName", billingProfileName);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccount", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Initiate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/initiateTransfer").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -122,7 +132,7 @@ namespace Microsoft.Azure.Management.Billing
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -153,6 +163,12 @@ namespace Microsoft.Azure.Management.Billing
 
             // Serialize Request
             string _requestContent = null;
+            if(parameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -203,7 +219,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BillingProfileListResult>();
+            var _result = new AzureOperationResponse<TransferDetails>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -216,7 +232,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingProfileListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TransferDetails>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -236,7 +252,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the billing profile by id.
+        /// Gets the transfer details for given transfer Id.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -244,8 +260,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='transferName'>
+        /// Transfer Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -268,12 +287,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingProfile>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TransferDetails>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -281,6 +296,14 @@ namespace Microsoft.Azure.Management.Billing
             if (billingProfileName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
+            }
+            if (invoiceSectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
+            }
+            if (transferName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "transferName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -291,24 +314,19 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
-                tracingParameters.Add("expand", expand);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
+                tracingParameters.Add("transferName", transferName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
+            _url = _url.Replace("{transferName}", System.Uri.EscapeDataString(transferName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -397,7 +415,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BillingProfile>();
+            var _result = new AzureOperationResponse<TransferDetails>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -410,7 +428,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingProfile>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TransferDetails>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -430,7 +448,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// The operation to create a BillingProfile.
+        /// Cancels the transfer for given transfer Id.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -438,58 +456,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='parameters'>
-        /// Request parameters supplied to the Create BillingProfile operation.
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<BillingProfile,BillingProfilesCreateHeaders>> CreateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfileCreationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<BillingProfile,BillingProfilesCreateHeaders> _response = await BeginCreateWithHttpMessagesAsync(billingAccountName, billingProfileName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to update a billing profile.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Request parameters supplied to the update billing profile operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(billingAccountName, billingProfileName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to create a BillingProfile.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Request parameters supplied to the Create BillingProfile operation.
+        /// <param name='transferName'>
+        /// Transfer Name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -512,12 +483,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingProfile,BillingProfilesCreateHeaders>> BeginCreateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfileCreationRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TransferDetails>> CancelWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -526,9 +493,13 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
-            if (parameters == null)
+            if (invoiceSectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
+            }
+            if (transferName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "transferName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -539,20 +510,19 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
+                tracingParameters.Add("transferName", transferName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Cancel", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
+            _url = _url.Replace("{transferName}", System.Uri.EscapeDataString(transferName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -560,7 +530,7 @@ namespace Microsoft.Azure.Management.Billing
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -591,12 +561,6 @@ namespace Microsoft.Azure.Management.Billing
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -617,7 +581,7 @@ namespace Microsoft.Azure.Management.Billing
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -647,7 +611,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BillingProfile,BillingProfilesCreateHeaders>();
+            var _result = new AzureOperationResponse<TransferDetails>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -660,7 +624,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingProfile>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TransferDetails>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -672,19 +636,6 @@ namespace Microsoft.Azure.Management.Billing
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BillingProfilesCreateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
-            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -693,7 +644,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// The operation to update a billing profile.
+        /// Lists all transfer's details initiated from given invoice section.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -701,8 +652,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='parameters'>
-        /// Request parameters supplied to the update billing profile operation.
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -725,12 +676,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TransferDetails>>> ListWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
@@ -739,9 +686,9 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
-            if (parameters == null)
+            if (invoiceSectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -752,20 +699,17 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -773,7 +717,7 @@ namespace Microsoft.Azure.Management.Billing
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -804,12 +748,6 @@ namespace Microsoft.Azure.Management.Billing
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -830,7 +768,7 @@ namespace Microsoft.Azure.Management.Billing
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -860,7 +798,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>();
+            var _result = new AzureOperationResponse<IPage<TransferDetails>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -873,7 +811,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingProfile>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TransferDetails>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -885,18 +823,173 @@ namespace Microsoft.Azure.Management.Billing
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            try
+            if (_shouldTrace)
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BillingProfilesUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                ServiceClientTracing.Exit(_invocationId, _result);
             }
-            catch (JsonException ex)
+            return _result;
+        }
+
+        /// <summary>
+        /// Lists all transfer's details initiated from given invoice section.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<TransferDetails>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
             {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
                 {
                     _httpResponse.Dispose();
                 }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<TransferDetails>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<TransferDetails>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
