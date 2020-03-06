@@ -503,6 +503,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstanceOperations.
+        /// </summary>
+        public virtual IManagedInstanceOperations ManagedInstanceOperations { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -829,6 +834,7 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabases = new ManagedDatabasesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            ManagedInstanceOperations = new ManagedInstanceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

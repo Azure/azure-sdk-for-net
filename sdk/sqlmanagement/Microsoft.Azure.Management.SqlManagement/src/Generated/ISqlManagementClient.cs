@@ -497,5 +497,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
+        /// <summary>
+        /// Gets the IManagedInstanceOperations.
+        /// </summary>
+        IManagedInstanceOperations ManagedInstanceOperations { get; }
+
     }
 }
