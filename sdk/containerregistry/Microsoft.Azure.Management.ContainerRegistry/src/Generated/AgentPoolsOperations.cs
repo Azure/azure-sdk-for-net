@@ -22,12 +22,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
     using System.Threading;
 
     /// <summary>
-    /// TasksOperations operations.
+    /// AgentPoolsOperations operations.
     /// </summary>
-    internal partial class TasksOperations : IServiceOperations<ContainerRegistryManagementClient>, ITasksOperations
+    internal partial class AgentPoolsOperations : IServiceOperations<ContainerRegistryManagementClient>, IAgentPoolsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the TasksOperations class.
+        /// Initializes a new instance of the AgentPoolsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal TasksOperations(ContainerRegistryManagementClient client)
+        internal AgentPoolsOperations(ContainerRegistryManagementClient client)
         {
             if (client == null)
             {
@@ -50,7 +50,327 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public ContainerRegistryManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the tasks for a specified container registry.
+        /// Gets the detailed information for a given agent pool.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorSchemaException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async System.Threading.Tasks.Task<AzureOperationResponse<AgentPool>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
+            if (registryName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
+            }
+            if (registryName != null)
+            {
+                if (registryName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "registryName", 50);
+                }
+                if (registryName.Length < 5)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "registryName", 5);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(registryName, "^[a-zA-Z0-9]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
+                }
+            }
+            if (agentPoolName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "agentPoolName");
+            }
+            if (agentPoolName != null)
+            {
+                if (agentPoolName.Length > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "agentPoolName", 20);
+                }
+                if (agentPoolName.Length < 3)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "agentPoolName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(agentPoolName, "^[a-zA-Z0-9-]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "agentPoolName", "^[a-zA-Z0-9-]*$");
+                }
+            }
+            string apiVersion = "2019-06-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("registryName", registryName);
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("agentPoolName", agentPoolName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools/{agentPoolName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
+            _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<AgentPool>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AgentPool>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates an agent pool for a container registry with the specified
+        /// parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
+        /// </param>
+        /// <param name='agentPool'>
+        /// The parameters of an agent pool that needs to scheduled.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async System.Threading.Tasks.Task<AzureOperationResponse<AgentPool>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, AgentPool agentPool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<AgentPool> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, agentPoolName, agentPool, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes a specified agent pool resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, agentPoolName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates an agent pool with the specified parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
+        /// </param>
+        /// <param name='count'>
+        /// The count of agent machine
+        /// </param>
+        /// <param name='tags'>
+        /// The ARM resource tags.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async System.Threading.Tasks.Task<AzureOperationResponse<AgentPool>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, int? count = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<AgentPool> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, agentPoolName, count, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Lists all the agent pools for a specified container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -79,7 +399,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Task>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<AgentPool>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -131,7 +451,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
@@ -228,7 +548,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Task>>();
+            var _result = new AzureOperationResponse<IPage<AgentPool>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -241,7 +561,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Task>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AgentPool>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -261,7 +581,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Get the properties of a specified task.
+        /// Gets the count of queued runs for a given agent pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -269,8 +589,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -293,7 +613,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<AgentPoolQueueStatus>> GetQueueStatusWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -329,339 +649,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (agentPoolName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "agentPoolName");
             }
-            if (taskName != null)
+            if (agentPoolName != null)
             {
-                if (taskName.Length > 50)
+                if (agentPoolName.Length > 20)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "agentPoolName", 20);
                 }
-                if (taskName.Length < 5)
+                if (agentPoolName.Length < 3)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "agentPoolName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(agentPoolName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
-                }
-            }
-            string apiVersion = "2019-06-01-preview";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("registryName", registryName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorSchemaException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorSchema _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorSchema>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Task>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Creates a task for a container registry with the specified parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
-        /// </param>
-        /// <param name='taskCreateParameters'>
-        /// The parameters for creating a task.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Task taskCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<Task> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, taskName, taskCreateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes a specified task.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, registryName, taskName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates a task with the specified parameters.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
-        /// </param>
-        /// <param name='taskUpdateParameters'>
-        /// The parameters for updating a task.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, TaskUpdateParameters taskUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send Request
-            AzureOperationResponse<Task> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, taskName, taskUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a task with extended information that includes all secrets.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorSchemaException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> GetDetailsWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-            }
-            if (registryName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
-            }
-            if (registryName != null)
-            {
-                if (registryName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "registryName", 50);
-                }
-                if (registryName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "registryName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(registryName, "^[a-zA-Z0-9]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
-                }
-            }
-            if (taskName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
-            }
-            if (taskName != null)
-            {
-                if (taskName.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
-                }
-                if (taskName.Length < 5)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "agentPoolName", "^[a-zA-Z0-9-]*$");
                 }
             }
             string apiVersion = "2019-06-01-preview";
@@ -675,17 +679,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
+                tracingParameters.Add("agentPoolName", agentPoolName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetDetails", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetQueueStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}/listDetails").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools/{agentPoolName}/listQueueStatus").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -779,7 +783,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<AgentPoolQueueStatus>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -792,7 +796,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AgentPoolQueueStatus>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -812,7 +816,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Creates a task for a container registry with the specified parameters.
+        /// Creates an agent pool for a container registry with the specified
+        /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -820,11 +825,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
         /// </param>
-        /// <param name='taskCreateParameters'>
-        /// The parameters for creating a task.
+        /// <param name='agentPool'>
+        /// The parameters of an agent pool that needs to scheduled.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -847,7 +852,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Task taskCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<AgentPool>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, AgentPool agentPool, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -883,32 +888,32 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (agentPoolName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "agentPoolName");
             }
-            if (taskName != null)
+            if (agentPoolName != null)
             {
-                if (taskName.Length > 50)
+                if (agentPoolName.Length > 20)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "agentPoolName", 20);
                 }
-                if (taskName.Length < 5)
+                if (agentPoolName.Length < 3)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "agentPoolName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(agentPoolName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "agentPoolName", "^[a-zA-Z0-9-]*$");
                 }
             }
-            if (taskCreateParameters == null)
+            if (agentPool == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskCreateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "agentPool");
             }
-            if (taskCreateParameters != null)
+            if (agentPool != null)
             {
-                taskCreateParameters.Validate();
+                agentPool.Validate();
             }
             string apiVersion = "2019-06-01-preview";
             // Tracing
@@ -921,18 +926,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("taskCreateParameters", taskCreateParameters);
+                tracingParameters.Add("agentPoolName", agentPoolName);
+                tracingParameters.Add("agentPool", agentPool);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools/{agentPoolName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -976,9 +981,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
             // Serialize Request
             string _requestContent = null;
-            if(taskCreateParameters != null)
+            if(agentPool != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(taskCreateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(agentPool, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1032,7 +1037,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<AgentPool>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1045,7 +1050,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AgentPool>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1063,7 +1068,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AgentPool>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1083,7 +1088,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Deletes a specified task.
+        /// Deletes a specified agent pool resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -1091,8 +1096,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1112,7 +1117,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1148,23 +1153,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (agentPoolName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "agentPoolName");
             }
-            if (taskName != null)
+            if (agentPoolName != null)
             {
-                if (taskName.Length > 50)
+                if (agentPoolName.Length > 20)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "agentPoolName", 20);
                 }
-                if (taskName.Length < 5)
+                if (agentPoolName.Length < 3)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "agentPoolName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(agentPoolName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "agentPoolName", "^[a-zA-Z0-9-]*$");
                 }
             }
             string apiVersion = "2019-06-01-preview";
@@ -1178,17 +1183,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
+                tracingParameters.Add("agentPoolName", agentPoolName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools/{agentPoolName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1297,7 +1302,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Updates a task with the specified parameters.
+        /// Updates an agent pool with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry belongs.
@@ -1305,11 +1310,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='taskName'>
-        /// The name of the container registry task.
+        /// <param name='agentPoolName'>
+        /// The name of the agent pool.
         /// </param>
-        /// <param name='taskUpdateParameters'>
-        /// The parameters for updating a task.
+        /// <param name='count'>
+        /// The count of agent machine
+        /// </param>
+        /// <param name='tags'>
+        /// The ARM resource tags.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1332,7 +1340,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<Task>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string taskName, TaskUpdateParameters taskUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<AgentPool>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string agentPoolName, int? count = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1368,30 +1376,32 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                     throw new ValidationException(ValidationRules.Pattern, "registryName", "^[a-zA-Z0-9]*$");
                 }
             }
-            if (taskName == null)
+            if (agentPoolName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "agentPoolName");
             }
-            if (taskName != null)
+            if (agentPoolName != null)
             {
-                if (taskName.Length > 50)
+                if (agentPoolName.Length > 20)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "taskName", 50);
+                    throw new ValidationException(ValidationRules.MaxLength, "agentPoolName", 20);
                 }
-                if (taskName.Length < 5)
+                if (agentPoolName.Length < 3)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "taskName", 5);
+                    throw new ValidationException(ValidationRules.MinLength, "agentPoolName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(taskName, "^[a-zA-Z0-9-_]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(agentPoolName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "taskName", "^[a-zA-Z0-9-_]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "agentPoolName", "^[a-zA-Z0-9-]*$");
                 }
-            }
-            if (taskUpdateParameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "taskUpdateParameters");
             }
             string apiVersion = "2019-06-01-preview";
+            AgentPoolUpdateParameters updateParameters = new AgentPoolUpdateParameters();
+            if (count != null || tags != null)
+            {
+                updateParameters.Count = count;
+                updateParameters.Tags = tags;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1402,18 +1412,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("registryName", registryName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("taskName", taskName);
-                tracingParameters.Add("taskUpdateParameters", taskUpdateParameters);
+                tracingParameters.Add("agentPoolName", agentPoolName);
+                tracingParameters.Add("updateParameters", updateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tasks/{taskName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools/{agentPoolName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{registryName}", System.Uri.EscapeDataString(registryName));
-            _url = _url.Replace("{taskName}", System.Uri.EscapeDataString(taskName));
+            _url = _url.Replace("{agentPoolName}", System.Uri.EscapeDataString(agentPoolName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1457,9 +1467,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
             // Serialize Request
             string _requestContent = null;
-            if(taskUpdateParameters != null)
+            if(updateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(taskUpdateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(updateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1513,7 +1523,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Task>();
+            var _result = new AzureOperationResponse<AgentPool>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1526,7 +1536,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AgentPool>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1544,7 +1554,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Task>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AgentPool>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1564,7 +1574,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         }
 
         /// <summary>
-        /// Lists all the tasks for a specified container registry.
+        /// Lists all the agent pools for a specified container registry.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1590,7 +1600,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<Task>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<AzureOperationResponse<IPage<AgentPool>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1699,7 +1709,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Task>>();
+            var _result = new AzureOperationResponse<IPage<AgentPool>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1712,7 +1722,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Task>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AgentPool>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -12,19 +12,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
     using System.Threading;
 
     /// <summary>
-    /// RunsOperations operations.
+    /// ScopeMapsOperations operations.
     /// </summary>
-    public partial interface IRunsOperations
+    public partial interface IScopeMapsOperations
     {
         /// <summary>
-        /// Gets all the runs for a registry.
+        /// Gets the properties of the specified scope map.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -33,8 +32,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -51,9 +50,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<IPage<Run>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, ODataQuery<RunFilter> odataQuery = default(ODataQuery<RunFilter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the detailed information for a given run.
+        /// Creates a scope map for a container registry with the specified
+        /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -62,8 +62,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='runId'>
-        /// The run ID.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
+        /// </param>
+        /// <param name='actions'>
+        /// The list of scoped permissions for registry artifacts.
+        /// E.g. repositories/repository-name/content/read,
+        /// repositories/repository-name/metadata/write
+        /// </param>
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -71,7 +79,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -80,9 +88,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Run>> GetWithHttpMessagesAsync(string resourceGroupName, string registryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> CreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, IList<string> actions, string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch the run properties.
+        /// Deletes a scope map from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -91,11 +99,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='runId'>
-        /// The run ID.
-        /// </param>
-        /// <param name='isArchiveEnabled'>
-        /// The value that indicates whether archiving is enabled or not.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -103,7 +108,41 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a scope map with the specified parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
+        /// </param>
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
+        /// </param>
+        /// <param name='actions'>
+        /// The list of scope permissions for registry artifacts.
+        /// E.g. repositories/repository-name/pull,
+        /// repositories/repository-name/delete
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -112,9 +151,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Run>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string runId, bool? isArchiveEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> UpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, string description = default(string), IList<string> actions = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a link to download the run logs.
+        /// Lists all the scope maps for the specified container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -123,16 +162,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='runId'>
-        /// The run ID.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -141,9 +177,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<RunGetLogResult>> GetLogSasUrlWithHttpMessagesAsync(string resourceGroupName, string registryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<IPage<ScopeMap>>> ListWithHttpMessagesAsync(string resourceGroupName, string registryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Cancel an existing run.
+        /// Creates a scope map for a container registry with the specified
+        /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -152,8 +189,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='runId'>
-        /// The run ID.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
+        /// </param>
+        /// <param name='actions'>
+        /// The list of scoped permissions for registry artifacts.
+        /// E.g. repositories/repository-name/content/read,
+        /// repositories/repository-name/metadata/write
+        /// </param>
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -161,36 +206,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string registryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Patch the run properties.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group to which the container registry
-        /// belongs.
-        /// </param>
-        /// <param name='registryName'>
-        /// The name of the container registry.
-        /// </param>
-        /// <param name='runId'>
-        /// The run ID.
-        /// </param>
-        /// <param name='isArchiveEnabled'>
-        /// The value that indicates whether archiving is enabled or not.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -199,9 +215,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<Run>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string runId, bool? isArchiveEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, IList<string> actions, string description = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Cancel an existing run.
+        /// Deletes a scope map from a container registry.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group to which the container registry
@@ -210,8 +226,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='registryName'>
         /// The name of the container registry.
         /// </param>
-        /// <param name='runId'>
-        /// The run ID.
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -219,15 +235,52 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse> BeginCancelWithHttpMessagesAsync(string resourceGroupName, string registryName, string runId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the runs for a registry.
+        /// Updates a scope map with the specified parameters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group to which the container registry
+        /// belongs.
+        /// </param>
+        /// <param name='registryName'>
+        /// The name of the container registry.
+        /// </param>
+        /// <param name='scopeMapName'>
+        /// The name of the scope map.
+        /// </param>
+        /// <param name='description'>
+        /// The user friendly description of the scope map.
+        /// </param>
+        /// <param name='actions'>
+        /// The list of scope permissions for registry artifacts.
+        /// E.g. repositories/repository-name/pull,
+        /// repositories/repository-name/delete
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        System.Threading.Tasks.Task<AzureOperationResponse<ScopeMap>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string registryName, string scopeMapName, string description = default(string), IList<string> actions = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all the scope maps for the specified container registry.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -238,7 +291,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorSchemaException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -247,6 +300,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<AzureOperationResponse<IPage<Run>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<AzureOperationResponse<IPage<ScopeMap>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
