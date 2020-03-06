@@ -48,7 +48,7 @@ For more information about creating the resource or how to get the location and 
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.2
+Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
 ```
 
 ### Authenticate the client
