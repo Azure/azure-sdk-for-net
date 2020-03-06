@@ -50,10 +50,33 @@ namespace Azure.Messaging.EventHubs.Producer
         private TransportEventBatch InnerBatch { get; }
 
         /// <summary>
+        ///   The fully qualified Event Hubs namespace that the batch is associated with.  To be used
+        ///   during instrumentation.
+        /// </summary>
+        ///
+        private string FullyQualifiedNamespace { get; }
+
+        /// <summary>
+        ///   The name of the Event Hub that the batch is associated with, specific to the
+        ///   Event Hubs namespace that contains it.  To be used during instrumentation.
+        /// </summary>
+        ///
+        private string EventHubName { get; }
+
+        /// <summary>
+        ///   The list of diagnostic identifiers of events added to this batch.  To be used during
+        ///   instrumentation.
+        /// </summary>
+        ///
+        private List<string> EventDiagnosticIdentifiers { get; } = new List<string>();
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch"/> class.
         /// </summary>
         ///
         /// <param name="transportBatch">The  transport-specific batch responsible for performing the batch operations.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the events with during instrumentation.</param>
         /// <param name="sendOptions">The set of options that should be used when publishing the batch.</param>
         ///
         /// <remarks>
@@ -66,12 +89,18 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         internal EventDataBatch(TransportEventBatch transportBatch,
+                                string fullyQualifiedNamespace,
+                                string eventHubName,
                                 SendEventOptions sendOptions)
         {
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(sendOptions, nameof(sendOptions));
 
             InnerBatch = transportBatch;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
             SendOptions = sendOptions;
         }
 
@@ -86,10 +115,17 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool TryAdd(EventData eventData)
         {
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
+            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
             bool added = InnerBatch.TryAdd(eventData);
 
-            if (!added && instrumented)
+            if (added)
+            {
+                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                {
+                    EventDiagnosticIdentifiers.Add(diagnosticId);
+                }
+            }
+            else if (instrumented)
             {
                 EventDataInstrumentation.ResetEvent(eventData);
             }
@@ -112,5 +148,13 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
         internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+
+        /// <summary>
+        ///   Gets the list of diagnostic identifiers of events added to this batch.
+        /// </summary>
+        ///
+        /// <returns>A read-only list of diagnostic identifiers.</returns>
+        ///
+        internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
     }
 }

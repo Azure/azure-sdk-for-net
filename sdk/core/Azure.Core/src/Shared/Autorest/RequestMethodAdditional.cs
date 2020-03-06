@@ -8,7 +8,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents HTTP methods sent as part of a <see cref="Request"/>.
     /// </summary>
-    public readonly struct RequestMethodAdditional
+    internal readonly struct RequestMethodAdditional
     {
         /// <summary>
         /// Gets <see cref="RequestMethod"/> instance for GET method.

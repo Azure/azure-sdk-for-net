@@ -134,11 +134,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(EventPosition other)
         {
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
             return (Offset == other.Offset)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
@@ -158,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             obj switch
             {
                 EventPosition other => Equals(other),
-                _ => ReferenceEquals(this, obj)
+                _ => false
             };
 
         /// <summary>

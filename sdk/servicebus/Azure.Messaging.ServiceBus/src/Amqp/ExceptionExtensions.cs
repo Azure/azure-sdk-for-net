@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     return operationEx.InnerException;
 
                 case OperationCanceledException operationEx when (!(operationEx is TaskCanceledException)):
-                    return new ServiceBusException(entityName, operationEx.Message, ServiceBusException.FailureReason.ServiceTimeout);
+                    return new ServiceBusException(operationEx.Message, ServiceBusException.FailureReason.ServiceTimeout, entityName);
 
                 default:
                     return instance;

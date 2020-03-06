@@ -2310,7 +2310,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
+            public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
             {
                 var stopWatch = Stopwatch.StartNew();
                 PublishDelayCallback?.Invoke();
@@ -2318,7 +2318,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (((maximumWaitTime.HasValue) && (stopWatch.Elapsed >= maximumWaitTime)) || (PublishIndex >= EventsToPublish.Count))
                 {
-                    return Task.FromResult(Enumerable.Empty<EventData>());
+                    // Delay execution in this path to prevent a tight loop, starving other Tasks.
+
+                    await Task.Delay(100).ConfigureAwait(false);
+
+                    return Enumerable.Empty<EventData>();
                 }
 
                 var index = PublishIndex;
@@ -2332,7 +2336,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 PublishIndex = (index + maximumMessageCount);
                 var source = EventsToPublish.Skip(index).Take(maximumMessageCount).ToList();
 
-                return Task.FromResult((IEnumerable<EventData>)source);
+                return (IEnumerable<EventData>)source;
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;

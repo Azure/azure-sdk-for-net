@@ -44,12 +44,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// name of the server.</param>
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections on a server</param>
+        /// <param name="minimalTlsVersion">Minimal TLS version. Allowed
+        /// values: '1.0', '1.1', '1.2'</param>
         /// <param name="publicNetworkAccess">Whether or not public endpoint
         /// access is allowed for this server.  Value is optional but if passed
         /// in, must be 'Enabled' or 'Disabled'. Possible values include:
         /// 'Enabled', 'Disabled'</param>
         /// <param name="tags">Resource tags.</param>
-        public ServerUpdate(string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string publicNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdate(string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             State = state;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             PrivateEndpointConnections = privateEndpointConnections;
+            MinimalTlsVersion = minimalTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
             Tags = tags;
             CustomInit();
@@ -104,6 +107,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
         public IList<ServerPrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets minimal TLS version. Allowed values: '1.0', '1.1',
+        /// '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
 
         /// <summary>
         /// Gets or sets whether or not public endpoint access is allowed for

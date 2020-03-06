@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     /// Describes an identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Identity : IResource
+    public partial class Identity : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the Identity class.
@@ -35,35 +34,27 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
-        /// <param name="id">The id of the created identity.</param>
-        /// <param name="name">The name of the created identity.</param>
-        /// <param name="location">The Azure region where the identity
-        /// lives.</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
         /// <param name="principalId">The id of the service principal object
         /// associated with the created identity.</param>
         /// <param name="clientId">The id of the app associated with the
         /// identity. This is a random generated UUID by MSI.</param>
-        /// <param name="clientSecretUrl"> The ManagedServiceIdentity DataPlane
-        /// URL that can be queried to obtain the identity credentials. If
-        /// identity is user assigned, then the clientSecretUrl will not be
-        /// present in the response, otherwise it will be present.</param>
-        /// <param name="type">The type of resource i.e.
-        /// Microsoft.ManagedIdentity/userAssignedIdentities. Possible values
-        /// include: 'Microsoft.ManagedIdentity/userAssignedIdentities'</param>
-        public Identity(string id = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string clientSecretUrl = default(string), string type = default(string))
+        public Identity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?))
+            : base(location, id, name, type, tags)
         {
-            Id = id;
-            Name = name;
-            Location = location;
-            Tags = tags;
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
-            ClientSecretUrl = clientSecretUrl;
-            Type = type;
             CustomInit();
         }
 
@@ -71,30 +62,6 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the id of the created identity.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the created identity.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the Azure region where the identity lives.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the id of the tenant which the identity belongs to.
@@ -117,21 +84,14 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         public System.Guid? ClientId { get; private set; }
 
         /// <summary>
-        /// Gets  The ManagedServiceIdentity DataPlane URL that can be queried
-        /// to obtain the identity credentials. If identity is user assigned,
-        /// then the clientSecretUrl will not be present in the response,
-        /// otherwise it will be present.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clientSecretUrl")]
-        public string ClientSecretUrl { get; private set; }
-
-        /// <summary>
-        /// Gets the type of resource i.e.
-        /// Microsoft.ManagedIdentity/userAssignedIdentities. Possible values
-        /// include: 'Microsoft.ManagedIdentity/userAssignedIdentities'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

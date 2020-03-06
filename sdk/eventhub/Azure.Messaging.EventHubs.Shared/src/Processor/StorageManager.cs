@@ -64,9 +64,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="eventData">The event to use as the basis for the checkpoint's starting position.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
+                                                   EventData eventData,
                                                    CancellationToken cancellationToken);
     }
 }

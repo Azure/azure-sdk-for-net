@@ -68,10 +68,6 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search','#5499']
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
-  - ['sdk/attestation/Microsoft.Azure.Attestation','#5499']
-  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Blobs','#9960']
-  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Keys','#9955']
-  - ['sdk/extensions/Azure.Extensions.Configuration.Secrets', '#9939']
 
 # List for changelogs begins here
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query/CHANGELOG.md','#5499']
@@ -119,6 +115,7 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search.Data/CHANGELOG.md','#5499']
   - ['sdk/search/Microsoft.Azure.Search.Service/CHANGELOG.md','#5499']
   - ['sdk/template/Azure.Template/CHANGELOG.md','#5499']
+  - ['sdk/attestation/Microsoft.Azure.Attestation','#5499']
 
 known_content_issues:
   - ['README.md','Root readme']
@@ -136,6 +133,10 @@ known_content_issues:
   - ['sdk/cognitiveservices/Personalizer/src/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
+  - ['sdk/extensions/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project

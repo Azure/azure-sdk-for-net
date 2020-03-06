@@ -56,16 +56,7 @@ else
   if ($releaseNotes.ContainsKey($VersionString)) 
   {
     $releaseNotesForVersion = $releaseNotes[$VersionString].ReleaseContent
-    $releaseNotesArray = $releaseNotesForVersion.Split([Environment]::NewLine)
-    $processedNotes = New-Object System.Collections.ArrayList
-    foreach ($line in $releaseNotesArray) 
-    {
-      $lineIsTitle = $line.Startswith('#') -And ($line -match $RELEASE_TITLE_REGEX)
-      if (-Not $lineIsTitle) 
-      {
-        $processedNotes.Add($line) > $null
-      }
-    }
+    $processedNotes = $releaseNotesForVersion -Split [Environment]::NewLine | where { $_ -notmatch $RELEASE_TITLE_REGEX }
     return $processedNotes -Join [Environment]::NewLine
   }
   Write-Error "Release Notes for the Specified version ${VersionString} was not found"
