@@ -23,6 +23,7 @@ namespace Azure.Identity
         private const string AzNotLogIn = "Please run 'az login' to setup account";
         private const string WinAzureCLIError = "'az' is not recognized";
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
+        private const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
         private const int CliProcessTImeoutMs = 10000;
         private readonly string _workingDir;
         private readonly string _path;
@@ -33,7 +34,14 @@ namespace Azure.Identity
 
         public AzureCliCredentialClient()
         {
-            (_path, _workingDir) = GetSafePathAndWorkingDirectory();
+            _path = EnvironmentVariables.Path;
+
+            if (string.IsNullOrEmpty(_path))
+            {
+                _path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPath;
+            }
+
+            _workingDir = _path.Split(Path.PathSeparator)?[0];
         }
 
         public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
@@ -70,14 +78,10 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException(AzNotLogIn);
                 }
 
-                throw new AuthenticationFailedException(output);
+                throw new AuthenticationFailedException($"{AzureCliFailedError} {output}");
             }
 
-            byte[] byteArrary = Encoding.ASCII.GetBytes(output);
-
-            using MemoryStream stream = new MemoryStream(byteArrary);
-
-            return await AccessTokenUtilities.DeserializeAsync(async, stream, cancellationToken).ConfigureAwait(false);
+            return DeserializeOutput(output);
         }
 
         protected virtual async ValueTask<(string, int)> GetAzureCliAccesToken(bool async, string resource, CancellationToken cancellationToken)
@@ -155,18 +159,39 @@ namespace Azure.Identity
             }
         }
 
-        private static (string, string) GetSafePathAndWorkingDirectory()
+        private static AccessToken DeserializeOutput(string output)
         {
-            string path = EnvironmentVariables.Path;
+            string accessToken = null;
+            DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
 
-            if (string.IsNullOrEmpty(path))
+            using (JsonDocument json = JsonDocument.Parse(output))
             {
-                path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPath;
+
+                foreach (JsonProperty prop in json.RootElement.EnumerateObject())
+                {
+                    switch (prop.Name)
+                    {
+                        case "accessToken":
+                            accessToken = prop.Value.GetString();
+                            break;
+
+                        case "expiresIn":
+                            expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(prop.Value.GetInt64());
+                            break;
+
+                        case "expiresOn":
+                            if (expiresOn == DateTimeOffset.MaxValue)
+                            {
+                                var expiresOnStr = prop.Value.GetString();
+
+                                expiresOn = DateTimeOffset.ParseExact(expiresOnStr, "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+                            }
+                            break;
+                    }
+                }
             }
 
-            string workingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? path.Split(';')?[0] : path.Split(':')?[0];
-
-            return (path, workingDir);
+            return new AccessToken(accessToken, expiresOn);
         }
     }
 }

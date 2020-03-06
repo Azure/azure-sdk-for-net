@@ -33,7 +33,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task CliCredentialAzureCLINotInstalledException()
+        public void CliCredentialAzureCLINotInstalledException()
         {
             string expectedMessage = $"Azure CLI not installed";
 
@@ -56,12 +56,10 @@ namespace Azure.Identity.Tests
 
                 Assert.AreEqual(expectedMessage, ex.Message);
             }
-
-            await Task.CompletedTask;
         }
 
         [Test]
-        public async Task CliCredentialAzNotLogInException()
+        public void CliCredentialAzNotLogInException()
         {
             string expectedExMessage = $"Please run 'az login' to setup account";
 
@@ -72,12 +70,10 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.AreEqual(expectedExMessage, ex.Message);
-
-            await Task.CompletedTask;
         }
 
         [Test]
-        public async Task CliCredentialAuthenticationFailedException()
+        public void CliCredentialAuthenticationFailedException()
         {
             string mockResult = $"mock-result";
 
@@ -86,8 +82,6 @@ namespace Azure.Identity.Tests
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-            await Task.CompletedTask;
         }
     }
 }

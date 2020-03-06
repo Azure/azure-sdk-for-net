@@ -16,7 +16,7 @@ namespace Azure.Identity
         private const string ScopePattern = "^[0-9a-zA-Z-.:/]+$";
 
         private const string InvalidScopeMessage = "The specified scope is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
-
+        private static readonly Regex scopeRegex = new Regex(ScopePattern);
 
         public static string ScopesToResource(string[] scopes)
         {
@@ -45,8 +45,7 @@ namespace Azure.Identity
 
         public static void ValidateScope(string scope)
         {
-            bool isScopeMatch = Regex.IsMatch(scope, ScopePattern);
-
+            bool isScopeMatch = scopeRegex.IsMatch(scope);
 
             if (!isScopeMatch)
             {
