@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -44,7 +45,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -58,13 +59,13 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("AzureCliCredential.GetToken", requestContext);
 
             try
             {
-                AccessToken token = isAsync ? await _client.RequestCliAccessTokenAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.RequestCliAccessToken(requestContext.Scopes, cancellationToken);
+                AccessToken token = async ? await _client.RequestCliAccessTokenAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false) : _client.RequestCliAccessToken(requestContext.Scopes, cancellationToken);
 
                 return scope.Succeeded(token);
             }

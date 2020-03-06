@@ -13,19 +13,21 @@ namespace Azure.Identity
 {
     internal static class AccessTokenUtilities
     {
-        public static async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
+        public static async Task<AccessToken> DeserializeAsync(bool async, Stream content, CancellationToken cancellationToken)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
+            if (async)
             {
-                return Deserialize(json.RootElement);
+                using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
+                {
+                    return Deserialize(json.RootElement);
+                }
             }
-        }
-
-        public static AccessToken Deserialize(Stream content)
-        {
-            using (JsonDocument json = JsonDocument.Parse(content))
+            else
             {
-                return Deserialize(json.RootElement);
+                using (JsonDocument json = JsonDocument.Parse(content))
+                {
+                    return Deserialize(json.RootElement);
+                }
             }
         }
 

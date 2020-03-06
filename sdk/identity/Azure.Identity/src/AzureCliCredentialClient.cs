@@ -13,6 +13,7 @@ using Azure.Core;
 using System.Globalization;
 using System;
 using System.Text.RegularExpressions;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -37,7 +38,7 @@ namespace Azure.Identity
 
         public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
         {
-            return RequestCliAccessTokenAsync(false, scopes, cancellationToken).GetAwaiter().GetResult();
+            return RequestCliAccessTokenAsync(false, scopes, cancellationToken).EnsureCompleted();
         }
 
         public virtual async ValueTask<AccessToken> RequestCliAccessTokenAsync(string[] scopes, CancellationToken cancellationToken)
@@ -45,13 +46,13 @@ namespace Azure.Identity
             return await RequestCliAccessTokenAsync(true, scopes, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool isAsync, string[] scopes, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, string[] scopes, CancellationToken cancellationToken)
         {
             string resource = ScopeUtilities.ScopesToResource(scopes);
 
             ScopeUtilities.ValidateScope(resource);
 
-            (string output, int exitCode) = isAsync ? await GetAzureCliAccesToken(true, resource, cancellationToken).ConfigureAwait(false) : GetAzureCliAccesToken(false, resource, cancellationToken).GetAwaiter().GetResult();
+            (string output, int exitCode) = await GetAzureCliAccesToken(async, resource, cancellationToken).ConfigureAwait(false);
 
             if (exitCode != 0)
             {
@@ -76,10 +77,10 @@ namespace Azure.Identity
 
             using MemoryStream stream = new MemoryStream(byteArrary);
 
-            return isAsync ? await AccessTokenUtilities.DeserializeAsync(stream, cancellationToken).ConfigureAwait(false) : AccessTokenUtilities.Deserialize(stream);
+            return await AccessTokenUtilities.DeserializeAsync(async, stream, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async ValueTask<(string, int)> GetAzureCliAccesToken(bool isAsync, string resource, CancellationToken cancellationToken)
+        protected virtual async ValueTask<(string, int)> GetAzureCliAccesToken(bool async, string resource, CancellationToken cancellationToken)
         {
             string command = $"az account get-access-token --output json --resource {resource}";
 
@@ -109,10 +110,10 @@ namespace Azure.Identity
                 Environment = { { "PATH", _path } }
             };
 
-            return isAsync ? await RunProcessAsync(isAsync, procStartInfo, cancellationToken).ConfigureAwait(false) : RunProcessAsync(isAsync, procStartInfo, cancellationToken).GetAwaiter().GetResult();
+            return await RunProcessAsync(async, procStartInfo, cancellationToken).ConfigureAwait(false);
         }
 
-        private static async ValueTask<(string, int)> RunProcessAsync(bool isAsync, ProcessStartInfo procStartInfo, CancellationToken cancellationToken)
+        private static async ValueTask<(string, int)> RunProcessAsync(bool async, ProcessStartInfo procStartInfo, CancellationToken cancellationToken)
         {
             int exitCode = default;
             StringBuilder stdOutput = new StringBuilder();
@@ -130,7 +131,7 @@ namespace Azure.Identity
                 proc.BeginOutputReadLine();
                 proc.BeginErrorReadLine();
 
-                completed = isAsync ? await Task.Run(() => proc.WaitForExit(CliProcessTImeoutMs), cancellationToken).ConfigureAwait(false) : proc.WaitForExit(CliProcessTImeoutMs);
+                completed = async ? await Task.Run(() => proc.WaitForExit(CliProcessTImeoutMs), cancellationToken).ConfigureAwait(false) : proc.WaitForExit(CliProcessTImeoutMs);
 
                 if (!completed)
                 {
