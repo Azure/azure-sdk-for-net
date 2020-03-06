@@ -56,7 +56,7 @@ namespace Azure.Search
         /// <summary>
         /// Gets the generated service level operations to make requests.
         /// </summary>
-        private AllOperations Operations { get; }
+        private ServiceClient Operations { get; }
 
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class for
@@ -132,7 +132,7 @@ namespace Azure.Search
             Pipeline = options.Build(credential);
             Version = options.Version;
 
-            Operations = new AllOperations(
+            Operations = new ServiceClient(
                 ClientDiagnostics,
                 Pipeline,
                 Endpoint.ToString(),
