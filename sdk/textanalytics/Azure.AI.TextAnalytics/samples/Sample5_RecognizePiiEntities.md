@@ -23,7 +23,7 @@ IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Val
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 

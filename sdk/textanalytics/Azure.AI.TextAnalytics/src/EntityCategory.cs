@@ -22,7 +22,12 @@ namespace Azure.AI.TextAnalytics
         public static readonly EntityCategory Person = new EntityCategory("Person");
 
         /// <summary>
-        /// Specifies that entity contains natural or human-made landmarks, structures, or geographical features.
+        /// Specifies that the entity corresponds to a job type or role held by a person.
+        /// </summary>
+        public static readonly EntityCategory PersonType = new EntityCategory("PersonType");
+
+        /// <summary>
+        /// Specifies that the entity contains natural or human-made landmarks, structures, or geographical features.
         /// </summary>
         public static readonly EntityCategory Location = new EntityCategory("Location");
 
@@ -30,6 +35,21 @@ namespace Azure.AI.TextAnalytics
         /// Specifies that the entity contains the name of an organization, corporation, agency, or other group of people.
         /// </summary>
         public static readonly EntityCategory Organization = new EntityCategory("Organization");
+
+        /// <summary>
+        /// Specifies that the entity contains historical, social and natural-occuring events.
+        /// </summary>
+        public static readonly EntityCategory Event = new EntityCategory("Event");
+
+        /// <summary>
+        /// Specifies that the entity contains physical objects of various categories.
+        /// </summary>
+        public static readonly EntityCategory Product = new EntityCategory("Product");
+
+        /// <summary>
+        /// Specifies an entity describing a capability or expertise.
+        /// </summary>
+        public static readonly EntityCategory Skill = new EntityCategory("Skill");
 
         /// <summary>
         /// Specifies that the entity contains a date, time or duration.
@@ -50,6 +70,11 @@ namespace Azure.AI.TextAnalytics
         /// Specifies that the entity contains an Internet URL.
         /// </summary>
         public static readonly EntityCategory Url = new EntityCategory("URL");
+
+        /// <summary>
+        /// Specifies that the entity contains an Internet Protocol Address.
+        /// </summary>
+        public static readonly EntityCategory IPAddress = new EntityCategory("IP");
 
         /// <summary>
         /// Specifies that the entity contains a number or numeric quantity.

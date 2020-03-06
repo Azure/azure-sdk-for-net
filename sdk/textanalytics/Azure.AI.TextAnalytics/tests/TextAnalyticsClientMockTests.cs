@@ -138,7 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
                             json.WriteString("subtype", JsonSerializer.Serialize(entity.SubCategory));
                             json.WriteNumber("offset", entity.GraphemeOffset);
                             json.WriteNumber("length", entity.GraphemeLength);
-                            json.WriteNumber("score", entity.Score);
+                            json.WriteNumber("score", entity.ConfidenceScore);
                             json.WriteEndObject();
                         }
                         json.WriteEndArray();
