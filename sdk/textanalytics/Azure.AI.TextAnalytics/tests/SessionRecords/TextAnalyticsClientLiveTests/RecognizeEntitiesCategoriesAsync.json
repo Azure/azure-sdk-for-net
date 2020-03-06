@@ -4,13 +4,13 @@
       "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/entities/recognition/general",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Content-Length": "233",
+        "Content-Length": "355",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-47d3613113d2b34cbf530135a147a48e-b14634724f0b374d-00",
+        "traceparent": "00-eb6ca5f97ac9ad4cb8866025a825c671-06c56d35cee54744-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200227.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200305.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "afe45b4c015222e6582ce37ff532ba2e",
         "x-ms-return-client-request-id": "true"
@@ -20,20 +20,20 @@
           {
             "language": "en",
             "id": "0",
-            "text": "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | \u20AC30 | 11m | 22 \u00B0C"
+            "text": "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | \u20AC30 | 11m | 22 \u00B0C |Software Engineer | Wedding | Microsoft Surface laptop | Coding | 127.0.0.1 | https://github.com/azure/azure-sdk-for-net"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e413008b-38d2-4f80-8ed9-79a22e29bbfd",
+        "apim-request-id": "7a25a68f-c861-4192-84d3-deafd5d095da",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 27 Feb 2020 17:33:56 GMT",
+        "Date": "Fri, 06 Mar 2020 03:38:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "168"
+        "x-envoy-upstream-service-time": "154"
       },
       "ResponseBody": {
         "documents": [
@@ -153,6 +153,48 @@
                 "subtype": "Temperature",
                 "offset": 166,
                 "length": 5,
+                "score": 0.8
+              },
+              {
+                "text": "Engineer",
+                "type": "PersonType",
+                "offset": 182,
+                "length": 8,
+                "score": 0.56
+              },
+              {
+                "text": "Wedding",
+                "type": "Event",
+                "offset": 193,
+                "length": 7,
+                "score": 0.39
+              },
+              {
+                "text": "Microsoft Surface laptop",
+                "type": "Product",
+                "offset": 203,
+                "length": 24,
+                "score": 0.53
+              },
+              {
+                "text": "Coding",
+                "type": "Skill",
+                "offset": 230,
+                "length": 6,
+                "score": 0.8
+              },
+              {
+                "text": "127.0.0.1",
+                "type": "IP",
+                "offset": 239,
+                "length": 9,
+                "score": 0.8
+              },
+              {
+                "text": "https://github.com/azure/azure-sdk-for-net",
+                "type": "URL",
+                "offset": 251,
+                "length": 42,
                 "score": 0.8
               }
             ]
