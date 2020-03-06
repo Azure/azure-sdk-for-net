@@ -725,6 +725,46 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
+            /// Gets list of NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            public static IPage<NetworkRuleSet> ListNetworkRuleSets(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            {
+                return operations.ListNetworkRuleSetsAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets list of NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkRuleSet>> ListNetworkRuleSetsAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNetworkRuleSetsWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
@@ -920,6 +960,40 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<IPage<SBAuthorizationRule>> ListAuthorizationRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets list of NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetworkRuleSet> ListNetworkRuleSetsNext(this INamespacesOperations operations, string nextPageLink)
+            {
+                return operations.ListNetworkRuleSetsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets list of NetworkRuleSet for a Namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkRuleSet>> ListNetworkRuleSetsNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNetworkRuleSetsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
