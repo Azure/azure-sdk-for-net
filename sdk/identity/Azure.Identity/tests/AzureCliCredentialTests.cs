@@ -61,7 +61,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void CliCredentialAzNotLogInException()
         {
-            string expectedExMessage = $"Please run 'az login' to setup account";
+            string expectedExMessage = $"Please run 'az login' to set up account";
 
             var mockCliCredentialClient = new MockAzureCliCredentialClient(("Please run 'az login'", 1));
 

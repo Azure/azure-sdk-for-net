@@ -20,7 +20,7 @@ namespace Azure.Identity
     internal class AzureCliCredentialClient
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string AzNotLogIn = "Please run 'az login' to setup account";
+        private const string AzNotLogIn = "Please run 'az login' to set up account";
         private const string WinAzureCLIError = "'az' is not recognized";
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
         private const string AzureCliFailedError = "Azure CLI authentication failed due to an unknown error.";
@@ -41,7 +41,7 @@ namespace Azure.Identity
                 _path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPath;
             }
 
-            _workingDir = _path.Split(Path.PathSeparator)?[0];
+            _workingDir = _path.Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)[0];
         }
 
         public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
@@ -93,7 +93,7 @@ namespace Azure.Identity
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                fileName = "cmd";
+                fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
                 argument = $"/c \"{command}\"";
             }
             else
@@ -128,8 +128,8 @@ namespace Azure.Identity
             {
 
                 proc.StartInfo = procStartInfo;
-                proc.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
-                proc.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
+                proc.OutputDataReceived += (sender, e) => stdOutput.AppendLine(e.Data);
+                proc.ErrorDataReceived += (sender, e) => stdError.AppendLine(e.Data);
 
                 proc.Start();
                 proc.BeginOutputReadLine();
