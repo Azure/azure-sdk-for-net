@@ -117,6 +117,42 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void AddLinkCreatesLinkedActivityWithTags()
+        {
+            using var testListener = new TestDiagnosticListener("Azure.Clients");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            var expectedTags = new Dictionary<string, string>()
+            {
+                {"key1", "value1"},
+                {"key2", "value2"}
+            };
+
+            scope.AddLink("id", expectedTags);
+            scope.Start();
+
+            (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
+
+            scope.Dispose();
+
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+
+            Assert.Null(Activity.Current);
+            Assert.AreEqual("ActivityName.Start", startEvent.Key);
+            Assert.AreEqual("ActivityName.Stop", stopEvent.Key);
+
+            var activities = (IEnumerable<Activity>)startEvent.Value.GetType().GetProperty("Links").GetValue(startEvent.Value);
+            Activity linkedActivity = activities.Single();
+
+            Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);
+            Assert.AreEqual("id", linkedActivity.ParentId);
+
+            CollectionAssert.AreEquivalent(expectedTags, linkedActivity.Tags);
+        }
+
+        [Test]
         public void FailedStopsActivityAndWritesExceptionEvent()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
