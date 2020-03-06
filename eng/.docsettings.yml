@@ -9,6 +9,7 @@ omitted_paths:
   - samples/*
   - common/SmokeTests/*
   - sdk/*/samples/*
+  - sdk/*/*/samples/*
   - sdk/*/swagger/*
   - doc/ApiDocGeneration/*
 language: net
