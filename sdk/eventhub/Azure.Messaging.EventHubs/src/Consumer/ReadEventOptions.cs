@@ -29,6 +29,13 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.</value>
         ///
+        /// <remarks>
+        ///   An <see cref="EventHubsException"/> will occur if an <see cref="EventHubConsumerClient"/> is unable to read events from the
+        ///   requested Event Hub partition for the given consumer group.  In this case, the <see cref="EventHubsException.FailureReason"/>
+        ///   will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventHubsException"/>
         /// <seealso cref="EventHubsException.FailureReason.ConsumerDisconnected"/>
         ///
         public long? OwnerLevel { get; set; }
