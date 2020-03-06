@@ -11,9 +11,6 @@ namespace Azure.AI.FormRecognizer.Samples
 {
     internal static class TableExtensions
     {
-
-
-        // TODO: Make this internal after testing.
         public static void WriteAscii(this ExtractedTable table, TextWriter writer, bool unicode = true, int cellWidth = 15)
         {
             var topLeft = unicode ? '┌' : '|';
@@ -61,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Samples
                         if (row.TryGetValue(colIndex, out ExtractedTableCell cell))
                         {
                             var colSpan = cell.ColumnSpan;
-                            var maxWidth = cellWidth * colSpan; // TODO
+                            var maxWidth = cellWidth * colSpan;
                             if (maxWidth > cellWidth)
                             {
                                 maxWidth += 1 * (colSpan - 1);

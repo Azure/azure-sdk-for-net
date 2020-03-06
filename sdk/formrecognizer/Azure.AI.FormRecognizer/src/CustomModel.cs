@@ -45,6 +45,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 {
                     FormTypeId = key.Key,
                     // TODO: Q3
+                    // https://github.com/Azure/azure-sdk-for-net/issues/10360
                     LearnedFields = new List<string>(key.Value)
                 };
                 forms.Add(form);

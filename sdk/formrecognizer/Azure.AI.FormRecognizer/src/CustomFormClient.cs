@@ -59,12 +59,13 @@ namespace Azure.AI.FormRecognizer.Custom
 
         public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
-            //filter ??= new TrainingFileFilter();
-
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            // https://github.com/Azure/autorest.csharp/issues/467
+            // When this is complete, we will be able to default filter.Path to "".
+            // Decision to make, do we always send filter, or only if needed?
+            // Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
             if (filter != default)
             {
                 trainRequest.SourceFilter = filter;
@@ -76,12 +77,10 @@ namespace Azure.AI.FormRecognizer.Custom
 
         public virtual async Task<TrainingOperation> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            // TODO: do we need to set prefix to an empty string in filter? -- looks like yes.
-            //filter ??= new TrainingFileFilter();
-
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10359
             if (filter != default)
             {
                 trainRequest.SourceFilter = filter;
@@ -96,6 +95,7 @@ namespace Azure.AI.FormRecognizer.Custom
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10359
             if (filter != default)
             {
                 trainRequest.SourceFilter = filter;
@@ -110,6 +110,7 @@ namespace Azure.AI.FormRecognizer.Custom
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10359
             if (filter != default)
             {
                 trainRequest.SourceFilter = filter;
@@ -131,6 +132,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
@@ -145,6 +147,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual async Task<ExtractFormOperation> StartExtractFormAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
@@ -170,7 +173,6 @@ namespace Azure.AI.FormRecognizer.Custom
             return await _operations.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
         }
 
-        // TODO: Q8 - How to convert ModelInfo_internal to ModelInfo for Pageables?
         public virtual Pageable<ModelInfo> GetModels(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);

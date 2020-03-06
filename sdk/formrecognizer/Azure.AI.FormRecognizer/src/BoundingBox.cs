@@ -12,6 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal BoundingBox(ICollection<float> boundingBox)
         {
             // TODO: improve perf here?
+            // https://github.com/Azure/azure-sdk-for-net/issues/10358
             float[] bbPoints = boundingBox.ToArray();
 
             int count = bbPoints.Length / 2;

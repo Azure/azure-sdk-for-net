@@ -218,6 +218,7 @@ namespace Azure.AI.FormRecognizer
         #region Layout
 
         // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
+        // This is missing from the swagger -- following up with service team.
         internal HttpMessage CreateAnalyzeLayoutAsyncRequest(Stream stream, FormContentType contentType)
         {
             var message = pipeline.CreateMessage();
@@ -238,6 +239,7 @@ namespace Azure.AI.FormRecognizer
         }
 
         // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
+        // This is missing from the swagger -- following up with service team.
         public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeLayoutAsync");

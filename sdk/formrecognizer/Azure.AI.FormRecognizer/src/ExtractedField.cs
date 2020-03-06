@@ -14,7 +14,6 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Confidence;
             Label = field.Key.Text;
 
-            // TODO: Better way to handle nulls here?
             LabelOutline = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
             if (field.Key.Elements != null)
             {
@@ -45,7 +44,9 @@ namespace Azure.AI.FormRecognizer.Models
         public float? Confidence { get; internal set; }
         public string Label { get; internal set; }
 
-        // TODO: Make this nullable - how?
+        // TODO: Make this nullable to indicate that this is an optional field.
+        // https://github.com/Azure/azure-sdk-for-net/issues/10361
+        // Not currently supported for Track2 libraries.
         public BoundingBox LabelOutline { get; internal set; }
 
         public string Value { get; internal set; }
@@ -54,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<RawExtractedItem> LabelRawExtractedItems { get; internal set; }
         public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
 
-        // TODO: Find a better home for this method?
+        // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
         internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)
         {
             List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
@@ -72,6 +73,7 @@ namespace Azure.AI.FormRecognizer.Models
         private static RawExtractedItem ResolveTextReference(ReadResult_internal readResult, string reference)
         {
             // TODO: Add additional validations here.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10363
 
             // Example: the following should result in LineIndex = 7, WordIndex = 12
             // "#/readResults/3/lines/7/words/12"
@@ -83,6 +85,7 @@ namespace Azure.AI.FormRecognizer.Models
 #pragma warning restore CA1305 // Specify IFormatProvider
 
             // TODO: Support case where text reference is lines only, without word segment
+            // https://github.com/Azure/azure-sdk-for-net/issues/10364
             return new RawExtractedWord(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex]);
 
             // Code from Chris Stone below
@@ -108,8 +111,7 @@ namespace Azure.AI.FormRecognizer.Models
             //                //{
             //                //    readResult = results[offset];
             //                //}
-
-            //                // TODO: Perf issues with using Linq here.
+            //
             //                // this is a text element
             //                if (readResult != default)
             //                {

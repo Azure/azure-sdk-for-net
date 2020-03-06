@@ -249,7 +249,6 @@ namespace Azure.AI.FormRecognizer.Samples
         {
             Console.WriteLine("Supervised Model - URI Input: ");
 
-            // TODO: This fails, with a URI that works for unsupervised.  What is wrong?
             Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
@@ -275,7 +274,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
         private static async Task ExtractCustomLabeledModelPlusOcrData(string modelId)
         {
-            // TODO: Q14 - currently blocked due to deserialization of array only handles string.
+            // TODO: Q14 - currently blocked due to known issue on the service.
             Console.WriteLine("Supervised Model - Stream Input: ");
 
             string pdfFormFile = @"C:\src\samples\cognitive\formrecognizer\sample_data\Test\Invoice_6.pdf";

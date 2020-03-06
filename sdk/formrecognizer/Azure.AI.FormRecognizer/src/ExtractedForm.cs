@@ -16,7 +16,8 @@ namespace Azure.AI.FormRecognizer.Models
             // Unsupervised
             Pages = SetPages(pageResults, readResults);
 
-            // TODO: how to set PageRange?
+            // TODO: Set page range from page numbers in pageResults
+            // https://github.com/Azure/azure-sdk-for-net/issues/10365
         }
 
         internal ExtractedForm(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
@@ -35,20 +36,15 @@ namespace Azure.AI.FormRecognizer.Models
 
         private IReadOnlyList<ExtractedPage> SetPages(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
-            // TODO: Are OCR results better at the form level?
-            // TODO: How bad is the perf here, manipulating collections with Linq?
+            // TODO: Add validation and appropriate exception if these don't match.
             Debug.Assert(pageResults.Count == readResults.Count);
 
             List<ExtractedPage> pages = new List<ExtractedPage>();
 
-            List<PageResult_internal> pageResultList = pageResults.ToList();
-            List<ReadResult_internal> readResultList = readResults.ToList();
-
-            //foreach (var result in pageResults)
-            for (int i = 0; i < pageResultList.Count; i++)
+            for (int i = 0; i < pageResults.Count; i++)
             {
-                PageResult_internal pageResult = pageResultList[i];
-                ReadResult_internal rawExtractedPage = readResultList[i];
+                PageResult_internal pageResult = pageResults.ElementAt(i);
+                ReadResult_internal rawExtractedPage = readResults.ElementAt(i);
 
                 SetLearnedFormType(pageResult.ClusterId);
 
@@ -62,15 +58,16 @@ namespace Azure.AI.FormRecognizer.Models
         private static IReadOnlyList<ExtractedPage> ConvertPages(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             List<ExtractedPage> pages = new List<ExtractedPage>();
-            List<PageResult_internal> pageResultsList = pageResults.ToList();
-            List<ReadResult_internal> readResultsList = readResults.ToList();
 
-            // TODO: improve performance here
             Dictionary<int, List<ExtractedField>> fieldsByPage = new Dictionary<int, List<ExtractedField>>();
             foreach (var field in documentResult.Fields)
             {
-                // TODO: page 0 if null, can we do better?
+                // TODO: We are currently setting the field page to 0 if field.Value.Page comes back as null.
+                // https://github.com/Azure/azure-sdk-for-net/issues/10369
+
                 // TODO: How should we handle the multiple values per field and the strongly-typed ones?
+                // https://github.com/Azure/azure-sdk-for-net/issues/10333
+
                 List<ExtractedField> list;
                 if (!fieldsByPage.TryGetValue(field.Value.Page ?? 0, out list))
                 {
@@ -83,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Models
             foreach (var pageFields in fieldsByPage)
             {
                 int pageNumber = pageFields.Key;
-                var page = new ExtractedPage(pageNumber, pageFields.Value, pageResultsList[pageNumber - 1], readResultsList[pageNumber - 1]);
+                var page = new ExtractedPage(pageNumber, pageFields.Value, pageResults.ElementAt(pageNumber - 1), readResults.ElementAt(pageNumber - 1));
                 pages.Add(page);
             }
 
