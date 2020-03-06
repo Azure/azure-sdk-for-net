@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>The amount of time to wait for messages when reading.</summary>
-        private TimeSpan _defaultMaximumReceiveWaitTime = TimeSpan.FromMinutes(1);
+        private TimeSpan _defaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(60);
 
         /// <summary>The prefetch count to use for the partition receiver.</summary>
-        private int? _prefetchCount = null;
+        private int _prefetchCount = 300;
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
@@ -100,17 +100,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hubs.
         /// </value>
         ///
-        public int? PrefetchCount
+        public int PrefetchCount
         {
             get => _prefetchCount;
 
             set
             {
-                if (value.HasValue)
-                {
-                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchCount));
-                }
-
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
             }
         }
