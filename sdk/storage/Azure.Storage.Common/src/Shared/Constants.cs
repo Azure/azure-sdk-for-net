@@ -158,6 +158,7 @@ namespace Azure.Storage
             internal static class Block
             {
                 public const int DefaultConcurrentTransfersCount = 5;
+                public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const int MaxUploadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB

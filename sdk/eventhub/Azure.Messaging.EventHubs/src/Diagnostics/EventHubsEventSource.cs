@@ -10,8 +10,8 @@ using Azure.Messaging.EventHubs.Producer;
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
-    ///   Serves as an ETW event source for logging of information about
-    ///   Event Hubs client.
+    ///   Serves as an ETW event source for logging of information about the
+    ///   Event Hubs client types.
     /// </summary>
     ///
     /// <remarks>
@@ -263,7 +263,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
         ///
-        [Event(12, Level = EventLevel.Informational, Message = "Retrieving properties for Event Hub: {0} (Partition Id: '{1}').")]
+        [Event(12, Level = EventLevel.Informational, Message = "Retrieving properties for Event Hub: {0}.")]
         public void GetPropertiesStart(string eventHubName)
         {
             if (IsEnabled())
@@ -294,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that properties are being retrieved for.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Event Hub: {0}. Error Message: '{2}'")]
+        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Event Hub: {0}. Error Message: '{1}'")]
         public void GetPropertiesError(string eventHubName,
                                        string errorMessage)
         {

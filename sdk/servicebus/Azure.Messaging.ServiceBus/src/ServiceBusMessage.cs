@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new message from the specified payload.
         /// </summary>
         /// <param name="body">The payload of the message in bytes</param>
-        public ServiceBusMessage(byte[] body)
+        public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
             Body = body;
             UserProperties = new Dictionary<string, object>();
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus
         /// message.Body = System.Text.Encoding.UTF8.GetBytes("Message1");
         /// </code>
         /// </remarks>
-        public byte[] Body { get; set; }
+        public ReadOnlyMemory<byte> Body { get; set; }
 
         /// <summary>
         /// Gets or sets the MessageId to identify the message.
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the total size of the message body in bytes.
         /// </summary>
-        public long Size => Body != null ? Body.Length : 0;
+        public long Size => !Body.IsEmpty ? Body.Length : 0;
 
         /// <summary>
         /// Gets the "user properties" bag, which can be used for custom message metadata.
@@ -267,10 +267,10 @@ namespace Azure.Messaging.ServiceBus
         {
             var clone = (ServiceBusMessage)MemberwiseClone();
 
-            if (Body != null)
+            if (!Body.IsEmpty)
             {
                 var clonedBody = new byte[Body.Length];
-                Array.Copy(Body, clonedBody, Body.Length);
+                Array.Copy(Body.ToArray(), clonedBody, Body.Length);
                 clone.Body = clonedBody;
             }
             return clone;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Primitives;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -431,25 +432,26 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new MockCheckPointStorage();
 
+            var mockEvent = new MockEventData(
+                eventBody: Array.Empty<byte>(),
+                offset: 10,
+                sequenceNumber: 20);
+
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace",
                 EventHubName = "eventHubName",
                 ConsumerGroup = "consumerGroup1",
-                PartitionId = "partitionId",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId"
+            }, mockEvent);
 
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace",
                 EventHubName = "eventHubName",
                 ConsumerGroup = "consumerGroup2",
-                PartitionId = "partitionId",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId"
+            }, mockEvent);
 
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList1 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup1");
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList2 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup2");
@@ -471,25 +473,26 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new MockCheckPointStorage();
 
+            var mockEvent = new MockEventData(
+                eventBody: Array.Empty<byte>(),
+                offset: 10,
+                sequenceNumber: 20);
+
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace",
                 EventHubName = "eventHubName1",
                 ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId"
+            }, mockEvent);
 
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace",
                 EventHubName = "eventHubName2",
                 ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId"
+            }, mockEvent);
 
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList1 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName1", "consumerGroup");
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList2 = await storageManager.ListCheckpointsAsync("namespace", "eventHubName2", "consumerGroup");
@@ -511,25 +514,26 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new MockCheckPointStorage();
 
+            var mockEvent = new MockEventData(
+                eventBody: Array.Empty<byte>(),
+                offset: 10,
+                sequenceNumber: 20);
+
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace1",
                 EventHubName = "eventHubName",
                 ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId"
+            }, mockEvent);
 
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace2",
                 EventHubName = "eventHubName",
                 ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId"
+            }, mockEvent);
 
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList1 = await storageManager.ListCheckpointsAsync("namespace1", "eventHubName", "consumerGroup");
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList2 = await storageManager.ListCheckpointsAsync("namespace2", "eventHubName", "consumerGroup");
@@ -551,25 +555,26 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var storageManager = new MockCheckPointStorage();
 
-            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
-            {
-                FullyQualifiedNamespace = "namespace",
-                EventHubName = "eventHubName",
-                ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId1",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+            var mockEvent = new MockEventData(
+                eventBody: Array.Empty<byte>(),
+                offset: 10,
+                sequenceNumber: 20);
 
             await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
             {
                 FullyQualifiedNamespace = "namespace",
                 EventHubName = "eventHubName",
                 ConsumerGroup = "consumerGroup",
-                PartitionId = "partitionId2",
-                Offset = 10,
-                SequenceNumber = 20
-            });
+                PartitionId = "partitionId1"
+            }, mockEvent);
+
+            await storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = "namespace",
+                EventHubName = "eventHubName",
+                ConsumerGroup = "consumerGroup",
+                PartitionId = "partitionId2"
+            }, mockEvent);
 
             IEnumerable<EventProcessorCheckpoint> storedCheckpointsList = await storageManager.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup");
 

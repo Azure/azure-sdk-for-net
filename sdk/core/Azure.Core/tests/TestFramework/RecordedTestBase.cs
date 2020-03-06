@@ -13,9 +13,9 @@ namespace Azure.Core.Testing
 
         protected RecordMatcher Matcher { get; set; }
 
-        protected TestRecording Recording { get; private set; }
+        public TestRecording Recording { get; private set; }
 
-        protected RecordedTestMode Mode { get; }
+        public RecordedTestMode Mode { get; }
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {

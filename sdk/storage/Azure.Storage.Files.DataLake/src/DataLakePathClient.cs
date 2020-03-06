@@ -478,7 +478,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        protected virtual Response<PathInfo> Create(
+        public virtual Response<PathInfo> Create(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
@@ -760,7 +760,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        protected virtual Response<PathInfo> CreateIfNotExists(
+        public virtual Response<PathInfo> CreateIfNotExists(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,

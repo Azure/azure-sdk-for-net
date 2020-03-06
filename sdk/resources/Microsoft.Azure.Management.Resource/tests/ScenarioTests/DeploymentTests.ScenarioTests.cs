@@ -128,7 +128,8 @@ namespace ResourceGroups.Tests
                         JObject.Parse(
                             @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
-                    }
+                    },
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string deploymentName = TestUtilities.GenerateName("csmd");
@@ -152,6 +153,8 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(deploymentListResult.First().Properties.ProvisioningState);
                 Assert.NotNull(deploymentGetResult.Properties.CorrelationId);
                 Assert.NotNull(deploymentListResult.First().Properties.CorrelationId);
+                Assert.NotNull(deploymentListResult.First().Tags);
+                Assert.True(deploymentListResult.First().Tags.ContainsKey("tagKey1"));
             }
         }
 
@@ -426,7 +429,8 @@ namespace ResourceGroups.Tests
                         JObject.Parse("{'storageAccountName': {'value': 'armbuilddemo1803'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "WestUS"
+                    Location = "WestUS",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
@@ -444,6 +448,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtSubscriptionScope(deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
             }
         }
 
@@ -464,10 +470,11 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tagsa1'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa021920'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "East US"
+                    Location = "East US",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 //Validate
@@ -483,6 +490,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtManagementGroupScope(groupId, deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
             }
         }
 
@@ -505,7 +514,8 @@ namespace ResourceGroups.Tests
                         JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "East US 2"
+                    Location = "East US 2",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 //Validate
@@ -521,6 +531,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtTenantScope(deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
 
                 var deploymentOperations = client.DeploymentOperations.ListAtTenantScope(deploymentName);
                 Assert.Equal(4, deploymentOperations.Count());
@@ -546,7 +558,8 @@ namespace ResourceGroups.Tests
                         JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "East US 2"
+                    Location = "East US 2",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 //Validate
@@ -562,6 +575,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtScope(scope: "", deploymentName: deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
 
                 var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: "", deploymentName: deploymentName);
                 Assert.Equal(4, deploymentOperations.Count());
@@ -585,10 +600,11 @@ namespace ResourceGroups.Tests
                     {
                         Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
                         Parameters =
-                        JObject.Parse("{'storageAccountName': {'value': 'tagsa1'}}"),
+                        JObject.Parse("{'storageAccountName': {'value': 'tagsa021920'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "East US"
+                    Location = "East US",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 var managementGroupScope = $"/providers/Microsoft.Management/managementGroups/{groupId}";
@@ -606,6 +622,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtScope(scope: managementGroupScope, deploymentName: deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
 
                 var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: managementGroupScope, deploymentName: deploymentName);
                 Assert.Equal(4, deploymentOperations.Count());
@@ -632,7 +650,8 @@ namespace ResourceGroups.Tests
                         JObject.Parse("{'storageAccountName': {'value': 'armbuilddemo1803'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
-                    Location = "WestUS"
+                    Location = "WestUS",
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
@@ -652,6 +671,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtScope(scope: subscriptionScope, deploymentName: deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
 
                 var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: subscriptionScope, deploymentName: deploymentName);
                 Assert.Equal(4, deploymentOperations.Count());
@@ -677,7 +698,8 @@ namespace ResourceGroups.Tests
                         Parameters =
                         JObject.Parse("{'storageAccountName': {'value': 'tianotest105'}}"),
                         Mode = DeploymentMode.Incremental,
-                    }
+                    },
+                    Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
                 };
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
@@ -697,6 +719,8 @@ namespace ResourceGroups.Tests
 
                 var deployment = client.Deployments.GetAtScope(scope: resourceGroupScope, deploymentName: deploymentName);
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+                Assert.NotNull(deployment.Tags);
+                Assert.True(deployment.Tags.ContainsKey("tagKey1"));
 
                 var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: resourceGroupScope, deploymentName: deploymentName);
                 Assert.Equal(2, deploymentOperations.Count());

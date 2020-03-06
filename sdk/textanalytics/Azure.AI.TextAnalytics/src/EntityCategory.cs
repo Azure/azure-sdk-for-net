@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Gets the entity category inferred by the text analytics service's named entity recognition model.
+    /// Gets the entity category inferred by the Text Analytics service's named entity recognition model.
     /// The list of available categories is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     [JsonConverter(typeof(EntityCategoryJsonConverter))]
@@ -81,18 +81,18 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Compares two EntityCategory values for equality.
         /// </summary>
-        /// <param name="lhs">The first EntityCategory to compare.</param>
-        /// <param name="rhs">The second EntityCategory to compare.</param>
+        /// <param name="left">The first EntityCategory to compare.</param>
+        /// <param name="right">The second EntityCategory to compare.</param>
         /// <returns>true if the EntityCategory objects are equal or are both null; false otherwise.</returns>
-        public static bool operator ==(EntityCategory lhs, EntityCategory rhs) => Equals(lhs, rhs);
+        public static bool operator ==(EntityCategory left, EntityCategory right) => Equals(left, right);
 
         /// <summary>
         /// Compares two EntityCategory values for inequality.
         /// </summary>
-        /// <param name="lhs">The first EntityCategory to compare.</param>
-        /// <param name="rhs">The second EntityCategory to compare.</param>
+        /// <param name="left">The first EntityCategory to compare.</param>
+        /// <param name="right">The second EntityCategory to compare.</param>
         /// <returns>true if the EntityCategory objects are not equal; false otherwise.</returns>
-        public static bool operator !=(EntityCategory lhs, EntityCategory rhs) => !Equals(lhs, rhs);
+        public static bool operator !=(EntityCategory left, EntityCategory right) => !Equals(left, right);
 
         /// <summary>
         /// Compares the EntityCategory for equality with another EntityCategory.
