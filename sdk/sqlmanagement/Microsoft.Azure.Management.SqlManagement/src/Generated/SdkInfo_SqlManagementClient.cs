@@ -113,17 +113,17 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "VirtualNetworkRules", "2015-05-01-preview"),
               }.AsEnumerable();
           }
-        }
-        // BEGIN: Code Generation Metadata Section
-        public static readonly String AutoRestVersion = "latest";
-        public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-        public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=.";
-        public static readonly String GithubForkName = "Azure";
-        public static readonly String GithubBranchName = "master";
-        public static readonly String GithubCommidId = "dcd51ecb0bba6cd98f42383f0ef0159efc64a658";
-        public static readonly String CodeGenerationErrors = "";
-        public static readonly String GithubRepoName = "azure-rest-api-specs";
-        // END: Code Generation Metadata Section
+      }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=.";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "dcd51ecb0bba6cd98f42383f0ef0159efc64a658";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
     }
 }
 

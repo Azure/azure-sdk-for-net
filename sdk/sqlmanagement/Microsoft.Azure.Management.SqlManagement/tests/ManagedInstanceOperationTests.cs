@@ -31,10 +31,11 @@ namespace Sql.Tests
 
                 var managedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName);
 
+                // Old operations should be excluded from validation.
                 var managedInstanceOperations = sqlClient.ManagedInstanceOperations.ListByManagedInstance(resourceGroup, managedInstanceName);
                 int oldOperations = managedInstanceOperations.Count();
 
-                // Update server
+                // Sync update managed server.
                 sqlClient.ManagedInstances.Update(resourceGroup, managedInstanceName, new ManagedInstanceUpdate { StorageSizeInGB = 128 });
 
                 managedInstanceOperations = sqlClient.ManagedInstanceOperations.ListByManagedInstance(resourceGroup, managedInstanceName);
@@ -42,9 +43,10 @@ namespace Sql.Tests
 
                 var firstManagedInstanceOperation = sqlClient.ManagedInstanceOperations.Get(resourceGroup, managedInstanceName, System.Guid.Parse(operationId));
 
+                // Validate that operation finished successfully.
                 SqlManagementTestUtilities.ValidateManagedInstanceOperation(firstManagedInstanceOperation, operationId, "UPDATE MANAGED SERVER", 100, "Succeeded", false);
 
-                // Update server
+                // Async update server
                 var updateManagedInstance = sqlClient.ManagedInstances.UpdateAsync(resourceGroup, managedInstanceName, new ManagedInstanceUpdate { VCores = 16 });
 
                 do
@@ -54,6 +56,8 @@ namespace Sql.Tests
                 } while (managedInstanceOperations.Count() < oldOperations + 2 || !managedInstanceOperations.ElementAt(oldOperations + 1).IsCancellable.Value);
 
                 operationId = managedInstanceOperations.ElementAt(oldOperations + 1).Name;
+
+                // Initiate cancel of second update which is in progress.
                 sqlClient.ManagedInstanceOperations.Cancel(resourceGroup, managedInstanceName, System.Guid.Parse(operationId));
 
                 var secondManagedInstanceOperation = sqlClient.ManagedInstanceOperations.Get(resourceGroup, managedInstanceName, System.Guid.Parse(operationId));
@@ -64,6 +68,7 @@ namespace Sql.Tests
                     Thread.Sleep(20000);
                 }
 
+                // Validate that operation was cancelled.
                 SqlManagementTestUtilities.ValidateManagedInstanceOperation(secondManagedInstanceOperation, operationId, "UPDATE MANAGED SERVER", 100, "Cancelled", false);
             }
         }
