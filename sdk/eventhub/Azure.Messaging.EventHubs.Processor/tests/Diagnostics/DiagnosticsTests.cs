@@ -99,8 +99,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     {
                         var context = new MockPartitionContext(partitionId);
 
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id" } } });
-                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id2" } } });
+                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { DiagnosticProperty.DiagnosticIdAttribute, "id" } } });
+                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { DiagnosticProperty.DiagnosticIdAttribute, "id2" } } });
 
                         while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
                         {
@@ -201,7 +201,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     {
                         var context = new MockPartitionContext(partitionId);
 
-                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { "Diagnostic-Id", "id" } } });
+                        yield return new PartitionEvent(context, new MockEventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) { Properties = { { DiagnosticProperty.DiagnosticIdAttribute, "id" } } });
 
                         while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
                         {
