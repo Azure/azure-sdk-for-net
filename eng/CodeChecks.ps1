@@ -39,19 +39,14 @@ function Invoke-Block([scriptblock]$cmd) {
 
 try {
 
-    Write-Host "Checking that solutions are up to date"
-
     Write-Host "Force .NET Welcome experience"
     Invoke-Block {
         & dotnet msbuild -version
     }
 
-    $root = "$PSScriptRoot/../sdk"
-    if ($ServiceDirectory) {
-        $root += '/' + $ServiceDirectory
-    }
-
-    Resolve-Path "$root" `
+    Write-Host "Checking that solutions are up to date"
+    Join-Path "$PSScriptRoot/../sdk" $ServiceDirectory  `
+        | Resolve-Path `
         | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
         | % {
             Write-Host "  Checking $(Split-Path -Leaf $_)"

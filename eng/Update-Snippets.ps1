@@ -14,6 +14,4 @@ if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
     $root += '/' + $ServiceDirectory
 }
 
-$paths = Resolve-Path "$root"
-
 Resolve-Path "$root" | %{ dotnet run -p $generatorProject -b "$_" }
