@@ -30,7 +30,7 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - checkout: none
+                    - checkout: azure-sdk-tools
                     - pwsh: |
                         Get-ChildItem $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
                         New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
@@ -102,6 +102,7 @@ stages:
               displayName: Publish Docs to GitHub pages
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
               environment: githubio
+              dependsOn: PublishPackage
 
               pool:
                 vmImage: windows-2019
@@ -138,6 +139,7 @@ stages:
               displayName: "Update Package Version"
               condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
               environment: github
+              dependsOn: PublishPackage
 
               pool:
                 vmImage: windows-2019
