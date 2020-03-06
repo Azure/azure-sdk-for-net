@@ -23,8 +23,9 @@ namespace Azure.AI.FormRecognizer.Models
 
         public PageRange PageRange { get; internal set; }
 
-        // TODO: I want to make these nullable in case a value isn't present or
-        // isn't read by the learner.
+        // TODO: Can we make this nullable in case a value isn't present or
+        // isn't read by the learner?
+        // https://github.com/Azure/azure-sdk-for-net/issues/10361
         public IReadOnlyList<ExtractedReceiptItem> Items { get; internal set; }
         public string MerchantAddress { get; internal set; }
         public string MerchantName { get; internal set; }
@@ -39,6 +40,7 @@ namespace Azure.AI.FormRecognizer.Models
         public DateTimeOffset TransactionTime { get; internal set; }
 
         // TODO: Have this handle Items correctly
+        // https://github.com/Azure/azure-sdk-for-net/issues/10379
         public IReadOnlyDictionary<string, ExtractedReceiptField> ExtractedFields { get; internal set; }
 
         public RawExtractedPage RawExtractedPage { get; }
