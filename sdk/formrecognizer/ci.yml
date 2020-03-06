@@ -33,10 +33,10 @@ pr:
     - sdk/formrecognizer/
 
 stages:
-- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: template
-    ArtifactName: packages
-    Artifacts:
-    - name: Azure.Template
-      safeName: AzureTemplate
+- template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: formrecognizer
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.AI.FormRecognizer
+      safeName: AzureAIFormRecognizer
