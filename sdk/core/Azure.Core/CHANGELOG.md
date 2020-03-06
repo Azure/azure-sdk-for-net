@@ -5,6 +5,7 @@
 ### Fixes and improvements
 - Add OPTIONS and TRACE HTTP request methods.
 - Add `NetworkTimeout` property to `RetryOptions` and apply it to network operations like sending request or reading from the response stream.
+- Implement serialization for RequestFailedException.
 
 ## 1.0.2 (2020-01-10)
 
