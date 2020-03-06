@@ -12,7 +12,7 @@
 /sdk/core/ @pakrym @KrzysztofCwalina
 
 # Extensions
-/sdk/extensions @parkym
+/sdk/extensions/ @parkym
 
 # Service teams
 /sdk/appconfiguration/ @annelo-msft @AlexanderSher
