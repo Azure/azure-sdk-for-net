@@ -300,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubName = "myName";
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var mockScope = new Mock<AmqpConnectionScope>();
@@ -587,7 +587,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "Barney";
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(retryOptions);
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
             var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var mockScope = new Mock<AmqpConnectionScope>();

@@ -424,7 +424,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateBatchAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
         {
             var partitionId = "testMe";
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
             var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -713,7 +713,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendEnumerableAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
         {
             var partitionId = "testMe";
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
             var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
@@ -1116,7 +1116,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var partitionKey = "testMe";
             var options = new CreateBatchOptions { PartitionKey = partitionKey };
-            var retriableException = AmqpError.CreateExceptionForError(new Error { Value = AmqpError.ServerBusyError }, "dummy");
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options.ToSendOptions());
 
