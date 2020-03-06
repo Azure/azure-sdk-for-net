@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -54,10 +53,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Management service.</param>
         /// <param name="managementApiUrl">Management API endpoint URL of the
         /// API Management service.</param>
-        /// <param name="developerPortalUrl">Developer Portal endpoint URL of
-        /// the API Management service.</param>
         /// <param name="scmUrl">SCM endpoint URL of the API Management
         /// service.</param>
+        /// <param name="developerPortalUrl">DEveloper Portal endpoint URL of
+        /// the API Management service.</param>
         /// <param name="hostnameConfigurations">Custom hostname configuration
         /// of the API Management service.</param>
         /// <param name="publicIPAddresses">Public Static Load Balanced IP
@@ -105,7 +104,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
         /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
-        /// The default value is `true` for them.</param>
+        /// The default value is `true` for them.  Note: next ciphers can't be
+        /// disabled since they are required by Azure CloudService internal
+        /// components:
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384</param>
         /// <param name="certificates">List of Certificates that need to be
         /// installed in the API Management service. Max supported certificates
         /// that can be installed is 10.</param>
@@ -114,6 +116,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// certificate to be presented on each request to the gateway. This
         /// also enables the ability to authenticate the certificate in the
         /// policy on the gateway.</param>
+        /// <param name="disableGateway">Property only valid for an Api
+        /// Management service deployed in multiple locations. This can be used
+        /// to disable the gateway in master region.</param>
         /// <param name="virtualNetworkType">The type of VPN in which API
         /// Management service needs to be configured in. None (Default Value)
         /// means the API Management service is not part of any Virtual
@@ -122,7 +127,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Internal means that API Management deployment is setup inside a
         /// Virtual Network having an Intranet Facing Endpoint only. Possible
         /// values include: 'None', 'External', 'Internal'</param>
-        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string developerPortalUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string))
+        /// <param name="apiVersionConstraint">Control Plane Apis version
+        /// constraint for the API Management service.</param>
+        public ApiManagementServiceBaseProperties(string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint))
         {
             NotificationSenderEmail = notificationSenderEmail;
             ProvisioningState = provisioningState;
@@ -132,8 +139,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             GatewayRegionalUrl = gatewayRegionalUrl;
             PortalUrl = portalUrl;
             ManagementApiUrl = managementApiUrl;
-            DeveloperPortalUrl = developerPortalUrl;
             ScmUrl = scmUrl;
+            DeveloperPortalUrl = developerPortalUrl;
             HostnameConfigurations = hostnameConfigurations;
             PublicIPAddresses = publicIPAddresses;
             PrivateIPAddresses = privateIPAddresses;
@@ -142,7 +149,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             CustomProperties = customProperties;
             Certificates = certificates;
             EnableClientCertificate = enableClientCertificate;
+            DisableGateway = disableGateway;
             VirtualNetworkType = virtualNetworkType;
+            ApiVersionConstraint = apiVersionConstraint;
             CustomInit();
         }
 
@@ -207,16 +216,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ManagementApiUrl { get; private set; }
 
         /// <summary>
-        /// Gets developer Portal endpoint URL of the API Management service.
-        /// </summary>
-        [JsonProperty(PropertyName = "developerPortalUrl")]
-        public string DeveloperPortalUrl { get; private set; }
-
-        /// <summary>
         /// Gets SCM endpoint URL of the API Management service.
         /// </summary>
         [JsonProperty(PropertyName = "scmUrl")]
         public string ScmUrl { get; private set; }
+
+        /// <summary>
+        /// Gets dEveloper Portal endpoint URL of the API Management service.
+        /// </summary>
+        [JsonProperty(PropertyName = "developerPortalUrl")]
+        public string DeveloperPortalUrl { get; private set; }
 
         /// <summary>
         /// Gets or sets custom hostname configuration of the API Management
@@ -291,7 +300,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
         /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
-        /// The default value is `true` for them.
+        /// The default value is `true` for them.  Note: next ciphers can't be
+        /// disabled since they are required by Azure CloudService internal
+        /// components:
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384
         /// </summary>
         [JsonProperty(PropertyName = "customProperties")]
         public IDictionary<string, string> CustomProperties { get; set; }
@@ -314,6 +326,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? EnableClientCertificate { get; set; }
 
         /// <summary>
+        /// Gets or sets property only valid for an Api Management service
+        /// deployed in multiple locations. This can be used to disable the
+        /// gateway in master region.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableGateway")]
+        public bool? DisableGateway { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of VPN in which API Management service needs
         /// to be configured in. None (Default Value) means the API Management
         /// service is not part of any Virtual Network, External means the API
@@ -327,54 +347,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string VirtualNetworkType { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets control Plane Apis version constraint for the API
+        /// Management service.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (NotificationSenderEmail != null)
-            {
-                if (NotificationSenderEmail.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "NotificationSenderEmail", 100);
-                }
-            }
-            if (HostnameConfigurations != null)
-            {
-                foreach (var element in HostnameConfigurations)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
-            if (VirtualNetworkConfiguration != null)
-            {
-                VirtualNetworkConfiguration.Validate();
-            }
-            if (AdditionalLocations != null)
-            {
-                foreach (var element1 in AdditionalLocations)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
-            }
-            if (Certificates != null)
-            {
-                foreach (var element2 in Certificates)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
-            }
-        }
+        [JsonProperty(PropertyName = "apiVersionConstraint")]
+        public ApiVersionConstraint ApiVersionConstraint { get; set; }
+
     }
 }

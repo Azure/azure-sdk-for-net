@@ -1,5 +1,12 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 5.0.0-preview
+
+- Switch the .NET client to use api-version `2019-12-01-preview`
+- `properties` entity renamed to `namedValues` 
+- Added POST operations to get entities secret properties. Secret properties will not be returned with GET or LIST operations anymore. Entities are: `accessInformation`, `authorizationServers`, `delegationSettings`, `identityProviders`, `namedValues`, `openIdConnectProviders`, `subscriptions`. 
+- `diagnostics` entity: `enableHttpCorrelationHeaders` property is not supported, `loggerId` is a required property now.
+
 ### Changes in 4.12.0-preview
 
 - Added support for `developerPortal` endpoint in apimanagement service resource.
