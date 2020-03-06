@@ -105,15 +105,17 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
-    public partial class RequestFailedException : System.Exception
+    public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public RequestFailedException(string message) { }
         public RequestFailedException(string message, System.Exception? innerException) { }
         public string? ErrorCode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int Status { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public abstract partial class Response : System.IDisposable
     {

@@ -23,7 +23,6 @@
       CA1815; <!-- Equality members on structs -->
       CA2007; <!-- Do not directly await a Task without calling ConfigureAwait (replaced by AZC0012) -->
       CA2231; <!-- Override Equality operators -->
-      CA2237; <!-- [Serializeable] on exceptions -->
       CA2225; <!-- Provide alternative to implicit operators -->
       CA1714; <!-- Flags should have plural names -->
     </NoWarn>
