@@ -205,7 +205,7 @@ namespace Azure.Messaging.EventHubs.Tests
             TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer.Object);
 
             transportProducer
-                .Setup(producer => producer.CloseAsync(true, It.IsAny<CancellationToken>()))
+                .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
             var _ = transportProducerPool.GetPooledProducer(null).TransportProducer as ObservableTransportProducerMock;
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
             TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer.Object);
 
             partitionProducer
-                .Setup(producer => producer.CloseAsync(true, It.IsAny<CancellationToken>()))
+                .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
             var _ = transportProducerPool.GetPooledProducer("0");
