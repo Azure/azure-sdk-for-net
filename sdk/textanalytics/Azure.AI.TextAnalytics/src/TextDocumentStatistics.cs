@@ -18,8 +18,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the number of characters the corresponding input document
-        /// contains.
+        /// Gets the number of characters the corresponding document contains.
         /// </summary>
         public int CharacterCount { get; }
 

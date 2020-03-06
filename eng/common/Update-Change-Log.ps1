@@ -17,7 +17,7 @@ param (
 
 
 $RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?))"
-
+$UNRELEASED_TAG = "(Unreleased)"
 function Version-Matches($line)
 {
     return ($line -match $RELEASE_TITLE_REGEX)
@@ -44,7 +44,7 @@ function Get-ChangelogPath($Path)
 function Get-VersionTitle($Version, $Unreleased)
 {
    # Generate version title
-   $newVersionTitle = "## $Version (Unreleased)"
+   $newVersionTitle = "## $Version $UNRELEASED_TAG"
    if ($Unreleased -eq $False){
       $releaseDate = Get-Date -Format "(yyyy-MM-dd)"
       $newVersionTitle = "## $Version $releaseDate"
@@ -75,7 +75,19 @@ function Get-NewChangeLog( [System.Collections.ArrayList]$ChangelogLines, $Versi
    $newVersionTitle = Get-VersionTitle -Version $Version -Unreleased $Unreleased
 
    if( $newVersionTitle -eq $CurrentTitle){
-      Write-Host "Version is already present in change log"
+      Write-Host "No change is required in change log. Version is already present."
+      exit(0)
+   }
+
+   # update change log script is triggered for all packages with current version for Java ( or any language where version is maintained in common file)
+   # Do not add new line or replace existing title when version is already present and script is triggered to add new line
+   if (($ReplaceVersion -eq $False) -and ($Unreleased -eq $True) -and $CurrentTitle.Contains($Version)){
+      Write-Host "Version is already present in change log."
+      exit(0)
+   }
+
+   if (($ReplaceVersion -eq $True) -and ($Unreleased -eq $False) -and (-not $CurrentTitle.Contains($UNRELEASED_TAG))){
+      Write-Host "Version is already present in change log with a release date."
       exit(0)
    }
 

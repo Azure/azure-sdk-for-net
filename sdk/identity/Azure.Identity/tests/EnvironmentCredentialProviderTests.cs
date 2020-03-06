@@ -3,14 +3,11 @@
 
 using Azure.Core;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using NUnit.Framework;
 using Azure.Core.Testing;
 using Azure.Identity.Tests.Mock;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace Azure.Identity.Tests
 {
@@ -22,7 +19,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void CredentialConstructionClientId()
+        public void CredentialConstructionClientSecret()
         {
             string clientIdBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             string tenantIdBackup = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
@@ -53,30 +50,38 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientIdBackup);
                 Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantIdBackup);
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecretBackup);
-
             }
         }
 
         [NonParallelizable]
         [Test]
-        public void CredentialConstructionAuthLocation()
+        public void CredentialConstructionClientCertificate()
         {
-            string authLocationBackup = Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
-            string pathToFile = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "authfile.json");
+            string clientIdBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+            string tenantIdBackup = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            string clientCertificateLocationBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
 
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", pathToFile);
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", "mockclientid");
+                Environment.SetEnvironmentVariable("AZURE_TENANT_ID", "mocktenantid");
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH", "mockcertificatepath");
 
                 var provider = new EnvironmentCredential();
-                AuthFileCredential cred = _credential(provider) as AuthFileCredential;
+                var cred = _credential(provider) as ClientCertificateCredential;
+                var certProvider = cred.ClientCertificateProvider as ClientCertificateCredential.X509Certificate2FromFileProvider;
 
                 Assert.NotNull(cred);
-                Assert.AreEqual(pathToFile, cred.FilePath);
+                Assert.NotNull(certProvider);
+                Assert.AreEqual("mockclientid", cred.ClientId);
+                Assert.AreEqual("mocktenantid", cred.TenantId);
+                Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);
             }
             finally
             {
-                Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", authLocationBackup);
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientIdBackup);
+                Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantIdBackup);
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_LOCATION", clientCertificateLocationBackup);
             }
         }
 

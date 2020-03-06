@@ -61,6 +61,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Management service.</param>
         /// <param name="managementApiUrl">Management API endpoint URL of the
         /// API Management service.</param>
+        /// <param name="developerPortalUrl">Developer Portal endpoint URL of
+        /// the API Management service.</param>
         /// <param name="scmUrl">SCM endpoint URL of the API Management
         /// service.</param>
         /// <param name="hostnameConfigurations">Custom hostname configuration
@@ -134,7 +136,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="identity">Managed service identity of the Api
         /// Management service.</param>
         /// <param name="etag">ETag of the resource.</param>
-        public ApiManagementServiceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string), string publisherEmail = default(string), string publisherName = default(string), ApiManagementServiceSkuProperties sku = default(ApiManagementServiceSkuProperties), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string))
+        public ApiManagementServiceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string developerPortalUrl = default(string), string scmUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string virtualNetworkType = default(string), string publisherEmail = default(string), string publisherName = default(string), ApiManagementServiceSkuProperties sku = default(ApiManagementServiceSkuProperties), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string))
             : base(id, name, type, tags)
         {
             NotificationSenderEmail = notificationSenderEmail;
@@ -145,6 +147,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             GatewayRegionalUrl = gatewayRegionalUrl;
             PortalUrl = portalUrl;
             ManagementApiUrl = managementApiUrl;
+            DeveloperPortalUrl = developerPortalUrl;
             ScmUrl = scmUrl;
             HostnameConfigurations = hostnameConfigurations;
             PublicIPAddresses = publicIPAddresses;
@@ -222,6 +225,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.managementApiUrl")]
         public string ManagementApiUrl { get; private set; }
+
+        /// <summary>
+        /// Gets developer Portal endpoint URL of the API Management service.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.developerPortalUrl")]
+        public string DeveloperPortalUrl { get; private set; }
 
         /// <summary>
         /// Gets SCM endpoint URL of the API Management service.

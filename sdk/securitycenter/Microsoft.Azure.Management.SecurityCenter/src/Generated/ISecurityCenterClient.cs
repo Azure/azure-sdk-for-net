@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Security
         ISettingsOperations Settings { get; }
 
         /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
+
+        /// <summary>
         /// Gets the IDeviceSecurityGroupsOperations.
         /// </summary>
         IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; }
@@ -162,11 +167,6 @@ namespace Microsoft.Azure.Management.Security
         ITopologyOperations Topology { get; }
 
         /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
-
-        /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
         /// </summary>
         IAutoProvisioningSettingsOperations AutoProvisioningSettings { get; }
@@ -215,6 +215,21 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ISubAssessmentsOperations.
         /// </summary>
         ISubAssessmentsOperations SubAssessments { get; }
+
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        IAutomationsOperations Automations { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        IAssessmentsOperations Assessments { get; }
 
     }
 }

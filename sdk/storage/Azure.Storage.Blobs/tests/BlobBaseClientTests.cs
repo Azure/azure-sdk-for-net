@@ -101,6 +101,24 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
+        [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobBaseClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
         #region Sequential Download
 
         [Test]
@@ -206,6 +224,28 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.Details.EncryptionKeySha256);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task DownloadAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.Details.EncryptionScope);
         }
 
         [Test]
@@ -424,7 +464,6 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await downloadingBlob.StagedDownloadAsync(
                         file,
-                        initialTransferLength: singleBlockThreshold,
                         transferOptions: transferOptions);
                 }
 
@@ -484,6 +523,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("Don't want to record 300 MB of data in the tests")]
+        public async Task DownloadToAsync_LargeStream()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var data = GetRandomBuffer(300 * Constants.MB);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            using (var resultStream = new MemoryStream(data))
+            {
+                await blob.DownloadToAsync(resultStream);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+        }
+
+        [Test]
         public async Task DownloadTo_Initial304()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -537,12 +596,12 @@ namespace Azure.Storage.Blobs.Test
                                     await blob.UploadAsync(newStream, overwrite: true);
                                 }
                             }),
-                        initialTransferLength: Constants.KB,
                         transferOptions:
                             new StorageTransferOptions
                             {
                                 MaximumConcurrency = 1,
-                                MaximumTransferLength = Constants.KB
+                                MaximumTransferLength = Constants.KB,
+                                InitialTransferLength = Constants.KB
                             });
                 });
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
@@ -1337,7 +1396,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedBlobClient.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
@@ -1372,6 +1431,24 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetPropertiesAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateAsync();
+
+            // Act
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]
@@ -1882,8 +1959,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task SetMetadataAsync_CPK()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
@@ -1892,6 +1969,21 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.SetMetadataAsync(metadata);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task SetMetadataAsync_EncryptionScope()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            IDictionary<string, string> metadata = BuildMetadata();
+            await blob.CreateAsync();
+
+            // Act
+            Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
         }
 
         [Test]
@@ -1976,8 +2068,8 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task CreateSnapshotAsync_CPK()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
             blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
@@ -1988,7 +2080,23 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task CreateSnapshotAsync_EncryptionScope()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateAsync();
+
+            // Act
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]

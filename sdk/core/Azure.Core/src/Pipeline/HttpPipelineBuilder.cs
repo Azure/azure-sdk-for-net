@@ -73,7 +73,7 @@ namespace Azure.Core.Pipeline
                     diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
             }
 
-            policies.Add(BufferResponsePolicy.Shared);
+            policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 
@@ -103,6 +103,12 @@ namespace Azure.Core.Pipeline
             if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
+            }
+
+            int hashSeparator = version.IndexOf('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
             }
 
             return new TelemetryPolicy(assemblyName, version, options.Diagnostics.ApplicationId);

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// key and value pairs for tags
+    /// A dictionary of name and value pairs.
     /// </summary>
     public partial class Tags
     {

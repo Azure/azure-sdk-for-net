@@ -72,6 +72,6 @@
   "Variables": {
     "RandomSeed": "335203925",
     "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/",
-    "TEXT_ANALYTICS_SUBSCRIPTION_KEY": "Sanitized"
+    "TEXT_ANALYTICS_API_KEY": "Sanitized"
   }
 }

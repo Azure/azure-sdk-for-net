@@ -33,6 +33,7 @@ pr:
     include:
     - sdk/core/
     - eng/
+    - samples/
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

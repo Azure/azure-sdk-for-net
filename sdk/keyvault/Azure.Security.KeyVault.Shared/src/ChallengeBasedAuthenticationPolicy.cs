@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessCoreAsync(message, pipeline, false).GetAwaiter().GetResult();
+            ProcessCoreAsync(message, pipeline, false).EnsureCompleted();
         }
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

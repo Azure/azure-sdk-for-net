@@ -17,10 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void ExtractKeyPhrasesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
             var inputs = new List<TextDocumentInput>
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -52,9 +52,10 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {

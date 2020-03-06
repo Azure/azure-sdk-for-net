@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/entities/recognition/general",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "96",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-37abcad565773643879c4446ca2a782f-d2245305cb971b4a-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200227.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "1e1bd581c2eac5df2fe8a3e72b124e2c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "language": "en",
+            "id": "0",
+            "text": "I had a wonderful trip to Seattle last week."
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "991b8af9-93dd-463e-907a-e033df744699",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Thu, 27 Feb 2020 17:33:56 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "61"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "entities": [
+              {
+                "text": "Seattle",
+                "type": "Location",
+                "subtype": "GPE",
+                "offset": 26,
+                "length": 7,
+                "score": 0.92
+              },
+              {
+                "text": "last week",
+                "type": "DateTime",
+                "subtype": "DateRange",
+                "offset": 34,
+                "length": 9,
+                "score": 0.8
+              }
+            ]
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2020-02-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "179873790",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+  }
+}

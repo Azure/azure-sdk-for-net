@@ -24,13 +24,15 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)ConditionalRequestOptionsExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Base type for results of text analytics operations corresponding to a
-    /// single input document.  If the operation is unsuccessful, the Id and
-    /// ErrorMessage fields will be populated, but not others.
+    /// document.  If the operation is unsuccessful, the Id and
+    /// Error properties will be populated, but not others.
     /// </summary>
     public class TextAnalyticsResult
     {
@@ -16,30 +16,35 @@ namespace Azure.AI.TextAnalytics
             Statistics = statistics;
         }
 
-        internal TextAnalyticsResult(string id, string errorMessage)
+        internal TextAnalyticsResult(string id, TextAnalyticsError error)
         {
             Id = id;
-            ErrorMessage = errorMessage;
+            Error = error;
         }
 
         /// <summary>
-        /// Gets the unique identifier for the input document that generated
+        /// Gets the unique identifier for the document that generated
         /// the result.
         /// </summary>
         public string Id { get; }
 
         /// <summary>
-        /// Gets statistics about the input document and how it was processed by
+        /// Gets statistics about the document and how it was processed by
         /// the service.  This property will have a value when IncludeStatistics
         /// is set to true in the client call.
         /// </summary>
         public TextDocumentStatistics Statistics { get; }
 
         /// <summary>
-        /// Gets the error message explaining why the operation failed on this
-        /// document.  This property will have a value only when the document
+        /// Gets the error explaining why the operation failed on this
+        /// document. This property will have a value only when the document
         /// cannot be processed.
         /// </summary>
-        public string ErrorMessage { get; }
+        public TextAnalyticsError Error { get; }
+
+        /// <summary>
+        /// Indicates that the document was not successfully processed and an error was returned for this document.
+        /// </summary>
+        public bool HasError => Error.Code != default;
     }
 }

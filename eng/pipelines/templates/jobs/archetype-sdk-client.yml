@@ -50,7 +50,7 @@ jobs:
     dependsOn:
       - Build
     pool:
-      vmImage: "ubuntu-16.04"
+      vmImage: "windows-2019"
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -77,12 +77,6 @@ jobs:
           artifact: packages
           path: $(Pipeline.Workspace)/packages
           patterns: "*.nupkg"
-      - task: PowerShell@2
-        displayName: "Analyze dependencies"
-        inputs:
-          filePath: "tools/AnalyzeDeps/AnalyzeDeps.ps1"
-          arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
-          pwsh: true
       - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
@@ -108,12 +102,6 @@ jobs:
           filePath: "eng/CodeChecks.ps1"
           pwsh: true
           failOnStderr:  false
-      - task: PublishPipelineArtifact@1
-        condition: succeeded()
-        displayName: "Publish Report Artifacts"
-        inputs:
-          artifactName: reports
-          path: $(Build.ArtifactStagingDirectory)/dependencies.html
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:
@@ -140,7 +128,7 @@ jobs:
           TestTargetFramework: net461
         MacOs:
           OSName: "MacOS"
-          OSVmImage: "macOS-10.13"
+          OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
     pool:
       vmImage: "$(OSVmImage)"

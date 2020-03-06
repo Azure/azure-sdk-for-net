@@ -3,18 +3,26 @@
 // Licensed under the MIT License.
 // ------------------------------------
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmokeTest
 {
     class EventHubsTest
     {
+        private const int ReadTimeoutInSeconds = 60;
+
         private static EventHubProducerClient sender;
-        private static EventHubConsumerClient receiver;
+        private static EventProcessorClient processor;
+        private static BlobContainerClient storageClient;
 
         /// <summary>
         /// Test the Event Hubs SDK by sending and receiving events
@@ -29,8 +37,9 @@ namespace SmokeTest
             Console.WriteLine("2.- Receive those events\n");
 
             var connectionString = Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING");
+            var storageConnectionString = Environment.GetEnvironmentVariable("BLOB_CONNECTION_STRING");
 
-            await CreateSenderAndReceiver(connectionString);
+            await CreateSenderAndReceiver(connectionString, storageConnectionString);
             await SendAndReceiveEvents();
         }
 
@@ -42,57 +51,91 @@ namespace SmokeTest
             return result;
         }
 
-        private static async Task CreateSenderAndReceiver(string connectionString)
+        private static async Task CreateSenderAndReceiver(string connectionString, string storageConnectionString)
         {
             Console.Write("Creating the Sender and Receivers... ");
 
-            var partitionId = await GetPartitionId(connectionString);
-
-            var producerOptions = new EventHubProducerClientOptions
-            {
-                PartitionId = partitionId,
-            };
-            sender = new EventHubProducerClient(connectionString, producerOptions);
-            receiver = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionId, EventPosition.Latest, connectionString);
+            sender = new EventHubProducerClient(connectionString);
+            storageClient = new BlobContainerClient(storageConnectionString, "mycontainer");
+            processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
             Console.WriteLine("\tdone");
         }
 
         private static async Task SendAndReceiveEvents()
         {
-            var eventBatch = new[]
-                {
-                new EventData(Encoding.UTF8.GetBytes("First event data")),
-                new EventData(Encoding.UTF8.GetBytes("Second event data")),
-                new EventData(Encoding.UTF8.GetBytes("Third event data"))
+            var partitionId = (await sender.GetPartitionIdsAsync()).First();
+
+            var events = new[]
+            {
+                new EventData(Encoding.UTF8.GetBytes(".NET event 1")),
+                new EventData(Encoding.UTF8.GetBytes(".NET event 2")),
+                new EventData(Encoding.UTF8.GetBytes(".NET event 3"))
             };
-            var index = 0;
-            var receivedEvents = new List<EventData>();
 
-            //Before sending any event, start the receiver
-            await receiver.ReceiveAsync(1, TimeSpan.Zero);
+            var eventBatch = await sender.CreateBatchAsync();
 
-            Console.Write("Ready to send a batch of " + eventBatch.Count().ToString() + " events... ");
+            foreach (var ev in events)
+            {
+                eventBatch.TryAdd(ev);
+            }
+
+            await sender.SendAsync(eventBatch);
+
+            Console.Write("Ready to send a batch of " + eventBatch.Count.ToString() + " events... ");
             await sender.SendAsync(eventBatch);
             Console.Write("Sent\n");
 
-            Console.Write("Receiving events... ");
-            while ((receivedEvents.Count < eventBatch.Length) && (++index < 3))
+            Console.WriteLine("Receiving events... ");
+            var receivedEventCount = 0;
+            var readCancellationSource = new CancellationTokenSource();
+            readCancellationSource.CancelAfter(TimeSpan.FromSeconds(ReadTimeoutInSeconds));
+
+            Task processEvent(ProcessEventArgs eventArgs)
             {
-                receivedEvents.AddRange(await receiver.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
+                // Only display the first few events received to prevent
+                // filling the console with redundant messages
+                if (++receivedEventCount <= eventBatch.Count)
+                {
+                    var bodyReader = new StreamReader(eventArgs.Data.BodyAsStream);
+                    var bodyContents = bodyReader.ReadToEnd();
+                    Console.WriteLine("Recieved Event: {0}", bodyContents);
+                }
+
+                return Task.CompletedTask;
             }
 
-            if (receivedEvents.Count == 0)
+            Task processError(ProcessErrorEventArgs eventArgs)
             {
-                throw new Exception(String.Format("Error, No events received."));
-            }
-            Console.Write(receivedEvents.Count() + " events received.\n");
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-            if (receivedEvents.Count() < eventBatch.Count())
+                Console.WriteLine("Error has occurred: {0}", eventArgs.Exception.ToString());
+                readCancellationSource.Cancel();
+                throw new Exception("Error while processing events", eventArgs.Exception);
+            }
+
+            processor.ProcessEventAsync += processEvent;
+            processor.ProcessErrorAsync += processError;
+
+
+            try
             {
-                throw new Exception(String.Format($"Error, expecting {eventBatch.Count()} events, but only got {receivedEvents.Count().ToString()}."));
-            }
+                await processor.StartProcessingAsync();
 
-            Console.WriteLine("done");
+                while ((!readCancellationSource.IsCancellationRequested) && (receivedEventCount <= eventBatch.Count))
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(250));
+                }
+
+                await processor.StopProcessingAsync();
+            }
+            finally
+            {
+                processor.ProcessEventAsync -= processEvent;
+                processor.ProcessErrorAsync -= processError;
+            }
         }
     }
 }

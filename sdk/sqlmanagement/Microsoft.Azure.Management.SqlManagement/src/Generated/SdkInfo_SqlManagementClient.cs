@@ -59,17 +59,19 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "JobVersions", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Jobs", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "LongTermRetentionBackups", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "LongTermRetentionManagedInstanceBackups", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedBackupShortTermRetentionPolicies", "2017-03-01-preview"),
-                new Tuple<string, string, string>("Sql", "ManagedDatabaseRestoreDetails", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabaseRestoreDetails", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseSensitivityLabels", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentRuleBaselines", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessmentScans", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabaseVulnerabilityAssessments", "2017-10-01-preview"),
-                new Tuple<string, string, string>("Sql", "ManagedDatabases", "2018-06-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedDatabases", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceAdministrators", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceEncryptionProtectors", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceKeys", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "ManagedInstanceLongTermRetentionPolicies", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceTdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstanceVulnerabilityAssessments", "2018-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2018-06-01-preview"),
@@ -96,7 +98,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ServerSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerUsages", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServerVulnerabilityAssessments", "2018-06-01-preview"),
-                new Tuple<string, string, string>("Sql", "Servers", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "Servers", "2019-06-01-preview"),
                 new Tuple<string, string, string>("Sql", "Servers", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServiceObjectives", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServiceTierAdvisors", "2014-04-01"),
@@ -113,16 +115,5 @@ namespace Microsoft.Azure.Management.Sql
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=.";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e0d9ceb1ca85e76a31b8496201499a7312824c09";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

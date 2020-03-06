@@ -100,6 +100,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
@@ -115,6 +133,21 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(containers.Count() >= 1);
             var accountName = new BlobUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
+
+            Assert.IsNotNull(containers[0].Name);
+            Assert.IsNotNull(containers[0].Properties);
+            Assert.IsNotNull(containers[0].Properties.ETag);
+            Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
+            Assert.IsNotNull(containers[0].Properties.HasLegalHold);
+            Assert.IsNotNull(containers[0].Properties.LastModified);
+            Assert.IsNotNull(containers[0].Properties.LeaseState);
+            Assert.IsNotNull(containers[0].Properties.LeaseStatus);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
+            {
+                Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
+                Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
+            }
         }
 
         #region Secondary Storage
@@ -401,7 +434,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]

@@ -22,8 +22,13 @@ namespace Microsoft.Azure.Management.ResourceManager
     public static partial class TagsOperationsExtensions
     {
             /// <summary>
-            /// Deletes a tag value.
+            /// Deletes a predefined tag value for a predefined tag name.
             /// </summary>
+            /// <remarks>
+            /// This operation allows deleting a value from the list of predefined values
+            /// for an existing predefined tag name. The value being deleted must not be in
+            /// use as a tag value for the given tag name for any resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -39,8 +44,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes a tag value.
+            /// Deletes a predefined tag value for a predefined tag name.
             /// </summary>
+            /// <remarks>
+            /// This operation allows deleting a value from the list of predefined values
+            /// for an existing predefined tag name. The value being deleted must not be in
+            /// use as a tag value for the given tag name for any resource.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -59,8 +69,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Creates a tag value. The name of the tag must already exist.
+            /// Creates a predefined value for a predefined tag name.
             /// </summary>
+            /// <remarks>
+            /// This operation allows adding a value to the list of predefined values for
+            /// an existing predefined tag name. A tag value can have a maximum of 256
+            /// characters.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -76,8 +91,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Creates a tag value. The name of the tag must already exist.
+            /// Creates a predefined value for a predefined tag name.
             /// </summary>
+            /// <remarks>
+            /// This operation allows adding a value to the list of predefined values for
+            /// an existing predefined tag name. A tag value can have a maximum of 256
+            /// characters.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -99,12 +119,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Creates a tag in the subscription.
+            /// Creates a predefined tag name.
             /// </summary>
             /// <remarks>
-            /// The tag name can have a maximum of 512 characters and is case insensitive.
-            /// Tag names created by Azure have prefixes of microsoft, azure, or windows.
-            /// You cannot create tags with one of these prefixes.
+            /// This operation allows adding a name to the list of predefined tag names for
+            /// the given subscription. A tag name can have a maximum of 512 characters and
+            /// is case-insensitive. Tag names cannot have the following prefixes which are
+            /// reserved for Azure use: 'microsoft', 'azure', 'windows'.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -118,12 +139,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Creates a tag in the subscription.
+            /// Creates a predefined tag name.
             /// </summary>
             /// <remarks>
-            /// The tag name can have a maximum of 512 characters and is case insensitive.
-            /// Tag names created by Azure have prefixes of microsoft, azure, or windows.
-            /// You cannot create tags with one of these prefixes.
+            /// This operation allows adding a name to the list of predefined tag names for
+            /// the given subscription. A tag name can have a maximum of 512 characters and
+            /// is case-insensitive. Tag names cannot have the following prefixes which are
+            /// reserved for Azure use: 'microsoft', 'azure', 'windows'.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -143,10 +165,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes a tag from the subscription.
+            /// Deletes a predefined tag name.
             /// </summary>
             /// <remarks>
-            /// You must remove all values from a resource tag before you can delete it.
+            /// This operation allows deleting a name from the list of predefined tag names
+            /// for the given subscription. The name being deleted must not be in use as a
+            /// tag name for any resource. All predefined values for the given name must
+            /// have already been deleted.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -160,10 +185,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Deletes a tag from the subscription.
+            /// Deletes a predefined tag name.
             /// </summary>
             /// <remarks>
-            /// You must remove all values from a resource tag before you can delete it.
+            /// This operation allows deleting a name from the list of predefined tag names
+            /// for the given subscription. The name being deleted must not be in use as a
+            /// tag name for any resource. All predefined values for the given name must
+            /// have already been deleted.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,9 +208,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets the names and values of all resource tags that are defined in a
-            /// subscription.
+            /// Gets a summary of tag usage under the subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation performs a union of predefined tags, resource tags, resource
+            /// group tags and subscription tags, and returns a summary of usage for each
+            /// tag name and value under the given subscription. In case of a large number
+            /// of tags, this operation may return a previously cached result.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -192,9 +225,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets the names and values of all resource tags that are defined in a
-            /// subscription.
+            /// Gets a summary of tag usage under the subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation performs a union of predefined tags, resource tags, resource
+            /// group tags and subscription tags, and returns a summary of usage for each
+            /// tag name and value under the given subscription. In case of a large number
+            /// of tags, this operation may return a previously cached result.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -210,8 +248,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Create or Replace existing tags with passing in tags.
+            /// Creates or updates the entire set of tags on a resource or subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation allows adding or replacing the entire set of tags on the
+            /// specified resource or subscription. The specified entity can have a maximum
+            /// of 50 tags.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -219,16 +262,20 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The resource scope.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for creating multiple tags.
             /// </param>
-            public static TagsResource ResourceCreate(this ITagsOperations operations, string scope, TagsResource parameters)
+            public static TagsResource CreateOrUpdateAtScope(this ITagsOperations operations, string scope, TagsResource parameters)
             {
-                return operations.ResourceCreateAsync(scope, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAtScopeAsync(scope, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or Replace existing tags with passing in tags.
+            /// Creates or updates the entire set of tags on a resource or subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation allows adding or replacing the entire set of tags on the
+            /// specified resource or subscription. The specified entity can have a maximum
+            /// of 50 tags.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -236,23 +283,30 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The resource scope.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for creating multiple tags.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagsResource> ResourceCreateAsync(this ITagsOperations operations, string scope, TagsResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagsResource> CreateOrUpdateAtScopeAsync(this ITagsOperations operations, string scope, TagsResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ResourceCreateWithHttpMessagesAsync(scope, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateAtScopeWithHttpMessagesAsync(scope, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Update multiple tags: if the tagKey exists, update tagValue with the new
-            /// value; if not, insert the new record.
+            /// Selectively updates the set of tags on a resource or subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation allows replacing, merging or selectively deleting tags on
+            /// the specified resource or subscription. The specified entity can have a
+            /// maximum of 50 tags at the end of the operation. The 'replace' option
+            /// replaces the entire set of existing tags with a new set. The 'merge' option
+            /// allows adding tags with new names and updating the values of tags with
+            /// existing names. The 'delete' option allows selectively deleting tags based
+            /// on given names or name/value pairs.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -260,17 +314,24 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The resource scope.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for updating multiple tags.
             /// </param>
-            public static TagsResource ResourceUpdate(this ITagsOperations operations, string scope, TagPatchRequest parameters)
+            public static TagsResource UpdateAtScope(this ITagsOperations operations, string scope, TagsPatchResource parameters)
             {
-                return operations.ResourceUpdateAsync(scope, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAtScopeAsync(scope, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update multiple tags: if the tagKey exists, update tagValue with the new
-            /// value; if not, insert the new record.
+            /// Selectively updates the set of tags on a resource or subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation allows replacing, merging or selectively deleting tags on
+            /// the specified resource or subscription. The specified entity can have a
+            /// maximum of 50 tags at the end of the operation. The 'replace' option
+            /// replaces the entire set of existing tags with a new set. The 'merge' option
+            /// allows adding tags with new names and updating the values of tags with
+            /// existing names. The 'delete' option allows selectively deleting tags based
+            /// on given names or name/value pairs.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -278,21 +339,20 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The resource scope.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters for updating multiple tags.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagsResource> ResourceUpdateAsync(this ITagsOperations operations, string scope, TagPatchRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagsResource> UpdateAtScopeAsync(this ITagsOperations operations, string scope, TagsPatchResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ResourceUpdateWithHttpMessagesAsync(scope, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateAtScopeWithHttpMessagesAsync(scope, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all the tags for the resource.
+            /// Gets the entire set of tags on a resource or subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -300,13 +360,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='scope'>
             /// The resource scope.
             /// </param>
-            public static TagsResource ResourceGet(this ITagsOperations operations, string scope)
+            public static TagsResource GetAtScope(this ITagsOperations operations, string scope)
             {
-                return operations.ResourceGetAsync(scope).GetAwaiter().GetResult();
+                return operations.GetAtScopeAsync(scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets all the tags for the resource.
+            /// Gets the entire set of tags on a resource or subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -317,16 +377,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagsResource> ResourceGetAsync(this ITagsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagsResource> GetAtScopeAsync(this ITagsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ResourceGetWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAtScopeWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes all the tags for the resource.
+            /// Deletes the entire set of tags on a resource or subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -334,13 +394,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='scope'>
             /// The resource scope.
             /// </param>
-            public static void ResourceDelete(this ITagsOperations operations, string scope)
+            public static void DeleteAtScope(this ITagsOperations operations, string scope)
             {
-                operations.ResourceDeleteAsync(scope).GetAwaiter().GetResult();
+                operations.DeleteAtScopeAsync(scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes all the tags for the resource.
+            /// Deletes the entire set of tags on a resource or subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -351,15 +411,20 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ResourceDeleteAsync(this ITagsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAtScopeAsync(this ITagsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ResourceDeleteWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteAtScopeWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Gets the names and values of all resource tags that are defined in a
-            /// subscription.
+            /// Gets a summary of tag usage under the subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation performs a union of predefined tags, resource tags, resource
+            /// group tags and subscription tags, and returns a summary of usage for each
+            /// tag name and value under the given subscription. In case of a large number
+            /// of tags, this operation may return a previously cached result.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -372,9 +437,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets the names and values of all resource tags that are defined in a
-            /// subscription.
+            /// Gets a summary of tag usage under the subscription.
             /// </summary>
+            /// <remarks>
+            /// This operation performs a union of predefined tags, resource tags, resource
+            /// group tags and subscription tags, and returns a summary of usage for each
+            /// tag name and value under the given subscription. In case of a large number
+            /// of tags, this operation may return a previously cached result.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

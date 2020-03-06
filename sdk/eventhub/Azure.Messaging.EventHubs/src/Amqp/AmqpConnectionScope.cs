@@ -782,7 +782,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                     // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
                     // At worse, another timer tick will occur and the operation will be retried.
 
-                    try { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); } catch {}
+                    try
+                    { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); }
+                    catch { }
                 }
                 finally
                 {

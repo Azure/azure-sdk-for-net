@@ -14,22 +14,28 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     internal static class EventDataInstrumentation
     {
         /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics("Azure.Messaging.EventHubs", "Microsoft.EventHub", true);
+        public static DiagnosticScopeFactory ScopeFactory { get; } = new DiagnosticScopeFactory("Azure.Messaging.EventHubs", "Microsoft.EventHub", true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
         /// </summary>
         ///
         /// <param name="eventData">The event to instrument.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the event with.</param>
         ///
         /// <returns><c>true</c> if the event was instrumented in response to this request; otherwise, <c>false</c>.</returns>
         ///
-        public static bool InstrumentEvent(EventData eventData)
+        public static bool InstrumentEvent(EventData eventData,
+                                           string fullyQualifiedNamespace,
+                                           string eventHubName)
         {
             if (!eventData.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
-                using DiagnosticScope messageScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
+                using DiagnosticScope messageScope = ScopeFactory.CreateScope(DiagnosticProperty.EventActivityName);
                 messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ProducerKind);
+                messageScope.AddAttribute(DiagnosticProperty.EventHubAttribute, eventHubName);
+                messageScope.AddAttribute(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;

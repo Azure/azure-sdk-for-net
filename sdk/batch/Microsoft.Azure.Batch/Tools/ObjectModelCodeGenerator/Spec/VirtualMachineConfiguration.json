@@ -74,6 +74,17 @@
             "UnboundAccess": "read,write"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "DiskEncryptionConfiguration",
+            "Name": "DiskEncryptionConfiguration",
+            "SummaryComment": "The disk encryption configuration for the pool.",
+            "RemarksComment": "If specified, encryption is performed on each node in the pool during node provisioning.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
         }
       ]
     }

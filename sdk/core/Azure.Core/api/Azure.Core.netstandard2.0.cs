@@ -296,9 +296,11 @@ namespace Azure.Core
         public static Azure.Core.RequestMethod Get { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Core.RequestMethod Head { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string Method { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Core.RequestMethod Options { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Core.RequestMethod Patch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Core.RequestMethod Post { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Core.RequestMethod Put { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Core.RequestMethod Trace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public bool Equals(Azure.Core.RequestMethod other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -360,6 +362,7 @@ namespace Azure.Core
         public System.TimeSpan MaxDelay { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public int MaxRetries { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public Azure.Core.RetryMode Mode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.TimeSpan NetworkTimeout { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
     public abstract partial class TokenCredential
     {

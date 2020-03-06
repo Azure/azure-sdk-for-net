@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetPropertiesAsync_CreateResponse(_response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -149,9 +149,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SetPropertiesAsync Azure.Response.</returns>
             internal static Azure.Response SetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -167,7 +169,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -223,7 +225,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -284,9 +286,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -311,7 +315,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -367,7 +371,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetStatisticsAsync_CreateResponse(_response);
+                        return GetStatisticsAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -428,9 +432,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatisticsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -455,7 +461,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -523,7 +529,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListBlobContainersSegmentAsync_CreateResponse(_response);
+                        return ListBlobContainersSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -595,9 +601,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.ListBlobContainersSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListBlobContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainersSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainersSegment> ListBlobContainersSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -622,7 +630,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -681,7 +689,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetUserDelegationKeyAsync_CreateResponse(_response);
+                        return GetUserDelegationKeyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -755,9 +763,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetUserDelegationKeyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response{Azure.Storage.Blobs.Models.UserDelegationKey}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKeyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -778,7 +788,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -828,7 +838,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccountInfoAsync_CreateResponse(_response);
+                        return GetAccountInfoAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -883,9 +893,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetAccountInfoAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetAccountInfoAsync Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -920,7 +932,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -985,7 +997,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SubmitBatchAsync_CreateResponse(_response);
+                        return SubmitBatchAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1064,9 +1076,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SubmitBatchAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1094,7 +1108,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1120,6 +1134,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="defaultEncryptionScope">Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes.</param>
+            /// <param name="preventEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1133,6 +1149,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
+                string defaultEncryptionScope = default,
+                bool? preventEncryptionScopeOverride = default,
                 bool async = true,
                 string operationName = "ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1149,7 +1167,9 @@ namespace Azure.Storage.Blobs
                         version,
                         timeout,
                         metadata,
-                        requestId))
+                        requestId,
+                        defaultEncryptionScope,
+                        preventEncryptionScopeOverride))
                     {
                         if (async)
                         {
@@ -1164,7 +1184,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1188,6 +1208,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="defaultEncryptionScope">Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes.</param>
+            /// <param name="preventEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
             /// <returns>The Container.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1196,7 +1218,9 @@ namespace Azure.Storage.Blobs
                 string version,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                string requestId = default)
+                string requestId = default,
+                string defaultEncryptionScope = default,
+                bool? preventEncryptionScopeOverride = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1228,6 +1252,12 @@ namespace Azure.Storage.Blobs
                     }
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (defaultEncryptionScope != null) { _request.Headers.SetValue("x-ms-default-encryption-scope", defaultEncryptionScope); }
+                if (preventEncryptionScopeOverride != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Headers.SetValue("x-ms-deny-encryption-scope-override", preventEncryptionScopeOverride.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
 
                 return _message;
             }
@@ -1235,9 +1265,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1268,7 +1300,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1327,7 +1359,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1390,9 +1422,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1445,6 +1479,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.HasLegalHold = bool.Parse(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-default-encryption-scope", out _header))
+                        {
+                            _value.DefaultEncryptionScope = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out _header))
+                        {
+                            _value.DenyEncryptionScopeOverride = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -1459,7 +1501,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1524,7 +1566,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1593,9 +1635,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1611,7 +1655,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1676,7 +1720,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1751,9 +1795,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1784,7 +1830,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1843,7 +1889,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessPolicyAsync_CreateResponse(_response);
+                        return GetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1907,9 +1953,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerAccessPolicy}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1954,7 +2002,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2025,7 +2073,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessPolicyAsync_CreateResponse(_response);
+                        return SetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2114,9 +2162,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2147,7 +2197,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2215,7 +2265,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AcquireLeaseAsync_CreateResponse(_response);
+                        return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2289,9 +2339,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> AcquireLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2326,7 +2378,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2391,7 +2443,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ReleaseLeaseAsync_CreateResponse(_response);
+                        return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2466,9 +2518,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> ReleaseLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2499,7 +2553,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2564,7 +2618,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenewLeaseAsync_CreateResponse(_response);
+                        return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2639,9 +2693,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> RenewLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2676,7 +2732,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2741,7 +2797,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return BreakLeaseAsync_CreateResponse(_response);
+                        return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2812,9 +2868,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2849,7 +2907,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2917,7 +2975,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ChangeLeaseAsync_CreateResponse(_response);
+                        return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2999,9 +3057,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> ChangeLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3036,7 +3096,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3104,7 +3164,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListBlobsFlatSegmentAsync_CreateResponse(_response);
+                        return ListBlobsFlatSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3177,9 +3237,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ListBlobsFlatSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsFlatSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> ListBlobsFlatSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3204,7 +3266,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3275,7 +3337,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListBlobsHierarchySegmentAsync_CreateResponse(_response);
+                        return ListBlobsHierarchySegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3351,9 +3413,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ListBlobsHierarchySegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsHierarchySegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> ListBlobsHierarchySegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3378,7 +3442,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3480,7 +3544,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return (DownloadAsync_CreateResponse(_response), _message.ExtractResponseContent());
+                        return (DownloadAsync_CreateResponse(clientDiagnostics, _response), _message.ExtractResponseContent());
                     }
                 }
                 catch (System.Exception ex)
@@ -3583,9 +3647,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3706,6 +3772,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
@@ -3835,6 +3905,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
                             _value.BlobContentHash = System.Convert.FromBase64String(_header);
@@ -3853,7 +3927,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3936,7 +4010,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4022,9 +4096,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4153,6 +4229,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-access-tier", out _header))
                         {
                             _value.AccessTier = _header;
@@ -4189,7 +4269,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4266,7 +4346,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4346,9 +4426,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4364,7 +4446,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4447,7 +4529,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessControlAsync_CreateResponse(_response);
+                        return SetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4534,9 +4616,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult> SetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4567,7 +4651,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4641,7 +4725,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessControlAsync_CreateResponse(_response);
+                        return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4723,9 +4807,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.GetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.GetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult> GetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4776,7 +4862,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4892,7 +4978,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenameAsync_CreateResponse(_response);
+                        return RenameAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5015,9 +5101,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.RenameAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.RenameAsync Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult> RenameAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5052,7 +5140,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5108,7 +5196,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UndeleteAsync_CreateResponse(_response);
+                        return UndeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5168,9 +5256,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.UndeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.UndeleteAsync Azure.Response.</returns>
             internal static Azure.Response UndeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5186,7 +5276,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5275,7 +5365,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetHttpHeadersAsync_CreateResponse(_response);
+                        return SetHttpHeadersAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5368,9 +5458,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetHttpHeadersAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetHttpHeadersAsync Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> SetHttpHeadersAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5405,7 +5497,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5425,6 +5517,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5445,6 +5538,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -5469,6 +5563,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -5488,7 +5583,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5514,6 +5609,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5530,6 +5626,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -5568,6 +5665,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -5580,9 +5678,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5611,6 +5711,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -5621,7 +5725,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5695,7 +5799,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AcquireLeaseAsync_CreateResponse(_response);
+                        return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5774,9 +5878,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> AcquireLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5811,7 +5917,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5882,7 +5988,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ReleaseLeaseAsync_CreateResponse(_response);
+                        return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5962,9 +6068,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ReleaseLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5995,7 +6103,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6066,7 +6174,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenewLeaseAsync_CreateResponse(_response);
+                        return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6146,9 +6254,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> RenewLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6183,7 +6293,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6257,7 +6367,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ChangeLeaseAsync_CreateResponse(_response);
+                        return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6344,9 +6454,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> ChangeLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6381,7 +6493,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6452,7 +6564,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return BreakLeaseAsync_CreateResponse(_response);
+                        return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6528,9 +6640,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6565,7 +6679,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6584,6 +6698,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -6604,6 +6719,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -6628,6 +6744,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -6648,7 +6765,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateSnapshotAsync_CreateResponse(_response);
+                        return CreateSnapshotAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6673,6 +6790,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -6689,6 +6807,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -6727,6 +6846,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -6740,9 +6860,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.CreateSnapshotAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> CreateSnapshotAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6781,7 +6903,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6876,7 +6998,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StartCopyFromUriAsync_CreateResponse(_response);
+                        return StartCopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6983,9 +7105,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.StartCopyFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> StartCopyFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7024,7 +7148,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7119,7 +7243,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CopyFromUriAsync_CreateResponse(_response);
+                        return CopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7227,9 +7351,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.CopyFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.CopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7268,7 +7394,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7330,7 +7456,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AbortCopyFromUriAsync_CreateResponse(_response);
+                        return AbortCopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7401,9 +7527,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.AbortCopyFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.AbortCopyFromUriAsync Azure.Response.</returns>
             internal static Azure.Response AbortCopyFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7419,7 +7547,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7484,7 +7612,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessTierAsync_CreateResponse(_response);
+                        return SetAccessTierAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7553,9 +7681,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessTierAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessTierAsync Azure.Response.</returns>
             internal static Azure.Response SetAccessTierAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7575,7 +7705,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7612,6 +7742,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7642,6 +7773,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -7676,6 +7808,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -7696,7 +7829,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7731,6 +7864,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7757,6 +7891,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -7805,6 +7940,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7818,9 +7954,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7849,6 +7987,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -7863,7 +8005,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7887,6 +8029,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -7914,6 +8057,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -7945,6 +8089,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
                         ifSequenceNumberEqualTo,
@@ -7967,7 +8112,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadPagesAsync_CreateResponse(_response);
+                        return UploadPagesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7997,6 +8142,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -8020,6 +8166,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8064,6 +8211,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8082,9 +8230,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UploadPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8121,6 +8271,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -8131,7 +8285,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8152,6 +8306,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -8176,6 +8331,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8204,6 +8360,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
                         ifSequenceNumberEqualTo,
@@ -8226,7 +8383,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ClearPagesAsync_CreateResponse(_response);
+                        return ClearPagesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8253,6 +8410,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -8273,6 +8431,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8311,6 +8470,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8326,9 +8486,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.ClearPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8375,7 +8537,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8399,6 +8561,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
@@ -8431,6 +8594,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
@@ -8467,6 +8631,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         leaseId,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
@@ -8494,7 +8659,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadPagesFromUriAsync_CreateResponse(_response);
+                        return UploadPagesFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8524,6 +8689,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
@@ -8552,6 +8718,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
@@ -8610,6 +8777,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8630,9 +8798,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8669,6 +8839,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -8685,7 +8859,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {
@@ -8693,7 +8867,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8770,7 +8944,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPageRangesAsync_CreateResponse(_response);
+                        return GetPageRangesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8851,9 +9025,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.GetPageRangesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8894,7 +9070,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8911,6 +9087,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="prevsnapshot">Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016.</param>
+            /// <param name="prevSnapshotUrl">Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot.</param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
@@ -8930,6 +9107,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string prevsnapshot = default,
+                System.Uri prevSnapshotUrl = default,
                 string range = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -8953,6 +9131,7 @@ namespace Azure.Storage.Blobs
                         snapshot,
                         timeout,
                         prevsnapshot,
+                        prevSnapshotUrl,
                         range,
                         leaseId,
                         ifModifiedSince,
@@ -8974,7 +9153,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPageRangesDiffAsync_CreateResponse(_response);
+                        return GetPageRangesDiffAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8997,6 +9176,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="prevsnapshot">Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016.</param>
+            /// <param name="prevSnapshotUrl">Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot.</param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
@@ -9012,6 +9192,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string prevsnapshot = default,
+                System.Uri prevSnapshotUrl = default,
                 string range = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -9044,6 +9225,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.ToString()); }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -9058,9 +9240,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.GetPageRangesDiffAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesDiffAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9101,7 +9285,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9121,6 +9305,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9141,6 +9326,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9165,6 +9351,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -9184,7 +9371,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ResizeAsync_CreateResponse(_response);
+                        return ResizeAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9210,6 +9397,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9226,6 +9414,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9259,6 +9448,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9271,9 +9461,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.ResizeAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9308,7 +9500,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9385,7 +9577,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UpdateSequenceNumberAsync_CreateResponse(_response);
+                        return UpdateSequenceNumberAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9466,9 +9658,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9503,7 +9697,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9574,7 +9768,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CopyIncrementalAsync_CreateResponse(_response);
+                        return CopyIncrementalAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9653,9 +9847,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.CopyIncrementalAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyIncrementalAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9694,7 +9890,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9729,6 +9925,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9756,6 +9953,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9787,6 +9985,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -9806,7 +10005,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9839,6 +10038,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9862,6 +10062,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9907,6 +10108,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9919,9 +10121,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9950,6 +10154,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -9964,7 +10172,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9989,6 +10197,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -10014,6 +10223,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -10043,6 +10253,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -10062,7 +10273,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AppendBlockAsync_CreateResponse(_response);
+                        return AppendBlockAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10093,6 +10304,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -10114,6 +10326,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -10155,6 +10368,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -10170,9 +10384,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.AppendBlockAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.AppendBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10217,6 +10433,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -10227,7 +10447,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -10251,6 +10471,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
@@ -10282,6 +10503,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
@@ -10317,6 +10539,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         leaseId,
                         maxSize,
                         appendPosition,
@@ -10343,7 +10566,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AppendBlockFromUriAsync_CreateResponse(_response);
+                        return AppendBlockFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10373,6 +10596,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
@@ -10400,6 +10624,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
@@ -10448,6 +10673,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10467,9 +10693,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.AppendBlockFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10510,6 +10738,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
@@ -10530,7 +10762,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {
@@ -10538,7 +10770,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -10575,6 +10807,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10605,6 +10838,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -10639,6 +10873,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         tier,
                         ifModifiedSince,
                         ifUnmodifiedSince,
@@ -10659,7 +10894,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadAsync_CreateResponse(_response);
+                        return UploadAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10694,6 +10929,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10720,6 +10956,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -10771,6 +11008,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10787,9 +11025,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.UploadAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.UploadAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10818,6 +11058,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -10832,7 +11076,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -10856,6 +11100,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -10876,6 +11121,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "BlockBlobClient.StageBlock",
@@ -10900,6 +11146,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         requestId))
                     {
                         if (async)
@@ -10915,7 +11162,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StageBlockAsync_CreateResponse(_response);
+                        return StageBlockAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10945,6 +11192,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockAsync Message.</returns>
             internal static Azure.Core.HttpMessage StageBlockAsync_CreateMessage(
@@ -10961,6 +11209,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string requestId = default)
             {
                 // Validation
@@ -11001,6 +11250,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
@@ -11012,9 +11262,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.StageBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11039,6 +11291,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -11049,7 +11305,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11073,6 +11329,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11098,6 +11355,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -11127,6 +11385,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         leaseId,
                         sourceIfModifiedSince,
                         sourceIfUnmodifiedSince,
@@ -11147,7 +11406,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StageBlockFromUriAsync_CreateResponse(_response);
+                        return StageBlockFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11177,6 +11436,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11198,6 +11458,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -11244,6 +11505,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11257,9 +11519,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11284,6 +11548,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -11300,7 +11568,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {
@@ -11308,7 +11576,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11337,6 +11605,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11367,6 +11636,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -11401,6 +11671,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         tier,
                         ifModifiedSince,
                         ifUnmodifiedSince,
@@ -11421,7 +11692,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CommitBlockListAsync_CreateResponse(_response);
+                        return CommitBlockListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11456,6 +11727,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11482,6 +11754,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -11533,6 +11806,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11553,9 +11827,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.CommitBlockListAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CommitBlockListAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11584,6 +11860,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -11598,7 +11878,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11663,7 +11943,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetBlockListAsync_CreateResponse(_response);
+                        return GetBlockListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11732,9 +12012,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.GetBlockListAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.GetBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> GetBlockListAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11779,7 +12061,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11882,7 +12164,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11981,9 +12263,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12018,7 +12302,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12137,7 +12421,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenameAsync_CreateResponse(_response);
+                        return RenameAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12263,9 +12547,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.RenameAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.RenameAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult> RenameAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12304,7 +12590,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12381,7 +12667,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12465,9 +12751,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.DeleteAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult> DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12494,7 +12782,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12577,7 +12865,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessControlAsync_CreateResponse(_response);
+                        return SetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12664,9 +12952,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.SetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult> SetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12697,7 +12987,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12771,7 +13061,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessControlAsync_CreateResponse(_response);
+                        return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12853,9 +13143,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.GetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.GetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult> GetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12906,7 +13198,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -13560,6 +13852,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlobAppendInfo instances.
         /// You can use BlobsModelFactory.BlobAppendInfo instead.
         /// </summary>
@@ -13582,7 +13879,8 @@ namespace Azure.Storage.Blobs.Models
             string blobAppendOffset,
             int blobCommittedBlockCount,
             bool isServerEncrypted,
-            string encryptionKeySha256)
+            string encryptionKeySha256,
+            string encryptionScope)
         {
             return new BlobAppendInfo()
             {
@@ -13594,6 +13892,7 @@ namespace Azure.Storage.Blobs.Models
                 BlobCommittedBlockCount = blobCommittedBlockCount,
                 IsServerEncrypted = isServerEncrypted,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
             };
         }
     }
@@ -13989,6 +14288,16 @@ namespace Azure.Storage.Blobs.Models
         public bool? HasLegalHold { get; internal set; }
 
         /// <summary>
+        /// DefaultEncryptionScope
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// DenyEncryptionScopeOverride
+        /// </summary>
+        public bool? PreventEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag ETag { get; internal set; }
@@ -14063,6 +14372,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.HasLegalHold = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("DefaultEncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.DefaultEncryptionScope = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DenyEncryptionScopeOverride", ""));
+            if (_child != null)
+            {
+                _value.PreventEncryptionScopeOverride = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -14095,25 +14414,29 @@ namespace Azure.Storage.Blobs.Models
         public static BlobContainerProperties BlobContainerProperties(
             System.DateTimeOffset lastModified,
             Azure.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
-            bool? hasImmutabilityPolicy = default,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             bool? hasLegalHold = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
+            string defaultEncryptionScope = default,
+            bool? preventEncryptionScopeOverride = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default,
+            bool? hasImmutabilityPolicy = default)
         {
             return new BlobContainerProperties()
             {
                 LastModified = lastModified,
                 ETag = eTag,
-                LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 PublicAccess = publicAccess,
-                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
                 HasLegalHold = hasLegalHold,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
                 Metadata = metadata,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
         }
     }
@@ -14266,6 +14589,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
@@ -14290,6 +14618,7 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             string encryptionKeySha256,
+            string encryptionScope,
             long blobSequenceNumber)
         {
             return new BlobContentInfo()
@@ -14298,6 +14627,7 @@ namespace Azure.Storage.Blobs.Models
                 LastModified = lastModified,
                 ContentHash = contentHash,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
                 BlobSequenceNumber = blobSequenceNumber,
             };
         }
@@ -14932,6 +15262,11 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet { get; } = new BlobErrorCode(@"MaxBlobSizeConditionNotMet");
 
         /// <summary>
+        /// NoAuthenticationInformation
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoAuthenticationInformation { get; } = new BlobErrorCode(@"NoAuthenticationInformation");
+
+        /// <summary>
         /// NoPendingCopyOperation
         /// </summary>
         public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { get; } = new BlobErrorCode(@"NoPendingCopyOperation");
@@ -15548,6 +15883,11 @@ namespace Azure.Storage.Blobs.Models
         public string CustomerProvidedKeySha256 { get; internal set; }
 
         /// <summary>
+        /// The name of the encryption scope under which the blob is encrypted.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag? ETag { get; internal set; }
@@ -15718,6 +16058,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.CustomerProvidedKeySha256 = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("EncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.EncryptionScope = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -15760,7 +16105,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            System.Uri copySource = default,
+            string copyProgress = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -15774,8 +16119,8 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             string copyId = default,
             Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
+            System.Uri copySource = default,
             long? contentLength = default,
-            string copyProgress = default,
             string copyStatusDescription = default,
             bool? serverEncrypted = default,
             bool? incrementalCopy = default,
@@ -15785,6 +16130,7 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset? lastModified = default,
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
+            string encryptionScope = default,
             Azure.ETag? eTag = default,
             System.DateTimeOffset? createdOn = default,
             System.DateTimeOffset? copyCompletedOn = default,
@@ -15794,7 +16140,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                CopySource = copySource,
+                CopyProgress = copyProgress,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -15808,8 +16154,8 @@ namespace Azure.Storage.Blobs.Models
                 LeaseDuration = leaseDuration,
                 CopyId = copyId,
                 CopyStatus = copyStatus,
+                CopySource = copySource,
                 ContentLength = contentLength,
-                CopyProgress = copyProgress,
                 CopyStatusDescription = copyStatusDescription,
                 ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
@@ -15819,6 +16165,7 @@ namespace Azure.Storage.Blobs.Models
                 LastModified = lastModified,
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
                 ETag = eTag,
                 CreatedOn = createdOn,
                 CopyCompletedOn = copyCompletedOn,
@@ -16202,6 +16549,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts. For a list of allowed premium page blob tiers, see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/premium-storage#features. For blob storage LRS accounts, valid values are Hot/Cool/Archive.
         /// </summary>
         public string AccessTier { get; internal set; }
@@ -16240,28 +16592,29 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobProperties BlobProperties(
             System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             Azure.Storage.Blobs.Models.LeaseState leaseState,
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
-            string destinationSnapshot,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             Azure.ETag eTag,
             byte[] contentHash,
             string contentEncoding,
             string contentDisposition,
             string contentLanguage,
-            bool isIncrementalCopy,
+            string destinationSnapshot,
             string cacheControl,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            bool isIncrementalCopy,
             long blobSequenceNumber,
-            System.Uri copySource,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             string acceptRanges,
-            string copyProgress,
+            System.Uri copySource,
             int blobCommittedBlockCount,
-            string copyId,
+            string copyProgress,
             bool isServerEncrypted,
-            string copyStatusDescription,
+            string copyId,
             string encryptionKeySha256,
+            string copyStatusDescription,
+            string encryptionScope,
             System.DateTimeOffset copyCompletedOn,
             string accessTier,
             Azure.Storage.Blobs.Models.BlobType blobType,
@@ -16275,28 +16628,29 @@ namespace Azure.Storage.Blobs.Models
             return new BlobProperties()
             {
                 LastModified = lastModified,
-                LeaseDuration = leaseDuration,
                 LeaseState = leaseState,
                 LeaseStatus = leaseStatus,
                 ContentLength = contentLength,
-                DestinationSnapshot = destinationSnapshot,
+                LeaseDuration = leaseDuration,
                 ETag = eTag,
                 ContentHash = contentHash,
                 ContentEncoding = contentEncoding,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
-                IsIncrementalCopy = isIncrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
                 CacheControl = cacheControl,
-                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
                 BlobSequenceNumber = blobSequenceNumber,
-                CopySource = copySource,
+                CopyStatus = copyStatus,
                 AcceptRanges = acceptRanges,
-                CopyProgress = copyProgress,
+                CopySource = copySource,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
-                CopyId = copyId,
+                CopyProgress = copyProgress,
                 IsServerEncrypted = isServerEncrypted,
-                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
                 EncryptionKeySha256 = encryptionKeySha256,
+                CopyStatusDescription = copyStatusDescription,
+                EncryptionScope = encryptionScope,
                 CopyCompletedOn = copyCompletedOn,
                 AccessTier = accessTier,
                 BlobType = blobType,
@@ -17243,6 +17597,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlockInfo instances.
         /// You can use BlobsModelFactory.BlockInfo instead.
         /// </summary>
@@ -17260,13 +17619,15 @@ namespace Azure.Storage.Blobs.Models
         public static BlockInfo BlockInfo(
             byte[] contentHash,
             byte[] contentCrc64,
-            string encryptionKeySha256)
+            string encryptionKeySha256,
+            string encryptionScope)
         {
             return new BlockInfo()
             {
                 ContentHash = contentHash,
                 ContentCrc64 = contentCrc64,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
             };
         }
     }
@@ -18052,6 +18413,16 @@ namespace Azure.Storage.Blobs.Models
         public bool HasLegalHold { get; internal set; }
 
         /// <summary>
+        /// The default encryption scope for the container.
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether the container's default encryption scope can be overriden.
+        /// </summary>
+        public bool DenyEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
         /// Creates a new FlattenedContainerItem instance
         /// </summary>
         public FlattenedContainerItem()
@@ -18208,6 +18579,11 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
 
         /// <summary>
         /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
@@ -18709,6 +19085,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PageInfo instances.
         /// You can use BlobsModelFactory.PageInfo instead.
         /// </summary>
@@ -18729,7 +19110,8 @@ namespace Azure.Storage.Blobs.Models
             byte[] contentHash,
             byte[] contentCrc64,
             long blobSequenceNumber,
-            string encryptionKeySha256)
+            string encryptionKeySha256,
+            string encryptionScope)
         {
             return new PageInfo()
             {
@@ -18739,6 +19121,7 @@ namespace Azure.Storage.Blobs.Models
                 ContentCrc64 = contentCrc64,
                 BlobSequenceNumber = blobSequenceNumber,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
             };
         }
     }
@@ -19195,6 +19578,11 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the metadata. This header is only returned when the metadata was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of SetMetadataOperation instances.

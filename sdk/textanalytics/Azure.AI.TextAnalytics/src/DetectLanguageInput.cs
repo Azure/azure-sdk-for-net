@@ -12,6 +12,12 @@ namespace Azure.AI.TextAnalytics
     public class DetectLanguageInput
     {
         /// <summary>
+        /// A wildcard that allows to set CountryHint to None
+        /// so the servide model doesn't use any default CountryHint.
+        /// </summary>
+        public const string None = "";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DetectLanguageInput"/>
         /// class.
         /// </summary>
@@ -26,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the unique, non-empty identifier for this input document.
+        /// Gets the unique, non-empty identifier for this document.
         /// </summary>
         public string Id { get; }
 
@@ -34,9 +40,8 @@ namespace Azure.AI.TextAnalytics
         /// Gets or sets a hint to assist the text analytics model in predicting
         /// the language the document is written in.  If unspecified, this value
         /// will be set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="None"/>.
         /// </summary>
         public string CountryHint { get; set; }
 

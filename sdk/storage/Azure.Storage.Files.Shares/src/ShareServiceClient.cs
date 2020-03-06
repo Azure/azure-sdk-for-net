@@ -480,7 +480,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Service.GetPropertiesOperationName,
+                        operationName: $"{nameof(ShareServiceClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -604,7 +604,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         properties: properties,
                         async: async,
-                        operationName: Constants.File.Service.SetPropertiesOperationName,
+                        operationName: $"{nameof(ShareServiceClient)}.{nameof(SetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

@@ -29,11 +29,11 @@ namespace Azure.Identity.Tests.Mock
         }
         public Func<MsiType> MsiTypeFactory { get; set; }
 
-        public Func<ExtendedAccessToken> TokenFactory { get; set; }
+        public Func<AccessToken> TokenFactory { get; set; }
 
         public Func<CancellationToken, bool> ImdsAvailableFunc { get; set; }
 
-        public override ExtendedAccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
+        public override AccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
         {
             if (TokenFactory != null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Identity.Tests.Mock
             return base.Authenticate(scopes, cancellationToken);
         }
 
-        public override Task<ExtendedAccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
+        public override Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
         {
             if (TokenFactory != null)
             {

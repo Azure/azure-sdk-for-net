@@ -143,7 +143,7 @@ foreach (SecretProperties secretProperties in response)
 
 ## Handling exceptions
 
-When request fails the `RequestFailedException` is thrown by client methods. The exception exposes HTTP status code as the `Status` property and service specific `ErrorCode`.
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try

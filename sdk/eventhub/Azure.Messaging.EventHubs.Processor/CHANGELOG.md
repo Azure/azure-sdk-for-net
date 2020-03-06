@@ -1,6 +1,10 @@
 # Release History
 
-## 5.0.0
+## 5.1.0-preview.1 (Unreleased)
+
+Release notes will be provided here when the final set of features for the release is available.
+
+## 5.0.1
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
@@ -10,7 +14,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### General
 
-- A migration guide is now available for those moving from the 4.x version of the `Microsoft.Azure.EventHubs` libraries to the 5.0.0 version under the `Azure.Messaging.EventHubs` namespace.
+- A migration guide is now available for those moving from the 4.x version of the `Microsoft.Azure.EventHubs` libraries to the 5.0.1 version under the `Azure.Messaging.EventHubs` namespace.
 
 #### Organization and naming
 
@@ -32,7 +36,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ## 5.0.0-preview.6
 
-### Acknowledgments 
+### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 

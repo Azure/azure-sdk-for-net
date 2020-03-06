@@ -6,7 +6,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - Reading and processing events across all partitions of an Event Hub at scale with resilience to transient failures and intermittent network issues.
 
-- Procesing events cooperatively, where multiple processors dynamically distribute and share the responsibility in the context of a consumer group, gracefully managing the load as processors are added and removed from the group.
+- Processing events cooperatively, where multiple processors dynamically distribute and share the responsibility in the context of a consumer group, gracefully managing the load as processors are added and removed from the group.
 
 - Managing checkpoints and state for processing in a durable manner using Azure Storage blobs as the underlying data store.
 

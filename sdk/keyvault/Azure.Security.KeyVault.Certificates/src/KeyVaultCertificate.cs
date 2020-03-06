@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Certificates
                     break;
 
                 case CERPropertyName:
-                    Cer = Base64Url.Decode(prop.Value.GetString());
+                    Cer = prop.Value.GetBytesFromBase64();
                     break;
 
                 default:

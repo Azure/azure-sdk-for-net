@@ -7,7 +7,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-d370fd71bd437743b94d1d7e51afef5e-8ec3e7b19dd0d543-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "4a8d2cb8-d47f-80b6-86cd-6cd1a8d66ce8",
@@ -30,12 +30,12 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://jolovstorage.queue.core.windows.net/?comp=list\u0026prefix=aaa",
+      "RequestUri": "http://jolovstorage.queue.core.windows.net/?comp=list&prefix=aaa",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "9fb27e1b-947b-f509-5d36-07ab6b82593b",
@@ -57,7 +57,7 @@
         "x-ms-request-id": "8cb39014-0003-0068-1a6c-84affe000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://jolovstorage.queue.core.windows.net/\u0022\u003E\u003CPrefix\u003Eaaa\u003C/Prefix\u003E\u003CQueues\u003E\u003CQueue\u003E\u003CName\u003Eaaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89\u003C/Name\u003E\u003C/Queue\u003E\u003C/Queues\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"http://jolovstorage.queue.core.windows.net/\"><Prefix>aaa</Prefix><Queues><Queue><Name>aaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89</Name></Queue></Queues><NextMarker /></EnumerationResults>"
     },
     {
       "RequestUri": "http://jolovstorage.queue.core.windows.net/aaatest-queue-026f4a1d-06a6-69ea-1013-f96bcc09de89",
@@ -66,7 +66,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-bd7d76315180ac4da53d99d6d96b58a8-25efe0f317b7934d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1\u002B57ef4720914a34ab66322af016d927dc4992c5c9",
+          "azsdk-net-Storage.Queues/12.0.0-dev.20191016.1+57ef4720914a34ab66322af016d927dc4992c5c9",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2ab553bc-cc24-f46c-5267-075d47f4da74",
@@ -91,6 +91,6 @@
   ],
   "Variables": {
     "RandomSeed": "36925754",
-    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttp://jolovstorage.blob.core.windows.net\nhttp://jolovstorage.file.core.windows.net\nhttp://jolovstorage.queue.core.windows.net\nhttp://jolovstorage.table.core.windows.net\n\n\n\n\nhttp://jolovstorage-secondary.blob.core.windows.net\n\nhttp://jolovstorage-secondary.queue.core.windows.net\nhttp://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://jolovstorage.blob.core.windows.net/;QueueEndpoint=http://jolovstorage.queue.core.windows.net/;TableEndpoint=http://jolovstorage.table.core.windows.net/;FileEndpoint=http://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=http://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://jolovstorage-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://jolovstorage-secondary.table.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttp://jolovstorage.blob.core.windows.net\nhttp://jolovstorage.file.core.windows.net\nhttp://jolovstorage.queue.core.windows.net\nhttp://jolovstorage.table.core.windows.net\n\n\n\n\nhttp://jolovstorage-secondary.blob.core.windows.net\n\nhttp://jolovstorage-secondary.queue.core.windows.net\nhttp://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://jolovstorage.blob.core.windows.net/;QueueEndpoint=http://jolovstorage.queue.core.windows.net/;TableEndpoint=http://jolovstorage.table.core.windows.net/;FileEndpoint=http://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=http://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://jolovstorage-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://jolovstorage-secondary.table.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized\nseanscope1"
   }
 }

@@ -17,10 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizePiiEntitiesBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             var inputs = new List<string>
             {
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
@@ -37,11 +37,11 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizePiiEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies were" : "y was")} found:");
+                Debug.WriteLine($"the following {result.Entities.Count()} PII entit{(result.Entities.Count() > 1 ? "ies were" : "y was")} found:");
 
-                foreach (NamedEntity entity in result.NamedEntities)
+                foreach (PiiEntity entity in result.Entities)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
                 }
             }
         }

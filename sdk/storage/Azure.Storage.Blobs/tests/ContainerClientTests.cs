@@ -276,6 +276,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = TestConfigDefault.EncryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobContainerClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
+        }
+
+        [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -427,6 +445,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        [Ignore("#10044: Re-enable failing Storage tests")]
+        public async Task CreateAsync_EncryptionScopeOptions()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = new BlobContainerEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigDefault.EncryptionScope,
+                PreventEncryptionScopeOverride  = true
+            };
+
+            // Act
+            await container.CreateAsync(encryptionScopeOptions: encryptionScopeOptions);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
         public async Task CreateAsync_PublicAccess()
         {
             // Arrange
@@ -456,7 +495,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.CreateAsync(),
-                e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode));
 
             // Cleanup
             await container.DeleteAsync();
@@ -500,6 +539,20 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            BlobContainerClient unauthorizedContainer = InstrumentClient(new BlobContainerClient(container.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedContainer.CreateIfNotExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [Test]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -524,7 +577,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -678,7 +731,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedContainerClient.ExistsAsync(),
-                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
@@ -690,7 +743,21 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.PublicAccess);
+            Assert.IsNotNull(response.Value.LastModified);
+            Assert.IsNotNull(response.Value.LeaseStatus);
+            Assert.IsNotNull(response.Value.LeaseState);
+            Assert.IsNotNull(response.Value.LeaseDuration);
+            Assert.IsNotNull(response.Value.PublicAccess);
+            Assert.IsNotNull(response.Value.HasImmutabilityPolicy);
+            Assert.IsNotNull(response.Value.HasLegalHold);
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.Metadata);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
+            {
+                Assert.IsNotNull(response.Value.DefaultEncryptionScope);
+                Assert.IsNotNull(response.Value.PreventEncryptionScopeOverride);
+            }
         }
 
         [Test]
@@ -703,7 +770,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetPropertiesAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -733,7 +800,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -854,7 +921,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.Container.GetAccessPolicyAsync(conditions: leaseAccessConditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
         }
 
         [Test]
@@ -867,7 +934,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetAccessPolicyAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -910,7 +977,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetAccessPolicyAsync(permissions: signedIdentifiers),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1018,7 +1085,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration: duration),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1111,7 +1178,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).ReleaseAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1205,7 +1272,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).ReleaseAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1296,7 +1363,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient()).BreakAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1393,7 +1460,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(container.GetBlobLeaseClient(id)).ChangeAsync(id),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1520,6 +1587,25 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task ListBlobsFlatSegmentAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+
+            await blob.CreateAsync();
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, blobs.First().Properties.EncryptionScope);
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
@@ -1622,7 +1708,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsAsync().ToListAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1718,6 +1804,24 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertMetadataEquality(metadata, item.Blob.Metadata);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task ListBlobsHierarchySegmentAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, item.Blob.Properties.EncryptionScope);
         }
 
         [Test]
@@ -1824,7 +1928,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsByHierarchyAsync().ToListAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1911,7 +2015,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteBlobIfExistsAsync(GetNewBlobName()),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         #region Secondary Storage

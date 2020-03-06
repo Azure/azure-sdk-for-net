@@ -1,6 +1,6 @@
 # Azure Storage Files Data Lake client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07 and 2019-02-02
 
 Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists, 
 and analysts to store data of any size, shape, and speed, and do all types of processing and analytics 
@@ -16,7 +16,7 @@ while making it faster to get up and running with batch, streaming, and interact
 Install the Azure Storage Files Data Lake client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.8
+dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.9
 ```
 
 ### Prerequisites

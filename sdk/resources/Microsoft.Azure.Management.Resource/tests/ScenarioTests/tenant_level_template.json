@@ -8,7 +8,7 @@
     },
     "subscriptionId": {
       "type": "string",
-      "defaultValue": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
+      "defaultValue": "afe8f803-7190-48e3-b41a-bc454e8aad1a"
     },
     "roleDefinitionId": {
       "type": "string",

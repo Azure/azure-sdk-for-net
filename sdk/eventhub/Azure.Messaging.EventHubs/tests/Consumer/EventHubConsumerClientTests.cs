@@ -1748,14 +1748,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
             var publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
             var options = new ReadEventOptions { MaximumWaitTime = maxWaitTime };
-            var transportConsumer = new PublishingTransportConsumerMock(events, () => publishDelay);
-            var mockConnection = new MockConnection(() => transportConsumer);
+            var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events, () => publishDelay));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
             var receivedEvents = new List<EventData>();
             var consecutiveEmptyCount = 0;
 
             var partitions = await mockConnection.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>());
             var thresholdModifier = 2 * partitions.Length;
+            var expectedEventCount = (events.Count * partitions.Length);
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(100));
 
@@ -1775,21 +1775,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(receivedEvents.Count, Is.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * thresholdModifier), "There should be empty events present due to the wait time.");
-            Assert.That(receivedEvents.Where(item => item != null).Count(), Is.EqualTo(events.Count), "The received event count should match the published events when empty events are removed.");
+            Assert.That(receivedEvents.Where(item => item != null).Count(), Is.EqualTo(expectedEventCount), "The received event count should match the published events when empty events are removed.");
 
             // Validate that each message received appeared in the source set once.
 
-            var sourceEventMessages = new HashSet<string>();
+            var receivedEventMessages = new HashSet<string>();
 
-            foreach (var message in events.Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            foreach (var message in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
             {
-                sourceEventMessages.Add(message);
+                receivedEventMessages.Add(message);
             }
 
-            foreach (var receivedMessage in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            foreach (var sourceMessage in events.Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
             {
-                Assert.That(sourceEventMessages.Contains(receivedMessage), $"The message: { receivedEvents } was not in the source set or has appeared more than once.");
-                sourceEventMessages.Remove(receivedMessage);
+                Assert.That(receivedEventMessages.Contains(sourceMessage), $"The message: { sourceMessage } was not received.");
             }
         }
 
@@ -2311,7 +2310,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
+            public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
             {
                 var stopWatch = Stopwatch.StartNew();
                 PublishDelayCallback?.Invoke();
@@ -2319,7 +2318,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (((maximumWaitTime.HasValue) && (stopWatch.Elapsed >= maximumWaitTime)) || (PublishIndex >= EventsToPublish.Count))
                 {
-                    return Task.FromResult(Enumerable.Empty<EventData>());
+                    // Delay execution in this path to prevent a tight loop, starving other Tasks.
+
+                    await Task.Delay(100).ConfigureAwait(false);
+
+                    return Enumerable.Empty<EventData>();
                 }
 
                 var index = PublishIndex;
@@ -2333,7 +2336,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 PublishIndex = (index + maximumMessageCount);
                 var source = EventsToPublish.Skip(index).Take(maximumMessageCount).ToList();
 
-                return Task.FromResult((IEnumerable<EventData>)source);
+                return (IEnumerable<EventData>)source;
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
