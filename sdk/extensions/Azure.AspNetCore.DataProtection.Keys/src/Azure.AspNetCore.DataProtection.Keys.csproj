@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Microsoft Azure Key Vault key encryption support.</Description>
     <PackageTags>aspnetcore;dataprotection;azure;keyvault</PackageTags>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-preview.2</Version>
     <EnableApiCompat>false</EnableApiCompat>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);AZC0102</NoWarn>
