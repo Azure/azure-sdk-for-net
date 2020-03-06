@@ -24,10 +24,15 @@ namespace Azure.Identity
         private const string AzureCliTimeoutError = "Azure CLI authentication timed out.";
         private const int CliProcessTImeoutMs = 10000;
         private readonly string _workingDir;
+        private readonly string _path;
 
-        public AzureCliCredentialClient(string path = default)
+        // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
+        private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
+        private const string DefaultPath = "/usr/bin:/usr/local/bin";
+
+        public AzureCliCredentialClient()
         {
-            _workingDir = GetSafeWorkingDirectory();
+            (_path, _workingDir) = GetSafePathAndWorkingDirectory();
         }
 
         public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
@@ -100,7 +105,8 @@ namespace Azure.Identity
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 CreateNoWindow = true,
-                WorkingDirectory = _workingDir
+                WorkingDirectory = _workingDir,
+                Environment = { { "PATH", _path } }
             };
 
             return isAsync ? await RunProcessAsync(isAsync, procStartInfo, cancellationToken).ConfigureAwait(false) : RunProcessAsync(isAsync, procStartInfo, cancellationToken).GetAwaiter().GetResult();
@@ -148,9 +154,18 @@ namespace Azure.Identity
             }
         }
 
-        private static string GetSafeWorkingDirectory()
+        private static (string, string) GetSafePathAndWorkingDirectory()
         {
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? EnvironmentVariables.Path?.Split(';')?[0] : EnvironmentVariables.Path?.Split(':')?[0];
+            string path = EnvironmentVariables.Path;
+
+            if (string.IsNullOrEmpty(path))
+            {
+                path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPath;
+            }
+
+            string workingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? path.Split(';')?[0] : path.Split(':')?[0];
+
+            return (path, workingDir);
         }
     }
 }

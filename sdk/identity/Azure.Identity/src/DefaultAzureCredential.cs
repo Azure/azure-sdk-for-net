@@ -184,9 +184,9 @@ namespace Azure.Identity
                 chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheTenantId, options.SharedTokenCacheUsername);
             }
 
-            if (!options.ExcludeDeveloperCredential)
+            if (!options.ExcludeAzureCliCredential)
             {
-                chain[i++] = factory.CreateDeveloperCredential();
+                chain[i++] = factory.CreateAzureCliCredential();
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

@@ -13,7 +13,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
     /// </summary>
-    public class AzureCliCredential : TokenCredential
+    internal class AzureCliCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
         private readonly AzureCliCredentialClient _client;

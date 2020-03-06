@@ -17,5 +17,8 @@ namespace Azure.Identity
         public static string MsiSecret => Environment.GetEnvironmentVariable("MSI_SECRET");
 
         public static string Path => Environment.GetEnvironmentVariable("PATH");
+
+        public static string ProgramFilesX86 => Environment.GetEnvironmentVariable("ProgramFiles(x86)");
+        public static string ProgramFiles => Environment.GetEnvironmentVariable("ProgramFiles");
     }
 }
