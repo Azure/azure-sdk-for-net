@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
 
         /// <summary>The amount of time to wait for messages when reading.</summary>
-        private TimeSpan _defaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(60);
+        private TimeSpan? _defaultMaximumReceiveWaitTime = TimeSpan.FromSeconds(60);
 
         /// <summary>The prefetch count to use for the partition receiver.</summary>
         private int _prefetchCount = 300;
@@ -63,13 +63,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   messages that were read will be returned.
         /// </summary>
         ///
-        public TimeSpan DefaultMaximumReceiveWaitTime
+        public TimeSpan? DefaultMaximumReceiveWaitTime
         {
             get => _defaultMaximumReceiveWaitTime;
 
             set
             {
-                Argument.AssertNotNegative(value, nameof(DefaultMaximumReceiveWaitTime));
+                if (value.HasValue)
+                {
+                    Argument.AssertNotNegative(value.Value, nameof(DefaultMaximumReceiveWaitTime));
+                }
+
                 _defaultMaximumReceiveWaitTime = value;
             }
         }
