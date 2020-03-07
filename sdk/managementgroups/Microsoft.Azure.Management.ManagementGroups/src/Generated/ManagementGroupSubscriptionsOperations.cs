@@ -52,6 +52,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// Associates existing subscription with the management group.
+        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -183,7 +184,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -229,6 +230,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// De-associates subscription from the management group.
+        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -360,7 +362,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

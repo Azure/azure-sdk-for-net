@@ -64,9 +64,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         /// <remarks>
         /// The fully qualified resource type which includes provider namespace
-        /// (e.g. /providers/Microsoft.Management/managementGroups). Possible
-        /// values include: '/providers/Microsoft.Management/managementGroups',
-        /// '/subscriptions'
+        /// (e.g. Microsoft.Management/managementGroups). Possible values
+        /// include: 'Microsoft.Management/managementGroups', '/subscriptions'
         /// </remarks>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
