@@ -61,7 +61,7 @@
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
-            "apiVersion": "2019-02-01-preview",
+            "apiVersion": "2019-10-01",
             "name": "[variables('uniqueAzConfigName')]",
             "location": "[parameters('location')]",
             "sku": {
