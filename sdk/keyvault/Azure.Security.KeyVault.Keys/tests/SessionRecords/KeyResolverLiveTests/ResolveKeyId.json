@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067/create?api-version=7.0",
+      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067/create?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -61,7 +61,7 @@
       }
     },
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067/35793aefd0ab4419ac9b4305571f2367?api-version=7.0",
+      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067/35793aefd0ab4419ac9b4305571f2367?api-version=7.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -118,7 +118,7 @@
       }
     },
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067/35793aefd0ab4419ac9b4305571f2367/unwrapKey?api-version=7.0",
+      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067/35793aefd0ab4419ac9b4305571f2367/unwrapKey?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -161,7 +161,7 @@
       }
     },
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067?api-version=7.0",
+      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/121571067?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -221,7 +221,7 @@
       }
     },
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/deletedkeys/121571067?api-version=7.0",
+      "RequestUri": "https://dotnettestvault.vault.azure.net/deletedkeys/121571067?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
