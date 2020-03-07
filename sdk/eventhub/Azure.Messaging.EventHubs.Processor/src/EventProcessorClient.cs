@@ -222,11 +222,22 @@ namespace Azure.Messaging.EventHubs
                     return _isRunningOverride.Value;
                 }
 
-                // Capture the load balancing task so we don't end up with a race condition.
+                if (ActiveLoadBalancingTask == null)
+                {
+                    try
+                    {
+                        if (!RunningTaskSemaphore.Wait(100))
+                        {
+                            return false;
+                        }
+                    }
+                    finally
+                    {
+                        RunningTaskSemaphore.Release();
+                    }
+                }
 
-                var loadBalancingTask = ActiveLoadBalancingTask;
-
-                return loadBalancingTask != null && !loadBalancingTask.IsCompleted;
+                return (!ActiveLoadBalancingTask?.IsCompleted) ?? false;
             }
 
             protected set => _isRunningOverride = value;
@@ -961,9 +972,9 @@ namespace Azure.Messaging.EventHubs
                 }
             }
 
-            var tokenSource = CancellationTokenSource.CreateLinkedTokenSource(RunningTaskTokenSource.Token);
-            var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, tokenSource.Token);
+            var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, RunningTaskTokenSource.Token);
 
+            var tokenSource = CancellationTokenSource.CreateLinkedTokenSource(RunningTaskTokenSource.Token);
             ActivePartitionProcessors[partitionId] = (processingTask, tokenSource);
             Logger.StartPartitionProcessingComplete(Identifier);
         }
