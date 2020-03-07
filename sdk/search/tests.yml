@@ -10,4 +10,5 @@ resources:
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
+    ExcludeTrack1: true
     ServiceDirectory: search
