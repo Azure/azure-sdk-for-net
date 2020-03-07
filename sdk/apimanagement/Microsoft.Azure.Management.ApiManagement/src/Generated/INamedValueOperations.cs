@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.ApiManagement
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,20 +20,23 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// IdentityProviderOperations operations.
+    /// NamedValueOperations operations.
     /// </summary>
-    public partial interface IIdentityProviderOperations
+    public partial interface INamedValueOperations
     {
         /// <summary>
-        /// Lists a collection of Identity Provider configured in the specified
-        /// service instance.
-        /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-aad#how-to-authorize-developer-accounts-using-azure-active-directory" />
+        /// Lists a collection of NamedValues defined within a service
+        /// instance.
+        /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,10 +53,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IdentityProviderContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NamedValueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the entity state (Etag) version of the identityProvider
-        /// specified by its identifier.
+        /// Gets the entity state (Etag) version of the NamedValue specified by
+        /// its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -60,9 +64,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='identityProviderName'>
-        /// Identity Provider Type identifier. Possible values include:
-        /// 'facebook', 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,10 +79,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<IdentityProviderGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string identityProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<NamedValueGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the configuration details of the identity Provider configured
-        /// in specified service instance.
+        /// Gets the details of the NamedValue specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -87,9 +89,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='identityProviderName'>
-        /// Identity Provider Type identifier. Possible values include:
-        /// 'facebook', 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,9 +107,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IdentityProviderContract,IdentityProviderGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string identityProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamedValueContract,NamedValueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or Updates the IdentityProvider configuration.
+        /// Creates or updates a NamedValue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -116,9 +117,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='identityProviderName'>
-        /// Identity Provider Type identifier. Possible values include:
-        /// 'facebook', 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='parameters'>
         /// Create parameters.
@@ -142,9 +142,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IdentityProviderContract,IdentityProviderCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderCreateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamedValueContract,NamedValueCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing IdentityProvider configuration.
+        /// Updates the specific NamedValue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -152,9 +152,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='identityProviderName'>
-        /// Identity Provider Type identifier. Possible values include:
-        /// 'facebook', 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='parameters'>
         /// Update parameters.
@@ -173,12 +172,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string identityProviderName, IdentityProviderUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamedValueContract,NamedValueUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified identity provider configuration.
+        /// Deletes specific NamedValue from the API Management service
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -186,9 +189,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='identityProviderName'>
-        /// Identity Provider Type identifier. Possible values include:
-        /// 'facebook', 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from
@@ -207,9 +209,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string identityProviderName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the client secret details of the Identity Provider.
+        /// Gets the secret value of the NamedValue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -217,9 +219,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='identityProviderName'>
-        /// Identity Provider Type identifier. Possible values include:
-        /// 'facebook', 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -236,11 +237,82 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ClientSecretContract>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string identityProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PropertyValueContract>> ListValueWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists a collection of Identity Provider configured in the specified
-        /// service instance.
-        /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-aad#how-to-authorize-developer-accounts-using-azure-active-directory" />
+        /// Creates or updates a NamedValue.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
+        /// </param>
+        /// <param name='parameters'>
+        /// Create parameters.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. Not required when creating an entity, but
+        /// required when updating an entity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<NamedValueContract,NamedValueCreateOrUpdateHeaders>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the specific NamedValue.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update parameters.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. ETag should match the current entity state from
+        /// the header response of the GET request or it should be * for
+        /// unconditional update.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<NamedValueContract,NamedValueUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists a collection of NamedValues defined within a service
+        /// instance.
+        /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -260,6 +332,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IdentityProviderContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NamedValueContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

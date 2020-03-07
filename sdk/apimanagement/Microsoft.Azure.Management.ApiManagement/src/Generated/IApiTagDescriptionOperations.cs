@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance. Non-current revision has ;rev=n as a
         /// suffix where n is the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for
+        /// API/Tag association. Based on API and Tag names.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<ApiTagDescriptionGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<ApiTagDescriptionGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get Tag description in scope of API
         /// </summary>
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance. Non-current revision has ;rev=n as a
         /// suffix where n is the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for
+        /// API/Tag association. Based on API and Tag names.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create/Update tag description in scope of the Api.
         /// </summary>
@@ -139,9 +139,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance. Non-current revision has ;rev=n as a
         /// suffix where n is the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for
+        /// API/Tag association. Based on API and Tag names.
         /// </param>
         /// <param name='parameters'>
         /// Create parameters.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, TagDescriptionCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete tag description for the Api.
         /// </summary>
@@ -180,9 +180,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance. Non-current revision has ;rev=n as a
         /// suffix where n is the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management
-        /// service instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for
+        /// API/Tag association. Based on API and Tag names.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all Tags descriptions in scope of API. Model similar to
         /// swagger - tagDescription is defined on API level but tag may be
