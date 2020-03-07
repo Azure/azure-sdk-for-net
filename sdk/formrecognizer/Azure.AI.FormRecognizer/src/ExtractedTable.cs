@@ -23,6 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         // TODO: implement table indexer
         // TODO: Handling column-span?
+        // https://github.com/Azure/azure-sdk-for-net/issues/9975
 
 
 #pragma warning disable CA1822 // Mark as static

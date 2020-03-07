@@ -8,7 +8,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    // TODO: Make ModelsSummary Internal!
     [CodeGenSchema("Models-Summary")]
     internal partial class ModelsSummary_internal
     {

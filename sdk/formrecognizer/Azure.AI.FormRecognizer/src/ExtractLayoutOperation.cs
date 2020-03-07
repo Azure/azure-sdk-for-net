@@ -43,7 +43,8 @@ namespace Azure.AI.FormRecognizer.Models
         {
             _operations = operations;
 
-            // TODO: Add validation here?
+            // TODO: Add validation here
+            // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
         }
 
@@ -63,14 +64,13 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _operations.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _operations.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
-                // TODO: check status code?  What if a failure status code is returned?
-
+                // TODO: Handle correctly according to returned status code
+                // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
 
                     _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
-                    //_value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First());
                 }
 
                 _response = update.GetRawResponse();

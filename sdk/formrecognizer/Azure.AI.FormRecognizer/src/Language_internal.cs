@@ -12,5 +12,6 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial struct Language_internal
     {
         // TODO: I want to map this to a string, rather than an enum
+        // https://github.com/Azure/azure-sdk-for-net/issues/10390
     }
 }

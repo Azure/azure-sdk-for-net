@@ -45,24 +45,18 @@ namespace Azure.AI.FormRecognizer
             _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        // TODO: Implement these:
-        //public virtual Response<IReadOnlyList<ExtractedLayoutPage>> ExtractLayout(Stream stream, CancellationToken cancellationToken = default);
-        //public virtual Response<IReadOnlyList<ExtractedLayoutPage>> ExtractLayout(Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        //public virtual Response<IReadOnlyList<ExtractedLayoutPage>> ExtractLayout(Uri uri, CancellationToken cancellationToken = default);
-        //public virtual Response<IReadOnlyList<ExtractedLayoutPage>> ExtractLayout(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        //public virtual Task<Response<IReadOnlyList<ExtractedLayoutPage>>> ExtractLayoutAsync(Stream stream, CancellationToken cancellationToken = default);
-        //public virtual Task<Response<IReadOnlyList<ExtractedLayoutPage>>> ExtractLayoutAsync(Stream stream, FormContentType? contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        //public virtual Task<Response<IReadOnlyList<ExtractedLayoutPage>>> ExtractLayoutAsync(Uri uri, CancellationToken cancellationToken = default);
-        //public virtual Task<Response<IReadOnlyList<ExtractedLayoutPage>>> ExtractLayoutAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-
         public virtual ExtractLayoutOperation StartExtractLayout(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.AnalyzeLayoutAsync(stream, contentType , cancellationToken);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
         public virtual async Task<ExtractLayoutOperation> StartExtractLayoutAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.AnalyzeLayoutAsyncAsync(stream, contentType, cancellationToken).ConfigureAwait(false);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }

@@ -50,7 +50,8 @@ namespace Azure.AI.FormRecognizer.Models
             _operations = operations;
             _modelId = modelId;
 
-            // TODO: Add validation here?
+            // TODO: Add validation here
+            // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
         }
 
@@ -70,7 +71,8 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _operations.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _operations.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
 
-                // TODO: check status code?  What if a failure status code is returned?
+                // TODO: Handle correctly according to returned status code
+                // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 // TODO: Add reasonable null checks.
 
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
@@ -87,6 +89,7 @@ namespace Azure.AI.FormRecognizer.Models
                     else
                     {
                         // TODO: Consider what we'll do when there are multiple DocumentResults
+                        // https://github.com/Azure/azure-sdk-for-net/issues/10387
                         // Supervised
                         _value = new ExtractedForm(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                     }

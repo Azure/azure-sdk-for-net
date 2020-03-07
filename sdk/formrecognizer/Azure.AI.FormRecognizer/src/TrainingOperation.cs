@@ -42,6 +42,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public override bool HasValue => _value != null;
         // TODO: This will make the model available even if status is failed to train.
         // is it useful to make the value available if training has failed?
+        // https://github.com/Azure/azure-sdk-for-net/issues/10392
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
@@ -64,13 +65,10 @@ namespace Azure.AI.FormRecognizer.Custom
         internal TrainingOperation(AllOperations allOperations, string location)
         {
             _operations = allOperations;
-            Id = location.Split('/').Last();
 
-            // TODO: validate this?
-            //if (i == -1)
-            //{
-            //    throw new RequestFailedException("Unable to parse train location URL.");
-            //}
+            // TODO: validate this
+            // https://github.com/Azure/azure-sdk-for-net/issues/10385
+            Id = location.Split('/').Last();
         }
 
         /// <inheritdoc/>
@@ -86,12 +84,13 @@ namespace Azure.AI.FormRecognizer.Custom
             if (!_hasCompleted)
             {
                 // TODO : when/where do we set includeKeys = true?
+                // https://github.com/Azure/azure-sdk-for-net/issues/10393
                 Response<Model_internal> update = async
                     ? await _operations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
                     : _operations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
-                // TODO: check status code?  What if a failure status code is returned?
-
+                // TODO: Handle correctly according to returned status code
+                // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 if (update.Value.ModelInfo.Status != ModelStatus.Creating)
                 {
                     _hasCompleted = true;

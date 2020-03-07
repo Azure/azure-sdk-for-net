@@ -36,6 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
         public LengthUnit Unit { get; set; }
 
         // TODO: Make language nullable?
+        // https://github.com/Azure/azure-sdk-for-net/issues/10361
 
         /// <summary> Language code. </summary>
         public string Language { get; set; }

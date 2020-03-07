@@ -41,7 +41,8 @@ namespace Azure.AI.FormRecognizer.Models
         {
             _operations = operations;
 
-            // TODO: Add validation here?
+            // TODO: Add validation here
+            // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
         }
 
@@ -61,13 +62,15 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _operations.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _operations.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
-                // TODO: check status code?  What if a failure status code is returned?
+                // TODO: Handle correctly according to returned status code
+                // https://github.com/Azure/azure-sdk-for-net/issues/10386
 
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
 
                     // TODO: When they support extracting more than one receipt, add a pageable method for this.
+                    // https://github.com/Azure/azure-sdk-for-net/issues/10389
                     _value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.ReadResults.First());
                 }
 

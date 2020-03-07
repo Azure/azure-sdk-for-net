@@ -44,21 +44,17 @@ namespace Azure.AI.FormRecognizer
             _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        // TODO: Implement these:
-        // XX public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        // XX - broken (service issue?) public virtual Response<ExtractedReceipt> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        // XX public virtual Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        // XX - broken (service issue?) public virtual Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-
         public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
             ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
 
             // TODO: this feels very bad.  Better way?
+            // https://github.com/Azure/azure-sdk-for-net/issues/10391
             task.AsTask().Wait();
 
             if (!operation.HasValue)
@@ -67,6 +63,7 @@ namespace Azure.AI.FormRecognizer
             }
 
             // TODO: this is also a mess. Reconcile these together.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10391
             return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
         }
 
@@ -79,6 +76,7 @@ namespace Azure.AI.FormRecognizer
             ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
 
             // TODO: this feels very bad.  Better way?
+            // https://github.com/Azure/azure-sdk-for-net/issues/10391
             task.AsTask().Wait();
 
             if (!operation.HasValue)
@@ -87,12 +85,14 @@ namespace Azure.AI.FormRecognizer
             }
 
             // TODO: this is also a mess. Reconcile these together.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10391
             return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
         }
 
         public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
@@ -104,6 +104,7 @@ namespace Azure.AI.FormRecognizer
             }
 
             // TODO: Is this the best way?
+            // https://github.com/Azure/azure-sdk-for-net/issues/10391
             return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
         }
 
@@ -121,6 +122,7 @@ namespace Azure.AI.FormRecognizer
             }
 
             // TODO: Is this the best way?
+            // https://github.com/Azure/azure-sdk-for-net/issues/10391
             return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
         }
     }
