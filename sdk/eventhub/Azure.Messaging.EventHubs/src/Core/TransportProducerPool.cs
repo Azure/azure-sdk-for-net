@@ -167,15 +167,12 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            var expirationTimerException = default(Exception);
-
             try
             {
                 ExpirationTimer.Dispose();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                expirationTimerException = e;
             }
 
             var pendingCloses = new List<Task>();
@@ -190,14 +187,6 @@ namespace Azure.Messaging.EventHubs.Core
             Pool.Clear();
 
             await Task.WhenAll(pendingCloses).ConfigureAwait(false);
-
-            // If there was an active exception pending from closing the
-            // expiration timer, surface it now.
-
-            if (expirationTimerException != default)
-            {
-                throw expirationTimerException;
-            }
         }
 
         /// <summary>
