@@ -407,7 +407,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             using DiagnosticScope scope = CreateDiagnosticScope();
 
-            TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
+            var pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested)
             {
