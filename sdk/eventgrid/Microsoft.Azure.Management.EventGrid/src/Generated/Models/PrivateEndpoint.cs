@@ -10,27 +10,42 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Information about the destination for an event subscription.
+    /// PrivateEndpoint information.
     /// </summary>
-    public partial class EventSubscriptionDestination
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the EventSubscriptionDestination
-        /// class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public EventSubscriptionDestination()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the PrivateEndpoint class.
+        /// </summary>
+        /// <param name="id">The ARM identifier for Private Endpoint.</param>
+        public PrivateEndpoint(string id = default(string))
+        {
+            Id = id;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the ARM identifier for Private Endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
