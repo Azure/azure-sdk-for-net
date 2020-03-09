@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer.Tests", "tests\Azure.AI.FormRecognizer.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer.Samples", "samples\Azure.AI.FormRecognizer.Samples.csproj", "{AEC5AECD-F2BB-46E1-9BE0-4FEA73E28D69}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEC5AECD-F2BB-46E1-9BE0-4FEA73E28D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEC5AECD-F2BB-46E1-9BE0-4FEA73E28D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEC5AECD-F2BB-46E1-9BE0-4FEA73E28D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEC5AECD-F2BB-46E1-9BE0-4FEA73E28D69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
