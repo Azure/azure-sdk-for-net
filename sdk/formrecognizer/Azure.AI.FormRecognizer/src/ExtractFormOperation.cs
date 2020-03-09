@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         private bool _hasCompleted;
 
         private readonly string _modelId;
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal ExtractFormOperation(AllOperations operations, string modelId, string operationLocation)
+        internal ExtractFormOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _operations = operations;
             _modelId = modelId;

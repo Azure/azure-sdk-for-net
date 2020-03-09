@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         internal const string ReceiptsRoute = "/prebuilt/receipt";
 
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer
         {
             _diagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
-            _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
+            _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
         public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer
         public virtual Response<ExtractedReceipt> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
             ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
@@ -111,7 +111,7 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
             var operationResponse = await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);

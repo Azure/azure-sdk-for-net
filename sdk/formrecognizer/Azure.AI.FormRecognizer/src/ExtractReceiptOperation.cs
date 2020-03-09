@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         private ExtractedReceipt _value;
         private bool _hasCompleted;
 
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override ValueTask<Response<ExtractedReceipt>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal ExtractReceiptOperation(AllOperations operations, string operationLocation)
+        internal ExtractReceiptOperation(ServiceClient operations, string operationLocation)
         {
             _operations = operations;
 

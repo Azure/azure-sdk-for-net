@@ -12,44 +12,10 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class AllOperations
+    [CodeGenClient("")]
+    internal partial class ServiceClient
     {
         #region Custom
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType)
-        {
-            var message = pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
-            uri.AppendPath("/custom/models/", false);
-            uri.AppendPath(modelId, true);
-            uri.AppendPath("/analyze", false);
-            if (includeTextDetails != null)
-            {
-                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", GetContentTypeString(contentType));
-            request.Content = RequestContent.Create(stream);
-            //using var content = new Utf8JsonRequestContent();
-            //content.JsonWriter.WriteObjectValue(fileStream);
-            //request.Content = content;
-            return message;
-        }
-
-        internal static string GetContentTypeString(FormContentType contentType)
-        {
-            return contentType switch
-            {
-                FormContentType.Pdf => "application/pdf",
-                FormContentType.Png => "image/png",
-                FormContentType.Jpeg => "image/jpeg",
-                FormContentType.Tiff => "image/tiff",
-                _ => throw new NotSupportedException($"The content type {contentType} is not supported."),
-            };
-        }
 
         internal ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
@@ -58,7 +24,7 @@ namespace Azure.AI.FormRecognizer
             try
             {
                 // TODO: Could refactor this so different AnalyzeWithCustomModels overload call the same implementation with different request messages.
-                using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, stream, contentType);
+                using var message = RestClient.CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, stream, contentType);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -82,7 +48,7 @@ namespace Azure.AI.FormRecognizer
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, stream, contentType);
+                using var message = RestClient.CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, stream, contentType);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -107,12 +73,12 @@ namespace Azure.AI.FormRecognizer
         {
             Page<ModelInfo> FirstPageFunc(int? pageSizeHint)
             {
-                var response = GetCustomModels(op, cancellationToken);
+                var response =  RestClient.GetCustomModels(op, cancellationToken);
                 return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             Page<ModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = GetCustomModelsNextPage(nextLink, cancellationToken);
+                var response = RestClient.GetCustomModelsNextPage(nextLink, cancellationToken);
                 return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
@@ -126,12 +92,12 @@ namespace Azure.AI.FormRecognizer
 
             async Task<Page<ModelInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             async Task<Page<ModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
@@ -140,28 +106,6 @@ namespace Azure.AI.FormRecognizer
         #endregion Custom
 
         #region Receipt
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, Stream stream, FormContentType contentType)
-        {
-            var message = pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
-            uri.AppendPath("/prebuilt/receipt/analyze", false);
-            if (includeTextDetails != null)
-            {
-                uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", GetContentTypeString(contentType));
-            request.Content = RequestContent.Create(stream);
-            //request.Headers.Add("Content-Type", "application/json");
-            //using var content = new Utf8JsonRequestContent();
-            //content.JsonWriter.WriteObjectValue(fileStream);
-            //request.Content = content;
-            return message;
-        }
 
         public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
@@ -170,7 +114,7 @@ namespace Azure.AI.FormRecognizer
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
+                using var message = RestClient.CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -195,7 +139,7 @@ namespace Azure.AI.FormRecognizer
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
+                using var message = RestClient.CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -219,34 +163,13 @@ namespace Azure.AI.FormRecognizer
 
         // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
         // This is missing from the swagger -- following up with service team.
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(Stream stream, FormContentType contentType)
-        {
-            var message = pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
-            uri.AppendPath("/layout/analyze", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", GetContentTypeString(contentType));
-            request.Content = RequestContent.Create(stream);
-            //request.Headers.Add("Content-Type", "application/json");
-            //using var content = new Utf8JsonRequestContent();
-            //content.JsonWriter.WriteObjectValue(fileStream);
-            //request.Content = content;
-            return message;
-        }
-
-        // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
-        // This is missing from the swagger -- following up with service team.
         public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeLayoutAsync");
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeLayoutAsyncRequest(stream, contentType);
+                using var message = RestClient.CreateAnalyzeLayoutAsyncRequest(stream, contentType);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -270,7 +193,7 @@ namespace Azure.AI.FormRecognizer
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeLayoutAsyncRequest(stream, contentType);
+                using var message = RestClient.CreateAnalyzeLayoutAsyncRequest(stream, contentType);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {

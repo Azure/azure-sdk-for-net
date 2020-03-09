@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Custom
         private Response _response;
         private CustomLabeledModel _value;
         private bool _hasCompleted;
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         /// <summary>
         /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
         }
 
-        internal TrainingWithLabelsOperation(AllOperations allOperations, string location)
+        internal TrainingWithLabelsOperation(ServiceClient allOperations, string location)
         {
             _operations = allOperations;
 

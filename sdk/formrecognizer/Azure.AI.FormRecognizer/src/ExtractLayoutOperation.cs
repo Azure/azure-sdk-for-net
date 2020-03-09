@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         private IReadOnlyList<ExtractedLayoutPage> _value;
         private bool _hasCompleted;
 
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override ValueTask<Response<IReadOnlyList<ExtractedLayoutPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal ExtractLayoutOperation(AllOperations operations, string operationLocation)
+        internal ExtractLayoutOperation(ServiceClient operations, string operationLocation)
         {
             _operations = operations;
 

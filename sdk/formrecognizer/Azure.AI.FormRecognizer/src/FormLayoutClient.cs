@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         internal const string LayoutRoute = "/layout";
 
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer
         {
             _diagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
-            _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
+            _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
         public virtual ExtractLayoutOperation StartExtractLayout(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
@@ -64,14 +64,14 @@ namespace Azure.AI.FormRecognizer
         public virtual ExtractLayoutOperation StartExtractLayout(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
         public virtual async Task<ExtractLayoutOperation> StartExtractLayoutAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
     }

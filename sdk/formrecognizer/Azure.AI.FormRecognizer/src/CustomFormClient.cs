@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Custom
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly AllOperations _operations;
+        private readonly ServiceClient _operations;
 
         internal const string CustomModelsRoute = "/custom/models";
 
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             _diagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
-            _operations = new AllOperations(_diagnostics, _pipeline, endpoint.ToString());
+            _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
         #region Training
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual ExtractFormOperation StartExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -187,7 +187,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// </summary>
         public virtual Response<SubscriptionProperties> GetModelSubscriptionProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = _operations.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            Response<Models_internal> response = _operations.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
             return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
         }
 
@@ -195,7 +195,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// </summary>
         public virtual async Task<Response<SubscriptionProperties>> GetModelSubscriptionPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await _operations.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            Response<Models_internal> response = await _operations.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
         }
 
