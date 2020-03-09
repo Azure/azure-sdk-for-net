@@ -942,12 +942,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
             ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(AccessControlList);
 
             // Assert
-            //// todo AssertValidStoragePathInfo(response);
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
         }
 
         [Test]
