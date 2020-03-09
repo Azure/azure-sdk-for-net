@@ -15,7 +15,7 @@ namespace Azure.Search.Models
         /// <summary> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </summary>
         public bool? IncludeTotalResultCount { get; set; }
         /// <summary> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </summary>
-        public ICollection<string> Facets { get; set; }
+        public IList<string> Facets { get; set; }
         /// <summary> The OData $filter expression to apply to the search query. </summary>
         public string Filter { get; set; }
         /// <summary> The comma-separated list of field names to use for hit highlights. Only searchable fields can be used for hit highlighting. </summary>
@@ -31,7 +31,7 @@ namespace Azure.Search.Models
         /// <summary> A value that specifies the syntax of the search query. The default is &apos;simple&apos;. Use &apos;full&apos; if your query uses the Lucene query syntax. </summary>
         public QueryType? QueryType { get; set; }
         /// <summary> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called &apos;mylocation&apos; the parameter string would be &quot;mylocation--122.2,44.8&quot; (without the quotes). </summary>
-        public ICollection<string> ScoringParameters { get; set; }
+        public IList<string> ScoringParameters { get; set; }
         /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
         public string ScoringProfile { get; set; }
         /// <summary> A full-text search query expression; Use &quot;*&quot; or omit this parameter to match all documents. </summary>
