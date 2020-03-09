@@ -615,12 +615,9 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
-            /// </param>
-            public static void ValidateByLocation(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow workflow)
+            public static void ValidateByLocation(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName)
             {
-                operations.ValidateByLocationAsync(resourceGroupName, location, workflowName, workflow).GetAwaiter().GetResult();
+                operations.ValidateByLocationAsync(resourceGroupName, location, workflowName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -638,15 +635,12 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='workflowName'>
             /// The workflow name.
             /// </param>
-            /// <param name='workflow'>
-            /// The workflow definition.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ValidateByLocationAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, Workflow workflow, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ValidateByLocationAsync(this IWorkflowsOperations operations, string resourceGroupName, string location, string workflowName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ValidateByLocationWithHttpMessagesAsync(resourceGroupName, location, workflowName, workflow, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ValidateByLocationWithHttpMessagesAsync(resourceGroupName, location, workflowName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
