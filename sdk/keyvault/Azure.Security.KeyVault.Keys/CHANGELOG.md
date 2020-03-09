@@ -1,6 +1,21 @@
 # Release History
 
-## 4.0.1 (2019-01-08)
+## 4.1.0-preview.1 (Unreleased)
+
+### Added
+
+- Add "import" value to `KeyOperation` enumeration.
+- Add `RecoverableDays` property to `KeyProperties`.
+
+## 4.0.2 (2020-03-03)
+
+### Fixed
+
+- Shorten diagnostic scope names. ([#9651](https://github.com/Azure/azure-sdk-for-net/issues/9651))
+- Include resource namespace in diagnostics scope. ([#9655](https://github.com/Azure/azure-sdk-for-net/issues/9655))
+- Sanitize header values in exceptions. ([#9782](https://github.com/Azure/azure-sdk-for-net/issues/9782))
+
+## 4.0.1 (2020-01-08)
 
 ### Minor changes
 

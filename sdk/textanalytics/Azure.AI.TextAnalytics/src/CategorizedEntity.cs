@@ -16,9 +16,9 @@ namespace Azure.AI.TextAnalytics
             Text = text;
             Category = category;
             SubCategory = subCategory;
-            Offset = offset;
-            Length = length;
-            Score = score;
+            GraphemeOffset = offset;
+            GraphemeLength = length;
+            ConfidenceScore = score;
         }
 
         /// <summary>
@@ -44,21 +44,19 @@ namespace Azure.AI.TextAnalytics
         public string SubCategory { get; }
 
         /// <summary>
-        /// Gets the start position for the matching text in the input document.
-        /// The offset unit is unicode character count.
+        /// Gets the starting position (in Unicode graphemes) for the matching text in the input document.
         /// </summary>
-        public int Offset { get; }
+        public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the length of the matching text in the input document.
-        /// The length unit is unicode character count.
+        /// Gets the length (in Unicode graphemes) of the matching text in the input document.
         /// </summary>
-        public int Length { get; }
+        public int GraphemeLength { get; }
 
         /// <summary>
         /// Gets a score between 0 and 1, indicating the confidence that the
         /// text substring matches this inferred entity.
         /// </summary>
-        public double Score { get; }
+        public double ConfidenceScore { get; }
     }
 }

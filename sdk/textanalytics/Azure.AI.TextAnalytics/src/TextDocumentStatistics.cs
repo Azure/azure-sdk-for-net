@@ -11,17 +11,16 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct TextDocumentStatistics
     {
-        internal TextDocumentStatistics(int characterCount, int transactionCount)
+        internal TextDocumentStatistics(int grahemeCount, int transactionCount)
         {
-            CharacterCount = characterCount;
+            GraphemeCount = grahemeCount;
             TransactionCount = transactionCount;
         }
 
         /// <summary>
-        /// Gets the number of characters the corresponding input document
-        /// contains.
+        /// Gets the number of characters (in Unicode graphemes) the corresponding document contains.
         /// </summary>
-        public int CharacterCount { get; }
+        public int GraphemeCount { get; }
 
         /// <summary>
         /// Gets the number of transactions used by the service to analyze the

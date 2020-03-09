@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="..\src\Testing\EventDataExtensions.cs" Link="SharedSource\Testing\EventDataExtensions.cs" />
     <Compile Include="..\src\Testing\MockCheckPointStorage.cs" Link="SharedSource\Testing\MockCheckPointStorage.cs" />
+    <Compile Include="..\src\Testing\MockEventData.cs" Link="SharedSource\Testing\MockEventData.cs" />
   </ItemGroup>
 
   <!--Embed the shared resources -->

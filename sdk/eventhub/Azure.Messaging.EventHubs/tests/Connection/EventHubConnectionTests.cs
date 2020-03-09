@@ -14,7 +14,6 @@ using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {

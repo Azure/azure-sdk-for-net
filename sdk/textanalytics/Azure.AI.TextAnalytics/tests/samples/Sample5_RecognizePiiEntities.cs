@@ -25,13 +25,12 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizePiiEntities
             string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-            Response<IReadOnlyCollection<PiiEntity>> response = client.RecognizePiiEntities(input);
-            IEnumerable<PiiEntity> entities = response.Value;
+            IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Value;
 
             Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
             foreach (PiiEntity entity in entities)
             {
-                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
             }
             #endregion
         }

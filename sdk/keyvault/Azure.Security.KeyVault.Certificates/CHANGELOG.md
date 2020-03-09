@@ -1,14 +1,23 @@
 # Release History
 
-## 4.0.1 (Unreleased)
+## 4.1.0-preview.1 (Unreleased)
+
+### Added
+
+- Add `RecoverableDays` property to `CertificateProperties`.
+
+## 4.0.1 (2020-03-03)
 
 ### Fixed
 
-- Reset challenge cache so tests can be run individually and in any order. (#9356)[https://github.com/Azure/azure-sdk-for-net/issues/9356]
-- Properly import PKCS12 or PEM-encoded certificate. (#9963)[https://github.com/Azure/azure-sdk-for-net/issues/9963]
-- Serialize the `MergeCertificateOptions` in `CertificateClient.MergeCertificate`. (#9986)[https://github.com/Azure/azure-sdk-for-net/issues/9986]
+- Reset challenge cache so tests can be run individually and in any order. ([#9356](https://github.com/Azure/azure-sdk-for-net/issues/9356))
+- Properly import PKCS12 or PEM-encoded certificate. ([#9963](https://github.com/Azure/azure-sdk-for-net/issues/9963))
+- Serialize the `MergeCertificateOptions` in `CertificateClient.MergeCertificate`. ([#9986](https://github.com/Azure/azure-sdk-for-net/issues/9986))
+- Shorten diagnostic scope names. ([#9651](https://github.com/Azure/azure-sdk-for-net/issues/9651))
+- Include resource namespace in diagnostics scope. ([#9655](https://github.com/Azure/azure-sdk-for-net/issues/9655))
+- Sanitize header values in exceptions. ([#9782](https://github.com/Azure/azure-sdk-for-net/issues/9782))
 
-## 4.0.0 (2019-01-08)
+## 4.0.0 (2020-01-08)
 
 ### Minor changes
 

@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Training/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\github\azure-sdk-for-net2\sdk
-2019-09-23 16:27:41 UTC
+2020-02-10 23:50:11 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      a942bf5703a34a66ca0fb7190bdb6e0c0875e12a
+Commit:      f9374a2a47f9a88f2ae53ecb2fb4ecea65ff348f
 AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4283
+Bootstrapper version:    autorest@2.0.4413

@@ -29,10 +29,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestProjectUnsupportedDomainTypeChange = "BadRequestProjectUnsupportedDomainTypeChange";
         public const string BadRequestProjectUnsupportedExportPlatform = "BadRequestProjectUnsupportedExportPlatform";
         public const string BadRequestProjectImagePreprocessingSettings = "BadRequestProjectImagePreprocessingSettings";
+        public const string BadRequestProjectDuplicated = "BadRequestProjectDuplicated";
         public const string BadRequestIterationName = "BadRequestIterationName";
         public const string BadRequestIterationNameNotUnique = "BadRequestIterationNameNotUnique";
         public const string BadRequestIterationDescription = "BadRequestIterationDescription";
         public const string BadRequestIterationIsNotTrained = "BadRequestIterationIsNotTrained";
+        public const string BadRequestIterationValidationFailed = "BadRequestIterationValidationFailed";
         public const string BadRequestWorkspaceCannotBeModified = "BadRequestWorkspaceCannotBeModified";
         public const string BadRequestWorkspaceNotDeletable = "BadRequestWorkspaceNotDeletable";
         public const string BadRequestTagName = "BadRequestTagName";
@@ -84,6 +86,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestPredictionResultsExceededCount = "BadRequestPredictionResultsExceededCount";
         public const string BadRequestPredictionInvalidApplicationName = "BadRequestPredictionInvalidApplicationName";
         public const string BadRequestPredictionInvalidQueryParameters = "BadRequestPredictionInvalidQueryParameters";
+        public const string BadRequestInvalidImportToken = "BadRequestInvalidImportToken";
+        public const string BadRequestExportWhileTraining = "BadRequestExportWhileTraining";
         public const string BadRequestInvalid = "BadRequestInvalid";
         public const string UnsupportedMediaType = "UnsupportedMediaType";
         public const string Forbidden = "Forbidden";
@@ -109,10 +113,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string Conflict = "Conflict";
         public const string ConflictInvalid = "ConflictInvalid";
         public const string ErrorUnknown = "ErrorUnknown";
+        public const string ErrorIterationCopyFailed = "ErrorIterationCopyFailed";
+        public const string ErrorPreparePerformanceMigrationFailed = "ErrorPreparePerformanceMigrationFailed";
         public const string ErrorProjectInvalidWorkspace = "ErrorProjectInvalidWorkspace";
         public const string ErrorProjectInvalidPipelineConfiguration = "ErrorProjectInvalidPipelineConfiguration";
         public const string ErrorProjectInvalidDomain = "ErrorProjectInvalidDomain";
         public const string ErrorProjectTrainingRequestFailed = "ErrorProjectTrainingRequestFailed";
+        public const string ErrorProjectImportRequestFailed = "ErrorProjectImportRequestFailed";
         public const string ErrorProjectExportRequestFailed = "ErrorProjectExportRequestFailed";
         public const string ErrorFeaturizationServiceUnavailable = "ErrorFeaturizationServiceUnavailable";
         public const string ErrorFeaturizationQueueTimeout = "ErrorFeaturizationQueueTimeout";

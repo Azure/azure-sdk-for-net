@@ -11,12 +11,16 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
+    [ClientTestFixture(
+        SecretClientOptions.ServiceVersion.V7_0,
+        SecretClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }
 
@@ -26,8 +30,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private readonly ConcurrentQueue<string> _secretsToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _secretsToPurge = new ConcurrentStack<string>();
 
-        protected SecretsTestBase(bool isAsync) : base(isAsync)
+        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         internal SecretClient GetClient(TestRecording recording = null)
@@ -38,7 +43,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 (new SecretClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new SecretClientOptions())));
+                    recording.InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
         }
 
         public override void StartTestRecording()

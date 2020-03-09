@@ -48,6 +48,17 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Provides test cases iterations for the stress testing.
+        /// </summary>
+        ///
+        public static IEnumerable<object> StressTestCases()
+        {
+            return Enumerable.Range(0, 100)
+                    .Select(i => i.ToString())
+                    .ToArray();
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient" />
         ///   constructor.
         /// </summary>
@@ -853,7 +864,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task StopProcessingAsyncStopsProcessingForEveryPartition()
         {
             var maximumWaitTimeInMilli = 100;
@@ -1425,7 +1435,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default);
 
-            var mockLog = new Mock<EventProcessorEventSource>();
+            var mockLog = new Mock<EventProcessorClientEventSource>();
             mockProcessor.CallBase = true;
             mockProcessor.Object.Logger = mockLog.Object;
 
@@ -1745,6 +1755,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task PartitionClosingAsyncIsCalledWithOwnershipLostReasonWhenStoppingTheFailedProcessor()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -2723,6 +2734,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockStorage
                 .Setup(storage => storage.UpdateCheckpointAsync(
                     It.IsAny<EventProcessorCheckpoint>(),
+                    It.IsAny<EventData>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedExceptionReference);
 
@@ -3031,18 +3043,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 FullyQualifiedNamespace = fqNamespace,
                 EventHubName = eventHub,
                 ConsumerGroup = consumerGroup,
-                PartitionId = partitionId,
-                Offset = checkpointOffset,
-                SequenceNumber = 0
+                PartitionId = partitionId
             };
 
             var mockStorage = new MockCheckPointStorage();
+            var mockEvent = new MockEventData(Array.Empty<byte>(), offset: checkpointOffset);
             var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             mockStorage
-                .Checkpoints.Add((fqNamespace, eventHub, consumerGroup, partitionId), checkpoint);
+                .Checkpoints.Add((fqNamespace, eventHub, consumerGroup, partitionId), new MockCheckPointStorage.CheckpointData(checkpoint, mockEvent));
 
             mockConsumer
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
@@ -3594,6 +3605,7 @@ namespace Azure.Messaging.EventHubs.Tests
             while (!cancellationToken.IsCancellationRequested)
             {
                 await Task.Delay(maximumWaitTime.Value, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 yield return new PartitionEvent();
             }
 

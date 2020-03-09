@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
@@ -163,6 +165,22 @@ namespace Azure.Core.Tests
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, innerException: innerException);
             Assert.AreEqual(formattedResponse, exception.Message);
             Assert.AreEqual(innerException, exception.InnerException);
+        }
+
+        [Test]
+        public void RequestFailedExceptionIsSerializeable()
+        {
+            var dataContractSerializer = new DataContractSerializer(typeof(RequestFailedException));
+            var exception = new RequestFailedException(201, "Message", "Error", null);
+            RequestFailedException deserialized;
+            using var memoryStream = new MemoryStream();
+            dataContractSerializer.WriteObject(memoryStream, exception);
+            memoryStream.Position = 0;
+            deserialized = (RequestFailedException) dataContractSerializer.ReadObject(memoryStream);
+
+            Assert.AreEqual(exception.Message, deserialized.Message);
+            Assert.AreEqual(exception.Status, deserialized.Status);
+            Assert.AreEqual(exception.ErrorCode, deserialized.ErrorCode);
         }
 
         private class TestClientOption : ClientOptions

@@ -128,7 +128,10 @@ namespace Azure.Core
         {
             if (wasClosed)
             {
-                throw new ServiceBusException(targetName, string.Format(CultureInfo.CurrentCulture, Resources1.ClosedInstanceCannotPerformOperation, targetName), ServiceBusException.FailureReason.ClientClosed);
+                throw new ServiceBusException(
+                    string.Format(CultureInfo.CurrentCulture, Resources1.ClosedInstanceCannotPerformOperation, targetName),
+                    ServiceBusException.FailureReason.ClientClosed,
+                    targetName);
             }
         }
     }

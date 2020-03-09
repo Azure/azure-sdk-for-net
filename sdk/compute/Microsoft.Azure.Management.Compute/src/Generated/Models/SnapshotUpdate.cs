@@ -120,10 +120,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 EncryptionSettingsCollection.Validate();
             }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
-            }
         }
     }
 }

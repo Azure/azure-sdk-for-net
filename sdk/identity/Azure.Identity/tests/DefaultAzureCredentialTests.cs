@@ -26,11 +26,12 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(sources.Length, 4);
+            Assert.AreEqual(sources.Length, 5);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
-            Assert.IsNull(sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[3]);
+            Assert.IsNull(sources[4]);
         }
 
         [Test]
@@ -41,18 +42,19 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(sources.Length, 4);
+            Assert.AreEqual(sources.Length, 5);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[3]);
 
             if (includeInteractive)
             {
-                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[3]);
+                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[4]);
             }
             else
             {
-                Assert.IsNull(sources[3]);
+                Assert.IsNull(sources[4]);
             }
         }
 
@@ -126,6 +128,7 @@ namespace Azure.Identity.Tests
                     ExcludeEnvironmentCredential = true,
                     ExcludeManagedIdentityCredential = false,
                     ExcludeSharedTokenCacheCredential = false,
+                    ExcludeAzureCliCredential = true,
                     ExcludeInteractiveBrowserCredential = false
                 };
 
@@ -138,16 +141,18 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateCtorWithExcludeOptions([Values(true, false)]bool excludeEnvironmentCredential, [Values(true, false)]bool excludeManagedIdentityCredential, [Values(true, false)]bool excludeSharedTokenCacheCredential, [Values(true, false)]bool excludeInteractiveBrowserCredential)
+        public void ValidateCtorWithExcludeOptions([Values(true, false)]bool excludeEnvironmentCredential, [Values(true, false)]bool excludeManagedIdentityCredential, [Values(true, false)]bool excludeSharedTokenCacheCredential, [Values(true, false)]bool excludeCliCredential, [Values(true, false)]bool excludeInteractiveBrowserCredential)
         {
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
             bool environmentCredentialIncluded = false;
             bool managedIdentityCredentialIncluded = false;
             bool sharedTokenCacheCredentialIncluded = false;
+            bool cliCredentialIncluded = false;
             bool interactiveBrowserCredentialIncluded = false;
 
             credFactory.OnCreateEnvironmentCredential = (_) => environmentCredentialIncluded = true;
+            credFactory.OnCreateAzureCliCredential = (_) => cliCredentialIncluded = true;
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _) => interactiveBrowserCredentialIncluded = true;
             credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
             {
@@ -163,10 +168,11 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = excludeEnvironmentCredential,
                 ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                 ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
+                ExcludeAzureCliCredential = excludeCliCredential,
                 ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential
             };
 
-            if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeSharedTokenCacheCredential && excludeInteractiveBrowserCredential)
+            if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeSharedTokenCacheCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
             {
                 Assert.Throws<ArgumentException>(() => new DefaultAzureCredential(options));
             }
@@ -177,14 +183,15 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(!excludeEnvironmentCredential, environmentCredentialIncluded);
                 Assert.AreEqual(!excludeManagedIdentityCredential, managedIdentityCredentialIncluded);
                 Assert.AreEqual(!excludeSharedTokenCacheCredential, sharedTokenCacheCredentialIncluded);
+                Assert.AreEqual(!excludeCliCredential, cliCredentialIncluded);
                 Assert.AreEqual(!excludeInteractiveBrowserCredential, interactiveBrowserCredentialIncluded);
             }
         }
 
         [Test]
-        public void ValidateAllUnavailable([Values(true, false)]bool excludeEnvironmentCredential, [Values(true, false)]bool excludeManagedIdentityCredential, [Values(true, false)]bool excludeSharedTokenCacheCredential, [Values(true, false)]bool excludeInteractiveBrowserCredential)
+        public void ValidateAllUnavailable([Values(true, false)]bool excludeEnvironmentCredential, [Values(true, false)]bool excludeManagedIdentityCredential, [Values(true, false)]bool excludeSharedTokenCacheCredential, [Values(true, false)]bool excludeCliCredential, [Values(true, false)]bool excludeInteractiveBrowserCredential)
         {
-            if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeSharedTokenCacheCredential && excludeInteractiveBrowserCredential)
+            if (excludeEnvironmentCredential && excludeManagedIdentityCredential && excludeSharedTokenCacheCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
             {
                 Assert.Pass();
             }
@@ -207,12 +214,17 @@ namespace Azure.Identity.Tests
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("SharedTokenCacheCredential Unavailable"); };
             };
+            credFactory.OnCreateAzureCliCredential = (c) =>
+            {
+                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("CliCredential Unavailable"); };
+            };
 
             var options = new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = excludeEnvironmentCredential,
                 ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                 ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
+                ExcludeAzureCliCredential = excludeCliCredential,
                 ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential
             };
 
@@ -232,6 +244,10 @@ namespace Azure.Identity.Tests
             {
                 Assert.True(ex.Message.Contains("SharedTokenCacheCredential Unavailable"));
             }
+            if (!excludeCliCredential)
+            {
+                Assert.True(ex.Message.Contains("CliCredential Unavailable"));
+            }
             if (!excludeInteractiveBrowserCredential)
             {
                 Assert.True(ex.Message.Contains("InteractiveBrowserCredential Unavailable"));
@@ -239,7 +255,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateUnhandledException([Values(0, 1, 2, 3)]int exPossition)
+        public void ValidateUnhandledException([Values(0, 1, 2, 3, 4)]int exPossition)
         {
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -285,6 +301,20 @@ namespace Azure.Identity.Tests
                     }
                 };
             };
+            credFactory.OnCreateAzureCliCredential = (c) =>
+            {
+                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
+                {
+                    if (exPossition > 3)
+                    {
+                        throw new CredentialUnavailableException("CliCredential Unavailable");
+                    }
+                    else
+                    {
+                        throw new MockClientException("CliCredential unhandled exception");
+                    }
+                };
+            };
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
@@ -298,6 +328,7 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = false,
                 ExcludeManagedIdentityCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
+                ExcludeAzureCliCredential = false,
                 ExcludeInteractiveBrowserCredential = false
             };
 
@@ -317,6 +348,9 @@ namespace Azure.Identity.Tests
                     Assert.AreEqual(ex.InnerException.Message, "SharedTokenCacheCredential unhandled exception");
                     break;
                 case 3:
+                    Assert.AreEqual(ex.InnerException.Message, "CliCredential unhandled exception");
+                    break;
+                case 4:
                     Assert.AreEqual(ex.InnerException.Message, "InteractiveBrowserCredential unhandled exception");
                     break;
                 default:
@@ -326,7 +360,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task ValidateSelectedCredentialCaching([Values(typeof(EnvironmentCredential), typeof(ManagedIdentityCredential), typeof(SharedTokenCacheCredential), typeof(InteractiveBrowserCredential))]Type availableCredential)
+        public async Task ValidateSelectedCredentialCaching([Values(typeof(EnvironmentCredential), typeof(ManagedIdentityCredential), typeof(SharedTokenCacheCredential), typeof(AzureCliCredential), typeof(InteractiveBrowserCredential))]Type availableCredential)
         {
             var expToken = new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.MaxValue);
 
@@ -361,6 +395,15 @@ namespace Azure.Identity.Tests
                     return (availableCredential == typeof(SharedTokenCacheCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
                 };
             };
+            credFactory.OnCreateAzureCliCredential = (c) =>
+            {
+                ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
+                {
+                    calledCredentials.Add(typeof(AzureCliCredential));
+
+                    return (availableCredential == typeof(AzureCliCredential)) ? expToken : throw new CredentialUnavailableException("Unavailable");
+                };
+            };
             credFactory.OnCreateInteractiveBrowserCredential = (_, c) =>
             {
                 ((MockTokenCredential)c).TokenFactory = (context, cancel) =>
@@ -376,6 +419,7 @@ namespace Azure.Identity.Tests
                 ExcludeEnvironmentCredential = false,
                 ExcludeManagedIdentityCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
+                ExcludeAzureCliCredential = false,
                 ExcludeInteractiveBrowserCredential = false
             };
 
