@@ -69,11 +69,12 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_0) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_1_Preview) { }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
+            V7_1_Preview = 1,
         }
     }
     public partial class CertificateContact
@@ -187,7 +188,9 @@ namespace Azure.Security.KeyVault.Certificates
         public static Azure.Security.KeyVault.Certificates.CertificateOperationError CertificateOperationError(string code = null, string message = null, Azure.Security.KeyVault.Certificates.CertificateOperationError innerError = null) { throw null; }
         public static Azure.Security.KeyVault.Certificates.CertificateOperationProperties CertificateOperationProperties(System.Uri id = null, string name = null, System.Uri vaultUri = null, string issuerName = null, string certificateType = null, bool? certificateTransparency = default(bool?), byte[] csr = null, bool cancellationRequested = false, string requestId = null, string status = null, string statusDetails = null, string target = null, Azure.Security.KeyVault.Certificates.CertificateOperationError error = null) { throw null; }
         public static Azure.Security.KeyVault.Certificates.CertificatePolicy CertificatePolicy(string subject = null, Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames = null, string issuerName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.CertificateProperties CertificateProperties(System.Uri id = null, string name = null, System.Uri vaultUri = null, string version = null, byte[] x509thumbprint = null, System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Security.KeyVault.Certificates.CertificateProperties CertificateProperties(System.Uri id, string name, System.Uri vaultUri, string version, byte[] x509thumbprint, System.DateTimeOffset? notBefore, System.DateTimeOffset? expiresOn, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel) { throw null; }
+        public static Azure.Security.KeyVault.Certificates.CertificateProperties CertificateProperties(System.Uri id = null, string name = null, System.Uri vaultUri = null, string version = null, byte[] x509thumbprint = null, System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?)) { throw null; }
         public static Azure.Security.KeyVault.Certificates.DeletedCertificate DeletedCertificate(Azure.Security.KeyVault.Certificates.CertificateProperties properties, System.Uri keyId = null, System.Uri secretId = null, byte[] cer = null, Azure.Security.KeyVault.Certificates.CertificatePolicy policy = null, System.Uri recoveryId = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeDate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Security.KeyVault.Certificates.IssuerProperties IssuerProperties(System.Uri id = null, string name = null) { throw null; }
         public static Azure.Security.KeyVault.Certificates.KeyVaultCertificate KeyVaultCertificate(Azure.Security.KeyVault.Certificates.CertificateProperties properties, System.Uri keyId = null, System.Uri secretId = null, byte[] cer = null) { throw null; }
@@ -288,6 +291,7 @@ namespace Azure.Security.KeyVault.Certificates
         public System.Uri Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } }
+        public int? RecoverableDays { get { throw null; } }
         public string RecoveryLevel { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
