@@ -23,11 +23,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Text content of the cell. </summary>
         public string Text { get; set; }
         /// <summary> Bounding box of the cell. </summary>
-        public ICollection<float> BoundingBox { get; set; } = new List<float>();
+        public IList<float> BoundingBox { get; set; } = new List<float>();
         /// <summary> Confidence value. </summary>
         public float Confidence { get; set; }
         /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this table cell. </summary>
-        public ICollection<string> Elements { get; set; }
+        public IList<string> Elements { get; set; }
         /// <summary> Is the current cell a header cell?. </summary>
         public bool? IsHeader { get; set; }
         /// <summary> Is the current cell a footer cell?. </summary>

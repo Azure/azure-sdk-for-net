@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary> Total number of pages trained. </summary>
         public int Pages { get; set; }
         /// <summary> List of errors. </summary>
-        public ICollection<FormRecognizerError> Errors { get; set; } = new List<FormRecognizerError>();
+        public IList<FormRecognizerError> Errors { get; set; } = new List<FormRecognizerError>();
         /// <summary> Status of the training operation. </summary>
         public TrainStatus Status { get; set; }
     }

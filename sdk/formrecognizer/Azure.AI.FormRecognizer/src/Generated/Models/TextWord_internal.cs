@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> The text content of the word. </summary>
         public string Text { get; set; }
         /// <summary> Bounding box of an extracted word. </summary>
-        public ICollection<float> BoundingBox { get; set; } = new List<float>();
+        public IList<float> BoundingBox { get; set; } = new List<float>();
         /// <summary> Confidence value. </summary>
         public float? Confidence { get; set; }
     }
