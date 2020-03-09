@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
-            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync();
 
             // TODO: this feels very bad.  Better way?
             // https://github.com/Azure/azure-sdk-for-net/issues/10391
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
-            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync();
 
             // TODO: this feels very bad.  Better way?
             // https://github.com/Azure/azure-sdk-for-net/issues/10391
@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
-            var operationResponse = await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+            var operationResponse = await operation.WaitForCompletionAsync().ConfigureAwait(false);
 
             if (!operation.HasValue)
             {
@@ -114,7 +114,7 @@ namespace Azure.AI.FormRecognizer
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
 
-            var operationResponse = await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+            var operationResponse = await operation.WaitForCompletionAsync().ConfigureAwait(false);
 
             if (!operation.HasValue)
             {
