@@ -219,6 +219,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
             {
                 SyncStatus.Validate();
             }
+            if (CloudTieringStatus != null)
+            {
+                CloudTieringStatus.Validate();
+            }
             if (RecallStatus != null)
             {
                 RecallStatus.Validate();
