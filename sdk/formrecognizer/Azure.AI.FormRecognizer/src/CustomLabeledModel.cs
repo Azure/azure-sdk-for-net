@@ -17,11 +17,11 @@ namespace Azure.AI.FormRecognizer.Custom
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
 
-        public string ModelId { get; internal set; }
-        public float AverageLabelAccuracy { get; internal set; }
-        public IReadOnlyList<LabeledFieldAccuracy> LabelAccuracies { get; internal set; }
-        public TrainingInfo TrainingInfo { get; internal set; }
-        public CustomModelTrainingStatus TrainingStatus { get; internal set; }
+        public string ModelId { get; }
+        public float AverageLabelAccuracy { get; }
+        public IReadOnlyList<LabeledFieldAccuracy> LabelAccuracies { get; }
+        public TrainingInfo TrainingInfo { get; }
+        public CustomModelTrainingStatus TrainingStatus { get; }
 
         private static IReadOnlyList<LabeledFieldAccuracy> ConvertLabelAccuracies(ICollection<FormFieldsReport_internal> fields)
         {

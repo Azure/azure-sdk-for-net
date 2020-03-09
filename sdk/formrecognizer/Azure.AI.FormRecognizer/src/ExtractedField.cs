@@ -38,8 +38,6 @@ namespace Azure.AI.FormRecognizer.Models
             ValueOutline = new BoundingBox(field.Value.BoundingBox);
         }
 
-        private ExtractedField() { }
-
         // TODO: Why can this be nullable on FieldValue.Confidence?
         // https://github.com/Azure/azure-sdk-for-net/issues/10378
         public float? Confidence { get; internal set; }

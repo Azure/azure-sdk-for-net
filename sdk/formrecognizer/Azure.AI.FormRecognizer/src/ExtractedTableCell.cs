@@ -11,12 +11,12 @@ namespace Azure.AI.FormRecognizer.Models
         {
             BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
             ColumnIndex = dataTableCell.ColumnIndex;
-            ColumnSpan = dataTableCell.ColumnSpan.HasValue ? dataTableCell.ColumnSpan.Value : 1;
+            ColumnSpan = dataTableCell.ColumnSpan ?? 1;
             Confidence = dataTableCell.Confidence;
-            IsFooter = dataTableCell.IsFooter.HasValue ? dataTableCell.IsFooter.Value : false;
-            IsHeader = dataTableCell.IsHeader.HasValue ? dataTableCell.IsHeader.Value : false;
+            IsFooter = dataTableCell.IsFooter ?? false;
+            IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
-            RowSpan = dataTableCell.RowSpan.HasValue ? dataTableCell.RowSpan.Value : 1;
+            RowSpan = dataTableCell.RowSpan.HasValue ?? 1;
             Text = dataTableCell.Text;
 
             if (references != null)

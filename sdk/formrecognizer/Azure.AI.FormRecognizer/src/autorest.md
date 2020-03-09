@@ -1,4 +1,4 @@
-# Azure.Generated.Template
+# Azure.AI.FormRecognizer
 
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 

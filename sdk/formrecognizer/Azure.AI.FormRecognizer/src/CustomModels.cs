@@ -17,23 +17,15 @@ namespace Azure.AI.FormRecognizer.Custom
         }
 
         /// <summary> Summary of all trained custom models. </summary>
-        public SubscriptionProperties SubscriptionProperties { get; set; }
+        public SubscriptionProperties SubscriptionProperties { get; }
         /// <summary> Collection of trained custom models. </summary>
-        public IReadOnlyList<ModelInfo> ModelList { get; set; }
+        public IReadOnlyList<ModelInfo> ModelList { get; }
         /// <summary> Link to the next page of custom models. </summary>
-        public string NextLink { get; set; }
+        internal string NextLink { get; }
 
         private static IReadOnlyList<ModelInfo> ConvertModelList(ICollection<ModelInfo_internal> modelInfos)
         {
             return modelInfos.Select(mi => new ModelInfo(mi)).ToList();
-
-            //List<ModelInfo> models = new List<ModelInfo>();
-            //foreach (var modelInfoInternal in modelInfoInternals)
-            //{
-            //    models.Add(new ModelInfo(modelInfoInternal));
-            //}
-
-            //return models;
         }
     }
 }
