@@ -128,12 +128,6 @@ namespace Azure.Core.Tests
             {
                 if (!producedDiagnosticScope.IsCompleted)
                 {
-                    // https://github.com/Azure/azure-sdk-for-net/issues/9656
-                    // A known issue with Azure.Core that is fixed but not all libraries are on latest Azure.Core yet
-                    if (producedDiagnosticScope.Name == "Azure.Core.Http.Request")
-                    {
-                        continue;
-                    }
                     throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
                 }
             }
