@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 
 namespace Azure.AI.FormRecognizer.Models
 {

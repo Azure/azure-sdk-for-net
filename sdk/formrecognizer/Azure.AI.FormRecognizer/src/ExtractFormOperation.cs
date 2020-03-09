@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractFormOperation : Operation<ExtractedForm>
+    internal class ExtractFormOperation : Operation<ExtractedForm>
     {
         private Response _response;
         private ExtractedForm _value;

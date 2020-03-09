@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Resources;
 
 namespace Azure.AI.FormRecognizer.Models
 {

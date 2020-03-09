@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var trainingOperation = client.StartTrainingWithLabels(sasUrl);
 
-            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (trainingOperation.HasValue)
             {
                 CustomLabeledModel model = trainingOperation.Value;
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var trainingOperation = client.StartTraining(sasUrl);
 
-            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            await trainingOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (trainingOperation.HasValue)
             {
                 CustomModel model = trainingOperation.Value;
@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf);
 
-                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
                     ExtractedForm form = extractFormOperation.Value;
@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var extractFormOperation = client.StartExtractForm(modelId, testFormPath);
 
-            await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
                 ExtractedForm form = extractFormOperation.Value;
@@ -173,7 +173,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf, includeRawPageExtractions: true);
 
-                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
                     ExtractedForm form = extractFormOperation.Value;
@@ -229,7 +229,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf);
 
-                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
                     ExtractedForm form = extractFormOperation.Value;
@@ -258,7 +258,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var extractFormOperation = client.StartExtractForm(modelId, testFormPath);
 
-            await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
                 ExtractedForm form = extractFormOperation.Value;
@@ -288,7 +288,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 var extractFormOperation = client.StartExtractForm(modelId, stream, contentType: FormContentType.Pdf, includeRawPageExtractions: true);
 
-                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
                     ExtractedForm form = extractFormOperation.Value;
@@ -368,7 +368,7 @@ namespace Azure.AI.FormRecognizer.Samples
             {
                 var extractLayoutOperation = client.StartExtractLayout(stream, contentType: FormContentType.Pdf);
 
-                await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+                await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractLayoutOperation.HasValue)
                 {
                     IReadOnlyList<ExtractedLayoutPage> result = extractLayoutOperation.Value;
@@ -394,7 +394,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var extractLayoutOperation = client.StartExtractLayout(testFormPath);
 
-            await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1));
+            await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractLayoutOperation.HasValue)
             {
                 IReadOnlyList<ExtractedLayoutPage> result = extractLayoutOperation.Value;

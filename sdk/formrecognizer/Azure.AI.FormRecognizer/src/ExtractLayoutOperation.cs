@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class ExtractLayoutOperation : Operation<IReadOnlyList<ExtractedLayoutPage>>
+    internal class ExtractLayoutOperation : Operation<IReadOnlyList<ExtractedLayoutPage>>
     {
         private Response _response;
         private IReadOnlyList<ExtractedLayoutPage> _value;

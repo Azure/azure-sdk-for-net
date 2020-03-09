@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class ExtractReceiptOperation : Operation<ExtractedReceipt>
+    internal class ExtractReceiptOperation : Operation<ExtractedReceipt>
     {
         private Response _response;
         private ExtractedReceipt _value;

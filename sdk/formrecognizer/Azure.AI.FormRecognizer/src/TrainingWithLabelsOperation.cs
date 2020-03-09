@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    public class TrainingWithLabelsOperation : Operation<CustomLabeledModel>
+    internal class TrainingWithLabelsOperation : Operation<CustomLabeledModel>
     {
         private Response _response;
         private CustomLabeledModel _value;

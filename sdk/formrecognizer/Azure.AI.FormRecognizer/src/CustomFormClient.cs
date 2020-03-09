@@ -51,13 +51,7 @@ namespace Azure.AI.FormRecognizer.Custom
         }
 
         #region Training
-
-        // XX public virtual LabeledTrainingOperation StartLabeledTraining(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
-        // XX public virtual Task<LabeledTrainingOperation> StartLabeledTrainingAsync(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
-        // XX public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
-        // XX public virtual Task<TrainingOperation> StartTrainingAsync(string source, TrainingFileFilter filter, CancellationToken cancellationToken = default);
-
-        public virtual TrainingOperation StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual Operation<CustomModel> StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
 
@@ -75,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
-        public virtual async Task<TrainingOperation> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<CustomModel>> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
 
@@ -90,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
-        public virtual TrainingWithLabelsOperation StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
 
@@ -105,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
-        public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
 
@@ -123,13 +117,7 @@ namespace Azure.AI.FormRecognizer.Custom
         #endregion Training
 
         #region Analyze
-
-        // XX public virtual Response<ExtractedForm> ExtractForm(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        // XX - broken (service issue?) public virtual Response<ExtractedForm> ExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        // XX public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Stream stream, FormContentType? contentType = null, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-        // XX - broken (service issue?) public virtual Task<Response<ExtractedForm>> ExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default);
-
-        public virtual ExtractFormOperation StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<ExtractedForm> StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -137,14 +125,14 @@ namespace Azure.AI.FormRecognizer.Custom
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual ExtractFormOperation StartExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<ExtractedForm> StartExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<ExtractFormOperation> StartExtractFormAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<ExtractedForm>> StartExtractFormAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -155,14 +143,6 @@ namespace Azure.AI.FormRecognizer.Custom
         #endregion Analyze
 
         #region CRUD Ops
-
-        // XX public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default);
-        // XX public virtual Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default);
-        // XX public virtual Response<ModelsSummary> GetModelsSummary(CancellationToken cancellationToken = default);
-        // XX public virtual Task<Response<ModelsSummary>> GetModelsSummaryAsync(CancellationToken cancellationToken = default);
-        // XX public virtual Pageable<ModelTrainingStatus> GetModelsTrainingStatus(CancellationToken cancellationToken = default);
-        // XX public virtual AsyncPageable<ModelTrainingStatus> GetModelsTrainingStatusAsync(CancellationToken cancellationToken = default);
-
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
             return _operations.DeleteCustomModel(new Guid(modelId), cancellationToken);

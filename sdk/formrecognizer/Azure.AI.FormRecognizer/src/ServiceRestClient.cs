@@ -5,10 +5,8 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Custom;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer
 {
