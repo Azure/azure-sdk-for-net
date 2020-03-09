@@ -9,15 +9,14 @@
 
   <ItemGroup>
     <ExcludeMgmtLib Include="..\sdk\*\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
-    <ExcludeTrack1Projects Include="..\sdk\*\Microsoft.*\**\*.csproj" Condition="'$(ExcludeTrack1)'=='true'" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
-    <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib);@(ExcludeTrack1Projects)" Condition="'$(IncludeTests)' == 'true'" />
-    <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib);@(ExcludeTrack1Projects)" Condition="'$(IncludeSamples)' == 'true'" />
-    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib);@(ExcludeTrack1Projects)" Condition="'$(IncludeSamples)' == 'true'"/>
-    <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib);@(ExcludeTrack1Projects)" Condition="'$(IncludeSrc)' == 'true'" />
+    <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
+    <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'" />
+    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'"/>
+    <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />

@@ -4,7 +4,6 @@ parameters:
   EnvVars: {}
   MaxParallel: 0
   BuildInParallel: true
-  ExcludeTrack1: false
   TimeoutInMinutes: 60
 
 jobs:
@@ -88,7 +87,6 @@ jobs:
           --logger:"console;verbosity=normal"
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false
-          /p:ExcludeTrack1=${{ parameters.ExcludeTrack1 }}
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
           $(ConvertToProjectReferenceOption)
 
