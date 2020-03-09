@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
             IsFooter = dataTableCell.IsFooter ?? false;
             IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
-            RowSpan = dataTableCell.RowSpan.HasValue ?? 1;
+            RowSpan = dataTableCell.RowSpan ?? 1;
             Text = dataTableCell.Text;
 
             if (references != null)
