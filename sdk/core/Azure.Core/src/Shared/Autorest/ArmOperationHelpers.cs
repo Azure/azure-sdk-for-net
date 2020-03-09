@@ -17,38 +17,11 @@ namespace Azure.Core
     /// </summary>
     internal static class ArmOperationHelpers
     {
-        /// <summary>
-        /// Waits for the long-running operation to complete.
-        /// </summary>
-        /// <typeparam name="TResult">The response type</typeparam>
-        /// <param name="operation">The operation to wait upon</param>
-        /// <param name="cancellationToken">A cancellation token for the operation</param>
-        /// <returns></returns>
-        public static Response<TResult> WaitForCompletion<TResult>(this Operation<TResult> operation, CancellationToken cancellationToken = default) where TResult : notnull
+        internal static Operation<Response> Create(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Response originalResponse, RequestMethod requestMethod, string scopeName, OperationFinalStateVia finalStateVia, Func<HttpMessage> createOriginalHttpMessage)
         {
-            return operation.WaitForCompletion(OperationHelpers.DefaultPollingInterval, cancellationToken);
-        }
-
-        /// <summary>
-        /// Waits for the long-running operation to complete, including a specified polling internal.
-        /// </summary>
-        /// <typeparam name="TResult">The response type</typeparam>
-        /// <param name="operation">The operation to wait upon</param>
-        /// <param name="pollingInterval">The duration to wait in-between each poll</param>
-        /// <param name="cancellationToken">A cancellation token for the operation</param>
-        /// <returns></returns>
-        public static Response<TResult> WaitForCompletion<TResult>(this Operation<TResult> operation, TimeSpan pollingInterval, CancellationToken cancellationToken = default) where TResult : notnull
-        {
-            while (true)
-            {
-                operation.UpdateStatus(cancellationToken);
-                if (operation.HasCompleted)
-                {
-                    return Response.FromValue(operation.Value, operation.GetRawResponse());
-                }
-
-                Thread.Sleep(pollingInterval);
-            }
+            return Create<Response>(pipeline, clientDiagnostics, originalResponse, requestMethod, scopeName, finalStateVia, createOriginalHttpMessage,
+                (response, token) => response,
+                (response, token) => new ValueTask<Response>(response));
         }
 
         internal static Operation<T> Create<T>(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Response originalResponse, RequestMethod requestMethod, string scopeName, OperationFinalStateVia finalStateVia,
