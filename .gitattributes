@@ -13,8 +13,8 @@
 *.isma binary
 
 *.cs text diff=csharp
-*.csproj text merge=union
-*.sln text eol=crlf merge=union
+*.csproj text=auto
+*.sln text=auto eol=crlf
 
 # Automatically collapse Track 2 test recordings in github PRs
 **/SessionRecords/**/*.json linguist-generated=true
