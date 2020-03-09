@@ -24,11 +24,11 @@ jobs:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        # Windows_NetCoreApp_ProjectReferences:
-        #   OSName: "Windows"
-        #   OSVmImage: "windows-2019"
-        #   TestTargetFramework: netcoreapp2.1
-        #   ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+        Windows_NetCoreApp_ProjectReferences:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSName: "Windows"
           OSVmImage: "windows-2019"
