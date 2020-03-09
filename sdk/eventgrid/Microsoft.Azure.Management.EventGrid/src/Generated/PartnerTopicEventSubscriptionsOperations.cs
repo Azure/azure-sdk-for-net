@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.EventGrid
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DomainsOperations operations.
+    /// PartnerTopicEventSubscriptionsOperations operations.
     /// </summary>
-    internal partial class DomainsOperations : IServiceOperations<EventGridManagementClient>, IDomainsOperations
+    internal partial class PartnerTopicEventSubscriptionsOperations : IServiceOperations<EventGridManagementClient>, IPartnerTopicEventSubscriptionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DomainsOperations class.
+        /// Initializes a new instance of the PartnerTopicEventSubscriptionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DomainsOperations(EventGridManagementClient client)
+        internal PartnerTopicEventSubscriptionsOperations(EventGridManagementClient client)
         {
             if (client == null)
             {
@@ -51,16 +51,21 @@ namespace Microsoft.Azure.Management.EventGrid
         public EventGridManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get a domain.
+        /// Get an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Get properties of a domain.
+        /// Get an event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
+        /// </param>
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be found. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,7 +88,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Domain>> GetWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventSubscription>> GetWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -93,9 +98,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (domainName == null)
+            if (partnerTopicName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
+            }
+            if (eventSubscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionName");
             }
             if (Client.ApiVersion == null)
             {
@@ -109,16 +118,18 @@ namespace Microsoft.Azure.Management.EventGrid
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("domainName", domainName);
+                tracingParameters.Add("partnerTopicName", partnerTopicName);
+                tracingParameters.Add("eventSubscriptionName", eventSubscriptionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}/eventSubscriptions/{eventSubscriptionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
+            _url = _url.Replace("{partnerTopicName}", System.Uri.EscapeDataString(partnerTopicName));
+            _url = _url.Replace("{eventSubscriptionName}", System.Uri.EscapeDataString(eventSubscriptionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -217,7 +228,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Domain>();
+            var _result = new AzureOperationResponse<EventSubscription>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -230,7 +241,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Domain>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventSubscription>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -250,20 +261,27 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Create or update a domain.
+        /// Create or update an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Asynchronously creates or updates a new domain with the specified
-        /// parameters.
+        /// Asynchronously creates or updates an event subscription of a partner topic
+        /// with the specified parameters. Existing event subscriptions will be updated
+        /// with this API.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
         /// </param>
-        /// <param name='domainInfo'>
-        /// Domain information.
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
+        /// </param>
+        /// <param name='eventSubscriptionInfo'>
+        /// Event subscription properties containing the destination and filter
+        /// information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -271,24 +289,29 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Domain>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, Domain domainInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventSubscription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Domain> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainInfo, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<EventSubscription> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, partnerTopicName, eventSubscriptionName, eventSubscriptionInfo, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Delete a domain.
+        /// Delete an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Delete existing domain.
+        /// Delete an event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
+        /// </param>
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -296,27 +319,32 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, domainName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, partnerTopicName, eventSubscriptionName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Update a domain.
+        /// Update event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Asynchronously updates a domain with the specified parameters.
+        /// Update event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
         /// </param>
-        /// <param name='domainUpdateParameters'>
-        /// Domain update information.
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
+        /// </param>
+        /// <param name='eventSubscriptionUpdateParameters'>
+        /// Updated event subscription information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -324,240 +352,29 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Domain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventSubscription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Domain> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<EventSubscription> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, partnerTopicName, eventSubscriptionName, eventSubscriptionUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// List domains under an Azure subscription.
+        /// Get full URL of an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// List all the domains under an Azure subscription.
-        /// </remarks>
-        /// <param name='filter'>
-        /// The query used to filter the search results using OData syntax. Filtering
-        /// is permitted on the 'name' property only and with limited number of OData
-        /// operations. These operations are: the 'contains' function as well as the
-        /// following logical operations: not, and, or, eq (for equal), and ne (for not
-        /// equal). No arithmetic operations are supported. The following is a valid
-        /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
-        /// The following is not a valid filter example: $filter=location eq 'westus'.
-        /// </param>
-        /// <param name='top'>
-        /// The number of results to return per page for the list operation. Valid
-        /// range for top parameter is 1 to 100. If not specified, the default number
-        /// of results to be returned is 20 items per page.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<Domain>>> ListBySubscriptionWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListBySubscription", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/domains").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Domain>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Domain>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// List domains under a resource group.
-        /// </summary>
-        /// <remarks>
-        /// List all the domains under a resource group.
+        /// Get the full endpoint URL for an event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='filter'>
-        /// The query used to filter the search results using OData syntax. Filtering
-        /// is permitted on the 'name' property only and with limited number of OData
-        /// operations. These operations are: the 'contains' function as well as the
-        /// following logical operations: not, and, or, eq (for equal), and ne (for not
-        /// equal). No arithmetic operations are supported. The following is a valid
-        /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
-        /// The following is not a valid filter example: $filter=location eq 'westus'.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
         /// </param>
-        /// <param name='top'>
-        /// The number of results to return per page for the list operation. Valid
-        /// range for top parameter is 1 to 100. If not specified, the default number
-        /// of results to be returned is 20 items per page.
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -580,7 +397,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Domain>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventSubscriptionFullUrl>> GetFullUrlWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -589,6 +406,14 @@ namespace Microsoft.Azure.Management.EventGrid
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (partnerTopicName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
+            }
+            if (eventSubscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionName");
             }
             if (Client.ApiVersion == null)
             {
@@ -602,223 +427,18 @@ namespace Microsoft.Azure.Management.EventGrid
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("top", top);
+                tracingParameters.Add("partnerTopicName", partnerTopicName);
+                tracingParameters.Add("eventSubscriptionName", eventSubscriptionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetFullUrl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}/eventSubscriptions/{eventSubscriptionName}/getFullUrl").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (top != null)
-            {
-                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Domain>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Domain>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// List keys for a domain.
-        /// </summary>
-        /// <remarks>
-        /// List the two keys used to publish to a domain.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
-        /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<DomainSharedAccessKeys>> ListSharedAccessKeysWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (domainName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("domainName", domainName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSharedAccessKeys", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/listKeys").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
+            _url = _url.Replace("{partnerTopicName}", System.Uri.EscapeDataString(partnerTopicName));
+            _url = _url.Replace("{eventSubscriptionName}", System.Uri.EscapeDataString(eventSubscriptionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -917,7 +537,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DomainSharedAccessKeys>();
+            var _result = new AzureOperationResponse<EventSubscriptionFullUrl>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -930,7 +550,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DomainSharedAccessKeys>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventSubscriptionFullUrl>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -950,19 +570,16 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Regenerate key for a domain.
+        /// List event subscriptions of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Regenerate a shared access key for a domain.
+        /// List event subscriptions that belong to a specific partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
-        /// </param>
-        /// <param name='keyName'>
-        /// Key name to regenerate key1 or key2.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -985,7 +602,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DomainSharedAccessKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string domainName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListByPartnerTopicWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -995,22 +612,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (domainName == null)
+            if (partnerTopicName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (keyName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
-            }
-            DomainRegenerateKeyRequest regenerateKeyRequest = new DomainRegenerateKeyRequest();
-            if (keyName != null)
-            {
-                regenerateKeyRequest.KeyName = keyName;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1020,17 +628,16 @@ namespace Microsoft.Azure.Management.EventGrid
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("domainName", domainName);
-                tracingParameters.Add("regenerateKeyRequest", regenerateKeyRequest);
+                tracingParameters.Add("partnerTopicName", partnerTopicName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RegenerateKey", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByPartnerTopic", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/regenerateKey").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}/eventSubscriptions").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
+            _url = _url.Replace("{partnerTopicName}", System.Uri.EscapeDataString(partnerTopicName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1043,7 +650,7 @@ namespace Microsoft.Azure.Management.EventGrid
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -1074,12 +681,6 @@ namespace Microsoft.Azure.Management.EventGrid
 
             // Serialize Request
             string _requestContent = null;
-            if(regenerateKeyRequest != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(regenerateKeyRequest, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -1135,7 +736,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<DomainSharedAccessKeys>();
+            var _result = new AzureOperationResponse<IEnumerable<EventSubscription>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1148,7 +749,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DomainSharedAccessKeys>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<EventSubscription>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1168,20 +769,27 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Create or update a domain.
+        /// Create or update an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Asynchronously creates or updates a new domain with the specified
-        /// parameters.
+        /// Asynchronously creates or updates an event subscription of a partner topic
+        /// with the specified parameters. Existing event subscriptions will be updated
+        /// with this API.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
         /// </param>
-        /// <param name='domainInfo'>
-        /// Domain information.
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
+        /// </param>
+        /// <param name='eventSubscriptionInfo'>
+        /// Event subscription properties containing the destination and filter
+        /// information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1204,7 +812,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Domain>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, Domain domainInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventSubscription>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1214,17 +822,17 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (domainName == null)
+            if (partnerTopicName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
             }
-            if (domainInfo == null)
+            if (eventSubscriptionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainInfo");
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionName");
             }
-            if (domainInfo != null)
+            if (eventSubscriptionInfo == null)
             {
-                domainInfo.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionInfo");
             }
             if (Client.ApiVersion == null)
             {
@@ -1238,17 +846,19 @@ namespace Microsoft.Azure.Management.EventGrid
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("domainName", domainName);
-                tracingParameters.Add("domainInfo", domainInfo);
+                tracingParameters.Add("partnerTopicName", partnerTopicName);
+                tracingParameters.Add("eventSubscriptionName", eventSubscriptionName);
+                tracingParameters.Add("eventSubscriptionInfo", eventSubscriptionInfo);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}/eventSubscriptions/{eventSubscriptionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
+            _url = _url.Replace("{partnerTopicName}", System.Uri.EscapeDataString(partnerTopicName));
+            _url = _url.Replace("{eventSubscriptionName}", System.Uri.EscapeDataString(eventSubscriptionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1292,9 +902,9 @@ namespace Microsoft.Azure.Management.EventGrid
 
             // Serialize Request
             string _requestContent = null;
-            if(domainInfo != null)
+            if(eventSubscriptionInfo != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(domainInfo, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(eventSubscriptionInfo, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1353,7 +963,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Domain>();
+            var _result = new AzureOperationResponse<EventSubscription>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1366,7 +976,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Domain>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventSubscription>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1386,16 +996,21 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Delete a domain.
+        /// Delete an event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Delete existing domain.
+        /// Delete an event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
+        /// </param>
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1415,7 +1030,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1425,9 +1040,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (domainName == null)
+            if (partnerTopicName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
+            }
+            if (eventSubscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionName");
             }
             if (Client.ApiVersion == null)
             {
@@ -1441,16 +1060,18 @@ namespace Microsoft.Azure.Management.EventGrid
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("domainName", domainName);
+                tracingParameters.Add("partnerTopicName", partnerTopicName);
+                tracingParameters.Add("eventSubscriptionName", eventSubscriptionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}/eventSubscriptions/{eventSubscriptionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
+            _url = _url.Replace("{partnerTopicName}", System.Uri.EscapeDataString(partnerTopicName));
+            _url = _url.Replace("{eventSubscriptionName}", System.Uri.EscapeDataString(eventSubscriptionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1564,19 +1185,24 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Update a domain.
+        /// Update event subscription of a partner topic.
         /// </summary>
         /// <remarks>
-        /// Asynchronously updates a domain with the specified parameters.
+        /// Update event subscription of a partner topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='domainName'>
-        /// Name of the domain.
+        /// <param name='partnerTopicName'>
+        /// Name of the partner topic.
         /// </param>
-        /// <param name='domainUpdateParameters'>
-        /// Domain update information.
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription names must
+        /// be between 3 and 100 characters in length and use alphanumeric letters
+        /// only.
+        /// </param>
+        /// <param name='eventSubscriptionUpdateParameters'>
+        /// Updated event subscription information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1599,7 +1225,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Domain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventSubscription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string partnerTopicName, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1609,13 +1235,17 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (domainName == null)
+            if (partnerTopicName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "partnerTopicName");
             }
-            if (domainUpdateParameters == null)
+            if (eventSubscriptionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "domainUpdateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionName");
+            }
+            if (eventSubscriptionUpdateParameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventSubscriptionUpdateParameters");
             }
             if (Client.ApiVersion == null)
             {
@@ -1629,17 +1259,19 @@ namespace Microsoft.Azure.Management.EventGrid
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("domainName", domainName);
-                tracingParameters.Add("domainUpdateParameters", domainUpdateParameters);
+                tracingParameters.Add("partnerTopicName", partnerTopicName);
+                tracingParameters.Add("eventSubscriptionName", eventSubscriptionName);
+                tracingParameters.Add("eventSubscriptionUpdateParameters", eventSubscriptionUpdateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}/eventSubscriptions/{eventSubscriptionName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
+            _url = _url.Replace("{partnerTopicName}", System.Uri.EscapeDataString(partnerTopicName));
+            _url = _url.Replace("{eventSubscriptionName}", System.Uri.EscapeDataString(eventSubscriptionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1683,9 +1315,9 @@ namespace Microsoft.Azure.Management.EventGrid
 
             // Serialize Request
             string _requestContent = null;
-            if(domainUpdateParameters != null)
+            if(eventSubscriptionUpdateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(domainUpdateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(eventSubscriptionUpdateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -1709,7 +1341,7 @@ namespace Microsoft.Azure.Management.EventGrid
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1744,7 +1376,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Domain>();
+            var _result = new AzureOperationResponse<EventSubscription>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1757,359 +1389,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Domain>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// List domains under an Azure subscription.
-        /// </summary>
-        /// <remarks>
-        /// List all the domains under an Azure subscription.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<Domain>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListBySubscriptionNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Domain>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Domain>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// List domains under a resource group.
-        /// </summary>
-        /// <remarks>
-        /// List all the domains under a resource group.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<Domain>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroupNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Domain>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Domain>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EventSubscription>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
