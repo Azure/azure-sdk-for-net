@@ -13,7 +13,7 @@ namespace Azure.Search.Models
     public partial class SuggestDocumentsResult
     {
         /// <summary> The sequence of results returned by the query. </summary>
-        public ICollection<SuggestResult> Results { get; internal set; }
+        public IList<SuggestResult> Results { get; internal set; }
         /// <summary> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </summary>
         public double? Coverage { get; internal set; }
     }

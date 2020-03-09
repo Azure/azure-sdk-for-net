@@ -13,6 +13,6 @@ namespace Azure.Search.Models
     public partial class IndexDocumentsResult
     {
         /// <summary> The list of status information for each document in the indexing request. </summary>
-        public ICollection<IndexingResult> Results { get; internal set; }
+        public IList<IndexingResult> Results { get; internal set; }
     }
 }

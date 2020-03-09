@@ -4,16 +4,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// Describes a Session object. <see cref="ServiceBusSessionManager"/> can be used to perform operations on sessions.
     /// </summary>
+    ///
+    /// <remarks>
+    /// <para>
+    /// Service Bus Sessions, also called 'Groups' in the AMQP 1.0 protocol, are unbounded sequences of related messages. ServiceBus guarantees ordering of messages in a session.
+    /// </para>
+    /// <para>
+    /// Any sender can create a session when submitting messages into a Topic or Queue by setting the <see cref="ServiceBusMessage.SessionId"/> property on Message to some
+    /// application defined unique identifier. At the AMQP 1.0 protocol level, this value maps to the group-id property.
+    /// </para>
+    /// <para>
+    /// Sessions come into existence when there is at least one message with the session's SessionId in the Queue or Topic subscription.
+    /// Once a Session exists, there is no defined moment or gesture for when the session expires or disappears.
+    /// </para>
+    /// </remarks>
     public class ServiceBusSessionManager
     {
+        /// <summary>
+        /// An abstracted Service Bus transport-specific receiver that is associated with the
+        /// Service Bus gateway; intended to perform delegated operations.
+        /// </summary>
         private readonly TransportReceiver _receiver;
 
         /// <summary>
@@ -27,16 +44,24 @@ namespace Azure.Messaging.ServiceBus
         public DateTime LockedUntilUtc { get; private set; }
 
         /// <summary>
-        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
         internal ServiceBusRetryPolicy RetryPolicy { get; }
 
         /// <summary>
-        ///
+        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         internal ReceiveMode ReceiveMode { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSessionManager"/> class.
+        /// </summary>
+        ///
+        /// <param name="receiver">
+        /// An abstracted Service Bus transport-specific receiver that is associated with the
+        /// Service Bus gateway; intended to perform delegated operations.
+        /// </param>
         internal ServiceBusSessionManager(
             TransportReceiver receiver)
         {
@@ -44,9 +69,12 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// TODO implement
+        /// Gets the session state.
         /// </summary>
-        /// <returns></returns>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The session state as byte array.</returns>
         public virtual async Task<byte[]> GetStateAsync(
             CancellationToken cancellationToken = default)
         {
@@ -55,11 +83,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// TODO implement
+        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
         /// </summary>
-        /// <param name="sessionState"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="sessionState">A byte array of session state</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public virtual async Task SetStateAsync(byte[] sessionState,
             CancellationToken cancellationToken = default)
         {
@@ -68,8 +100,23 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.
         /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        /// <para>
+        /// When you get session receiver, the session is locked for this receiver by the service for a duration as specified during the Queue/Subscription creation.
+        /// If processing of the session requires longer than this duration, the session-lock needs to be renewed.
+        /// For each renewal, it resets the time the session is locked by the LockDuration set on the Entity.
+        /// </para>
+        /// <para>
+        /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
+        /// </para>
+        /// </remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
             LockedUntilUtc = await _receiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
     }
