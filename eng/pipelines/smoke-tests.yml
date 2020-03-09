@@ -63,6 +63,6 @@ jobs:
           AZURE_CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
           AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
           AZURE_CLIENT_ID: $(aad-azure-sdk-test-client-id)
+          AZURE_AUTHORITY_HOST: $(aad-azure-sdk-test-authority-host)
           COSMOS_AUTH_KEY: $(smoke-tests-cosmos-key)
           COSMOS_URI: $(smoke-tests-cosmos-endpoint)
-          AZURE_AUTHORITY_HOST: $(aad-azure-sdk-test-authority-host)
