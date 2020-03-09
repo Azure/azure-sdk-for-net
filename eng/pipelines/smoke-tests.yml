@@ -67,46 +67,46 @@ jobs:
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
-      # Set secret environment variables for different clouds
-      - pwsh: |
-          $variables = @{
-            KEY_VAULT_URI='$(smoke-tests-key-vault-project-url)'
-            EVENT_HUBS_CONNECTION_STRING='$(smoke-tests-event-hubs-connection-string)'
-            BLOB_CONNECTION_STRING='$(smoke-tests-storage-connection-string)'
-            AZURE_CLIENT_SECRET='$(aad-azure-sdk-test-client-secret)'
-            AZURE_TENANT_ID='$(aad-azure-sdk-test-tenant-id)'
-            AZURE_CLIENT_ID='$(aad-azure-sdk-test-client-id)'
-            AZURE_AUTHORITY_HOST='$(aad-azure-sdk-test-authority-uri)'
-            COSMOS_AUTH_KEY='$(smoke-tests-cosmos-key)'
-            COSMOS_URI='$(smoke-tests-cosmos-endpoint)'
-          };
-          foreach ($key in $variables.Keys) {
-            Write-Host "Setting variable '$key'"
-            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variables[$key])"
-            Write-Host "##vso[task.setvariable variable=$key;]$($variables[$key])"
-          }
-        displayName: Set secrets for public cloud
-        condition: and(succeeded(), eq(variables['CloudType'], 'public'))
+      - template: ../common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          TenantId: $(aad-azure-sdk-test-tenant-id)
+          TestApplicationId: $(aad-azure-sdk-test-client-id)
+          TestApplicationSecret: $(aad-azure-sdk-test-client-secret)
+          TestApplicationObjectId: $(aad-azure-sdk-test-client-oid)
+          ProvisionerApplicationId: $(provisioner-aad-id)
+          ProvisionerApplicationSecret: $(provisioner-aad-secret)
+          AdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com' }"
+          Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
 
-      - pwsh: |
-          $variables = @{
-            KEY_VAULT_URI='$(smoke-tests-key-vault-project-url-gov)'
-            EVENT_HUBS_CONNECTION_STRING='$(smoke-tests-event-hubs-connection-string-gov)'
-            BLOB_CONNECTION_STRING='$(smoke-tests-storage-connection-string-gov)'
-            AZURE_CLIENT_SECRET='$(aad-azure-sdk-test-client-secret-gov)'
-            AZURE_TENANT_ID='$(aad-azure-sdk-test-tenant-id-gov)'
-            AZURE_CLIENT_ID='$(aad-azure-sdk-test-client-id-gov)'
-            AZURE_AUTHORITY_HOST='$(aad-azure-sdk-test-authority-uri-gov)'
-            COSMOS_AUTH_KEY='$(smoke-tests-cosmos-key-gov)'
-            COSMOS_URI='$(smoke-tests-cosmos-endpoint-gov)'
-          };
-          foreach ($key in $variables.Keys) {
-            Write-Host "Setting variable '$key'"
-            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variables[$key])"
-            Write-Host "##vso[task.setvariable variable=$key;]$($variables[$key])"
-          }
-        displayName: Set secrets for government cloud
-        condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+      - template: ../common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: $(Build.SourcesDirectory)/common/SmokeTests/
+          TenantId: $(aad-azure-sdk-test-tenant-id-gov)
+          TestApplicationId: $(aad-azure-sdk-test-client-id-gov)
+          TestApplicationSecret: $(aad-azure-sdk-test-client-secret-gov)
+          TestApplicationObjectId: $(aad-azure-sdk-test-client-oid-gov)
+          ProvisionerApplicationId: $(provisioner-aad-id-gov)
+          ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
+          AdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/' }"
+          Location: usgovvirginia
+          Environment: AzureUSGovernment
+          Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
+
+      - template: ../common/TestResources/remove-test-resources.yml
+        parameters:
+          TenantId: $(aad-azure-sdk-test-tenant-id)
+          ProvisionerApplicationId: $(provisioner-aad-id)
+          ProvisionerApplicationSecret: $(provisioner-aad-secret)
+          Condition: eq(variables['CloudType'], 'public')
+
+      - template: ../common/TestResources/remove-test-resources.yml
+        parameters:
+          TenantId: $(aad-azure-sdk-test-tenant-id-gov)
+          ProvisionerApplicationId: $(provisioner-aad-id-gov)
+          ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
+          Environment: AzureUSGovernment
+          Condition: eq(variables['CloudType'], 'gov')
