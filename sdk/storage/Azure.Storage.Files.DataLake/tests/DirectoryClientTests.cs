@@ -10,6 +10,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
@@ -980,6 +981,35 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
             Assert.AreEqual(4, result.FilesSuccessfulCount);
             Assert.AreEqual(0, result.FailureCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
+
+            // Act
+            ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(
+                accessControlList: AccessControlList,
+                batchSize: 2,
+                progressHandler: progresMonitorMock.Object);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+
+            progresMonitorMock.Verify(x => x.Report(It.IsAny<ChangeAccessControlListPartialResult>()), Times.Exactly(4));
         }
 
         [Test]

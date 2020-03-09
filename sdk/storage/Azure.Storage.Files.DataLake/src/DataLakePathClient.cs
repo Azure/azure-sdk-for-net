@@ -2014,6 +2014,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// setting the the path's access control.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional ProgressHandler.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2030,6 +2033,7 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
             DataLakeRequestConditions conditions = default,
+            IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlListRecursive)}");
@@ -2043,6 +2047,7 @@ namespace Azure.Storage.Files.DataLake
                     Mode.Set,
                     batchSize,
                     conditions,
+                    progressHandler,
                     false, // async
                     cancellationToken)
                     .EnsureCompleted();
@@ -2074,6 +2079,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// setting the the path's access control.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional ProgressHandler.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2090,6 +2098,7 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
             DataLakeRequestConditions conditions = default,
+            IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlListRecursive)}");
@@ -2103,6 +2112,7 @@ namespace Azure.Storage.Files.DataLake
                     Mode.Set,
                     batchSize,
                     conditions,
+                    progressHandler,
                     true, // async
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2139,6 +2149,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// setting the the path's access control.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional ProgressHandler.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2159,6 +2172,7 @@ namespace Azure.Storage.Files.DataLake
             Mode mode,
             int? batchSize,
             DataLakeRequestConditions conditions,
+            IProgress<ChangeAccessControlListPartialResult> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2180,7 +2194,7 @@ namespace Azure.Storage.Files.DataLake
                     int failureCount = 0;
                     do
                     {
-                        Response<PathSetAccessControlRecursiveResult> response =
+                        Response<PathSetAccessControlRecursiveResult> jsonResponse =
                             await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
                                 clientDiagnostics: ClientDiagnostics,
                                 pipeline: Pipeline,
@@ -2198,18 +2212,29 @@ namespace Azure.Storage.Files.DataLake
                                 continuation: continuationToken,
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested();
 
-                        continuationToken = response.Value.Continuation;
-                        using (var document = JsonDocument.Parse(response.Value.Body))
+                        continuationToken = jsonResponse.Value.Continuation;
+                        using (var document = JsonDocument.Parse(jsonResponse.Value.Body))
                         {
-                            int currentDirectoriesSuccessfulCount = document.RootElement.GetProperty("directoriesSuccessful").GetInt32();
-                            int currentFilesSuccessfulCount = document.RootElement.GetProperty("filesSuccessful").GetInt32();
-                            int currentFailureCount = document.RootElement.GetProperty("failureCount").GetInt32();
+                            var response = DeserializeSetAccessControlRecursiveResponse(document.RootElement);
+                            int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
+                            int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
+                            int currentFailureCount = response.FailureCount ?? 0;
+                            if (progressHandler != null)
+                            {
+                                progressHandler.Report(new ChangeAccessControlListPartialResult()
+                                {
+                                    DirectoriesSuccessfulCount = currentDirectoriesSuccessfulCount,
+                                    FilesSuccessfulCount = currentFilesSuccessfulCount,
+                                    FailureCount = failureCount,
+                                });
+                            }
                             directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
                             filesSuccessfulCount += currentFilesSuccessfulCount;
                             failureCount += currentFailureCount;
                         }
+
+                        cancellationToken.ThrowIfCancellationRequested();
                     } while (!string.IsNullOrEmpty(continuationToken));
 
                     return new ChangeAccessControlListResult()
@@ -2229,6 +2254,92 @@ namespace Azure.Storage.Files.DataLake
                     Pipeline.LogMethodExit(nameof(DataLakePathClient));
                 }
             }
+        }
+
+        private static SetAccessControlRecursiveResponse DeserializeSetAccessControlRecursiveResponse(JsonElement element)
+        {
+            SetAccessControlRecursiveResponse result = new SetAccessControlRecursiveResponse();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("directoriesSuccessful"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.DirectoriesSuccessful = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("filesSuccessful"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.FilesSuccessful = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("failureCount"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.FailureCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("failedEntries"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var failedEntries = new List<AclFailedEntryList>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        failedEntries.Add(DeserializeAclFailedEntryList(item));
+                    }
+                    result.FailedEntries = failedEntries;
+                    continue;
+                }
+            }
+            return result;
+        }
+
+        private static AclFailedEntryList DeserializeAclFailedEntryList(JsonElement element)
+        {
+            AclFailedEntryList result = new AclFailedEntryList();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.Name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.Type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("errorMessage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.ErrorMessage = property.Value.GetString();
+                    continue;
+                }
+            }
+            return result;
         }
         #endregion Set Access Control Recursive
 
