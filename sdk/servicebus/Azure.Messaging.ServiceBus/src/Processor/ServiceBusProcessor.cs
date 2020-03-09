@@ -4,106 +4,84 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   A client responsible for reading <see cref="ServiceBusMessage" /> from a specific entity
-    ///   as a member of a specific consumer group.
-    ///
-    ///   A consumer may be exclusive, which asserts ownership over associated partitions for the consumer
-    ///   group to ensure that only one consumer from that group is reading the from the partition.
-    ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
-    ///
-    ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
-    ///   group to be actively reading events from a given partition.  These non-exclusive consumers are
-    ///   sometimes referred to as "Non-Epoch Consumers."
+    /// A processor is responsible for receiving <see cref="ServiceBusReceivedMessage" /> from a specific entity.
     /// </summary>
-    ///
     public class ServiceBusProcessor : IAsyncDisposable
     {
         private Func<ProcessMessageEventArgs, Task> _processMessage;
 
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync = default;
+
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
-
         private readonly object EventHandlerGuard = new object();
-        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
 
+        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private SemaphoreSlim MessageHandlerSemaphore;
+
         private int _maxConcurrentCalls = 4;
+
         private TimeSpan _maxAutoRenewDuration;
 
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
-
         private readonly SemaphoreSlim ProcessingStartStopSemaphore = new SemaphoreSlim(1, 1);
 
         private CancellationTokenSource RunningTaskTokenSource { get; set; }
 
         private ServiceBusReceiver Receiver { get; set; }
 
-        /// <summary>
-        ///   The running task responsible for performing partition load balancing between multiple <see cref="ServiceBusProcessor" />
-        ///   instances, as well as managing partition processing tasks and ownership.
-        /// </summary>
-        ///
         private Task ActiveReceiveTask { get; set; }
 
         /// <summary>
-        ///   Called when a 'process message' event is triggered.
+        /// Called when a 'process message' event is triggered.
         /// </summary>
         ///
         /// <param name="args">The set of arguments to identify the context of the event to be processed.</param>
-        ///
         private Task OnProcessMessageAsync(ProcessMessageEventArgs args) => _processMessage(args);
 
         /// <summary>
-        ///   Called when a 'process error' event is triggered.
+        /// Called when a 'process error' event is triggered.
         /// </summary>
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
-        ///
         private Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
 
         /// <summary>
-        ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
-        ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
+        /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        ///
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
-        ///   The name of the Service Bus entity that the consumer is connected to, specific to the
-        ///   Service Bus namespace that contains it.
+        /// The name of the Service Bus entity that the receiver is connected to, specific to the
+        /// Service Bus namespace that contains it.
         /// </summary>
-        ///
         public string EntityName { get; private set; }
 
         /// <summary>
-        ///
+        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
-        ///
+        /// Indicates whether the receiver entity is session enabled.
         /// </summary>
         public bool UseSessions { get; set; }
 
         /// <summary>
-        ///
+        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// from a local cache rather than waiting on a service request.
         /// </summary>
         public int PrefetchCount
         {
@@ -123,11 +101,10 @@ namespace Azure.Messaging.ServiceBus
         private int _prefetchCount = 0;
 
         /// <summary>
-        ///   The set of options to use for determining whether a failed operation should be retried and,
-        ///   if so, the amount of time to wait between retry attempts.  These options also control the
-        ///   amount of time allowed for publishing events and other interactions with the Service Bus service.
+        /// The set of options to use for determining whether a failed operation should be retried and,
+        /// if so, the amount of time to wait between retry attempts.  These options also control the
+        /// amount of time allowed for sending messages and other interactions with the Service Bus service.
         /// </summary>
-        ///
         public ServiceBusRetryOptions RetryOptions
         {
             get => _retryOptions;
@@ -142,26 +119,23 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
+        /// Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsClosed => Receiver == null || Receiver.IsClosed;
 
         /// <summary>
-        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
-        ///
         private ServiceBusRetryPolicy RetryPolicy => Receiver.RetryPolicy;
 
         /// <summary>
-        ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
-        ///   about the associated Service Bus entity and access to transport-aware consumers.
+        /// The active connection to the Azure Service Bus service, enabling client communications for metadata
+        /// about the associated Service Bus entity and access to transport-aware receivers.
         /// </summary>
-        ///
         private readonly ServiceBusConnection _connection;
 
         /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
@@ -182,14 +156,17 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        ///  cref="QueueClient.CompleteAsync(string)" /> or
-        ///  cref="SubscriptionClient.CompleteAsync(string)" /> on messages after the callback has completed processing.</summary>
+        /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete { get; set; }
 
-        /// <summary>Gets or sets the maximum duration within which the lock will be renewed automatically. This
-        /// value should be greater than the longest message lock duration; for example, the LockDuration Property. </summary>
+        /// <summary>
+        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
+        /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
+        /// </summary>
+        ///
         /// <value>The maximum duration during which locks are automatically renewed.</value>
+        ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration
@@ -206,23 +183,22 @@ namespace Azure.Messaging.ServiceBus
         internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         /// <summary>
-        ///
+        ///The time span the processor waits for receiving a message before it times out.
         /// </summary>
         public TimeSpan MaxReceiveTimeout { get; set; }
 
         /// <summary>
-        ///
+        /// The Session Id associated with the processor.
         /// </summary>
         public string SessionId { get; set; }
 
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="entityName"></param>
-        ///
+        /// <param name="entityName">The name of the specific entity to associate the processor with.</param>
         internal ServiceBusProcessor(
             ServiceBusConnection connection,
             string entityName)
@@ -232,21 +208,19 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
+        /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
-        ///
         protected ServiceBusProcessor()
         {
         }
 
         /// <summary>
-        ///   Closes the consumer.
+        /// Closes the receiver.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             if (Receiver != null)
@@ -256,28 +230,26 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />,
-        ///   including ensuring that the client itself has been closed.
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />,
+        /// including ensuring that the client itself has been closed.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
         ///
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-        ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        ///   Returns a hash code for this instance.
+        /// Returns a hash code for this instance.
         /// </summary>
         ///
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
@@ -286,7 +258,7 @@ namespace Azure.Messaging.ServiceBus
         public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
-        ///   Converts the instance to string representation.
+        /// Converts the instance to string representation.
         /// </summary>
         ///
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
@@ -295,8 +267,8 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   The event responsible for processing events received from the Event Hubs service.  Implementation
-        ///   is mandatory.
+        /// The event responsible for processing messages received from the Queue or Subscription. Implementation
+        /// is mandatory.
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -332,8 +304,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
-        ///   Implementation is mandatory.
+        /// The event responsible for processing unhandled exceptions thrown while this processor is running.
+        /// Implementation is mandatory.
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -366,15 +338,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Signals the <see cref="ServiceBusProcessor" /> to begin processing events.  Should this method be called while the processor
-        ///   is running, no action is taken.
+        /// Signals the <see cref="ServiceBusProcessor" /> to begin processing messages. Should this method be called while the processor
+        /// is running, no action is taken.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="ServiceBusProcessor" /> once it starts running.</param>
-        ///
-        /// exception cref="EventHubsException">Occurs when this <see cref="ServiceBusProcessor" /> instance is already closed./exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessMessageAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
-        ///
         public virtual async Task StartProcessingAsync(
             CancellationToken cancellationToken = default)
         {
@@ -469,12 +437,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Signals the <see cref="ServiceBusProcessor" /> to stop processing events.  Should this method be called while the processor
-        ///   is not running, no action is taken.
+        /// Signals the <see cref="ServiceBusProcessor" /> to stop processing events. Should this method be called while the processor
+        /// is not running, no action is taken.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusProcessor" /> will keep running.</param>
-        ///
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -524,8 +491,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Runs the Receive task in as many threads as are
-        ///   specified in the <see cref="MaxConcurrentCalls"/> property.
+        /// Runs the Receive task in as many threads as are
+        /// specified in the <see cref="MaxConcurrentCalls"/> property.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -764,13 +731,12 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
+        /// Invokes a specified action only if this <see cref="ServiceBusProcessor" /> instance is not running.
         /// </summary>
         ///
         /// <param name="action">The action to invoke.</param>
         ///
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
-        ///
         private void EnsureNotRunningAndInvoke(Action action)
         {
             if (ActiveReceiveTask == null)
