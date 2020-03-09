@@ -13,6 +13,7 @@ namespace Azure.Identity.Tests.Mock
         }
 
         public Action<TokenCredential> OnCreateEnvironmentCredential { get; set; }
+        public Action<TokenCredential> OnCreateAzureCliCredential { get; set; }
         public Action<string, TokenCredential> OnCreateManagedIdentityCredential { get; set; }
         public Action<string, string, TokenCredential> OnCreateSharedTokenCacheCredential { get; set; }
         public Action<string, TokenCredential> OnCreateInteractiveBrowserCredential { get; set; }
@@ -40,6 +41,15 @@ namespace Azure.Identity.Tests.Mock
             TokenCredential cred = new MockTokenCredential();
 
             OnCreateSharedTokenCacheCredential?.Invoke(tenantId, username, cred);
+
+            return cred;
+        }
+
+        public override TokenCredential CreateAzureCliCredential()
+        {
+            TokenCredential cred = new MockTokenCredential();
+
+            OnCreateAzureCliCredential?.Invoke(cred);
 
             return cred;
         }

@@ -33,5 +33,10 @@ namespace Azure.Identity
         {
             return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, Pipeline);
         }
+
+        public virtual TokenCredential CreateAzureCliCredential()
+        {
+            return new AzureCliCredential(Pipeline, new AzureCliCredentialClient());
+        }
     }
 }
