@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1995,6 +1996,241 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Set Access Control
+
+        #region Set Access Control Recursive
+        /// <summary>
+        /// The <see cref="SetAccessControlListRecursive"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="batchSize">
+        /// Optional. Defines how many subpaths will be processed.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual ChangeAccessControlListResult SetAccessControlListRecursive(
+            IList<PathAccessControlItem> accessControlList,
+            int? batchSize = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlListRecursive)}");
+
+            try
+            {
+                scope.Start();
+
+                return SetAccessControlListRecursiveInternal(
+                    accessControlList,
+                    Mode.Set,
+                    batchSize,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlListRecursiveAsync"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="batchSize">
+        /// Optional. Defines how many subpaths will be processed.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<ChangeAccessControlListResult> SetAccessControlListRecursiveAsync(
+            IList<PathAccessControlItem> accessControlList,
+            int? batchSize = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlListRecursive)}");
+
+            try
+            {
+                scope.Start();
+
+                return await SetAccessControlListRecursiveInternal(
+                    accessControlList,
+                    Mode.Set,
+                    batchSize,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlListRecursiveInternal"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="mode">
+        /// Mode \"set\" sets POSIX access control rights on files and directories,
+        /// \"modify\" modifies one or more POSIX access control rights  that pre-exist on files and directories,
+        /// \"remove\" removes one or more POSIX access control rights that were present earlier on files and directories.
+        /// </param>
+        /// <param name="batchSize">
+        /// Optional. Defines how many subpaths will be processed.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="ChangeAccessControlListResult"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<ChangeAccessControlListResult> SetAccessControlListRecursiveInternal(
+            IList<PathAccessControlItem> accessControlList,
+            Mode mode,
+            int? batchSize,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakePathClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(accessControlList)}: {accessControlList}\n" +
+                    $"{nameof(mode)}: {mode}\n" +
+                    $"{nameof(batchSize)}: {batchSize}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    string continuationToken = null;
+                    int directoriesSuccessfulCount = 0;
+                    int filesSuccessfulCount = 0;
+                    int failureCount = 0;
+                    do
+                    {
+                        Response<PathSetAccessControlRecursiveResult> response =
+                            await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                clientDiagnostics: ClientDiagnostics,
+                                pipeline: Pipeline,
+                                resourceUri: DfsUri,
+                                mode: mode,
+                                maxRecords: batchSize,
+                                version: Version.ToVersionString(),
+                                leaseId: conditions?.LeaseId,
+                                acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                                ifMatch: conditions?.IfMatch,
+                                ifNoneMatch: conditions?.IfNoneMatch,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                async: async,
+                                continuation: continuationToken,
+                                cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        continuationToken = response.Value.Continuation;
+                        using (var document = JsonDocument.Parse(response.Value.Body))
+                        {
+                            int currentDirectoriesSuccessfulCount = document.RootElement.GetProperty("directoriesSuccessful").GetInt32();
+                            int currentFilesSuccessfulCount = document.RootElement.GetProperty("filesSuccessful").GetInt32();
+                            int currentFailureCount = document.RootElement.GetProperty("failureCount").GetInt32();
+                            directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                            filesSuccessfulCount += currentFilesSuccessfulCount;
+                            failureCount += currentFailureCount;
+                        }
+                    } while (!string.IsNullOrEmpty(continuationToken));
+
+                    return new ChangeAccessControlListResult()
+                        {
+                            DirectoriesSuccessfulCount = directoriesSuccessfulCount,
+                            FilesSuccessfulCount = filesSuccessfulCount,
+                            FailureCount = failureCount,
+                        };
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                }
+            }
+        }
+        #endregion Set Access Control Recursive
 
         #region Set Permissions
         /// <summary>

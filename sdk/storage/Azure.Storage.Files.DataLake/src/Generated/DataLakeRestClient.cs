@@ -3198,9 +3198,8 @@ namespace Azure.Storage.Files.DataLake
                     case 200:
                     {
                         // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult _value = new Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveResult();
-                        _value.Body = Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse.FromXml(_xml.Root);
+                        _value.Body = response.ContentStream; // You should manually wrap with RetriableStream!
 
                         // Get response headers
                         string _header;
@@ -4469,7 +4468,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Path SetAccessControlRecursiveResult
     /// </summary>
-    public partial class PathSetAccessControlRecursiveResult
+    internal partial class PathSetAccessControlRecursiveResult
     {
         /// <summary>
         /// An HTTP entity tag associated with the file or directory.
@@ -4494,41 +4493,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Body
         /// </summary>
-        public Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse Body { get; internal set; }
+        public System.IO.Stream Body { get; internal set; }
 
         /// <summary>
-        /// Creates a new PathSetAccessControlRecursiveResult instance
+        /// Prevent direct instantiation of PathSetAccessControlRecursiveResult instances.
+        /// You can use DataLakeModelFactory.PathSetAccessControlRecursiveResult instead.
         /// </summary>
-        public PathSetAccessControlRecursiveResult()
-        {
-            Body = new Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse();
-        }
-    }
-
-    /// <summary>
-    /// DataLakeModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class DataLakeModelFactory
-    {
-        /// <summary>
-        /// Creates a new PathSetAccessControlRecursiveResult instance for mocking.
-        /// </summary>
-        public static PathSetAccessControlRecursiveResult PathSetAccessControlRecursiveResult(
-            Azure.Storage.Files.DataLake.Models.SetAccessControlRecursiveResponse body,
-            string continuation,
-            string clientRequestId,
-            System.DateTimeOffset lastModified,
-            Azure.ETag eTag)
-        {
-            return new PathSetAccessControlRecursiveResult()
-            {
-                Body = body,
-                Continuation = continuation,
-                ClientRequestId = clientRequestId,
-                LastModified = lastModified,
-                ETag = eTag,
-            };
-        }
+        internal PathSetAccessControlRecursiveResult() { }
     }
 }
 #endregion class PathSetAccessControlRecursiveResult
