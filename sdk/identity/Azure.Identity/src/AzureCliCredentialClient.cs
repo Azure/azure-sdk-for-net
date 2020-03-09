@@ -31,6 +31,8 @@ namespace Azure.Identity
         // The default install paths are used to find Azure CLI if no path is specified. This is to prevent executing out of the current working directory.
         private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
         private const string DefaultPath = "/usr/bin:/usr/local/bin";
+        private const string DefaultWorkingDir = "/bin/";
+        private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
 
         private static readonly Regex AzNotFoundPattern = new Regex("az:(.*)not found");
 
@@ -43,7 +45,7 @@ namespace Azure.Identity
                 _path = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPath;
             }
 
-            _workingDir = _path.Split(new char[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries)[0];
+            _workingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDir;
         }
 
         public virtual AccessToken RequestCliAccessToken(string[] scopes, CancellationToken cancellationToken)
