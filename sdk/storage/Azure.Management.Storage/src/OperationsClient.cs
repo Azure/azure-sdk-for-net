@@ -9,6 +9,10 @@ namespace Azure.Management.Storage
     [CodeGenClient("Operations")]
     public partial class OperationsClient
     {
+        public OperationsClient(TokenCredential tokenCredential): this(tokenCredential, StorageManagementClientOptions.Default)
+        {
+        }
+
         public OperationsClient(TokenCredential tokenCredential, StorageManagementClientOptions options): this(
             new ClientDiagnostics(options),
             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, "https://management.azure.com/")))

@@ -18,12 +18,14 @@
     <NoWarn>
       $(NoWarn);
       AZC0001;
+      AZC0005;
       CA1056;
       CA1507;
       CA1717;
       CA1812;
       CS1591;
       SA1649;
+      AZC0100;
     </NoWarn>
   </PropertyGroup>
 

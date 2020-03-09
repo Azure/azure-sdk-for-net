@@ -16,14 +16,14 @@ using Azure.Management.Storage.Models;
 
 namespace Azure.Management.Storage
 {
-    internal partial class RestClient
+    internal partial class OperationsRestClient
     {
         private string host;
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
-        /// <summary> Initializes a new instance of RestClient. </summary>
-        public RestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        /// <summary> Initializes a new instance of OperationsRestClient. </summary>
+        public OperationsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
             if (host == null)
             {
@@ -55,7 +55,7 @@ namespace Azure.Management.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<OperationListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("Client.List");
+            using var scope = clientDiagnostics.CreateScope("OperationsClient.List");
             scope.Start();
             try
             {
@@ -83,7 +83,7 @@ namespace Azure.Management.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<OperationListResult> List(CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("Client.List");
+            using var scope = clientDiagnostics.CreateScope("OperationsClient.List");
             scope.Start();
             try
             {
@@ -127,7 +127,7 @@ namespace Azure.Management.Storage
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var scope = clientDiagnostics.CreateScope("Client.List");
+            using var scope = clientDiagnostics.CreateScope("OperationsClient.List");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.Management.Storage
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var scope = clientDiagnostics.CreateScope("Client.List");
+            using var scope = clientDiagnostics.CreateScope("OperationsClient.List");
             scope.Start();
             try
             {

@@ -28,7 +28,7 @@ namespace Azure.Management.Storage
         }
         /// <summary> Lists the available SKUs supported by Microsoft.Storage for given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public AsyncPageable<SkuInformation> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SkuInformation> ListAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SkuInformation>> FirstPageFunc(int? pageSizeHint)
             {
@@ -44,7 +44,7 @@ namespace Azure.Management.Storage
         }
         /// <summary> Lists the available SKUs supported by Microsoft.Storage for given subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Pageable<SkuInformation> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<SkuInformation> List(CancellationToken cancellationToken = default)
         {
             Page<SkuInformation> FirstPageFunc(int? pageSizeHint)
             {
