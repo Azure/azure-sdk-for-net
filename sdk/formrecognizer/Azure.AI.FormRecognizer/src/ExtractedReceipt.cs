@@ -210,9 +210,10 @@ namespace Azure.AI.FormRecognizer.Models
 
                     string name = ConvertStringValue("Name", objectValue);
                     int quantity = ConvertIntValue("Quantity", objectValue);
+                    float price = ConvertFloatValue("Price", objectValue);
                     float totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
-                    ExtractedReceiptItem item = new ExtractedReceiptItem(name, quantity, totalPrice);
+                    ExtractedReceiptItem item = new ExtractedReceiptItem(name, quantity, price, totalPrice);
                     items.Add(item);
                 }
             }
