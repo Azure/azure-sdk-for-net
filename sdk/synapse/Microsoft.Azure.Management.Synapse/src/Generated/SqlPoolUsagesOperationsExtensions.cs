@@ -17,15 +17,15 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for SqlPoolOperations.
+    /// Extension methods for SqlPoolUsagesOperations.
     /// </summary>
-    public static partial class SqlPoolOperationsExtensions
+    public static partial class SqlPoolUsagesOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets SQL pool usages
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets SQL pool usages.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,16 +39,16 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='sqlPoolName'>
             /// SQL pool name
             /// </param>
-            public static IPage<SqlPoolOperation> List(this ISqlPoolOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            public static IPage<SqlPoolUsage> List(this ISqlPoolUsagesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
             {
                 return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets SQL pool usages
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets SQL pool usages.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPoolOperation>> ListAsync(this ISqlPoolOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolUsage>> ListAsync(this ISqlPoolUsagesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -74,10 +74,10 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets SQL pool usages
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets SQL pool usages.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,16 +85,16 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SqlPoolOperation> ListNext(this ISqlPoolOperations operations, string nextPageLink)
+            public static IPage<SqlPoolUsage> ListNext(this ISqlPoolUsagesOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets SQL pool usages
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets SQL pool usages.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPoolOperation>> ListNextAsync(this ISqlPoolOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolUsage>> ListNextAsync(this ISqlPoolUsagesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

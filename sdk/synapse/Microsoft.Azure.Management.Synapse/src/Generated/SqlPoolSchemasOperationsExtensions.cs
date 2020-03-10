@@ -12,20 +12,21 @@ namespace Microsoft.Azure.Management.Synapse
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for SqlPoolOperations.
+    /// Extension methods for SqlPoolSchemasOperations.
     /// </summary>
-    public static partial class SqlPoolOperationsExtensions
+    public static partial class SqlPoolSchemasOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets schemas of a given SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets schemas of a given SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,16 +40,19 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='sqlPoolName'>
             /// SQL pool name
             /// </param>
-            public static IPage<SqlPoolOperation> List(this ISqlPoolOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<SqlPoolSchema> List(this ISqlPoolSchemasOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, ODataQuery<SqlPoolSchema> odataQuery = default(ODataQuery<SqlPoolSchema>))
             {
-                return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets schemas of a given SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets schemas of a given SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,23 +65,26 @@ namespace Microsoft.Azure.Management.Synapse
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPoolOperation>> ListAsync(this ISqlPoolOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolSchema>> ListAsync(this ISqlPoolSchemasOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, ODataQuery<SqlPoolSchema> odataQuery = default(ODataQuery<SqlPoolSchema>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets schemas of a given SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets schemas of a given SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,16 +92,16 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SqlPoolOperation> ListNext(this ISqlPoolOperations operations, string nextPageLink)
+            public static IPage<SqlPoolSchema> ListNext(this ISqlPoolSchemasOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets schemas of a given SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets schemas of a given SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -105,7 +112,7 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPoolOperation>> ListNextAsync(this ISqlPoolOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolSchema>> ListNextAsync(this ISqlPoolSchemasOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlPoolOperations operations.
+    /// SqlPoolReplicationLinksOperations operations.
     /// </summary>
-    public partial interface ISqlPoolOperations
+    public partial interface ISqlPoolReplicationLinksOperations
     {
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Get SQL pool replication links
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Lists a Sql pool's replication links.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -53,12 +53,12 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ReplicationLink>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Get SQL pool replication links
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Lists a Sql pool's replication links.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -78,6 +78,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ReplicationLink>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

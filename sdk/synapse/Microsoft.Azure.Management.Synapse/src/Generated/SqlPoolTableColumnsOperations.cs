@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Synapse
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -23,12 +24,12 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlPoolOperations operations.
+    /// SqlPoolTableColumnsOperations operations.
     /// </summary>
-    internal partial class SqlPoolOperations : IServiceOperations<SynapseManagementClient>, ISqlPoolOperations
+    internal partial class SqlPoolTableColumnsOperations : IServiceOperations<SynapseManagementClient>, ISqlPoolTableColumnsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SqlPoolOperations class.
+        /// Initializes a new instance of the SqlPoolTableColumnsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SqlPoolOperations(SynapseManagementClient client)
+        internal SqlPoolTableColumnsOperations(SynapseManagementClient client)
         {
             if (client == null)
             {
@@ -51,10 +52,10 @@ namespace Microsoft.Azure.Management.Synapse
         public SynapseManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Gets columns in a given table in a SQL pool
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Gets columns in a given table in a SQL pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -64,6 +65,15 @@ namespace Microsoft.Azure.Management.Synapse
         /// </param>
         /// <param name='sqlPoolName'>
         /// SQL pool name
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -86,7 +96,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SqlPoolColumn>>> ListByTableNameWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, ODataQuery<SqlPoolColumn> odataQuery = default(ODataQuery<SqlPoolColumn>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -137,6 +147,14 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sqlPoolName");
             }
+            if (schemaName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "schemaName");
+            }
+            if (tableName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "tableName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -144,20 +162,33 @@ namespace Microsoft.Azure.Management.Synapse
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("sqlPoolName", sqlPoolName);
+                tracingParameters.Add("schemaName", schemaName);
+                tracingParameters.Add("tableName", tableName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByTableName", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}/columns").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{sqlPoolName}", System.Uri.EscapeDataString(sqlPoolName));
+            _url = _url.Replace("{schemaName}", System.Uri.EscapeDataString(schemaName));
+            _url = _url.Replace("{tableName}", System.Uri.EscapeDataString(tableName));
             List<string> _queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter))
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -255,7 +286,7 @@ namespace Microsoft.Azure.Management.Synapse
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SqlPoolOperation>>();
+            var _result = new AzureOperationResponse<IPage<SqlPoolColumn>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -268,7 +299,7 @@ namespace Microsoft.Azure.Management.Synapse
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SqlPoolOperation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SqlPoolColumn>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -288,10 +319,10 @@ namespace Microsoft.Azure.Management.Synapse
         }
 
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Gets columns in a given table in a SQL pool
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Gets columns in a given table in a SQL pool.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -317,7 +348,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SqlPoolColumn>>> ListByTableNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -332,7 +363,7 @@ namespace Microsoft.Azure.Management.Synapse
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByTableNameNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -431,7 +462,7 @@ namespace Microsoft.Azure.Management.Synapse
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SqlPoolOperation>>();
+            var _result = new AzureOperationResponse<IPage<SqlPoolColumn>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -444,7 +475,7 @@ namespace Microsoft.Azure.Management.Synapse
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SqlPoolOperation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SqlPoolColumn>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

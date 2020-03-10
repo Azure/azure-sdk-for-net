@@ -12,20 +12,21 @@ namespace Microsoft.Azure.Management.Synapse
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for SqlPoolOperations.
+    /// Extension methods for SqlPoolTableColumnsOperations.
     /// </summary>
-    public static partial class SqlPoolOperationsExtensions
+    public static partial class SqlPoolTableColumnsOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets columns in a given table in a SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets columns in a given table in a SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,16 +40,25 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='sqlPoolName'>
             /// SQL pool name
             /// </param>
-            public static IPage<SqlPoolOperation> List(this ISqlPoolOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<SqlPoolColumn> ListByTableName(this ISqlPoolTableColumnsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, ODataQuery<SqlPoolColumn> odataQuery = default(ODataQuery<SqlPoolColumn>))
             {
-                return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+                return operations.ListByTableNameAsync(resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets columns in a given table in a SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets columns in a given table in a SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,23 +71,32 @@ namespace Microsoft.Azure.Management.Synapse
             /// </param>
             /// <param name='sqlPoolName'>
             /// SQL pool name
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPoolOperation>> ListAsync(this ISqlPoolOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolColumn>> ListByTableNameAsync(this ISqlPoolTableColumnsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, ODataQuery<SqlPoolColumn> odataQuery = default(ODataQuery<SqlPoolColumn>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTableNameWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets columns in a given table in a SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets columns in a given table in a SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,16 +104,16 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SqlPoolOperation> ListNext(this ISqlPoolOperations operations, string nextPageLink)
+            public static IPage<SqlPoolColumn> ListByTableNameNext(this ISqlPoolTableColumnsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByTableNameNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of operations performed on the SQL pool
+            /// Gets columns in a given table in a SQL pool
             /// </summary>
             /// <remarks>
-            /// Gets a list of operations performed on the SQL pool.
+            /// Gets columns in a given table in a SQL pool.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -105,9 +124,9 @@ namespace Microsoft.Azure.Management.Synapse
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SqlPoolOperation>> ListNextAsync(this ISqlPoolOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SqlPoolColumn>> ListByTableNameNextAsync(this ISqlPoolTableColumnsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTableNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

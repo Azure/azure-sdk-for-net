@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlPoolOperations operations.
+    /// SqlPoolReplicationLinksOperations operations.
     /// </summary>
-    internal partial class SqlPoolOperations : IServiceOperations<SynapseManagementClient>, ISqlPoolOperations
+    internal partial class SqlPoolReplicationLinksOperations : IServiceOperations<SynapseManagementClient>, ISqlPoolReplicationLinksOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SqlPoolOperations class.
+        /// Initializes a new instance of the SqlPoolReplicationLinksOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SqlPoolOperations(SynapseManagementClient client)
+        internal SqlPoolReplicationLinksOperations(SynapseManagementClient client)
         {
             if (client == null)
             {
@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.Synapse
         public SynapseManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Get SQL pool replication links
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Lists a Sql pool's replication links.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReplicationLink>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Synapse
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.Synapse
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SqlPoolOperation>>();
+            var _result = new AzureOperationResponse<IPage<ReplicationLink>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.Synapse
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SqlPoolOperation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReplicationLink>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -288,10 +288,10 @@ namespace Microsoft.Azure.Management.Synapse
         }
 
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Get SQL pool replication links
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Lists a Sql pool's replication links.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReplicationLink>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Management.Synapse
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SqlPoolOperation>>();
+            var _result = new AzureOperationResponse<IPage<ReplicationLink>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.Management.Synapse
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SqlPoolOperation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReplicationLink>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

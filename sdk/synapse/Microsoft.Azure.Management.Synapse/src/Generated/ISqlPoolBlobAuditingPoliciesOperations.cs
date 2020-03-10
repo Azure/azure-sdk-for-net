@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlPoolOperations operations.
+    /// SqlPoolBlobAuditingPoliciesOperations operations.
     /// </summary>
-    public partial interface ISqlPoolOperations
+    public partial interface ISqlPoolBlobAuditingPoliciesOperations
     {
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Get a SQL pool's blob auditing policy
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Get a SQL pool's blob auditing policy.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -53,15 +53,24 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SqlPoolBlobAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Creates or updates a SQL pool's blob auditing policy
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Creates or updates a SQL pool's blob auditing policy.
         /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='sqlPoolName'>
+        /// SQL pool name
+        /// </param>
+        /// <param name='parameters'>
+        /// The database blob auditing policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,6 +87,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SqlPoolBlobAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolBlobAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

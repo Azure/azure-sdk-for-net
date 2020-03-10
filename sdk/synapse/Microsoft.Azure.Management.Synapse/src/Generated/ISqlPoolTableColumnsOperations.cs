@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Synapse
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,15 +20,15 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SqlPoolOperations operations.
+    /// SqlPoolTableColumnsOperations operations.
     /// </summary>
-    public partial interface ISqlPoolOperations
+    public partial interface ISqlPoolTableColumnsOperations
     {
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Gets columns in a given table in a SQL pool
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Gets columns in a given table in a SQL pool.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -37,6 +38,15 @@ namespace Microsoft.Azure.Management.Synapse
         /// </param>
         /// <param name='sqlPoolName'>
         /// SQL pool name
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,12 +63,12 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SqlPoolColumn>>> ListByTableNameWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, ODataQuery<SqlPoolColumn> odataQuery = default(ODataQuery<SqlPoolColumn>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of operations performed on the SQL pool
+        /// Gets columns in a given table in a SQL pool
         /// </summary>
         /// <remarks>
-        /// Gets a list of operations performed on the SQL pool.
+        /// Gets columns in a given table in a SQL pool.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -78,6 +88,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SqlPoolOperation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SqlPoolColumn>>> ListByTableNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
