@@ -243,6 +243,21 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   Retrieves information about the partition this client is associated to, including elements that describe the
+        ///   available events in the partition event stream.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of information for the associated partition under the Event Hub this client is associated with.</returns>
+        ///
+        public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
+            return Connection.GetPartitionPropertiesAsync(PartitionId, RetryPolicy, cancellationToken);
+        }
+
+        /// <summary>
         ///   Closes the client.
         /// </summary>
         ///
