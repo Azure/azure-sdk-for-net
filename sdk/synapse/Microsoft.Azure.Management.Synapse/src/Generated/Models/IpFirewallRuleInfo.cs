@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Synapse.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
     /// IP firewall rule
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IpFirewallRuleInfo : ProxyResource
+    public partial class IpFirewallRuleInfo : IResource
     {
         /// <summary>
         /// Initializes a new instance of the IpFirewallRuleInfo class.
@@ -32,12 +33,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the IpFirewallRuleInfo class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="endIpAddress">The end IP address of the firewall rule.
         /// Must be IPv4 format. Must be greater than or equal to
         /// startIpAddress</param>
@@ -46,8 +41,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// 'Failed', 'DeleteError'</param>
         /// <param name="startIpAddress">The start IP address of the firewall
         /// rule. Must be IPv4 format</param>
-        public IpFirewallRuleInfo(string id = default(string), string name = default(string), string type = default(string), string endIpAddress = default(string), string provisioningState = default(string), string startIpAddress = default(string))
-            : base(id, name, type)
+        public IpFirewallRuleInfo(string endIpAddress = default(string), string provisioningState = default(string), string startIpAddress = default(string))
         {
             EndIpAddress = endIpAddress;
             ProvisioningState = provisioningState;

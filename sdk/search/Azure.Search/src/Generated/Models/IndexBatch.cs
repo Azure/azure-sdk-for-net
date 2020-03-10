@@ -13,6 +13,6 @@ namespace Azure.Search.Models
     public partial class IndexBatch
     {
         /// <summary> The actions in the batch. </summary>
-        public ICollection<IndexAction> Actions { get; set; } = new List<IndexAction>();
+        public IList<IndexAction> Actions { get; set; } = new List<IndexAction>();
     }
 }

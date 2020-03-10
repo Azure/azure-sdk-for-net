@@ -1,0 +1,15 @@
+trigger: none
+
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  parameters:
+    EnvVars:
+      AZURE_SEARCH_TEST_MODE: Live
+    ServiceDirectory: search
