@@ -68,7 +68,8 @@ namespace Azure.Identity
 
             if (exitCode != 0)
             {
-                bool isLoginError = output.StartsWith("Please run 'az login'", StringComparison.CurrentCultureIgnoreCase);
+                bool isLoginError = output.IndexOf("az login", StringComparison.OrdinalIgnoreCase) != -1 || output.IndexOf("az account set", StringComparison.OrdinalIgnoreCase) != -1;
+
                 bool isWinError = output.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
 
                 bool isOtherOsError = AzNotFoundPattern.IsMatch(output);
