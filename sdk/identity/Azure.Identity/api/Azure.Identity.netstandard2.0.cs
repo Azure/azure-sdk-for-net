@@ -98,6 +98,13 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class KnownAuthorityHosts
+    {
+        public static readonly System.Uri AzureChinaCloud;
+        public static readonly System.Uri AzureCloud;
+        public static readonly System.Uri AzureGermanCloud;
+        public static readonly System.Uri AzureUSGovernment;
+    }
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
         protected ManagedIdentityCredential() { }
