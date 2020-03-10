@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -26,8 +29,17 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
+        /// <summary>The primitive for synchronizing access when starting and stopping the processor.</summary>
+        private readonly SemaphoreSlim ProcessorRunningSync = new SemaphoreSlim(1, 1);
+
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
         private bool? _isRunningOverride;
+
+        /// <summary>The task responsible for managing the operations of the processor when it is running.</summary>
+        private Task _runningProcessorTask;
+
+        /// <summary>A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the current running task.</summary>
+        private CancellationTokenSource _runningProcessorCancellationSource;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the processor is associated with.  This is likely
@@ -69,8 +81,29 @@ namespace Azure.Messaging.EventHubs.Primitives
                     return _isRunningOverride.Value;
                 }
 
-                // TODO: Implement
-                throw new NotImplementedException();
+                // If there is no active processor task, ensure that it is not
+                // in the process of starting by attempting to acquire the semaphore.
+                //
+                // If the semaphore could not be acquired, then there is an active start/stop
+                // operation in progress indicating that the processor is not yet running or
+                // will not be running.
+
+                if (_runningProcessorTask == null)
+                {
+                    try
+                    {
+                        if (!ProcessorRunningSync.Wait(100))
+                        {
+                            return false;
+                        }
+                    }
+                    finally
+                    {
+                        ProcessorRunningSync.Release();
+                    }
+                }
+
+                return  ((!_runningProcessorTask?.IsCompleted) ?? (false));
             }
 
             protected set => _isRunningOverride = value;
@@ -81,6 +114,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
+
+        /// <summary>
+        ///   The set of currently active partition processing tasks issued by this event processor and their associated
+        ///   token sources that can be used to cancel the operation.  Partition identifiers are used as keys.
+        /// </summary>
+        ///
+        private ConcurrentDictionary<string, PartitionProcessor> ActivePartitionProcessors { get; } = new ConcurrentDictionary<string, PartitionProcessor>();
 
         /// <summary>
         ///   A factory used to create new <see cref="EventHubConnection" /> instances.
@@ -105,6 +145,44 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         private int EventBatchMaximumCount { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">The set of options to use for the processor.</param>
+        /// <param name="loadBalancer">The load balancer to use for coordinating processing with other event processor instances.  If <c>null</c>, the standard load balancer will be created.</param>
+        ///
+        internal EventProcessor(int eventBatchMaximumCount,
+                                string consumerGroup,
+                                string fullyQualifiedNamespace,
+                                string eventHubName,
+                                TokenCredential credential,
+                                EventProcessorOptions options = default,
+                                PartitionLoadBalancer loadBalancer = default)
+        {
+            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new EventProcessorOptions();
+
+            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            Options = options;
+            EventBatchMaximumCount = eventBatchMaximumCount;
+            LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
@@ -157,6 +235,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                  string eventHubName,
                                  EventProcessorOptions options = default)
         {
+            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
@@ -190,23 +269,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                  string fullyQualifiedNamespace,
                                  string eventHubName,
                                  TokenCredential credential,
-                                 EventProcessorOptions options = default)
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options = options?.Clone() ?? new EventProcessorOptions();
-
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EventHubName = eventHubName;
-            ConsumerGroup = consumerGroup;
-            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
-            Options = options;
-            EventBatchMaximumCount = eventBatchMaximumCount;
-            LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
         }
 
         /// <summary>
@@ -295,18 +359,23 @@ namespace Azure.Messaging.EventHubs.Primitives
         internal virtual EventHubConnection CreateConnection() => ConnectionFactory();
 
         /// <summary>
-        ///   Creates an <see cref="EventHubConsumerClient" /> to use for processing.
+        ///   Creates an <see cref="TransportConsumer" /> to use for processing.
         /// </summary>
         ///
-        /// <param name="consumerGroup">The consumer group to associate with the consumer client.</param>
-        /// <param name="connection">The connection to use for the consumer client.</param>
-        /// <param name="options">The options to use for configuring the consumer client.</param>
+        /// <param name="consumerGroup">The consumer group to associate with the consumer.</param>
+        /// <param name="partitionId">The partition to associated with the consumer.</param>
+        /// <param name="eventPosition">The position in the event stream where the consumer should begin reading.</param>
+        /// <param name="connection">The connection to use for the consumer.</param>
+        /// <param name="options">The options to use for configuring the consumer.</param>
         ///
-        /// <returns>An <see cref="EventHubConsumerClient" /> with the requested configuration.</returns>
+        /// <returns>An <see cref="TransportConsumer" /> with the requested configuration.</returns>
         ///
-        internal virtual EventHubConsumerClient CreateConsumer(string consumerGroup,
-                                                               EventHubConnection connection,
-                                                               EventHubConsumerClientOptions options) => new EventHubConsumerClient(consumerGroup, connection, options);
+        internal virtual TransportConsumer CreateConsumer(string consumerGroup,
+                                                          string partitionId,
+                                                          EventPosition eventPosition,
+                                                          EventHubConnection connection,
+                                                          EventProcessorOptions options) =>
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount);
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
@@ -501,17 +570,64 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                         CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.EventProcessorStart(Identifier, EventHubName, ConsumerGroup);
 
-            // TODO: Implement
+            var releaseSync = false;
 
-            if (async)
+            try
             {
-                await Task.Delay(1).ConfigureAwait(false);
+                // Acquire the semaphore used to synchronize processor starts and stops, respecting
+                // the async flag.  When this is held, the state of the processor is stable.
+
+                if (async)
+                {
+                    await ProcessorRunningSync.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessorRunningSync.Wait();
+                }
+
+                releaseSync = true;
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // If the processor is already running, then it was started before the
+                // semaphore was acquired; there is no work to be done.
+
+                if (_runningProcessorTask != null)
+                {
+                    return;
+                }
+
+                // There should be no cancellation source, but guard against leaking resources in the
+                // event of a processing crash or other exception.
+
+                _runningProcessorCancellationSource?.Cancel();
+                _runningProcessorCancellationSource?.Dispose();
+                _runningProcessorCancellationSource = new CancellationTokenSource();
+
+                // Start processing events.
+
+                _runningProcessorTask = RunProcessingAsync(_runningProcessorCancellationSource.Token);
             }
+            catch (Exception ex)
+            {
+                Logger.EventProcessorStartError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.EventProcessorStartComplete(Identifier, EventHubName, ConsumerGroup);
 
-            throw new NotImplementedException();
+                // If the cancellation token was signaled during the attempt to acquire the
+                // semaphore, it cannot be safely released; ensure that it is held.
+
+                if (releaseSync)
+                {
+                    ProcessorRunningSync.Release();
+                }
+            }
         }
-
 
         /// <summary>
         ///   Signals the <see cref="EventProcessor{TPartition}" /> to stop processing events. Should this method be called while the processor is not running, no action is taken.
@@ -524,14 +640,149 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                        CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.EventProcessorStop(Identifier, EventHubName, ConsumerGroup);
 
-            // TODO: Implement
+            var processingException = default(Exception);
+            var releaseSync = false;
 
-            if (async)
+            try
             {
-                await Task.Delay(1).ConfigureAwait(false);
+                // Acquire the semaphore used to synchronize processor starts and stops, respecting
+                // the async flag.  When this is held, the state of the processor is stable.
+
+                if (async)
+                {
+                    await ProcessorRunningSync.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessorRunningSync.Wait();
+                }
+
+                releaseSync = true;
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // If the processor is not running, then it was never started or has been stopped
+                // before the semaphore was acquired; there is no work to be done.
+
+                if (_runningProcessorTask == null)
+                {
+                    return;
+                }
+
+                // Request cancellation of the running processor task.
+
+                _runningProcessorCancellationSource?.Cancel();
+                _runningProcessorCancellationSource?.Dispose();
+                _runningProcessorCancellationSource = null;
+
+                // Allow processing to complete.  If there was a processing or load balancing error,
+                // awaiting the task is where it will be surfaced.  Be sure to preserve it so
+                // that it can be surfaced.
+
+                try
+                {
+                    if (async)
+                    {
+                        await _runningProcessorTask.ConfigureAwait(false);
+                    }
+                    else
+                    {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                        _runningProcessorTask.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                    }
+                }
+                catch (Exception ex) when ((ex is OperationCanceledException) || (ex is TaskCanceledException))
+                {
+                    // This is expected as part of the normal flow; no action is needed.
+                }
+                catch (Exception ex)
+                {
+                    Logger.EventProcessingTaskError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                    processingException = ex;
+                }
+
+                // With the processing task having completed, perform the necessary cleanup of partition processing tasks
+                // and surrender ownership.
+
+                var stopPartitionProcessingTasks = ActivePartitionProcessors.Keys
+                    .Select(partitionId => StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None))
+                    .ToArray();
+
+                if (async)
+                {
+                    await Task.WhenAll(stopPartitionProcessingTasks).ConfigureAwait(false);
+                    await LoadBalancer.RelinquishOwnershipAsync(CancellationToken.None).ConfigureAwait(false);
+                }
+                else
+                {
+                    Task.WaitAll(stopPartitionProcessingTasks);
+
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                    LoadBalancer.RelinquishOwnershipAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+                }
+
+                // Dispose of the processing task and reset processing state to
+                // allow the processor to be restarted when this method completes.
+
+                _runningProcessorTask.Dispose();
+                _runningProcessorTask = null;
+            }
+            catch (Exception ex)
+            {
+                Logger.EventProcessorStopError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.EventProcessorStopComplete(Identifier, EventHubName, ConsumerGroup);
+
+                // If the cancellation token was signaled during the attempt to acquire the
+                // semaphore, it cannot be safely released; ensure that it is held.
+
+                if (releaseSync)
+                {
+                    ProcessorRunningSync.Release();
+                }
             }
 
+            // Surface any exception that was captured when the processing task was
+            // initially awaited.
+
+            if (processingException != default)
+            {
+                ExceptionDispatchInfo.Capture(processingException).Throw();
+            }
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to execute processing for this <see cref="EventProcessor{TPartition}" /> instance, managing owned partitions and
+        ///   load balancing between associated processors.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        private async Task RunProcessingAsync(CancellationToken cancellationToken)
+        {
+            CreateConnection();
+            await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Stop processing the requested partition, if is currently owned and being processed.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing should be stopped.</param>
+        /// <param name="reason">The reason why the processing is being stopped.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        private async Task StopProcessingPartitionAsync(string partitionId,
+                                                        ProcessingStoppedReason reason,
+                                                        CancellationToken cancellationToken)
+        {
+            await Task.Delay(1).ConfigureAwait(false);
             throw new NotImplementedException();
         }
 
@@ -546,7 +797,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             ///   The <see cref="EventProcessor{TPartition}" /> that the storage manager is associated with.
             /// </summary>
             ///
-            private WeakReference<EventProcessor<TPartition>> Processor { get; }
+            private EventProcessor<TPartition> Processor { get; }
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="DelegatingStorageManager"/> class.
@@ -554,7 +805,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             ///
             /// <param name="processor">The <see cref="EventProcessor{TPartition}" /> to associate the storage manager with.</param>
             ///
-            public DelegatingStorageManager(EventProcessor<TPartition> processor) => Processor = new WeakReference<EventProcessor<TPartition>>(processor);
+            public DelegatingStorageManager(EventProcessor<TPartition> processor) => Processor = processor;
 
             /// <summary>
             ///   Retrieves a complete ownership list from the data store.
@@ -570,21 +821,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             public override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                                          string eventHubName,
                                                                                                          string consumerGroup,
-                                                                                                         CancellationToken cancellationToken)
-            {
-                var processor = default(EventProcessor<TPartition>);
-
-                if ((Processor?.TryGetTarget(out processor) == false) || (processor == null))
-                {
-                    // If the processor instance was not available, treat it as a closed instance for
-                    // messaging consistency.
-
-                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
-                }
-
-                return await processor.ListOwnershipAsync(cancellationToken).ConfigureAwait(false);
-            }
-
+                                                                                                         CancellationToken cancellationToken) => await Processor.ListOwnershipAsync(cancellationToken).ConfigureAwait(false);
             /// <summary>
             ///   Attempts to claim ownership of partitions for processing.
             /// </summary>
@@ -595,20 +832,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <returns>An enumerable containing the successfully claimed ownership.</returns>
             ///
             public override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> partitionOwnership,
-                                                                                                          CancellationToken cancellationToken)
-            {
-                var processor = default(EventProcessor<TPartition>);
-
-                if ((Processor?.TryGetTarget(out processor) == false) || (processor == null))
-                {
-                    // If the processor instance was not available, treat it as a closed instance for
-                    // messaging consistency.
-
-                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
-                }
-
-                return await processor.ClaimOwnershipAsync(partitionOwnership, cancellationToken).ConfigureAwait(false);
-            }
+                                                                                                          CancellationToken cancellationToken) => await Processor.ClaimOwnershipAsync(partitionOwnership, cancellationToken).ConfigureAwait(false);
 
             /// <summary>
             ///   Retrieves a list of all the checkpoints in a data store for a given namespace, Event Hub and consumer group.
@@ -624,20 +848,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             public override async Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
                                                                                                    string eventHubName,
                                                                                                    string consumerGroup,
-                                                                                                   CancellationToken cancellationToken)
-            {
-                var processor = default(EventProcessor<TPartition>);
-
-                if ((Processor?.TryGetTarget(out processor) == false) || (processor == null))
-                {
-                    // If the processor instance was not available, treat it as a closed instance for
-                    // messaging consistency.
-
-                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
-                }
-
-                return await processor.ListCheckpointsAsync(cancellationToken).ConfigureAwait(false);
-            }
+                                                                                                   CancellationToken cancellationToken) => await Processor.ListCheckpointsAsync(cancellationToken).ConfigureAwait(false);
 
             /// <summary>
             ///   This method is not implemented for this type.
@@ -652,6 +863,30 @@ namespace Azure.Messaging.EventHubs.Primitives
             public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
                                                        EventData eventData,
                                                        CancellationToken cancellationToken) => throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   The set of information needed to track and manage the active processing
+        ///   of a partition.
+        /// </summary>
+        ///
+        private class PartitionProcessor
+        {
+            /// <summary>The task that is performing the processing.</summary>
+            public readonly Task ProcessingTask;
+
+            /// <summary>The source token that can be used to cancel the processing for the associated <see cref="ProcessingTask" />.</summary>
+            public readonly CancellationTokenSource CancellationSource;
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
+            /// </summary>
+            ///
+            /// <param name="processingTask">The task that is performing the processing.</param>
+            /// <param name="cancellationSource">he source token that can be used to cancel the processing.</param>
+            ///
+            public PartitionProcessor(Task processingTask,
+                                      CancellationTokenSource cancellationSource) => (ProcessingTask, CancellationSource) = (processingTask, cancellationSource);
         }
     }
 }

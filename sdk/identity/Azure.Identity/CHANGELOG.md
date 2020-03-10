@@ -5,6 +5,7 @@
 ### Fixes and improvements
 - `ClientCertificateCredential` now supports being constructed with a path to an unencrypted certificate (in either PFX or PEM format)
 - `EnvironmentCredential` now supports reading a certificate path from `AZURE_CLIENT_CERTIFICATE_PATH`
+- Fix an issue where `EnvironmentCredential` did not behave correctly when `AZURE_USERNAME` and `AZURE_PASSWORD` where set
 - Updating `DefaultAzureCredential` to enable authenticating through the Azure CLI
 
 ## 1.1.1

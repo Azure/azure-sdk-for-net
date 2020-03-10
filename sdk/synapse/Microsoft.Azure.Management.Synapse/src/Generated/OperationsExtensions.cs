@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Synapse
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
