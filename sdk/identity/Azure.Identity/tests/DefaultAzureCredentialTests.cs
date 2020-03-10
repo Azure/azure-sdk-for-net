@@ -216,7 +216,7 @@ namespace Azure.Identity.Tests
             };
             credFactory.OnCreateAzureCliCredential = (c) =>
             {
-                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("CliCredential Unavailable"); };
+                ((MockTokenCredential)c).TokenFactory = (context, cancel) => { throw new CredentialUnavailableException("AzureCliCredential Unavailable"); };
             };
 
             var options = new DefaultAzureCredentialOptions
@@ -246,7 +246,7 @@ namespace Azure.Identity.Tests
             }
             if (!excludeCliCredential)
             {
-                Assert.True(ex.Message.Contains("CliCredential Unavailable"));
+                Assert.True(ex.Message.Contains("AzureCliCredential Unavailable"));
             }
             if (!excludeInteractiveBrowserCredential)
             {
@@ -307,11 +307,11 @@ namespace Azure.Identity.Tests
                 {
                     if (exPossition > 3)
                     {
-                        throw new CredentialUnavailableException("CliCredential Unavailable");
+                        throw new CredentialUnavailableException("AzureCliCredential Unavailable");
                     }
                     else
                     {
-                        throw new MockClientException("CliCredential unhandled exception");
+                        throw new MockClientException("AzureCliCredential unhandled exception");
                     }
                 };
             };
@@ -348,7 +348,7 @@ namespace Azure.Identity.Tests
                     Assert.AreEqual(ex.InnerException.Message, "SharedTokenCacheCredential unhandled exception");
                     break;
                 case 3:
-                    Assert.AreEqual(ex.InnerException.Message, "CliCredential unhandled exception");
+                    Assert.AreEqual(ex.InnerException.Message, "AzureCliCredential unhandled exception");
                     break;
                 case 4:
                     Assert.AreEqual(ex.InnerException.Message, "InteractiveBrowserCredential unhandled exception");

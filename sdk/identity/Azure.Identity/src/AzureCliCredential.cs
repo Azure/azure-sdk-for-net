@@ -20,7 +20,7 @@ namespace Azure.Identity
         private readonly AzureCliCredentialClient _client;
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of AzureCliCredential class.
         /// </summary>
         public AzureCliCredential()
             : this(CredentialPipeline.GetInstance(null), new AzureCliCredentialClient())
