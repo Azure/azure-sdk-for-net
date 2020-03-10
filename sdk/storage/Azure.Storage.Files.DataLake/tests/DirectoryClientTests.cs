@@ -1308,7 +1308,36 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
-    }
+        }
+
+        [Test]
+        public async Task SetHttpHeadersAsync_RootDirectory()
+        {
+            var constants = new TestConstants(this);
+
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = test.FileSystem.GetRootDirectoryClient();
+
+            // Act
+            await directory.SetHttpHeadersAsync(new PathHttpHeaders
+            {
+                CacheControl = constants.CacheControl,
+                ContentDisposition = constants.ContentDisposition,
+                ContentEncoding = constants.ContentEncoding,
+                ContentLanguage = constants.ContentLanguage,
+                ContentHash = constants.ContentMD5,
+                ContentType = constants.ContentType
+            });
+
+            // Assert
+            Response<PathProperties> response = await directory.GetPropertiesAsync();
+            Assert.AreEqual(constants.ContentType, response.Value.ContentType);
+            TestHelper.AssertSequenceEqual(constants.ContentMD5, response.Value.ContentHash);
+            Assert.AreEqual(constants.ContentEncoding, response.Value.ContentEncoding);
+            Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
+            Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
+            Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
+        }
 
         [Test]
         public async Task SetHttpHeadersAsync_Error()
@@ -1503,6 +1532,21 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task CreateFileAsync_RootDirectory()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = test.FileSystem.GetRootDirectoryClient();
+            // Arrange
+            string fileName = GetNewFileName();
+
+            // Act
+            Response<DataLakeFileClient> response = await directory.CreateFileAsync(fileName);
+
+            // Assert
+            Assert.AreEqual(fileName, response.Value.Name);
+        }
+
+        [Test]
         public async Task CreateFileAsync_HttpHeaders()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1616,6 +1660,22 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Arrange
+            string directoryName = GetNewDirectoryName();
+
+            // Act
+            Response<DataLakeDirectoryClient> response = await directory.CreateSubDirectoryAsync(directoryName);
+
+            // Assert
+            Assert.AreEqual(directoryName, response.Value.Name);
+        }
+
+        [Test]
+        public async Task CreateSubDirectoryAsync_RootDirectory()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = test.FileSystem.GetRootDirectoryClient();
 
             // Arrange
             string directoryName = GetNewDirectoryName();

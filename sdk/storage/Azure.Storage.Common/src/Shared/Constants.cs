@@ -272,7 +272,7 @@ namespace Azure.Storage
             /// <summary>
             /// Root directory path.
             /// </summary>
-            public const string RootDirectoryPath = "%2F";
+            public const string BlobRootDirectoryPath = "/%2F";
         }
 
         /// <summary>

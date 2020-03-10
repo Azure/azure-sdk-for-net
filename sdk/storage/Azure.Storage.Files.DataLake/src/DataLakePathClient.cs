@@ -371,6 +371,42 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// The blob Uri.
+        /// </param>
+        /// <param name="dfsUri">
+        /// The DFS Uri.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakePathClient(
+            Uri blobUri,
+            Uri dfsUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+        {
+            _uri = dfsUri;
+            _blobUri = blobUri;
+            _dfsUri = dfsUri;
+            _pipeline = pipeline;
+            _version = version;
+            _clientDiagnostics = clientDiagnostics;
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
         /// Helper to access protected static members of BlockBlobClient
         /// that should not be exposed directly to customers.
         /// </summary>

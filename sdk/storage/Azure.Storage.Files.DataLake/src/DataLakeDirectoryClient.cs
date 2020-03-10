@@ -184,6 +184,36 @@ namespace Azure.Storage.Files.DataLake
             : base(directoryUri, pipeline, version, clientDiagnostics)
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// The blob Uri.
+        /// </param>
+        /// <param name="dfsUri">
+        /// The DFS Uri.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeDirectoryClient(
+            Uri blobUri,
+            Uri dfsUri,
+            HttpPipeline pipeline,
+            DataLakeClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics)
+            : base(blobUri, dfsUri, pipeline, version, clientDiagnostics)
+        {
+        }
         #endregion ctors
 
         /// <summary>

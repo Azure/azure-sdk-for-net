@@ -332,7 +332,18 @@ namespace Azure.Storage.Files.DataLake
         /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
         public virtual DataLakeDirectoryClient GetRootDirectoryClient()
         {
-            return GetDirectoryClient(Constants.DataLake.RootDirectoryPath);
+            UriBuilder blobUriBuilder = new UriBuilder(_blobUri);
+            blobUriBuilder.Path += Constants.DataLake.BlobRootDirectoryPath;
+
+            UriBuilder dfsUriBuilder = new UriBuilder(_dfsUri);
+            dfsUriBuilder.Path += "/";
+
+            return new DataLakeDirectoryClient(
+                blobUriBuilder.Uri,
+                dfsUriBuilder.Uri,
+                _pipeline,
+                _version,
+                _clientDiagnostics);
         }
 
         /// <summary>
