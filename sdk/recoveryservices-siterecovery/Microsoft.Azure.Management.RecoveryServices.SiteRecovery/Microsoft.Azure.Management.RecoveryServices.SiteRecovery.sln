@@ -1,6 +1,7 @@
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Tests", "tests\Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Tests.csproj", "{27EFA488-E3C5-4D97-BBF3-138AF1326F93}"
 EndProject
@@ -43,8 +44,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {940B44E2-17F3-4047-8723-3733FD94959E}
 	EndGlobalSection
 EndGlobal

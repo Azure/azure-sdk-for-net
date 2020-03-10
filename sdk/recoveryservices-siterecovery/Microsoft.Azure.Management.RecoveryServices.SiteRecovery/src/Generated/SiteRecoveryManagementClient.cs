@@ -529,8 +529,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificContainerMappingInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DisableProtectionProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DisableProtectionProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EnableMigrationProviderSpecificInput>("instanceType"));
@@ -563,8 +561,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProtectionContainerMappingProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificDetails>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RemoveDisksProviderSpecificInput>("instanceType"));
