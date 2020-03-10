@@ -5,15 +5,17 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedReceiptItem
     {
-        public ExtractedReceiptItem(string name, int quantity, float totalPrice)
+        public ExtractedReceiptItem(string name, int quantity, float price, float totalPrice)
         {
             Name = name;
             Quantity = quantity;
+            Price = price;
             TotalPrice = totalPrice;
         }
 
         public string Name { get; }
-        public int Quantity { get; }
-        public float TotalPrice { get; }
+        public int? Quantity { get; }
+        public float? Price { get; }
+        public float? TotalPrice { get; }
     }
 }
