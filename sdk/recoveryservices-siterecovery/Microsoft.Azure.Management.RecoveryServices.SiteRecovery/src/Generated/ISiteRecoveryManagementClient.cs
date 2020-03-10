@@ -90,11 +90,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationAlertSettingsOperations ReplicationAlertSettings { get; }
 
         /// <summary>
-        /// Gets the IReplicationEligibilityResultsOperations.
-        /// </summary>
-        IReplicationEligibilityResultsOperations ReplicationEligibilityResults { get; }
-
-        /// <summary>
         /// Gets the IReplicationEventsOperations.
         /// </summary>
         IReplicationEventsOperations ReplicationEvents { get; }
@@ -195,19 +190,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; }
 
         /// <summary>
-        /// Gets the ISupportedOperatingSystemsOperations.
-        /// </summary>
-        ISupportedOperatingSystemsOperations SupportedOperatingSystems { get; }
-
-        /// <summary>
         /// Gets the IReplicationVaultHealthOperations.
         /// </summary>
         IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
-
-        /// <summary>
-        /// Gets the IReplicationVaultSettingOperations.
-        /// </summary>
-        IReplicationVaultSettingOperations ReplicationVaultSetting { get; }
 
     }
 }

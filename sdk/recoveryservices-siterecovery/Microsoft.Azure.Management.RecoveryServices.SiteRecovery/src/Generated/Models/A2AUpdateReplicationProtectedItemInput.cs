@@ -44,16 +44,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// storage account.</param>
         /// <param name="diskEncryptionInfo">The recovery os disk encryption
         /// information.</param>
-        /// <param name="tfoAzureVMName">The user given name for test failover
-        /// VM.</param>
-        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string tfoAzureVMName = default(string))
+        public A2AUpdateReplicationProtectedItemInput(string recoveryCloudServiceId = default(string), string recoveryResourceGroupId = default(string), IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default(IList<A2AVmManagedDiskUpdateDetails>), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
             ManagedDiskUpdateDetails = managedDiskUpdateDetails;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
-            TfoAzureVMName = tfoAzureVMName;
             CustomInit();
         }
 
@@ -91,12 +88,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionInfo")]
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user given name for test failover VM.
-        /// </summary>
-        [JsonProperty(PropertyName = "tfoAzureVMName")]
-        public string TfoAzureVMName { get; set; }
 
     }
 }

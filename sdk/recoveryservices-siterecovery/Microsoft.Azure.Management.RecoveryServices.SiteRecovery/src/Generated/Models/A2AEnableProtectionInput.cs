@@ -50,12 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// storage account.</param>
         /// <param name="diskEncryptionInfo">The recovery disk encryption
         /// information.</param>
-        /// <param name="recoveryAvailabilityZone">The recovery availability
-        /// zone.</param>
-        /// <param name="recoveryAzureNetworkId">The recovery Azure virtual
-        /// network ARM id.</param>
-        /// <param name="recoverySubnetName">The recovery subnet name.</param>
-        public A2AEnableProtectionInput(string fabricObjectId = default(string), string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string multiVmGroupName = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string recoveryAvailabilityZone = default(string), string recoveryAzureNetworkId = default(string), string recoverySubnetName = default(string))
+        public A2AEnableProtectionInput(string fabricObjectId = default(string), string recoveryContainerId = default(string), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string multiVmGroupName = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
@@ -67,9 +62,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             MultiVmGroupName = multiVmGroupName;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
-            RecoveryAvailabilityZone = recoveryAvailabilityZone;
-            RecoveryAzureNetworkId = recoveryAzureNetworkId;
-            RecoverySubnetName = recoverySubnetName;
             CustomInit();
         }
 
@@ -138,24 +130,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionInfo")]
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recovery availability zone.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryAvailabilityZone")]
-        public string RecoveryAvailabilityZone { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recovery Azure virtual network ARM id.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryAzureNetworkId")]
-        public string RecoveryAzureNetworkId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the recovery subnet name.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoverySubnetName")]
-        public string RecoverySubnetName { get; set; }
 
     }
 }

@@ -175,7 +175,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LastUpdateReceivedTime = lastUpdateReceivedTime;
             ReplicaId = replicaId;
             OsVersion = osVersion;
-            ProtectedManagedDisks = protectedManagedDisks;
             CustomInit();
         }
 
@@ -498,12 +497,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "osVersion")]
         public string OsVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of protected managed disks.
-        /// </summary>
-        [JsonProperty(PropertyName = "protectedManagedDisks")]
-        public IList<InMageAzureV2ManagedDiskDetails> ProtectedManagedDisks { get; set; }
 
     }
 }

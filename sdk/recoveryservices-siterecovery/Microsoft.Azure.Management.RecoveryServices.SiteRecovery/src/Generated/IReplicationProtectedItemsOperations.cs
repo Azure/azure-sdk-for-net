@@ -186,40 +186,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> UpdateWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateReplicationProtectedItemInput updateProtectionInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Add disk(s) for protection.
-        /// </summary>
-        /// <remarks>
-        /// Operation to add disks(s) to the replication protected item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Unique fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='addDisksInput'>
-        /// Add disks input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> AddDisksWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, AddDisksInput addDisksInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Change or apply recovery point.
         /// </summary>
         /// <remarks>
@@ -353,40 +319,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, DisableProtectionInput disableProtectionInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes disk(s).
-        /// </summary>
-        /// <remarks>
-        /// Operation to remove disk(s) from the replication protected item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Unique fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='removeDisksInput'>
-        /// Remove disks input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> RemoveDisksWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, RemoveDisksInput removeDisksInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Resynchronize or repair replication.
         /// </summary>
         /// <remarks>
@@ -453,41 +385,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> ReprotectWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Resolve health errors.
-        /// </summary>
-        /// <remarks>
-        /// Operation to resolve health issues of the replication protected
-        /// item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Unique fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='resolveHealthInput'>
-        /// Health issue input object.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> ResolveHealthErrorsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthInput resolveHealthInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Execute test failover
         /// </summary>
@@ -759,40 +656,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginUpdateWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateReplicationProtectedItemInput updateProtectionInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Add disk(s) for protection.
-        /// </summary>
-        /// <remarks>
-        /// Operation to add disks(s) to the replication protected item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Unique fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='addDisksInput'>
-        /// Add disks input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginAddDisksWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, AddDisksInput addDisksInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Change or apply recovery point.
         /// </summary>
         /// <remarks>
@@ -926,40 +789,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, DisableProtectionInput disableProtectionInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Removes disk(s).
-        /// </summary>
-        /// <remarks>
-        /// Operation to remove disk(s) from the replication protected item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Unique fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='removeDisksInput'>
-        /// Remove disks input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginRemoveDisksWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, RemoveDisksInput removeDisksInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Resynchronize or repair replication.
         /// </summary>
         /// <remarks>
@@ -1026,41 +855,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ReplicationProtectedItem>> BeginReprotectWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationInput rrInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Resolve health errors.
-        /// </summary>
-        /// <remarks>
-        /// Operation to resolve health issues of the replication protected
-        /// item.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Unique fabric name.
-        /// </param>
-        /// <param name='protectionContainerName'>
-        /// Protection container name.
-        /// </param>
-        /// <param name='replicatedProtectedItemName'>
-        /// Replication protected item name.
-        /// </param>
-        /// <param name='resolveHealthInput'>
-        /// Health issue input object.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationProtectedItem>> BeginResolveHealthErrorsWithHttpMessagesAsync(string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthInput resolveHealthInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Execute test failover
         /// </summary>
