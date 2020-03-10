@@ -13,14 +13,14 @@ namespace Azure.Management.Storage.Models
     public partial class CorsRule
     {
         /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or &quot;*&quot; to allow all domains. </summary>
-        public ICollection<string> AllowedOrigins { get; set; } = new List<string>();
+        public IList<string> AllowedOrigins { get; set; } = new List<string>();
         /// <summary> Required if CorsRule element is present. A list of HTTP methods that are allowed to be executed by the origin. </summary>
-        public ICollection<CorsRuleAllowedMethodsItem> AllowedMethods { get; set; } = new List<CorsRuleAllowedMethodsItem>();
+        public IList<CorsRuleAllowedMethodsItem> AllowedMethods { get; set; } = new List<CorsRuleAllowedMethodsItem>();
         /// <summary> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </summary>
         public int MaxAgeInSeconds { get; set; }
         /// <summary> Required if CorsRule element is present. A list of response headers to expose to CORS clients. </summary>
-        public ICollection<string> ExposedHeaders { get; set; } = new List<string>();
+        public IList<string> ExposedHeaders { get; set; } = new List<string>();
         /// <summary> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </summary>
-        public ICollection<string> AllowedHeaders { get; set; } = new List<string>();
+        public IList<string> AllowedHeaders { get; set; } = new List<string>();
     }
 }

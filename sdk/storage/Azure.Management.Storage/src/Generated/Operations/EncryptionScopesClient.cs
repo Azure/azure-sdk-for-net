@@ -20,6 +20,10 @@ namespace Azure.Management.Storage
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal EncryptionScopesRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of EncryptionScopesClient for mocking. </summary>
+        protected EncryptionScopesClient()
+        {
+        }
         /// <summary> Initializes a new instance of EncryptionScopesClient. </summary>
         internal EncryptionScopesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
@@ -33,7 +37,7 @@ namespace Azure.Management.Storage
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="encryptionScope"> Encryption scope properties to be used for the create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<EncryptionScope>> PutAsync(string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScope encryptionScope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EncryptionScope>> PutAsync(string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScope encryptionScope, CancellationToken cancellationToken = default)
         {
             return await RestClient.PutAsync(resourceGroupName, accountName, encryptionScopeName, encryptionScope, cancellationToken).ConfigureAwait(false);
         }
@@ -53,7 +57,7 @@ namespace Azure.Management.Storage
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="encryptionScope"> Encryption scope properties to be used for the create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<EncryptionScope>> PatchAsync(string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScope encryptionScope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EncryptionScope>> PatchAsync(string resourceGroupName, string accountName, string encryptionScopeName, EncryptionScope encryptionScope, CancellationToken cancellationToken = default)
         {
             return await RestClient.PatchAsync(resourceGroupName, accountName, encryptionScopeName, encryptionScope, cancellationToken).ConfigureAwait(false);
         }
@@ -72,7 +76,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<EncryptionScope>> GetAsync(string resourceGroupName, string accountName, string encryptionScopeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EncryptionScope>> GetAsync(string resourceGroupName, string accountName, string encryptionScopeName, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAsync(resourceGroupName, accountName, encryptionScopeName, cancellationToken).ConfigureAwait(false);
         }

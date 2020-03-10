@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class StorageAccountListKeysResult
     {
         /// <summary> Gets the list of storage account keys and their properties for the specified storage account. </summary>
-        public ICollection<StorageAccountKey> Keys { get; internal set; }
+        public IList<StorageAccountKey> Keys { get; internal set; }
     }
 }

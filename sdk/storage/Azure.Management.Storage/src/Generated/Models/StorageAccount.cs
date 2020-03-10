@@ -58,7 +58,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
         public LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-        public ICollection<PrivateEndpointConnection> PrivateEndpointConnections { get; internal set; }
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; internal set; }
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         public RoutingPreference RoutingPreference { get; set; }
         /// <summary> Blob restore status. </summary>

@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class OperationListResult
     {
         /// <summary> List of Storage operations supported by the Storage resource provider. </summary>
-        public ICollection<Operation> Value { get; set; }
+        public IList<Operation> Value { get; set; }
     }
 }

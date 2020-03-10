@@ -20,6 +20,10 @@ namespace Azure.Management.Storage
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal UsagesRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of UsagesClient for mocking. </summary>
+        protected UsagesClient()
+        {
+        }
         /// <summary> Initializes a new instance of UsagesClient. </summary>
         internal UsagesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {

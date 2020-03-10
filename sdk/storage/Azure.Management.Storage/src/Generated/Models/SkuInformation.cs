@@ -21,10 +21,10 @@ namespace Azure.Management.Storage.Models
         /// <summary> Indicates the type of storage account. </summary>
         public Kind? Kind { get; internal set; }
         /// <summary> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </summary>
-        public ICollection<string> Locations { get; internal set; }
+        public IList<string> Locations { get; internal set; }
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
-        public ICollection<SKUCapability> Capabilities { get; internal set; }
+        public IList<SKUCapability> Capabilities { get; internal set; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
-        public ICollection<Restriction> Restrictions { get; set; }
+        public IList<Restriction> Restrictions { get; set; }
     }
 }

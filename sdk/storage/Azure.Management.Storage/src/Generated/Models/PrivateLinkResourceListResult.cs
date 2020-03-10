@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class PrivateLinkResourceListResult
     {
         /// <summary> Array of private link resources. </summary>
-        public ICollection<PrivateLinkResource> Value { get; set; }
+        public IList<PrivateLinkResource> Value { get; set; }
     }
 }

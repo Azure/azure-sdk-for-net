@@ -18,6 +18,10 @@ namespace Azure.Management.Storage
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal PrivateLinkResourcesRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of PrivateLinkResourcesClient for mocking. </summary>
+        protected PrivateLinkResourcesClient()
+        {
+        }
         /// <summary> Initializes a new instance of PrivateLinkResourcesClient. </summary>
         internal PrivateLinkResourcesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
@@ -29,7 +33,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<PrivateLinkResourceListResult>> ListByStorageAccountAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResourceListResult>> ListByStorageAccountAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             return await RestClient.ListByStorageAccountAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }

@@ -13,7 +13,7 @@ namespace Azure.Management.Storage.Models
     public partial class StorageAccountListResult
     {
         /// <summary> Gets the list of storage accounts and their properties. </summary>
-        public ICollection<StorageAccount> Value { get; internal set; }
+        public IList<StorageAccount> Value { get; internal set; }
         /// <summary> Request URL that can be used to query next page of storage accounts. Returned when total number of requested storage accounts exceed maximum page size. </summary>
         public string NextLink { get; internal set; }
     }

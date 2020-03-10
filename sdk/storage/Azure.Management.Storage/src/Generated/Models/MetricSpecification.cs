@@ -21,7 +21,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> Unit could be Bytes or Count. </summary>
         public string Unit { get; set; }
         /// <summary> Dimensions of blobs, including blob type and access tier. </summary>
-        public ICollection<Dimension> Dimensions { get; set; }
+        public IList<Dimension> Dimensions { get; set; }
         /// <summary> Aggregation type could be Average. </summary>
         public string AggregationType { get; set; }
         /// <summary> The property to decide fill gap with zero or not. </summary>

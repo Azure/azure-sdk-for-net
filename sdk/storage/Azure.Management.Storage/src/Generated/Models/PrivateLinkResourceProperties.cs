@@ -15,8 +15,8 @@ namespace Azure.Management.Storage.Models
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; internal set; }
         /// <summary> The private link resource required member names. </summary>
-        public ICollection<string> RequiredMembers { get; internal set; }
+        public IList<string> RequiredMembers { get; internal set; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public ICollection<string> RequiredZoneNames { get; set; }
+        public IList<string> RequiredZoneNames { get; set; }
     }
 }

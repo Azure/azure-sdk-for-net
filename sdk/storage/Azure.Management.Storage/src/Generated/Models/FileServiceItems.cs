@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class FileServiceItems
     {
         /// <summary> List of file services returned. </summary>
-        public ICollection<FileServiceProperties> Value { get; internal set; }
+        public IList<FileServiceProperties> Value { get; internal set; }
     }
 }

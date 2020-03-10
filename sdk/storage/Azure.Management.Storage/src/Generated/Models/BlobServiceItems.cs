@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class BlobServiceItems
     {
         /// <summary> List of blob services returned. </summary>
-        public ICollection<BlobServiceProperties> Value { get; internal set; }
+        public IList<BlobServiceProperties> Value { get; internal set; }
     }
 }

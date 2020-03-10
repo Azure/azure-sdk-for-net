@@ -19,6 +19,6 @@ namespace Azure.Management.Storage.Models
         /// <summary> The target of the particular error. For example, the name of the property in error. </summary>
         public string Target { get; set; }
         /// <summary> A list of additional details about the error. </summary>
-        public ICollection<CloudErrorBody> Details { get; set; }
+        public IList<CloudErrorBody> Details { get; set; }
     }
 }

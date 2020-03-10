@@ -19,6 +19,10 @@ namespace Azure.Management.Storage
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal SkusRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of SkusClient for mocking. </summary>
+        protected SkusClient()
+        {
+        }
         /// <summary> Initializes a new instance of SkusClient. </summary>
         internal SkusClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {

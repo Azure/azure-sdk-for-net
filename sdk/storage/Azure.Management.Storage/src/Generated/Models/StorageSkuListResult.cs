@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class StorageSkuListResult
     {
         /// <summary> Get the list result of storage SKUs and their properties. </summary>
-        public ICollection<SkuInformation> Value { get; internal set; }
+        public IList<SkuInformation> Value { get; internal set; }
     }
 }

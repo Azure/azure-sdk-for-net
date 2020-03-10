@@ -20,6 +20,10 @@ namespace Azure.Management.Storage
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal FileSharesRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of FileSharesClient for mocking. </summary>
+        protected FileSharesClient()
+        {
+        }
         /// <summary> Initializes a new instance of FileSharesClient. </summary>
         internal FileSharesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
@@ -33,7 +37,7 @@ namespace Azure.Management.Storage
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties of the file share to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<FileShare>> CreateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShare>> CreateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
         {
             return await RestClient.CreateAsync(resourceGroupName, accountName, shareName, fileShare, cancellationToken).ConfigureAwait(false);
         }
@@ -53,7 +57,7 @@ namespace Azure.Management.Storage
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="fileShare"> Properties of the file share to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<FileShare>> UpdateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShare>> UpdateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
         {
             return await RestClient.UpdateAsync(resourceGroupName, accountName, shareName, fileShare, cancellationToken).ConfigureAwait(false);
         }
@@ -72,7 +76,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<FileShare>> GetAsync(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShare>> GetAsync(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAsync(resourceGroupName, accountName, shareName, cancellationToken).ConfigureAwait(false);
         }
@@ -90,7 +94,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response> DeleteAsync(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default)
         {
             return await RestClient.DeleteAsync(resourceGroupName, accountName, shareName, cancellationToken).ConfigureAwait(false);
         }

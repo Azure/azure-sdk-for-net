@@ -15,9 +15,9 @@ namespace Azure.Management.Storage.Models
         /// <summary> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, &quot;Logging, Metrics&quot;), or None to bypass none of those traffics. </summary>
         public Bypass? Bypass { get; set; }
         /// <summary> Sets the virtual network rules. </summary>
-        public ICollection<VirtualNetworkRule> VirtualNetworkRules { get; set; }
+        public IList<VirtualNetworkRule> VirtualNetworkRules { get; set; }
         /// <summary> Sets the IP ACL rules. </summary>
-        public ICollection<IPRule> IpRules { get; set; }
+        public IList<IPRule> IpRules { get; set; }
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
         public DefaultAction DefaultAction { get; set; }
     }

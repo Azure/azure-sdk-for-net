@@ -15,7 +15,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> ImmutabilityPolicy Etag. </summary>
         public string Etag { get; internal set; }
         /// <summary> The ImmutabilityPolicy update history of the blob container. </summary>
-        public ICollection<UpdateHistoryProperty> UpdateHistory { get; internal set; }
+        public IList<UpdateHistoryProperty> UpdateHistory { get; internal set; }
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
         public int? ImmutabilityPeriodSinceCreationInDays { get; set; }
         /// <summary> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </summary>

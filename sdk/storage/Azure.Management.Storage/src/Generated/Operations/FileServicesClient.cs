@@ -18,6 +18,10 @@ namespace Azure.Management.Storage
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal FileServicesRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of FileServicesClient for mocking. </summary>
+        protected FileServicesClient()
+        {
+        }
         /// <summary> Initializes a new instance of FileServicesClient. </summary>
         internal FileServicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
@@ -29,7 +33,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<FileServiceItems>> ListAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileServiceItems>> ListAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             return await RestClient.ListAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -46,7 +50,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default)
         {
             return await RestClient.SetServicePropertiesAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
         }
@@ -63,7 +67,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<FileServiceProperties>> GetServicePropertiesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileServiceProperties>> GetServicePropertiesAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetServicePropertiesAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }

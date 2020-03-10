@@ -13,6 +13,6 @@ namespace Azure.Management.Storage.Models
     public partial class ManagementPolicySchema
     {
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
-        public ICollection<ManagementPolicyRule> Rules { get; set; } = new List<ManagementPolicyRule>();
+        public IList<ManagementPolicyRule> Rules { get; set; } = new List<ManagementPolicyRule>();
     }
 }
