@@ -260,6 +260,11 @@ namespace Azure.Storage
             public const string AlreadyExists = "ContainerAlreadyExists";
 
             /// <summary>
+            /// Metadata key for if a path is a directory.
+            /// </summary>
+            public const string MetadataKeyIsDirectory = "hdi_isfolder";
+
+            /// <summary>
             /// Default concurrent transfers count.
             /// </summary>
             public const int DefaultConcurrentTransfersCount = 5;

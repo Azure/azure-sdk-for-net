@@ -495,6 +495,118 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Create If Not Exists
 
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="DataLakeFileClient"/> to see if the associated
+        /// file exists in the file system.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if file exists.  False if this file
+        /// does not exists, or this path is a durectory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the directory if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists"/>
+        /// instead.
+        /// </remarks>
+        public new virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobProperties> response = _blockBlobClient.GetProperties();
+
+                if (response.Value.Metadata.ContainsKey(Constants.DataLake.MetadataKeyIsDirectory))
+                {
+                    // Path is a directory
+                    return Response.FromValue(false, response.GetRawResponse());
+                }
+
+                return Response.FromValue(true, response.GetRawResponse());
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
+            {
+                return Response.FromValue(false, default);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="DataLakeFileClient"/> to see if the associated
+        /// file exists in the file system.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if file exists.  False if this file
+        /// does not exists, or this path is a durectory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the directory if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExistsAsync"/>
+        /// instead.
+        /// </remarks>
+        public new virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobProperties> response = await _blockBlobClient.GetPropertiesAsync().ConfigureAwait(false);
+
+                if (response.Value.Metadata.ContainsKey(Constants.DataLake.MetadataKeyIsDirectory))
+                {
+                    // Path is a directory
+                    return Response.FromValue(false, response.GetRawResponse());
+                }
+
+                return Response.FromValue(true, response.GetRawResponse());
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
+            {
+                return Response.FromValue(false, default);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Exists
+
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path

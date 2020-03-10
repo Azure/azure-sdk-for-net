@@ -371,6 +371,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task ExistsAsync_Directory()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            string name = GetNewFileName();
+            await directory.CreateSubDirectoryAsync(name);
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(name));
+
+            // Act
+            Response<bool> response = await file.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
         public async Task DeleteIfExists_Exists()
         {
             // Arrange
