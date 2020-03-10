@@ -11,8 +11,7 @@
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
 <![CDATA[    
-1) Unify Account create/update parameters.
-2) Support HTTP code 202 for Account create/update/delete operations.
+1) Support Identity, Encryption, UserOwnedStorage.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>
