@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new ServiceBusException(true, message);
         }
 
-        public static Exception GetClientException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
+        public static Exception TranslateException(Exception exception, string referenceId = null, Exception innerException = null, bool connectionError = false)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendFormat(CultureInfo.InvariantCulture, exception.Message);
@@ -215,14 +215,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 operationCanceledException.InnerException != null:
                     return operationCanceledException.InnerException;
 
-                case OperationCanceledException operationEx when (!(operationEx is TaskCanceledException)):
+                case OperationCanceledException operationEx when !(operationEx is TaskCanceledException):
                     return new ServiceBusException(operationEx.Message, ServiceBusException.FailureReason.ServiceTimeout);
 
-                case OperationCanceledException _:
-                    return new ServiceBusException(true, message, innerException: aggregateException);
-
                 case TimeoutException _:
-                    return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceTimeout, innerException: aggregateException);
+                    return new ServiceBusException(
+                        message,
+                        ServiceBusException.FailureReason.ServiceTimeout,
+                        innerException: aggregateException);
 
                 case InvalidOperationException _ when connectionError:
                     return new ServiceBusException(message, ServiceBusException.FailureReason.ServiceCommunicationProblem, innerException: aggregateException);
@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     return null;
             }
 
-            return innerException == null ? null : GetClientException(innerException, null, null, connectionError);
+            return innerException == null ? null : TranslateException(innerException, null, null, connectionError);
         }
     }
 }

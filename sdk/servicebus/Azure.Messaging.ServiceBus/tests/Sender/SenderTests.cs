@@ -81,6 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var sender = new ServiceBusClient(connString).GetSender(queueName);
             Assert.AreEqual(queueName, sender.EntityName);
             Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
+            Assert.IsNotNull(sender.Identifier);
         }
     }
 }

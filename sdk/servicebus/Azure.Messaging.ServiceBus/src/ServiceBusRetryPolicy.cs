@@ -102,13 +102,11 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="operation"></param>
-        /// <param name="entityName"></param>
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task RunOperation(
             Func<TimeSpan, Task> operation,
-            string entityName,
             TransportConnectionScope scope,
             CancellationToken cancellationToken)
         {
@@ -122,7 +120,9 @@ namespace Azure.Messaging.ServiceBus
                     // We are in a server busy state before we start processing.
                     // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
                     await Task.Delay(tryTimeout).ConfigureAwait(false);
-                    throw new ServiceBusException("", ServiceBusException.FailureReason.ServiceBusy);
+                    throw new ServiceBusException(
+                        ServerBusyExceptionMessage,
+                        ServiceBusException.FailureReason.ServiceBusy);
                 }
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -139,10 +139,10 @@ namespace Azure.Messaging.ServiceBus
 
                     catch (Exception ex)
                     {
-                        Exception activeEx = AmqpExceptionHelper.GetClientException(ex);
+                        Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
 
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                        // Otherwise, mark the exception as active and break out of the loop.
+                        // Otherwise, throw the translated exception.
 
                         ++failedAttemptCount;
                         TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);

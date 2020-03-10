@@ -424,9 +424,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 Times.Once());
         }
 
-
-        private void AssertReceiveDetectsEmbeddedException(Exception embeddedException)
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReceiveAsyncDoesntRetryOnTaskCanceled()
         {
+            var exception = new TaskCanceledException();
             var entityName = "entityName";
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions());
@@ -451,10 +457,10 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<string>(),
                    It.IsAny<bool>(),
                    It.IsAny<CancellationToken>()))
-               .Throws(new ServiceBusException("", ServiceBusException.FailureReason.ClientClosed));
+               .Throws(exception);
 
             var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
-            Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ServiceBusException>());
+            Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
 
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(

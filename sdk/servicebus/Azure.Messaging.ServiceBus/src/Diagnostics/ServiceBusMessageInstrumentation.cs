@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///
         public static bool InstrumentEvent(ClientDiagnostics clientDiagnostics, ServiceBusMessage message)
         {
-            if (!message.UserProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
+            if (!message.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
                 using DiagnosticScope messageScope = clientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
                 messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind);
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 Activity activity = Activity.Current;
                 if (activity != null)
                 {
-                    message.UserProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                    message.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
                     return true;
                 }
             }
@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             id = null;
 
-            if (message.UserProperties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            if (message.Properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
             {
                 id = stringId;
                 return true;
@@ -71,6 +71,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="message">The event to reset.</param>
         ///
         public static void ResetEvent(ServiceBusMessage message) =>
-            message.UserProperties.Remove(DiagnosticProperty.DiagnosticIdAttribute);
+            message.Properties.Remove(DiagnosticProperty.DiagnosticIdAttribute);
     }
 }

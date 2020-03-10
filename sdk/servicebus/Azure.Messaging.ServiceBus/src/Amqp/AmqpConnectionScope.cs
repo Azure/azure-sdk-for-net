@@ -429,7 +429,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, ServiceEndpoint, endpointUri.AbsoluteUri, endpointUri.AbsoluteUri, claims, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
 
-                var link = new RequestResponseAmqpLink(/*AmqpManagement.LinkType*/"entity-mgmt", session, entityPath, linkSettings.Properties);
+                var link = new RequestResponseAmqpLink(
+                    AmqpClientConstants.EntityTypeManagement,
+                    session,
+                    entityPath,
+                    linkSettings.Properties);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
                 stopWatch.Stop();
 
@@ -527,7 +531,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var linkSettings = new AmqpLinkSettings
                 {
                     Role = true,
-                    TotalLinkCredit = (uint) prefetchCount,
+                    TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = (receiveMode == ReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend,
                     Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
@@ -772,7 +776,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return async _ =>
             {
                 ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshStart(entityName, endpoint.AbsoluteUri);
-                var refreshTimer = refreshTimerFactory();
+                Timer refreshTimer = refreshTimerFactory();
 
                 try
                 {

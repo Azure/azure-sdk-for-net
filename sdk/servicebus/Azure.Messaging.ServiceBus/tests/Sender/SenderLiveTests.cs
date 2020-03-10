@@ -4,15 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Tests;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.Template.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Sender
 {
     public class SenderLiveTests : ServiceBusLiveTestBase
     {
@@ -29,14 +26,9 @@ namespace Microsoft.Azure.Template.Tests
         [Test]
         public async Task Send_Token()
         {
-            ClientSecretCredential credential = new ClientSecretCredential(
-                TestEnvironment.ServiceBusTenant,
-                TestEnvironment.ServiceBusClient,
-                TestEnvironment.ServiceBusSecret);
-
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, GetTokenCredential());
                 var sender = client.GetSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
             }
@@ -191,11 +183,11 @@ namespace Microsoft.Azure.Template.Tests
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
                 await using var receiver = client.GetReceiver(scope.QueueName);
-                ServiceBusMessage msg = await receiver.PeekBySequenceAsync(sequenceNum);
+                ServiceBusMessage msg = await receiver.PeekAt(sequenceNum);
                 Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
 
                 await sender.CancelScheduledMessageAsync(sequenceNum);
-                msg = await receiver.PeekBySequenceAsync(sequenceNum);
+                msg = await receiver.PeekAt(sequenceNum);
                 Assert.IsNull(msg);
             }
         }
@@ -211,15 +203,15 @@ namespace Microsoft.Azure.Template.Tests
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
                 await sender.CloseAsync(); // shouldn't close connection, but should close send link
 
-                Assert.That(async () => await sender.SendAsync(GetMessage()), Throws.Exception);
+                Assert.That(async () => await sender.SendAsync(GetMessage()),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
+                Assert.That(async () => await sender.ScheduleMessageAsync(GetMessage(), default), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
+                Assert.That(async () => await sender.CancelScheduledMessageAsync(sequenceNum), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
 
+                // receive should still work
                 await using var receiver = client.GetReceiver(scope.QueueName);
-                ServiceBusMessage msg = await receiver.PeekBySequenceAsync(sequenceNum);
+                ServiceBusMessage msg = await receiver.PeekAt(sequenceNum);
                 Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
-
-                await sender.CancelScheduledMessageAsync(sequenceNum);
-                msg = await receiver.PeekBySequenceAsync(sequenceNum);
-                Assert.IsNull(msg);
             }
         }
 
@@ -234,6 +226,45 @@ namespace Microsoft.Azure.Template.Tests
                     await Task.Delay(1000);
                     await sender.SendAsync(GetMessage());
                 }
+            }
+        }
+
+        [Test]
+        public async Task Can_Send_Received_Message()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(
+                    TestEnvironment.FullyQualifiedNamespace,
+                    GetTokenCredential());
+                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).GetSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
+                var messageCt = 10;
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
+                await sender.SendBatchAsync(batch);
+
+                var receiver = client.GetReceiver(scope.QueueName, new ServiceBusReceiverOptions()
+                {
+                    ReceiveMode = ReceiveMode.PeekLock
+                });
+                var receivedMessages = await receiver.ReceiveBatchAsync(messageCt);
+
+                foreach (ServiceBusReceivedMessage msg in receivedMessages)
+                {
+                    await sender.SendAsync(msg);
+                }
+
+                int receivedMessageCount = 0;
+                var messageEnum = messages.GetEnumerator();
+
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCt))
+                {
+                    receivedMessageCount++;
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                }
+                Assert.AreEqual(messageCt, receivedMessages.Count);
+
             }
         }
     }
