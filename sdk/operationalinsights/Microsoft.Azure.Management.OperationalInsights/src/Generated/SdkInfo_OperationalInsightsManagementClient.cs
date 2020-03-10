@@ -20,8 +20,11 @@ namespace Microsoft.Azure.Management.OperationalInsights
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("OperationalInsights", "DataSources", "2015-11-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "GetAsyncOperationsStatus", "2015-11-01-preview"),
                 new Tuple<string, string, string>("OperationalInsights", "LinkedServices", "2015-11-01-preview"),
                 new Tuple<string, string, string>("OperationalInsights", "Operations", "2015-11-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "PrivateEndpointConnections", "2015-11-01-preview"),
+                new Tuple<string, string, string>("OperationalInsights", "PrivateLinkResources", "2015-11-01-preview"),
                 new Tuple<string, string, string>("OperationalInsights", "Workspaces", "2015-11-01-preview"),
               }.AsEnumerable();
           }
