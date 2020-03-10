@@ -6,7 +6,7 @@ namespace Azure.Template
         public TemplateClient(System.Uri endpoint) { }
         public TemplateClient(System.Uri endpoint, Azure.Template.TemplateClientOptions options) { }
         public virtual Azure.Response<Azure.Template.Models.Model> Operation(Azure.Template.Models.Model body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Response<Azure.Template.Models.Model>> OperationAsync(Azure.Template.Models.Model body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.Model>> OperationAsync(Azure.Template.Models.Model body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TemplateClientOptions : Azure.Core.ClientOptions
     {

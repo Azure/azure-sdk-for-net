@@ -11,18 +11,20 @@
 namespace Microsoft.Azure.Management.Synapse
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
 
     /// <summary>
     /// Azure Synapse Analytics Management Client
     /// </summary>
-    public partial class SynapseManagementClient : ServiceClient<SynapseManagementClient>, ISynapseManagementClient
+    public partial class SynapseManagementClient : ServiceClient<SynapseManagementClient>, ISynapseManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -40,6 +42,11 @@ namespace Microsoft.Azure.Management.Synapse
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Credentials needed for the client to connect to Azure.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
         /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
@@ -47,12 +54,30 @@ namespace Microsoft.Azure.Management.Synapse
         /// <summary>
         /// The API version to use for this operation.
         /// </summary>
-        public string ApiVersion { get; set; }
+        public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets the IBigDataPools.
+        /// The preferred language for the response.
         /// </summary>
-        public virtual IBigDataPools BigDataPools { get; private set; }
+        public string AcceptLanguage { get; set; }
+
+        /// <summary>
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
+        /// </summary>
+        public int? LongRunningOperationRetryTimeout { get; set; }
+
+        /// <summary>
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
+        /// </summary>
+        public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IBigDataPoolsOperations.
+        /// </summary>
+        public virtual IBigDataPoolsOperations BigDataPools { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -60,54 +85,54 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IIpFirewallRules.
+        /// Gets the IIpFirewallRulesOperations.
         /// </summary>
-        public virtual IIpFirewallRules IpFirewallRules { get; private set; }
+        public virtual IIpFirewallRulesOperations IpFirewallRules { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPools.
+        /// Gets the ISqlPoolsOperations.
         /// </summary>
-        public virtual ISqlPools SqlPools { get; private set; }
+        public virtual ISqlPoolsOperations SqlPools { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolMetadataSyncConfigs.
+        /// Gets the ISqlPoolMetadataSyncConfigsOperations.
         /// </summary>
-        public virtual ISqlPoolMetadataSyncConfigs SqlPoolMetadataSyncConfigs { get; private set; }
+        public virtual ISqlPoolMetadataSyncConfigsOperations SqlPoolMetadataSyncConfigs { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolOperationResults.
+        /// Gets the ISqlPoolOperationResultsOperations.
         /// </summary>
-        public virtual ISqlPoolOperationResults SqlPoolOperationResults { get; private set; }
+        public virtual ISqlPoolOperationResultsOperations SqlPoolOperationResults { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolGeoBackupPolicies.
+        /// Gets the ISqlPoolGeoBackupPoliciesOperations.
         /// </summary>
-        public virtual ISqlPoolGeoBackupPolicies SqlPoolGeoBackupPolicies { get; private set; }
+        public virtual ISqlPoolGeoBackupPoliciesOperations SqlPoolGeoBackupPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolDataWarehouseUserActivities.
+        /// Gets the ISqlPoolDataWarehouseUserActivitiesOperations.
         /// </summary>
-        public virtual ISqlPoolDataWarehouseUserActivities SqlPoolDataWarehouseUserActivities { get; private set; }
+        public virtual ISqlPoolDataWarehouseUserActivitiesOperations SqlPoolDataWarehouseUserActivities { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolRestorePoints.
+        /// Gets the ISqlPoolRestorePointsOperations.
         /// </summary>
-        public virtual ISqlPoolRestorePoints SqlPoolRestorePoints { get; private set; }
+        public virtual ISqlPoolRestorePointsOperations SqlPoolRestorePoints { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolReplicationLinks.
+        /// Gets the ISqlPoolReplicationLinksOperations.
         /// </summary>
-        public virtual ISqlPoolReplicationLinks SqlPoolReplicationLinks { get; private set; }
+        public virtual ISqlPoolReplicationLinksOperations SqlPoolReplicationLinks { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolTransparentDataEncryptions.
+        /// Gets the ISqlPoolTransparentDataEncryptionsOperations.
         /// </summary>
-        public virtual ISqlPoolTransparentDataEncryptions SqlPoolTransparentDataEncryptions { get; private set; }
+        public virtual ISqlPoolTransparentDataEncryptionsOperations SqlPoolTransparentDataEncryptions { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolBlobAuditingPolicies.
+        /// Gets the ISqlPoolBlobAuditingPoliciesOperations.
         /// </summary>
-        public virtual ISqlPoolBlobAuditingPolicies SqlPoolBlobAuditingPolicies { get; private set; }
+        public virtual ISqlPoolBlobAuditingPoliciesOperations SqlPoolBlobAuditingPolicies { get; private set; }
 
         /// <summary>
         /// Gets the ISqlPoolOperations.
@@ -115,69 +140,69 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual ISqlPoolOperations SqlPoolOperations { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolUsages.
+        /// Gets the ISqlPoolUsagesOperations.
         /// </summary>
-        public virtual ISqlPoolUsages SqlPoolUsages { get; private set; }
+        public virtual ISqlPoolUsagesOperations SqlPoolUsages { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolSensitivityLabels.
+        /// Gets the ISqlPoolSensitivityLabelsOperations.
         /// </summary>
-        public virtual ISqlPoolSensitivityLabels SqlPoolSensitivityLabels { get; private set; }
+        public virtual ISqlPoolSensitivityLabelsOperations SqlPoolSensitivityLabels { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolSchemas.
+        /// Gets the ISqlPoolSchemasOperations.
         /// </summary>
-        public virtual ISqlPoolSchemas SqlPoolSchemas { get; private set; }
+        public virtual ISqlPoolSchemasOperations SqlPoolSchemas { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolTables.
+        /// Gets the ISqlPoolTablesOperations.
         /// </summary>
-        public virtual ISqlPoolTables SqlPoolTables { get; private set; }
+        public virtual ISqlPoolTablesOperations SqlPoolTables { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolTableColumns.
+        /// Gets the ISqlPoolTableColumnsOperations.
         /// </summary>
-        public virtual ISqlPoolTableColumns SqlPoolTableColumns { get; private set; }
+        public virtual ISqlPoolTableColumnsOperations SqlPoolTableColumns { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolConnectionPolicies.
+        /// Gets the ISqlPoolConnectionPoliciesOperations.
         /// </summary>
-        public virtual ISqlPoolConnectionPolicies SqlPoolConnectionPolicies { get; private set; }
+        public virtual ISqlPoolConnectionPoliciesOperations SqlPoolConnectionPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolVulnerabilityAssessments.
+        /// Gets the ISqlPoolVulnerabilityAssessmentsOperations.
         /// </summary>
-        public virtual ISqlPoolVulnerabilityAssessments SqlPoolVulnerabilityAssessments { get; private set; }
+        public virtual ISqlPoolVulnerabilityAssessmentsOperations SqlPoolVulnerabilityAssessments { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolVulnerabilityAssessmentScans.
+        /// Gets the ISqlPoolVulnerabilityAssessmentScansOperations.
         /// </summary>
-        public virtual ISqlPoolVulnerabilityAssessmentScans SqlPoolVulnerabilityAssessmentScans { get; private set; }
+        public virtual ISqlPoolVulnerabilityAssessmentScansOperations SqlPoolVulnerabilityAssessmentScans { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolSecurityAlertPolicies.
+        /// Gets the ISqlPoolSecurityAlertPoliciesOperations.
         /// </summary>
-        public virtual ISqlPoolSecurityAlertPolicies SqlPoolSecurityAlertPolicies { get; private set; }
+        public virtual ISqlPoolSecurityAlertPoliciesOperations SqlPoolSecurityAlertPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the ISqlPoolVulnerabilityAssessmentRuleBaselines.
+        /// Gets the ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations.
         /// </summary>
-        public virtual ISqlPoolVulnerabilityAssessmentRuleBaselines SqlPoolVulnerabilityAssessmentRuleBaselines { get; private set; }
+        public virtual ISqlPoolVulnerabilityAssessmentRuleBaselinesOperations SqlPoolVulnerabilityAssessmentRuleBaselines { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkspaces.
+        /// Gets the IWorkspacesOperations.
         /// </summary>
-        public virtual IWorkspaces Workspaces { get; private set; }
+        public virtual IWorkspacesOperations Workspaces { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkspaceAadAdmins.
+        /// Gets the IWorkspaceAadAdminsOperations.
         /// </summary>
-        public virtual IWorkspaceAadAdmins WorkspaceAadAdmins { get; private set; }
+        public virtual IWorkspaceAadAdminsOperations WorkspaceAadAdmins { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkspaceManagedIdentitySqlControlSettings.
+        /// Gets the IWorkspaceManagedIdentitySqlControlSettingsOperations.
         /// </summary>
-        public virtual IWorkspaceManagedIdentitySqlControlSettings WorkspaceManagedIdentitySqlControlSettings { get; private set; }
+        public virtual IWorkspaceManagedIdentitySqlControlSettingsOperations WorkspaceManagedIdentitySqlControlSettings { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SynapseManagementClient class.
@@ -187,7 +212,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// </param>
         /// <param name='disposeHttpClient'>
         /// True: will dispose the provided httpClient on calling SynapseManagementClient.Dispose(). False: will not dispose provided httpClient</param>
-        public SynapseManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        protected SynapseManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
@@ -198,7 +223,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SynapseManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected SynapseManagementClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -212,7 +237,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public SynapseManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected SynapseManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
@@ -229,7 +254,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SynapseManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected SynapseManagementClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -253,51 +278,204 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SynapseManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected SynapseManagementClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
                 throw new System.ArgumentNullException("baseUri");
             }
             BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SynapseManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SynapseManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SynapseManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SynapseManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SynapseManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SynapseManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SynapseManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SynapseManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SynapseManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SynapseManagementClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SynapseManagementClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
         /// An optional partial-method to perform custom initialization.
-        ///</summary>
+        /// </summary>
         partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
         /// </summary>
         private void Initialize()
         {
-            BigDataPools = new BigDataPools(this);
+            BigDataPools = new BigDataPoolsOperations(this);
             Operations = new Operations(this);
-            IpFirewallRules = new IpFirewallRules(this);
-            SqlPools = new SqlPools(this);
-            SqlPoolMetadataSyncConfigs = new SqlPoolMetadataSyncConfigs(this);
-            SqlPoolOperationResults = new SqlPoolOperationResults(this);
-            SqlPoolGeoBackupPolicies = new SqlPoolGeoBackupPolicies(this);
-            SqlPoolDataWarehouseUserActivities = new SqlPoolDataWarehouseUserActivities(this);
-            SqlPoolRestorePoints = new SqlPoolRestorePoints(this);
-            SqlPoolReplicationLinks = new SqlPoolReplicationLinks(this);
-            SqlPoolTransparentDataEncryptions = new SqlPoolTransparentDataEncryptions(this);
-            SqlPoolBlobAuditingPolicies = new SqlPoolBlobAuditingPolicies(this);
+            IpFirewallRules = new IpFirewallRulesOperations(this);
+            SqlPools = new SqlPoolsOperations(this);
+            SqlPoolMetadataSyncConfigs = new SqlPoolMetadataSyncConfigsOperations(this);
+            SqlPoolOperationResults = new SqlPoolOperationResultsOperations(this);
+            SqlPoolGeoBackupPolicies = new SqlPoolGeoBackupPoliciesOperations(this);
+            SqlPoolDataWarehouseUserActivities = new SqlPoolDataWarehouseUserActivitiesOperations(this);
+            SqlPoolRestorePoints = new SqlPoolRestorePointsOperations(this);
+            SqlPoolReplicationLinks = new SqlPoolReplicationLinksOperations(this);
+            SqlPoolTransparentDataEncryptions = new SqlPoolTransparentDataEncryptionsOperations(this);
+            SqlPoolBlobAuditingPolicies = new SqlPoolBlobAuditingPoliciesOperations(this);
             SqlPoolOperations = new SqlPoolOperations(this);
-            SqlPoolUsages = new SqlPoolUsages(this);
-            SqlPoolSensitivityLabels = new SqlPoolSensitivityLabels(this);
-            SqlPoolSchemas = new SqlPoolSchemas(this);
-            SqlPoolTables = new SqlPoolTables(this);
-            SqlPoolTableColumns = new SqlPoolTableColumns(this);
-            SqlPoolConnectionPolicies = new SqlPoolConnectionPolicies(this);
-            SqlPoolVulnerabilityAssessments = new SqlPoolVulnerabilityAssessments(this);
-            SqlPoolVulnerabilityAssessmentScans = new SqlPoolVulnerabilityAssessmentScans(this);
-            SqlPoolSecurityAlertPolicies = new SqlPoolSecurityAlertPolicies(this);
-            SqlPoolVulnerabilityAssessmentRuleBaselines = new SqlPoolVulnerabilityAssessmentRuleBaselines(this);
-            Workspaces = new Workspaces(this);
-            WorkspaceAadAdmins = new WorkspaceAadAdmins(this);
-            WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettings(this);
+            SqlPoolUsages = new SqlPoolUsagesOperations(this);
+            SqlPoolSensitivityLabels = new SqlPoolSensitivityLabelsOperations(this);
+            SqlPoolSchemas = new SqlPoolSchemasOperations(this);
+            SqlPoolTables = new SqlPoolTablesOperations(this);
+            SqlPoolTableColumns = new SqlPoolTableColumnsOperations(this);
+            SqlPoolConnectionPolicies = new SqlPoolConnectionPoliciesOperations(this);
+            SqlPoolVulnerabilityAssessments = new SqlPoolVulnerabilityAssessmentsOperations(this);
+            SqlPoolVulnerabilityAssessmentScans = new SqlPoolVulnerabilityAssessmentScansOperations(this);
+            SqlPoolSecurityAlertPolicies = new SqlPoolSecurityAlertPoliciesOperations(this);
+            SqlPoolVulnerabilityAssessmentRuleBaselines = new SqlPoolVulnerabilityAssessmentRuleBaselinesOperations(this);
+            Workspaces = new WorkspacesOperations(this);
+            WorkspaceAadAdmins = new WorkspaceAadAdminsOperations(this);
+            WorkspaceManagedIdentitySqlControlSettings = new WorkspaceManagedIdentitySqlControlSettingsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2019-06-01-preview";
+            AcceptLanguage = "en-US";
+            LongRunningOperationRetryTimeout = 30;
+            GenerateClientRequestId = true;
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -306,7 +484,7 @@ namespace Microsoft.Azure.Management.Synapse
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
                 ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new  List<JsonConverter>
+                Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
                     }
@@ -326,6 +504,7 @@ namespace Microsoft.Azure.Management.Synapse
             };
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
 }

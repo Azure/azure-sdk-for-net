@@ -316,7 +316,7 @@ namespace Azure.Messaging.EventHubs
         ///   token sources that can be used to cancel the operation.  Partition ids are used as keys.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, (Task, CancellationTokenSource)> ActivePartitionProcessors { get; set; } = new ConcurrentDictionary<string, (Task, CancellationTokenSource)>();
+        private ConcurrentDictionary<string, (Task, CancellationTokenSource)> ActivePartitionProcessors { get; } = new ConcurrentDictionary<string, (Task, CancellationTokenSource)>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
@@ -1181,7 +1181,7 @@ namespace Azure.Messaging.EventHubs
                         await Task.WhenAll(stopPartitionProcessingTasks).ConfigureAwait(false);
 
                         // Stop the LoadBalancer.
-                        await LoadBalancer.RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
+                        await LoadBalancer.RelinquishOwnershipAsync(CancellationToken.None).ConfigureAwait(false);
                     }
                     else
                     {
@@ -1189,7 +1189,7 @@ namespace Azure.Messaging.EventHubs
 
                         // Stop the LoadBalancer.
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-                        LoadBalancer.RelinquishOwnershipAsync(cancellationToken).GetAwaiter().GetResult();
+                        LoadBalancer.RelinquishOwnershipAsync(CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     }
 

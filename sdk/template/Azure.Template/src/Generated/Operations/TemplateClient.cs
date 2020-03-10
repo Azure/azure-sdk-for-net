@@ -18,6 +18,10 @@ namespace Azure.Template
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal ServiceRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of TemplateClient for mocking. </summary>
+        protected TemplateClient()
+        {
+        }
         /// <summary> Initializes a new instance of TemplateClient. </summary>
         internal TemplateClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "http://localhost:3000")
         {
@@ -27,7 +31,7 @@ namespace Azure.Template
         }
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
         {
             return await RestClient.OperationAsync(body, cancellationToken).ConfigureAwait(false);
         }
