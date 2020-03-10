@@ -372,6 +372,24 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task CloseAsyncUpdatesIsClosedProperty()
+        {
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+
+            Assert.That(receiver.IsClosed, Is.False);
+
+            await receiver.CloseAsync();
+
+            Assert.That(receiver.IsClosed, Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CloseAsyncClosesTheConnectionWhenOwned()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
@@ -397,6 +415,24 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await receiver.CloseAsync();
             Assert.That(connection.IsClosed, Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CloseAsyncRespectsTheCancellationToken()
+        {
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(receiver.IsClosed, Is.False);
         }
 
         /// <summary>
