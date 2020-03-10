@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.4 (Unreleased)
+
+
 ## 1.0.0-preview.3 (2020-03-10)
 ### Breaking changes
 - In both `DocumentSentiment` and `SentenceSentiment` property `SentimentScores` has been renamed to `ConfidenceScores`.
