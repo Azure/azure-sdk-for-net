@@ -268,6 +268,11 @@ namespace Azure.Storage
             /// Max upload bytes.
             /// </summary>
             public const int MaxAppendBytes = 100 * Constants.MB; // 100 MB
+
+            /// <summary>
+            /// Root directory path.
+            /// </summary>
+            public const string RootDirectoryPath = "%2F";
         }
 
         /// <summary>

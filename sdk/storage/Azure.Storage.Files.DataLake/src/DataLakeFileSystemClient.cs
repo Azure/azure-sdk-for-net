@@ -332,7 +332,7 @@ namespace Azure.Storage.Files.DataLake
         /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
         public virtual DataLakeDirectoryClient GetRootDirectoryClient()
         {
-            return GetDirectoryClient(string.Empty);
+            return GetDirectoryClient(Constants.DataLake.RootDirectoryPath);
         }
 
         /// <summary>

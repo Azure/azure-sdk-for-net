@@ -1025,6 +1025,19 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task GetPropertiesAsync_RootDirectory()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = test.FileSystem.GetRootDirectoryClient();
+
+            // Act
+            Response<PathProperties> response = await directory.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
         public async Task GetPropertiesAsync_Oauth()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
