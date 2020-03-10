@@ -1502,7 +1502,7 @@ namespace Azure.Storage.Queues
         }
         #endregion SendMessage
 
-        #region ReceiveMessag
+        #region ReceiveMessage
         /// <summary>
         /// Receives one or more messages from the front of the queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
