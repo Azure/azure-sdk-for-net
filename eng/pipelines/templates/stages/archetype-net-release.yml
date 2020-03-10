@@ -126,7 +126,7 @@ stages:
                       - task: MSBuild@1
                         displayName: 'Upload Symbols for ${{artifact.name}}'
                         inputs:
-                          solution: '$(Pipeline.Workspace)/azure-sdk-build-tools/tools/symboltool/SymbolUploader.proj'
+                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
                           msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
 
           - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
@@ -164,7 +164,7 @@ stages:
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
                           TargetLanguage: 'dotnet'
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
-                          ScriptPath: '$(Pipeline.Workspace)/azure-sdk-build-tools/scripts/copy-docs-to-blobstorage.ps1'
+                          ScriptPath: '$(AzureSDKBuildToolsPath)/scripts/copy-docs-to-blobstorage.ps1'
 
           - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
             - deployment: UpdatePackageVersion
@@ -233,7 +233,7 @@ stages:
       - task: MSBuild@1
         displayName: 'Publish to blobfeed'
         inputs:
-          solution: '$(Pipeline.Workspace)/azure-sdk-build-tools/tools/blobfeedtool/BlobFeedPublishHelper.proj'
+          solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
           msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'
 
   - stage: Cleanup
