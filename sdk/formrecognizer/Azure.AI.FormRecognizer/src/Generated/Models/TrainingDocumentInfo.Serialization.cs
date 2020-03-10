@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Custom
             writer.WritePropertyName("documentName");
             writer.WriteStringValue(DocumentName);
             writer.WritePropertyName("pages");
-            writer.WriteNumberValue(Pages);
+            writer.WriteNumberValue(PageCount);
             writer.WritePropertyName("errors");
             writer.WriteStartArray();
             foreach (var item in Errors)
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 }
                 if (property.NameEquals("pages"))
                 {
-                    result.Pages = property.Value.GetInt32();
+                    result.PageCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("errors"))
