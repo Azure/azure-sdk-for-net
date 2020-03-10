@@ -1,19 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.FormRecognizer.Models;
+using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Models
 {
-    public class FieldPredictionAccuracy
+    [CodeGenSchema("FormFieldsReport")]
+    public partial class FieldPredictionAccuracy
     {
-        internal FieldPredictionAccuracy(FormFieldsReport_internal field)
-        {
-            Accuracy = field.Accuracy;
-            Label = field.FieldName;
-        }
-
-        public float Accuracy { get; }
+        [CodeGenSchemaMember("FieldName")]
 
         public string Label { get; }
     }
