@@ -33,15 +33,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the VMwareV2FabricCreationInput
         /// class.
         /// </summary>
+        /// <param name="vmwareSiteId">The ARM Id of the VMware site.</param>
         /// <param name="migrationSolutionId">The ARM Id of the migration
         /// solution.</param>
-        /// <param name="vmwareSiteId">The ARM Id of the VMware site.</param>
-        /// <param name="physicalSiteId">The ARM Id of the physical
-        /// site.</param>
-        public VMwareV2FabricCreationInput(string migrationSolutionId, string vmwareSiteId = default(string), string physicalSiteId = default(string))
+        public VMwareV2FabricCreationInput(string vmwareSiteId, string migrationSolutionId)
         {
             VmwareSiteId = vmwareSiteId;
-            PhysicalSiteId = physicalSiteId;
             MigrationSolutionId = migrationSolutionId;
             CustomInit();
         }
@@ -58,12 +55,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string VmwareSiteId { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM Id of the physical site.
-        /// </summary>
-        [JsonProperty(PropertyName = "physicalSiteId")]
-        public string PhysicalSiteId { get; set; }
-
-        /// <summary>
         /// Gets or sets the ARM Id of the migration solution.
         /// </summary>
         [JsonProperty(PropertyName = "migrationSolutionId")]
@@ -77,6 +68,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (VmwareSiteId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VmwareSiteId");
+            }
             if (MigrationSolutionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "MigrationSolutionId");
