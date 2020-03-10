@@ -3,22 +3,22 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// ChangeAccessControlListResult.
+    /// Represents an entry that failed to update Access Control List.
     /// </summary>
     public class ChangeAccessControlListResultFailedEntry
     {
         /// <summary>
-        /// DirectoriesSuccessful.
+        /// Returns name of an entry.
         /// </summary>
         public string Name { get; internal set; }
 
         /// <summary>
-        /// FilesSuccessfulCount.
+        /// Returns type of an entry.
         /// </summary>
         public string Type { get; internal set; }
 
         /// <summary>
-        /// FailureCount.
+        /// Returns error message that is the reason why entry failed to update.
         /// </summary>
         public string  ErrorMessage { get; internal set; }
 
