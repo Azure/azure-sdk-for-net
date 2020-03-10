@@ -70,10 +70,10 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Fields = new List<FormFieldsReport_internal>();
+                    result.Fields = new List<FieldPredictionAccuracy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Fields.Add(FormFieldsReport_internal.DeserializeFormFieldsReport_internal(item));
+                        result.Fields.Add(FieldPredictionAccuracy.DeserializeFieldPredictionAccuracy(item));
                     }
                     continue;
                 }

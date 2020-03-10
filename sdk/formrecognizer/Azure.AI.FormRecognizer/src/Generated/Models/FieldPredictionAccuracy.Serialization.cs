@@ -8,27 +8,27 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
-    internal partial class FormFieldsReport_internal : IUtf8JsonSerializable
+    public partial class FieldPredictionAccuracy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("fieldName");
-            writer.WriteStringValue(FieldName);
+            writer.WriteStringValue(Label);
             writer.WritePropertyName("accuracy");
             writer.WriteNumberValue(Accuracy);
             writer.WriteEndObject();
         }
-        internal static FormFieldsReport_internal DeserializeFormFieldsReport_internal(JsonElement element)
+        internal static FieldPredictionAccuracy DeserializeFieldPredictionAccuracy(JsonElement element)
         {
-            FormFieldsReport_internal result = new FormFieldsReport_internal();
+            FieldPredictionAccuracy result = new FieldPredictionAccuracy();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"))
                 {
-                    result.FieldName = property.Value.GetString();
+                    result.Label = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accuracy"))
