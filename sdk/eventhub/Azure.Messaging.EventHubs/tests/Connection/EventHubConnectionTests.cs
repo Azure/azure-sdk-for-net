@@ -733,7 +733,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 WasCloseAsyncCalled = true;
                 return base.CloseAsync(cancellationToken);
             }
-
         }
 
         /// <summary>

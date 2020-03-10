@@ -400,6 +400,101 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseAsyncLogsNormalClose()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
+            var eventHubName = "someHub";
+            var mockConnection = new Mock<EventHubConnection>(connectionString, eventHubName);
+            var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+
+            receiver.Logger = mockEventSource.Object;
+
+            await receiver.CloseAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            mockEventSource
+                .Verify(log => log.ClientCloseStart(
+                    typeof(PartitionReceiver),
+                    eventHubName,
+                    It.IsAny<string>()),
+                Times.Once);
+
+            mockEventSource
+                .Verify(log => log.ClientCloseComplete(
+                    typeof(PartitionReceiver),
+                    eventHubName,
+                    It.IsAny<string>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseAsyncLogsErrorDuringClose()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
+            var eventHubName = "someHub";
+            var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
+            var mockReceiver = new Mock<PartitionReceiver>("cg", "pid", EventPosition.Earliest, connectionString, eventHubName, default(PartitionReceiverOptions)) { CallBase = true };
+
+            mockReceiver.Object.Logger = mockEventSource.Object;
+
+            mockEventSource
+                .Setup(log => log.ClientCloseStart(
+                    It.IsAny<Type>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Callback(() => cancellationSource.Cancel());
+
+            try
+            {
+                await mockReceiver.Object.CloseAsync(cancellationSource.Token);
+            }
+            catch (TaskCanceledException)
+            {
+                // We are forcing a token cancellation, so a TaskCanceledException is expected.
+            }
+
+            mockEventSource
+                .Verify(log => log.ClientCloseStart(
+                    typeof(PartitionReceiver),
+                    eventHubName,
+                    It.IsAny<string>()),
+                Times.Once);
+
+            mockEventSource
+                .Verify(log => log.ClientCloseError(
+                    typeof(PartitionReceiver),
+                    eventHubName,
+                    It.IsAny<string>(),
+                    It.IsAny<string>()),
+                Times.Once);
+
+            mockEventSource
+                .Verify(log => log.ClientCloseComplete(
+                    typeof(PartitionReceiver),
+                    eventHubName,
+                    It.IsAny<string>()),
+                Times.Once);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="PartitionReceiver.DisposeAsync" />
         ///   method.
         /// </summary>

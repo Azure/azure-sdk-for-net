@@ -74,6 +74,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         public bool IsClosed { get; protected set; } = false;
 
         /// <summary>
+        ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
+
+        /// <summary>
         ///   Indicates whether the client has ownership of the associated <see cref="EventHubConnection" />
         ///   and should take responsibility for managing its lifespan.
         /// </summary>
@@ -249,7 +255,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
-            EventHubsEventSource.Log.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
+            Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
 
             try
             {
@@ -260,12 +266,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
+                Logger.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
             }
         }
 
