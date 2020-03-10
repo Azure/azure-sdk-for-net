@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Search
     {
             /// <summary>
             /// Gets the primary and secondary admin API keys for the specified Azure
-            /// Search service.
+            /// Cognitive Search service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Gets the primary and secondary admin API keys for the specified Azure
-            /// Search service.
+            /// Cognitive Search service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
@@ -88,8 +88,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='keyKind'>
             /// Specifies which key to regenerate. Valid values include 'primary' and
@@ -116,8 +116,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='keyKind'>
             /// Specifies which key to regenerate. Valid values include 'primary' and
