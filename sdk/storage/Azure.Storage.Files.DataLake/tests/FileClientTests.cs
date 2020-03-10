@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
+using Azure.Storage.Blobs;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -979,6 +980,23 @@ namespace Azure.Storage.Files.DataLake.Tests
                         conditions: conditions),
                     e => { });
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            ChangeAccessControlListResult result = await file.SetAccessControlListRecursiveAsync(AccessControlList);
+
+            // Assert
+            Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(1, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
         }
 
         [Test]
