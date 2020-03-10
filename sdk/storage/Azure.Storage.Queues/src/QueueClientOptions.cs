@@ -54,9 +54,7 @@ namespace Azure.Storage.Queues
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public QueueClientOptions(ServiceVersion version = LatestVersion)
-#pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
             if (version == ServiceVersion.V2019_07_07
                 || version == ServiceVersion.V2019_02_02)
