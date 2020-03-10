@@ -29,6 +29,7 @@
     <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
     <Compile Include="..\src\Shared\OperationHelpers.cs" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
+    <Compile Include="..\src\Shared\Autorest\RawRequestUriBuilder.cs" />
   </ItemGroup>
 
 </Project>
