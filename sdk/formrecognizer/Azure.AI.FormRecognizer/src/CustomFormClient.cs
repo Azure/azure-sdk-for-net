@@ -140,6 +140,13 @@ namespace Azure.AI.FormRecognizer.Custom
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
+        public virtual async Task<Operation<ExtractedForm>> StartExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
         #endregion Analyze
 
         #region CRUD Ops
