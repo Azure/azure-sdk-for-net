@@ -1017,26 +1017,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [Ignore("Until we know what ACL format remove accepts")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task RemoveAccessControlRecursiveAsync()
-        {
-            await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-            DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
-
-            await file.SetAccessControlListRecursiveAsync(AccessControlList);
-
-            // Act
-            ChangeAccessControlListResult result = await file.RemoveAccessControlListRecursiveAsync(AccessControlList);
-
-            // Assert
-            Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
-            Assert.AreEqual(1, result.FilesSuccessfulCount);
-            Assert.AreEqual(0, result.FailureCount);
-        }
-
-        [Test]
         public async Task SetPermissionsAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
