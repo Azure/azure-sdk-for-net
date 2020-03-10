@@ -69,6 +69,7 @@ known_presence_issues:
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer','#5499']
+  - ['sdk/storage/Azure.Management.Storage', '#10450']
 
 # List for changelogs begins here
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query/CHANGELOG.md','#5499']
