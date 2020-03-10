@@ -13,6 +13,6 @@ namespace Azure.AI.FormRecognizer
     internal partial class KeysResult_internal
     {
         /// <summary> Object mapping clusterIds to a list of keys. </summary>
-        public IDictionary<string, ICollection<string>> Clusters { get; set; } = new Dictionary<string, ICollection<string>>();
+        public IDictionary<string, IList<string>> Clusters { get; set; } = new Dictionary<string, IList<string>>();
     }
 }

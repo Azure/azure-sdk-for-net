@@ -20,6 +20,10 @@ namespace Azure.AI.FormRecognizer
         private readonly ClientDiagnostics clientDiagnostics;
         private readonly HttpPipeline pipeline;
         internal ServiceRestClient RestClient { get; }
+        /// <summary> Initializes a new instance of ServiceClient for mocking. </summary>
+        protected ServiceClient()
+        {
+        }
         /// <summary> Initializes a new instance of ServiceClient. </summary>
         internal ServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
@@ -30,7 +34,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response> TrainCustomModelAsyncAsync(TrainRequest_internal trainRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TrainCustomModelAsyncAsync(TrainRequest_internal trainRequest, CancellationToken cancellationToken = default)
         {
             return (await RestClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -45,7 +49,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetCustomModelAsync(modelId, includeKeys, cancellationToken).ConfigureAwait(false);
         }
@@ -60,7 +64,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Mark model for deletion. Model artifacts will be permanently removed within a predetermined period. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response> DeleteCustomModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteCustomModelAsync(Guid modelId, CancellationToken cancellationToken = default)
         {
             return await RestClient.DeleteCustomModelAsync(modelId, cancellationToken).ConfigureAwait(false);
         }
@@ -76,7 +80,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType? contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType? contentType, CancellationToken cancellationToken = default)
         {
             return (await RestClient.AnalyzeWithCustomModelAsync(modelId, includeTextDetails, contentType, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -93,7 +97,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAnalyzeFormResultAsync(modelId, resultId, cancellationToken).ConfigureAwait(false);
         }
@@ -109,7 +113,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType? contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType? contentType, CancellationToken cancellationToken = default)
         {
             return (await RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails, contentType, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -124,7 +128,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAnalyzeReceiptResultAsync(resultId, cancellationToken).ConfigureAwait(false);
         }
@@ -138,7 +142,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response> AnalyzeLayoutAsyncAsync(ContentType? contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AnalyzeLayoutAsyncAsync(ContentType? contentType, CancellationToken cancellationToken = default)
         {
             return (await RestClient.AnalyzeLayoutAsyncAsync(contentType, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -152,7 +156,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAnalyzeLayoutResultAsync(resultId, cancellationToken).ConfigureAwait(false);
         }

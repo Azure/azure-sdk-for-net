@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Cluster identifier. </summary>
         public int? ClusterId { get; set; }
         /// <summary> List of key-value pairs extracted from the page. </summary>
-        public ICollection<KeyValuePair_internal> KeyValuePairs { get; set; }
+        public IList<KeyValuePair_internal> KeyValuePairs { get; set; }
         /// <summary> List of data tables extracted from the page. </summary>
-        public ICollection<DataTable_internal> Tables { get; set; }
+        public IList<DataTable_internal> Tables { get; set; }
     }
 }

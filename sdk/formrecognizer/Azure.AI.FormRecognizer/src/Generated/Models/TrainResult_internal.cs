@@ -14,12 +14,12 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class TrainResult_internal
     {
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
-        public ICollection<TrainingDocumentInfo> TrainingDocuments { get; set; } = new List<TrainingDocumentInfo>();
+        public IList<TrainingDocumentInfo> TrainingDocuments { get; set; } = new List<TrainingDocumentInfo>();
         /// <summary> List of fields used to train the model and the train operation error reported by each. </summary>
-        public ICollection<FormFieldsReport_internal> Fields { get; set; }
+        public IList<FormFieldsReport_internal> Fields { get; set; }
         /// <summary> Average accuracy. </summary>
         public float? AverageModelAccuracy { get; set; }
         /// <summary> Errors returned during the training operation. </summary>
-        public ICollection<FormRecognizerError> Errors { get; set; }
+        public IList<FormRecognizerError> Errors { get; set; }
     }
 }

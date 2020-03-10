@@ -27,17 +27,17 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Integer value. </summary>
         public int? ValueInteger { get; set; }
         /// <summary> Array of field values. </summary>
-        public ICollection<FieldValue_internal> ValueArray { get; set; }
+        public IList<FieldValue_internal> ValueArray { get; set; }
         /// <summary> Dictionary of named field values. </summary>
         public IDictionary<string, FieldValue_internal> ValueObject { get; set; }
         /// <summary> Text content of the extracted field. </summary>
         public string Text { get; set; }
         /// <summary> Bounding box of the field value, if appropriate. </summary>
-        public ICollection<float> BoundingBox { get; set; }
+        public IList<float> BoundingBox { get; set; }
         /// <summary> Confidence score. </summary>
         public float? Confidence { get; set; }
         /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </summary>
-        public ICollection<string> Elements { get; set; }
+        public IList<string> Elements { get; set; }
         /// <summary> The 1-based page number in the input document. </summary>
         public int? Page { get; set; }
     }
