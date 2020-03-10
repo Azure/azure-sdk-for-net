@@ -10,7 +10,7 @@ namespace Azure.Management.Storage
     {
         public static HttpPipeline Build(ClientOptions options, TokenCredential tokenCredential)
         {
-            return HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, "https://management.azure.com/"));
+            return HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, "https://management.azure.com/.default"));
         }
     }
 }
