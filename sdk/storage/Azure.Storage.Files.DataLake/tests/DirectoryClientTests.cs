@@ -998,10 +998,12 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
 
+            int batchSize = 2;
+
             // Act
             ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(
                 accessControlList: AccessControlList,
-                batchSize: 2,
+                batchSize: batchSize,
                 progressHandler: progresMonitorMock.Object);
 
             // Assert
@@ -1009,7 +1011,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(4, result.FilesSuccessfulCount);
             Assert.AreEqual(0, result.FailureCount);
 
-            progresMonitorMock.Verify(x => x.Report(It.IsAny<ChangeAccessControlListPartialResult>()), Times.Exactly(4));
+            progresMonitorMock.Verify(
+                x => x.Report(It.Is<ChangeAccessControlListPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
+                Times.Exactly(4));
         }
 
         [Test]
