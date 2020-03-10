@@ -143,6 +143,7 @@ namespace Azure.Core.Http.Multipart
 
         public override void Flush()
         {
+            // Flush is allowed on read-only stream
         }
 
         private void PositionInnerStream()
