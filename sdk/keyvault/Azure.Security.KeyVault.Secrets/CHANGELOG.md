@@ -1,6 +1,6 @@
 # Release History
 
-## 4.1.0-preview.1 (Unreleased)
+## 4.1.0-preview.1 (2020-03-09)
 
 ### Added
 
