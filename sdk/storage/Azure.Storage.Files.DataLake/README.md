@@ -179,6 +179,31 @@ fileClient.SetAccessControlList(accessControlList);
 PathAccessControl accessControlResponse = fileClient.GetAccessControl();
 ```
 
+### Set and modify Access Controls (ACLs) on a DataLake Directory structure
+```C# Snippet:SampleSnippetDataLakeFileClient_SetAclsRecursively
+// Create a DataLake directory structure with files so we can set the Access Controls recursively on whole tree.
+DataLakeDirectoryClient rootDirectoryClient = filesystem.GetDirectoryClient(Randomize("sample-root"));
+rootDirectoryClient.Create();
+DataLakeFileClient rootFileClient = rootDirectoryClient.GetFileClient(Randomize("sample-file"));
+rootFileClient.Create();
+DataLakeDirectoryClient subDirectoryClient = rootDirectoryClient.GetSubDirectoryClient(Randomize("sample-subdirectory"));
+subDirectoryClient.Create();
+DataLakeFileClient fileClient = subDirectoryClient.GetFileClient(Randomize("sample-file"));
+fileClient.Create();
+
+// Set Access Control List Recursively
+IList<PathAccessControlItem> accessControlList
+    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::rw-,mask::rwx,other::---");
+rootDirectoryClient.SetAccessControlListRecursive(accessControlList);
+```
+
+```C# Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
+// Modify Access Control List Recursively
+IList<PathAccessControlItem> deltaAccessControlList
+    = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
+subDirectoryClient.ModifyAccessControlListRecursive(deltaAccessControlList);
+```
+
 ### Rename a DataLake File
 ```C# Snippet:SampleSnippetDataLakeFileClient_RenameFile
 DataLakeFileClient renamedFileClient = fileClient.Rename("sample-file2");

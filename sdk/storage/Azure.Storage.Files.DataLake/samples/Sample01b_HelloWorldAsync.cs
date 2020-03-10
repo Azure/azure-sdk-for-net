@@ -598,6 +598,67 @@ namespace Azure.Storage.Files.DataLake.Samples
             }
         }
 
+
+        /// <summary>
+        /// Set and modify access control list recursively on a DataLake directory structure
+        /// </summary>
+        [Test]
+        public async Task SetModifyAclsRecursivelyAsync()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = NamespaceStorageAccountName;
+            string storageAccountKey = NamespaceStorageAccountKey;
+            Uri serviceUri = NamespaceBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-acl" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-acl"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Create a DataLake directory structure with files so we can set the Access Controls recursively on whole tree.
+                DataLakeDirectoryClient rootDirectoryClient = filesystem.GetDirectoryClient(Randomize("sample-root"));
+                await rootDirectoryClient.CreateAsync();
+                DataLakeFileClient rootFileClient = rootDirectoryClient.GetFileClient(Randomize("sample-file"));
+                await rootFileClient.CreateAsync();
+                DataLakeDirectoryClient subDirectoryClient = rootDirectoryClient.GetSubDirectoryClient(Randomize("sample-subdirectory"));
+                await subDirectoryClient.CreateAsync();
+                DataLakeFileClient fileClient = subDirectoryClient.GetFileClient(Randomize("sample-file"));
+                await fileClient.CreateAsync();
+
+                // Set Access Control List Recursively
+                IList<PathAccessControlItem> accessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::rw-,mask::rwx,other::---");
+                await rootDirectoryClient.SetAccessControlListRecursiveAsync(accessControlList);
+
+                // Modify Access Control List Recursively
+                IList<PathAccessControlItem> deltaAccessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
+                await subDirectoryClient.ModifyAccessControlListRecursiveAsync(deltaAccessControlList);
+
+                PathAccessControl rootFileAccessControlResponse = await rootFileClient.GetAccessControlAsync();
+                PathAccessControl fileAccessControlResponse = await fileClient.GetAccessControlAsync();
+                IList<PathAccessControlItem> expectedFileAccessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::r--,group::rw-,mask::rw-,other::-w-");
+
+                // Check Access Control permissions
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(rootFileAccessControlResponse.AccessControlList.ToList()));
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(expectedFileAccessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(fileAccessControlResponse.AccessControlList.ToList()));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
         /// <summary>
         /// Rename a DataLake file and a DatLake directories in a DataLake Filesystem.
         /// </summary>

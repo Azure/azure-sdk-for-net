@@ -618,6 +618,69 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
+        /// Set and modify access control list recursively on a DataLake directory structure
+        /// </summary>
+        [Test]
+        public void SetModifyAclsRecursively()
+        {
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = NamespaceStorageAccountName;
+            string storageAccountKey = NamespaceStorageAccountKey;
+            Uri serviceUri = NamespaceBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-acl" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-acl"));
+            filesystem.Create();
+            try
+            {
+                #region Snippet:SampleSnippetDataLakeFileClient_SetAclsRecursively
+                // Create a DataLake directory structure with files so we can set the Access Controls recursively on whole tree.
+                DataLakeDirectoryClient rootDirectoryClient = filesystem.GetDirectoryClient(Randomize("sample-root"));
+                rootDirectoryClient.Create();
+                DataLakeFileClient rootFileClient = rootDirectoryClient.GetFileClient(Randomize("sample-file"));
+                rootFileClient.Create();
+                DataLakeDirectoryClient subDirectoryClient = rootDirectoryClient.GetSubDirectoryClient(Randomize("sample-subdirectory"));
+                subDirectoryClient.Create();
+                DataLakeFileClient fileClient = subDirectoryClient.GetFileClient(Randomize("sample-file"));
+                fileClient.Create();
+
+                // Set Access Control List Recursively
+                IList<PathAccessControlItem> accessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::rw-,mask::rwx,other::---");
+                rootDirectoryClient.SetAccessControlListRecursive(accessControlList);
+                #endregion Snippet:SampleSnippetDataLakeFileClient_SetAclsRecursively
+                #region Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
+                // Modify Access Control List Recursively
+                IList<PathAccessControlItem> deltaAccessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
+                subDirectoryClient.ModifyAccessControlListRecursive(deltaAccessControlList);
+                #endregion Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
+
+                PathAccessControl rootFileAccessControlResponse = rootFileClient.GetAccessControl();
+                PathAccessControl fileAccessControlResponse = fileClient.GetAccessControl();
+                IList<PathAccessControlItem> expectedFileAccessControlList
+                    = PathAccessControlExtensions.ParseAccessControlList("user::r--,group::rw-,mask::rw-,other::-w-");
+
+                // Check Access Control permissions
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(rootFileAccessControlResponse.AccessControlList.ToList()));
+                Assert.AreEqual(
+                    PathAccessControlExtensions.ToAccessControlListString(expectedFileAccessControlList),
+                    PathAccessControlExtensions.ToAccessControlListString(fileAccessControlResponse.AccessControlList.ToList()));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
         /// Rename a DataLake file and a DataLake directory in a DataLake Filesystem.
         /// </summary>
         [Test]
