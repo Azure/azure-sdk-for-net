@@ -93,11 +93,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationAlertSettingsOperations ReplicationAlertSettings { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationEligibilityResultsOperations.
-        /// </summary>
-        public virtual IReplicationEligibilityResultsOperations ReplicationEligibilityResults { get; private set; }
-
-        /// <summary>
         /// Gets the IReplicationEventsOperations.
         /// </summary>
         public virtual IReplicationEventsOperations ReplicationEvents { get; private set; }
@@ -198,19 +193,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; private set; }
 
         /// <summary>
-        /// Gets the ISupportedOperatingSystemsOperations.
-        /// </summary>
-        public virtual ISupportedOperatingSystemsOperations SupportedOperatingSystems { get; private set; }
-
-        /// <summary>
         /// Gets the IReplicationVaultHealthOperations.
         /// </summary>
         public virtual IReplicationVaultHealthOperations ReplicationVaultHealth { get; private set; }
-
-        /// <summary>
-        /// Gets the IReplicationVaultSettingOperations.
-        /// </summary>
-        public virtual IReplicationVaultSettingOperations ReplicationVaultSetting { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SiteRecoveryManagementClient class.
@@ -455,7 +440,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         {
             Operations = new Operations(this);
             ReplicationAlertSettings = new ReplicationAlertSettingsOperations(this);
-            ReplicationEligibilityResults = new ReplicationEligibilityResultsOperations(this);
             ReplicationEvents = new ReplicationEventsOperations(this);
             ReplicationFabrics = new ReplicationFabricsOperations(this);
             ReplicationLogicalNetworks = new ReplicationLogicalNetworksOperations(this);
@@ -476,11 +460,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             ReplicationJobs = new ReplicationJobsOperations(this);
             ReplicationPolicies = new ReplicationPoliciesOperations(this);
             ReplicationRecoveryPlans = new ReplicationRecoveryPlansOperations(this);
-            SupportedOperatingSystems = new SupportedOperatingSystemsOperations(this);
             ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
-            ReplicationVaultSetting = new ReplicationVaultSettingOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-07-10";
+            ApiVersion = "2018-01-10";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -509,8 +491,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AddDisksProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AddDisksProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskTypeDetails>("instanceType"));
@@ -563,12 +543,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RemoveDisksProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RemoveDisksProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificUpdateContainerMappingInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResyncProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));

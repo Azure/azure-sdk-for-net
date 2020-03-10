@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
 
     /// <summary>
-    /// Defines values for MigrationItemOperation.
+    /// Defines values for ResyncState.
     /// </summary>
-    public static class MigrationItemOperation
+    public static class ResyncState
     {
-        public const string DisableMigration = "DisableMigration";
-        public const string TestMigrate = "TestMigrate";
-        public const string TestMigrateCleanup = "TestMigrateCleanup";
-        public const string Migrate = "Migrate";
-        public const string StartResync = "StartResync";
+        public const string None = "None";
+        public const string PreparedForResynchronization = "PreparedForResynchronization";
+        public const string StartedResynchronization = "StartedResynchronization";
     }
 }

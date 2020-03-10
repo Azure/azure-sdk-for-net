@@ -33,13 +33,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// class.
         /// </summary>
         /// <param name="vmwareSiteId">The ARM Id of the VMware site.</param>
+        /// <param name="physicalSiteId">The ARM Id of the physical
+        /// site.</param>
         /// <param name="migrationSolutionId">The Migration solution ARM
         /// Id.</param>
         /// <param name="serviceEndpoint">The service endpoint.</param>
         /// <param name="serviceResourceId">The service resource Id.</param>
-        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string), string serviceResourceId = default(string))
+        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string physicalSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string), string serviceResourceId = default(string))
         {
             VmwareSiteId = vmwareSiteId;
+            PhysicalSiteId = physicalSiteId;
             MigrationSolutionId = migrationSolutionId;
             ServiceEndpoint = serviceEndpoint;
             ServiceResourceId = serviceResourceId;
@@ -56,6 +59,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmwareSiteId")]
         public string VmwareSiteId { get; private set; }
+
+        /// <summary>
+        /// Gets the ARM Id of the physical site.
+        /// </summary>
+        [JsonProperty(PropertyName = "physicalSiteId")]
+        public string PhysicalSiteId { get; private set; }
 
         /// <summary>
         /// Gets the Migration solution ARM Id.
