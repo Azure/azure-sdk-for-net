@@ -9,6 +9,7 @@
 
 ### Fixes and improvements
 - Fix an issue where `EnvironmentCredential` did not behave correctly when `AZURE_USERNAME` and `AZURE_PASSWORD` where set
+- Added `KnownAuthorityHosts` class to aid in sovereign cloud configuration.
 
 ## 1.1.1
 
