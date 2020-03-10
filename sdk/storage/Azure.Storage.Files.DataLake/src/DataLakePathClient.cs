@@ -2010,10 +2010,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="batchSize">
         /// Optional. Defines how many subpaths will be processed.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// setting the the path's access control.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional ProgressHandler.
         /// </param>
@@ -2032,7 +2028,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual ChangeAccessControlListResult SetAccessControlListRecursive(
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
-            DataLakeRequestConditions conditions = default,
             IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
@@ -2046,7 +2041,6 @@ namespace Azure.Storage.Files.DataLake
                     accessControlList,
                     Mode.Set,
                     batchSize,
-                    conditions,
                     progressHandler,
                     false, // async
                     cancellationToken)
@@ -2075,10 +2069,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="batchSize">
         /// Optional. Defines how many subpaths will be processed.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// setting the the path's access control.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional ProgressHandler.
         /// </param>
@@ -2097,7 +2087,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<ChangeAccessControlListResult> SetAccessControlListRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
-            DataLakeRequestConditions conditions = default,
             IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
@@ -2111,7 +2100,6 @@ namespace Azure.Storage.Files.DataLake
                     accessControlList,
                     Mode.Set,
                     batchSize,
-                    conditions,
                     progressHandler,
                     true, // async
                     cancellationToken)
@@ -2145,10 +2133,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="batchSize">
         /// Optional. Defines how many subpaths will be processed.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// setting the the path's access control.
-        /// </param>
         /// <param name="progressHandler">
         /// Optional ProgressHandler.
         /// </param>
@@ -2171,7 +2155,6 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             Mode mode,
             int? batchSize,
-            DataLakeRequestConditions conditions,
             IProgress<ChangeAccessControlListPartialResult> progressHandler,
             bool async,
             CancellationToken cancellationToken)
@@ -2184,8 +2167,7 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessControlList)}: {accessControlList}\n" +
                     $"{nameof(mode)}: {mode}\n" +
-                    $"{nameof(batchSize)}: {batchSize}\n" +
-                    $"{nameof(conditions)}: {conditions}");
+                    $"{nameof(batchSize)}: {batchSize}");
                 try
                 {
                     string continuationToken = null;
@@ -2202,12 +2184,7 @@ namespace Azure.Storage.Files.DataLake
                                 mode: mode,
                                 maxRecords: batchSize,
                                 version: Version.ToVersionString(),
-                                leaseId: conditions?.LeaseId,
                                 acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                                ifMatch: conditions?.IfMatch,
-                                ifNoneMatch: conditions?.IfNoneMatch,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 async: async,
                                 continuation: continuationToken,
                                 cancellationToken: cancellationToken)

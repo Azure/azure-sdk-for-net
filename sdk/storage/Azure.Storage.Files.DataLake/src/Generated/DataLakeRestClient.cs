@@ -3033,12 +3033,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
             /// <param name="maxRecords">Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
-            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
-            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
-            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
-            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -3053,12 +3048,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 string continuation = default,
                 int? maxRecords = default,
-                string leaseId = default,
                 string acl = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
-                System.DateTimeOffset? ifModifiedSince = default,
-                System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "PathClient.SetAccessControlRecursive",
@@ -3077,12 +3067,7 @@ namespace Azure.Storage.Files.DataLake
                         timeout,
                         continuation,
                         maxRecords,
-                        leaseId,
                         acl,
-                        ifMatch,
-                        ifNoneMatch,
-                        ifModifiedSince,
-                        ifUnmodifiedSince,
                         requestId))
                     {
                         if (async)
@@ -3122,12 +3107,7 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="continuation">Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.</param>
             /// <param name="maxRecords">Optional. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
-            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
-            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
-            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
-            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The Path.SetAccessControlRecursiveAsync Message.</returns>
             internal static Azure.Core.HttpMessage SetAccessControlRecursiveAsync_CreateMessage(
@@ -3138,12 +3118,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 string continuation = default,
                 int? maxRecords = default,
-                string leaseId = default,
                 string acl = default,
-                Azure.ETag? ifMatch = default,
-                Azure.ETag? ifNoneMatch = default,
-                System.DateTimeOffset? ifModifiedSince = default,
-                System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default)
             {
                 // Validation
@@ -3171,12 +3146,7 @@ namespace Azure.Storage.Files.DataLake
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
-                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (acl != null) { _request.Headers.SetValue("x-ms-acl", acl); }
-                if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
-                if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
-                if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
-                if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _message;
@@ -3203,14 +3173,6 @@ namespace Azure.Storage.Files.DataLake
 
                         // Get response headers
                         string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
                         if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
                         {
                             _value.ClientRequestId = _header;
@@ -4470,16 +4432,6 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     internal partial class PathSetAccessControlRecursiveResult
     {
-        /// <summary>
-        /// An HTTP entity tag associated with the file or directory.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// The data and time the file or directory was last modified. Write operations on the file or directory update the last modified time.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
         /// <summary>
         /// If a client request id header is sent in the request, this header will be present in the response with the same value.
         /// </summary>
