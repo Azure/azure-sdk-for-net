@@ -29,9 +29,12 @@ stages:
                       Get-ChildItem $(Pipeline.Workspace)/staging
                     displayName: Copying ${{artifact.name}} to staging directory
 
+                - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+
                 - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                   parameters:
-                    StagingDirectory: $(Pipeline.Workspace)/staging
+                    PackagesPath: $(Pipeline.Workspace)/staging
+                    BuildToolsPath: $(AzureSDKBuildToolsPath)
 
                 - publish: $(Pipeline.Workspace)/staging
                   artifact: ${{parameters.ArtifactName}}-signed
@@ -50,14 +53,13 @@ stages:
             environment: github
 
             pool:
-              vmImage: vs2017-win2016
+              vmImage: windows-2019
 
             strategy:
               runOnce:
                 deploy:
                   steps:
-                    - checkout: none
-                    - template: ../../tools/clone-buildtools/clone-buildtools.yml
+                    - checkout: azure-sdk-tools
                     - pwsh: |
                         Get-ChildItem $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
                         New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
@@ -65,12 +67,12 @@ stages:
                         Get-ChildItem $(Pipeline.Workspace)/${{artifact.safeName}}
                       displayName: Stage artifacts
                       timeoutInMinutes: 5
-                    - pwsh: |
-                        $(Pipeline.Workspace)/azure-sdk-build-tools/scripts/create-tags-and-git-release.ps1 -artifactLocation $(Pipeline.Workspace)/${{artifact.safeName}} -packageRepository Nuget -releaseSha $(Build.SourceVersion) -repoId $(Build.Repository.Name)
-                      displayName: 'Verify Package Tags and Create Git Releases'
-                      timeoutInMinutes: 5
-                      env:
-                        GH_TOKEN: $(azuresdk-github-pat)
+                    - template: eng/pipelines/templates/scripts/create-tags-and-git-release.yml@azure-sdk-tools
+                      parameters:
+                        ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                        PackageRepository: Nuget
+                        ReleaseSha: $(Build.SourceVersion)
+                        RepoId: $(Build.Repository.Name)
 
           - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
@@ -87,7 +89,6 @@ stages:
                   deploy:
                     steps:
                       - checkout: none
-                      - template: ../../tools/clone-buildtools/clone-buildtools.yml
                       - pwsh: |
                           New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace)
                           Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
@@ -116,7 +117,7 @@ stages:
                   deploy:
                     steps:
                       - checkout: none
-                      - template: ../../tools/clone-buildtools/clone-buildtools.yml
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
                       - pwsh: |
                           New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace)
                           Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
@@ -133,6 +134,7 @@ stages:
               displayName: Publish Docs to GitHub pages
               condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
               environment: githubio
+              dependsOn: PublishPackage
 
               pool:
                 vmImage: windows-2019
@@ -142,7 +144,7 @@ stages:
                   deploy:
                     steps:
                       - checkout: none
-                      - template: ../../tools/clone-buildtools/clone-buildtools.yml
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
                       - pwsh: |
                           New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
                           New-Item -Type Directory -Name packages -Path $(Pipeline.Workspace)/${{artifact.safeName}}
@@ -155,7 +157,7 @@ stages:
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
-                      - template: ../../tools/generic-blob-upload/publish-blobs.yml
+                      - template: tools/generic-blob-upload/publish-blobs.yml@azure-sdk-build-tools
                         parameters:
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
@@ -169,6 +171,7 @@ stages:
               displayName: "Update Package Version"
               condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
               environment: github
+              dependsOn: PublishPackage
 
               pool:
                 vmImage: windows-2019
@@ -181,8 +184,8 @@ stages:
                       - pwsh: |
                           eng/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
                         displayName: Increment package version
-                      - template: ../../tools/clone-buildtools/clone-buildtools.yml
-                      - template: ../steps/create-pull-request.yml
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                      - template: pipelines/steps/create-pull-request.yml@azure-sdk-build-tools
                         parameters:
                           RepoName: azure-sdk-for-net
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
@@ -198,8 +201,8 @@ stages:
         vmImage: ubuntu-16.04
       steps:
       - checkout: none
-      - template: ../../tools/clone-buildtools/clone-buildtools.yml
-      - template: ../../tools/burner-feed/burner-feed-create.yml
+      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+      - template: tools/burner-feed/burner-feed-create.yml@azure-sdk-build-tools
 
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
@@ -224,7 +227,7 @@ stages:
         vmImage: windows-2019
       steps:
       - checkout: none
-      - template: ../../tools/clone-buildtools/clone-buildtools.yml
+      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
       - task: MSBuild@1
@@ -247,4 +250,4 @@ stages:
         vmImage: ubuntu-16.04
       steps:
       - checkout: none
-      - template: ../../tools/burner-feed/burner-feed-delete.yml
+      - template: tools/burner-feed/burner-feed-delete.yml@azure-sdk-build-tools
