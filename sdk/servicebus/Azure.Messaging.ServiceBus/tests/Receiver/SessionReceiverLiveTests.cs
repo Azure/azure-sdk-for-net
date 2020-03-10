@@ -43,6 +43,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
+                    null,
                     sessionId);
 
                 sequenceNumber ??= 1;
@@ -95,14 +96,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 };
                 ServiceBusReceiver receiver1 = await client.GetSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId,
-                    options);
+                    options,
+                    sessionId);
                 Assert.That(
                     async () =>
                     await client.GetSessionReceiverAsync(
                         scope.QueueName,
-                        sessionId,
-                        options),
+                        options,
+                        sessionId),
                     Throws.Exception);
             }
         }
@@ -275,8 +276,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId,
-                    clientOptions);
+                    clientOptions,
+                    sessionId);
 
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
@@ -314,7 +315,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId);
+                    sessionId: sessionId);
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 

@@ -198,7 +198,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetSubscriptionReceiver(string topicName, string subscriptionName) =>
+        public ServiceBusReceiver GetReceiver(string topicName, string subscriptionName) =>
             ServiceBusReceiver.CreateReceiver(
                 entityName: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection);
@@ -210,7 +210,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetSubscriptionReceiver(
+        public ServiceBusReceiver GetReceiver(
             string topicName,
             string subscriptionName,
             ServiceBusReceiverOptions options) =>
@@ -235,7 +235,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetSubscriptionProcessor(string topicName, string subscriptionName) =>
+        public ServiceBusProcessor GetProcessor(string topicName, string subscriptionName) =>
             new ServiceBusProcessor(
                 entityName: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection);
@@ -246,8 +246,8 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
             string queueName,
-            string sessionId = default,
             ServiceBusReceiverOptions options = default,
+            string sessionId = default,
             CancellationToken cancellationToken = default) =>
             await ServiceBusReceiver.CreateSessionReceiverAsync(
                 entityName: queueName,
@@ -260,11 +260,11 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceiver> GetSubscriptionSessionReceiverAsync(
+        public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
             string subscriptionName,
             string topicName,
-            string sessionId = default,
             ServiceBusReceiverOptions options = default,
+            string sessionId = default,
             CancellationToken cancellationToken = default) =>
             await ServiceBusReceiver.CreateSessionReceiverAsync(
                 entityName: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),

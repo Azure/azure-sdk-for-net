@@ -40,13 +40,13 @@ namespace Azure.Messaging.ServiceBus.Tests
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.GetReceiver(scope.QueueName));
-                    Assert.Throws<ObjectDisposedException>(() => client.GetSubscriptionReceiver(scope.QueueName, scope.QueueName));
+                    Assert.Throws<ObjectDisposedException>(() => client.GetReceiver(scope.QueueName, scope.QueueName));
                     Assert.Throws<ObjectDisposedException>(() => client.GetSender(scope.QueueName));
                 }
                 else
                 {
                     Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetSessionReceiverAsync(scope.QueueName));
-                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetSubscriptionSessionReceiverAsync(scope.QueueName, scope.QueueName));
+                    Assert.ThrowsAsync<ObjectDisposedException>(async () => await client.GetSessionReceiverAsync(scope.QueueName, sessionId: scope.QueueName));
                 }
                 Assert.Throws<ObjectDisposedException>(() => client.GetProcessor(scope.QueueName));
             }
@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 if (!useSessions)
                 {
                     client.GetReceiver(scope.QueueName);
-                    client.GetSubscriptionReceiver(scope.QueueName, scope.QueueName);
+                    client.GetReceiver(scope.QueueName, scope.QueueName);
                     client.GetSender(scope.QueueName);
                 }
                 else

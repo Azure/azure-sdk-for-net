@@ -403,7 +403,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 var exceptionReceivedHandlerCalled = false;
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var processor = client.GetSubscriptionProcessor(scope.TopicName, scope.SubscriptionNames.First());
+                var processor = client.GetProcessor(scope.TopicName, scope.SubscriptionNames.First());
                 processor.UseSessions = true;
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
@@ -445,7 +445,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var processor = client.GetProcessor(scope.QueueName);
+                ServiceBusProcessor processor = client.GetProcessor(scope.QueueName);
                 processor.ProcessErrorAsync += ExceptionHandler;
                 processor.ProcessMessageAsync += MessageHandler;
 
