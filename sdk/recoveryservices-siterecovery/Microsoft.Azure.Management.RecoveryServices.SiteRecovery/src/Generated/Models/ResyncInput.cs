@@ -15,27 +15,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Test migrate cleanup input properties.
+    /// Resync input.
     /// </summary>
-    public partial class TestMigrateCleanupInputProperties
+    public partial class ResyncInput
     {
         /// <summary>
-        /// Initializes a new instance of the TestMigrateCleanupInputProperties
-        /// class.
+        /// Initializes a new instance of the ResyncInput class.
         /// </summary>
-        public TestMigrateCleanupInputProperties()
+        public ResyncInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TestMigrateCleanupInputProperties
-        /// class.
+        /// Initializes a new instance of the ResyncInput class.
         /// </summary>
-        /// <param name="comments">Test migrate cleanup comments.</param>
-        public TestMigrateCleanupInputProperties(string comments = default(string))
+        /// <param name="properties">Resync input properties.</param>
+        public ResyncInput(ResyncInputProperties properties)
         {
-            Comments = comments;
+            Properties = properties;
             CustomInit();
         }
 
@@ -45,10 +43,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets test migrate cleanup comments.
+        /// Gets or sets resync input properties.
         /// </summary>
-        [JsonProperty(PropertyName = "comments")]
-        public string Comments { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ResyncInputProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,12 +56,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Comments != null)
+            if (Properties == null)
             {
-                if (Comments.Length > 1024)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Comments", 1024);
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }
