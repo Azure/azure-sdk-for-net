@@ -204,7 +204,7 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCalls;
         private int _maxConcurrentAcceptSessions;
         private const int DefaultMaxConcurrentCalls = 1;
-        private const int DefaultMaxConcurrentSessions = 2000;
+        private const int DefaultMaxConcurrentSessions = 8;
 
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
