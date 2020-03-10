@@ -1017,6 +1017,173 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ModifyAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(AccessControlList);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ModifyAccessControlRecursiveAsync_InBatches()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(
+                accessControlList: AccessControlList,
+                batchSize: 2);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ModifyAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
+
+            int batchSize = 2;
+
+            // Act
+            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(
+                accessControlList: AccessControlList,
+                batchSize: batchSize,
+                progressHandler: progresMonitorMock.Object);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+
+            progresMonitorMock.Verify(
+                x => x.Report(It.Is<ChangeAccessControlListPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
+                Times.Exactly(4));
+        }
+
+        [Test]
+        [Ignore("Until we know what ACL format remove accepts")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            await directory.SetAccessControlListRecursiveAsync(AccessControlList);
+
+            // Act
+            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(AccessControlList);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+        }
+
+        [Test]
+        [Ignore("Until we know what ACL format remove accepts")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_InBatches()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            await directory.SetAccessControlListRecursiveAsync(AccessControlList);
+
+            // Act
+            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(
+                accessControlList: AccessControlList,
+                batchSize: 2);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+        }
+
+        [Test]
+        [Ignore("Until we know what ACL format remove accepts")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RemoveAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient subdirectory1 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file1 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file2 = await subdirectory1.CreateFileAsync(GetNewFileName());
+            DataLakeDirectoryClient subdirectory2 = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
+
+            Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
+
+            int batchSize = 2;
+
+            await directory.SetAccessControlListRecursiveAsync(AccessControlList);
+
+            // Act
+            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(
+                accessControlList: AccessControlList,
+                batchSize: batchSize,
+                progressHandler: progresMonitorMock.Object);
+
+            // Assert
+            Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
+            Assert.AreEqual(4, result.FilesSuccessfulCount);
+            Assert.AreEqual(0, result.FailureCount);
+
+            progresMonitorMock.Verify(
+                x => x.Report(It.Is<ChangeAccessControlListPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
+                Times.Exactly(4));
+        }
+
+        [Test]
         public async Task SetPermissionsAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
