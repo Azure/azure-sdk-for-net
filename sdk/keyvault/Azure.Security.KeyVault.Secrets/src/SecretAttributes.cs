@@ -13,6 +13,7 @@ namespace Azure.Security.KeyVault.Secrets
         private const string ExpiresPropertyName = "exp";
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
+        private const string RecoverableDaysPropertyName = "recoverableDays";
         private const string RecoveryLevelPropertyName = "recoveryLevel";
 
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
@@ -28,6 +29,8 @@ namespace Azure.Security.KeyVault.Secrets
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         public DateTimeOffset? UpdatedOn { get; internal set; }
+
+        public int? RecoverableDays { get; internal set; }
 
         public string RecoveryLevel { get; internal set; }
 
@@ -57,6 +60,10 @@ namespace Azure.Security.KeyVault.Secrets
                         UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
+                    case RecoverableDaysPropertyName:
+                        RecoverableDays = prop.Value.GetInt32();
+                        break;
+
                     case RecoveryLevelPropertyName:
                         RecoveryLevel = prop.Value.GetString();
                         break;
@@ -83,6 +90,7 @@ namespace Azure.Security.KeyVault.Secrets
 
             // Created is read-only don't serialize
             // Updated is read-only don't serialize
+            // RecoverableDays is read-only don't serialize
             // RecoveryLevel is read-only don't serialize
         }
     }

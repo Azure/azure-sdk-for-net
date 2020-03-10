@@ -1,0 +1,19 @@
+# Assumes steps in deploy-test-resources.yml was run previously. Requires
+# environment variable: AZURE_RESOURCEGROUP_NAME and Az PowerShell module
+parameters:
+  TenantId: not-specified
+  ProvisionerApplicationId: not-specified
+  ProvisionerApplicationSecret: not-specified
+
+steps:
+  - pwsh: >
+      eng/common/TestResources/Remove-TestResources.ps1
+      -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
+      -TenantId '${{ parameters.TenantId }}'
+      -ProvisionerApplicationId '${{ parameters.ProvisionerApplicationId }}'
+      -ProvisionerApplicationSecret '${{ parameters.ProvisionerApplicationSecret }}'
+      -Force
+      -Verbose
+    displayName: Remove test resources
+    condition: ne(variables['AZURE_RESOURCEGROUP_NAME'], '')
+    continueOnError: true

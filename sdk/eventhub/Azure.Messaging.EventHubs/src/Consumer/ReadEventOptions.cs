@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
         /// <summary>
         ///   When populated, the owner level indicates that a reading is intended to be performed exclusively for events in the
-        ///   requested partition and an for the associated consumer group.  To do so, reading will attempt to assert ownership
+        ///   requested partition and for the associated consumer group.  To do so, reading will attempt to assert ownership
         ///   over the partition; in the case where more than one exclusive reader attempts to assert ownership for the same
         ///   partition/consumer group pair, the one having a larger <see cref="OwnerLevel"/> value will "win."
         ///
@@ -28,6 +28,15 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         /// <value>The relative priority to associate with an exclusive reader; for a non-exclusive reader, this value should be <c>null</c>.</value>
+        ///
+        /// <remarks>
+        ///   An <see cref="EventHubsException"/> will occur if an <see cref="EventHubConsumerClient"/> is unable to read events from the
+        ///   requested Event Hub partition for the given consumer group.  In this case, the <see cref="EventHubsException.FailureReason"/>
+        ///   will be set to <see cref="EventHubsException.FailureReason.ConsumerDisconnected"/>.
+        /// </remarks>
+        ///
+        /// <seealso cref="EventHubsException"/>
+        /// <seealso cref="EventHubsException.FailureReason.ConsumerDisconnected"/>
         ///
         public long? OwnerLevel { get; set; }
 

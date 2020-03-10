@@ -43,6 +43,7 @@
             }
         }
     },
+    "resources": [],
     "outputs": {
         "AZURE_TENANT_ID": {
             "type": "string",

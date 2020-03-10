@@ -19,38 +19,34 @@ using Microsoft.Azure.Amqp.Framing;
 namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
-    ///   A transport client abstraction responsible for brokering operations for AMQP-based connections.
-    ///   It is intended that the public <see cref="ServiceBusReceiver" /> make use of an instance
-    ///   via containment and delegate operations to it.
+    /// A transport client abstraction responsible for brokering operations for AMQP-based connections.
+    /// It is intended that the public <see cref="ServiceBusReceiver" /> make use of an instance
+    /// via containment and delegate operations to it.
     /// </summary>
     ///
     /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportReceiver" />
-    ///
     internal class AmqpReceiver : TransportReceiver
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
 
         /// <summary>
-        ///   Indicates whether or not this consumer has been closed.
+        /// Indicates whether or not this receiver has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        ///
         public override bool IsClosed => _closed;
 
         /// <summary>
-        ///   The name of the Service Bus entity to which the client is bound.
+        /// The name of the Service Bus entity to which the receiver is bound.
         /// </summary>
-        ///
         public override string EntityName { get; }
 
         /// <summary>
-        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
-        ///
         private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
@@ -59,23 +55,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly bool _isSessionReceiver;
 
         /// <summary>
-        ///   The AMQP connection scope responsible for managing transport constructs for this instance.
+        /// The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
-        ///
         private readonly AmqpConnectionScope _connectionScope;
 
         /// <summary>
-        ///   The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        ///
         private readonly ReceiveMode _receiveMode;
 
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
 
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
+        /// <summary>
+        /// Gets the sequence number of the last peeked message.
+        /// </summary>
         public long LastPeekedSequenceNumber { get; private set; }
 
+        /// <summary>
+        /// The Session Id associated with the receiver.
+        /// </summary>
         public override string SessionId { get; protected set; }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="AmqpReceiver"/> class.
+        /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
         /// </summary>
         ///
         /// <param name="entityName">The name of the Service Bus entity from which events will be consumed.</param>
@@ -96,14 +96,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="isSessionReceiver"></param>
         ///
         /// <remarks>
-        ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
-        ///   is assumed that callers are trusted and have performed deep validation.
+        /// As an internal type, this class performs only basic sanity checks against its arguments.  It
+        /// is assumed that callers are trusted and have performed deep validation.
         ///
-        ///   Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
-        ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the
-        ///   caller.
+        /// Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
+        /// creation of clones or otherwise protecting the parameters is assumed to be the purview of the
+        /// caller.
         /// </remarks>
-        ///
         public AmqpReceiver(
             string entityName,
             ReceiveMode receiveMode,
@@ -157,14 +156,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
+        /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// </summary>
         ///
-        /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
-        ///
+        /// <returns>List of messages received. Returns null if no message is found.</returns>
         public override async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
             int maximumMessageCount,
             CancellationToken cancellationToken)
@@ -186,7 +184,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
+        /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
@@ -244,16 +242,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/>. This will delete the message from the service.
+        /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="receivedMessages">An <see cref="IEnumerable{T}"/> containing the list of <see cref="ServiceBusReceivedMessage"/> messages to complete.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="receivedMessages">The <see cref="ServiceBusReceivedMessage"/> message to complete.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// This operation can only be performed on messages that were received by this receiver
+        /// This operation can only be performed on a message that was received by this receiver
         /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task CompleteAsync(
             IEnumerable<ServiceBusReceivedMessage> receivedMessages,
             CancellationToken cancellationToken = default)
@@ -395,20 +395,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
+        /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>
         ///
-        /// <param name="message">The lock token of the <see cref="ServiceBusMessage" />.</param>
+        /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to defer.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
-        /// and receive it using <see cref="ServiceBusReceiver.ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
+        /// and receive it using ReceiveDeferredMessageBatchAsync(IEnumerable, CancellationToken).
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task DeferAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
@@ -469,13 +471,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver
         /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task AbandonAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
@@ -538,16 +542,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to deadletter.</param>
         /// <param name="deadLetterReason">The reason for deadlettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for deadlettering the message.</param>
-        /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="propertiesToModify">The properties of the message to modify while moving to sub-queue.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
+        /// In order to receive a message from the deadletter queue, you will need a new
+        /// <see cref="ServiceBusReceiver"/> with the corresponding path.
+        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// This operation can only be performed on messages that were received by this receiver
+        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
@@ -702,12 +708,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///
+        /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
+        /// <param name="messageCount">The maximum number of messages that will be fetched.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        /// The first call to PeekBatchBySequenceAsync(long, int, CancellationToken) fetches the first active message for this receiver. Each subsequent call
+        /// fetches the subsequent message in the entity.
+        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
+        /// Also, unlike <see cref="ReceiveBatchAsync(int, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
+        /// </remarks>
+        ///
+        /// <returns>List of <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
         public override async Task<IList<ServiceBusReceivedMessage>> PeekBatchBySequenceAsync(
             long? fromSequenceNumber,
             int messageCount = 1,
@@ -926,11 +941,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
         /// </summary>
-        ///
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task<DateTime> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken)
@@ -1016,8 +1030,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///
+        /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.
         /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task<DateTime> RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
@@ -1035,8 +1051,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 await _retryPolicy.RunOperation(
                     async (timeout) =>
                     {
-                            lockedUntil = await RenewSessionLockInternal(
-                            timeout).ConfigureAwait(false);
+                        lockedUntil = await RenewSessionLockInternal(
+                        timeout).ConfigureAwait(false);
                     },
                     EntityName,
                     _connectionScope,
@@ -1055,13 +1071,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // MessagingEventSource.Log.MessageRenewLockStop(this.SessionId);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        ///
-        /// <returns>New lock token expiry date and time in UTC format.</returns>
-        ///
-        /// <param name="timeout"></param>
         internal async Task<DateTime> RenewSessionLockInternal(
             TimeSpan timeout)
         {
@@ -1103,8 +1112,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Receives a <see cref="IList{Message}"/> of deferred messages identified by <paramref name="sequenceNumbers"/>.
         /// </summary>
+        ///
         /// <param name="sequenceNumbers">An <see cref="IEnumerable{T}"/> containing the sequence numbers to receive.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
@@ -1185,18 +1196,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception)
             {
-               // throw AmqpExceptionHelper.GetClientException(exception);
+                // throw AmqpExceptionHelper.GetClientException(exception);
             }
 
             return messages;
         }
 
         /// <summary>
-        ///   Closes the connection to the transport consumer instance.
+        /// Closes the connection to the transport receiver instance.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
             if (_closed)
@@ -1236,24 +1246,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
+        /// Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
         /// </summary>
         ///
         /// <param name="firstOption">The first option to consider.</param>
         /// <param name="secondOption">The second option to consider.</param>
         ///
         /// <returns>The smaller of the two specified intervals.</returns>
-        ///
         private static TimeSpan UseMinimum(
             TimeSpan firstOption,
             TimeSpan secondOption) =>
             (firstOption < secondOption) ? firstOption : secondOption;
 
         /// <summary>
-        ///
+        /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task OpenLinkAsync(CancellationToken cancellationToken)
         {
             ReceivingAmqpLink link = null;

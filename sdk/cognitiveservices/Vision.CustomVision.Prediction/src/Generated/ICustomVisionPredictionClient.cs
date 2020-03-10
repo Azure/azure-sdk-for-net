@@ -38,14 +38,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// API key.
-        /// </summary>
-        string ApiKey { get; set; }
-
-        /// <summary>
         /// Supported Cognitive Services endpoints.
         /// </summary>
         string Endpoint { get; set; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client
+        /// subscription.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
 
 
         /// <summary>

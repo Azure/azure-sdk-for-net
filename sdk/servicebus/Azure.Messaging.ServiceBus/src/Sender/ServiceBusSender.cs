@@ -23,6 +23,9 @@ namespace Azure.Messaging.ServiceBus
     ///
     public class ServiceBusSender : IAsyncDisposable
     {
+        /// <summary>The minimum allowable size, in bytes, for a batch to be sent.</summary>
+        internal const int MinimumBatchSizeLimit = 24;
+
         /// <summary>
         ///   The fully qualified Service Bus namespace that the producer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -120,54 +123,82 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
+        ///   Sends a message to the associated entity of Service Bus.
         /// </summary>
         ///
-        /// <param name="message">The set of event data to send.</param>
+        /// <param name="message">A messsage to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        /// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
         ///
         public virtual async Task SendAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            await SendBatchAsync(new ServiceBusMessage[]{message}, cancellationToken).ConfigureAwait(false);
+            await _innerSender.SendAsync(message, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
+        ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
+        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the message and signal that scenario using its
+        ///   return value.
+        ///
+        ///   Because messages that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
+        ///   attempting to send the messages to the Queue/Topic.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="ServiceBusMessageBatch" /> with the default batch options.</returns>
+        ///
+        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        ///
+        public virtual ValueTask<ServiceBusMessageBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+
+        /// <summary>
+        ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
+        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the message and signal that scenario using its
+        ///   return value.
+        ///
+        ///   Because messages that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
+        ///   attempting to send the messages to the Queue/Topic.
+        /// </summary>
+        ///
+        /// <param name="options">The set of options to consider when creating this batch.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
+        ///
+        /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
+        ///
+        public virtual async ValueTask<ServiceBusMessageBatch> CreateBatchAsync(
+            CreateBatchOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            options = options?.Clone() ?? new CreateBatchOptions();
+
+            TransportMessageBatch transportBatch = await _innerSender.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            return new ServiceBusMessageBatch(transportBatch);
+        }
+
+        /// <summary>
+        ///   Sends a set of messages to the associated Service Bus entity using a batched approach.  If the size of messages exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
-        /// <param name="messages">The set of event data to send.</param>
+        /// <param name="messageBatch">The set of messages to send. A batch may be created using <see cref="CreateBatchAsync(CancellationToken)" />.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
-        ///
-        public virtual async Task SendBatchAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
-            await SendRangeInternal(messages, cancellationToken).ConfigureAwait(false);
-
-        ///// <summary>
-        /////   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
-        /////   maximum size of a single batch, an exception will be triggered and the send will fail.
-        ///// </summary>
-        /////
-        ///// <param name="messages">The set of event data to send.</param>
-        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /////
-        ///// <returns>A task to be resolved on when the operation has completed.</returns>
-        /////
-        ///// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
-        /////
-        //public virtual async Task SendBatchAsync(ServiceBusMessageBatch messages, CancellationToken cancellationToken = default) =>
-        //    await SendRangeInternal(new ServiceBusMessage[] { }, cancellationToken).ConfigureAwait(false);
+        public virtual async Task SendBatchAsync(
+            ServiceBusMessageBatch messageBatch,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(messageBatch, nameof(messageBatch));
+            await _innerSender.SendBatchAsync(messageBatch, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
@@ -184,7 +215,7 @@ namespace Azure.Messaging.ServiceBus
             //this.ThrowIfClosed();
             Argument.AssertNotNull(message, nameof(message));
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
-            return await _innerSender.ScheduleMessageAsync(message, _retryPolicy, cancellationToken).ConfigureAwait(false);
+            return await _innerSender.ScheduleMessageAsync(message, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,40 +226,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task CancelScheduledMessageAsync(long sequenceNumber, CancellationToken cancellationToken = default)
         {
             //this.ThrowIfClosed();
-            await _innerSender.CancelScheduledMessageAsync(sequenceNumber, _retryPolicy, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
-        /// </summary>
-        ///
-        /// <param name="messages">The set of event data to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-
-        ///
-        internal async Task SendRangeInternal(
-            IEnumerable<ServiceBusMessage> messages,
-            CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(messages, nameof(messages));
-
-            using DiagnosticScope scope = CreateDiagnosticScope();
-            messages = messages.ToList();
-            InstrumentMessages(messages);
-
-            try
-            {
-                await _innerSender.SendAsync(messages, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            await _innerSender.CancelScheduledMessageAsync(sequenceNumber, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

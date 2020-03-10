@@ -25,10 +25,9 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:ExtractKeyPhrases
             string input = "My cat might need to see a veterinarian.";
 
-            Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
-            IEnumerable<string> keyPhrases = response.Value;
+            IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
 
-            Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
+            Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
             foreach (string keyPhrase in keyPhrases)
             {
                 Console.WriteLine(keyPhrase);

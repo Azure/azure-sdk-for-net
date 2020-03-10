@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,12 +29,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the Encryption class.
         /// </summary>
+        /// <param name="diskEncryptionSetId">ResourceId of the disk encryption
+        /// set to use for enabling encryption at rest.</param>
         /// <param name="type">The type of key used to encrypt the data of the
         /// disk. Possible values include: 'EncryptionAtRestWithPlatformKey',
         /// 'EncryptionAtRestWithCustomerKey'</param>
-        /// <param name="diskEncryptionSetId">ResourceId of the disk encryption
-        /// set to use for enabling encryption at rest.</param>
-        public Encryption(string type, string diskEncryptionSetId = default(string))
+        public Encryption(string diskEncryptionSetId = default(string), string type = default(string))
         {
             DiskEncryptionSetId = diskEncryptionSetId;
             Type = type;
@@ -62,18 +61,5 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-        }
     }
 }

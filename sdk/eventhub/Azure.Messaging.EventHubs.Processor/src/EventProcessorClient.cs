@@ -222,11 +222,22 @@ namespace Azure.Messaging.EventHubs
                     return _isRunningOverride.Value;
                 }
 
-                // Capture the load balancing task so we don't end up with a race condition.
+                if (ActiveLoadBalancingTask == null)
+                {
+                    try
+                    {
+                        if (!RunningTaskSemaphore.Wait(100))
+                        {
+                            return false;
+                        }
+                    }
+                    finally
+                    {
+                        RunningTaskSemaphore.Release();
+                    }
+                }
 
-                var loadBalancingTask = ActiveLoadBalancingTask;
-
-                return loadBalancingTask != null && !loadBalancingTask.IsCompleted;
+                return (!ActiveLoadBalancingTask?.IsCompleted) ?? false;
             }
 
             protected set => _isRunningOverride = value;
@@ -245,10 +256,10 @@ namespace Azure.Messaging.EventHubs
         internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///   The instance of <see cref="EventProcessorEventSource" /> which can be mocked for testing.
+        ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
-        internal EventProcessorEventSource Logger { get; set; } = EventProcessorEventSource.Log;
+        internal EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
 
         /// <summary>
         ///   Responsible for ownership claim for load balancing.
@@ -726,8 +737,12 @@ namespace Azure.Messaging.EventHubs
                     && partitionEvent.Data != null
                     && EventDataInstrumentation.TryExtractDiagnosticId(partitionEvent.Data, out string diagnosticId))
                 {
-                    diagnosticScope.AddLink(diagnosticId);
-                    diagnosticScope.AddAttribute(DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds());
+                    var attributes = new Dictionary<string, string>()
+                    {
+                        { DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds().ToString() }
+                    };
+
+                    diagnosticScope.AddLink(diagnosticId, attributes);
                 }
 
                 diagnosticScope.Start();
@@ -961,9 +976,9 @@ namespace Azure.Messaging.EventHubs
                 }
             }
 
-            var tokenSource = CancellationTokenSource.CreateLinkedTokenSource(RunningTaskTokenSource.Token);
-            var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, tokenSource.Token);
+            var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, RunningTaskTokenSource.Token);
 
+            var tokenSource = CancellationTokenSource.CreateLinkedTokenSource(RunningTaskTokenSource.Token);
             ActivePartitionProcessors[partitionId] = (processingTask, tokenSource);
             Logger.StartPartitionProcessingComplete(Identifier);
         }

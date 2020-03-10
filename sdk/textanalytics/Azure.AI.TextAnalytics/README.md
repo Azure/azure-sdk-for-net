@@ -48,7 +48,7 @@ For more information about creating the resource or how to get the location and 
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.2
+Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
 ```
 
 ### Authenticate the client
@@ -139,7 +139,7 @@ string input = "Este documento está en español.";
 
 DetectedLanguage language = client.DetectLanguage(input);
 
-Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
+Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
 ```
 For samples on using the production recommended option `DetectLanguageBatch` see [here](#detect-language-1).
 
@@ -154,9 +154,9 @@ string input = "That was the best day of my life!";
 DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
 
 Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
-Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive:0.00}.");
-Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral:0.00}.");
-Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative:0.00}.");
+Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
+Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
+Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
 ```
 For samples on using the production recommended option `AnalyzeSentimentBatch` see [here](#analyze-sentiment-1).
 
@@ -168,10 +168,9 @@ Run a model to identify a collection of significant phrases found in the passed-
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
 
-Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
-IEnumerable<string> keyPhrases = response.Value;
+IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
 
-Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
+Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
 {
     Console.WriteLine(keyPhrase);
@@ -187,13 +186,12 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
-IEnumerable<CategorizedEntity> entities = response.Value;
+IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input).Value;
 
-Console.WriteLine($"Recognized {entities.Count()} entities:");
+Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
@@ -206,13 +204,12 @@ Run a predictive model to identify a collection of entities containing Personall
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-Response<IReadOnlyCollection<PiiEntity>> response = client.RecognizePiiEntities(input);
-IEnumerable<PiiEntity> entities = response.Value;
+IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 
@@ -224,16 +221,15 @@ Run a predictive model to identify a collection of entities found in the passed-
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<LinkedEntity>> response = client.RecognizeLinkedEntities(input);
-IEnumerable<LinkedEntity> linkedEntities = response.Value;
+IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(input).Value;
 
-Console.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
+Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
 {
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score:0.00}, Offset: {match.GraphemeOffset}, Length: {match.GraphemeLength}.");
+        Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");
     }
 }
 ```
@@ -249,7 +245,7 @@ string input = "Este documento está en español.";
 
 DetectedLanguage language = await client.DetectLanguageAsync(input);
 
-Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
+Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
 ```
 
 ### Recognize Entities Asynchronously
@@ -258,13 +254,12 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input);
-IEnumerable<CategorizedEntity> entities = response.Value;
+Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(input);
 
-Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (CategorizedEntity entity in entities)
+Console.WriteLine($"Recognized {entities.Value.Count} entities:");
+foreach (CategorizedEntity entity in entities.Value)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 

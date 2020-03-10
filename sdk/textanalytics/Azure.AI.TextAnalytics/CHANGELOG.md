@@ -1,13 +1,21 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
-- Renamed type `SentimentScorePerLabel` to `SentimentConfidenceScorePerLabel`.
+## 1.0.0-preview.3 (2020-03-10)
+### Breaking changes
 - In both `DocumentSentiment` and `SentenceSentiment` property `SentimentScores` has been renamed to `ConfidenceScores`.
 - In `LinkedEntity`, property `Id` has been renamed to `DataSourceEntityId`.
-- Added `DetectLanguageInput.None` for user convenience, instead of passing empty string to `CountryHint`.
 - Change wording in all documentation from `text inputs` to `documents`.
 - Properties `Length` and `Offset` have been renamed to `GraphemeLength` and `GraphemeOffset` for the `SentenceSentiment`,
 `CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects, to make it clear that the offsets and lengths are in units of Unicode graphemes.
+- `CharacterCount` in `TextDocumentStatistics` has been renamed to `GraphemeCount`.
+- Unified `DocumentSentimentLabel` and `SentenceSentimentLabel` into `TextSentiment`.
+- `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScores`.
+- Extensible ENUM `SubCategory` has been deleted and managed as a string trhought the code.
+- `Score` has been renamed to `ConfidenceScore` for types `CategorizedEntity`, `LinkedEntityMatch`, and `PiiEntity`.
+
+### New Features
+ - Added `DetectLanguageInput.None` for user convenience when overriding the default behavior of `CountryHint`.
+ - Added `PersonType`, `Skill`, `Product`, `IP Address`, and `Event` to the `EntityCategory` ENUM.
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes

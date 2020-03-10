@@ -1,5 +1,11 @@
 # Release History
 
+## 4.1.0-preview.1 (Unreleased)
+
+### Added
+
+- Add `RecoverableDays` property to `SecretProperties`.
+
 ## 4.0.2 (2020-03-03)
 
 ### Fixed
