@@ -8,5 +8,7 @@ namespace Azure.AI.FormRecognizer.Custom
     [CodeGenSchema("TrainingDocumentInfo")]
     public partial class TrainingDocumentInfo
     {
+        [CodeGenSchemaMember("pages")]
+        public int PageCount { get; set; }
     }
 }

@@ -31,12 +31,12 @@ namespace Azure.AI.FormRecognizer.Models
         public string MerchantPhoneNumber { get; internal set; }
 
         public ExtractedReceiptType ReceiptType { get; internal set; }
-        public float Subtotal { get; internal set; }
-        public float Tax { get; internal set; }
-        public float Tip { get; internal set; }
-        public float Total { get; internal set; }
-        public DateTimeOffset TransactionDate { get; internal set; }
-        public DateTimeOffset TransactionTime { get; internal set; }
+        public float? Subtotal { get; internal set; }
+        public float? Tax { get; internal set; }
+        public float? Tip { get; internal set; }
+        public float? Total { get; internal set; }
+        public DateTimeOffset? TransactionDate { get; internal set; }
+        public DateTimeOffset? TransactionTime { get; internal set; }
 
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
