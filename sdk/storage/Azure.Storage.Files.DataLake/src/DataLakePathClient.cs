@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -2323,11 +2324,19 @@ namespace Azure.Storage.Files.DataLake
                             int currentFailureCount = response.FailureCount ?? 0;
                             if (progressHandler != null)
                             {
+                                var failedEntries = response.FailedEntries
+                                    .Select(failedEntry => new ChangeAccessControlListResultFailedEntry()
+                                    {
+                                        Name = failedEntry.Name,
+                                        Type = failedEntry.Type,
+                                        ErrorMessage = failedEntry.ErrorMessage,
+                                    }).ToList();
                                 progressHandler.Report(new ChangeAccessControlListPartialResult()
                                 {
                                     DirectoriesSuccessfulCount = currentDirectoriesSuccessfulCount,
                                     FilesSuccessfulCount = currentFilesSuccessfulCount,
                                     FailureCount = failureCount,
+                                    FailedEntries = failedEntries,
                                 });
                             }
                             directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
