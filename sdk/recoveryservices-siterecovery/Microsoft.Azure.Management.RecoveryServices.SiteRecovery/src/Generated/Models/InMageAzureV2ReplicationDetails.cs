@@ -120,7 +120,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="osVersion">The OS Version of the protected
         /// item.</param>
-        public InMageAzureV2ReplicationDetails(string infrastructureVmId = default(string), string vCenterInfrastructureId = default(string), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), int? resyncProgressPercentage = default(int?), long? rpoInSeconds = default(long?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), string ipAddress = default(string), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), string isAgentUpdateRequired = default(string), string isRebootAfterUpdateRequired = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), IList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default(IList<InMageAzureV2ProtectedDiskDetails>), string diskResized = default(string), string masterTargetId = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), string osType = default(string), string vhdName = default(string), string osDiskId = default(string), IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string discoveryType = default(string), string enableRdpOnTargetOption = default(string), IList<string> datastores = default(IList<string>), string targetVmId = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string useManagedDisks = default(string), string licenseType = default(string), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string))
+        /// <param name="protectedManagedDisks">The list of protected managed
+        /// disks.</param>
+        public InMageAzureV2ReplicationDetails(string infrastructureVmId = default(string), string vCenterInfrastructureId = default(string), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), int? resyncProgressPercentage = default(int?), long? rpoInSeconds = default(long?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), string ipAddress = default(string), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), string isAgentUpdateRequired = default(string), string isRebootAfterUpdateRequired = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), IList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default(IList<InMageAzureV2ProtectedDiskDetails>), string diskResized = default(string), string masterTargetId = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), string osType = default(string), string vhdName = default(string), string osDiskId = default(string), IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string discoveryType = default(string), string enableRdpOnTargetOption = default(string), IList<string> datastores = default(IList<string>), string targetVmId = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string useManagedDisks = default(string), string licenseType = default(string), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string), IList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = default(IList<InMageAzureV2ManagedDiskDetails>))
         {
             InfrastructureVmId = infrastructureVmId;
             VCenterInfrastructureId = vCenterInfrastructureId;
@@ -171,6 +173,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LastUpdateReceivedTime = lastUpdateReceivedTime;
             ReplicaId = replicaId;
             OsVersion = osVersion;
+            ProtectedManagedDisks = protectedManagedDisks;
             CustomInit();
         }
 
@@ -487,6 +490,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "osVersion")]
         public string OsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of protected managed disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedManagedDisks")]
+        public IList<InMageAzureV2ManagedDiskDetails> ProtectedManagedDisks { get; set; }
 
     }
 }

@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="policyFriendlyName">The name of policy governing this
         /// item.</param>
+        /// <param name="recoveryServicesProviderId">The recovery services
+        /// provider ARM Id.</param>
         /// <param name="migrationState">The migration status. Possible values
         /// include: 'None', 'EnableMigrationInProgress',
         /// 'EnableMigrationFailed', 'DisableMigrationInProgress',
@@ -45,43 +47,34 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'MigrationSucceeded', 'MigrationFailed'</param>
         /// <param name="migrationStateDescription">The migration state
         /// description.</param>
-        /// <param name="lastTestMigrationTime">The last test migration
-        /// time.</param>
-        /// <param name="lastTestMigrationStatus">The status of the last test
-        /// migration.</param>
         /// <param name="testMigrateState">The test migrate state. Possible
         /// values include: 'None', 'TestMigrationInProgress',
         /// 'TestMigrationSucceeded', 'TestMigrationFailed',
         /// 'TestMigrationCleanupInProgress'</param>
         /// <param name="testMigrateStateDescription">The test migrate state
         /// description.</param>
-        /// <param name="health">The consolidated health. Possible values
-        /// include: 'None', 'Normal', 'Warning', 'Critical'</param>
+        /// <param name="health">The consolidated health.</param>
         /// <param name="healthErrors">The list of health errors.</param>
         /// <param name="allowedOperations">The allowed operations on the
         /// migration item, based on the current migration state of the
         /// item.</param>
         /// <param name="currentJob">The current job details.</param>
-        /// <param name="eventCorrelationId">The correlation Id for events
-        /// associated with this migration item.</param>
         /// <param name="providerSpecificDetails">The migration provider custom
         /// settings.</param>
-        public MigrationItemProperties(string machineName = default(string), string policyId = default(string), string policyFriendlyName = default(string), string migrationState = default(string), string migrationStateDescription = default(string), System.DateTime? lastTestMigrationTime = default(System.DateTime?), string lastTestMigrationStatus = default(string), string testMigrateState = default(string), string testMigrateStateDescription = default(string), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), IList<string> allowedOperations = default(IList<string>), CurrentJobDetails currentJob = default(CurrentJobDetails), string eventCorrelationId = default(string), MigrationProviderSpecificSettings providerSpecificDetails = default(MigrationProviderSpecificSettings))
+        public MigrationItemProperties(string machineName = default(string), string policyId = default(string), string policyFriendlyName = default(string), string recoveryServicesProviderId = default(string), string migrationState = default(string), string migrationStateDescription = default(string), string testMigrateState = default(string), string testMigrateStateDescription = default(string), string health = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), IList<string> allowedOperations = default(IList<string>), CurrentJobDetails currentJob = default(CurrentJobDetails), MigrationProviderSpecificSettings providerSpecificDetails = default(MigrationProviderSpecificSettings))
         {
             MachineName = machineName;
             PolicyId = policyId;
             PolicyFriendlyName = policyFriendlyName;
+            RecoveryServicesProviderId = recoveryServicesProviderId;
             MigrationState = migrationState;
             MigrationStateDescription = migrationStateDescription;
-            LastTestMigrationTime = lastTestMigrationTime;
-            LastTestMigrationStatus = lastTestMigrationStatus;
             TestMigrateState = testMigrateState;
             TestMigrateStateDescription = testMigrateStateDescription;
             Health = health;
             HealthErrors = healthErrors;
             AllowedOperations = allowedOperations;
             CurrentJob = currentJob;
-            EventCorrelationId = eventCorrelationId;
             ProviderSpecificDetails = providerSpecificDetails;
             CustomInit();
         }
@@ -110,6 +103,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string PolicyFriendlyName { get; private set; }
 
         /// <summary>
+        /// Gets the recovery services provider ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryServicesProviderId")]
+        public string RecoveryServicesProviderId { get; private set; }
+
+        /// <summary>
         /// Gets the migration status. Possible values include: 'None',
         /// 'EnableMigrationInProgress', 'EnableMigrationFailed',
         /// 'DisableMigrationInProgress', 'DisableMigrationFailed',
@@ -126,18 +125,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string MigrationStateDescription { get; private set; }
 
         /// <summary>
-        /// Gets the last test migration time.
-        /// </summary>
-        [JsonProperty(PropertyName = "lastTestMigrationTime")]
-        public System.DateTime? LastTestMigrationTime { get; private set; }
-
-        /// <summary>
-        /// Gets the status of the last test migration.
-        /// </summary>
-        [JsonProperty(PropertyName = "lastTestMigrationStatus")]
-        public string LastTestMigrationStatus { get; private set; }
-
-        /// <summary>
         /// Gets the test migrate state. Possible values include: 'None',
         /// 'TestMigrationInProgress', 'TestMigrationSucceeded',
         /// 'TestMigrationFailed', 'TestMigrationCleanupInProgress'
@@ -152,8 +139,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string TestMigrateStateDescription { get; private set; }
 
         /// <summary>
-        /// Gets the consolidated health. Possible values include: 'None',
-        /// 'Normal', 'Warning', 'Critical'
+        /// Gets the consolidated health.
         /// </summary>
         [JsonProperty(PropertyName = "health")]
         public string Health { get; private set; }
@@ -176,13 +162,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "currentJob")]
         public CurrentJobDetails CurrentJob { get; private set; }
-
-        /// <summary>
-        /// Gets the correlation Id for events associated with this migration
-        /// item.
-        /// </summary>
-        [JsonProperty(PropertyName = "eventCorrelationId")]
-        public string EventCorrelationId { get; private set; }
 
         /// <summary>
         /// Gets or sets the migration provider custom settings.

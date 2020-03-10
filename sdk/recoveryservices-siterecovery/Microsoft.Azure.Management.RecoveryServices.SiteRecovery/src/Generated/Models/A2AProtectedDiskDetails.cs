@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -53,6 +55,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// pending for replication in MB at staging account.</param>
         /// <param name="dataPendingAtSourceAgentInMB">The data pending at
         /// source virtual machine in MB.</param>
+        /// <param name="diskState">The disk state.</param>
+        /// <param name="allowedDiskLevelOperation">The disk level operations
+        /// list.</param>
         /// <param name="isDiskEncrypted">A value indicating whether vm has
         /// encrypted os disk or not.</param>
         /// <param name="secretIdentifier">The secret URL / identifier
@@ -64,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="keyIdentifier">The key URL / identifier (KEK).</param>
         /// <param name="kekKeyVaultArmId">The KeyVault resource id for key
         /// (KEK).</param>
-        public A2AProtectedDiskDetails(string diskUri = default(string), string recoveryAzureStorageAccountId = default(string), string primaryDiskAzureStorageAccountId = default(string), string recoveryDiskUri = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string))
+        public A2AProtectedDiskDetails(string diskUri = default(string), string recoveryAzureStorageAccountId = default(string), string primaryDiskAzureStorageAccountId = default(string), string recoveryDiskUri = default(string), string diskName = default(string), long? diskCapacityInBytes = default(long?), string primaryStagingAzureStorageAccountId = default(string), string diskType = default(string), bool? resyncRequired = default(bool?), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), double? dataPendingInStagingStorageAccountInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string diskState = default(string), IList<string> allowedDiskLevelOperation = default(IList<string>), bool? isDiskEncrypted = default(bool?), string secretIdentifier = default(string), string dekKeyVaultArmId = default(string), bool? isDiskKeyEncrypted = default(bool?), string keyIdentifier = default(string), string kekKeyVaultArmId = default(string))
         {
             DiskUri = diskUri;
             RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;
@@ -79,6 +84,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             MonitoringJobType = monitoringJobType;
             DataPendingInStagingStorageAccountInMB = dataPendingInStagingStorageAccountInMB;
             DataPendingAtSourceAgentInMB = dataPendingAtSourceAgentInMB;
+            DiskState = diskState;
+            AllowedDiskLevelOperation = allowedDiskLevelOperation;
             IsDiskEncrypted = isDiskEncrypted;
             SecretIdentifier = secretIdentifier;
             DekKeyVaultArmId = dekKeyVaultArmId;
@@ -174,6 +181,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataPendingAtSourceAgentInMB")]
         public double? DataPendingAtSourceAgentInMB { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk state.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskState")]
+        public string DiskState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk level operations list.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowedDiskLevelOperation")]
+        public IList<string> AllowedDiskLevelOperation { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether vm has encrypted os disk or

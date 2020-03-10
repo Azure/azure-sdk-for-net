@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,11 +40,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// resource group Id for resource manager deployment.</param>
         /// <param name="useManagedDisks">A value indicating whether managed
         /// disks should be used during failover.</param>
-        public HyperVReplicaAzureUpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
+        /// <param name="diskIdToDiskEncryptionMap">The dictionary of disk
+        /// resource Id to disk encryption set ARM Id.</param>
+        public HyperVReplicaAzureUpdateReplicationProtectedItemInput(string recoveryAzureV1ResourceGroupId = default(string), string recoveryAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string), IDictionary<string, string> diskIdToDiskEncryptionMap = default(IDictionary<string, string>))
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
             UseManagedDisks = useManagedDisks;
+            DiskIdToDiskEncryptionMap = diskIdToDiskEncryptionMap;
             CustomInit();
         }
 
@@ -71,6 +76,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "useManagedDisks")]
         public string UseManagedDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dictionary of disk resource Id to disk encryption
+        /// set ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskIdToDiskEncryptionMap")]
+        public IDictionary<string, string> DiskIdToDiskEncryptionMap { get; set; }
 
     }
 }

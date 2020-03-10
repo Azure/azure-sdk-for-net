@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// VMwareCbt container creation input.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("VMwareCbt")]
+    [Newtonsoft.Json.JsonObject("6c7da455-506f-43ff-a16a-8eb101aebb70")]
     public partial class VMwareCbtContainerCreationInput : ReplicationProviderSpecificContainerCreationInput
     {
         /// <summary>
