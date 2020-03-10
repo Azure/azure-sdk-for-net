@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             ModelId = model.ModelInfo.ModelId.ToString();
             AveragePredictionAccuracy = model.TrainResult.AverageModelAccuracy.Value;
-            PredictionAccuracies = ConvertLabelAccuracies(model.TrainResult.Fields);
+            PredictionAccuracies = (IReadOnlyList<FieldPredictionAccuracy>)model.TrainResult.Fields;
             TrainingStatus = new CustomModelTrainingStatus(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
@@ -22,17 +22,5 @@ namespace Azure.AI.FormRecognizer.Custom
         public IReadOnlyList<FieldPredictionAccuracy> PredictionAccuracies { get; }
         public TrainingInfo TrainingInfo { get; }
         public CustomModelTrainingStatus TrainingStatus { get; }
-
-        private static IReadOnlyList<FieldPredictionAccuracy> ConvertLabelAccuracies(ICollection<FormFieldsReport_internal> fields)
-        {
-            List<FieldPredictionAccuracy> accuracies = new List<FieldPredictionAccuracy>();
-            foreach (FormFieldsReport_internal field in fields)
-            {
-                FieldPredictionAccuracy accuracy = new FieldPredictionAccuracy(field);
-                accuracies.Add(accuracy);
-            }
-
-            return accuracies;
-        }
     }
 }

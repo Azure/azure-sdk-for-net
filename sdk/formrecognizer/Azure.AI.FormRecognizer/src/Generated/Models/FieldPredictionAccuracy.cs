@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Report for a custom model training field. </summary>
     public partial class FieldPredictionAccuracy
