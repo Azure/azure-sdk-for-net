@@ -16,19 +16,26 @@ namespace Azure.AI.FormRecognizer.Models
 
             // TODO: Set page range from page numbers in pageResults
             // https://github.com/Azure/azure-sdk-for-net/issues/10365
+
+            // TODO: confirm with service team whether these are in sorted order
+            StartPageNumber = pageResults.First().Page;
+            EndPageNumber = pageResults.Last().Page;
         }
 
         internal ExtractedForm(DocumentResult_internal documentResult, ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             // Supervised
             LearnedFormType = documentResult.DocType;
-            PageRange = new PageRange(documentResult.PageRange);
+            StartPageNumber = documentResult.PageRange.First();
+            EndPageNumber = documentResult.PageRange.Last();
             Pages = ConvertPages(documentResult, pageResults, readResults);
         }
 
         public string LearnedFormType { get; internal set; }
 
-        public PageRange PageRange { get; internal set; }
+        public int StartPageNumber { get; internal set; }
+
+        public int EndPageNumber { get; internal set; }
 
         public IReadOnlyList<ExtractedPage> Pages { get; }
 
