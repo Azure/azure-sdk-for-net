@@ -65,7 +65,36 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// this product belongs.</param>
         /// <param name="subscriptionId">The subscription id.</param>
         /// <param name="subscriptionName">The subscription name.</param>
-        public Transaction(string id = default(string), string name = default(string), string type = default(string), string kind = default(string), System.DateTime? date = default(System.DateTime?), string invoice = default(string), string orderId = default(string), string orderName = default(string), string productFamily = default(string), string productTypeId = default(string), string productType = default(string), string productDescription = default(string), string transactionType = default(string), Amount transactionAmount = default(Amount), int? quantity = default(int?), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), string subscriptionId = default(string), string subscriptionName = default(string))
+        /// <param name="azureCreditApplied">The amount of any Azure credits
+        /// automatically applied to this transaction.</param>
+        /// <param name="billingCurrency">The ISO 4217 code for the currency in
+        /// which this transaction is billed.</param>
+        /// <param name="discount">The percentage discount, if any, applied to
+        /// this transaction.</param>
+        /// <param name="effectivePrice">The price of the product after
+        /// applying any discounts.</param>
+        /// <param name="exchangeRate">The exchange rate used to convert
+        /// charged amount to billing currency, if applicable.</param>
+        /// <param name="marketPrice">The retail price of the product.</param>
+        /// <param name="pricingCurrency">The ISO 4217 code for the currency in
+        /// which the product is priced.</param>
+        /// <param name="servicePeriodStartDate">The date of the purchase of
+        /// the product, or the start date of the month in which usage
+        /// started.</param>
+        /// <param name="servicePeriodEndDate">The end date of the product
+        /// term, or the end date of the month in which usage ended.</param>
+        /// <param name="subTotal">The pre-tax charged amount for the
+        /// transaction.</param>
+        /// <param name="tax">The tax amount applied to the
+        /// transaction.</param>
+        /// <param name="unitOfMeasure">The unit of measure used to bill for
+        /// the product. For example, compute services are billed per
+        /// hour.</param>
+        /// <param name="units">The number of units used for a given
+        /// product.</param>
+        /// <param name="unitType">The description for the unit of measure for
+        /// a given product.</param>
+        public Transaction(string id = default(string), string name = default(string), string type = default(string), string kind = default(string), System.DateTime? date = default(System.DateTime?), string invoice = default(string), string orderId = default(string), string orderName = default(string), string productFamily = default(string), string productTypeId = default(string), string productType = default(string), string productDescription = default(string), string transactionType = default(string), Amount transactionAmount = default(Amount), int? quantity = default(int?), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), string subscriptionId = default(string), string subscriptionName = default(string), Amount azureCreditApplied = default(Amount), string billingCurrency = default(string), double? discount = default(double?), Amount effectivePrice = default(Amount), double? exchangeRate = default(double?), Amount marketPrice = default(Amount), string pricingCurrency = default(string), System.DateTime? servicePeriodStartDate = default(System.DateTime?), System.DateTime? servicePeriodEndDate = default(System.DateTime?), Amount subTotal = default(Amount), Amount tax = default(Amount), string unitOfMeasure = default(string), double? units = default(double?), string unitType = default(string))
             : base(id, name, type)
         {
             Kind = kind;
@@ -88,6 +117,20 @@ namespace Microsoft.Azure.Management.Billing.Models
             CustomerDisplayName = customerDisplayName;
             SubscriptionId = subscriptionId;
             SubscriptionName = subscriptionName;
+            AzureCreditApplied = azureCreditApplied;
+            BillingCurrency = billingCurrency;
+            Discount = discount;
+            EffectivePrice = effectivePrice;
+            ExchangeRate = exchangeRate;
+            MarketPrice = marketPrice;
+            PricingCurrency = pricingCurrency;
+            ServicePeriodStartDate = servicePeriodStartDate;
+            ServicePeriodEndDate = servicePeriodEndDate;
+            SubTotal = subTotal;
+            Tax = tax;
+            UnitOfMeasure = unitOfMeasure;
+            Units = units;
+            UnitType = unitType;
             CustomInit();
         }
 
@@ -217,6 +260,97 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionName")]
         public string SubscriptionName { get; private set; }
+
+        /// <summary>
+        /// Gets the amount of any Azure credits automatically applied to this
+        /// transaction.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureCreditApplied")]
+        public Amount AzureCreditApplied { get; private set; }
+
+        /// <summary>
+        /// Gets the ISO 4217 code for the currency in which this transaction
+        /// is billed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingCurrency")]
+        public string BillingCurrency { get; private set; }
+
+        /// <summary>
+        /// Gets the percentage discount, if any, applied to this transaction.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.discount")]
+        public double? Discount { get; private set; }
+
+        /// <summary>
+        /// Gets the price of the product after applying any discounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.effectivePrice")]
+        public Amount EffectivePrice { get; private set; }
+
+        /// <summary>
+        /// Gets the exchange rate used to convert charged amount to billing
+        /// currency, if applicable.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.exchangeRate")]
+        public double? ExchangeRate { get; private set; }
+
+        /// <summary>
+        /// Gets the retail price of the product.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.marketPrice")]
+        public Amount MarketPrice { get; private set; }
+
+        /// <summary>
+        /// Gets the ISO 4217 code for the currency in which the product is
+        /// priced.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pricingCurrency")]
+        public string PricingCurrency { get; private set; }
+
+        /// <summary>
+        /// Gets the date of the purchase of the product, or the start date of
+        /// the month in which usage started.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.servicePeriodStartDate")]
+        public System.DateTime? ServicePeriodStartDate { get; private set; }
+
+        /// <summary>
+        /// Gets the end date of the product term, or the end date of the month
+        /// in which usage ended.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.servicePeriodEndDate")]
+        public System.DateTime? ServicePeriodEndDate { get; private set; }
+
+        /// <summary>
+        /// Gets the pre-tax charged amount for the transaction.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subTotal")]
+        public Amount SubTotal { get; private set; }
+
+        /// <summary>
+        /// Gets the tax amount applied to the transaction.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tax")]
+        public Amount Tax { get; private set; }
+
+        /// <summary>
+        /// Gets the unit of measure used to bill for the product. For example,
+        /// compute services are billed per hour.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unitOfMeasure")]
+        public string UnitOfMeasure { get; private set; }
+
+        /// <summary>
+        /// Gets the number of units used for a given product.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.units")]
+        public double? Units { get; private set; }
+
+        /// <summary>
+        /// Gets the description for the unit of measure for a given product.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.unitType")]
+        public string UnitType { get; private set; }
 
     }
 }

@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Billing.Models
 {
 
     /// <summary>
-    /// Defines values for DocumentType.
+    /// Defines values for InvoiceType.
     /// </summary>
-    public static class DocumentType
+    public static class InvoiceType
     {
-        public const string Invoice = "Invoice";
-        public const string VoidNote = "VoidNote";
-        public const string TaxReceipt = "TaxReceipt";
-        public const string CreditNote = "CreditNote";
+        public const string AzureService = "AzureService";
+        public const string AzureMarketplace = "AzureMarketplace";
+        public const string AzureSupport = "AzureSupport";
     }
 }

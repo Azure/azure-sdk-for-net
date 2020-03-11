@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface ITransactionsOperations
     {
         /// <summary>
-        /// Lists the transactions by customer id for given start date and end
-        /// date.
+        /// Lists the billed and unbilled transactions by customer id for given
+        /// start date and end date. Transactions include purchases, refunds
+        /// and Azure usage charges. Unbilled transactions are listed under
+        /// pending invoice Id and do not include tax. Tax is added to the
+        /// amount once an invoice is generated.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingAccountName'>
@@ -63,8 +66,11 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Transaction>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the transactions by billing account name for given start and
-        /// end date.
+        /// Lists the billed and unbilled transactions by billing account name
+        /// for given start and end date. Transactions include purchases,
+        /// refunds and Azure usage charges. Unbilled transactions are listed
+        /// under pending invoice ID and do not include tax. Tax is added to
+        /// the amount once an invoice is generated.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
@@ -99,8 +105,11 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Transaction>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the transactions by billing profile name for given start date
-        /// and end date.
+        /// Lists the billed and unbilled transactions by billing profile name
+        /// for given start date and end date. Transactions include purchases,
+        /// refunds and Azure usage charges. Unbilled transactions are listed
+        /// under pending invoice Id and do not include tax. Tax is added to
+        /// the amount once an invoice is generated.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
@@ -138,8 +147,11 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<TransactionListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the transactions by invoice section name for given start date
-        /// and end date.
+        /// Lists the billed and unbilled transactions by invoice section name
+        /// for given start date and end date. Transactions include purchases,
+        /// refunds and Azure usage charges. Unbilled transactions are listed
+        /// under pending invoice Id and do not include tax. Tax is added to
+        /// the amount once an invoice is generated.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
@@ -180,6 +192,36 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<TransactionListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists the transactions by invoice. Transactions include purchases,
+        /// refunds and Azure usage charges.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
+        /// <param name='invoiceName'>
+        /// Invoice Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Transaction>>> ListByInvoiceWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get the transaction.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
@@ -215,8 +257,11 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<Transaction>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the transactions by customer id for given start date and end
-        /// date.
+        /// Lists the billed and unbilled transactions by customer id for given
+        /// start date and end date. Transactions include purchases, refunds
+        /// and Azure usage charges. Unbilled transactions are listed under
+        /// pending invoice Id and do not include tax. Tax is added to the
+        /// amount once an invoice is generated.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -239,8 +284,11 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Transaction>>> ListByCustomerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the transactions by billing account name for given start and
-        /// end date.
+        /// Lists the billed and unbilled transactions by billing account name
+        /// for given start and end date. Transactions include purchases,
+        /// refunds and Azure usage charges. Unbilled transactions are listed
+        /// under pending invoice ID and do not include tax. Tax is added to
+        /// the amount once an invoice is generated.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -262,5 +310,29 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<Transaction>>> ListByBillingAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the transactions by invoice. Transactions include purchases,
+        /// refunds and Azure usage charges.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Transaction>>> ListByInvoiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

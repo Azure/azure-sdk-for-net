@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Billing.Models
 {
 
     /// <summary>
-    /// Defines values for Status.
+    /// Defines values for Category.
     /// </summary>
-    public static class Status
+    public static class Category
     {
-        public const string Approved = "Approved";
-        public const string Rejected = "Rejected";
+        public const string MicrosoftCustomerAgreement = "MicrosoftCustomerAgreement";
+        public const string AffiliatePurchaseTerms = "AffiliatePurchaseTerms";
+        public const string Other = "Other";
     }
 }
