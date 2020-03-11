@@ -948,6 +948,12 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="CreateIfNotExists"/>
         /// instead.
         /// </remarks>
+        /// <remarks>
+        /// Note that this method does not guarantee that the path type
+        /// (file/directory) matches expectations.  For example, a
+        /// DataLakeFileClient representing a path to a directory
+        /// will return true, and vice versa.
+        /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default)
         {
@@ -988,6 +994,12 @@ namespace Azure.Storage.Files.DataLake
         /// it doesn't exist, use
         /// <see cref="CreateIfNotExistsAsync"/>
         /// instead.
+        /// </remarks>
+        /// <remarks>
+        /// Note that this method does not guarantee that the path type
+        /// (file/directory) matches expectations.  For example, a
+        /// DataLakeFileClient representing a path to a directory
+        /// will return true, and vice versa.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default)
