@@ -3,8 +3,8 @@ namespace Azure.Storage.Files.DataLake
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
         public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2019_07_07) { }
-        public System.Uri GeoRedundantSecondaryUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
@@ -150,7 +150,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetRootDirectoryClient() { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> SetAccessPolicy(Azure.Storage.Files.DataLake.Models.PublicAccessType accessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> permissions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> SetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.PublicAccessType accessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> permissions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -275,17 +274,17 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeAccessPolicy
     {
         public DataLakeAccessPolicy() { }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string Permissions { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
     public partial class DataLakeLease
     {
         internal DataLakeLease() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int? LeaseTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public string LeaseId { get { throw null; } }
+        public int? LeaseTime { get { throw null; } }
     }
     public enum DataLakeLeaseDuration
     {
@@ -324,80 +323,80 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeRequestConditions : Azure.RequestConditions
     {
         public DataLakeRequestConditions() { }
-        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string LeaseId { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
     public partial class DataLakeSignedIdentifier
     {
         public DataLakeSignedIdentifier() { }
-        public Azure.Storage.Files.DataLake.Models.DataLakeAccessPolicy AccessPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeAccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
     public partial class FileDownloadDetails
     {
         internal FileDownloadDetails() { }
-        public string AcceptRanges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset CopyCompletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyProgress { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri CopySource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyStatusDescription { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsServerEncrypted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration LeaseDuration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState LeaseState { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus LeaseStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string AcceptRanges { get { throw null; } }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public string ContentRange { get { throw null; } }
+        public System.DateTimeOffset CopyCompletedOn { get { throw null; } }
+        public string CopyId { get { throw null; } }
+        public string CopyProgress { get { throw null; } }
+        public System.Uri CopySource { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { get { throw null; } }
+        public string CopyStatusDescription { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool IsServerEncrypted { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration LeaseDuration { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState LeaseState { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus LeaseStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
     public partial class FileDownloadInfo
     {
         internal FileDownloadInfo() { }
-        public System.IO.Stream Content { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long ContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.FileDownloadDetails Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.IO.Stream Content { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public long ContentLength { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.FileDownloadDetails Properties { get { throw null; } }
     }
     public partial class FileSystemAccessPolicy
     {
         public FileSystemAccessPolicy() { }
-        public Azure.Storage.Files.DataLake.Models.PublicAccessType DataLakePublicAccess { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> SignedIdentifiers { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.PublicAccessType DataLakePublicAccess { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> SignedIdentifiers { get { throw null; } }
     }
     public partial class FileSystemInfo
     {
         internal FileSystemInfo() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class FileSystemItem
     {
         internal FileSystemItem() { }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.FileSystemProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.FileSystemProperties Properties { get { throw null; } }
     }
     public partial class FileSystemProperties
     {
         internal FileSystemProperties() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? HasImmutabilityPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? HasLegalHold { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration? LeaseDuration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? LeaseState { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? LeaseStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.PublicAccessType? PublicAccess { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool? HasImmutabilityPolicy { get { throw null; } }
+        public bool? HasLegalHold { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration? LeaseDuration { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? LeaseState { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? LeaseStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.PublicAccessType? PublicAccess { get { throw null; } }
     }
     [System.FlagsAttribute]
     public enum FileSystemTraits
@@ -408,10 +407,10 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class PathAccessControl
     {
         internal PathAccessControl() { }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Group { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Owner { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.PathPermissions Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } }
+        public string Group { get { throw null; } }
+        public string Owner { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.PathPermissions Permissions { get { throw null; } }
     }
     public static partial class PathAccessControlExtensions
     {
@@ -426,34 +425,34 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public PathAccessControlItem() { }
         public PathAccessControlItem(Azure.Storage.Files.DataLake.Models.AccessControlType accessControlType, Azure.Storage.Files.DataLake.Models.RolePermissions permissions, bool defaultScope = false, string entityId = null) { }
-        public Azure.Storage.Files.DataLake.Models.AccessControlType AccessControlType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool DefaultScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string EntityId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Files.DataLake.Models.RolePermissions Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Files.DataLake.Models.AccessControlType AccessControlType { get { throw null; } set { } }
+        public bool DefaultScope { get { throw null; } set { } }
+        public string EntityId { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.RolePermissions Permissions { get { throw null; } set { } }
         public static Azure.Storage.Files.DataLake.Models.PathAccessControlItem Parse(string s) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PathContentInfo
     {
         internal PathContentInfo() { }
-        public string AcceptRanges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long ContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string AcceptRanges { get { throw null; } }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public string ContentHash { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public long ContentLength { get { throw null; } }
+        public string ContentRange { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
     public partial class PathCreateInfo
     {
         internal PathCreateInfo() { }
-        public string Continuation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.PathInfo PathInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Continuation { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.PathInfo PathInfo { get { throw null; } }
     }
     public enum PathGetPropertiesAction
     {
@@ -463,12 +462,12 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class PathHttpHeaders
     {
         public PathHttpHeaders() { }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string CacheControl { get { throw null; } set { } }
+        public string ContentDisposition { get { throw null; } set { } }
+        public string ContentEncoding { get { throw null; } set { } }
+        public byte[] ContentHash { get { throw null; } set { } }
+        public string ContentLanguage { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -479,20 +478,20 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class PathInfo
     {
         internal PathInfo() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class PathItem
     {
         internal PathItem() { }
-        public long? ContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Group { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? IsDirectory { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Owner { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long? ContentLength { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public string Group { get { throw null; } }
+        public bool? IsDirectory { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Owner { get { throw null; } }
+        public string Permissions { get { throw null; } }
     }
     public enum PathLeaseAction
     {
@@ -506,11 +505,11 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public PathPermissions() { }
         public PathPermissions(Azure.Storage.Files.DataLake.Models.RolePermissions owner, Azure.Storage.Files.DataLake.Models.RolePermissions group, Azure.Storage.Files.DataLake.Models.RolePermissions other, bool stickyBit = false, bool extendedInfoInAcl = false) { }
-        public bool ExtendedAcls { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Files.DataLake.Models.RolePermissions Group { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Files.DataLake.Models.RolePermissions Other { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Files.DataLake.Models.RolePermissions Owner { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool StickyBit { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool ExtendedAcls { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.RolePermissions Group { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.RolePermissions Other { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.RolePermissions Owner { get { throw null; } set { } }
+        public bool StickyBit { get { throw null; } set { } }
         public static Azure.Storage.Files.DataLake.Models.PathPermissions ParseOctalPermissions(string s) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathPermissions ParseSymbolicPermissions(string s) { throw null; }
         public string ToOctalPermissions() { throw null; }
@@ -519,33 +518,33 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class PathProperties
     {
         internal PathProperties() { }
-        public string AcceptRanges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string AccessTier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset AccessTierChangedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ArchiveStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long ContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset CopyCompletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyProgress { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri CopySource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyStatusDescription { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsIncrementalCopy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsServerEncrypted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration LeaseDuration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState LeaseState { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus LeaseStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string AcceptRanges { get { throw null; } }
+        public string AccessTier { get { throw null; } }
+        public System.DateTimeOffset AccessTierChangedOn { get { throw null; } }
+        public string ArchiveStatus { get { throw null; } }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public long ContentLength { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.DateTimeOffset CopyCompletedOn { get { throw null; } }
+        public string CopyId { get { throw null; } }
+        public string CopyProgress { get { throw null; } }
+        public System.Uri CopySource { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { get { throw null; } }
+        public string CopyStatusDescription { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool IsIncrementalCopy { get { throw null; } }
+        public bool IsServerEncrypted { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration LeaseDuration { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState LeaseState { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus LeaseStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
     public enum PathRenameMode
     {
@@ -576,8 +575,8 @@ namespace Azure.Storage.Files.DataLake.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ReleasedObjectInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
         public bool Equals(Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -599,13 +598,13 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
-        public System.DateTimeOffset SignedExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedObjectId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedService { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset SignedStartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedTenantId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedVersion { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
+        public string SignedObjectId { get { throw null; } }
+        public string SignedService { get { throw null; } }
+        public System.DateTimeOffset SignedStartsOn { get { throw null; } }
+        public string SignedTenantId { get { throw null; } }
+        public string SignedVersion { get { throw null; } }
+        public string Value { get { throw null; } }
     }
 }
 namespace Azure.Storage.Sas
@@ -635,21 +634,21 @@ namespace Azure.Storage.Sas
     public partial class DataLakeSasBuilder
     {
         public DataLakeSasBuilder() { }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string FileSystemName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Identifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Sas.SasIPRange IPRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Path { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Sas.SasProtocol Protocol { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Resource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string CacheControl { get { throw null; } set { } }
+        public string ContentDisposition { get { throw null; } set { } }
+        public string ContentEncoding { get { throw null; } set { } }
+        public string ContentLanguage { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string FileSystemName { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
+        public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public string Permissions { get { throw null; } }
+        public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
+        public string Resource { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
