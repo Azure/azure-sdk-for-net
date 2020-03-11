@@ -949,10 +949,10 @@ namespace Azure.Storage.Files.DataLake
         /// instead.
         /// </remarks>
         /// <remarks>
-        /// Note that this method does not guarantee that the path type
-        /// (file/directory) matches expectations.  For example, a
-        /// DataLakeFileClient representing a path to a directory
-        /// will return true, and vice versa.
+        /// Note that if you call FileClient.Exists in a path is does not
+        /// represent a file, Exists will return true. Similarly, if you
+        /// call DirectoryClient.Exists on a path that is not a directory,
+        /// Exists will return true.
         /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default)
@@ -996,10 +996,10 @@ namespace Azure.Storage.Files.DataLake
         /// instead.
         /// </remarks>
         /// <remarks>
-        /// Note that this method does not guarantee that the path type
-        /// (file/directory) matches expectations.  For example, a
-        /// DataLakeFileClient representing a path to a directory
-        /// will return true, and vice versa.
+        /// Note that if you call FileClient.Exists in a path is does not
+        /// represent a file, Exists will return true. Similarly, if you
+        /// call DirectoryClient.Exists on a path that is not a directory,
+        /// Exists will return true.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default)
