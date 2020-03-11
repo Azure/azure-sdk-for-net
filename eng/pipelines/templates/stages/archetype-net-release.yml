@@ -72,7 +72,7 @@ stages:
                         ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
                         PackageRepository: Nuget
                         ReleaseSha: $(Build.SourceVersion)
-                        RepoId: $(Build.Repository.Name)
+                        RepoId: Azure/azure-sdk-for-net
 
           - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
@@ -201,7 +201,6 @@ stages:
         vmImage: ubuntu-16.04
       steps:
       - checkout: none
-      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
       - template: tools/burner-feed/burner-feed-create.yml@azure-sdk-build-tools
 
       - download: current
