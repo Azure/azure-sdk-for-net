@@ -122,6 +122,29 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
+        public async Task<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, SourcePath_internal fileStream, CancellationToken cancellationToken = default)
+        {
+            using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeWithCustomModel");
+            scope.Start();
+            try
+            {
+                using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
+                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 202:
+                        var headers = new AnalyzeWithCustomModelHeaders(message.Response);
+                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                    default:
+                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
         internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, SourcePath_internal fileStream)
         {
             var message = pipeline.CreateMessage();

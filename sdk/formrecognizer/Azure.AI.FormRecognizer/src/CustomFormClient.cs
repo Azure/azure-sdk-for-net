@@ -140,6 +140,13 @@ namespace Azure.AI.FormRecognizer.Custom
             return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
+        public virtual async Task<Operation<ExtractedForm>> StartExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
         #endregion Analyze
 
         #region CRUD Ops
@@ -153,12 +160,12 @@ namespace Azure.AI.FormRecognizer.Custom
             return await _operations.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual Pageable<ModelInfo> GetModels(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
         }
 
-        public virtual AsyncPageable<ModelInfo> GetModelsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
         }
