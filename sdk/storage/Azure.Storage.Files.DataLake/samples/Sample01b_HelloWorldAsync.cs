@@ -603,7 +603,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         /// Set and modify access control list recursively on a DataLake directory structure
         /// </summary>
         [Test]
-        public async Task SetModifyAclsRecursivelyAsync()
+        public async Task SetModifyRemoveAclsRecursivelyAsync()
         {
             // Make StorageSharedKeyCredential to pass to the serviceClient
             string storageAccountName = NamespaceStorageAccountName;
