@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Advisor
             Operations = new Operations(this);
             Suppressions = new SuppressionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-04-19";
+            ApiVersion = "2020-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
