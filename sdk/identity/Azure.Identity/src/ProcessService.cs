@@ -3,150 +3,45 @@
 
 using System;
 using System.Diagnostics;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Azure.Identity
 {
-    internal static class ProcessService
+    internal class ProcessService : IProcessService
     {
-        public static async ValueTask<string> RunProcessAsync(ProcessStartInfo startInfo, TimeSpan timeout, CancellationToken cancellationToken)
-        {
-            using AsyncProcessHandler handler = StartProcess(startInfo, timeout, cancellationToken);
-            return await handler.WaitAsync().ConfigureAwait(false);
-        }
+        public static IProcessService Default { get; } = new ProcessService();
 
-        public static string RunProcess(ProcessStartInfo startInfo, TimeSpan timeout, CancellationToken cancellationToken)
-        {
-            using AsyncProcessHandler handler = StartProcess(startInfo, timeout, cancellationToken);
-            return handler.Wait();
-        }
+        private ProcessService() { }
 
-        private static AsyncProcessHandler StartProcess(ProcessStartInfo processStartInfo, TimeSpan timeout, CancellationToken cancellationToken)
-        {
-            var process = new Process
-            {
-                StartInfo = processStartInfo,
-                EnableRaisingEvents = true
-            };
+        public IProcess Create(ProcessStartInfo startInfo) => new ProcessWrapper(startInfo);
 
-            var handler = new AsyncProcessHandler(process, timeout, cancellationToken);
-            if (handler.IsCancellationRequested)
-            {
-                handler.Cancel();
-            }
-            else
-            {
-                process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-            }
-
-            return handler;
-        }
-
-        private class AsyncProcessHandler : IDisposable
+        private class ProcessWrapper : IProcess
         {
             private readonly Process _process;
-            private readonly StringBuilder _output;
-            private readonly StringBuilder _error;
-            private readonly TaskCompletionSource<string> _tcs;
-            private readonly CancellationToken _cancellationToken;
-            private readonly CancellationTokenSource _timeoutCts;
-            private readonly CancellationTokenRegistration _ctRegistration;
-            private readonly CancellationTokenRegistration _timeoutCtRegistration;
 
-            public bool IsCancellationRequested => _cancellationToken.IsCancellationRequested || _timeoutCts != null && _timeoutCts.IsCancellationRequested;
-
-            public AsyncProcessHandler(Process process, TimeSpan timeout, CancellationToken cancellationToken)
+            public ProcessWrapper(ProcessStartInfo processStartInfo)
             {
-                _process = process;
-                _cancellationToken = cancellationToken;
-                _output = new StringBuilder();
-                _error = new StringBuilder();
-                _tcs = new TaskCompletionSource<string>();
-
-                _ctRegistration = cancellationToken.Register(QueueHandleCancel);
-                if (timeout.TotalMilliseconds >= 0)
+                _process = new Process
                 {
-                    _timeoutCts = new CancellationTokenSource();
-                    _timeoutCtRegistration = _timeoutCts.Token.Register(QueueHandleCancel);
-                    _timeoutCts.CancelAfter(timeout);
-                }
-
-                process.OutputDataReceived += (o, e) => ProcessDataReceived(e, _output);
-                process.ErrorDataReceived += (o, e) => ProcessDataReceived(e, _error);
-                process.Exited += (o, e) => HandleExit();
+                    StartInfo = processStartInfo,
+                    EnableRaisingEvents = true
+                };
             }
 
-            public Task<string> WaitAsync() => _tcs.Task;
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            public string Wait() => _tcs.Task.GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+            public bool HasExited => _process.HasExited;
+            public int ExitCode => _process.ExitCode;
+            public StreamReader StandardOutput => _process.StandardOutput;
+            public StreamReader StandardError => _process.StandardError;
 
-            public void Cancel()
+            public event EventHandler Exited
             {
-                if (_timeoutCts != null && _timeoutCts.IsCancellationRequested)
-                {
-                    _tcs.TrySetCanceled(_timeoutCts.Token);
-                }
-                else if (_cancellationToken.IsCancellationRequested)
-                {
-                    _tcs.TrySetCanceled(_cancellationToken);
-                }
+                add => _process.Exited += value;
+                remove => _process.Exited -= value;
             }
 
-            private static void ProcessDataReceived(DataReceivedEventArgs args, StringBuilder stringBuilder)
-            {
-                if (!string.IsNullOrEmpty(args.Data))
-                {
-                    stringBuilder.AppendLine(args.Data);
-                }
-            }
-
-            private void HandleExit()
-            {
-                if (_process.ExitCode == 0)
-                {
-                    _tcs.TrySetResult(_output.ToString());
-                }
-                else
-                {
-                    _tcs.TrySetException(new InvalidOperationException(_error.ToString()));
-                }
-            }
-
-            private void QueueHandleCancel()
-            {
-                if (!_tcs.Task.IsCompleted)
-                {
-                    ThreadPool.QueueUserWorkItem(HandleCancel);
-                }
-            }
-
-            private void HandleCancel(object state)
-            {
-                if (_tcs.Task.IsCompleted)
-                {
-                    return;
-                }
-
-                if (!_process.HasExited)
-                {
-                    _process.Kill();
-                }
-
-                Cancel();
-            }
-
-            public void Dispose()
-            {
-                _process.Dispose();
-                _ctRegistration.Dispose();
-                _timeoutCts?.Dispose();
-                _timeoutCtRegistration.Dispose();
-            }
+            public void Start() => _process.Start();
+            public void Kill() => _process.Kill();
+            public void Dispose() => _process.Dispose();
         }
     }
 }

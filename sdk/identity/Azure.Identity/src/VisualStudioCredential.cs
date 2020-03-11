@@ -27,15 +27,21 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
+        private readonly IFileSystemService _fileSystem;
+        private readonly IProcessService _processService;
 
         /// <inheritdoc />
         public VisualStudioCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        public VisualStudioCredential(string tenantId, TokenCredentialOptions options)
+        public VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
+
+        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IProcessService processService)
         {
             _tenantId = tenantId;
             _pipeline = CredentialPipeline.GetInstance(options);
+            _fileSystem = fileSystem ?? FileSystemService.Default;
+            _processService = processService ?? ProcessService.Default;
         }
 
         /// <inheritdoc />
@@ -56,7 +62,7 @@ namespace Azure.Identity
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
-                var processStartInfos = GetProcessStartInfos(tokenProviders, resource);
+                var processStartInfos = GetProcessStartInfos(tokenProviders, resource, cancellationToken);
 
                 if (processStartInfos.Count == 0)
                 {
@@ -81,16 +87,17 @@ namespace Azure.Identity
             }
         }
 
-        private static async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
+        private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
         {
             var exceptions = new List<Exception>();
             foreach (ProcessStartInfo processStartInfo in processStartInfos)
             {
                 try
                 {
+                    var processRunner = new ProcessRunner(_processService.Create(processStartInfo), TimeSpan.FromSeconds(30), cancellationToken);
                     string output = async
-                        ? await ProcessService.RunProcessAsync(processStartInfo, TimeSpan.FromSeconds(30), cancellationToken).ConfigureAwait(false)
-                        : ProcessService.RunProcess(processStartInfo, TimeSpan.FromSeconds(30), cancellationToken);
+                        ? await processRunner.RunAsync().ConfigureAwait(false)
+                        : processRunner.Run();
 
                     JsonElement root = JsonDocument.Parse(output).RootElement;
                     string accessToken = root.GetProperty("access_token").GetString();
@@ -114,15 +121,17 @@ namespace Azure.Identity
             }
         }
 
-        private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource)
+        private List<ProcessStartInfo> GetProcessStartInfos(VisualStudioTokenProvider[] visualStudioTokenProviders, string resource, CancellationToken cancellationToken)
         {
             List<ProcessStartInfo> processStartInfos = new List<ProcessStartInfo>();
             StringBuilder arguments = new StringBuilder();
 
             foreach (VisualStudioTokenProvider tokenProvider in visualStudioTokenProviders)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 // If file does not exist, the version of Visual Studio that set the token provider may be uninstalled.
-                if (!File.Exists(tokenProvider.Path))
+                if (!_fileSystem.FileExists(tokenProvider.Path))
                 {
                     continue;
                 }
@@ -162,7 +171,7 @@ namespace Azure.Identity
             return processStartInfos;
         }
 
-        private static VisualStudioTokenProvider[] GetTokenProviders(string tokenProviderPath)
+        private VisualStudioTokenProvider[] GetTokenProviders(string tokenProviderPath)
         {
             var content = GetTokenProviderContent(tokenProviderPath);
 
@@ -184,11 +193,11 @@ namespace Azure.Identity
             return providers;
         }
 
-        private static string GetTokenProviderContent(string tokenProviderPath)
+        private string GetTokenProviderContent(string tokenProviderPath)
         {
             try
             {
-                return File.ReadAllText(tokenProviderPath);
+                return _fileSystem.ReadAllText(tokenProviderPath);
             }
             catch (FileNotFoundException exception)
             {
