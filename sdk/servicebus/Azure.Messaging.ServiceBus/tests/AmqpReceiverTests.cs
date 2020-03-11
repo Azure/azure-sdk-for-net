@@ -50,6 +50,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
                 sessionId: default,
+                identifier: "someIdentifier",
                 isSessionReceiver: default),
                 Throws.InstanceOf<ArgumentException>());
         }
@@ -67,6 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 prefetchCount: 0,
                 connectionScope: null,
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
+                identifier: "someIdentifier",
                 sessionId: default,
                 isSessionReceiver: default),
             Throws.InstanceOf<ArgumentNullException>());
@@ -85,6 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 prefetchCount: 0,
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
                 retryPolicy: null,
+                identifier: "someIdentifier",
                 sessionId: default,
                 isSessionReceiver: default),
             Throws.InstanceOf<ArgumentNullException>());
@@ -104,22 +107,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await receiver.CloseAsync(CancellationToken.None);
             Assert.That(receiver.IsClosed, Is.True, "The receiver should be marked as closed after closing");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpReceiver.CloseAsync"/>
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseRespectsTheCancellationToken()
-        {
-            AmqpReceiver receiver = CreateReceiver();
-            using var cancellationSource = new CancellationTokenSource();
-
-            cancellationSource.Cancel();
-            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>(), "Cancellation should trigger the appropriate exception.");
-            Assert.That(receiver.IsClosed, Is.False, "Cancellation should have interrupted closing and left the consumer in an open state.");
         }
 
         ///// <summary>
@@ -202,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.GeneralError));
 
             mockScope
@@ -253,7 +240,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<CancellationToken>()))
                .Throws(retriableException);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
 
             mockScope
@@ -309,7 +296,7 @@ namespace Azure.Messaging.EventHubs.Tests
                .Throws(retriableException);
 
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceBusy));
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
@@ -358,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ArgumentNullException>());
 
             mockScope
@@ -409,7 +396,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
 
             mockScope
@@ -459,7 +446,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    It.IsAny<CancellationToken>()))
                .Throws(exception);
 
-            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
+            var receiver = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession);
             Assert.That(async () => await receiver.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
 
             mockScope
@@ -474,30 +461,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Times.Once());
         }
 
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ReceiveAsyncValidatesClosed()
-        {
-            var entityName = "entityName";
-            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions());
-            var mockCredential = new Mock<TokenCredential>();
-            var mockScope = new Mock<AmqpConnectionScope>();
-            uint prefetchCount = 0;
-            var sessionId = "sessionId";
-            bool isSession = true;
-
-            using var cancellationSource = new CancellationTokenSource();
-
-            var consumer = new AmqpReceiver(entityName, ReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, sessionId, isSession);
-            await consumer.CloseAsync(cancellationSource.Token);
-
-            Assert.That(async () => await consumer.ReceiveBatchAsync(100, cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
-        }
-
         private AmqpReceiver CreateReceiver() =>
             new AmqpReceiver(
                 "someQueue",
@@ -505,6 +468,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 0,
                 Mock.Of<AmqpConnectionScope>(),
                 Mock.Of<ServiceBusRetryPolicy>(),
+                "someIdentifier",
                 default,
                 default);
     }

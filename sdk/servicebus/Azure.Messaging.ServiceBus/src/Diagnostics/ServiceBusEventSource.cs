@@ -358,7 +358,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(36, identifier, exception,ToString());
+                WriteEvent(36, identifier, exception, ToString());
             }
         }
 

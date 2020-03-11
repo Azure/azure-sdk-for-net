@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class ReceiverTests : ServiceBusTestBase
     {
         [Test]
-        public void NonSessionReceiver_CannotAccessSessionProperties()
+        public void NonSessionReceiverCannotAccessSessionProperties()
         {
             var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             var receiver = client.GetReceiver("fakeQueue");
@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public void SessionReceiver_CanAccessSessionProperties()
+        public void SessionReceiverCanAccessSessionProperties()
         {
             var receiver = new ServiceBusReceiver(
                 Mock.Of<ServiceBusConnection>(),
@@ -35,6 +35,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         //[Test]
+        // TODO add test that validates service error thrown
+        // now that we removed assumption that subscription path
+        // won't ever be passed into queueName property.
         //public void NonSubscriptionReceiver_CannotAccessSubscriptionProperties()
         //{
         //    var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);

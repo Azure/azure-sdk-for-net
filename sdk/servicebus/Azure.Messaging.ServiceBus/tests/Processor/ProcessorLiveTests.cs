@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(5)]
         [TestCase(10)]
         [TestCase(20)]
-        public async Task Process_Event_Next_Session(int numThreads)
+        public async Task ProcessEventNextSession(int numThreads)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(5)]
         [TestCase(10)]
         [TestCase(20)]
-        public async Task Receive_StopProcessing(int numThreads)
+        public async Task ReceiveStopProcessing(int numThreads)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(5)]
         [TestCase(10)]
         [TestCase(20)]
-        public async Task Process_Event(int numThreads)
+        public async Task ProcessEvent(int numThreads)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -269,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(5)]
         [TestCase(10)]
         [TestCase(20)]
-        public async Task Process_Event_Consumes_All_Messages(int numThreads)
+        public async Task ProcessEventConsumesAllMessages(int numThreads)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -440,7 +440,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task Setting_Properties_While_Processing_Throws()
+        public async Task SettingPropertiesWhileProcessingThrows()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {

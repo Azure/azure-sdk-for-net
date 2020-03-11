@@ -200,6 +200,7 @@ namespace Azure.Messaging.ServiceBus
                 retryPolicy: _retryPolicy,
                 receiveMode: ReceiveMode,
                 prefetchCount: (uint)PrefetchCount,
+                identifier: Identifier,
                 sessionId: sessionId,
                 isSessionReceiver: IsSessionReceiver);
             SessionManager = new ServiceBusSessionManager(_innerReceiver, Identifier);
@@ -224,6 +225,7 @@ namespace Azure.Messaging.ServiceBus
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
+            Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.ReceiveMessageStart(Identifier, maxMessages);
@@ -484,6 +486,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -581,6 +584,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
@@ -626,6 +630,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -734,6 +739,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -779,8 +785,8 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusSender), Identifier);
-
         }
 
         /// <summary>

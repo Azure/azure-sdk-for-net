@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task Can_Send_Message_With_Max_Size()
+        public async Task CanSendMessageWithMaxSize()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {

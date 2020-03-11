@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(1, "key")]
         [TestCase(10000, null)]
         [TestCase(null, null)]
-        public async Task Peek_Session(long? sequenceNumber, string partitionKey)
+        public async Task PeekSession(long? sequenceNumber, string partitionKey)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        public async Task Lock_Same_Session_Should_Throw()
+        public async Task LockSameSessionShouldThrow()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(10, 5)]
         [TestCase(50, 1)]
         [TestCase(50, 10)]
-        public async Task PeekRange_IncrementsSequenceNumber(int messageCt, int peekCt)
+        public async Task PeekRangeIncrementsSequenceNumber(int messageCt, int peekCt)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         [TestCase(10)]
         [TestCase(50)]
-        public async Task Peek_Increments_Sequence_Number(int messageCt)
+        public async Task PeekIncrementsSequenceNumber(int messageCt)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {

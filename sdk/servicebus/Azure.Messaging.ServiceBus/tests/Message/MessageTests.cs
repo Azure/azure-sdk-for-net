@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         [TestCase(null)]
         [TestCase("123")]
         [TestCase("jøbber-nå")]
-        public void Message_To_String(string id)
+        public void MessageToString(string id)
         {
             var message = new ServiceBusMessage();
             if (id != null)
@@ -27,14 +27,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         }
 
         [Test]
-        public void Setting_Null_Message_Id_Throws()
+        public void SettingNullMessageIdThrows()
         {
             var message = new ServiceBusMessage();
             Assert.That(() => message.MessageId = null, Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
-        public void Setting_Empty_Message_Id_Throws()
+        public void SettingEmptyMessageIdThrows()
         {
             var message = new ServiceBusMessage();
             Assert.That(() => message.MessageId = "", Throws.InstanceOf<ArgumentException>());

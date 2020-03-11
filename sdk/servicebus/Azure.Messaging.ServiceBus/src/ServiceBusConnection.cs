@@ -204,6 +204,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
+            string identifier,
             string sessionId = default,
             bool isSessionReceiver = default) =>
                 _innerClient.CreateReceiver(
@@ -211,6 +212,7 @@ namespace Azure.Messaging.ServiceBus
                     retryPolicy,
                     receiveMode,
                     prefetchCount,
+                    identifier,
                     sessionId,
                     isSessionReceiver);
 

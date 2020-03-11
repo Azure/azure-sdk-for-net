@@ -191,8 +191,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusMessageBatch messageBatch,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(messageBatch, nameof(messageBatch));
-            Argument.AssertNotClosed(_closed, nameof(AmqpSender));
             AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageBatch.AsEnumerable<ServiceBusMessage>());
             await _retryPolicy.RunOperation(async (timeout) =>
                 await SendBatchInternalAsync(
