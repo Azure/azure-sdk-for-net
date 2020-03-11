@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         /// Set and modify access control list recursively on a DataLake directory structure
         /// </summary>
         [Test]
-        public void SetModifyAclsRecursively()
+        public void SetModifyRemoveAclsRecursively()
         {
             // Make StorageSharedKeyCredential to pass to the serviceClient
             string storageAccountName = NamespaceStorageAccountName;
@@ -650,7 +650,7 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Set Access Control List Recursively
                 IList<PathAccessControlItem> accessControlList
-                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::rw-,mask::rwx,other::---");
+                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,user:ec3595d6-2c17-4696-8caa-7e139758d24a:rw-,group::rw-,mask::rwx,other::---");
                 rootDirectoryClient.SetAccessControlListRecursive(accessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAclsRecursively
                 #region Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
@@ -659,6 +659,12 @@ namespace Azure.Storage.Files.DataLake.Samples
                     = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
                 subDirectoryClient.ModifyAccessControlListRecursive(deltaAccessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
+                #region Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
+                // Remove Access Control List Recursively
+                IList<RemovePathAccessControlItem> removeAccessControlList
+                    = RemovePathAccessControlExtensions.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
+                subDirectoryClient.RemoveAccessControlListRecursive(removeAccessControlList);
+                #endregion Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
 
                 PathAccessControl rootFileAccessControlResponse = rootFileClient.GetAccessControl();
                 PathAccessControl fileAccessControlResponse = fileClient.GetAccessControl();

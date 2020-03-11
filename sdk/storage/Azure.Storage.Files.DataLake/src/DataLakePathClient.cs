@@ -2045,7 +2045,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return SetAccessControlListRecursiveInternal(
-                    accessControlList,
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     Mode.Set,
                     batchSize,
                     progressHandler,
@@ -2111,7 +2111,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return await SetAccessControlListRecursiveInternal(
-                    accessControlList,
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     Mode.Set,
                     batchSize,
                     progressHandler,
@@ -2177,7 +2177,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return SetAccessControlListRecursiveInternal(
-                    accessControlList,
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     Mode.Modify,
                     batchSize,
                     progressHandler,
@@ -2243,8 +2243,140 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return await SetAccessControlListRecursiveInternal(
-                    accessControlList,
+                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     Mode.Modify,
+                    batchSize,
+                    progressHandler,
+                    stopOnFailure,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveAccessControlListRecursive"/> operation removes the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="batchSize">
+        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
+        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="Progress{ChangeAccessControlListPartialResult}"/> callback where caller can track progress of the operation
+        /// as well as collect paths that failed to change Access Control.
+        /// </param>
+        /// <param name="stopOnFailure">
+        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
+        /// Default is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="ChangeAccessControlListResult"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual ChangeAccessControlListResult RemoveAccessControlListRecursive(
+            IList<RemovePathAccessControlItem> accessControlList,
+            int? batchSize = default,
+            IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
+            bool stopOnFailure = false,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlListRecursive)}");
+
+            try
+            {
+                scope.Start();
+
+                return SetAccessControlListRecursiveInternal(
+                    RemovePathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    Mode.Remove,
+                    batchSize,
+                    progressHandler,
+                    stopOnFailure,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveAccessControlListRecursiveAsync"/> operation removes the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="batchSize">
+        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
+        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="Progress{ChangeAccessControlListPartialResult}"/> callback where caller can track progress of the operation
+        /// as well as collect paths that failed to change Access Control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="stopOnFailure">
+        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
+        /// Default is false.
+        /// </param>
+        /// <returns>
+        /// A <see cref="ChangeAccessControlListResult"/> that contains summary stats of the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<ChangeAccessControlListResult> RemoveAccessControlListRecursiveAsync(
+            IList<RemovePathAccessControlItem> accessControlList,
+            int? batchSize = default,
+            IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
+            bool stopOnFailure = false,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlListRecursive)}");
+
+            try
+            {
+                scope.Start();
+
+                return await SetAccessControlListRecursiveInternal(
+                    RemovePathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    Mode.Remove,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2304,7 +2436,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<ChangeAccessControlListResult> SetAccessControlListRecursiveInternal(
-            IList<PathAccessControlItem> accessControlList,
+            string accessControlList,
             Mode mode,
             int? batchSize,
             IProgress<ChangeAccessControlListPartialResult> progressHandler,
@@ -2338,7 +2470,7 @@ namespace Azure.Storage.Files.DataLake
                                 mode: mode,
                                 maxRecords: batchSize,
                                 version: Version.ToVersionString(),
-                                acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                                acl: accessControlList,
                                 async: async,
                                 continuation: continuationToken,
                                 cancellationToken: cancellationToken)

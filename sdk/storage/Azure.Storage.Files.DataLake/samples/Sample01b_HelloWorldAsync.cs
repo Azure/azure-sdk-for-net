@@ -631,13 +631,18 @@ namespace Azure.Storage.Files.DataLake.Samples
 
                 // Set Access Control List Recursively
                 IList<PathAccessControlItem> accessControlList
-                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::rw-,mask::rwx,other::---");
+                    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,user:ec3595d6-2c17-4696-8caa-7e139758d24a:rw-,group::rw-,mask::rwx,other::---");
                 await rootDirectoryClient.SetAccessControlListRecursiveAsync(accessControlList);
 
                 // Modify Access Control List Recursively
                 IList<PathAccessControlItem> deltaAccessControlList
                     = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
                 await subDirectoryClient.ModifyAccessControlListRecursiveAsync(deltaAccessControlList);
+
+                // Remove Access Control List Recursively
+                IList<RemovePathAccessControlItem> removeAccessControlList
+                    = RemovePathAccessControlExtensions.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
+                await subDirectoryClient.RemoveAccessControlListRecursiveAsync(removeAccessControlList);
 
                 PathAccessControl rootFileAccessControlResponse = await rootFileClient.GetAccessControlAsync();
                 PathAccessControl fileAccessControlResponse = await fileClient.GetAccessControlAsync();

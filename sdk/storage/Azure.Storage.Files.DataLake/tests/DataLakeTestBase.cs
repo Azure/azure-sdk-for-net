@@ -28,6 +28,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentType = "type";
         public readonly IList<PathAccessControlItem> AccessControlList
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
+        public readonly IList<RemovePathAccessControlItem> RemoveAccessControlList
+            = RemovePathAccessControlExtensions.ParseAccessControlList(
+                "mask," +
+                "default:user,default:group," +
+                "user:ec3595d6-2c17-4696-8caa-7e139758d24a,group:ec3595d6-2c17-4696-8caa-7e139758d24a," +
+                "default:user:ec3595d6-2c17-4696-8caa-7e139758d24a,default:group:ec3595d6-2c17-4696-8caa-7e139758d24a");
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
         public DataLakeTestBase(bool async) : this(async, null) { }
