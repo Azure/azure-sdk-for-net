@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class PageRange
     {
-        public PageRange(ICollection<int> pageRange)
+        internal PageRange(ICollection<int> pageRange)
         {
             Debug.Assert(pageRange.Count == 2);
 

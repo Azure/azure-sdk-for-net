@@ -31,12 +31,12 @@ namespace Azure.AI.FormRecognizer.Models
         public string MerchantPhoneNumber { get; internal set; }
 
         public ExtractedReceiptType ReceiptType { get; internal set; }
-        public float Subtotal { get; internal set; }
-        public float Tax { get; internal set; }
-        public float Tip { get; internal set; }
-        public float Total { get; internal set; }
-        public DateTimeOffset TransactionDate { get; internal set; }
-        public DateTimeOffset TransactionTime { get; internal set; }
+        public float? Subtotal { get; internal set; }
+        public float? Tax { get; internal set; }
+        public float? Tip { get; internal set; }
+        public float? Total { get; internal set; }
+        public DateTimeOffset? TransactionDate { get; internal set; }
+        public DateTimeOffset? TransactionTime { get; internal set; }
 
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
@@ -112,9 +112,9 @@ namespace Azure.AI.FormRecognizer.Models
             return stringValue;
         }
 
-        private static float ConvertFloatValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static float? ConvertFloatValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
-            float floatValue = default;
+            float? floatValue = default;
 
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
@@ -131,18 +131,16 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 else
                 {
-                    // TODO: make this nullable
-                    // https://github.com/Azure/azure-sdk-for-net/issues/10361
-                    floatValue = value.ValueNumber.HasValue ? value.ValueNumber.Value : default;
+                    floatValue = value.ValueNumber;
                 }
             }
 
             return floatValue;
         }
 
-        private static int ConvertIntValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static int? ConvertIntValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
-            int intValue = default;
+            int? intValue = default;
 
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
@@ -159,18 +157,16 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 else
                 {
-                    // TODO: make this nullable
-                    // https://github.com/Azure/azure-sdk-for-net/issues/10361
-                    intValue = value.ValueInteger.HasValue ? value.ValueInteger.Value : default;
+                    intValue = value.ValueInteger;
                 }
             }
 
             return intValue;
         }
 
-        private static DateTimeOffset ConvertDateTimeOffsetValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static DateTimeOffset? ConvertDateTimeOffsetValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
-            DateTimeOffset dateTimeOffsetValue = default;
+            DateTimeOffset? dateTimeOffsetValue = default;
 
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
@@ -209,10 +205,11 @@ namespace Azure.AI.FormRecognizer.Models
                     IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
                     string name = ConvertStringValue("Name", objectValue);
-                    int quantity = ConvertIntValue("Quantity", objectValue);
-                    float totalPrice = ConvertFloatValue("TotalPrice", objectValue);
+                    int? quantity = ConvertIntValue("Quantity", objectValue);
+                    float? price = ConvertFloatValue("Price", objectValue);
+                    float? totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
-                    ExtractedReceiptItem item = new ExtractedReceiptItem(name, quantity, totalPrice);
+                    ExtractedReceiptItem item = new ExtractedReceiptItem(name, quantity, price, totalPrice);
                     items.Add(item);
                 }
             }

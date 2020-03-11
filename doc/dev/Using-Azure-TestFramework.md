@@ -1,7 +1,7 @@
 # Using Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
 1. Getting Started
-2. Accquring TestFramework
+2. Acquiring TestFramework
 3. Setup prior to Record/Playback tests
 	1. Environment Variables
 	2. Playback Test
@@ -13,7 +13,7 @@
 7. Supported Key=Value pairs in ConnectionString
 8. Environment Variable Reference
 
-## 2. Accquring TestFramework
+## 2. Acquiring TestFramework
 
 TestFramework is available on NuGet at https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure.TestFramework/ .
 

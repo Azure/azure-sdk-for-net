@@ -7,7 +7,7 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    public class CustomModels
+    internal class CustomModels
     {
         internal CustomModels(Models_internal models)
         {
