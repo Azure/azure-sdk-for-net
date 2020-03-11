@@ -430,21 +430,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString, "someHub");
 
-            var capturedException = default(Exception);
-
             await receiver.CloseAsync(cancellationSource.Token);
 
-            try
-            {
-                await receiver.GetPartitionPropertiesAsync(cancellationSource.Token);
-            }
-            catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ClientClosed)
-            {
-                capturedException = ex;
-            }
-
+            Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(capturedException, Is.Not.Null, "An exception should have been thrown when closing.");
         }
 
         /// <summary>
