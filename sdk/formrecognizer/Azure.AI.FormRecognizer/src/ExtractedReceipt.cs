@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -11,7 +12,9 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal ExtractedReceipt(DocumentResult_internal documentResult, ReadResult_internal readResult)
         {
-            PageRange = new PageRange(documentResult.PageRange);
+            StartPageNumber = documentResult.PageRange.First();
+            EndPageNumber = documentResult.PageRange.Last();
+
             SetReceiptValues(documentResult.Fields);
 
             if (readResult != null)
@@ -19,8 +22,9 @@ namespace Azure.AI.FormRecognizer.Models
                 RawExtractedPage = new RawExtractedPage(readResult);
             }
         }
+        public int StartPageNumber { get; internal set; }
 
-        public PageRange PageRange { get; internal set; }
+        public int EndPageNumber { get; internal set; }
 
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?

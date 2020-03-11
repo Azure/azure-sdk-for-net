@@ -8,5 +8,8 @@ namespace Azure.AI.FormRecognizer.Custom
     [CodeGenSchema("TrainSourceFilter")]
     public partial class TrainingFileFilter
     {
+        internal TrainingFileFilter()
+        {
+        }
     }
 }

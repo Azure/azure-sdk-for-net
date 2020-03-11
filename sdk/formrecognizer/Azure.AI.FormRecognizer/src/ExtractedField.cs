@@ -14,14 +14,14 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Confidence;
             Label = field.Key.Text;
 
-            LabelOutline = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
+            LabelBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
             if (field.Key.Elements != null)
             {
                 LabelRawExtractedItems = ConvertTextReferences(readResult, field.Key.Elements);
             }
 
             Value = field.Value.Text;
-            ValueOutline = new BoundingBox(field.Value.BoundingBox);
+            ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
 
             if (field.Value.Elements != null)
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Value.Confidence;
             Label = field.Key;
             Value = field.Value.Text;
-            ValueOutline = new BoundingBox(field.Value.BoundingBox);
+            ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
         }
 
         // TODO: Why can this be nullable on FieldValue.Confidence?
@@ -46,10 +46,10 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: Make this nullable to indicate that this is an optional field.
         // https://github.com/Azure/azure-sdk-for-net/issues/10361
         // Not currently supported for Track2 libraries.
-        public BoundingBox LabelOutline { get; internal set; }
+        public BoundingBox LabelBoundingBox { get; internal set; }
 
         public string Value { get; internal set; }
-        public BoundingBox ValueOutline { get; internal set; }
+        public BoundingBox ValueBoundingBox { get; internal set; }
 
         public IReadOnlyList<RawExtractedItem> LabelRawExtractedItems { get; internal set; }
         public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }

@@ -3,10 +3,10 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class AdministratorContact
     {
         public AdministratorContact() { }
-        public string Email { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string FirstName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string LastName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Phone { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string Email { get { throw null; } set { } }
+        public string FirstName { get { throw null; } set { } }
+        public string LastName { get { throw null; } set { } }
+        public string Phone { get { throw null; } set { } }
     }
     public partial class CertificateClient
     {
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
         public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_1_Preview) { }
-        public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
@@ -80,9 +80,9 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class CertificateContact
     {
         public CertificateContact() { }
-        public string Email { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Phone { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string Email { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Phone { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificateContentType : System.IEquatable<Azure.Security.KeyVault.Certificates.CertificateContentType>
@@ -90,8 +90,8 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CertificateContentType(string value) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.CertificateContentType Pem { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateContentType Pkcs12 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateContentType Pem { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateContentType Pkcs12 { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Certificates.CertificateContentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -106,16 +106,16 @@ namespace Azure.Security.KeyVault.Certificates
     {
         public CertificateIssuer(string name) { }
         public CertificateIssuer(string name, string provider) { }
-        public string AccountId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string AccountId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.AdministratorContact> AdministratorContacts { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public bool? Enabled { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public string OrganizationId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Password { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string OrganizationId { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
         public string Provider { get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificateKeyCurveName : System.IEquatable<Azure.Security.KeyVault.Certificates.CertificateKeyCurveName>
@@ -123,10 +123,10 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CertificateKeyCurveName(string value) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P256K { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P384 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P521 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P256 { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P256K { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P384 { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyCurveName P521 { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Certificates.CertificateKeyCurveName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -143,10 +143,10 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CertificateKeyType(string value) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyType Ec { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyType EcHsm { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyType Rsa { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyType RsaHsm { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyType Ec { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyType EcHsm { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyType Rsa { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyType RsaHsm { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Certificates.CertificateKeyType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -163,15 +163,15 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CertificateKeyUsage(string value) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage CrlSign { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage DataEncipherment { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage DecipherOnly { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage DigitalSignature { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage EncipherOnly { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage KeyAgreement { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage KeyCertSign { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage KeyEncipherment { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage NonRepudiation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage CrlSign { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage DataEncipherment { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage DecipherOnly { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage DigitalSignature { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage EncipherOnly { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage KeyAgreement { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage KeyCertSign { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage KeyEncipherment { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificateKeyUsage NonRepudiation { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Certificates.CertificateKeyUsage other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -201,8 +201,8 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificateOperation(Azure.Security.KeyVault.Certificates.CertificateClient client, string name) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
-        public override string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public override string Id { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
         public override Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -217,26 +217,26 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class CertificateOperationError
     {
         internal CertificateOperationError() { }
-        public string Code { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateOperationError InnerError { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Message { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Code { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateOperationError InnerError { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class CertificateOperationProperties
     {
         internal CertificateOperationProperties() { }
-        public bool CancellationRequested { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public bool CancellationRequested { get { throw null; } }
         public bool? CertificateTransparency { get { throw null; } }
         public string CertificateType { get { throw null; } }
-        public byte[] Csr { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateOperationError Error { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public byte[] Csr { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateOperationError Error { get { throw null; } }
+        public System.Uri Id { get { throw null; } }
         public string IssuerName { get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string RequestId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Status { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string StatusDetails { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Target { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri VaultUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Name { get { throw null; } }
+        public string RequestId { get { throw null; } }
+        public string Status { get { throw null; } }
+        public string StatusDetails { get { throw null; } }
+        public string Target { get { throw null; } }
+        public System.Uri VaultUri { get { throw null; } }
     }
     public partial class CertificatePolicy
     {
@@ -245,23 +245,23 @@ namespace Azure.Security.KeyVault.Certificates
         public CertificatePolicy(string issuerName, string subject, Azure.Security.KeyVault.Certificates.SubjectAlternativeNames subjectAlternativeNames) { }
         public bool? CertificateTransparency { get { throw null; } set { } }
         public string CertificateType { get { throw null; } set { } }
-        public Azure.Security.KeyVault.Certificates.CertificateContentType? ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset? CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateContentType? ContentType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public static Azure.Security.KeyVault.Certificates.CertificatePolicy Default { get { throw null; } }
-        public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.Collections.Generic.IList<string> EnhancedKeyUsage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? Exportable { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool? Enabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> EnhancedKeyUsage { get { throw null; } }
+        public bool? Exportable { get { throw null; } set { } }
         public string IssuerName { get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateKeyCurveName? KeyCurveName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public int? KeySize { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Security.KeyVault.Certificates.CertificateKeyType? KeyType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateKeyUsage> KeyUsage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.LifetimeAction> LifetimeActions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? ReuseKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Subject { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.SubjectAlternativeNames SubjectAlternativeNames { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? UpdatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int? ValidityInMonths { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Security.KeyVault.Certificates.CertificateKeyCurveName? KeyCurveName { get { throw null; } set { } }
+        public int? KeySize { get { throw null; } set { } }
+        public Azure.Security.KeyVault.Certificates.CertificateKeyType? KeyType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateKeyUsage> KeyUsage { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.LifetimeAction> LifetimeActions { get { throw null; } }
+        public bool? ReuseKey { get { throw null; } set { } }
+        public string Subject { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.SubjectAlternativeNames SubjectAlternativeNames { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public int? ValidityInMonths { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificatePolicyAction : System.IEquatable<Azure.Security.KeyVault.Certificates.CertificatePolicyAction>
@@ -269,8 +269,8 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CertificatePolicyAction(string value) { throw null; }
-        public static Azure.Security.KeyVault.Certificates.CertificatePolicyAction AutoRenew { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Security.KeyVault.Certificates.CertificatePolicyAction EmailContacts { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificatePolicyAction AutoRenew { get { throw null; } }
+        public static Azure.Security.KeyVault.Certificates.CertificatePolicyAction EmailContacts { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Certificates.CertificatePolicyAction other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -288,16 +288,16 @@ namespace Azure.Security.KeyVault.Certificates
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
-        public System.Uri Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Uri Id { get { throw null; } }
+        public string Name { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } }
         public int? RecoverableDays { get { throw null; } }
         public string RecoveryLevel { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        public System.Uri VaultUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] X509Thumbprint { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Uri VaultUri { get { throw null; } }
+        public string Version { get { throw null; } }
+        public byte[] X509Thumbprint { get { throw null; } }
     }
     public partial class DeleteCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.DeletedCertificate>
     {
@@ -315,56 +315,56 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class DeletedCertificate : Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy
     {
         internal DeletedCertificate() { }
-        public System.DateTimeOffset? DeletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public System.Uri RecoveryId { get { throw null; } }
-        public System.DateTimeOffset? ScheduledPurgeDate { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
     }
     public partial class ImportCertificateOptions
     {
         public ImportCertificateOptions(string name, byte[] certificate) { }
-        public byte[] Certificate { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Password { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public byte[] Certificate { get { throw null; } }
+        public bool? Enabled { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public string Password { get { throw null; } set { } }
+        public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class IssuerProperties
     {
         internal IssuerProperties() { }
-        public System.Uri Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Provider { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.Uri Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Provider { get { throw null; } set { } }
     }
     public partial class KeyVaultCertificate
     {
         internal KeyVaultCertificate() { }
-        public byte[] Cer { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public byte[] Cer { get { throw null; } }
         public System.Uri Id { get { throw null; } }
         public System.Uri KeyId { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificateProperties Properties { get { throw null; } }
         public System.Uri SecretId { get { throw null; } }
     }
     public partial class KeyVaultCertificateWithPolicy : Azure.Security.KeyVault.Certificates.KeyVaultCertificate
     {
         internal KeyVaultCertificateWithPolicy() { }
-        public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { get { throw null; } }
     }
     public partial class LifetimeAction
     {
         public LifetimeAction(Azure.Security.KeyVault.Certificates.CertificatePolicyAction action) { }
-        public Azure.Security.KeyVault.Certificates.CertificatePolicyAction Action { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int? DaysBeforeExpiry { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public int? LifetimePercentage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Security.KeyVault.Certificates.CertificatePolicyAction Action { get { throw null; } }
+        public int? DaysBeforeExpiry { get { throw null; } set { } }
+        public int? LifetimePercentage { get { throw null; } set { } }
     }
     public partial class MergeCertificateOptions
     {
         public MergeCertificateOptions(string name, System.Collections.Generic.IEnumerable<byte[]> x509Certificates) { }
-        public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public bool? Enabled { get { throw null; } set { } }
+        public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<byte[]> X509Certificates { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Collections.Generic.IEnumerable<byte[]> X509Certificates { get { throw null; } }
     }
     public partial class RecoverDeletedCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
     {

@@ -3,9 +3,9 @@ namespace Azure.Security.KeyVault.Secrets
     public partial class DeletedSecret : Azure.Security.KeyVault.Secrets.KeyVaultSecret
     {
         internal DeletedSecret() : base (default(string), default(string)) { }
-        public System.DateTimeOffset? DeletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public System.Uri RecoveryId { get { throw null; } }
-        public System.DateTimeOffset? ScheduledPurgeDate { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
     }
     public partial class DeleteSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.DeletedSecret>
     {
@@ -25,8 +25,8 @@ namespace Azure.Security.KeyVault.Secrets
         public KeyVaultSecret(string name, string value) { }
         public System.Uri Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Security.KeyVault.Secrets.SecretProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Secrets.SecretProperties Properties { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class RecoverDeletedSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.SecretProperties>
     {
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Secrets
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
         public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_1_Preview) { }
-        public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
@@ -96,13 +96,13 @@ namespace Azure.Security.KeyVault.Secrets
     {
         public SecretProperties(string name) { }
         public SecretProperties(System.Uri id) { }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public System.Uri KeyId { get { throw null; } }
-        public bool Managed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
         public int? RecoverableDays { get { throw null; } }
