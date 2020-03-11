@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             var expectedTags = new List<KeyValuePair<string, string>>()
             {
-                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeSeconds().ToString())
+                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds().ToString())
             };
 
             Assert.That(linkedActivity.Tags, Is.EquivalentTo(expectedTags));
