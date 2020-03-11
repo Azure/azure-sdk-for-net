@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Billing.Models
 {
 
     /// <summary>
-    /// Defines values for DocumentType.
+    /// Defines values for SpendingLimit.
     /// </summary>
-    public static class DocumentType
+    public static class SpendingLimit
     {
-        public const string Invoice = "Invoice";
-        public const string VoidNote = "VoidNote";
-        public const string TaxReceipt = "TaxReceipt";
-        public const string CreditNote = "CreditNote";
+        public const string Off = "Off";
+        public const string On = "On";
     }
 }
