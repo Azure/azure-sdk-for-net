@@ -949,7 +949,7 @@ namespace Azure.Storage.Files.DataLake
         /// instead.
         /// </remarks>
         /// <remarks>
-        /// Note that if you call FileClient.Exists in a path is does not
+        /// Note that if you call FileClient.Exists on a path that does not
         /// represent a file, Exists will return true. Similarly, if you
         /// call DirectoryClient.Exists on a path that is not a directory,
         /// Exists will return true.
@@ -996,7 +996,7 @@ namespace Azure.Storage.Files.DataLake
         /// instead.
         /// </remarks>
         /// <remarks>
-        /// Note that if you call FileClient.Exists in a path is does not
+        /// Note that if you call FileClient.Exists on a path that does not
         /// represent a file, Exists will return true. Similarly, if you
         /// call DirectoryClient.Exists on a path that is not a directory,
         /// Exists will return true.
