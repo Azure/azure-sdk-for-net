@@ -4,14 +4,14 @@ namespace Azure.Messaging.EventHubs
     {
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         protected EventData(System.ReadOnlyMemory<byte> eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
-        public System.ReadOnlyMemory<byte> Body { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.ReadOnlyMemory<byte> Body { get { throw null; } }
         public System.IO.Stream BodyAsStream { get { throw null; } }
-        public System.DateTimeOffset EnqueuedTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long Offset { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string PartitionKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long SequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> SystemProperties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset EnqueuedTime { get { throw null; } }
+        public long Offset { get { throw null; } }
+        public string PartitionKey { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
+        public long SequenceNumber { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> SystemProperties { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -27,8 +27,8 @@ namespace Azure.Messaging.EventHubs
         public EventHubConnection(string connectionString, string eventHubName) { }
         public EventHubConnection(string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions = null) { }
         public EventHubConnection(string connectionString, string eventHubName, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions) { }
-        public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string FullyQualifiedNamespace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string EventHubName { get { throw null; } }
+        public string FullyQualifiedNamespace { get { throw null; } }
         public bool IsClosed { get { throw null; } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
@@ -42,8 +42,8 @@ namespace Azure.Messaging.EventHubs
     public partial class EventHubConnectionOptions
     {
         public EventHubConnectionOptions() { }
-        public System.Net.IWebProxy Proxy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.Net.IWebProxy Proxy { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -54,9 +54,9 @@ namespace Azure.Messaging.EventHubs
     public partial class EventHubProperties
     {
         protected internal EventHubProperties(string name, System.DateTimeOffset createdOn, string[] partitionIds) { }
-        public System.DateTimeOffset CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string[] PartitionIds { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string[] PartitionIds { get { throw null; } }
     }
     public partial class EventHubsException : System.Exception
     {
@@ -67,10 +67,10 @@ namespace Azure.Messaging.EventHubs
         public EventHubsException(bool isTransient, string eventHubName, string message, Azure.Messaging.EventHubs.EventHubsException.FailureReason reason, System.Exception innerException) { }
         public EventHubsException(bool isTransient, string eventHubName, string message, System.Exception innerException) { }
         public EventHubsException(string eventHubName, string message, Azure.Messaging.EventHubs.EventHubsException.FailureReason reason) { }
-        public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsTransient { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string EventHubName { get { throw null; } }
+        public bool IsTransient { get { throw null; } }
         public override string Message { get { throw null; } }
-        public Azure.Messaging.EventHubs.EventHubsException.FailureReason Reason { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Messaging.EventHubs.EventHubsException.FailureReason Reason { get { throw null; } }
         public enum FailureReason
         {
             GeneralError = 0,
@@ -92,11 +92,11 @@ namespace Azure.Messaging.EventHubs
     public partial class EventHubsRetryOptions
     {
         public EventHubsRetryOptions() { }
-        public Azure.Messaging.EventHubs.EventHubsRetryPolicy CustomRetryPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Messaging.EventHubs.EventHubsRetryPolicy CustomRetryPolicy { get { throw null; } set { } }
         public System.TimeSpan Delay { get { throw null; } set { } }
         public System.TimeSpan MaximumDelay { get { throw null; } set { } }
         public int MaximumRetries { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.EventHubsRetryMode Mode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Messaging.EventHubs.EventHubsRetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan TryTimeout { get { throw null; } set { } }
     }
     public abstract partial class EventHubsRetryPolicy
@@ -119,13 +119,13 @@ namespace Azure.Messaging.EventHubs
     public partial class PartitionProperties
     {
         protected internal PartitionProperties(string eventHubName, string partitionId, bool isEmpty, long beginningSequenceNumber, long lastSequenceNumber, long lastOffset, System.DateTimeOffset lastEnqueuedTime) { }
-        public long BeginningSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsEmpty { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long LastEnqueuedOffset { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long LastEnqueuedSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastEnqueuedTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long BeginningSequenceNumber { get { throw null; } }
+        public string EventHubName { get { throw null; } }
+        public string Id { get { throw null; } }
+        public bool IsEmpty { get { throw null; } }
+        public long LastEnqueuedOffset { get { throw null; } }
+        public long LastEnqueuedSequenceNumber { get { throw null; } }
+        public System.DateTimeOffset LastEnqueuedTime { get { throw null; } }
     }
 }
 namespace Azure.Messaging.EventHubs.Consumer
@@ -140,10 +140,10 @@ namespace Azure.Messaging.EventHubs.Consumer
         public EventHubConsumerClient(string consumerGroup, string connectionString, string eventHubName) { }
         public EventHubConsumerClient(string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions = null) { }
         public EventHubConsumerClient(string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions) { }
-        public string ConsumerGroup { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string ConsumerGroup { get { throw null; } }
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] protected set { } }
+        public bool IsClosed { get { throw null; } protected set { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -198,15 +198,15 @@ namespace Azure.Messaging.EventHubs.Consumer
     public partial struct LastEnqueuedEventProperties
     {
         public LastEnqueuedEventProperties(long? lastSequenceNumber, long? lastOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
-        public System.DateTimeOffset? EnqueuedTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? LastReceivedTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long? Offset { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long? SequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? EnqueuedTime { get { throw null; } }
+        public System.DateTimeOffset? LastReceivedTime { get { throw null; } }
+        public long? Offset { get { throw null; } }
+        public long? SequenceNumber { get { throw null; } }
     }
     public partial class PartitionContext
     {
         protected internal PartitionContext(string partitionId) { }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string PartitionId { get { throw null; } }
         public virtual Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties ReadLastEnqueuedEventProperties() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -215,15 +215,15 @@ namespace Azure.Messaging.EventHubs.Consumer
         private object _dummy;
         private int _dummyPrimitive;
         public PartitionEvent(Azure.Messaging.EventHubs.Consumer.PartitionContext partition, Azure.Messaging.EventHubs.EventData data) { throw null; }
-        public Azure.Messaging.EventHubs.EventData Data { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Messaging.EventHubs.Consumer.PartitionContext Partition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Messaging.EventHubs.EventData Data { get { throw null; } }
+        public Azure.Messaging.EventHubs.Consumer.PartitionContext Partition { get { throw null; } }
     }
     public partial class ReadEventOptions
     {
         public ReadEventOptions() { }
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
-        public long? OwnerLevel { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool TrackLastEnqueuedEventProperties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public long? OwnerLevel { get { throw null; } set { } }
+        public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -237,24 +237,24 @@ namespace Azure.Messaging.EventHubs.Primitives
     public partial class EventProcessorCheckpoint
     {
         public EventProcessorCheckpoint() { }
-        public string ConsumerGroup { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string FullyQualifiedNamespace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Messaging.EventHubs.Consumer.EventPosition StartingPosition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public string EventHubName { get { throw null; } set { } }
+        public string FullyQualifiedNamespace { get { throw null; } set { } }
+        public string PartitionId { get { throw null; } set { } }
+        public Azure.Messaging.EventHubs.Consumer.EventPosition StartingPosition { get { throw null; } set { } }
     }
     public partial class EventProcessorOptions
     {
         public EventProcessorOptions() { }
         public Azure.Messaging.EventHubs.EventHubConnectionOptions ConnectionOptions { get { throw null; } set { } }
-        public Azure.Messaging.EventHubs.Consumer.EventPosition DefaultStartingPosition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Identifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Messaging.EventHubs.Consumer.EventPosition DefaultStartingPosition { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
         public System.TimeSpan LoadBalancingUpdateInterval { get { throw null; } set { } }
         public System.TimeSpan? MaximumWaitTime { get { throw null; } set { } }
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsRetryOptions RetryOptions { get { throw null; } set { } }
-        public bool TrackLastEnqueuedEventProperties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -265,18 +265,18 @@ namespace Azure.Messaging.EventHubs.Primitives
     public partial class EventProcessorPartition
     {
         public EventProcessorPartition() { }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string PartitionId { get { throw null; } }
     }
     public partial class EventProcessorPartitionOwnership
     {
         public EventProcessorPartitionOwnership() { }
-        public string ConsumerGroup { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string FullyQualifiedNamespace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset LastModifiedTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string OwnerIdentifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public string EventHubName { get { throw null; } set { } }
+        public string FullyQualifiedNamespace { get { throw null; } set { } }
+        public System.DateTimeOffset LastModifiedTime { get { throw null; } set { } }
+        public string OwnerIdentifier { get { throw null; } set { } }
+        public string PartitionId { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
     }
     public abstract partial class EventProcessor<TPartition> where TPartition : Azure.Messaging.EventHubs.Primitives.EventProcessorPartition, new()
     {
@@ -284,10 +284,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
-        public string ConsumerGroup { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string FullyQualifiedNamespace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Identifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string ConsumerGroup { get { throw null; } }
+        public string EventHubName { get { throw null; } }
+        public string FullyQualifiedNamespace { get { throw null; } }
+        public string Identifier { get { throw null; } }
         public bool IsRunning { get { throw null; } protected set { } }
         protected abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -314,16 +314,16 @@ namespace Azure.Messaging.EventHubs.Processor
     public partial class PartitionClosingEventArgs
     {
         public PartitionClosingEventArgs(string partitionId, Azure.Messaging.EventHubs.Processor.ProcessingStoppedReason reason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Messaging.EventHubs.Processor.ProcessingStoppedReason Reason { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public string PartitionId { get { throw null; } }
+        public Azure.Messaging.EventHubs.Processor.ProcessingStoppedReason Reason { get { throw null; } }
     }
     public partial class PartitionInitializingEventArgs
     {
         public PartitionInitializingEventArgs(string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition defaultStartingPosition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Messaging.EventHubs.Consumer.EventPosition DefaultStartingPosition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public Azure.Messaging.EventHubs.Consumer.EventPosition DefaultStartingPosition { get { throw null; } set { } }
+        public string PartitionId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ProcessErrorEventArgs
@@ -331,10 +331,10 @@ namespace Azure.Messaging.EventHubs.Processor
         private object _dummy;
         private int _dummyPrimitive;
         public ProcessErrorEventArgs(string partitionId, string operation, System.Exception exception, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Exception Exception { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Operation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public System.Exception Exception { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string PartitionId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ProcessEventArgs
@@ -342,10 +342,10 @@ namespace Azure.Messaging.EventHubs.Processor
         private object _dummy;
         private int _dummyPrimitive;
         public ProcessEventArgs(Azure.Messaging.EventHubs.Consumer.PartitionContext partition, Azure.Messaging.EventHubs.EventData data, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task> updateCheckpointImplementation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Messaging.EventHubs.EventData Data { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
+        public Azure.Messaging.EventHubs.EventData Data { get { throw null; } }
         public bool HasEvent { get { throw null; } }
-        public Azure.Messaging.EventHubs.Consumer.PartitionContext Partition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Messaging.EventHubs.Consumer.PartitionContext Partition { get { throw null; } }
         public System.Threading.Tasks.Task UpdateCheckpointAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public enum ProcessingStoppedReason
@@ -360,8 +360,8 @@ namespace Azure.Messaging.EventHubs.Producer
     {
         public CreateBatchOptions() { }
         public long? MaximumSizeInBytes { get { throw null; } set { } }
-        public string PartitionId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string PartitionKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string PartitionId { get { throw null; } set { } }
+        public string PartitionKey { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -389,7 +389,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubProducerClient(string connectionString, string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions) { }
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
-        public bool IsClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] protected set { } }
+        public bool IsClosed { get { throw null; } protected set { } }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Messaging.EventHubs.Producer.EventDataBatch> CreateBatchAsync(Azure.Messaging.EventHubs.Producer.CreateBatchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Messaging.EventHubs.Producer.EventDataBatch> CreateBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -277,6 +277,17 @@ namespace Azure.Core.Tests
                 5));
         }
 
+        [Test]
+        public async Task FlushDoesntThrow()
+        {
+            Stream reliableStream = await CreateAsync(
+                offset => new MemoryStream(),
+                offset => new ValueTask<Stream>(new MemoryStream()),
+                new ResponseClassifier(), maxRetries: 5);
+
+            await reliableStream.FlushAsync();
+        }
+
         private void AssertReads(byte[] buffer, int length)
         {
             for (int i = 0; i < length; i++)
