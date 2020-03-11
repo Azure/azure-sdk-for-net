@@ -82,10 +82,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </return>
         public async Task<AzureOperationResponse<IPage<VCenter>>> ListByReplicationFabricsWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.ResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceName");
@@ -102,6 +98,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "fabricName");
             }
+            string apiVersion = "2018-07-10";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -109,6 +106,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByReplicationFabrics", tracingParameters);
@@ -121,9 +119,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -285,10 +283,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </return>
         public async Task<AzureOperationResponse<VCenter>> GetWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.ResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceName");
@@ -309,6 +303,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vCenterName");
             }
+            string apiVersion = "2018-07-10";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -316,6 +311,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("vCenterName", vCenterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -330,9 +326,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
             _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -570,10 +566,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </return>
         public async Task<AzureOperationResponse<IPage<VCenter>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.ResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceName");
@@ -586,6 +578,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2018-07-10";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -593,6 +586,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -603,9 +597,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -770,10 +764,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </return>
         public async Task<AzureOperationResponse<VCenter>> BeginCreateWithHttpMessagesAsync(string fabricName, string vCenterName, AddVCenterRequest addVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.ResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceName");
@@ -798,6 +788,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "addVCenterRequest");
             }
+            string apiVersion = "2018-07-10";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -805,6 +796,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("vCenterName", vCenterName);
                 tracingParameters.Add("addVCenterRequest", addVCenterRequest);
@@ -820,9 +812,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
             _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -988,10 +980,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </return>
         public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, string vCenterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.ResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceName");
@@ -1012,6 +1000,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vCenterName");
             }
+            string apiVersion = "2018-07-10";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1019,6 +1008,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("vCenterName", vCenterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1033,9 +1023,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
             _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1182,10 +1172,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </return>
         public async Task<AzureOperationResponse<VCenter>> BeginUpdateWithHttpMessagesAsync(string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.ResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceName");
@@ -1210,6 +1196,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "updateVCenterRequest");
             }
+            string apiVersion = "2018-07-10";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1217,6 +1204,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("vCenterName", vCenterName);
                 tracingParameters.Add("updateVCenterRequest", updateVCenterRequest);
@@ -1232,9 +1220,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
             _url = _url.Replace("{vCenterName}", System.Uri.EscapeDataString(vCenterName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

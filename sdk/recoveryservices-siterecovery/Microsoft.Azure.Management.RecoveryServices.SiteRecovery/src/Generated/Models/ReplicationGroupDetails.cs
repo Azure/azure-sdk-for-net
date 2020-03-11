@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Replication group details. This will be used in case of San and Wvr.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ReplicationGroupDetails")]
     public partial class ReplicationGroupDetails : ConfigurationSettings
     {
         /// <summary>

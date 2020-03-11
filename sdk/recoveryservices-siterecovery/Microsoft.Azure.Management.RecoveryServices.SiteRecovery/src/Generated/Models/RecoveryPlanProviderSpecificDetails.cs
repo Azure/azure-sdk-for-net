@@ -14,16 +14,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Container mapping provider specific details.
+    /// Recovery plan provider specific details.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ProtectionContainerMappingProviderSpecificDetails")]
-    public partial class ProtectionContainerMappingProviderSpecificDetails
+    [Newtonsoft.Json.JsonObject("RecoveryPlanProviderSpecificDetails")]
+    public partial class RecoveryPlanProviderSpecificDetails
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ProtectionContainerMappingProviderSpecificDetails class.
+        /// RecoveryPlanProviderSpecificDetails class.
         /// </summary>
-        public ProtectionContainerMappingProviderSpecificDetails()
+        public RecoveryPlanProviderSpecificDetails()
         {
             CustomInit();
         }

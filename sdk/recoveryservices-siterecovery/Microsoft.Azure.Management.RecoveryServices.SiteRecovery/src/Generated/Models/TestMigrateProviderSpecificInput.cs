@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Test migrate provider specific input.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TestMigrateProviderSpecificInput")]
     public partial class TestMigrateProviderSpecificInput
     {
         /// <summary>

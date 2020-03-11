@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Remove Disk provider specific input.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RemoveDisksProviderSpecificInput")]
     public partial class RemoveDisksProviderSpecificInput
     {
         /// <summary>

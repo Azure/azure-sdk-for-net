@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents details for export jobs workflow.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ExportJobDetails")]
     public partial class ExportJobDetails : JobDetails
     {
         /// <summary>
