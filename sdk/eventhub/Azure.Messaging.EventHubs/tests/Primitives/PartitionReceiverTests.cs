@@ -32,12 +32,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
-            var expectedType = consumerGroup is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-
-            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "cs"), Throws.TypeOf(expectedType), "The connection string constructor without event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "cs", "eh"), Throws.TypeOf(expectedType), "The connection string constructor with event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.TypeOf(expectedType), "The namespace constructor should perform validation.");
-            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>()), Throws.TypeOf(expectedType), "The connection constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "cs"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor without event hub should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "cs", "eh"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor with event hub should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver(consumerGroup, "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>()), Throws.InstanceOf<ArgumentException>(), "The connection constructor should perform validation.");
         }
 
         /// <summary>
@@ -49,12 +47,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesThePartitionId(string partitionId)
         {
-            var expectedType = partitionId is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-
-            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "cs"), Throws.TypeOf(expectedType), "The connection string constructor without event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "cs", "eh"), Throws.TypeOf(expectedType), "The connection string constructor with event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.TypeOf(expectedType), "The namespace constructor should perform validation.");
-            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, Mock.Of<EventHubConnection>()), Throws.TypeOf(expectedType), "The connection constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "cs"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor without event hub should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "cs", "eh"), Throws.InstanceOf<ArgumentException>(), "The connection string constructor with event hub should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", partitionId, EventPosition.Earliest, Mock.Of<EventHubConnection>()), Throws.InstanceOf<ArgumentException>(), "The connection constructor should perform validation.");
         }
 
         /// <summary>
@@ -66,10 +62,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConnectionString(string connectionString)
         {
-            var expectedType = connectionString is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString), Throws.TypeOf(expectedType), "The constructor without event hub should perform validation.");
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString, "eh"), Throws.TypeOf(expectedType), "The constructor with event hub should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString), Throws.InstanceOf<ArgumentException>(), "The constructor without event hub should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString, "eh"), Throws.InstanceOf<ArgumentException>(), "The constructor with event hub should perform validation.");
         }
 
         /// <summary>
@@ -81,8 +75,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
-            var expectedType = fullyQualifiedNamespace is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", Mock.Of<TokenCredential>()), Throws.TypeOf(expectedType), "The constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The constructor should perform validation.");
         }
 
         /// <summary>
@@ -94,8 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorValidatesTheEventHubName(string eventHubName)
         {
-            var expectedType = eventHubName is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", eventHubName, Mock.Of<TokenCredential>()), Throws.TypeOf(expectedType), "The constructor should perform validation.");
+            Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", eventHubName, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The constructor should perform validation.");
         }
 
         /// <summary>
@@ -372,7 +364,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CloseAsyncUpdatesIsClosedProperty()
+        public async Task CloseAsyncMarksTheClientAsClosed()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
@@ -484,6 +476,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
+            var expectedException = new InsufficientMemoryException("This message is expected.");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var eventHubName = "someHub";
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
@@ -491,21 +484,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockReceiver.Object.Logger = mockEventSource.Object;
 
-            mockEventSource
-                .Setup(log => log.ClientCloseStart(
-                    It.IsAny<Type>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>()))
-                .Callback(() => cancellationSource.Cancel());
+            mockReceiver
+                .SetupGet(receiver => receiver.OwnsConnection)
+                .Throws(expectedException);
 
             try
             {
                 await mockReceiver.Object.CloseAsync(cancellationSource.Token);
             }
-            catch (TaskCanceledException)
+            catch (InsufficientMemoryException)
             {
-                // We are forcing a token cancellation, so a TaskCanceledException is expected.
+                // This exception is expected.
             }
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             mockEventSource
                 .Verify(log => log.ClientCloseStart(
@@ -519,7 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     typeof(PartitionReceiver),
                     eventHubName,
                     It.IsAny<string>(),
-                    It.IsAny<string>()),
+                    expectedException.Message),
                 Times.Once);
 
             mockEventSource

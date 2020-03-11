@@ -24,6 +24,7 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   intended to enable scenarios with special needs which require more direct control.
     /// </remarks>
     ///
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
     /// <seealso cref="EventHubConsumerClient.ReadEventsFromPartitionAsync(string, EventPosition, CancellationToken)"/>
     /// <seealso cref="EventHubConsumerClient.ReadEventsFromPartitionAsync(string, EventPosition, ReadEventOptions, CancellationToken)"/>
     ///
@@ -84,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   and should take responsibility for managing its lifespan.
         /// </summary>
         ///
-        private bool OwnsConnection { get; } = true;
+        internal virtual bool OwnsConnection { get; } = true;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -160,7 +161,6 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             options = options?.Clone() ?? new PartitionReceiverOptions();
 
-            OwnsConnection = true;
             Connection = new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
@@ -196,7 +196,6 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             options = options?.Clone() ?? new PartitionReceiverOptions();
 
-            OwnsConnection = true;
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
             ConsumerGroup = consumerGroup;
             PartitionId = partitionId;
@@ -252,6 +251,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            if (IsClosed)
+            {
+                return;
+            }
+
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
@@ -261,7 +266,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync(cancellationToken).ConfigureAwait(false);
+                    await Connection.CloseAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
