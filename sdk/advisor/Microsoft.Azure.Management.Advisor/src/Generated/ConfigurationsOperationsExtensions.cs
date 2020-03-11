@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='configContract'>
             /// The Azure Advisor configuration data structure.
             /// </param>
-            public static ARMErrorResponseBody CreateInSubscription(this IConfigurationsOperations operations, ConfigData configContract)
+            public static ConfigData CreateInSubscription(this IConfigurationsOperations operations, ConfigData configContract)
             {
                 return operations.CreateInSubscriptionAsync(configContract).GetAwaiter().GetResult();
             }
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ARMErrorResponseBody> CreateInSubscriptionAsync(this IConfigurationsOperations operations, ConfigData configContract, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConfigData> CreateInSubscriptionAsync(this IConfigurationsOperations operations, ConfigData configContract, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateInSubscriptionWithHttpMessagesAsync(configContract, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='resourceGroup'>
             /// The name of the Azure resource group.
             /// </param>
-            public static ARMErrorResponseBody CreateInResourceGroup(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup)
+            public static ConfigData CreateInResourceGroup(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup)
             {
                 return operations.CreateInResourceGroupAsync(configContract, resourceGroup).GetAwaiter().GetResult();
             }
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ARMErrorResponseBody> CreateInResourceGroupAsync(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConfigData> CreateInResourceGroupAsync(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateInResourceGroupWithHttpMessagesAsync(configContract, resourceGroup, null, cancellationToken).ConfigureAwait(false))
                 {
