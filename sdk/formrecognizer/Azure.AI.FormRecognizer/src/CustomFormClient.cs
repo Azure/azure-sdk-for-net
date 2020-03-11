@@ -160,12 +160,12 @@ namespace Azure.AI.FormRecognizer.Custom
             return await _operations.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual Pageable<ModelInfo> GetModels(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
         }
 
-        public virtual AsyncPageable<ModelInfo> GetModelsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
             return _operations.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
         }
