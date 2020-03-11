@@ -11,11 +11,6 @@
     <!-- We don't have to worry about Breaking Changes until GA -->
     <EnableApiCompat>false</EnableApiCompat>
 
-    <!-- Ignore generated warnings until https://github.com/Azure/autorest.csharp/issues/206 is fixed -->
-    <NoWarn>
-      $(NoWarn);
-      AZC0001;
-    </NoWarn>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
