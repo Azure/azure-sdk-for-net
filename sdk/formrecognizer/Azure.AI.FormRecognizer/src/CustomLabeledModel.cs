@@ -11,28 +11,16 @@ namespace Azure.AI.FormRecognizer.Custom
         internal CustomLabeledModel(Model_internal model)
         {
             ModelId = model.ModelInfo.ModelId.ToString();
-            AverageLabelAccuracy = model.TrainResult.AverageModelAccuracy.Value;
-            LabelAccuracies = ConvertLabelAccuracies(model.TrainResult.Fields);
+            AveragePredictionAccuracy = model.TrainResult.AverageModelAccuracy.Value;
+            PredictionAccuracies = (IReadOnlyList<FieldPredictionAccuracy>)model.TrainResult.Fields;
             TrainingStatus = new CustomModelTrainingStatus(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
 
         public string ModelId { get; }
-        public float AverageLabelAccuracy { get; }
-        public IReadOnlyList<LabeledFieldAccuracy> LabelAccuracies { get; }
+        public float AveragePredictionAccuracy { get; }
+        public IReadOnlyList<FieldPredictionAccuracy> PredictionAccuracies { get; }
         public TrainingInfo TrainingInfo { get; }
         public CustomModelTrainingStatus TrainingStatus { get; }
-
-        private static IReadOnlyList<LabeledFieldAccuracy> ConvertLabelAccuracies(ICollection<FormFieldsReport_internal> fields)
-        {
-            List<LabeledFieldAccuracy> accuracies = new List<LabeledFieldAccuracy>();
-            foreach (FormFieldsReport_internal field in fields)
-            {
-                LabeledFieldAccuracy accuracy = new LabeledFieldAccuracy(field);
-                accuracies.Add(accuracy);
-            }
-
-            return accuracies;
-        }
     }
 }

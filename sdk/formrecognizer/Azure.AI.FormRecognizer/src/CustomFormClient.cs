@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public virtual Response<SubscriptionProperties> GetModelSubscriptionProperties(CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionProperties> GetSubscriptionProperties(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = _operations.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
             return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public virtual async Task<Response<SubscriptionProperties>> GetModelSubscriptionPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionProperties>> GetSubscriptionPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = await _operations.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
