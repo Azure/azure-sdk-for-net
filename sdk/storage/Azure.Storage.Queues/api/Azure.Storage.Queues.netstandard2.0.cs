@@ -204,7 +204,9 @@ namespace Azure.Storage.Queues.Models
         public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter { get { throw null; } }
         public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode { get { throw null; } }
         public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Queues.Models.QueueErrorCode left, Azure.Storage.Queues.Models.QueueErrorCode right) { throw null; }
         public static implicit operator Azure.Storage.Queues.Models.QueueErrorCode (string value) { throw null; }
@@ -338,12 +340,15 @@ namespace Azure.Storage.Sas
         public string QueueName { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public void SetPermissions(Azure.Storage.Sas.QueueAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.QueueSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.FlagsAttribute]

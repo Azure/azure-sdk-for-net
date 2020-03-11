@@ -33,7 +33,9 @@ namespace Azure.Template.Models
         public static Azure.Template.Models.DaysOfWeek Tuesday { get { throw null; } }
         public static Azure.Template.Models.DaysOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.Template.Models.DaysOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Template.Models.DaysOfWeek left, Azure.Template.Models.DaysOfWeek right) { throw null; }
         public static implicit operator Azure.Template.Models.DaysOfWeek (string value) { throw null; }
@@ -49,7 +51,9 @@ namespace Azure.Template.Models
         public static Azure.Template.Models.Fruit Apple { get { throw null; } }
         public static Azure.Template.Models.Fruit Pear { get { throw null; } }
         public bool Equals(Azure.Template.Models.Fruit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Template.Models.Fruit left, Azure.Template.Models.Fruit right) { throw null; }
         public static implicit operator Azure.Template.Models.Fruit (string value) { throw null; }
