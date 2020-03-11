@@ -39,13 +39,14 @@ namespace Azure.AI.FormRecognizer.Custom
         public CustomFormClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential, Azure.AI.FormRecognizer.FormRecognizerClientOptions options) { }
         public virtual Azure.Response DeleteModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteModelAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.FormRecognizer.Custom.ModelInfo> GetModels(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.FormRecognizer.Custom.ModelInfo> GetModelsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.FormRecognizer.Custom.CustomModelInfo> GetModelInfos(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.FormRecognizer.Custom.CustomModelInfo> GetModelInfosAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.FormRecognizer.Custom.SubscriptionProperties> GetSubscriptionProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.Custom.SubscriptionProperties>> GetSubscriptionPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.FormRecognizer.Models.ExtractedForm> StartExtractForm(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.FormRecognizer.Models.ExtractedForm> StartExtractForm(string modelId, System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Models.ExtractedForm>> StartExtractFormAsync(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Models.ExtractedForm>> StartExtractFormAsync(string modelId, System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.FormRecognizer.Custom.CustomModel> StartTraining(string source, Azure.AI.FormRecognizer.Custom.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Custom.CustomModel>> StartTrainingAsync(string source, Azure.AI.FormRecognizer.Custom.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.FormRecognizer.Custom.CustomLabeledModel> StartTrainingWithLabels(string source, Azure.AI.FormRecognizer.Custom.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -56,17 +57,25 @@ namespace Azure.AI.FormRecognizer.Custom
         internal CustomLabeledModel() { }
         public float AveragePredictionAccuracy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string ModelId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.AI.FormRecognizer.Custom.CustomModelInfo ModelInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.FieldPredictionAccuracy> PredictionAccuracies { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.AI.FormRecognizer.Custom.TrainingInfo TrainingInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Custom.CustomModelTrainingStatus TrainingStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class CustomModel
     {
         internal CustomModel() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.CustomModelLearnedForm> LearnedForms { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string ModelId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.AI.FormRecognizer.Custom.CustomModelInfo ModelInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.AI.FormRecognizer.Custom.TrainingInfo TrainingInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Custom.CustomModelTrainingStatus TrainingStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public partial class CustomModelInfo
+    {
+        internal CustomModelInfo() { }
+        public System.DateTimeOffset? CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string ModelId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.ModelStatus TrainingStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class CustomModelLearnedForm
     {
@@ -74,27 +83,11 @@ namespace Azure.AI.FormRecognizer.Custom
         public string FormTypeId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> LearnedFields { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
-    public partial class CustomModelTrainingStatus
-    {
-        internal CustomModelTrainingStatus() { }
-        public System.DateTimeOffset? CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ModelId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.ModelStatus TrainingStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-    }
     public partial class FieldPredictionAccuracy
     {
         public FieldPredictionAccuracy() { }
         public float Accuracy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Label { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-    }
-    public partial class ModelInfo
-    {
-        internal ModelInfo() { }
-        public System.DateTimeOffset CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastUpdatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ModelId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.ModelStatus TrainingStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class SubscriptionProperties
     {
@@ -113,7 +106,7 @@ namespace Azure.AI.FormRecognizer.Custom
     }
     public partial class TrainingFileFilter
     {
-        public TrainingFileFilter() { }
+        internal TrainingFileFilter() { }
         public bool? IncludeSubFolders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Prefix { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
@@ -143,18 +136,19 @@ namespace Azure.AI.FormRecognizer.Models
         internal ExtractedField() { }
         public float? Confidence { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string Label { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.BoundingBox LabelOutline { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.BoundingBox LabelBoundingBox { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedItem> LabelRawExtractedItems { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.BoundingBox ValueOutline { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.BoundingBox ValueBoundingBox { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedItem> ValueRawExtractedItems { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class ExtractedForm
     {
         internal ExtractedForm() { }
+        public int EndPageNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string LearnedFormType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.PageRange PageRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedPage> Pages { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int StartPageNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class ExtractedLayoutPage
     {
@@ -174,14 +168,15 @@ namespace Azure.AI.FormRecognizer.Models
     public partial class ExtractedReceipt
     {
         internal ExtractedReceipt() { }
+        public int EndPageNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Models.ExtractedReceiptField> ExtractedFields { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceiptItem> Items { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string MerchantAddress { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string MerchantName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string MerchantPhoneNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.PageRange PageRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.AI.FormRecognizer.Models.RawExtractedPage RawExtractedPage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.AI.FormRecognizer.Models.ExtractedReceiptType ReceiptType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int StartPageNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public float? Subtotal { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public float? Tax { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public float? Tip { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
@@ -277,12 +272,6 @@ namespace Azure.AI.FormRecognizer.Models
         Running = 1,
         Succeeded = 2,
         Failed = 3,
-    }
-    public partial class PageRange
-    {
-        internal PageRange() { }
-        public int EndPageNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int StartPageNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class RawExtractedItem
     {
