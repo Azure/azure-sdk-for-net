@@ -2016,6 +2016,10 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="Progress{ChangeAccessControlListPartialResult}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
+        /// <param name="stopOnFailure">
+        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
+        /// Default is false.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2031,6 +2035,7 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
             IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
+            bool stopOnFailure = false,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlListRecursive)}");
@@ -2044,6 +2049,7 @@ namespace Azure.Storage.Files.DataLake
                     Mode.Set,
                     batchSize,
                     progressHandler,
+                    stopOnFailure,
                     false, // async
                     cancellationToken)
                     .EnsureCompleted();
@@ -2076,6 +2082,10 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="Progress{ChangeAccessControlListPartialResult}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
+        /// <param name="stopOnFailure">
+        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
+        /// Default is false.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2091,6 +2101,7 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
             IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
+            bool stopOnFailure = false,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlListRecursive)}");
@@ -2104,6 +2115,7 @@ namespace Azure.Storage.Files.DataLake
                     Mode.Set,
                     batchSize,
                     progressHandler,
+                    stopOnFailure,
                     true, // async
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2136,6 +2148,10 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="Progress{ChangeAccessControlListPartialResult}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
+        /// <param name="stopOnFailure">
+        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
+        /// Default is false.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2151,6 +2167,7 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
             IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
+            bool stopOnFailure = false,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(ModifyAccessControlListRecursive)}");
@@ -2164,6 +2181,7 @@ namespace Azure.Storage.Files.DataLake
                     Mode.Modify,
                     batchSize,
                     progressHandler,
+                    stopOnFailure,
                     false, // async
                     cancellationToken)
                     .EnsureCompleted();
@@ -2200,6 +2218,10 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="stopOnFailure">
+        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
+        /// Default is false.
+        /// </param>
         /// <returns>
         /// A <see cref="ChangeAccessControlListResult"/> that contains summary stats of the operation.
         /// </returns>
@@ -2211,6 +2233,7 @@ namespace Azure.Storage.Files.DataLake
             IList<PathAccessControlItem> accessControlList,
             int? batchSize = default,
             IProgress<ChangeAccessControlListPartialResult> progressHandler = default,
+            bool stopOnFailure = false,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(ModifyAccessControlListRecursive)}");
@@ -2224,6 +2247,7 @@ namespace Azure.Storage.Files.DataLake
                     Mode.Modify,
                     batchSize,
                     progressHandler,
+                    stopOnFailure,
                     true, // async
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2261,6 +2285,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="Progress{ChangeAccessControlListPartialResult}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
+        /// <param name="stopOnFailure">
+        /// Whether progress should be stopped on first batch that contain failed paths.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2281,6 +2308,7 @@ namespace Azure.Storage.Files.DataLake
             Mode mode,
             int? batchSize,
             IProgress<ChangeAccessControlListPartialResult> progressHandler,
+            bool stopOnFailure,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2299,6 +2327,7 @@ namespace Azure.Storage.Files.DataLake
                     int directoriesSuccessfulCount = 0;
                     int filesSuccessfulCount = 0;
                     int failureCount = 0;
+                    bool shouldStop = false;
                     do
                     {
                         Response<PathSetAccessControlRecursiveResult> jsonResponse =
@@ -2344,8 +2373,10 @@ namespace Azure.Storage.Files.DataLake
                             failureCount += currentFailureCount;
                         }
 
+                        shouldStop = (stopOnFailure && failureCount > 0) || string.IsNullOrEmpty(continuationToken);
+
                         cancellationToken.ThrowIfCancellationRequested();
-                    } while (!string.IsNullOrEmpty(continuationToken));
+                    } while (!shouldStop);
 
                     return new ChangeAccessControlListResult()
                         {

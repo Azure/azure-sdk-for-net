@@ -12,6 +12,59 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public static partial class DataLakeModelFactory
     {
+        #region ChangeAccessControlListResult
+        /// <summary>
+        /// Creates a new <see cref="ChangeAccessControlListResult"/> instance for mocking.
+        /// </summary>
+        /// <returns></returns>
+        public static ChangeAccessControlListResult ChangeAccessControlListResult(
+            int directoriesSuccessfulCount,
+            int filesSuccessfulCount,
+            int failureCount
+            ) => new ChangeAccessControlListResult()
+            {
+                DirectoriesSuccessfulCount = directoriesSuccessfulCount,
+                FilesSuccessfulCount = filesSuccessfulCount,
+                FailureCount = failureCount,
+            };
+        #endregion ChangeAccessControlListResult
+
+        #region ChangeAccessControlListPartialResult
+        /// <summary>
+        /// Creates a new <see cref="ChangeAccessControlListPartialResult"/> instance for mocking.
+        /// </summary>
+        /// <returns></returns>
+        public static ChangeAccessControlListPartialResult ChangeAccessControlListPartialResult(
+            int directoriesSuccessfulCount,
+            int filesSuccessfulCount,
+            int failureCount,
+            IEnumerable<ChangeAccessControlListResultFailedEntry> failedEntries
+            ) => new ChangeAccessControlListPartialResult()
+            {
+                DirectoriesSuccessfulCount = directoriesSuccessfulCount,
+                FilesSuccessfulCount = filesSuccessfulCount,
+                FailureCount = failureCount,
+                FailedEntries = failedEntries,
+            };
+        #endregion ChangeAccessControlListResult
+
+        #region ChangeAccessControlListResultFailedEntry
+        /// <summary>
+        /// Creates a new <see cref="ChangeAccessControlListResultFailedEntry"/> instance for mocking.
+        /// </summary>
+        /// <returns></returns>
+        public static ChangeAccessControlListResultFailedEntry ChangeAccessControlListResultFailedEntry(
+            string name,
+            string type,
+            string errorMessage
+            ) => new ChangeAccessControlListResultFailedEntry()
+            {
+                Name = name,
+                Type = type,
+                ErrorMessage = errorMessage,
+            };
+        #endregion ChangeAccessControlListResultFailedEntry
+
         #region FileDownloadDetails
         /// <summary>
         /// Creates a new <see cref="FileDownloadDetails"/> instance for mocking.

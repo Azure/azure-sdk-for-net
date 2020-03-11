@@ -4,10 +4,6 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
     /// ChangeAccessControlListResult contains summary counts of operations that change Access Control Lists recursively.
-    /// See <see cref="DataLakePathClient.SetAccessControlListRecursive(System.Collections.Generic.IList{PathAccessControlItem}, int?, System.IProgress{ChangeAccessControlListPartialResult}, System.Threading.CancellationToken)"/>
-    /// <see cref="DataLakePathClient.SetAccessControlListRecursiveAsync(System.Collections.Generic.IList{PathAccessControlItem}, int?, System.IProgress{ChangeAccessControlListPartialResult}, System.Threading.CancellationToken)"/>
-    /// <see cref="DataLakePathClient.ModifyAccessControlListRecursive(System.Collections.Generic.IList{PathAccessControlItem}, int?, System.IProgress{ChangeAccessControlListPartialResult}, System.Threading.CancellationToken)"/>
-    /// <see cref="DataLakePathClient.ModifyAccessControlListRecursiveAsync(System.Collections.Generic.IList{PathAccessControlItem}, int?, System.IProgress{ChangeAccessControlListPartialResult}, System.Threading.CancellationToken)"/>
     /// </summary>
     public class ChangeAccessControlListResult
     {
