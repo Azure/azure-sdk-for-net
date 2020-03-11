@@ -39,8 +39,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
-            var expectedType = fullyQualifiedNamespace is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), Throws.TypeOf(expectedType));
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -53,8 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheEventHubName(string eventHubName)
         {
-            var expectedType = eventHubName is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), Throws.TypeOf(expectedType));
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
