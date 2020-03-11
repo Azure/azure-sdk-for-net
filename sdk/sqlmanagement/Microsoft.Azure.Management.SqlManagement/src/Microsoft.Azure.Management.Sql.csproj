@@ -14,6 +14,7 @@
 New features:
 - Added MinimalTlsVersion to Server properties
 - Added MinimalTlsVersion to ManagedInstance properties
+- Updated SDK clients of Auditing and Data Classification services.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
