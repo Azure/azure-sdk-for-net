@@ -206,13 +206,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AzPowerShellVersion");
             }
-            if (ScriptContent != null)
-            {
-                if (ScriptContent.Length > 32000)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ScriptContent", 32000);
-                }
-            }
             if (EnvironmentVariables != null)
             {
                 foreach (var element in EnvironmentVariables)
