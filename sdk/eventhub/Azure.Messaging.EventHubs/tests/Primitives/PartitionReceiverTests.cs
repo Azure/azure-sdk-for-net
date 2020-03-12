@@ -422,6 +422,35 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task GetPartitionPropertiesUsesTheCancellationToken()
+        {
+            var mockConnection = new Mock<EventHubConnection>();
+            using var cancellationSource = new CancellationTokenSource();
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+
+            mockConnection
+                .Setup(connection => connection.GetPartitionPropertiesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(default(PartitionProperties)));
+
+            await receiver.GetPartitionPropertiesAsync(cancellationSource.Token);
+
+            mockConnection
+                .Verify(connection => connection.GetPartitionPropertiesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    cancellationSource.Token),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.GetPartitionPropertiesAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task GetPartitionPropertiesFailsWhenPartitionReceiverIsClosed()
         {
             using var cancellationSource = new CancellationTokenSource();
