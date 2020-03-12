@@ -1412,7 +1412,7 @@ namespace Azure.Storage.Files.DataLake
                 System.IO.Stream body,
                 string requestId = default,
                 int? timeout = default,
-                Azure.Storage.Files.DataLake.Models.Mode? mode = default,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode? mode = default,
                 int? maxRecords = default,
                 string continuation = default,
                 long? position = default,
@@ -1545,7 +1545,7 @@ namespace Azure.Storage.Files.DataLake
                 System.IO.Stream body,
                 string requestId = default,
                 int? timeout = default,
-                Azure.Storage.Files.DataLake.Models.Mode? mode = default,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode? mode = default,
                 int? maxRecords = default,
                 string continuation = default,
                 long? position = default,
@@ -3043,7 +3043,7 @@ namespace Azure.Storage.Files.DataLake
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Files.DataLake.Models.Mode mode,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
                 string version,
                 int? timeout = default,
                 string continuation = default,
@@ -3113,7 +3113,7 @@ namespace Azure.Storage.Files.DataLake
             internal static Azure.Core.HttpMessage SetAccessControlRecursiveAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                Azure.Storage.Files.DataLake.Models.Mode mode,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
                 string version,
                 int? timeout = default,
                 string continuation = default,
@@ -3652,13 +3652,13 @@ namespace Azure.Storage.Files.DataLake
 #endregion Service
 
 #region Models
-#region class AclFailedEntryList
+#region class AclFailedEntry
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// AclFailedEntryList
+    /// AclFailedEntry
     /// </summary>
-    public partial class AclFailedEntryList
+    public partial class AclFailedEntry
     {
         /// <summary>
         /// name
@@ -3676,21 +3676,21 @@ namespace Azure.Storage.Files.DataLake.Models
         public string ErrorMessage { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of AclFailedEntryList instances.
-        /// You can use DataLakeModelFactory.AclFailedEntryList instead.
+        /// Prevent direct instantiation of AclFailedEntry instances.
+        /// You can use DataLakeModelFactory.AclFailedEntry instead.
         /// </summary>
-        internal AclFailedEntryList() { }
+        internal AclFailedEntry() { }
 
         /// <summary>
-        /// Deserializes XML into a new AclFailedEntryList instance.
+        /// Deserializes XML into a new AclFailedEntry instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized AclFailedEntryList instance.</returns>
-        internal static Azure.Storage.Files.DataLake.Models.AclFailedEntryList FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized AclFailedEntry instance.</returns>
+        internal static Azure.Storage.Files.DataLake.Models.AclFailedEntry FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Files.DataLake.Models.AclFailedEntryList _value = new Azure.Storage.Files.DataLake.Models.AclFailedEntryList();
+            Azure.Storage.Files.DataLake.Models.AclFailedEntry _value = new Azure.Storage.Files.DataLake.Models.AclFailedEntry();
             _child = element.Element(System.Xml.Linq.XName.Get("name", ""));
             if (_child != null)
             {
@@ -3710,7 +3710,7 @@ namespace Azure.Storage.Files.DataLake.Models
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.AclFailedEntryList value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.AclFailedEntry value);
     }
 
     /// <summary>
@@ -3719,14 +3719,14 @@ namespace Azure.Storage.Files.DataLake.Models
     public static partial class DataLakeModelFactory
     {
         /// <summary>
-        /// Creates a new AclFailedEntryList instance for mocking.
+        /// Creates a new AclFailedEntry instance for mocking.
         /// </summary>
-        public static AclFailedEntryList AclFailedEntryList(
+        public static AclFailedEntry AclFailedEntry(
             string name = default,
             string type = default,
             string errorMessage = default)
         {
-            return new AclFailedEntryList()
+            return new AclFailedEntry()
             {
                 Name = name,
                 Type = type,
@@ -3735,7 +3735,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
     }
 }
-#endregion class AclFailedEntryList
+#endregion class AclFailedEntry
 
 #region class FileSystem
 namespace Azure.Storage.Files.DataLake.Models
@@ -3743,7 +3743,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// FileSystem
     /// </summary>
-    internal partial class FileSystem
+    public partial class FileSystem
     {
         /// <summary>
         /// name
@@ -3796,6 +3796,28 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.FileSystem value);
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileSystem instance for mocking.
+        /// </summary>
+        public static FileSystem FileSystem(
+            string name = default,
+            string lastModified = default,
+            string eTag = default)
+        {
+            return new FileSystem()
+            {
+                Name = name,
+                LastModified = lastModified,
+                ETag = eTag,
+            };
+        }
     }
 }
 #endregion class FileSystem
@@ -3939,7 +3961,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// FileSystemList
     /// </summary>
-    internal partial class FileSystemList
+    public partial class FileSystemList
     {
         /// <summary>
         /// filesystems
@@ -3949,7 +3971,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new FileSystemList instance
         /// </summary>
-        public FileSystemList()
+        internal FileSystemList()
             : this(false)
         {
         }
@@ -3985,6 +4007,24 @@ namespace Azure.Storage.Files.DataLake.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.DataLake.Models.FileSystemList value);
     }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileSystemList instance for mocking.
+        /// </summary>
+        public static FileSystemList FileSystemList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.FileSystem> filesystems = default)
+        {
+            return new FileSystemList()
+            {
+                Filesystems = filesystems,
+            };
+        }
+    }
 }
 #endregion class FileSystemList
 
@@ -3994,7 +4034,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Path
     /// </summary>
-    internal partial class Path
+    public partial class Path
     {
         /// <summary>
         /// name
@@ -4041,6 +4081,38 @@ namespace Azure.Storage.Files.DataLake.Models
         /// You can use DataLakeModelFactory.Path instead.
         /// </summary>
         internal Path() { }
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new Path instance for mocking.
+        /// </summary>
+        public static Path Path(
+            string name = default,
+            bool? isDirectory = default,
+            string lastModified = default,
+            string eTag = default,
+            long? contentLength = default,
+            string owner = default,
+            string group = default,
+            string permissions = default)
+        {
+            return new Path()
+            {
+                Name = name,
+                IsDirectory = isDirectory,
+                LastModified = lastModified,
+                ETag = eTag,
+                ContentLength = contentLength,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
+            };
+        }
     }
 }
 #endregion class Path
@@ -4704,7 +4776,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// PathList
     /// </summary>
-    internal partial class PathList
+    public partial class PathList
     {
         /// <summary>
         /// paths
@@ -4717,6 +4789,24 @@ namespace Azure.Storage.Files.DataLake.Models
         public PathList()
         {
             Paths = new System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.Path>();
+        }
+    }
+
+    /// <summary>
+    /// DataLakeModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class DataLakeModelFactory
+    {
+        /// <summary>
+        /// Creates a new PathList instance for mocking.
+        /// </summary>
+        public static PathList PathList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.Path> paths = default)
+        {
+            return new PathList()
+            {
+                Paths = paths,
+            };
         }
     }
 }
@@ -4821,6 +4911,63 @@ namespace Azure.Storage.Files.DataLake
     }
 }
 #endregion enum PathResourceType
+
+#region enum PathSetAccessControlRecursiveMode
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// Optional. Valid and Required for "SetAccessControlRecursive" operation.  Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories
+    /// </summary>
+    public enum PathSetAccessControlRecursiveMode
+    {
+        /// <summary>
+        /// set
+        /// </summary>
+        Set,
+
+        /// <summary>
+        /// modify
+        /// </summary>
+        Modify,
+
+        /// <summary>
+        /// remove
+        /// </summary>
+        Remove
+    }
+}
+
+namespace Azure.Storage.Files.DataLake
+{
+    internal static partial class DataLakeRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Set => "set",
+                    Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Modify => "modify",
+                    Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Remove => "remove",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode value.")
+                };
+            }
+
+            public static Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode ParsePathSetAccessControlRecursiveMode(string value)
+            {
+                return value switch
+                {
+                    "set" => Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Set,
+                    "modify" => Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Modify,
+                    "remove" => Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode.Remove,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum PathSetAccessControlRecursiveMode
 
 #region enum PathUpdateAction
 namespace Azure.Storage.Files.DataLake.Models
@@ -4953,7 +5100,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// failedEntries
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AclFailedEntryList> FailedEntries { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AclFailedEntry> FailedEntries { get; internal set; }
 
         /// <summary>
         /// Creates a new SetAccessControlRecursiveResponse instance
@@ -4971,7 +5118,7 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             if (!skipInitialization)
             {
-                FailedEntries = new System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.AclFailedEntryList>();
+                FailedEntries = new System.Collections.Generic.List<Azure.Storage.Files.DataLake.Models.AclFailedEntry>();
             }
         }
 
@@ -5002,8 +5149,8 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             _value.FailedEntries = System.Linq.Enumerable.ToList(
                 System.Linq.Enumerable.Select(
-                    element.Elements(System.Xml.Linq.XName.Get("AclFailedEntryList", "")),
-                    e => Azure.Storage.Files.DataLake.Models.AclFailedEntryList.FromXml(e)));
+                    element.Elements(System.Xml.Linq.XName.Get("AclFailedEntry", "")),
+                    e => Azure.Storage.Files.DataLake.Models.AclFailedEntry.FromXml(e)));
             CustomizeFromXml(element, _value);
             return _value;
         }
@@ -5023,7 +5170,7 @@ namespace Azure.Storage.Files.DataLake.Models
             int? directoriesSuccessful = default,
             int? filesSuccessful = default,
             int? failureCount = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AclFailedEntryList> failedEntries = default)
+            System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AclFailedEntry> failedEntries = default)
         {
             return new SetAccessControlRecursiveResponse()
             {
@@ -5036,62 +5183,5 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class SetAccessControlRecursiveResponse
-
-#region enum Mode
-namespace Azure.Storage.Files.DataLake.Models
-{
-    /// <summary>
-    /// Optional. Valid and Required for "SetAccessControlRecursive" operation.  Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories
-    /// </summary>
-    public enum Mode
-    {
-        /// <summary>
-        /// set
-        /// </summary>
-        Set,
-
-        /// <summary>
-        /// modify
-        /// </summary>
-        Modify,
-
-        /// <summary>
-        /// remove
-        /// </summary>
-        Remove
-    }
-}
-
-namespace Azure.Storage.Files.DataLake
-{
-    internal static partial class DataLakeRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Files.DataLake.Models.Mode value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Files.DataLake.Models.Mode.Set => "set",
-                    Azure.Storage.Files.DataLake.Models.Mode.Modify => "modify",
-                    Azure.Storage.Files.DataLake.Models.Mode.Remove => "remove",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.Mode value.")
-                };
-            }
-
-            public static Azure.Storage.Files.DataLake.Models.Mode ParseMode(string value)
-            {
-                return value switch
-                {
-                    "set" => Azure.Storage.Files.DataLake.Models.Mode.Set,
-                    "modify" => Azure.Storage.Files.DataLake.Models.Mode.Modify,
-                    "remove" => Azure.Storage.Files.DataLake.Models.Mode.Remove,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.DataLake.Models.Mode value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum Mode
 #endregion Models
 

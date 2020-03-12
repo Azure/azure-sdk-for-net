@@ -2046,7 +2046,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return SetAccessControlListRecursiveInternal(
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    Mode.Set,
+                    PathSetAccessControlRecursiveMode.Set,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2112,7 +2112,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return await SetAccessControlListRecursiveInternal(
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    Mode.Set,
+                    PathSetAccessControlRecursiveMode.Set,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2178,7 +2178,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return SetAccessControlListRecursiveInternal(
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    Mode.Modify,
+                    PathSetAccessControlRecursiveMode.Modify,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2244,7 +2244,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return await SetAccessControlListRecursiveInternal(
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    Mode.Modify,
+                    PathSetAccessControlRecursiveMode.Modify,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2310,7 +2310,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return SetAccessControlListRecursiveInternal(
                     RemovePathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    Mode.Remove,
+                    PathSetAccessControlRecursiveMode.Remove,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2376,7 +2376,7 @@ namespace Azure.Storage.Files.DataLake
 
                 return await SetAccessControlListRecursiveInternal(
                     RemovePathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    Mode.Remove,
+                    PathSetAccessControlRecursiveMode.Remove,
                     batchSize,
                     progressHandler,
                     stopOnFailure,
@@ -2437,7 +2437,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         private async Task<ChangeAccessControlListResult> SetAccessControlListRecursiveInternal(
             string accessControlList,
-            Mode mode,
+            PathSetAccessControlRecursiveMode mode,
             int? batchSize,
             IProgress<ChangeAccessControlListPartialResult> progressHandler,
             bool stopOnFailure,

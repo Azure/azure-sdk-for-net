@@ -366,10 +366,10 @@ namespace Azure.Storage.Files.DataLake
                     {
                         continue;
                     }
-                    var failedEntries = new List<AclFailedEntryList>();
+                    var failedEntries = new List<AclFailedEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        failedEntries.Add(item.DeserializeAclFailedEntryList());
+                        failedEntries.Add(item.DeserializeAclFailedEntry());
                     }
                     result.FailedEntries = failedEntries;
                     continue;
@@ -378,9 +378,9 @@ namespace Azure.Storage.Files.DataLake
             return result;
         }
 
-        internal static AclFailedEntryList DeserializeAclFailedEntryList(this JsonElement element)
+        internal static AclFailedEntry DeserializeAclFailedEntry(this JsonElement element)
         {
-            AclFailedEntryList result = new AclFailedEntryList();
+            AclFailedEntry result = new AclFailedEntry();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
