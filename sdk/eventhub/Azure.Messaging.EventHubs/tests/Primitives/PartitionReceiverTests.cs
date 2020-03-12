@@ -359,6 +359,84 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.GetPartitionPropertiesAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetPartitionPropertiesUsesThePartitionId()
+        {
+            var mockConnection = new Mock<EventHubConnection>();
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+
+            mockConnection
+                .Setup(connection => connection.GetPartitionPropertiesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(default(PartitionProperties)));
+
+            await receiver.GetPartitionPropertiesAsync();
+
+            mockConnection
+                .Verify(connection => connection.GetPartitionPropertiesAsync(
+                    receiver.PartitionId,
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.GetPartitionPropertiesAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetPartitionPropertiesUsesTheRetryPolicy()
+        {
+            var mockConnection = new Mock<EventHubConnection>();
+            var retryPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var options = new PartitionReceiverOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy } };
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object, options);
+
+            mockConnection
+                .Setup(connection => connection.GetPartitionPropertiesAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(default(PartitionProperties)));
+
+            await receiver.GetPartitionPropertiesAsync();
+
+            mockConnection
+                .Verify(connection => connection.GetPartitionPropertiesAsync(
+                    It.IsAny<string>(),
+                    retryPolicy,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.GetPartitionPropertiesAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetPartitionPropertiesFailsWhenPartitionReceiverIsClosed()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString, "someHub");
+
+            await receiver.CloseAsync(cancellationSource.Token);
+
+            Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
         ///   method.
         /// </summary>
