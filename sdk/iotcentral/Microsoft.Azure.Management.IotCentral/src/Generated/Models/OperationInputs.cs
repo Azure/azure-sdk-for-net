@@ -71,13 +71,6 @@ namespace Microsoft.Azure.Management.IotCentral.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Name != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Name, "^[a-z0-9-]{1,63}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Name", "^[a-z0-9-]{1,63}$");
-                }
-            }
         }
     }
 }

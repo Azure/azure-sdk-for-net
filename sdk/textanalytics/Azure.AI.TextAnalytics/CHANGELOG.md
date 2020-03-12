@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.4 (Unreleased)
+
+
 ## 1.0.0-preview.3 (2020-03-10)
 ### Breaking changes
 - In both `DocumentSentiment` and `SentenceSentiment` property `SentimentScores` has been renamed to `ConfidenceScores`.
@@ -9,7 +12,7 @@
 `CategorizedEntity`, `PiiEntity`, and `LinkedEntityMatch` objects, to make it clear that the offsets and lengths are in units of Unicode graphemes.
 - `CharacterCount` in `TextDocumentStatistics` has been renamed to `GraphemeCount`.
 - Unified `DocumentSentimentLabel` and `SentenceSentimentLabel` into `TextSentiment`.
-- `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScore`.
+- `SentimentConfidenceScorePerLabel` renamed to `SentimentConfidenceScores`.
 - Extensible ENUM `SubCategory` has been deleted and managed as a string trhought the code.
 - `Score` has been renamed to `ConfidenceScore` for types `CategorizedEntity`, `LinkedEntityMatch`, and `PiiEntity`.
 

@@ -56,8 +56,8 @@ namespace Azure.Storage.Queues
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
         public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2019_07_07) { }
-        public System.Uri GeoRedundantSecondaryUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
+        public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
@@ -109,36 +109,36 @@ namespace Azure.Storage.Queues.Models
     public partial class PeekedMessage
     {
         internal PeekedMessage() { }
-        public long DequeueCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? InsertedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string MessageId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string MessageText { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long DequeueCount { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? InsertedOn { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string MessageText { get { throw null; } }
     }
     public partial class QueueAccessPolicy
     {
         public QueueAccessPolicy() { }
-        public System.DateTimeOffset? ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset? StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public string Permissions { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     public partial class QueueAnalyticsLogging
     {
         public QueueAnalyticsLogging() { }
-        public bool Delete { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool Read { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool Write { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool Delete { get { throw null; } set { } }
+        public bool Read { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        public bool Write { get { throw null; } set { } }
     }
     public partial class QueueCorsRule
     {
         public QueueCorsRule() { }
-        public string AllowedHeaders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string AllowedMethods { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string AllowedOrigins { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ExposedHeaders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public int MaxAgeInSeconds { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string AllowedHeaders { get { throw null; } set { } }
+        public string AllowedMethods { get { throw null; } set { } }
+        public string AllowedOrigins { get { throw null; } set { } }
+        public string ExposedHeaders { get { throw null; } set { } }
+        public int MaxAgeInSeconds { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueueErrorCode : System.IEquatable<Azure.Storage.Queues.Models.QueueErrorCode>
@@ -146,63 +146,63 @@ namespace Azure.Storage.Queues.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public QueueErrorCode(string value) { throw null; }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationPermissionMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationProtocolMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationResourceTypeMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationServiceMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationSourceIPMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode FeatureVersionMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InternalError { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidInput { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode ServerBusy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountBeingCreated { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AccountIsDisabled { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthenticationFailed { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationFailure { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationPermissionMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationProtocolMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationResourceTypeMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationServiceMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode AuthorizationSourceIPMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionHeadersNotSupported { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode ConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode EmptyMetadataKey { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode FeatureVersionMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InsufficientAccountPermissions { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InternalError { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidAuthenticationInfo { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHeaderValue { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidHttpVerb { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidInput { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMarker { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMd5 { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidMetadata { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidQueryParameterValue { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidRange { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidResourceName { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidUri { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlDocument { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode InvalidXmlNodeValue { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode Md5Mismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MessageNotFound { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MessageTooLarge { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MetadataTooLarge { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingContentLengthHeader { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredHeader { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredQueryParameter { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MissingRequiredXmlNode { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode MultipleConditionHeadersNotSupported { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode OperationTimedOut { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeInput { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode OutOfRangeQueryParameterValue { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode PopReceiptMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueBeingDeleted { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueDisabled { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotEmpty { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode QueueNotFound { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode RequestBodyTooLarge { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode RequestUrlFailedToParse { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceNotFound { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode ResourceTypeMismatch { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode ServerBusy { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHeader { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedHttpVerb { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedQueryParameter { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueErrorCode UnsupportedXmlNode { get { throw null; } }
         public bool Equals(Azure.Storage.Queues.Models.QueueErrorCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -216,8 +216,8 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueGeoReplication
     {
         internal QueueGeoReplication() { }
-        public System.DateTimeOffset? LastSyncedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
+        public Azure.Storage.Queues.Models.QueueGeoReplicationStatus Status { get { throw null; } }
     }
     public enum QueueGeoReplicationStatus
     {
@@ -228,59 +228,59 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueItem
     {
         internal QueueItem() { }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class QueueMessage
     {
         internal QueueMessage() { }
-        public long DequeueCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? InsertedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string MessageId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string MessageText { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? NextVisibleOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string PopReceipt { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long DequeueCount { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? InsertedOn { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string MessageText { get { throw null; } }
+        public System.DateTimeOffset? NextVisibleOn { get { throw null; } }
+        public string PopReceipt { get { throw null; } }
         public Azure.Storage.Queues.Models.QueueMessage Update(Azure.Storage.Queues.Models.UpdateReceipt updated) { throw null; }
     }
     public partial class QueueMetrics
     {
         public QueueMetrics() { }
-        public bool Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool? IncludeApis { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool Enabled { get { throw null; } set { } }
+        public bool? IncludeApis { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
     }
     public partial class QueueProperties
     {
         public QueueProperties() { }
-        public int ApproximateMessagesCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int ApproximateMessagesCount { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
     public partial class QueueRetentionPolicy
     {
         public QueueRetentionPolicy() { }
-        public int? Days { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public int? Days { get { throw null; } set { } }
+        public bool Enabled { get { throw null; } set { } }
     }
     public partial class QueueServiceProperties
     {
         public QueueServiceProperties() { }
-        public System.Collections.Generic.IList<Azure.Storage.Queues.Models.QueueCorsRule> Cors { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Queues.Models.QueueMetrics HourMetrics { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Queues.Models.QueueAnalyticsLogging Logging { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Queues.Models.QueueMetrics MinuteMetrics { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.Collections.Generic.IList<Azure.Storage.Queues.Models.QueueCorsRule> Cors { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueMetrics HourMetrics { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueAnalyticsLogging Logging { get { throw null; } set { } }
+        public Azure.Storage.Queues.Models.QueueMetrics MinuteMetrics { get { throw null; } set { } }
     }
     public partial class QueueServiceStatistics
     {
         internal QueueServiceStatistics() { }
-        public Azure.Storage.Queues.Models.QueueGeoReplication GeoReplication { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Queues.Models.QueueGeoReplication GeoReplication { get { throw null; } }
     }
     public partial class QueueSignedIdentifier
     {
         public QueueSignedIdentifier() { }
-        public Azure.Storage.Queues.Models.QueueAccessPolicy AccessPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Queues.Models.QueueAccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
     public static partial class QueuesModelFactory
     {
@@ -302,17 +302,17 @@ namespace Azure.Storage.Queues.Models
     public partial class SendReceipt
     {
         internal SendReceipt() { }
-        public System.DateTimeOffset ExpirationTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset InsertionTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string MessageId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string PopReceipt { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset TimeNextVisible { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset InsertionTime { get { throw null; } }
+        public string MessageId { get { throw null; } }
+        public string PopReceipt { get { throw null; } }
+        public System.DateTimeOffset TimeNextVisible { get { throw null; } }
     }
     public partial class UpdateReceipt
     {
         internal UpdateReceipt() { }
-        public System.DateTimeOffset NextVisibleOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string PopReceipt { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset NextVisibleOn { get { throw null; } }
+        public string PopReceipt { get { throw null; } }
     }
 }
 namespace Azure.Storage.Sas
@@ -332,14 +332,14 @@ namespace Azure.Storage.Sas
     public partial class QueueSasBuilder
     {
         public QueueSasBuilder() { }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Identifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Sas.SasIPRange IPRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Sas.SasProtocol Protocol { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string QueueName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
+        public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public string Permissions { get { throw null; } }
+        public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
+        public string QueueName { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

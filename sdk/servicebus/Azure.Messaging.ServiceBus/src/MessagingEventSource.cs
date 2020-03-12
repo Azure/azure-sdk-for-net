@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp;
+
 namespace Azure.Messaging.ServiceBus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Tracing;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Azure.Messaging.ServiceBus.Primitives;
-    using Microsoft.Azure.Amqp;
-
     [EventSource(Name = "Microsoft-Azure-ServiceBus")]
     internal sealed class MessagingEventSource : EventSource
     {

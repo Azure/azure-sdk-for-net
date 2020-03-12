@@ -425,9 +425,9 @@ public class EventProcessorOptions
     public EventHubConnectionOptions ConnectionOptions { get; set; }
     public EventHubsRetryOptions RetryOptions { get; set; }
     public string Identifier { get; set; }
-    public int? PrefetchCount { get; set; } 
+    public int PrefetchCount { get; set; } 
     public bool TrackLastEnqueuedEventProperties { get; set; }
-    public TimeSpan MaximumWaitTime { get; set; } = TimeSpan.FromSeconds(60);
+    public TimeSpan? MaximumWaitTime { get; set; } = TimeSpan.FromSeconds(60);
     public EventPosition DefaultStartingPosition { get; set; } = EventPosition.Earliest;
     public TimeSpan LoadBalancingUpdateInterval { get; set; } = TimeSpan.FromSeconds(10);
     public TimeSpan PartitionOwnershipExpirationInterval { get; set; } = TimeSpan.FromSeconds(30);

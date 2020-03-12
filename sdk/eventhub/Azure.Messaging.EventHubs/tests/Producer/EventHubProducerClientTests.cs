@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ProducerDelegatesForTheFullyQualifiedNamespaceName()
+        public void ProducerDelegatesForTheFullyQualifiedNamespace()
         {
             var expected = "SomeNamespace";
             var mockConnection = new MockConnection(expected);

@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
         internal SentenceSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
-            ConfidenceScores = new SentimentConfidenceScore(positiveScore, neutralScore, negativeScore);
+            ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             GraphemeOffset = offset;
             GraphemeLength = length;
         }
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the sentiment confidence score (Softmax score) between 0 and 1,
         /// for each sentiment. Higher values signify higher confidence.
         /// </summary>
-        public SentimentConfidenceScore ConfidenceScores { get; }
+        public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
         /// Gets the starting position (in Unicode graphemes) for the matching text in the input.
