@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "93",
+        "Content-Type": "application/json",
+        "traceparent": "00-44c43b7a90cb3b4bbf141c1a8b4e171c-822c3806bdd1e849-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200308.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "13f4ebfe4ca7795cde2ed18d91924aae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "looking for very po",
+        "autocompleteMode": "oneTermWithContext",
+        "suggesterName": "sg"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "373",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sun, 08 Mar 2020 23:05:21 GMT",
+        "elapsed-time": "6",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "13f4ebfe-4ca7-795c-de2e-d18d91924aae",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.AutocompleteItem)",
+        "value": [
+          {
+            "text": "very police",
+            "queryPlusText": "looking for very police"
+          },
+          {
+            "text": "very polite",
+            "queryPlusText": "looking for very polite"
+          },
+          {
+            "text": "very popular",
+            "queryPlusText": "looking for very popular"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "253423147",
+    "SearchIndexName": "grurisvf",
+    "SearchServiceName": "azs-net-gjxdhkdl"
+  }
+}

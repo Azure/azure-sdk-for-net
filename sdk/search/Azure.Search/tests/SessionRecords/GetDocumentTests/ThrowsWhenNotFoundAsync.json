@@ -1,0 +1,36 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gyqqmobj.search.windows.net/indexes(\u0027eifefphf\u0027)/docs(\u0027ThisDocumentDoesNotExist\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "traceparent": "00-e7747f6117a3964e82d1eae419efd398-a906d9b344a9e64e-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "aee8edee2b291e361337583140d47761",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 12 Mar 2020 00:49:31 GMT",
+        "elapsed-time": "7",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "aee8edee-2b29-1e36-1337-583140d47761",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "447408589",
+    "SearchIndexName": "eifefphf",
+    "SearchServiceName": "azs-net-gyqqmobj"
+  }
+}
