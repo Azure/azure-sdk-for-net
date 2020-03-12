@@ -26,10 +26,9 @@ namespace Azure.Storage.Blobs
         private Uri _uri;
 
         /// <summary>
-        /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
+        /// Whether the Uri has the account name embedded
         /// </summary>
-        private readonly bool _isIPStyleUri;
+        private readonly bool _uriHasAccountName;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -173,9 +172,15 @@ namespace Azure.Storage.Blobs
 
                 var startIndex = 0;
 
-                if (uri.IsHostIPEndPointStyle())
+                var derivedAccountName = uri.GetAccountNameFromDomain(Constants.Blob.UriSubDomain);
+
+                if (derivedAccountName is object)
                 {
-                    _isIPStyleUri = true;
+                    _uriHasAccountName = true;
+                    AccountName = derivedAccountName;
+                }
+                else
+                {
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no container name
@@ -189,10 +194,6 @@ namespace Azure.Storage.Blobs
                         AccountName = path.Substring(0, accountEndIndex);
                         startIndex = accountEndIndex + 1;
                     }
-                }
-                else
-                {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.Blob.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -276,9 +277,8 @@ namespace Azure.Storage.Blobs
         {
             // Concatenate account, container, & blob names (if they exist)
             var path = new StringBuilder("");
-            // only append the account name to the path for Ip style Uri.
-            // regular style Uri will already have account name in domain
-            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            // only append the account name to the path if it is not already included in the uri
+            if (!_uriHasAccountName && !string.IsNullOrWhiteSpace(AccountName))
             {
                 path.Append("/").Append(AccountName);
             }
