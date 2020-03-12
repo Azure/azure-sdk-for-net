@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   and should take responsibility for managing its lifespan.
         /// </summary>
         ///
-        internal virtual bool OwnsConnection { get; } = true;
+        private bool OwnsConnection { get; } = true;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -100,6 +100,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         private EventHubConnection Connection { get; }
+
+        /// <summary>
+        ///   The transport consumer that is used for operations performed against
+        ///   the Event Hubs service.
+        /// </summary>
+        ///
+        private TransportConsumer InnerConsumer { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
@@ -167,6 +174,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            InnerConsumer = Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
         }
 
         /// <summary>
@@ -202,6 +210,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            InnerConsumer = Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
         }
 
         /// <summary>
@@ -232,6 +241,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            InnerConsumer = Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
         }
 
         /// <summary>
@@ -302,6 +312,24 @@ namespace Azure.Messaging.EventHubs.Primitives
             var clientHash = GetHashCode().ToString();
             Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
 
+            // Attempt to close the transport consumer.  In the event that an exception is encountered,
+            // it should not impact the attempt to close the connection, assuming ownership.
+
+            var transportConsumerException = default(Exception);
+
+            try
+            {
+                await InnerConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                transportConsumerException = ex;
+            }
+
+            // An exception when closing the connection supersedes one observed when closing the
+            // transport consumer.
+
             try
             {
                 if (OwnsConnection)
@@ -317,6 +345,14 @@ namespace Azure.Messaging.EventHubs.Primitives
             finally
             {
                 Logger.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
+            }
+
+            // If there was an active exception pending from closing the transport
+            // consumer, surface it now.
+
+            if (transportConsumerException != default)
+            {
+                throw transportConsumerException;
             }
         }
 

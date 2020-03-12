@@ -619,8 +619,26 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var eventHubName = "someHub";
+            var mockConsumer = new Mock<TransportConsumer>();
             var mockConnection = new Mock<EventHubConnection>(connectionString, eventHubName);
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.CloseAsync(
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>()))
+                .Returns(mockConsumer.Object);
+
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
 
             receiver.Logger = mockEventSource.Object;
@@ -658,18 +676,33 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedException = new InsufficientMemoryException("This message is expected.");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var eventHubName = "someHub";
+            var mockConsumer = new Mock<TransportConsumer>();
+            var mockConnection = new Mock<EventHubConnection>(connectionString, eventHubName);
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
-            var mockReceiver = new Mock<PartitionReceiver>("cg", "pid", EventPosition.Earliest, connectionString, eventHubName, default(PartitionReceiverOptions)) { CallBase = true };
 
-            mockReceiver.Object.Logger = mockEventSource.Object;
-
-            mockReceiver
-                .SetupGet(receiver => receiver.OwnsConnection)
+            mockConsumer
+                .Setup(consumer => consumer.CloseAsync(
+                    It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<EventHubsRetryPolicy>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<uint?>()))
+                .Returns(mockConsumer.Object);
+
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+
+            receiver.Logger = mockEventSource.Object;
 
             try
             {
-                await mockReceiver.Object.CloseAsync(cancellationSource.Token);
+                await receiver.CloseAsync(cancellationSource.Token);
             }
             catch (InsufficientMemoryException)
             {
