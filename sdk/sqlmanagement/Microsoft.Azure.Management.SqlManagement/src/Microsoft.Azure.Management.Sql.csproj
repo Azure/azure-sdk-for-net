@@ -12,6 +12,9 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
+- Added MinimalTlsVersion to Server properties
+- Added MinimalTlsVersion to ManagedInstance properties
+- Updated SDK clients of Auditing and Data Classification services.
 - Added support for Azure SQL Managed Instance operations (list/get/cancel) API version 2019-06-01-preview.
       ]]>
 		</PackageReleaseNotes>
