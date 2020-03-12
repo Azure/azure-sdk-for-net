@@ -235,7 +235,15 @@ directive:
     $.FileSystemList["x-az-public"] = false;
     $.PathList["x-az-public"] = false;
     $.Path["x-az-public"] = false;
-    $.AclFailedEntryList["x-az-public"] = false;
+```
+
+### Hide AclFailedEntryList/SetAccessControlRecursiveResponse
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.AclFailedEntry["x-az-public"] = false;
     $.SetAccessControlRecursiveResponse["x-az-public"] = false;
 ```
 
