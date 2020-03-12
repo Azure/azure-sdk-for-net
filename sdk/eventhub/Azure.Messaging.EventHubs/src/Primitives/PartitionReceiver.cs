@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of information for the associated partition under the Event Hub this client is associated with.</returns>
         ///
-        public async virtual Task<PartitionProperties> GetPartitionPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
             return await Connection.GetPartitionPropertiesAsync(PartitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
