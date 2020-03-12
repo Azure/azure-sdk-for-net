@@ -278,9 +278,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>TODO.</returns>
         ///
-        public async virtual Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
-                                                                            TimeSpan maximumWaitTime,
-                                                                            CancellationToken cancellationToken = default)
+        public virtual Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
+                                                                      TimeSpan maximumWaitTime,
+                                                                      CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -288,7 +288,8 @@ namespace Azure.Messaging.EventHubs.Primitives
             Argument.AssertInRange(maximumEventCount, 1, int.MaxValue, nameof(maximumEventCount));
             Argument.AssertNotNegative(maximumWaitTime, nameof(maximumWaitTime));
 
-            await Task.CompletedTask.ConfigureAwait(false);
+            // TODO: implement method.
+
             return default;
         }
 
