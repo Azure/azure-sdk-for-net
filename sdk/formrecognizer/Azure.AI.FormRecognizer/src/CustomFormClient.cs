@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -117,35 +119,72 @@ namespace Azure.AI.FormRecognizer.Custom
         #endregion Training
 
         #region Analyze
-        public virtual Operation<ExtractedForm> StartExtractForm(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+
+        #region Unsupervised
+        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractPages(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
-            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual Operation<ExtractedForm> StartExtractForm(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractPages(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
-            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<ExtractedForm>> StartExtractFormAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractPagesAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
-            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<ExtractedForm>> StartExtractFormAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractPagesAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new ExtractFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
+        #endregion
+
+        #region Supervised
+        public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
+        public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
+        public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+
+        public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+        }
+        #endregion
+
+        // TODO: Add methods for labeled models
 
         #endregion Analyze
 

@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class ExtractedPage
+    public class ExtractedLabeledPage
     {
-        // Unsupervised
-        internal ExtractedPage(PageResult_internal pageResult, ReadResult_internal readResult)
+        // Supervised
+        internal ExtractedLabeledPage(int pageNumber, List<ExtractedField> fields, PageResult_internal pageResult, ReadResult_internal readResult)
         {
-            PageNumber = pageResult.Page;
-            Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
+            PageNumber = pageNumber;
+            Fields = ConvertFields(fields);
             Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult);
 
             if (readResult != null)
@@ -23,12 +23,10 @@ namespace Azure.AI.FormRecognizer.Models
         public int PageNumber { get; }
 
         public IReadOnlyList<ExtractedField> Fields { get; }
-
         public IReadOnlyList<ExtractedTable> Tables { get; }
 
         public RawExtractedPage RawExtractedPage { get; }
 
-        // TODO: Unmerge Convert Fields
         private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
         {
             List<ExtractedField> fields = new List<ExtractedField>();
@@ -38,6 +36,16 @@ namespace Azure.AI.FormRecognizer.Models
                 fields.Add(field);
             }
             return fields;
+        }
+
+        private static IReadOnlyList<ExtractedField> ConvertFields(List<ExtractedField> fields)
+        {
+            List<ExtractedField> list = new List<ExtractedField>();
+            foreach (var field in fields)
+            {
+                list.Add(field);
+            }
+            return list;
         }
     }
 }
