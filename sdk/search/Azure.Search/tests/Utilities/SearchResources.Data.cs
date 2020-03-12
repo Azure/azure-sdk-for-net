@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Text.Json.Serialization;
+using Azure.Search.Models;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Spatial;
@@ -281,87 +284,236 @@ namespace Azure.Search.Tests
     internal class Hotel
     {
         [System.ComponentModel.DataAnnotations.Key, IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("hotelId")]
         public string HotelId { get; set; }
 
         [IsSearchable, IsFilterable, IsSortable]
+        [JsonPropertyName("hotelName")]
         public string HotelName { get; set; }
 
         [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
         [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
+        [JsonPropertyName("descriptionFr")]
         public string DescriptionFr { get; set; }
 
         [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("category")]
         public string Category { get; set; }
 
         [IsSearchable, IsFilterable, IsFacetable]
-        public string[] Tags { get; set; }
+        [JsonPropertyName("tags")]
+        // TODO: XXXXX - Investigate JsonConverter for null arrays
+        public string[] Tags { get; set; } = new string[] { };
 
         [IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("parkingIncluded")]
         public bool? ParkingIncluded { get; set; }
 
         [IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("smokingAllowed")]
         public bool? SmokingAllowed { get; set; }
 
         [IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("lastRenovationDate")]
         public DateTimeOffset? LastRenovationDate { get; set; }
 
         [IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("rating")]
         public int? Rating { get; set; }
 
         [IsFilterable, IsSortable]
-        public GeographyPoint Location { get; set; }
+        // TODO: XXXXX - Unify on an Azure.Core spatial type
+        [JsonIgnore]
+        public GeographyPoint Location { get; set; } = null;
 
+        [JsonPropertyName("address")]
         public HotelAddress Address { get; set; }
 
-        public HotelRoom[] Rooms { get; set; }
+        [JsonPropertyName("rooms")]
+        // TODO: XXXXX - Investigate JsonConverter for null arrays
+        public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };
+
+        public override bool Equals(object obj) =>
+            obj is Hotel other &&
+            HotelId == other.HotelId &&
+            HotelName == other.HotelName &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Category == other.Category &&
+            Tags.SequenceEqualsNullSafe(other.Tags) &&
+            ParkingIncluded == other.ParkingIncluded &&
+            SmokingAllowed == other.SmokingAllowed &&
+            LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
+            Rating == other.Rating &&
+            // TODO: XXXXX - Unify on an Azure.Core spatial type
+            // Location.EqualsNullSafe(other.Location) &&
+            Address.EqualsNullSafe(other.Address) &&
+            Rooms.SequenceEqualsNullSafe(other.Rooms);
+
+        public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
+
+        public override string ToString()
+        {
+            string FormatRoom(HotelRoom room) => $"{{ {room} }}";
+            return
+                $"ID: {HotelId}; Name: {HotelName}; Description: {Description}; " +
+                $"Description (French): {DescriptionFr}; Category: {Category}; " +
+                $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
+                $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
+                $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
+                $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
+        }
+
+        public SearchDocument AsDocument() =>
+            new SearchDocument()
+            {
+                ["hotelId"] = HotelId,
+                ["hotelName"] = HotelName,
+                ["description"] = Description,
+                ["descriptionFr"] = DescriptionFr,
+                ["category"] = Category,
+                ["tags"] = Tags ?? new object[0],   // OData always gives [] instead of null for collections.
+                ["parkingIncluded"] = ParkingIncluded,
+                ["smokingAllowed"] = SmokingAllowed,
+                ["lastRenovationDate"] = LastRenovationDate,
+                ["rating"] = Rating,
+                // TODO: XXXXX - Unify on an Azure.Core spatial type
+                // ["location"] = Location,
+                ["location"] = Location == null ? null : new SearchDocument()
+                {
+                    ["type"] = "Point",
+                    ["coordinates"] = new double[] { Location.Longitude, Location.Latitude },
+                    ["crs"] = new SearchDocument()
+                    {
+                        ["type"] = "name",
+                        ["properties"] = new SearchDocument()
+                        {
+                            ["name"] = "EPSG:4326"
+                        }
+                    }
+                },
+                ["address"] = Address?.AsDocument(),
+                // With no elements to infer the type during deserialization, we must assume object[].
+                ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
+            };
     }
 
     [SerializePropertyNamesAsCamelCase]
     internal class HotelAddress
     {
         [IsSearchable]
+        [JsonPropertyName("streetAddress")]
         public string StreetAddress { get; set; }
 
         [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("city")]
         public string City { get; set; }
 
         [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("stateProvince")]
         public string StateProvince { get; set; }
 
         [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("country")]
         public string Country { get; set; }
 
         [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        [JsonPropertyName("postalCode")]
         public string PostalCode { get; set; }
+
+        public override bool Equals(object obj) =>
+            obj is HotelAddress other &&
+            StreetAddress == other.StreetAddress &&
+            City == other.City &&
+            StateProvince == other.StateProvince &&
+            Country == other.Country &&
+            PostalCode == other.PostalCode;
+
+        public override int GetHashCode() => StreetAddress?.GetHashCode() ?? 0;
+
+        public override string ToString() =>
+            $"StreetAddress: {StreetAddress}; City: {City}; State/Province: {StateProvince}; Country: {Country}; " +
+            $"PostalCode: {PostalCode}";
+
+        public SearchDocument AsDocument() =>
+            new SearchDocument()
+            {
+                ["streetAddress"] = StreetAddress,
+                ["city"] = City,
+                ["stateProvince"] = StateProvince,
+                ["country"] = Country,
+                ["postalCode"] = PostalCode
+            };
     }
 
     [SerializePropertyNamesAsCamelCase]
     internal class HotelRoom
     {
         [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
         [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
+        [JsonPropertyName("descriptionFr")]
         public string DescriptionFr { get; set; }
 
         [IsSearchable, IsFilterable, IsFacetable]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
         [IsFilterable, IsFacetable]
+        [JsonPropertyName("baseRate")]
         public double? BaseRate { get; set; }
 
         [IsSearchable, IsFilterable, IsFacetable]
+        [JsonPropertyName("bedOptions")]
         public string BedOptions { get; set; }
 
         [IsFilterable, IsFacetable]
+        [JsonPropertyName("sleepsCount")]
         public int? SleepsCount { get; set; }
 
         [IsFilterable, IsFacetable]
+        [JsonPropertyName("smokingAllowed")]
         public bool? SmokingAllowed { get; set; }
 
         [IsSearchable, IsFilterable, IsFacetable]
-        public string[] Tags { get; set; }
+        [JsonPropertyName("tags")]
+        // TODO: XXXXX - Investigate JsonConverter for null arrays
+        public string[] Tags { get; set; } = new string[] { };
+
+        public override bool Equals(object obj) =>
+            obj is HotelRoom other &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Type == other.Type &&
+            BaseRate.EqualsDouble(other.BaseRate) &&
+            BedOptions == other.BedOptions &&
+            SleepsCount == other.SleepsCount &&
+            SmokingAllowed == other.SmokingAllowed &&
+            Tags.SequenceEqualsNullSafe(other.Tags);
+
+        public override int GetHashCode() => Description?.GetHashCode() ?? 0;
+
+        public override string ToString() =>
+            $"Description: {Description}; Description (French): {DescriptionFr}; Type: {Type}; BaseRate: {BaseRate}; " +
+            $"Bed Options: {BedOptions}; Sleeps: {SleepsCount}; Smoking: {SmokingAllowed}; " +
+            $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}";
+
+        public SearchDocument AsDocument() =>
+            new SearchDocument()
+            {
+                ["description"] = Description,
+                ["descriptionFr"] = DescriptionFr,
+                ["type"] = Type,
+                ["baseRate"] = BaseRate,
+                ["bedOptions"] = BedOptions,
+                ["sleepsCount"] = SleepsCount,
+                ["smokingAllowed"] = SmokingAllowed,
+                ["tags"] = Tags ?? new object[0]   // OData always gives [] instead of null for collections.
+            };
     }
 }

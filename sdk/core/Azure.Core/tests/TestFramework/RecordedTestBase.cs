@@ -17,6 +17,13 @@ namespace Azure.Core.Testing
 
         public RecordedTestMode Mode { get; }
 
+        /// <summary>
+        /// Flag you can (temporarily) enable to save failed test recordings
+        /// and debug/re-run at the point of failure without re-running
+        /// potentially lengthy live tests.  This should never be checked in.
+        /// </summary>
+        public bool DEBUG_ONLY_SaveRecordingsOnFailure { get; set; } = false;
+
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
@@ -55,7 +62,9 @@ namespace Azure.Core.Testing
         [TearDown]
         public virtual void StopTestRecording()
         {
-            Recording?.Dispose(TestContext.CurrentContext.Result.FailCount == 0);
+            Recording?.Dispose(
+                DEBUG_ONLY_SaveRecordingsOnFailure ||
+                TestContext.CurrentContext.Result.FailCount == 0);
         }
     }
 }

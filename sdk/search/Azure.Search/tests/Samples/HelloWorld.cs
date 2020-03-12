@@ -22,7 +22,7 @@ namespace Azure.Search.Tests.Samples
         [Test]
         public async Task CreateClient()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -48,7 +48,7 @@ namespace Azure.Search.Tests.Samples
         [Test]
         public async Task CreateClientAsync()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -73,7 +73,7 @@ namespace Azure.Search.Tests.Samples
         [Test]
         public async Task HandleErrors()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -89,7 +89,7 @@ namespace Azure.Search.Tests.Samples
             try
             {
                 //@@ index.GetCount();
-                /*@@*/ await index.GetCountAsync();
+                /*@@*/ await index.GetDocumentCountAsync();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -101,7 +101,7 @@ namespace Azure.Search.Tests.Samples
         [Test]
         public async Task HandleErrorsAsync()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -116,7 +116,7 @@ namespace Azure.Search.Tests.Samples
             /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
-                await index.GetCountAsync();
+                await index.GetDocumentCountAsync();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -128,7 +128,7 @@ namespace Azure.Search.Tests.Samples
         [Test]
         public async Task GetStatisticsAsync()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
@@ -149,7 +149,7 @@ namespace Azure.Search.Tests.Samples
         [Test]
         public async Task GetCountAsync()
         {
-            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
@@ -164,7 +164,7 @@ namespace Azure.Search.Tests.Samples
             /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, indexName, credential, GetSearchClientOptions()));
 
             // Get and report the number of documents in the index
-            Response<long> count = await index.GetCountAsync();
+            Response<long> count = await index.GetDocumentCountAsync();
             Console.WriteLine($"Search index {indexName} has {count.Value} documents.");
             #endregion Snippet:Azure_Search_Tests_Samples_GetCountAsync
         }

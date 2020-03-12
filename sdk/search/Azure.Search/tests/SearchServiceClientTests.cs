@@ -3,14 +3,13 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Search;
-using Azure.Search.Models;
-using Azure.Search.Tests;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
+using Azure.Search.Models;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.Template.Tests
+namespace Azure.Search.Tests
 {
     public class SearchServiceClientTests : SearchTestBase
     {
@@ -29,21 +28,86 @@ namespace Microsoft.Azure.Template.Tests
             Assert.AreEqual(endpoint, service.Endpoint);
             Assert.AreEqual(serviceName, service.ServiceName);
 
+            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(null, new SearchApiKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(endpoint, null));
+            Assert.Throws<ArgumentException>(() => new SearchServiceClient(new Uri("http://bing.com"), null));
+        }
+
+        [Test]
+        public void GetSearchIndexClient()
+        {
+            var serviceName = "my-svc-name";
+            var endpoint = new Uri($"https://{serviceName}.search.windows.net");
+            var service = new SearchServiceClient(endpoint, new SearchApiKeyCredential("fake"));
+
             var indexName = "my-index-name";
             var index = service.GetSearchIndexClient(indexName);
             Assert.NotNull(index);
             Assert.AreEqual(endpoint, index.Endpoint);
             Assert.AreEqual(serviceName, index.ServiceName);
             Assert.AreEqual(indexName, index.IndexName);
+
+            Assert.Throws<ArgumentNullException>(() => service.GetSearchIndexClient(null));
+            Assert.Throws<ArgumentException>(() => service.GetSearchIndexClient(string.Empty));
         }
 
         [Test]
-        public async Task GetStastistics()
+        public void SearchApiKeyCredential()
         {
-            await using SearchResources search = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
+            Assert.Throws<ArgumentNullException>(() => new SearchApiKeyCredential(null));
+            Assert.Throws<ArgumentException>(() => new SearchApiKeyCredential(string.Empty));
 
-            SearchServiceClient client = search.GetServiceClient();
-            Response<SearchServiceStatistics> response = await client.GetStatisticsAsync();
+            Assert.Throws<ArgumentNullException>(() => new SearchApiKeyCredential("fake").Refresh(null));
+            Assert.Throws<ArgumentException>(() => new SearchApiKeyCredential("fake").Refresh(string.Empty));
+        }
+
+        private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
+        {
+            public int RequestCount { get; private set; }
+            public override void OnSendingRequest(HttpMessage message) => RequestCount++;
+        }
+
+        [Test]
+        public async Task IndexSharesPipeline()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            TestPipelinePolicy custom = new TestPipelinePolicy();
+            Assert.AreEqual(0, custom.RequestCount);
+
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion);
+            options.AddPolicy(custom, HttpPipelinePosition.PerCall);
+            SearchServiceClient client = resources.GetServiceClient(options);
+
+            SearchIndexClient index = client.GetSearchIndexClient(resources.IndexName);
+            _ = await index.GetDocumentCountAsync();
+
+            Assert.AreEqual(1, custom.RequestCount);
+        }
+
+        [Test]
+        public async Task ClientRequestIdRountrips()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchServiceClient client = resources.GetServiceClient();
+            Guid id = Recording.Random.NewGuid();
+            Response<SearchServiceStatistics> response =
+                await client.GetStatisticsAsync(
+                    new SearchRequestOptions { ClientRequestId = id });
+
+            // TODO: XXXXX - C# generator doesn't properly support ClientRequestId yet
+            // (Assertion is here to remind us to fix this when we do - just
+            // change to AreEqual and re-record)
+            Assert.AreNotEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
+        }
+
+        [Test]
+        public async Task GetStatistics()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchServiceClient client = resources.GetServiceClient();
+            Response < SearchServiceStatistics > response = await client.GetStatisticsAsync();
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Counters);
@@ -55,8 +119,8 @@ namespace Microsoft.Azure.Template.Tests
             Assert.IsNotNull(response.Value.Counters.SynonymMapCounter);
             Assert.IsNotNull(response.Value.Limits);
 
-            Assert.NotZero(response.Value.Counters.IndexCounter.Quota ?? 0);
-            Assert.AreEqual(1, response.Value.Counters.IndexCounter.Usage ?? 0);
+            Assert.NotZero(response.Value.Counters.IndexCounter.Quota ?? 0L);
+            Assert.AreEqual(1, response.Value.Counters.IndexCounter.Usage);
         }
     }
 }

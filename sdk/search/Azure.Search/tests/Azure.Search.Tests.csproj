@@ -20,8 +20,6 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />

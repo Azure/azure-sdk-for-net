@@ -75,6 +75,10 @@ namespace Azure.Core.Testing
 
             try
             {
+                if (methodInfo.ContainsGenericParameters)
+                {
+                    methodInfo = methodInfo.MakeGenericMethod(invocation.Method.GetGenericArguments());
+                }
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
                 // Map IEnumerable to IAsyncEnumerable
@@ -108,6 +112,15 @@ namespace Azure.Core.Testing
             Type methodReturnType = invocation.Method.ReturnType;
             if (methodReturnType.IsGenericType)
             {
+                // Make sure Response<T> is a concrete type
+                if (returnType.IsGenericType &&
+                    returnType.GetGenericTypeDefinition() == typeof(Response<>) &&
+                    returnType.ContainsGenericParameters)
+                {
+                    Type modelType = methodReturnType.GetGenericArguments()[0].GetGenericArguments()[0];
+                    returnType = returnType.GetGenericTypeDefinition().MakeGenericType(modelType);
+                }
+
                 if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                 {
                     invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
@@ -145,10 +158,40 @@ namespace Azure.Core.Testing
             throw new NotSupportedException();
         }
 
-        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types) =>
-            IsInternal(invocation.Method)
-                ? invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.NonPublic | BindingFlags.Instance, null, types, null)
-                : invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
+        {
+            BindingFlags flags = IsInternal(invocation.Method) ?
+                BindingFlags.Instance | BindingFlags.NonPublic :
+                BindingFlags.Instance | BindingFlags.Public;
+
+            // Do our own "lightweight binding" in situations where we have
+            // generic arguments that aren't factored into the binder for
+            // the above GetMethod call.  We're taking lots of shortcuts
+            // like only comparing the generic type or count.
+            static Type GenericDef(Type t) => t.IsGenericType ? t.GetGenericTypeDefinition() : t;
+            MethodInfo GetMethodSlow() =>
+                invocation.TargetType
+                    .GetMethods(flags)
+                    .Where(m => m.Name == nonAsyncMethodName)
+                    .Where(m => m.GetParameters().Select(p => GenericDef(p.ParameterType)).SequenceEqual(types.Select(GenericDef)))
+                    .Where(m => m.GetGenericArguments().Length == invocation.Method.GetGenericArguments().Length)
+                    .SingleOrDefault();
+            try
+            {
+                return invocation.TargetType.GetMethod(
+                    nonAsyncMethodName,
+                    flags,
+                    null,
+                    types,
+                    null) ??
+                    // Try harder if we couldn't find a matching method
+                    GetMethodSlow();
+            }
+            catch (AmbiguousMatchException)
+            {
+                return GetMethodSlow();
+            }
+        }
 
         private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
 
