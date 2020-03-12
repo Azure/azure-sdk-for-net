@@ -61,8 +61,7 @@ jobs:
 
       # TODO: Remove when eng/New-TestResources.ps1 bootstraps the Az module (https://github.com/Azure/azure-sdk-for-net/issues/9130).
       - pwsh: | 
-          Get-Module -ListAvailable -Name Az | Write-Host
-          Install-Module -Name Az -Scope CurrentUser -Force -AllowClobber
+          Install-Module -Name Az -Scope CurrentUser -Force -AllowClobber -Verbose
         displayName: "Install Azure PowerShell module"
 
         # Chomp the string literal to more easily read and update the New-TestResources parameters.
