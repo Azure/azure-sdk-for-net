@@ -13,7 +13,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public void NonSessionReceiverCannotAccessSessionProperties()
         {
-            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
             var receiver = client.GetReceiver("fakeQueue");
 
             Assert.IsFalse(receiver.IsSessionReceiver);

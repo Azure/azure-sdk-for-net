@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    public class ServiceBusClientLiveTests : ServiceBusTestBase
+    public class ServiceBusClientLiveTests : ServiceBusLiveTestBase
     {
         [Test]
         [TestCase(true)]
