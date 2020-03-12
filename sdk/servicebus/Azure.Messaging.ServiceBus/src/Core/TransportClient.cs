@@ -41,13 +41,13 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   Creates a producer strongly aligned with the active protocol and transport,
         ///   responsible for publishing <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string entityName, ServiceBusRetryPolicy retryPolicy);
+        public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible

@@ -31,11 +31,11 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
-        ///   The name of the entity that the sender is connected to, specific to the
+        ///   The path of the entity that the sender is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         /// <param name="connection"></param>
         /// <param name="options">A set of options to apply when configuring the producer.</param>
         /// <remarks>
@@ -86,23 +86,23 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         internal ServiceBusSender(
-            string entityName,
+            string entityPath,
             ServiceBusConnection connection,
             ServiceBusSenderOptions options)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
-            Argument.AssertNotNullOrWhiteSpace(entityName, nameof(entityName));
+            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             connection.ThrowIfClosed();
 
-            EntityName = entityName;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityName);
+            EntityPath = entityPath;
+            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
             options = options?.Clone() ?? new ServiceBusSenderOptions();
             _connection = connection;
             _retryPolicy = options.RetryOptions.ToRetryPolicy();
             _innerSender = _connection.CreateTransportSender(
-                entityName,
+                entityPath,
                 _retryPolicy);
         }
 

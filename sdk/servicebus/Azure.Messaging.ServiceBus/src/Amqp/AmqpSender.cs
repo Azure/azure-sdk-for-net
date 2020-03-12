@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the entity to which messages will be sent.</param>
+        /// <param name="entityPath">The name of the entity to which messages will be sent.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
@@ -92,15 +92,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </remarks>
         ///
         public AmqpSender(
-            string entityName,
+            string entityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _entityPath = entityName;
+            _entityPath = entityPath;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 

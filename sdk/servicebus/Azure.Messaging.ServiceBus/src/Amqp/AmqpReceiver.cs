@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the Service Bus entity from which events will be consumed.</param>
+        /// <param name="entityPath">The name of the Service Bus entity from which events will be consumed.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// caller.
         /// </remarks>
         public AmqpReceiver(
-            string entityName,
+            string entityPath,
             ReceiveMode receiveMode,
             uint prefetchCount,
             AmqpConnectionScope connectionScope,
@@ -120,11 +120,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string sessionId,
             bool isSessionReceiver)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _entityPath = entityName;
+            _entityPath = entityPath;
             ConnectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
                     ConnectionScope.OpenReceiverLinkAsync(
-                        entityName: _entityPath,
+                        entityPath: _entityPath,
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,

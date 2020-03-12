@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
             var sender = new ServiceBusClient(connString).GetSender(queueName);
-            Assert.AreEqual(queueName, sender.EntityName);
+            Assert.AreEqual(queueName, sender.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             Assert.IsNotNull(sender.Identifier);
         }

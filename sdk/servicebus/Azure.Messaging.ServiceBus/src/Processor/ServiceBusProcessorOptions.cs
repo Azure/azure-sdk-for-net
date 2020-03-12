@@ -81,9 +81,10 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
+        /// Receiver.CompleteAsync() on messages after the callback has completed processing.
+        /// The default value is false.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
-        public bool AutoComplete { get; set; }
+        public bool AutoComplete { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
@@ -106,7 +107,7 @@ namespace Azure.Messaging.ServiceBus
         }
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate. The default value when used with a session processor is 8. For a non-session processor, the default is 1.</summary>
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {

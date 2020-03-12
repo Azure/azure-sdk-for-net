@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
-        /// The name of the Service Bus entity that the receiver is connected to, specific to the
+        /// The path of the Service Bus entity that the receiver is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
         public string EntityPath { get; }

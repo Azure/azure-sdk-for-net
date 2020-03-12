@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusSender GetSender(string entityName) =>
             new ServiceBusSender(
-                entityName: entityName,
+                entityPath: entityName,
                 connection: Connection,
                 options: new ServiceBusSenderOptions());
 
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusSender GetSender(string entityName, ServiceBusSenderOptions options) =>
             new ServiceBusSender(
-                entityName: entityName,
+                entityPath: entityName,
                 connection: Connection,
                 options: options);
 

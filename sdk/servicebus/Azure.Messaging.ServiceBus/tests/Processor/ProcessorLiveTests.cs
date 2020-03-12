@@ -168,7 +168,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 Assert.NotNull(args);
                 Assert.NotNull(args.Exception);
-                Assert.AreEqual(processor.Identifier, args.Identifier);
                 Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                 Assert.AreEqual(ExceptionReceivedEventArgsAction.Receive, args.Action);
                 Assert.AreEqual(processor.EntityPath, args.EntityPath);

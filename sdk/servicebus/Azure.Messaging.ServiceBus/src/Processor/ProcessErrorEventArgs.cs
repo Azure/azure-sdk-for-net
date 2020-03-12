@@ -19,14 +19,16 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="action">The action associated with the message.</param>
         /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
         /// <param name="entityPath">The entity path used when this exception occurred.</param>
-        /// <param name="identifier">The Client Id can be used to associate with the  cref="QueueClient"/>,  cref="SubscriptionClient"/>,  cref="MessageSender"/> or  cref="MessageReceiver"/>that encountered the exception.</param>
-        public ProcessErrorEventArgs(Exception exception, ExceptionReceivedEventArgsAction action, string fullyQualifiedNamespace, string entityPath, string identifier)
+        public ProcessErrorEventArgs(
+            Exception exception,
+            ExceptionReceivedEventArgsAction action,
+            string fullyQualifiedNamespace,
+            string entityPath)
         {
             Exception = exception;
             Action = action;
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityPath = entityPath;
-            Identifier = identifier;
         }
 
         /// <summary>Gets the parent class exception to which this Service bus message belongs.</summary>
@@ -39,13 +41,11 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The action associated with the event.</value>
         public ExceptionReceivedEventArgsAction Action { get; }
 
-        /// <summary>The namespace name used when this exception occurred.</summary>
+        /// <summary>The namespace name used when this exception occurred. This is likely
+        ///  to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</summary>
         public string FullyQualifiedNamespace { get; }
 
         /// <summary>The entity path used when this exception occurred.</summary>
         public string EntityPath { get; }
-
-        /// <summary>The Client Id associated with the sender, receiver or session when this exception occurred.</summary>
-        public string Identifier { get; }
     }
 }

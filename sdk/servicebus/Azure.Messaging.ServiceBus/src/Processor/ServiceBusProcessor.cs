@@ -31,8 +31,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; set; }
 
-        private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
-
         /// <summary>The primitive for synchronizing access during start and close operations.</summary>
         private readonly SemaphoreSlim ProcessingStartStopSemaphore = new SemaphoreSlim(1, 1);
 
@@ -63,7 +61,7 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
-        /// The name of the Service Bus entity that the processor is connected to, specific to the
+        /// The path of the Service Bus entity that the processor is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
         public string EntityPath { get; private set; }
@@ -568,7 +566,7 @@ namespace Azure.Messaging.ServiceBus
                 if (!(ex is TaskCanceledException))
                 {
                     await RaiseExceptionReceived(
-                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath, Identifier)).ConfigureAwait(false);
+                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
                 }
             }
             finally
@@ -638,7 +636,7 @@ namespace Azure.Messaging.ServiceBus
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 await RaiseExceptionReceived(
-                    new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath, Identifier)).ConfigureAwait(false);
+                    new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
                 await receiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
             }
             finally
@@ -722,8 +720,7 @@ namespace Azure.Messaging.ServiceBus
                                 exception,
                                 ExceptionReceivedEventArgsAction.RenewLock,
                                 FullyQualifiedNamespace,
-                                EntityPath,
-                                Identifier)).ConfigureAwait(false);
+                                EntityPath)).ConfigureAwait(false);
                     }
 
                     // if the error was not transient, break out of the loop
