@@ -42,6 +42,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
+                var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var receiverOptions = new PartitionReceiverOptions { ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
 
@@ -49,14 +51,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
-                    partitionId = (await producer.GetPartitionIdsAsync()).First();
+                    partitionId = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 }
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitionId, EventPosition.Earliest, connectionString, receiverOptions))
                 {
-                    var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                     var partitionProperties = await receiver.GetPartitionPropertiesAsync(cancellationSource.Token);
 
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(partitionProperties, Is.Not.Null, "A set of partition properties should have been returned.");
                     Assert.That(partitionProperties.Id, Is.EqualTo(partitionId), "The partition identifier should match.");
                     Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
@@ -79,6 +81,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
+                var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var connection = new EventHubConnection(connectionString);
 
@@ -86,16 +90,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var producer = new EventHubProducerClient(connection))
                 {
-                    partitionId = (await producer.GetPartitionIdsAsync()).First();
+                    partitionId = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 }
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitionId, EventPosition.Earliest, connection))
                 {
-                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(), Throws.Nothing);
+                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.Nothing);
 
-                    await connection.CloseAsync();
+                    await connection.CloseAsync(cancellationSource.Token);
 
-                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }
         }

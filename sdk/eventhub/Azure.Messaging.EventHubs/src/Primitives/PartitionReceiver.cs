@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -85,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   and should take responsibility for managing its lifespan.
         /// </summary>
         ///
-        internal virtual bool OwnsConnection { get; } = true;
+        private bool OwnsConnection { get; } = true;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -99,6 +101,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         private EventHubConnection Connection { get; }
+
+        /// <summary>
+        ///   The transport consumer that is used for operations performed against
+        ///   the Event Hubs service.
+        /// </summary>
+        ///
+        private TransportConsumer InnerConsumer { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionReceiver"/> class.
@@ -166,6 +175,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
         }
 
         /// <summary>
@@ -201,6 +211,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
         }
 
         /// <summary>
@@ -231,6 +242,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
         }
 
         /// <summary>
@@ -251,10 +263,35 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of information for the associated partition under the Event Hub this client is associated with.</returns>
         ///
-        public async virtual Task<PartitionProperties> GetPartitionPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
             return await Connection.GetPartitionPropertiesAsync(PartitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.
+        /// </summary>
+        ///
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified by the options when the client was created will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        ///
+        public virtual Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
+                                                                      TimeSpan maximumWaitTime,
+                                                                      CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            Argument.AssertInRange(maximumEventCount, 1, int.MaxValue, nameof(maximumEventCount));
+            Argument.AssertNotNegative(maximumWaitTime, nameof(maximumWaitTime));
+
+            // TODO: implement method.
+
+            return default;
         }
 
         /// <summary>
@@ -277,6 +314,24 @@ namespace Azure.Messaging.EventHubs.Primitives
             var clientHash = GetHashCode().ToString();
             Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
 
+            // Attempt to close the transport consumer.  In the event that an exception is encountered,
+            // it should not impact the attempt to close the connection, assuming ownership.
+
+            var transportConsumerException = default(Exception);
+
+            try
+            {
+                await InnerConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.ClientCloseError(typeof(PartitionReceiver), EventHubName, clientHash, ex.Message);
+                transportConsumerException = ex;
+            }
+
+            // An exception when closing the connection supersedes one observed when closing the
+            // transport consumer.
+
             try
             {
                 if (OwnsConnection)
@@ -292,6 +347,14 @@ namespace Azure.Messaging.EventHubs.Primitives
             finally
             {
                 Logger.ClientCloseComplete(typeof(PartitionReceiver), EventHubName, clientHash);
+            }
+
+            // If there was an active exception pending from closing the transport
+            // consumer, surface it now.
+
+            if (transportConsumerException != default)
+            {
+                ExceptionDispatchInfo.Capture(transportConsumerException).Throw();
             }
         }
 
@@ -330,5 +393,24 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates an <see cref="TransportConsumer" /> to use for reading events.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group the consumer will be associated with.  Events will be read in the context of this group.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
+        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
+        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
+        /// <param name="options">A set of options to apply when configuring the consumer.</param>
+        ///
+        /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
+        ///
+        internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
+                                                                   string partitionId,
+                                                                   EventPosition eventPosition,
+                                                                   EventHubsRetryPolicy retryPolicy,
+                                                                   PartitionReceiverOptions options) =>
+            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
     }
 }
