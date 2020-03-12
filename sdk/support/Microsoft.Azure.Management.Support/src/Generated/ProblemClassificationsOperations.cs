@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.Support
 
         /// <summary>
         /// Lists all the problem classifications (categories) available for a specific
-        /// Azure service.&lt;br/&gt;&lt;br/&gt; Always use the service and problem
-        /// classifications obtained programmatically. This practice ensures that you
-        /// always have the most recent set of service and problem classification Ids.
+        /// Azure service. Always use the service and problem classifications obtained
+        /// programmatically. This practice ensures that you always have the most
+        /// recent set of service and problem classification Ids.
         /// </summary>
         /// <param name='serviceName'>
         /// Name of Azure service for which the problem classifications need to be
@@ -87,10 +87,7 @@ namespace Microsoft.Azure.Management.Support
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serviceName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -99,6 +96,7 @@ namespace Microsoft.Azure.Management.Support
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -107,9 +105,9 @@ namespace Microsoft.Azure.Management.Support
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Support/services/{serviceName}/problemClassifications").ToString();
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -232,8 +230,7 @@ namespace Microsoft.Azure.Management.Support
         }
 
         /// <summary>
-        /// Gets the details of a specific problem classification for a specific Azure
-        /// service.
+        /// Get problem classification details for a specific Azure service.
         /// </summary>
         /// <param name='serviceName'>
         /// Name of Azure service available for support.
@@ -272,10 +269,7 @@ namespace Microsoft.Azure.Management.Support
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "problemClassificationName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -285,6 +279,7 @@ namespace Microsoft.Azure.Management.Support
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("problemClassificationName", problemClassificationName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -294,9 +289,9 @@ namespace Microsoft.Azure.Management.Support
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{problemClassificationName}", System.Uri.EscapeDataString(problemClassificationName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -19,13 +19,20 @@ namespace Microsoft.Azure.Management.Support
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Support", "Communications", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "Operations", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "ProblemClassifications", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "Services", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "SupportTickets", "2019-05-01-preview"),
+
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6187";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/support/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\bhshah\\Source\\Repos\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "e5c5e19fbafd578644c816b287a10c79deddb574";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

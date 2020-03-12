@@ -51,22 +51,15 @@ namespace Microsoft.Azure.Management.Support
         public MicrosoftSupportClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the Azure services available for support ticket creation. Here
-        /// are the Service Ids for **Billing**, **Subscription Management**, and
-        /// **Service and subscription limits (Quotas)** issues:
-        /// &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Issue
-        /// type&lt;/u&gt;&lt;/td&gt;&lt;td&gt;&lt;u&gt;Service
-        /// Id&lt;/u&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Billing&lt;/td&gt;&lt;td&gt;'/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc'&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Subscription
-        /// Management&lt;/td&gt;&lt;td&gt;'/providers/Microsoft.Support/services/f3dc5421-79ef-1efa-41a5-42bf3cbb52c6'&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Quota&lt;/td&gt;&lt;td&gt;'/providers/Microsoft.Support/services/06bfd9d3-516b-d5c6-5802-169c800dec89'&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-        /// &lt;br/&gt;&lt;br/&gt; For **Technical** issues, select the Service Id that
-        /// maps to the Azure service/product as displayed in the **Services**
-        /// drop-down list on the Azure portal's &lt;a target='_blank'
-        /// href='https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview'&gt;New
-        /// support request&lt;/a&gt; page. &lt;br/&gt;&lt;br/&gt; Always use the
-        /// service and it's corresponding problem classification(s) obtained
-        /// programmatically for support ticket creation. This practice ensures that
-        /// you always have the most recent set of service and problem classification
-        /// Ids.
+        /// Lists all the Azure services available for support ticket creation. For
+        /// **Technical** issues, select the Service Id that maps to the Azure
+        /// service/product as displayed in the **Services** drop-down list on the
+        /// Azure portal's [New support
+        /// request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview)
+        /// page. Always use the service and it's corresponding problem
+        /// classification(s) obtained programmatically for support ticket creation.
+        /// This practice ensures that you always have the most recent set of service
+        /// and problem classification Ids.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,21 +73,12 @@ namespace Microsoft.Azure.Management.Support
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<AzureOperationResponse<IEnumerable<Service>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -102,6 +86,7 @@ namespace Microsoft.Azure.Management.Support
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -109,9 +94,9 @@ namespace Microsoft.Azure.Management.Support
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Support/services").ToString();
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -266,10 +251,7 @@ namespace Microsoft.Azure.Management.Support
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serviceName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -278,6 +260,7 @@ namespace Microsoft.Azure.Management.Support
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -286,9 +269,9 @@ namespace Microsoft.Azure.Management.Support
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Support/services/{serviceName}").ToString();
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
