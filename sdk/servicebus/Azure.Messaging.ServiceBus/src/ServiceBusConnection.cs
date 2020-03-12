@@ -62,11 +62,16 @@ namespace Azure.Messaging.ServiceBus
         private readonly TransportClient _innerClient;
 
         /// <summary>
+        /// Parameterless constructor to allow mocking.
+        /// </summary>
+        internal ServiceBusConnection() { }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
-        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
@@ -76,28 +81,31 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal ServiceBusConnection(
             string connectionString,
-            ServiceBusClientOptions connectionOptions = default)
+            ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            Argument.AssertNotNull(options, nameof(options));
 
-            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusClientOptions();
+            options = options.Clone();
 
-            ValidateConnectionOptions(connectionOptions);
+            ValidateConnectionOptions(options);
             var builder = new ServiceBusConnectionStringBuilder(connectionString);
 
             FullyQualifiedNamespace = builder.FullyQualifiedNamespace;
-            TransportType = connectionOptions.TransportType;
+            TransportType = options.TransportType;
             EntityName = builder.EntityName;
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildAudienceResource(connectionOptions.TransportType, FullyQualifiedNamespace, EntityName),
+                 BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityName),
                  builder.SasKeyName,
                  builder.SasKey
             );
 
             var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredentials = new ServiceBusTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, FullyQualifiedNamespace, EntityName));
-            _innerClient = CreateTransportClient(tokenCredentials, connectionOptions);
+            var tokenCredentials = new ServiceBusTokenCredential(
+                sharedCredentials,
+                BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityName));
+            _innerClient = CreateTransportClient(tokenCredentials, options);
         }
 
 
@@ -107,34 +115,35 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         ///
         internal ServiceBusConnection(
-                    string fullyQualifiedNamespace,
-                    TokenCredential credential,
-                    ServiceBusClientOptions connectionOptions = default)
+            string fullyQualifiedNamespace,
+            TokenCredential credential,
+            ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
 
-            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusClientOptions();
-            ValidateConnectionOptions(connectionOptions);
+            options = options.Clone();
+            ValidateConnectionOptions(options);
             switch (credential)
             {
                 case SharedAccessSignatureCredential _:
                     break;
 
                 case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, EntityName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityName));
                     break;
             }
 
-            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, EntityName));
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityName));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
-            TransportType = connectionOptions.TransportType;
+            TransportType = options.TransportType;
 
-            _innerClient = CreateTransportClient(tokenCredential, connectionOptions);
+            _innerClient = CreateTransportClient(tokenCredential, options);
         }
 
         /// <summary>
@@ -145,25 +154,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), "", FullyQualifiedNamespace);
-
-            try
-            {
-                await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusConnection), "", FullyQualifiedNamespace, ex.Message);
-                throw;
-            }
-            finally
-            {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), "", FullyQualifiedNamespace);
-            }
-        }
+        public async virtual Task CloseAsync(CancellationToken cancellationToken = default) =>
+            await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
 
 
         /// <summary>
@@ -207,11 +199,12 @@ namespace Azure.Messaging.ServiceBus
         internal TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
             _innerClient.CreateSender(entityName, retryPolicy);
 
-        internal TransportReceiver CreateTransportReceiver(
+        internal virtual TransportReceiver CreateTransportReceiver(
             string entityName,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
+            string identifier,
             string sessionId = default,
             bool isSessionReceiver = default) =>
                 _innerClient.CreateReceiver(
@@ -219,6 +212,7 @@ namespace Azure.Messaging.ServiceBus
                     retryPolicy,
                     receiveMode,
                     prefetchCount,
+                    identifier,
                     sessionId,
                     isSessionReceiver);
 
@@ -286,7 +280,9 @@ namespace Azure.Messaging.ServiceBus
         ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the caller.
         /// </remarks>
         ///
-        internal virtual TransportClient CreateTransportClient(ServiceBusTokenCredential credential, ServiceBusClientOptions options)
+        internal virtual TransportClient CreateTransportClient(
+            ServiceBusTokenCredential credential,
+            ServiceBusClientOptions options)
         {
             switch (TransportType)
             {
@@ -394,6 +390,17 @@ namespace Azure.Messaging.ServiceBus
             if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.Proxy != null))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources1.ProxyMustUseWebSockets), nameof(connectionOptions));
+            }
+        }
+
+        /// <summary>
+        /// Throw an ObjectDisposedException if the object is Closing.
+        /// </summary>
+        internal virtual void ThrowIfClosed()
+        {
+            if (IsClosed)
+            {
+                throw new ObjectDisposedException($"{nameof(ServiceBusConnection)} has already been closed. Please create a new instance");
             }
         }
     }

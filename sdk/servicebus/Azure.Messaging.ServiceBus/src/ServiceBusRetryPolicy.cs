@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
@@ -26,6 +27,24 @@ namespace Azure.Messaging.ServiceBus
     ///
     public abstract class ServiceBusRetryPolicy
     {
+
+        private static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
+
+        private readonly object serverBusyLock = new object();
+
+        // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
+        private volatile bool encounteredServerBusy;
+
+        /// <summary>
+        /// Determines whether or not the server returned a busy error.
+        /// </summary>
+        private bool IsServerBusy { get; set; }
+
+        /// <summary>
+        /// Gets the exception message when a server busy error is returned.
+        /// </summary>
+        private string ServerBusyExceptionMessage { get; set; }
+
         /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
@@ -46,8 +65,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The amount of time to delay before retrying the associated operation; if <c>null</c>, then the operation is no longer eligible to be retried.</returns>
         ///
-        public abstract TimeSpan? CalculateRetryDelay(Exception lastException,
-                                                      int attemptCount);
+        public abstract TimeSpan? CalculateRetryDelay(
+            Exception lastException,
+            int attemptCount);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -82,13 +102,11 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="operation"></param>
-        /// <param name="entityName"></param>
         /// <param name="scope"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task RunOperation(
             Func<TimeSpan, Task> operation,
-            string entityName,
             TransportConnectionScope scope,
             CancellationToken cancellationToken)
         {
@@ -97,9 +115,21 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TimeSpan tryTimeout = CalculateTryTimeout(0);
-
+                if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
+                {
+                    // We are in a server busy state before we start processing.
+                    // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
+                    await Task.Delay(tryTimeout).ConfigureAwait(false);
+                    throw new ServiceBusException(
+                        ServerBusyExceptionMessage,
+                        ServiceBusException.FailureReason.ServiceBusy);
+                }
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    if (IsServerBusy)
+                    {
+                        await Task.Delay(ServerBusyBaseSleepTime).ConfigureAwait(false);
+                    }
 
                     try
                     {
@@ -109,27 +139,22 @@ namespace Azure.Messaging.ServiceBus
 
                     catch (Exception ex)
                     {
-                        Exception activeEx = ex.TranslateServiceException(entityName);
+                        Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
 
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                        // Otherwise, mark the exception as active and break out of the loop.
+                        // Otherwise, throw the translated exception.
 
                         ++failedAttemptCount;
-                        TimeSpan? retryDelay = CalculateRetryDelay(ex, failedAttemptCount);
+                        TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
                         if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                         {
-                            //EventHubsEventSource.Log.GetPropertiesError(EventHubName, activeEx.Message);
+                            ServiceBusEventSource.Log.RunOperationExceptionEncountered(activeEx);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
                             tryTimeout = CalculateTryTimeout(failedAttemptCount);
-                        }
-                        else if (ex is AmqpException)
-                        {
-                            throw activeEx;
                         }
                         else
                         {
-                            throw;
+                            throw activeEx;
                         }
                     }
                 }
@@ -137,15 +162,56 @@ namespace Azure.Messaging.ServiceBus
                 // then cancellation has been requested.
                 throw new TaskCanceledException();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                throw exception;
-                //TODO through correct exception throw AmqpExceptionHelper.GetClientException(exception);
+                ServiceBusEventSource.Log.RunOperationExceptionEncountered(ex);
+                throw;
             }
-            finally
+        }
+
+        internal void SetServerBusy(string exceptionMessage)
+        {
+            // multiple call to this method will not prolong the timer.
+            if (encounteredServerBusy)
             {
-                //TODO log correct completion event ServiceBusEventSource.Log.PeekMessagesComplete(EntityName);
+                return;
             }
+
+            lock (serverBusyLock)
+            {
+                if (!encounteredServerBusy)
+                {
+                    encounteredServerBusy = true;
+                    ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
+                        Resources.DefaultServerBusyException : exceptionMessage;
+                    IsServerBusy = true;
+                    _ = ScheduleResetServerBusy();
+                }
+            }
+        }
+
+        internal void ResetServerBusy()
+        {
+            if (!encounteredServerBusy)
+            {
+                return;
+            }
+
+            lock (serverBusyLock)
+            {
+                if (encounteredServerBusy)
+                {
+                    encounteredServerBusy = false;
+                    ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
+                    IsServerBusy = false;
+                }
+            }
+        }
+
+        private async Task ScheduleResetServerBusy()
+        {
+            await Task.Delay(ServerBusyBaseSleepTime).ConfigureAwait(false);
+            ResetServerBusy();
         }
     }
 }

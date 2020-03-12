@@ -63,17 +63,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
+        /// <param name="innerException"></param>
         ///
         public ServiceBusException(
             string message,
             FailureReason reason,
-            string entityName = default) :
-            this(
-                isTransient: default,
-                message: message,
-                entityName: entityName,
-                reason: reason,
-                innerException: null)
+            string entityName = default,
+            Exception innerException = default) : this(default, entityName, message, reason, innerException)
         {
             switch (reason)
             {
@@ -111,6 +107,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        public ServiceBusException() { }
+
+        /// <summary>
         ///   The set of well-known reasons for an Service Bus operation failure that
         ///   was the cause of an exception.
         /// </summary>
@@ -126,13 +127,18 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>A client was forcefully disconnected from an Service Bus entity instance.</summary>
             ReceiverDisconnected,
 
-            /// <summary>An Service Bus resource cannot be found by the Service Bus service.</summary>
+            /// <summary>A Service Bus resource cannot be found by the Service Bus service.</summary>
             MessagingEntityNotFound,
 
             /// <summary>
             ///
             /// </summary>
             MessageLockLost,
+
+            /// <summary>
+            /// The requested message was not found.
+            /// </summary>
+            MessageNotFound,
 
             /// <summary>A message is larger than the maximum size allowed for its transport.</summary>
             MessageSizeExceeded,

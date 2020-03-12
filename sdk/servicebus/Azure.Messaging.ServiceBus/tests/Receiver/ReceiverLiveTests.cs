@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.DeadLetterAsync(item);
+                    await receiver.MoveToDeadLetterQueueAsync(item);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -320,7 +320,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // Sleeping for 10 seconds...
                 await Task.Delay(10000);
 
-                await receiver.RenewLockAsync(receivedMessage);
+                await receiver.RenewMessageLockAsync(receivedMessage);
 
                 Assert.True(receivedMessage.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 

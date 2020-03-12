@@ -23,18 +23,18 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <value>
         /// <c>true</c> if the consumer is closed; otherwise, <c>false</c>.
         /// </value>
-        public virtual bool IsClosed { get; }
+        ///
+        public abstract bool IsClosed { get; }
 
         /// <summary>
-        /// The name of the Service Bus entity that the receiver is connected to, specific to the
-        /// Service Bus namespace that contains it.
+        ///
         /// </summary>
-        public virtual string EntityName { get; }
+        public abstract string SessionId { get; protected set; }
 
         /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
-        public virtual string SessionId { get; protected set; }
+        public abstract DateTime SessionLockedUntilUtc { get; protected set; }
 
         /// <summary>
         /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
@@ -116,9 +116,8 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveBatchAsync(int, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
-        ///
-        /// <returns>List of <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
-        public abstract Task<IList<ServiceBusReceivedMessage>> PeekBatchBySequenceAsync(
+        /// <returns></returns>
+        public abstract Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
             long? fromSequenceNumber,
             int messageCount = 1,
             CancellationToken cancellationToken = default);
@@ -172,15 +171,13 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Receives a <see cref="IList{Message}"/> of deferred messages identified by <paramref name="sequenceNumbers"/>.
         /// </summary>
-        ///
-        /// <param name="sequenceNumbers">An <see cref="IEnumerable{T}"/> containing the sequence numbers to receive.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
+        /// <param name="sequenceNumbers">A <see cref="IList{SequenceNumber}"/> containing the sequence numbers to receive.</param>
+        /// <param name="cancellationToken"></param>
         /// <returns>Messages identified by sequence number are returned. Returns null if no messages are found.
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferAsync"/>
         public abstract Task<IList<ServiceBusReceivedMessage>> ReceiveDeferredMessageBatchAsync(
-            IEnumerable<long> sequenceNumbers,
+            IList<long> sequenceNumbers,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -198,8 +195,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public abstract Task<DateTime> RenewSessionLockAsync(
+        /// <returns>New lock token expiry date and time in UTC format.</returns>
+        ///
+        /// <param name="cancellationToken"></param>
+        public abstract Task RenewSessionLockAsync(
             CancellationToken cancellationToken);
     }
 }
