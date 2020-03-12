@@ -39,13 +39,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="minimalTlsVersion">Enforce a minimal Tls version for
+        /// the server. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'</param>
         /// <param name="storageProfile">Storage profile of a server.</param>
-        public ServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword, string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), StorageProfile storageProfile = default(StorageProfile))
-            : base(version, sslEnforcement, storageProfile)
+        public ServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword, string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string minimalTlsVersion = default(string), StorageProfile storageProfile = default(StorageProfile))
+            : base(version, sslEnforcement, minimalTlsVersion, storageProfile)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
