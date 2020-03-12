@@ -19,12 +19,12 @@ namespace Azure.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.")
         };
 
-        public static AutocompleteMode ToAutocompleteMode(this string value) => value switch
+        public static AutocompleteMode ToAutocompleteMode(this string value)
         {
-            "oneTerm" => AutocompleteMode.OneTerm,
-            "twoTerms" => AutocompleteMode.TwoTerms,
-            "oneTermWithContext" => AutocompleteMode.OneTermWithContext,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.")
-        };
+            if (string.Equals(value, "oneTerm", StringComparison.InvariantCultureIgnoreCase)) return AutocompleteMode.OneTerm;
+            if (string.Equals(value, "twoTerms", StringComparison.InvariantCultureIgnoreCase)) return AutocompleteMode.TwoTerms;
+            if (string.Equals(value, "oneTermWithContext", StringComparison.InvariantCultureIgnoreCase)) return AutocompleteMode.OneTermWithContext;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutocompleteMode value.");
+        }
     }
 }
