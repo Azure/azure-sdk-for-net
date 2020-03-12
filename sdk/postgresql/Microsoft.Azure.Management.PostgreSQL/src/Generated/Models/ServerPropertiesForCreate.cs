@@ -30,15 +30,19 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// Initializes a new instance of the ServerPropertiesForCreate class.
         /// </summary>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="minimalTlsVersion">Enforce a minimal Tls version for
+        /// the server. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'</param>
         /// <param name="storageProfile">Storage profile of a server.</param>
-        public ServerPropertiesForCreate(string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), StorageProfile storageProfile = default(StorageProfile))
+        public ServerPropertiesForCreate(string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string minimalTlsVersion = default(string), StorageProfile storageProfile = default(StorageProfile))
         {
             Version = version;
             SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
             StorageProfile = storageProfile;
             CustomInit();
         }
@@ -50,7 +54,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets server version. Possible values include: '9.5', '9.6',
-        /// '10', '10.0', '10.2'
+        /// '10', '10.0', '10.2', '11'
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
@@ -61,6 +65,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         [JsonProperty(PropertyName = "sslEnforcement")]
         public SslEnforcementEnum? SslEnforcement { get; set; }
+
+        /// <summary>
+        /// Gets or sets enforce a minimal Tls version for the server. Possible
+        /// values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
 
         /// <summary>
         /// Gets or sets storage profile of a server.
