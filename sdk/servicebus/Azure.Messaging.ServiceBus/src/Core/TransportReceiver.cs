@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
         ///
-        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
+        /// <param name="sequenceNumber">The sequence number from where to read the message.</param>
         /// <param name="messageCount">The maximum number of messages that will be fetched.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </remarks>
         /// <returns></returns>
         public abstract Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
-            long? fromSequenceNumber,
+            long? sequenceNumber,
             int messageCount = 1,
             CancellationToken cancellationToken = default);
 

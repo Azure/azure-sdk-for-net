@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         /// The name of the Service Bus entity that the receiver is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
@@ -105,15 +105,10 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusSessionManager _sessionManager;
 
         /// <summary>
-        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
-        /// </summary>
-        public ServiceBusSubscriptionManager SubscriptionManager { get; set; }
-
-        /// <summary>
         /// Creates a session receiver which can be used to interact with all messages with the same sessionId.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the specific queue to associate the receiver with.</param>
+        /// <param name="entityPath">The name of the specific queue to associate the receiver with.</param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="sessionId">The sessionId for this receiver</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
@@ -121,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         ///<returns>Returns a new instance of the <see cref="ServiceBusReceiver"/> class.</returns>
         internal static async Task<ServiceBusReceiver> CreateSessionReceiverAsync(
-            string entityName,
+            string entityPath,
             ServiceBusConnection connection,
             string sessionId = default,
             ServiceBusReceiverOptions options = default,
@@ -131,37 +126,12 @@ namespace Azure.Messaging.ServiceBus
 
             var receiver = new ServiceBusReceiver(
                 connection: connection,
-                entityName: entityName,
+                entityPath: entityPath,
                 isSessionEntity: true,
-                sessionId: sessionId,
-                options: options);
+                options: options,
+                sessionId: sessionId);
 
             await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
-            return receiver;
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="ServiceBusReceiver"/>.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the specific queue to associate the receiver with.</param>
-        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="options">A set of options to apply when configuring the receiver.</param>
-        ///
-        /// <returns>Returns a new instance of the <see cref="ServiceBusReceiver"/> class.</returns>
-        internal static ServiceBusReceiver CreateReceiver(
-            string entityName,
-            ServiceBusConnection connection,
-            ServiceBusReceiverOptions options = default)
-        {
-            options = options?.Clone() ?? new ServiceBusReceiverOptions();
-
-            var receiver = new ServiceBusReceiver(
-                connection: connection,
-                entityName: entityName,
-                isSessionEntity: false,
-                options: options);
-
             return receiver;
         }
 
@@ -170,33 +140,33 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
-        /// <param name="sessionId"></param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
+        /// <param name="sessionId"></param>
         ///
         internal ServiceBusReceiver(
             ServiceBusConnection connection,
-            string entityName,
+            string entityPath,
             bool isSessionEntity,
-            string sessionId = default,
-            ServiceBusReceiverOptions options = default)
+            ServiceBusReceiverOptions options,
+            string sessionId = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
-            Argument.AssertNotNullOrWhiteSpace(entityName, nameof(entityName));
+            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             connection.ThrowIfClosed();
 
-            Identifier = DiagnosticUtilities.GenerateIdentifier(entityName);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(entityPath);
             _connection = connection;
             _retryPolicy = options.RetryOptions.ToRetryPolicy();
             ReceiveMode = options.ReceiveMode;
             PrefetchCount = options.PrefetchCount;
-            EntityName = entityName;
+            EntityPath = entityPath;
             IsSessionReceiver = isSessionEntity;
             _innerReceiver = _connection.CreateTransportReceiver(
-                entityName: EntityName,
+                entityPath: EntityPath,
                 retryPolicy: _retryPolicy,
                 receiveMode: ReceiveMode,
                 prefetchCount: (uint)PrefetchCount,
@@ -204,7 +174,6 @@ namespace Azure.Messaging.ServiceBus
                 sessionId: sessionId,
                 isSessionReceiver: IsSessionReceiver);
             SessionManager = new ServiceBusSessionManager(_innerReceiver, Identifier);
-            SubscriptionManager = new ServiceBusSubscriptionManager();
         }
 
         /// <summary>
@@ -282,7 +251,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchAtInternalAsync(
-                fromSequenceNumber: null,
+                sequenceNumber: null,
                 maxMessages: 1,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -298,16 +267,16 @@ namespace Azure.Messaging.ServiceBus
         /// Fetch the next message without changing the state of the receiver or the message source.
         /// </summary>
         ///
-        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
+        /// <param name="sequenceNumber">The sequence number from where to read the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceivedMessage> PeekAt(
-            long fromSequenceNumber,
+        public virtual async Task<ServiceBusReceivedMessage> PeekAtAsync(
+            long sequenceNumber,
             CancellationToken cancellationToken = default)
         {
             IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchAtAsync(
-                fromSequenceNumber: fromSequenceNumber,
+                sequenceNumber: sequenceNumber,
                 maxMessages: 1)
                 .ConfigureAwait(false);
 
@@ -337,7 +306,7 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages,
             CancellationToken cancellationToken = default) =>
             await PeekBatchAtInternalAsync(
-                fromSequenceNumber: null,
+                sequenceNumber: null,
                 maxMessages: maxMessages,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -345,16 +314,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
-        /// <param name="fromSequenceNumber"></param>
+        /// <param name="sequenceNumber"></param>
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
-            long fromSequenceNumber,
+            long sequenceNumber,
             int maxMessages = 1,
             CancellationToken cancellationToken = default) =>
             await PeekBatchAtInternalAsync(
-                fromSequenceNumber: fromSequenceNumber,
+                sequenceNumber: sequenceNumber,
                 maxMessages: maxMessages,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -362,24 +331,24 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
-        /// <param name="fromSequenceNumber"></param>
+        /// <param name="sequenceNumber"></param>
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         private async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtInternalAsync(
-            long? fromSequenceNumber,
+            long? sequenceNumber,
             int maxMessages,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.PeekMessageStart(Identifier, fromSequenceNumber, maxMessages);
+            ServiceBusEventSource.Log.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             IList<ServiceBusReceivedMessage> messages = null;
 
             try
             {
                 messages = await _innerReceiver.PeekBatchAtAsync(
-                    fromSequenceNumber,
+                    sequenceNumber,
                     maxMessages,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -658,6 +627,14 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        private void ThrowIfSessionReceiver()
+        {
+            if (IsSessionReceiver)
+            {
+                throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
+            }
+        }
+
         /// <summary>
         /// Receives a specific deferred message identified by <paramref name="sequenceNumber"/>.
         /// </summary>
@@ -739,6 +716,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
+            ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewMessageLockStart(Identifier, 1, message.LockToken);
 

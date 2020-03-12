@@ -225,4 +225,7 @@
   <data name="CannotRegisterSessionEventHandlerWhenNotUsingSessions" xml:space="preserve">
     <value>When not using a sessionful entity, the non-session event handler must be used.</value>
   </data>
+  <data name="CannotLockMessageOnSessionEntity" xml:space="preserve">
+    <value>Messages cannot be locked when working with session-enabled entities. Locks are handled at the session level.</value>
+  </data>
 </root>

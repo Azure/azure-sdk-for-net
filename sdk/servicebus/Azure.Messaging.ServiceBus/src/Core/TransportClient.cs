@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
         public abstract TransportReceiver CreateReceiver(
-            string entityName,
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,

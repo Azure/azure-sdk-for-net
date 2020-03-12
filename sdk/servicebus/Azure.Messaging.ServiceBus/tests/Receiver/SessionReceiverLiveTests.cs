@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // verify peeked == send
                 var ct = 0;
                 foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAtAsync(
-                    fromSequenceNumber: (long)sequenceNumber,
+                    sequenceNumber: (long)sequenceNumber,
                     maxMessages: messageCt))
                 {
                     var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
 
                     foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAtAsync(
-                        fromSequenceNumber: 1,
+                        sequenceNumber: 1,
                         maxMessages: 10))
                     {
                         var sessionId = receiver.SessionManager.SessionId;
@@ -209,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     }
 
                     // Close the receiver client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
-                    await receiver.CloseAsync();
+                    await receiver.DisposeAsync();
                 }
             }
         }

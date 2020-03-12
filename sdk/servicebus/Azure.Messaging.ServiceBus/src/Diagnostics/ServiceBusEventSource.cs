@@ -460,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         /// <summary>
         ///   Indicates that a client is closing, which may correspond to an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <see cref="ServiceBusReceiver"/>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>

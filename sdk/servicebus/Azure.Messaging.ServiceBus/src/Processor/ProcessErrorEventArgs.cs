@@ -17,15 +17,15 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="exception">The exception that this event data belongs to.</param>
         /// <param name="action">The action associated with the message.</param>
-        /// <param name="endpoint">The endpoint used when this exception occurred.</param>
-        /// <param name="entityName">The entity path used when this exception occurred.</param>
+        /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
+        /// <param name="entityPath">The entity path used when this exception occurred.</param>
         /// <param name="identifier">The Client Id can be used to associate with the  cref="QueueClient"/>,  cref="SubscriptionClient"/>,  cref="MessageSender"/> or  cref="MessageReceiver"/>that encountered the exception.</param>
-        public ProcessErrorEventArgs(Exception exception, ExceptionReceivedEventArgsAction action, string endpoint, string entityName, string identifier)
+        public ProcessErrorEventArgs(Exception exception, ExceptionReceivedEventArgsAction action, string fullyQualifiedNamespace, string entityPath, string identifier)
         {
             Exception = exception;
             Action = action;
-            FullyQualifiedNamespace = endpoint;
-            EntityName = entityName;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EntityPath = entityPath;
             Identifier = identifier;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace { get; }
 
         /// <summary>The entity path used when this exception occurred.</summary>
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>The Client Id associated with the sender, receiver or session when this exception occurred.</summary>
         public string Identifier { get; }

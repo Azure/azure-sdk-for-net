@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The name of the Service Bus entity to which the receiver is bound.
         /// </summary>
         ///
-        private readonly string _entityName;
+        private readonly string _entityPath;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _entityName = entityName;
+            _entityPath = entityName;
             ConnectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
                     ConnectionScope.OpenReceiverLinkAsync(
-                        entityName: _entityName,
+                        entityName: _entityPath,
                         timeout: timeout,
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => ConnectionScope.OpenManagementLinkAsync(
-                    _entityName,
+                    _entityPath,
                     timeout,
                     CancellationToken.None),
                 link =>
@@ -738,7 +738,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
         ///
-        /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
+        /// <param name="sequenceNumber">The sequence number from where to read the message.</param>
         /// <param name="messageCount">The maximum number of messages that will be fetched.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -750,12 +750,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </remarks>
         /// <returns></returns>
         public override async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
-            long? fromSequenceNumber,
+            long? sequenceNumber,
             int messageCount = 1,
             CancellationToken cancellationToken = default)
         {
 
-            long seqNumber = fromSequenceNumber ?? LastPeekedSequenceNumber + 1;
+            long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
             IList<ServiceBusReceivedMessage> messages = null;
 
             await _retryPolicy.RunOperation(
@@ -775,13 +775,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///
         /// </summary>
-        /// <param name="fromSequenceNumber"></param>
+        /// <param name="sequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         private async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtInternalAsync(
-            long fromSequenceNumber,
+            long sequenceNumber,
             int messageCount,
             TimeSpan timeout,
             CancellationToken cancellationToken)
@@ -799,7 +799,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber;
+            amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = sequenceNumber;
             amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
 
             if (!string.IsNullOrWhiteSpace(SessionId))

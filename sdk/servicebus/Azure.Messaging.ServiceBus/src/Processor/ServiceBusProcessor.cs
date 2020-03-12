@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -64,105 +63,33 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
-        /// The name of the Service Bus entity that the receiver is connected to, specific to the
+        /// The name of the Service Bus entity that the processor is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityName { get; private set; }
+        public string EntityPath { get; private set; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
-        public string Identifier { get; private set; }
+        internal string Identifier { get; private set; }
 
         /// <summary>
-        ///
+        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
-        public ReceiveMode ReceiveMode
-        {
-            get
-            {
-                return _receiveMode;
-            }
-            set
-            {
-                ValidateNotProcessing();
-                _receiveMode = value;
-            }
-        }
-
-        private ReceiveMode _receiveMode = ReceiveMode.PeekLock;
+        public ReceiveMode ReceiveMode { get; }
 
         /// <summary>
-        /// Indicates whether the receiver entity is session enabled.
+        /// Indicates whether the processor is configured to process session entities.
         /// </summary>
-        public bool UseSessions
-        {
-            get
-            {
-                return _useSessions;
-            }
-            set
-            {
-                ValidateNotProcessing();
-                _useSessions = value;
-            }
-        }
-        private bool _useSessions;
+        public bool IsSessionProcessor { get; }
 
         /// <summary>
-        /// TODO add validation to prevent changing while processor running.
+        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// from a local cache rather than waiting on a service request.
         /// </summary>
-        public string SessionId
-        {
-            get
-            {
-                return _sessionId;
-            }
-            set
-            {
-                ValidateNotProcessing();
-                _sessionId = value;
-            }
-        }
-        private string _sessionId;
-
-        /// <summary>
-        ///
-        /// </summary>
-        public int PrefetchCount
-        {
-            get
-            {
-                return _prefetchCount;
-            }
-            set
-            {
-                ValidateNotProcessing();
-                if (value < 0)
-                {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
-                }
-                _prefetchCount = value;
-            }
-        }
-        private int _prefetchCount = 0;
-
-        /// <summary>
-        /// The set of options to use for determining whether a failed operation should be retried and,
-        /// if so, the amount of time to wait between retry attempts.  These options also control the
-        /// amount of time allowed for sending messages and other interactions with the Service Bus service.
-        /// </summary>
-        public ServiceBusRetryOptions RetryOptions
-        {
-            get => _retryOptions;
-            set
-            {
-                ValidateNotProcessing();
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
-            }
-        }
+        public int PrefetchCount { get; }
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
@@ -189,14 +116,8 @@ namespace Azure.Messaging.ServiceBus
         {
             get => _maxConcurrentCalls;
 
-            set
+            private set
             {
-                ValidateNotProcessing();
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
-                }
-
                 _maxConcurrentCalls = value;
                 _maxConcurrentAcceptSessions = Math.Min(value, 2 * Environment.ProcessorCount);
             }
@@ -207,11 +128,10 @@ namespace Azure.Messaging.ServiceBus
         private const int DefaultMaxConcurrentCalls = 1;
         private const int DefaultMaxConcurrentSessions = 8;
 
-
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
         /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
-        public bool AutoComplete { get; set; }
+        public bool AutoComplete { get; }
 
         /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
@@ -222,37 +142,49 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
-        public TimeSpan MaxAutoLockRenewalDuration
-        {
-            get => _maxAutoRenewDuration;
-
-            set
-            {
-                TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                _maxAutoRenewDuration = value;
-            }
-        }
+        public TimeSpan MaxAutoLockRenewalDuration { get; }
 
         internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
+
+        private readonly string _sessionId;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
         /// </summary>
         ///
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
+        /// <param name="isSessionEntity"></param>
+        /// <param name="sessionId"></param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
+        /// <param name="options"></param>
         ///
         internal ServiceBusProcessor(
-            string entityName,
-            ServiceBusConnection connection)
+            ServiceBusConnection connection,
+            string entityPath,
+            bool isSessionEntity,
+            ServiceBusProcessorOptions options,
+            string sessionId = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(entityName, nameof(entityName));
+            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
             connection.ThrowIfClosed();
 
             _connection = connection;
-            EntityName = entityName;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityName);
+            EntityPath = entityPath;
+            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+
+            _retryOptions = options.RetryOptions;
+            ReceiveMode = options.ReceiveMode;
+            PrefetchCount = options.PrefetchCount;
+            MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
+            MaxConcurrentCalls = options.MaxConcurrentCalls;
+            AutoComplete = options.AutoComplete;
+
+            EntityPath = entityPath;
+            IsSessionProcessor = isSessionEntity;
+            _sessionId = sessionId;
         }
 
         /// <summary>
@@ -387,20 +319,20 @@ namespace Azure.Messaging.ServiceBus
 
                     ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
 
-                    if (UseSessions)
+                    if (IsSessionProcessor)
                     {
                         if (MaxConcurrentCalls == 0)
                         {
                             MaxConcurrentCalls = DefaultMaxConcurrentSessions;
                         }
-                        if (SessionId != null)
+                        if (_sessionId != null)
                         {
                             // only create a new receiver if a specific session
                             // is specified, otherwise thread local receivers will be used
                             Receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
-                                EntityName,
+                                EntityPath,
                                 _connection,
-                                SessionId,
+                                _sessionId,
                                 receiverOptions,
                                 cancellationToken).ConfigureAwait(false);
                         }
@@ -413,10 +345,11 @@ namespace Azure.Messaging.ServiceBus
                         }
                         // even when not using sessions, we create a new receiver
                         // in case processing options have been changed
-                        Receiver = ServiceBusReceiver.CreateReceiver(
-                            EntityName,
-                            _connection,
-                            receiverOptions);
+                        Receiver = new ServiceBusReceiver(
+                            connection: _connection,
+                            entityPath: EntityPath,
+                            isSessionEntity: false,
+                            options: receiverOptions);
                     }
                     MessageHandlerSemaphore = new SemaphoreSlim(
                         MaxConcurrentCalls,
@@ -459,7 +392,7 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ReceiveMode,
-                RetryOptions = RetryOptions,
+                RetryOptions = _retryOptions,
                 PrefetchCount = PrefetchCount
             };
         }
@@ -560,7 +493,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
-                if (UseSessions && SessionId == null)
+                if (IsSessionProcessor && _sessionId == null)
                 {
                     action = ExceptionReceivedEventArgsAction.AcceptMessageSession;
                     useThreadLocalReceiver = true;
@@ -568,7 +501,7 @@ namespace Azure.Messaging.ServiceBus
                     try
                     {
                         receiver = await ServiceBusReceiver.CreateSessionReceiverAsync(
-                            entityName: EntityName,
+                            entityPath: EntityPath,
                             connection: _connection,
                             options: receiverOptions,
                             cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -605,7 +538,7 @@ namespace Azure.Messaging.ServiceBus
                         // if we are processing next available session, and no messages were returned:
                         // 1. cancel the renew session lock task
                         // 2. break out of the loop to allow requesting another session from the service
-                        if (UseSessions && SessionId == null)
+                        if (IsSessionProcessor && _sessionId == null)
                         {
                             await CancelTask(
                                 renewLockCancellationTokenSource,
@@ -635,7 +568,7 @@ namespace Azure.Messaging.ServiceBus
                 if (!(ex is TaskCanceledException))
                 {
                     await RaiseExceptionReceived(
-                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityName, Identifier)).ConfigureAwait(false);
+                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath, Identifier)).ConfigureAwait(false);
                 }
             }
             finally
@@ -643,7 +576,7 @@ namespace Azure.Messaging.ServiceBus
                 MessageHandlerSemaphore.Release();
                 if (useThreadLocalReceiver)
                 {
-                    await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                    await receiver.DisposeAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -677,7 +610,7 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                if (!UseSessions && ReceiveMode == ReceiveMode.PeekLock && AutoRenewLock)
+                if (!IsSessionProcessor && ReceiveMode == ReceiveMode.PeekLock && AutoRenewLock)
                 {
                     renewLock = RenewLock(
                         receiver,
@@ -705,7 +638,7 @@ namespace Azure.Messaging.ServiceBus
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 await RaiseExceptionReceived(
-                    new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityName, Identifier)).ConfigureAwait(false);
+                    new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath, Identifier)).ConfigureAwait(false);
                 await receiver.AbandonAsync(message).ConfigureAwait(false);
             }
             finally
@@ -740,7 +673,7 @@ namespace Azure.Messaging.ServiceBus
                 try
                 {
                     DateTimeOffset lockedUntil = default;
-                    if (UseSessions)
+                    if (IsSessionProcessor)
                     {
                         lockedUntil = receiver.SessionManager.LockedUntilUtc;
                     }
@@ -761,7 +694,7 @@ namespace Azure.Messaging.ServiceBus
                         break;
                     }
 
-                    if (UseSessions)
+                    if (IsSessionProcessor)
                     {
                         await receiver.SessionManager.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
                     }
@@ -789,7 +722,7 @@ namespace Azure.Messaging.ServiceBus
                                 exception,
                                 ExceptionReceivedEventArgsAction.RenewLock,
                                 FullyQualifiedNamespace,
-                                EntityName,
+                                EntityPath,
                                 Identifier)).ConfigureAwait(false);
                     }
 
