@@ -18,7 +18,7 @@ namespace Azure.Management.Storage.Samples
             var accountName = "my0account3";
             var resourceGroupName = "pakrym-resources";
 
-            var createOperation = storageAccountsClient.StartCreateOperation(resourceGroupName, accountName, new StorageAccountCreateParameters()
+            var createOperation = storageAccountsClient.StartCreate(resourceGroupName, accountName, new StorageAccountCreateParameters()
             {
                 Sku = new Sku() { Name = "Standard_LRS" },
                 Location = "eastus",
