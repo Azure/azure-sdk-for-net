@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).GetSender(scope.QueueName);
-                Assert.AreEqual(scope.QueueName, sender.EntityPath);
+                Assert.AreEqual(scope.QueueName, sender.EntityName);
                 Assert.AreEqual(TestEnvironment.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             }
         }

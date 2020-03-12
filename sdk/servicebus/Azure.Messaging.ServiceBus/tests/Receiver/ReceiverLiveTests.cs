@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.CompleteAsync(item);
+                    await receiver.CompleteAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.AbandonAsync(item);
+                    await receiver.AbandonAsync(item.LockToken);
                     Assert.AreEqual(item.DeliveryCount, 1);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.MoveToDeadLetterQueueAsync(item);
+                    await receiver.MoveToDeadLetterQueueAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await deadLetterReceiver.CompleteAsync(item);
+                    await deadLetterReceiver.CompleteAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -227,7 +227,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     sequenceNumbers.Add(item.SequenceNumber);
-                    await receiver.DeferAsync(item);
+                    await receiver.DeferAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -325,7 +325,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.True(receivedMessage.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 
                 // Complete Messages
-                await receiver.CompleteAsync(receivedMessage);
+                await receiver.CompleteAsync(receivedMessage.LockToken);
 
                 Assert.AreEqual(messageCount, receivedMessages.Length);
                 Assert.AreEqual(message.MessageId, receivedMessage.MessageId);

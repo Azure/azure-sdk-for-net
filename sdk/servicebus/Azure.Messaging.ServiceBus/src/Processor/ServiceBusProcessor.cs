@@ -628,7 +628,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     action = ExceptionReceivedEventArgsAction.Complete;
                     await receiver.CompleteAsync(
-                        message,
+                        message.LockToken,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -639,7 +639,7 @@ namespace Azure.Messaging.ServiceBus
 
                 await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath, Identifier)).ConfigureAwait(false);
-                await receiver.AbandonAsync(message).ConfigureAwait(false);
+                await receiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
             }
             finally
             {

@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     {
                         var receiver = args.Receiver;
                         var message = args.Message;
-                        await receiver.CompleteAsync(message);
+                        await receiver.CompleteAsync(message.LockToken);
                         Interlocked.Increment(ref messageCt);
                     }
                     finally
@@ -253,7 +253,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     {
                         var message = args.Message;
                         var receiver = args.Receiver;
-                        await receiver.CompleteAsync(message);
+                        await receiver.CompleteAsync(message.LockToken);
                         Interlocked.Increment(ref messageCt);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
@@ -326,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     {
                         var receiver = args.Receiver;
                         var message = args.Message;
-                        await receiver.CompleteAsync(message);
+                        await receiver.CompleteAsync(message.LockToken);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
                         Assert.IsNotNull(receiver.SessionManager.LockedUntilUtc);

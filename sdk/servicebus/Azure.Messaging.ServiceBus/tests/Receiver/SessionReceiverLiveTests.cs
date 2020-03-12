@@ -325,7 +325,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.CompleteAsync(item);
+                    await receiver.CompleteAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -363,7 +363,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.AbandonAsync(item);
+                    await receiver.AbandonAsync(item.LockToken);
                     Assert.AreEqual(item.DeliveryCount, 1);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
@@ -409,7 +409,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.MoveToDeadLetterQueueAsync(item);
+                    await receiver.MoveToDeadLetterQueueAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -468,7 +468,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                     sequenceNumbers.Add(item.SequenceNumber);
-                    await receiver.DeferAsync(item);
+                    await receiver.DeferAsync(item.LockToken);
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
                 IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessageBatchAsync(sequenceNumbers);
@@ -517,7 +517,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.True(receiver.SessionManager.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 
                 // Complete Messages
-                await receiver.CompleteAsync(receivedMessage);
+                await receiver.CompleteAsync(receivedMessage.LockToken);
 
                 Assert.AreEqual(messageCount, receivedMessages.Length);
                 if (isSessionSpecified)

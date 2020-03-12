@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityPath { get; }
+        public string EntityName { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
-        /// <param name="entityPath"></param>
+        /// <param name="entityName"></param>
         /// <param name="connection"></param>
         /// <param name="options">A set of options to apply when configuring the producer.</param>
         /// <remarks>
@@ -86,23 +86,23 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         internal ServiceBusSender(
-            string entityPath,
+            string entityName,
             ServiceBusConnection connection,
             ServiceBusSenderOptions options)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
-            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
+            Argument.AssertNotNullOrWhiteSpace(entityName, nameof(entityName));
             connection.ThrowIfClosed();
 
-            EntityPath = entityPath;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+            EntityName = entityName;
+            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityName);
             options = options?.Clone() ?? new ServiceBusSenderOptions();
             _connection = connection;
             _retryPolicy = options.RetryOptions.ToRetryPolicy();
             _innerSender = _connection.CreateTransportSender(
-                entityPath,
+                entityName,
                 _retryPolicy);
         }
 
