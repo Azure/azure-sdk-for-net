@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             Value = field.Value.Text;
-            ValueBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Value.BoundingBox);
+            ValueBoundingBox = field.Value.BoundingBox == null ? null : new BoundingBox(field.Value.BoundingBox);
 
             if (field.Value.Elements != null)
             {
