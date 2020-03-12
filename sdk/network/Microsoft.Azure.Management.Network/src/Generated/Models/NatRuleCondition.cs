@@ -16,43 +16,40 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Rule condition of type application.
+    /// Rule condition of type nat.
     /// </summary>
-    public partial class ApplicationRuleCondition : FirewallPolicyRuleCondition
+    public partial class NatRuleCondition : FirewallPolicyRuleCondition
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationRuleCondition class.
+        /// Initializes a new instance of the NatRuleCondition class.
         /// </summary>
-        public ApplicationRuleCondition()
+        public NatRuleCondition()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationRuleCondition class.
+        /// Initializes a new instance of the NatRuleCondition class.
         /// </summary>
         /// <param name="name">Name of the rule condition.</param>
         /// <param name="description">Description of the rule
         /// condition.</param>
+        /// <param name="ipProtocols">Array of
+        /// FirewallPolicyRuleConditionNetworkProtocols.</param>
         /// <param name="sourceAddresses">List of source IP addresses for this
         /// rule.</param>
         /// <param name="destinationAddresses">List of destination IP addresses
         /// or Service Tags.</param>
-        /// <param name="protocols">Array of Application Protocols.</param>
-        /// <param name="targetFqdns">List of FQDNs for this rule
-        /// condition.</param>
-        /// <param name="fqdnTags">List of FQDN Tags for this rule
-        /// condition.</param>
+        /// <param name="destinationPorts">List of destination ports.</param>
         /// <param name="sourceIpGroups">List of source IpGroups for this
         /// rule.</param>
-        public ApplicationRuleCondition(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<FirewallPolicyRuleConditionApplicationProtocol> protocols = default(IList<FirewallPolicyRuleConditionApplicationProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>))
+        public NatRuleCondition(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>))
             : base(name, description)
         {
+            IpProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
-            Protocols = protocols;
-            TargetFqdns = targetFqdns;
-            FqdnTags = fqdnTags;
+            DestinationPorts = destinationPorts;
             SourceIpGroups = sourceIpGroups;
             CustomInit();
         }
@@ -61,6 +58,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets array of FirewallPolicyRuleConditionNetworkProtocols.
+        /// </summary>
+        [JsonProperty(PropertyName = "ipProtocols")]
+        public IList<string> IpProtocols { get; set; }
 
         /// <summary>
         /// Gets or sets list of source IP addresses for this rule.
@@ -75,22 +78,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> DestinationAddresses { get; set; }
 
         /// <summary>
-        /// Gets or sets array of Application Protocols.
+        /// Gets or sets list of destination ports.
         /// </summary>
-        [JsonProperty(PropertyName = "protocols")]
-        public IList<FirewallPolicyRuleConditionApplicationProtocol> Protocols { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of FQDNs for this rule condition.
-        /// </summary>
-        [JsonProperty(PropertyName = "targetFqdns")]
-        public IList<string> TargetFqdns { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of FQDN Tags for this rule condition.
-        /// </summary>
-        [JsonProperty(PropertyName = "fqdnTags")]
-        public IList<string> FqdnTags { get; set; }
+        [JsonProperty(PropertyName = "destinationPorts")]
+        public IList<string> DestinationPorts { get; set; }
 
         /// <summary>
         /// Gets or sets list of source IpGroups for this rule.
