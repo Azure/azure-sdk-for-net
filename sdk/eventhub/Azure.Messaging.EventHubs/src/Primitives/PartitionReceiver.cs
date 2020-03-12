@@ -269,14 +269,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   TODO.
+        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.
         /// </summary>
         ///
-        /// <param name="maximumEventCount">TODO.</param>
-        /// <param name="maximumWaitTime">TODO.</param>
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified by the options when the client was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>TODO.</returns>
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this client is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public virtual Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
                                                                       TimeSpan maximumWaitTime,
