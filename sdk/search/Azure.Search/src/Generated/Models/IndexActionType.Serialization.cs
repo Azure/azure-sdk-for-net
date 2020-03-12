@@ -20,13 +20,13 @@ namespace Azure.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexActionType value.")
         };
 
-        public static IndexActionType ToIndexActionType(this string value) => value switch
+        public static IndexActionType ToIndexActionType(this string value)
         {
-            "upload" => IndexActionType.Upload,
-            "merge" => IndexActionType.Merge,
-            "mergeOrUpload" => IndexActionType.MergeOrUpload,
-            "delete" => IndexActionType.Delete,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexActionType value.")
-        };
+            if (string.Equals(value, "upload", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.Upload;
+            if (string.Equals(value, "merge", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.Merge;
+            if (string.Equals(value, "mergeOrUpload", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.MergeOrUpload;
+            if (string.Equals(value, "delete", StringComparison.InvariantCultureIgnoreCase)) return IndexActionType.Delete;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexActionType value.");
+        }
     }
 }
