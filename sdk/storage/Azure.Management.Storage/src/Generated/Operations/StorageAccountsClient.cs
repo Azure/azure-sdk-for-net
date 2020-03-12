@@ -263,7 +263,7 @@ namespace Azure.Management.Storage
         /// <summary> Asynchronously creates a new storage account with the specified parameters. If an account is already created and a subsequent create request is issued with different properties, the account properties will be updated. If an account is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed. </summary>
         /// <param name="originalResponse"> The original response from starting the operation. </param>
         /// <param name="createOriginalHttpMessage"> Creates the HTTP message used for the original request. </param>
-        public Operation<StorageAccount> CreateCreateOperation(Response originalResponse, Func<HttpMessage> createOriginalHttpMessage)
+        internal Operation<StorageAccount> CreateCreate(Response originalResponse, Func<HttpMessage> createOriginalHttpMessage)
         {
             if (originalResponse == null)
             {
@@ -293,7 +293,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Operation<StorageAccount>> StartCreateOperationAsync(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async ValueTask<Operation<StorageAccount>> StartCreateAsync(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -309,14 +309,14 @@ namespace Azure.Management.Storage
             }
 
             var originalResponse = await RestClient.CreateAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
-            return CreateCreateOperation(originalResponse, () => RestClient.CreateCreateRequest(resourceGroupName, accountName, parameters));
+            return CreateCreate(originalResponse, () => RestClient.CreateCreateRequest(resourceGroupName, accountName, parameters));
         }
         /// <summary> Asynchronously creates a new storage account with the specified parameters. If an account is already created and a subsequent create request is issued with different properties, the account properties will be updated. If an account is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<StorageAccount> StartCreateOperation(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Operation<StorageAccount> StartCreate(string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -332,12 +332,12 @@ namespace Azure.Management.Storage
             }
 
             var originalResponse = RestClient.Create(resourceGroupName, accountName, parameters, cancellationToken);
-            return CreateCreateOperation(originalResponse, () => RestClient.CreateCreateRequest(resourceGroupName, accountName, parameters));
+            return CreateCreate(originalResponse, () => RestClient.CreateCreateRequest(resourceGroupName, accountName, parameters));
         }
         /// <summary> Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account&apos;s primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover. </summary>
         /// <param name="originalResponse"> The original response from starting the operation. </param>
         /// <param name="createOriginalHttpMessage"> Creates the HTTP message used for the original request. </param>
-        public Operation<Response> CreateFailoverOperation(Response originalResponse, Func<HttpMessage> createOriginalHttpMessage)
+        internal Operation<Response> CreateFailover(Response originalResponse, Func<HttpMessage> createOriginalHttpMessage)
         {
             if (originalResponse == null)
             {
@@ -354,7 +354,7 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Operation<Response>> StartFailoverOperationAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual async ValueTask<Operation<Response>> StartFailoverAsync(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -366,13 +366,13 @@ namespace Azure.Management.Storage
             }
 
             var originalResponse = await RestClient.FailoverAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
-            return CreateFailoverOperation(originalResponse, () => RestClient.CreateFailoverRequest(resourceGroupName, accountName));
+            return CreateFailover(originalResponse, () => RestClient.CreateFailoverRequest(resourceGroupName, accountName));
         }
         /// <summary> Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account&apos;s primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<Response> StartFailoverOperation(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual Operation<Response> StartFailover(string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -384,12 +384,12 @@ namespace Azure.Management.Storage
             }
 
             var originalResponse = RestClient.Failover(resourceGroupName, accountName, cancellationToken);
-            return CreateFailoverOperation(originalResponse, () => RestClient.CreateFailoverRequest(resourceGroupName, accountName));
+            return CreateFailover(originalResponse, () => RestClient.CreateFailoverRequest(resourceGroupName, accountName));
         }
         /// <summary> Restore blobs in the specified blob ranges. </summary>
         /// <param name="originalResponse"> The original response from starting the operation. </param>
         /// <param name="createOriginalHttpMessage"> Creates the HTTP message used for the original request. </param>
-        public Operation<BlobRestoreStatus> CreateRestoreBlobRangesOperation(Response originalResponse, Func<HttpMessage> createOriginalHttpMessage)
+        internal Operation<BlobRestoreStatus> CreateRestoreBlobRanges(Response originalResponse, Func<HttpMessage> createOriginalHttpMessage)
         {
             if (originalResponse == null)
             {
@@ -419,7 +419,7 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async ValueTask<Operation<BlobRestoreStatus>> StartRestoreBlobRangesOperationAsync(string resourceGroupName, string accountName, BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async ValueTask<Operation<BlobRestoreStatus>> StartRestoreBlobRangesAsync(string resourceGroupName, string accountName, BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -435,14 +435,14 @@ namespace Azure.Management.Storage
             }
 
             var originalResponse = await RestClient.RestoreBlobRangesAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
-            return CreateRestoreBlobRangesOperation(originalResponse, () => RestClient.CreateRestoreBlobRangesRequest(resourceGroupName, accountName, parameters));
+            return CreateRestoreBlobRanges(originalResponse, () => RestClient.CreateRestoreBlobRangesRequest(resourceGroupName, accountName, parameters));
         }
         /// <summary> Restore blobs in the specified blob ranges. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation<BlobRestoreStatus> StartRestoreBlobRangesOperation(string resourceGroupName, string accountName, BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
+        public virtual Operation<BlobRestoreStatus> StartRestoreBlobRanges(string resourceGroupName, string accountName, BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -458,7 +458,7 @@ namespace Azure.Management.Storage
             }
 
             var originalResponse = RestClient.RestoreBlobRanges(resourceGroupName, accountName, parameters, cancellationToken);
-            return CreateRestoreBlobRangesOperation(originalResponse, () => RestClient.CreateRestoreBlobRangesRequest(resourceGroupName, accountName, parameters));
+            return CreateRestoreBlobRanges(originalResponse, () => RestClient.CreateRestoreBlobRangesRequest(resourceGroupName, accountName, parameters));
         }
     }
 }
