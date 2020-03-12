@@ -21,6 +21,17 @@ namespace Azure.Messaging.ServiceBus.Primitives
             return lockTokenBuilder.ToString();
         }
 
+        public static string GetFormattedMessageIds(IEnumerable<string> messageIds)
+        {
+            var messageIdBuilder = new StringBuilder();
+            foreach (var messageId in messageIds)
+            {
+                messageIdBuilder.AppendFormat(CultureInfo.InvariantCulture, "<LockToken>{0}</LockToken>", messageId);
+            }
+
+            return messageIdBuilder.ToString();
+        }
+
         public static string GetFormattedSequenceNumbers(IEnumerable<long> sequenceNumbers)
         {
             var sequenceNumberBuilder = new StringBuilder();

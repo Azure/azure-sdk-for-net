@@ -15,6 +15,7 @@ namespace IotCentral.Tests.ScenarioTests
     using Newtonsoft.Json.Linq;
     using Xunit;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
 
     public class IotCentralLifeCycleTests : IotCentralTestBase
     {
@@ -148,32 +149,6 @@ namespace IotCentral.Tests.ScenarioTests
         }
 
         [Fact]
-        public void TestAppWhenInvalidSubdomain()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                App app = new App()
-                {
-                    Location = IotCentralTestUtilities.DefaultLocation,
-                    Sku = new AppSkuInfo()
-                    {
-                        Name = "ST1"
-                    },
-                    Subdomain = "SOME-INVALID-SUBDOMAIN",
-                    DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName
-                };
-                app.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
         public void TestAppSkuInfoWhenNullInput()
         {
             var exceptionThrown = false;
@@ -197,24 +172,6 @@ namespace IotCentral.Tests.ScenarioTests
             try
             {
                 OperationInputs operationInput = new OperationInputs();
-                operationInput.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
-        public void TestOperationInputsWhenInvalidInput()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                var nameInput = "SOMEINVALIDINPUT";
-                OperationInputs operationInput = new OperationInputs(nameInput);
                 operationInput.Validate();
             }
             catch (Exception ex)

@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Core
@@ -115,6 +116,12 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
+            // There's there's an ambient transaction - should not retry
+            if (Transaction.Current != null)
+            {
+                return false;
+            }
+
             if ((exception is TaskCanceledException) || (exception is OperationCanceledException))
             {
                 exception = exception?.InnerException;

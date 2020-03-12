@@ -57,14 +57,14 @@ namespace Azure.Data.AppConfiguration
     public sealed partial class ConfigurationSetting
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? IsReadOnly { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Key { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Label { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset? LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string ContentType { get { throw null; } set { } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool? IsReadOnly { get { throw null; } }
+        public string Key { get { throw null; } set { } }
+        public string Label { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModified { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string Value { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -89,10 +89,10 @@ namespace Azure.Data.AppConfiguration
     {
         public static readonly string Any;
         public SettingSelector() { }
-        public System.DateTimeOffset? AcceptDateTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Data.AppConfiguration.SettingFields Fields { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string KeyFilter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string LabelFilter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
+        public Azure.Data.AppConfiguration.SettingFields Fields { get { throw null; } set { } }
+        public string KeyFilter { get { throw null; } set { } }
+        public string LabelFilter { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

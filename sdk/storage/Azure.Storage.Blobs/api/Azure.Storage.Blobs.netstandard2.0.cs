@@ -28,10 +28,10 @@ namespace Azure.Storage.Blobs
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
         public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07) { }
-        public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.Uri GeoRedundantSecondaryUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
+        public string EncryptionScope { get { throw null; } set { } }
+        public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
+        public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
@@ -147,20 +147,20 @@ namespace Azure.Storage.Blobs.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AccessTier(string value) { throw null; }
-        public static Azure.Storage.Blobs.Models.AccessTier Archive { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier Cool { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier Hot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P10 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P15 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P20 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P30 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P4 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P40 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P50 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P6 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P60 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P70 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.AccessTier P80 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier Archive { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier Cool { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier Hot { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P10 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P15 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P20 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P30 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P4 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P40 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P50 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P6 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P60 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P70 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier P80 { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.Models.AccessTier other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -174,8 +174,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class AccountInfo
     {
         internal AccountInfo() { }
-        public Azure.Storage.Blobs.Models.AccountKind AccountKind { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.SkuName SkuName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.AccountKind AccountKind { get { throw null; } }
+        public Azure.Storage.Blobs.Models.SkuName SkuName { get { throw null; } }
     }
     public enum AccountKind
     {
@@ -186,8 +186,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class AppendBlobRequestConditions : Azure.Storage.Blobs.Models.BlobRequestConditions
     {
         public AppendBlobRequestConditions() { }
-        public long? IfAppendPositionEqual { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public long? IfMaxSizeLessThanOrEqual { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public long? IfAppendPositionEqual { get { throw null; } set { } }
+        public long? IfMaxSizeLessThanOrEqual { get { throw null; } set { } }
     }
     public enum ArchiveStatus
     {
@@ -197,39 +197,39 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobAccessPolicy
     {
         public BlobAccessPolicy() { }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string Permissions { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
     }
     public partial class BlobAnalyticsLogging
     {
         public BlobAnalyticsLogging() { }
-        public bool Delete { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool Read { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool Write { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool Delete { get { throw null; } set { } }
+        public bool Read { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        public bool Write { get { throw null; } set { } }
     }
     public partial class BlobAppendInfo
     {
         internal BlobAppendInfo() { }
-        public string BlobAppendOffset { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int BlobCommittedBlockCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentCrc64 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsServerEncrypted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string BlobAppendOffset { get { throw null; } }
+        public int BlobCommittedBlockCount { get { throw null; } }
+        public byte[] ContentCrc64 { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool IsServerEncrypted { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobBlock : System.IEquatable<Azure.Storage.Blobs.Models.BlobBlock>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int Size { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Name { get { throw null; } }
+        public int Size { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Storage.Blobs.Models.BlobBlock other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -240,43 +240,43 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobContainerAccessPolicy
     {
         public BlobContainerAccessPolicy() { }
-        public Azure.Storage.Blobs.Models.PublicAccessType BlobPublicAccess { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> SignedIdentifiers { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.PublicAccessType BlobPublicAccess { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobSignedIdentifier> SignedIdentifiers { get { throw null; } }
     }
     public partial class BlobContainerEncryptionScopeOptions
     {
         public BlobContainerEncryptionScopeOptions() { }
-        public string DefaultEncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool PreventEncryptionScopeOverride { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string DefaultEncryptionScope { get { throw null; } set { } }
+        public bool PreventEncryptionScopeOverride { get { throw null; } set { } }
     }
     public partial class BlobContainerInfo
     {
         internal BlobContainerInfo() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class BlobContainerItem
     {
         internal BlobContainerItem() { }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { get { throw null; } }
     }
     public partial class BlobContainerProperties
     {
         internal BlobContainerProperties() { }
-        public string DefaultEncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? HasImmutabilityPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? HasLegalHold { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? PreventEncryptionScopeOverride { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.PublicAccessType? PublicAccess { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string DefaultEncryptionScope { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool? HasImmutabilityPolicy { get { throw null; } }
+        public bool? HasLegalHold { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public bool? PreventEncryptionScopeOverride { get { throw null; } }
+        public Azure.Storage.Blobs.Models.PublicAccessType? PublicAccess { get { throw null; } }
     }
     [System.FlagsAttribute]
     public enum BlobContainerTraits
@@ -287,29 +287,29 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobContentInfo
     {
         internal BlobContentInfo() { }
-        public long BlobSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long BlobSequenceNumber { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class BlobCopyInfo
     {
         internal BlobCopyInfo() { }
-        public string CopyId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string CopyId { get { throw null; } }
+        public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class BlobCorsRule
     {
         public BlobCorsRule() { }
-        public string AllowedHeaders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string AllowedMethods { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string AllowedOrigins { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ExposedHeaders { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public int MaxAgeInSeconds { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string AllowedHeaders { get { throw null; } set { } }
+        public string AllowedMethods { get { throw null; } set { } }
+        public string AllowedOrigins { get { throw null; } set { } }
+        public string ExposedHeaders { get { throw null; } set { } }
+        public int MaxAgeInSeconds { get { throw null; } set { } }
     }
     public partial class BlobDownloadDetails
     {
@@ -347,7 +347,7 @@ namespace Azure.Storage.Blobs.Models
         public byte[] ContentHash { get { throw null; } }
         public long ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobDownloadDetails Details { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobDownloadDetails Details { get { throw null; } }
         public void Dispose() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -356,117 +356,117 @@ namespace Azure.Storage.Blobs.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BlobErrorCode(string value) { throw null; }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountBeingCreated { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountIsDisabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AppendPositionConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthenticationFailed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationFailure { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationPermissionMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationProtocolMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationServiceMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationSourceIPMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotVerifyCopySource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionHeadersNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerBeingDeleted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerDisabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ContentLengthLargerThanTierLimit { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InfiniteLeaseDurationRequired { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InsufficientAccountPermissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InternalError { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidAuthenticationInfo { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobOrBlock { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobTier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockList { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHeaderValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHttpVerb { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidInput { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMd5 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMetadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidVersionForPageBlobOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlDocument { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlNodeValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyBroken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyPresent { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithBlobOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithContainerOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithLeaseOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMissing { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeAcquired { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeChanged { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBrokenAndCannotBeRenewed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseLost { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithBlobOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithContainerOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithLeaseOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode Md5Mismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MetadataTooLarge { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingContentLengthHeader { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredHeader { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode NoAuthenticationInformation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeInput { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeQueryParameterValue { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PendingCopyOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotCannotBeNewer { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotOperationNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestBodyTooLarge { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestUrlFailedToParse { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceAlreadyExists { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceNotFound { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceTypeMismatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SourceConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode SystemInUse { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode TargetConditionNotMet { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnauthorizedBlobOverwrite { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHeader { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHttpVerb { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedQueryParameter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedXmlNode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountBeingCreated { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AccountIsDisabled { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AppendPositionConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthenticationFailed { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationFailure { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationPermissionMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationProtocolMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationResourceTypeMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationServiceMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode AuthorizationSourceIPMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobArchived { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobBeingRehydrated { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotArchived { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CannotVerifyCopySource { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionHeadersNotSupported { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerBeingDeleted { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerDisabled { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContainerNotFound { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ContentLengthLargerThanTierLimit { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopySourceMustBeSnapshot { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InfiniteLeaseDurationRequired { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InsufficientAccountPermissions { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InternalError { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidAuthenticationInfo { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobOrBlock { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobTier { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlobType { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockId { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidBlockList { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHeaderValue { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidHttpVerb { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidInput { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMd5 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidMetadata { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidUri { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidVersionForPageBlobOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlDocument { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidXmlNodeValue { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyBroken { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseAlreadyPresent { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithBlobOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithContainerOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMismatchWithLeaseOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIdMissing { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeAcquired { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBreakingAndCannotBeChanged { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseIsBrokenAndCannotBeRenewed { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseLost { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithBlobOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithContainerOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode LeaseNotPresentWithLeaseOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode Md5Mismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MetadataTooLarge { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingContentLengthHeader { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredHeader { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoAuthenticationInformation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeInput { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode OutOfRangeQueryParameterValue { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PendingCopyOperation { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotCannotBeNewer { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotNotFound { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode PreviousSnapshotOperationNotSupported { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestBodyTooLarge { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode RequestUrlFailedToParse { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceAlreadyExists { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceNotFound { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ResourceTypeMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SequenceNumberIncrementTooLarge { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode ServerBusy { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnaphotOperationRateExceeded { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotCountExceeded { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SnapshotsPresent { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SourceConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode SystemInUse { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode TargetConditionNotMet { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnauthorizedBlobOverwrite { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHeader { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedHttpVerb { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedQueryParameter { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode UnsupportedXmlNode { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.Models.BlobErrorCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -480,8 +480,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobGeoReplication
     {
         internal BlobGeoReplication() { }
-        public System.DateTimeOffset? LastSyncedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobGeoReplicationStatus Status { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobGeoReplicationStatus Status { get { throw null; } }
     }
     public enum BlobGeoReplicationStatus
     {
@@ -492,20 +492,20 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobHierarchyItem
     {
         internal BlobHierarchyItem() { }
-        public Azure.Storage.Blobs.Models.BlobItem Blob { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobItem Blob { get { throw null; } }
         public bool IsBlob { get { throw null; } }
         public bool IsPrefix { get { throw null; } }
-        public string Prefix { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Prefix { get { throw null; } }
     }
     public partial class BlobHttpHeaders
     {
         public BlobHttpHeaders() { }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string CacheControl { get { throw null; } set { } }
+        public string ContentDisposition { get { throw null; } set { } }
+        public string ContentEncoding { get { throw null; } set { } }
+        public byte[] ContentHash { get { throw null; } set { } }
+        public string ContentLanguage { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -516,141 +516,141 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobInfo
     {
         internal BlobInfo() { }
-        public long BlobSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long BlobSequenceNumber { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class BlobItem
     {
         internal BlobItem() { }
-        public bool Deleted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobItemProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Snapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public bool Deleted { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobItemProperties Properties { get { throw null; } }
+        public string Snapshot { get { throw null; } }
     }
     public partial class BlobItemProperties
     {
         internal BlobItemProperties() { }
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? AccessTierChangedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool AccessTierInferred { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.ArchiveStatus? ArchiveStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long? BlobSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobType? BlobType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long? ContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? CopyCompletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyProgress { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri CopySource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.CopyStatus? CopyStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyStatusDescription { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CustomerProvidedKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? DeletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string DestinationSnapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag? ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? IncrementalCopy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset? LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int? RemainingRetentionDays { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool? ServerEncrypted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } }
+        public System.DateTimeOffset? AccessTierChangedOn { get { throw null; } }
+        public bool AccessTierInferred { get { throw null; } }
+        public Azure.Storage.Blobs.Models.ArchiveStatus? ArchiveStatus { get { throw null; } }
+        public long? BlobSequenceNumber { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobType? BlobType { get { throw null; } }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public long? ContentLength { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.DateTimeOffset? CopyCompletedOn { get { throw null; } }
+        public string CopyId { get { throw null; } }
+        public string CopyProgress { get { throw null; } }
+        public System.Uri CopySource { get { throw null; } }
+        public Azure.Storage.Blobs.Models.CopyStatus? CopyStatus { get { throw null; } }
+        public string CopyStatusDescription { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string CustomerProvidedKeySha256 { get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public string DestinationSnapshot { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public bool? IncrementalCopy { get { throw null; } }
+        public System.DateTimeOffset? LastModified { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get { throw null; } }
+        public int? RemainingRetentionDays { get { throw null; } }
+        public bool? ServerEncrypted { get { throw null; } }
     }
     public partial class BlobLease
     {
         internal BlobLease() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int? LeaseTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public string LeaseId { get { throw null; } }
+        public int? LeaseTime { get { throw null; } }
     }
     public partial class BlobMetrics
     {
         public BlobMetrics() { }
-        public bool Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool? IncludeApis { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool Enabled { get { throw null; } set { } }
+        public bool? IncludeApis { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobRetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
     }
     public partial class BlobProperties
     {
         public BlobProperties() { }
-        public string AcceptRanges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string AccessTier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset AccessTierChangedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool AccessTierInferred { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ArchiveStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int BlobCommittedBlockCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long BlobSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobType BlobType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long ContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset CopyCompletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyProgress { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri CopySource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string CopyStatusDescription { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string DestinationSnapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsIncrementalCopy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsServerEncrypted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseDurationType LeaseDuration { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseState LeaseState { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string AcceptRanges { get { throw null; } }
+        public string AccessTier { get { throw null; } }
+        public System.DateTimeOffset AccessTierChangedOn { get { throw null; } }
+        public bool AccessTierInferred { get { throw null; } }
+        public string ArchiveStatus { get { throw null; } }
+        public int BlobCommittedBlockCount { get { throw null; } }
+        public long BlobSequenceNumber { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public long ContentLength { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.DateTimeOffset CopyCompletedOn { get { throw null; } }
+        public string CopyId { get { throw null; } }
+        public string CopyProgress { get { throw null; } }
+        public System.Uri CopySource { get { throw null; } }
+        public Azure.Storage.Blobs.Models.CopyStatus CopyStatus { get { throw null; } }
+        public string CopyStatusDescription { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string DestinationSnapshot { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool IsIncrementalCopy { get { throw null; } }
+        public bool IsServerEncrypted { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseDurationType LeaseDuration { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseState LeaseState { get { throw null; } }
+        public Azure.Storage.Blobs.Models.LeaseStatus LeaseStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
     }
     public partial class BlobRequestConditions : Azure.RequestConditions
     {
         public BlobRequestConditions() { }
-        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string LeaseId { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
     public partial class BlobRetentionPolicy
     {
         public BlobRetentionPolicy() { }
-        public int? Days { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public int? Days { get { throw null; } set { } }
+        public bool Enabled { get { throw null; } set { } }
     }
     public partial class BlobServiceProperties
     {
         public BlobServiceProperties() { }
-        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string DefaultServiceVersion { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobRetentionPolicy DeleteRetentionPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobMetrics HourMetrics { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobAnalyticsLogging Logging { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobMetrics MinuteMetrics { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.BlobStaticWebsite StaticWebsite { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobCorsRule> Cors { get { throw null; } set { } }
+        public string DefaultServiceVersion { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobRetentionPolicy DeleteRetentionPolicy { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobMetrics HourMetrics { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobAnalyticsLogging Logging { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobMetrics MinuteMetrics { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobStaticWebsite StaticWebsite { get { throw null; } set { } }
     }
     public partial class BlobServiceStatistics
     {
         internal BlobServiceStatistics() { }
-        public Azure.Storage.Blobs.Models.BlobGeoReplication GeoReplication { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobGeoReplication GeoReplication { get { throw null; } }
     }
     public partial class BlobSignedIdentifier
     {
         public BlobSignedIdentifier() { }
-        public Azure.Storage.Blobs.Models.BlobAccessPolicy AccessPolicy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.Storage.Blobs.Models.BlobAccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
     public static partial class BlobsModelFactory
     {
@@ -698,10 +698,10 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobSnapshotInfo
     {
         internal BlobSnapshotInfo() { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public bool IsServerEncrypted { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Snapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public bool IsServerEncrypted { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public string Snapshot { get { throw null; } }
     }
     [System.FlagsAttribute]
     public enum BlobStates
@@ -715,9 +715,9 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobStaticWebsite
     {
         public BlobStaticWebsite() { }
-        public bool Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ErrorDocument404Path { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string IndexDocument { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool Enabled { get { throw null; } set { } }
+        public string ErrorDocument404Path { get { throw null; } set { } }
+        public string IndexDocument { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
     public enum BlobTraits
@@ -736,20 +736,20 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlockInfo
     {
         internal BlockInfo() { }
-        public byte[] ContentCrc64 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public byte[] ContentCrc64 { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
     }
     public partial class BlockList
     {
         internal BlockList() { }
-        public long BlobContentLength { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> CommittedBlocks { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> UncommittedBlocks { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long BlobContentLength { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> CommittedBlocks { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> UncommittedBlocks { get { throw null; } }
     }
     [System.FlagsAttribute]
     public enum BlockListTypes
@@ -764,7 +764,7 @@ namespace Azure.Storage.Blobs.Models
         public CopyFromUriOperation(string id, Azure.Storage.Blobs.Specialized.BlobBaseClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
-        public override string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public override string Id { get { throw null; } }
         public override long Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -786,9 +786,9 @@ namespace Azure.Storage.Blobs.Models
         private readonly int _dummyPrimitive;
         public CustomerProvidedKey(byte[] key) { throw null; }
         public CustomerProvidedKey(string key) { throw null; }
-        public Azure.Storage.Blobs.Models.EncryptionAlgorithmType EncryptionAlgorithm { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeyHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Storage.Blobs.Models.EncryptionAlgorithmType EncryptionAlgorithm { get { throw null; } }
+        public string EncryptionKey { get { throw null; } }
+        public string EncryptionKeyHash { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.Models.CustomerProvidedKey other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -827,36 +827,36 @@ namespace Azure.Storage.Blobs.Models
     public partial class PageBlobInfo
     {
         internal PageBlobInfo() { }
-        public long BlobSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long BlobSequenceNumber { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class PageBlobRequestConditions : Azure.Storage.Blobs.Models.BlobRequestConditions
     {
         public PageBlobRequestConditions() { }
-        public long? IfSequenceNumberEqual { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public long? IfSequenceNumberLessThan { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public long? IfSequenceNumberLessThanOrEqual { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public long? IfSequenceNumberEqual { get { throw null; } set { } }
+        public long? IfSequenceNumberLessThan { get { throw null; } set { } }
+        public long? IfSequenceNumberLessThanOrEqual { get { throw null; } set { } }
     }
     public partial class PageInfo
     {
         internal PageInfo() { }
-        public long BlobSequenceNumber { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentCrc64 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public byte[] ContentHash { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionKeySha256 { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long BlobSequenceNumber { get { throw null; } }
+        public byte[] ContentCrc64 { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
     }
     public partial class PageRangesInfo
     {
         internal PageRangesInfo() { }
         public long BlobContentLength { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.HttpRange> ClearRanges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.HttpRange> ClearRanges { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<Azure.HttpRange> PageRanges { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.HttpRange> PageRanges { get { throw null; } }
     }
     public enum PathRenameMode
     {
@@ -877,8 +877,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class ReleasedObjectInfo
     {
         public ReleasedObjectInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { }
-        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -903,13 +903,13 @@ namespace Azure.Storage.Blobs.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
-        public System.DateTimeOffset SignedExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedObjectId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedService { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset SignedStartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedTenantId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string SignedVersion { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
+        public string SignedObjectId { get { throw null; } }
+        public string SignedService { get { throw null; } }
+        public System.DateTimeOffset SignedStartsOn { get { throw null; } }
+        public string SignedTenantId { get { throw null; } }
+        public string SignedVersion { get { throw null; } }
+        public string Value { get { throw null; } }
     }
 }
 namespace Azure.Storage.Blobs.Specialized
@@ -997,7 +997,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobLeaseClient(Azure.Storage.Blobs.Specialized.BlobBaseClient client, string leaseId = null) { }
         protected virtual Azure.Storage.Blobs.Specialized.BlobBaseClient BlobClient { get { throw null; } }
         protected virtual Azure.Storage.Blobs.BlobContainerClient BlobContainerClient { get { throw null; } }
-        public virtual string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public virtual string LeaseId { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobLease> Acquire(System.TimeSpan duration, Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobLease>> AcquireAsync(System.TimeSpan duration, Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1108,22 +1108,22 @@ namespace Azure.Storage.Sas
     public partial class BlobSasBuilder
     {
         public BlobSasBuilder() { }
-        public string BlobContainerName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string BlobName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string CacheControl { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentDisposition { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentEncoding { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentLanguage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Identifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Sas.SasIPRange IPRange { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Permissions { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Storage.Sas.SasProtocol Protocol { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Resource { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Snapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset StartsOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string BlobContainerName { get { throw null; } set { } }
+        public string BlobName { get { throw null; } set { } }
+        public string CacheControl { get { throw null; } set { } }
+        public string ContentDisposition { get { throw null; } set { } }
+        public string ContentEncoding { get { throw null; } set { } }
+        public string ContentLanguage { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
+        public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public string Permissions { get { throw null; } }
+        public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
+        public string Resource { get { throw null; } set { } }
+        public string Snapshot { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

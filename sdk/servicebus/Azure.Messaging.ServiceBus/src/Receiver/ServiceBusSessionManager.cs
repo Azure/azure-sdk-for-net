@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -32,6 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// Service Bus gateway; intended to perform delegated operations.
         /// </summary>
         private readonly TransportReceiver _receiver;
+        private readonly string _identifier;
 
         /// <summary>
         /// The Session Id associated with the receiver.
@@ -41,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
-        public DateTime LockedUntilUtc { get; private set; }
+        public DateTime LockedUntilUtc => _receiver.SessionLockedUntilUtc;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
@@ -62,10 +64,13 @@ namespace Azure.Messaging.ServiceBus
         /// An abstracted Service Bus transport-specific receiver that is associated with the
         /// Service Bus gateway; intended to perform delegated operations.
         /// </param>
+        /// <param name="identifier"></param>
         internal ServiceBusSessionManager(
-            TransportReceiver receiver)
+            TransportReceiver receiver,
+            string identifier)
         {
             _receiver = receiver;
+            _identifier = identifier;
         }
 
         /// <summary>
@@ -115,9 +120,21 @@ namespace Azure.Messaging.ServiceBus
         /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
         /// </para>
         /// </remarks>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
-            LockedUntilUtc = await _receiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            ServiceBusEventSource.Log.RenewSessionLockStart(_identifier, SessionId);
+            try
+            {
+                await _receiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                ServiceBusEventSource.Log.RenewSessionLockException(_identifier, exception);
+                throw;
+            }
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            ServiceBusEventSource.Log.RenewSessionLockComplete(_identifier);
+        }
     }
 }

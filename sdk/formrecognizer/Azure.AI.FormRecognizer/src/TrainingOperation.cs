@@ -83,8 +83,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             if (!_hasCompleted)
             {
-                // TODO : when/where do we set includeKeys = true?
-                // https://github.com/Azure/azure-sdk-for-net/issues/10393
+                // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
                 Response<Model_internal> update = async
                     ? await _operations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
                     : _operations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
