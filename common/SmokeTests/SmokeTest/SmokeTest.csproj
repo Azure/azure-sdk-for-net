@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.0.0" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-preview.5" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.0.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.0.0" />
-    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" />
+    <PackageReference Include="Azure.Core" Version="1.0.2-dev.*" />
+    <PackageReference Include="Azure.Identity" Version="1.0.0-dev.*" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.0-dev.*" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.0.1-dev.*" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.0.0-dev.*" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.0.0-dev.*" />
+    <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.10.0" />
   </ItemGroup>
 
   <ItemGroup>

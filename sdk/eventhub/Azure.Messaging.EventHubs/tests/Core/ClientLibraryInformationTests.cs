@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Dictionary<string, string> expectedNames = typeof(ClientLibraryInformation)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .ToDictionary(property => property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name, property => property.Name);
+                .ToDictionary(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant(), property => property.Name);
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Tests
             HashSet<string> expectedNames = new HashSet<string>(
                 typeof(ClientLibraryInformation)
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                    .Select(property => property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name));
+                    .Select(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant()));
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {

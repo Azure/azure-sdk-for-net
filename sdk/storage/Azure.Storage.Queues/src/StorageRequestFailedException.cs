@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -45,13 +46,12 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Create an exception corresponding to the StorageError.
         /// </summary>
-        /// <param name="response">
-        /// The failed response.
-        /// </param>
+        /// <param name="clientDiagnostics">The <see cref="ClientDiagnostics"/> instance to use.</param>
+        /// <param name="response">The failed response.</param>
         /// <returns>
         /// A <see cref="RequestFailedException"/>.
         /// </returns>
-        public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
+        public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null, response.GetErrorCode(Code), AdditionalInformation);
     }
 }

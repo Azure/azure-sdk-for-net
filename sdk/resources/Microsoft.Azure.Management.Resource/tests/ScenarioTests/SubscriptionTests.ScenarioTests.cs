@@ -66,6 +66,7 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(subscriptionDetails.SubscriptionId);
                 Assert.NotNull(subscriptionDetails.DisplayName);
                 Assert.NotNull(subscriptionDetails.State);
+                Assert.NotNull(subscriptionDetails.Tags);
             }
         }
     }

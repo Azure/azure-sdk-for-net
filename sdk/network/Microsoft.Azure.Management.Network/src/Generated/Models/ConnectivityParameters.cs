@@ -30,20 +30,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ConnectivityParameters class.
         /// </summary>
-        /// <param name="source">Describes the source of the
-        /// connection.</param>
-        /// <param name="destination">Describes the destination of
-        /// connection.</param>
+        /// <param name="source">The source of the connection.</param>
+        /// <param name="destination">The destination of connection.</param>
         /// <param name="protocol">Network protocol. Possible values include:
         /// 'Tcp', 'Http', 'Https', 'Icmp'</param>
         /// <param name="protocolConfiguration">Configuration of the
         /// protocol.</param>
-        public ConnectivityParameters(ConnectivitySource source, ConnectivityDestination destination, string protocol = default(string), ProtocolConfiguration protocolConfiguration = default(ProtocolConfiguration))
+        /// <param name="preferredIPVersion">Preferred IP version of the
+        /// connection. Possible values include: 'IPv4', 'IPv6'</param>
+        public ConnectivityParameters(ConnectivitySource source, ConnectivityDestination destination, string protocol = default(string), ProtocolConfiguration protocolConfiguration = default(ProtocolConfiguration), string preferredIPVersion = default(string))
         {
             Source = source;
             Destination = destination;
             Protocol = protocol;
             ProtocolConfiguration = protocolConfiguration;
+            PreferredIPVersion = preferredIPVersion;
             CustomInit();
         }
 
@@ -53,13 +54,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes the source of the connection.
+        /// Gets or sets the source of the connection.
         /// </summary>
         [JsonProperty(PropertyName = "source")]
         public ConnectivitySource Source { get; set; }
 
         /// <summary>
-        /// Gets or sets describes the destination of connection.
+        /// Gets or sets the destination of connection.
         /// </summary>
         [JsonProperty(PropertyName = "destination")]
         public ConnectivityDestination Destination { get; set; }
@@ -76,6 +77,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "protocolConfiguration")]
         public ProtocolConfiguration ProtocolConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets preferred IP version of the connection. Possible
+        /// values include: 'IPv4', 'IPv6'
+        /// </summary>
+        [JsonProperty(PropertyName = "preferredIPVersion")]
+        public string PreferredIPVersion { get; set; }
 
         /// <summary>
         /// Validate the object.

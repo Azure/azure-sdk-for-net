@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The expression root.
+    /// </summary>
     public partial class ExpressionRoot : Expression
     {
         /// <summary>
@@ -28,6 +31,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the ExpressionRoot class.
         /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="subexpressions">The sub expressions.</param>
         /// <param name="path">The path.</param>
         public ExpressionRoot(string text = default(string), object value = default(object), IList<Expression> subexpressions = default(IList<Expression>), AzureResourceErrorInfo error = default(AzureResourceErrorInfo), string path = default(string))
             : base(text, value, subexpressions, error)

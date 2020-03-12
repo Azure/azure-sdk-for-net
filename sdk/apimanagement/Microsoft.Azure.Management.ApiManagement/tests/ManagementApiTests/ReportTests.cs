@@ -10,12 +10,15 @@ using Xunit;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using System.Net.Http;
+using System.Globalization;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
     public class ReportTests : TestBase
     {
         [Fact]
+        [Trait("owner", "vifedo")]
         public void Query()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -23,6 +26,17 @@ namespace ApiManagement.Tests.ManagementApiTests
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
+
+                var service = testBase.client.ApiManagementService.Get(testBase.rgName, testBase.serviceName);
+                Assert.NotNull(service);
+
+                var subscriptionList = testBase.client.Subscription.List(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    new Microsoft.Rest.Azure.OData.ODataQuery<SubscriptionContract> { Top = 1 });
+                Assert.NotNull(subscriptionList);
+
+                MakeAnalyticRequests(service.GatewayUrl, subscriptionList.First().PrimaryKey);
 
                 var byApiResponse = testBase.client.Reports.ListByApi(
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
@@ -121,6 +135,32 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(byRequestResponse.First().ApiId);
                 Assert.NotNull(byRequestResponse.First().OperationId);
                 Assert.NotNull(byRequestResponse.First().ProductId);
+            }
+        }
+
+        void MakeAnalyticRequests(string proxyUrl, string subscriptionKey)
+        {
+            var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(proxyUrl)
+            };
+            int requests = 10;
+            while (requests-- > 0)
+            {
+                try
+                {
+                    var response = httpClient.GetAsync(
+                        string.Format(CultureInfo.InvariantCulture, "echo/resource?key={0}", subscriptionKey))
+                        .GetAwaiter()
+                        .GetResult();
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
+                Task.Delay(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
             }
         }
     }

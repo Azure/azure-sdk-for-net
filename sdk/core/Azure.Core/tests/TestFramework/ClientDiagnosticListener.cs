@@ -11,7 +11,7 @@ namespace Azure.Core.Tests
 {
     public class ClientDiagnosticListener : IObserver<KeyValuePair<string, object>>, IObserver<DiagnosticListener>, IDisposable
     {
-        private readonly string _diagnosticSourceName;
+        private readonly Func<string, bool> _sourceNameFilter;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
 
@@ -19,7 +19,13 @@ namespace Azure.Core.Tests
 
         public ClientDiagnosticListener(string name)
         {
-            _diagnosticSourceName = name;
+            _sourceNameFilter = n => n == name;
+            DiagnosticListener.AllListeners.Subscribe(this);
+        }
+
+        public ClientDiagnosticListener(Func<string, bool> filter)
+        {
+            _sourceNameFilter = filter;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
 
@@ -49,8 +55,10 @@ namespace Azure.Core.Tests
                     {
                         Name = name,
                         Activity = Activity.Current,
-                        Links = links.Select(a => a.ParentId).ToList()
+                        Links = links.Select(a => a.ParentId).ToList(),
+                        LinkedActivities = links.ToList()
                     };
+
                     Scopes.Add(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
@@ -58,7 +66,7 @@ namespace Azure.Core.Tests
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
                     foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        if (producedDiagnosticScope.Name == name)
+                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
                         {
                             producedDiagnosticScope.IsCompleted = true;
                             return;
@@ -71,13 +79,13 @@ namespace Azure.Core.Tests
                     var name = value.Key.Substring(0, value.Key.Length - exceptionSuffix.Length);
                     foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        if (producedDiagnosticScope.IsCompleted)
+                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
                         {
-                            throw new InvalidOperationException("Scope should not be stopped when calling Failed");
-                        }
+                            if (producedDiagnosticScope.IsCompleted)
+                            {
+                                throw new InvalidOperationException("Scope should not be stopped when calling Failed");
+                            }
 
-                        if (producedDiagnosticScope.Name == name)
-                        {
                             producedDiagnosticScope.Exception = (Exception)value.Value;
                         }
                     }
@@ -88,7 +96,7 @@ namespace Azure.Core.Tests
         public void OnNext(DiagnosticListener value)
         {
             List<IDisposable> subscriptions = _subscriptions;
-            if (value.Name == _diagnosticSourceName && subscriptions != null)
+            if (_sourceNameFilter(value.Name) && subscriptions != null)
             {
                 lock (subscriptions)
                 {
@@ -99,6 +107,11 @@ namespace Azure.Core.Tests
 
         public void Dispose()
         {
+            if (_subscriptions == null)
+            {
+                return;
+            }
+
             List<IDisposable> subscriptions;
             lock (_subscriptions)
             {
@@ -115,7 +128,7 @@ namespace Azure.Core.Tests
             {
                 if (!producedDiagnosticScope.IsCompleted)
                 {
-                    throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' is not completed");
+                    throw new InvalidOperationException($"'{producedDiagnosticScope.Name}' scope is not completed");
                 }
             }
         }
@@ -173,8 +186,15 @@ namespace Azure.Core.Tests
             public string Name { get; set; }
             public Activity Activity { get; set; }
             public bool IsCompleted { get; set; }
+            public bool IsFailed => Exception != null;
             public Exception Exception { get; set; }
             public List<string> Links { get; set; } = new List<string>();
+            public List<Activity> LinkedActivities { get; set; } = new List<Activity>();
+
+            public override string ToString()
+            {
+                return Name;
+            }
         }
     }
 }

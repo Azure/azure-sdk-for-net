@@ -54,10 +54,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'</param>
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET',
+        /// 'ORC'</param>
         /// <param name="eventSystemProperties">System properties of the event
         /// hub</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>))
+        /// <param name="compression">The event hub messages compression type.
+        /// Possible values include: 'None', 'GZip'</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string))
             : base(id, name, type, location)
         {
             EventHubResourceId = eventHubResourceId;
@@ -66,6 +69,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             MappingRuleName = mappingRuleName;
             DataFormat = dataFormat;
             EventSystemProperties = eventSystemProperties;
+            Compression = compression;
             CustomInit();
         }
 
@@ -105,7 +109,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }
@@ -115,6 +119,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventSystemProperties")]
         public IList<string> EventSystemProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event hub messages compression type. Possible
+        /// values include: 'None', 'GZip'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.compression")]
+        public string Compression { get; set; }
 
         /// <summary>
         /// Validate the object.

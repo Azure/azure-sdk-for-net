@@ -22,6 +22,13 @@ namespace Azure.Storage
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
+        /// The size of the first range request in bytes. Blobs smaller than this limit will
+        /// be downloaded in a single request. Blobs larger than this limit will continue being
+        /// downloaded in chunks of size MaximumTransferLength.
+        /// </summary>
+        public int? InitialTransferLength { get; set; }
+
+        /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
@@ -40,6 +47,7 @@ namespace Azure.Storage
         public override int GetHashCode()
             => MaximumTransferLength.GetHashCode()
             ^ MaximumConcurrency.GetHashCode()
+            ^ InitialTransferLength.GetHashCode()
             ;
 
         /// <summary>
@@ -69,6 +77,7 @@ namespace Azure.Storage
         public bool Equals(StorageTransferOptions obj)
             => MaximumTransferLength == obj.MaximumTransferLength
             && MaximumConcurrency == obj.MaximumConcurrency
+            && InitialTransferLength == obj.InitialTransferLength
             ;
     }
 }

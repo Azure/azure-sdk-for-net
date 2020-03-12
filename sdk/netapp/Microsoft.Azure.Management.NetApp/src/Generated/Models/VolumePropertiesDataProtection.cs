@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// DataProtection
     /// </summary>
     /// <remarks>
-    /// DataProtection volume, can have a replication object
+    /// DataProtection type volumes include an object containing details of the
+    /// replication
     /// </remarks>
     public partial class VolumePropertiesDataProtection
     {

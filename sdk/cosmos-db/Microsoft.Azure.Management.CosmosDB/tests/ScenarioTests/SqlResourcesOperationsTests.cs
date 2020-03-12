@@ -8,8 +8,6 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System;
-using Xunit.Sdk;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -26,7 +24,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
                 ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
 
-                string resourceGroupName = "CosmosDBResourceGroup822";//CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
+                string resourceGroupName = "CosmosDBResourceGroup822"; // Using a pre-existing ResourceGroup and DatabaseAccount, because Database Account provisioning takes some time
                 string databaseAccountName = "db9934";
 
                 bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
@@ -215,11 +213,12 @@ namespace CosmosDB.Tests.ScenarioTests
 
         private void VerifyEqualSqlDatabases(SqlDatabaseGetResults expectedValue, SqlDatabaseGetResults actualValue)
         {
-            Assert.Equal(expectedValue._rid, actualValue._rid);
-            Assert.Equal(expectedValue._ts, actualValue._ts);
-            Assert.Equal(expectedValue._etag, actualValue._etag);
-            Assert.Equal(expectedValue._colls, actualValue._colls);
-            Assert.Equal(expectedValue._users, actualValue._users);
+            Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
+            Assert.Equal(expectedValue.Resource._rid, actualValue.Resource._rid);
+            Assert.Equal(expectedValue.Resource._ts, actualValue.Resource._ts);
+            Assert.Equal(expectedValue.Resource._etag, actualValue.Resource._etag);
+            Assert.Equal(expectedValue.Resource._colls, actualValue.Resource._colls);
+            Assert.Equal(expectedValue.Resource._users, actualValue.Resource._users);
         }
     }
 }

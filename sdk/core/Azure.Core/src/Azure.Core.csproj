@@ -1,16 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.1.0-preview.1</Version>
+    <Version>1.2.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-- Fix issues with log redaction where first query character was replaced with '?' character.
-- Exclude EventCounter events from AzureEventSourceListener.
-- Add `AZURE_TRACING_DISABLED` environment variable support.
-      ]]>
-    </PackageReleaseNotes>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -28,13 +21,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Shared\*.cs"/>
-    <Compile Include="Shared\Argument.cs"/>
-    <Compile Include="Shared\EventSourceEventFormatting.cs"/>
-    <Compile Include="Shared\HashCodeBuilder.cs"/>
-    <Compile Include="Shared\NullableAttributes.cs"/>
-    <Compile Include="Shared\ContentTypeUtilities.cs"/>
-    <Compile Include="Shared\ClientDiagnostics.cs"/>
-    <Compile Include="Shared\DiagnosticScope.cs"/>
+    <Compile Remove="Shared\**\*.cs" />
+    <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\EventSourceEventFormatting.cs" />
+    <Compile Include="Shared\HashCodeBuilder.cs" />
+    <Compile Include="Shared\ClientDiagnostics.cs" />
+    <Compile Include="Shared\HttpMessageSanitizer.cs" />
+    <Compile Include="Shared\NullableAttributes.cs" />
+    <Compile Include="Shared\ContentTypeUtilities.cs" />
+    <Compile Include="Shared\DiagnosticScopeFactory.cs" />
+    <Compile Include="Shared\DiagnosticScope.cs" />
+    <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
 </Project>

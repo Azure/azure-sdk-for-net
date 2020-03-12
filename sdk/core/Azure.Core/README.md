@@ -1,4 +1,4 @@
-# Azure.Core shared library for .NET
+# Azure Core shared client library for .NET
 
 Azure.Core provides shared primitives, abstractions, and helpers for modern .NET Azure SDK client libraries. 
 These libraries follow the [Azure SDK Design Guidelines for .NET](https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html) 
@@ -8,24 +8,29 @@ A more complete list of client libraries using Azure.Core can be found [here](ht
 Azure.Core allows client libraries to expose common functionality in a consistent fashion, 
 so that once you learn how to use these APIs in one client library, you will know how to use them in other client libraries.
 
-The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs]
 
-- Configuring service clients, e.g. configuring retries, logging.
-- Accessing HTTP response details.
-- Calling long-running operations (LROs).
-- Paging and asynchronous streams (```AsyncPageable<T>```) 
-- Exceptions for reporting errors from service requests in a consistent fashion.
-- Abstractions for representing Azure SDK credentials.
+## Getting started
 
-Below, you will find sections explaining these shared concepts in more detail.
-
-## Installing
 Typically, you will not need to install Azure.Core; 
 it will be installed for you when you install one of the client libraries using it. 
 In case you want to install it explicitly (to implement your own client library, for example), 
 you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
 
-## Usage Scenarios and Samples
+## Key concepts
+
+The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:
+
+- Configuring service clients, e.g. configuring retries, logging (`ClientOptions`).
+- Accessing HTTP response details (`Response`, `Response<T>`).
+- Calling long-running operations (`Operation<T>`).
+- Paging and asynchronous streams (```AsyncPageable<T>```).
+- Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`).
+- Abstractions for representing Azure SDK credentials. (`TokenCredentials`).
+
+Below, you will find sections explaining these shared concepts in more detail.
+
+## Examples
 
 **NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`. 
 
@@ -105,9 +110,11 @@ To create an Azure SDK log listener that outputs messages to console use `AzureE
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
 ```
 
-More on logging in [configuration samples](samples/Configuration.md)
+More on logging in [diagnostics samples](samples/Diagnostics.md)
 
 ### Reporting Errors ```RequestFailedException```
+
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try
@@ -196,4 +203,24 @@ KeyVaultSecret secret = client.GetSecret("Name");
 
 More on mocking in [mocking samples](samples/Mocking.md)
 
+## Troubleshooting
+
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#Enabling exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
+
+## Next steps
+
+Explore and install [available Azure SDK libraries](https://azure.github.io/azure-sdk/releases/latest/dotnet.html).
+
+## Contributing
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)
+
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
+[package]: https://www.nuget.org/packages/Azure.Core/
+[docs]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/core/client

@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
 using Azure.Storage.Blobs;
 
@@ -144,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 // cancellation.
 
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(12));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
                 while (!cancellationSource.IsCancellationRequested)
                 {

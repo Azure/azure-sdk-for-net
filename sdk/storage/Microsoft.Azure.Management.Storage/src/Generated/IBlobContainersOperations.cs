@@ -320,15 +320,23 @@ namespace Microsoft.Azure.Management.Storage
         /// Every dash (-) character must be immediately preceded and followed
         /// by a letter or number.
         /// </param>
-        /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// The immutability period for the blobs in the container since the
-        /// policy creation, in days.
-        /// </param>
         /// <param name='ifMatch'>
         /// The entity state (ETag) version of the immutability policy to
         /// update. A value of "*" can be used to apply the operation only if
         /// the immutability policy already exists. If omitted, this operation
         /// will always be applied.
+        /// </param>
+        /// <param name='immutabilityPeriodSinceCreationInDays'>
+        /// The immutability period for the blobs in the container since the
+        /// policy creation, in days.
+        /// </param>
+        /// <param name='allowProtectedAppendWrites'>
+        /// This property can only be changed for unlocked time-based retention
+        /// policies. When enabled, new blocks can be written to an append blob
+        /// while maintaining immutability protection and compliance. Only new
+        /// blocks can be added and any existing blocks cannot be modified or
+        /// deleted. This property cannot be changed with
+        /// ExtendImmutabilityPolicy API
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -345,7 +353,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = default(string), int? immutabilityPeriodSinceCreationInDays = default(int?), bool? allowProtectedAppendWrites = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the existing immutability policy along with the corresponding
         /// ETag in response headers and body.
@@ -507,6 +515,14 @@ namespace Microsoft.Azure.Management.Storage
         /// The immutability period for the blobs in the container since the
         /// policy creation, in days.
         /// </param>
+        /// <param name='allowProtectedAppendWrites'>
+        /// This property can only be changed for unlocked time-based retention
+        /// policies. When enabled, new blocks can be written to an append blob
+        /// while maintaining immutability protection and compliance. Only new
+        /// blocks can be added and any existing blocks cannot be modified or
+        /// deleted. This property cannot be changed with
+        /// ExtendImmutabilityPolicy API
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -522,7 +538,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int? immutabilityPeriodSinceCreationInDays = default(int?), bool? allowProtectedAppendWrites = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Lease Container operation establishes and manages a lock on a
         /// container for delete operations. The lock duration can be 15 to 60

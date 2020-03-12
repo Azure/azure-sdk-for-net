@@ -6,6 +6,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -17,6 +18,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_LOCATION</term><description>A path to the certificate that was generate for the App Registration.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
@@ -24,11 +26,11 @@ namespace Azure.Identity
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
-    public class EnvironmentCredential : TokenCredential, IExtendedTokenCredential
+    public class EnvironmentCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredential _credential;
-        private readonly string _unavailbleErrorMessage;
+        private const string UnavailbleErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured.";
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -56,6 +58,7 @@ namespace Azure.Identity
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
+            string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
@@ -65,43 +68,16 @@ namespace Azure.Identity
                 {
                     _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _pipeline);
                 }
-                else if (username != null && password != null && tenantId != null && clientId != null)
+                else if (username != null && password != null)
                 {
-                    _credential = new UsernamePasswordCredential(username, password, clientId, tenantId, _pipeline);
+                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _pipeline);
+                }
+                else if (clientCertificatePath != null)
+                {
+                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath);
                 }
             }
 
-            if (_credential is null)
-            {
-                StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
-
-                if (tenantId != null)
-                {
-                    builder.Append(" AZURE_TENANT_ID");
-                }
-
-                if (clientId != null)
-                {
-                    builder.Append(" AZURE_CLIENT_ID");
-                }
-
-                if (clientSecret != null)
-                {
-                    builder.Append(" AZURE_CLIENT_SECRET");
-                }
-
-                if (username != null)
-                {
-                    builder.Append(" AZURE_USERNAME");
-                }
-
-                if (password != null)
-                {
-                    builder.Append(" AZURE_PASSWORD");
-                }
-
-                _unavailbleErrorMessage = builder.Append(" ]").ToString();
-            }
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
@@ -124,7 +100,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImpl(requestContext, cancellationToken).GetTokenOrThrow();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -140,33 +116,25 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return GetTokenImpl(requestContext, cancellationToken);
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-        }
-
-        private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                throw scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage));
             }
 
             try
             {
-                AccessToken token =  _credential.GetToken(requestContext, cancellationToken);
+                AccessToken token = async
+                    ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                    : _credential.GetToken(requestContext, cancellationToken);
 
-                return new ExtendedAccessToken(scope.Succeeded(token));
+                return scope.Succeeded(token);
             }
             catch (OperationCanceledException e)
             {
@@ -176,34 +144,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
-            }
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.EnvironmentCredential.GetToken", requestContext);
-
-            if (_credential is null)
-            {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
-            }
-
-            try
-            {
-                AccessToken token = await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
-
-                return new ExtendedAccessToken(scope.Succeeded(token));
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
-            catch (Exception e)
-            {
-                return new ExtendedAccessToken(scope.Failed(e));
+                 throw scope.FailAndWrap(e);
             }
         }
     }

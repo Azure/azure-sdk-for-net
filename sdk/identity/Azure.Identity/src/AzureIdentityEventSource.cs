@@ -72,7 +72,7 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ProbeImdsEndpoint(RequestUriBuilder uri)
+        public void ProbeImdsEndpoint(Uri uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
@@ -80,14 +80,14 @@ namespace Azure.Identity
             }
         }
 
-        [Event(ProbeImdsEndpointEvent, Level = EventLevel.Informational, Message = "Probiing IMDS endpoint for availability. Endpoint: {0}")]
+        [Event(ProbeImdsEndpointEvent, Level = EventLevel.Informational, Message = "Probing IMDS endpoint for availability. Endpoint: {0}")]
         public void ProbeImdsEndpoint(string uri)
         {
             WriteEvent(ProbeImdsEndpointEvent, uri);
         }
 
         [NonEvent]
-        public void ImdsEndpointFound(RequestUriBuilder uri)
+        public void ImdsEndpointFound(Uri uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
@@ -102,7 +102,7 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ImdsEndpointUnavailable(RequestUriBuilder uri)
+        public void ImdsEndpointUnavailable(Uri uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Media.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -45,9 +47,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// for details). However, faces that end up being too small in the
         /// resized video may not be detected. Possible values include:
         /// 'SourceResolution', 'StandardDefinition'</param>
-        public FaceDetectorPreset(AnalysisResolution? resolution = default(AnalysisResolution?))
+        /// <param name="experimentalOptions">Dictionary containing key value
+        /// pairs for parameters not exposed in the preset itself</param>
+        public FaceDetectorPreset(AnalysisResolution? resolution = default(AnalysisResolution?), IDictionary<string, string> experimentalOptions = default(IDictionary<string, string>))
         {
             Resolution = resolution;
+            ExperimentalOptions = experimentalOptions;
             CustomInit();
         }
 
@@ -74,6 +79,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "resolution")]
         public AnalysisResolution? Resolution { get; set; }
+
+        /// <summary>
+        /// Gets or sets dictionary containing key value pairs for parameters
+        /// not exposed in the preset itself
+        /// </summary>
+        [JsonProperty(PropertyName = "experimentalOptions")]
+        public IDictionary<string, string> ExperimentalOptions { get; set; }
 
     }
 }

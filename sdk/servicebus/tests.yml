@@ -10,7 +10,8 @@ resources:
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    MaxParallel: 1
+    MaxParallel: 4
     ServiceDirectory: servicebus
+    TimeoutInMinutes: 120
     EnvVars:
       SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)

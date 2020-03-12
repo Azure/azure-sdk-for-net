@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DeploymentManager
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,18 +22,18 @@ namespace Microsoft.Azure.Management.DeploymentManager
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Gets an operation resource.
+            /// Lists the supported operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<Operation> Get(this IOperations operations)
+            public static OperationsList List(this IOperations operations)
             {
-                return operations.GetAsync().GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets an operation resource.
+            /// Lists the supported operations.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,9 +41,9 @@ namespace Microsoft.Azure.Management.DeploymentManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Operation>> GetAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationsList> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1,0 +1,86 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/keyPhrases?showStats=true",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "188",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-67d6bc1d4ebc32429151c444b00b0117-440fbf3a15bcde4f-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
+          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "51b01516b9e9b99ac91ad6bb2fe2060c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "language": "en",
+            "id": "1",
+            "text": "Microsoft was founded by Bill Gates and Paul Allen."
+          },
+          {
+            "language": "es",
+            "id": "2",
+            "text": "Mi perro y mi gato tienen que ir al veterinario."
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c1728b14-10b6-4d1e-ac83-c93b329a17c2",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Fri, 07 Feb 2020 19:13:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "11"
+      },
+      "ResponseBody": {
+        "statistics": {
+          "documentsCount": 2,
+          "validDocumentsCount": 2,
+          "erroneousDocumentsCount": 0,
+          "transactionsCount": 2
+        },
+        "documents": [
+          {
+            "id": "1",
+            "keyPhrases": [
+              "Bill Gates",
+              "Paul Allen",
+              "Microsoft"
+            ],
+            "statistics": {
+              "charactersCount": 51,
+              "transactionsCount": 1
+            }
+          },
+          {
+            "id": "2",
+            "keyPhrases": [
+              "gato",
+              "perro",
+              "veterinario"
+            ],
+            "statistics": {
+              "charactersCount": 48,
+              "transactionsCount": 1
+            }
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2019-10-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2068179637",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+  }
+}

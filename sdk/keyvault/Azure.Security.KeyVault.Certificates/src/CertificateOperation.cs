@@ -19,11 +19,28 @@ namespace Azure.Security.KeyVault.Certificates
         private Response _response;
         private KeyVaultCertificateWithPolicy _value;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateOperation"/> class.
+        /// You must call <see cref="UpdateStatus(CancellationToken)"/> or <see cref="UpdateStatusAsync(CancellationToken)"/> before you can get the <see cref="Value"/>.
+        /// </summary>
+        /// <param name="client">A <see cref="CertificateClient"/> for the Key Vault where the operation was started.</param>
+        /// <param name="name">The name of the certificate being created.</param>
+        public CertificateOperation(CertificateClient client, string name)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            Properties = new CertificateOperationProperties(client.VaultUri, name);
+
+            Id = Properties.Id.ToString();
+            _client = client;
+        }
+
         internal CertificateOperation(Response<CertificateOperationProperties> properties, CertificateClient client)
         {
             Properties = properties;
 
-            Id = properties.Value.Id.ToString();
+            Id = Properties.Id.ToString();
             _client = client;
         }
 
@@ -84,7 +101,11 @@ namespace Azure.Security.KeyVault.Certificates
 
         /// <summary>
         /// Updates the status of the certificate operation.
+        /// This operation requires the certificates/get permission.
         /// </summary>
+        /// <remarks>
+        /// This operation requires the certificates/get permission.
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The raw response of the poll operation.</returns>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
@@ -130,6 +151,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Updates the status of the certificate operation.
         /// </summary>
+        /// <remarks>
+        /// This operation requires the certificates/get permission.
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The raw response of the poll operation.</returns>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
@@ -175,6 +199,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
         /// </summary>
+        /// <remarks>
+        /// This operation requires the certificates/update permission.
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual void Cancel(CancellationToken cancellationToken = default)
         {
@@ -188,6 +215,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Cancels a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/update permission.
         /// </summary>
+        /// <remarks>
+        /// This operation requires the certificates/update permission.
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
         public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
@@ -202,6 +232,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
         /// </summary>
+        /// <remarks>
+        /// This operation requires the certificates/update permission.
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual void Delete(CancellationToken cancellationToken = default)
         {
@@ -215,6 +248,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Deletes a pending <see cref="CertificateOperation"/> in the key vault. This operation requires the certificates/delete permission.
         /// </summary>
+        /// <remarks>
+        /// This operation requires the certificates/update permission.
+        /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
         public virtual async Task DeleteAsync(CancellationToken cancellationToken = default)

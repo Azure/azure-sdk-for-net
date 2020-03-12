@@ -44,6 +44,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
         /// <param name="query">Database query. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="redshiftUnloadSettings">The Amazon S3 settings needed
@@ -51,8 +54,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// unload. With this, data from Amazon Redshift source will be
         /// unloaded into S3 first and then copied into the targeted sink from
         /// the interim S3.</param>
-        public AmazonRedshiftSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), object query = default(object), RedshiftUnloadSettings redshiftUnloadSettings = default(RedshiftUnloadSettings))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout)
+        public AmazonRedshiftSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), RedshiftUnloadSettings redshiftUnloadSettings = default(RedshiftUnloadSettings))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
         {
             Query = query;
             RedshiftUnloadSettings = redshiftUnloadSettings;

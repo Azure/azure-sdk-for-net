@@ -6,7 +6,6 @@
     <RepoSdkPath>$(RepoRoot)src/SDKs</RepoSdkPath>
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
     <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and '$(IsClientLibrary)' == 'true'">true</IsDataPlaneProject>
-    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
   </PropertyGroup>
 
   <!-- Setup default project properties -->

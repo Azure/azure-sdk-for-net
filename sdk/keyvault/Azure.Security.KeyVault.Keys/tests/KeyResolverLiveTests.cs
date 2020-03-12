@@ -15,8 +15,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     public class KeyResolverLiveTests : KeysTestBase
     {
-        public KeyResolverLiveTests(bool isAsync) : base(isAsync)
+        private readonly KeyClientOptions.ServiceVersion _serviceVersion;
+
+        public KeyResolverLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public KeyResolver Resolver { get { return GetResolver(); } }
@@ -25,7 +28,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             recording ??= Recording;
 
-            return InstrumentClient(new KeyResolver(recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new CryptographyClientOptions())));
+            CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
+            return InstrumentClient(new KeyResolver(recording.GetCredential(new DefaultAzureCredential()), options));
         }
 
         public SecretClient GetSecretClient(TestRecording recording = null)

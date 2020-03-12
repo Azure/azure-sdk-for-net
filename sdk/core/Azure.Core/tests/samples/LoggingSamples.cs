@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
 using System.Net.Http;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
@@ -18,6 +19,16 @@ namespace Azure.Core.Samples
             #region Snippet:ConsoleLogging
             // Setup a listener to monitor logged events.
             using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+            #endregion
+        }
+
+        [Test]
+        public void LoggingCallback()
+        {
+            #region Snippet:LoggingCallback
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (e, message) => Console.WriteLine($"{DateTime.Now} {message}"),
+                level: EventLevel.Verbose);
             #endregion
         }
 

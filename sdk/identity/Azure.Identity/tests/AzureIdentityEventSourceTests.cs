@@ -54,7 +54,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient));
 
-            var method = "Azure.Identity.ClientSecretCredential.GetToken";
+            var method = "ClientSecretCredential.GetToken";
 
             await AssertCredentialGetTokenSucceededAsync(credential, method);
         }
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockAadClient));
 
-            var method = "Azure.Identity.ClientCertificateCredential.GetToken";
+            var method = "ClientCertificateCredential.GetToken";
 
             await AssertCredentialGetTokenSucceededAsync(credential, method);
         }
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new DeviceCodeCredential((_, __) => { return Task.CompletedTask; }, Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            var method = "Azure.Identity.DeviceCodeCredential.GetToken";
+            var method = "DeviceCodeCredential.GetToken";
 
             await AssertCredentialGetTokenSucceededAsync(credential, method);
         }
@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            var method = "Azure.Identity.InteractiveBrowserCredential.GetToken";
+            var method = "InteractiveBrowserCredential.GetToken";
 
             await AssertCredentialGetTokenSucceededAsync(credential, method);
         }
@@ -106,7 +106,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            var method = "Azure.Identity.SharedTokenCacheCredential.GetToken";
+            var method = "SharedTokenCacheCredential.GetToken";
 
             await AssertCredentialGetTokenSucceededAsync(credential, method);
         }
@@ -120,7 +120,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient));
 
-            var method = "Azure.Identity.ClientSecretCredential.GetToken";
+            var method = "ClientSecretCredential.GetToken";
 
             await AssertCredentialGetTokenFailedAsync(credential, method, expExMessage);
         }
@@ -134,7 +134,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), CredentialPipeline.GetInstance(null), mockAadClient));
 
-            var method = "Azure.Identity.ClientCertificateCredential.GetToken";
+            var method = "ClientCertificateCredential.GetToken";
 
             await AssertCredentialGetTokenFailedAsync(credential, method, expExMessage);
         }
@@ -148,7 +148,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new DeviceCodeCredential((_, __) => { return Task.CompletedTask; }, Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            var method = "Azure.Identity.DeviceCodeCredential.GetToken";
+            var method = "DeviceCodeCredential.GetToken";
 
             await AssertCredentialGetTokenFailedAsync(credential, method, expExMessage);
         }
@@ -162,7 +162,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            var method = "Azure.Identity.InteractiveBrowserCredential.GetToken";
+            var method = "InteractiveBrowserCredential.GetToken";
 
             await AssertCredentialGetTokenFailedAsync(credential, method, expExMessage);
         }
@@ -180,7 +180,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new SharedTokenCacheCredential(null, "mockuser@mockdomain.com", CredentialPipeline.GetInstance(null), mockMsalClient));
 
-            var method = "Azure.Identity.SharedTokenCacheCredential.GetToken";
+            var method = "SharedTokenCacheCredential.GetToken";
 
             await AssertCredentialGetTokenFailedAsync(credential, method, expExMessage);
         }

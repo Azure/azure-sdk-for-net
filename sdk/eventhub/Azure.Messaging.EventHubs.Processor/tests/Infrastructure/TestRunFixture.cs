@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             try
             {
-                if (TestEnvironment.WasEventHubsNamespaceCreated)
+                if (TestEnvironment.ShouldRemoveNamespaceAfterTestRunCompletion)
                 {
                     EventHubScope.DeleteNamespaceAsync(TestEnvironment.EventHubsNamespace).GetAwaiter().GetResult();
                 }
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             try
             {
-                if (StorageTestEnvironment.WasStorageAccountCreated)
+                if (StorageTestEnvironment.ShouldRemoveStorageAccountAfterTestRunCompletion)
                 {
                     StorageScope.DeleteStorageAccountAsync(StorageTestEnvironment.StorageAccountName).GetAwaiter().GetResult();
                 }

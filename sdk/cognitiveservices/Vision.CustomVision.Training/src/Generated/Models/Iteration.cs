@@ -56,10 +56,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Possible values include: 'Regular', 'Advanced'</param>
         /// <param name="reservedBudgetInHours">Gets the reserved advanced
         /// training budget for the iteration.</param>
+        /// <param name="trainingTimeInMinutes">Gets the training time for the
+        /// iteration.</param>
         /// <param name="publishName">Name of the published model.</param>
         /// <param name="originalPublishResourceId">Resource Provider Id this
         /// iteration was originally published to.</param>
-        public Iteration(string name, System.Guid id = default(System.Guid), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), IList<string> exportableTo = default(IList<string>), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), string trainingType = default(string), int reservedBudgetInHours = default(int), string publishName = default(string), string originalPublishResourceId = default(string))
+        public Iteration(string name, System.Guid id = default(System.Guid), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), IList<string> exportableTo = default(IList<string>), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), string trainingType = default(string), int reservedBudgetInHours = default(int), int trainingTimeInMinutes = default(int), string publishName = default(string), string originalPublishResourceId = default(string))
         {
             Id = id;
             Name = name;
@@ -74,6 +76,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             ClassificationType = classificationType;
             TrainingType = trainingType;
             ReservedBudgetInHours = reservedBudgetInHours;
+            TrainingTimeInMinutes = trainingTimeInMinutes;
             PublishName = publishName;
             OriginalPublishResourceId = originalPublishResourceId;
             CustomInit();
@@ -165,6 +168,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "reservedBudgetInHours")]
         public int ReservedBudgetInHours { get; private set; }
+
+        /// <summary>
+        /// Gets the training time for the iteration.
+        /// </summary>
+        [JsonProperty(PropertyName = "trainingTimeInMinutes")]
+        public int TrainingTimeInMinutes { get; private set; }
 
         /// <summary>
         /// Gets name of the published model.

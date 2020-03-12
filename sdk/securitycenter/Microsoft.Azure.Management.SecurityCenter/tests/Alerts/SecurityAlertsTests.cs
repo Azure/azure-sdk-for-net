@@ -161,7 +161,7 @@ namespace SecurityCenter.Tests
 
                 securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
 
-                securityCenterClient.Alerts.UpdateResourceGroupLevelAlertState(enumerator.Current.Name, "Dismiss", Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                securityCenterClient.Alerts.UpdateResourceGroupLevelAlertStateToDismiss(enumerator.Current.Name, Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
             }
         }
 
@@ -179,7 +179,7 @@ namespace SecurityCenter.Tests
 
                 securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
 
-                securityCenterClient.Alerts.UpdateSubscriptionLevelAlertState(enumerator.Current.Name, "Dismiss");
+                securityCenterClient.Alerts.UpdateSubscriptionLevelAlertStateToDismiss(enumerator.Current.Name);
             }
         }
 
