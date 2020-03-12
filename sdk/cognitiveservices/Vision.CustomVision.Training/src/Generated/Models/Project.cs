@@ -43,7 +43,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// image.</param>
         /// <param name="drModeEnabled">Gets if the Disaster Recovery (DR) mode
         /// is on, indicating the project is temporarily read-only.</param>
-        public Project(string name, string description, ProjectSettings settings, System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string), bool? drModeEnabled = default(bool?))
+        /// <param name="status">Gets the status of the project. Possible
+        /// values include: 'Succeeded', 'Importing', 'Failed'</param>
+        public Project(string name, string description, ProjectSettings settings, System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string), bool? drModeEnabled = default(bool?), string status = default(string))
         {
             Id = id;
             Name = name;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             LastModified = lastModified;
             ThumbnailUri = thumbnailUri;
             DrModeEnabled = drModeEnabled;
+            Status = status;
             CustomInit();
         }
 
@@ -109,6 +112,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "drModeEnabled")]
         public bool? DrModeEnabled { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the project. Possible values include:
+        /// 'Succeeded', 'Importing', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
 
         /// <summary>
         /// Validate the object.

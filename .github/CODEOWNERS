@@ -11,6 +11,9 @@
 # Core
 /sdk/core/ @pakrym @KrzysztofCwalina
 
+# Extensions
+/sdk/extensions/ @parkym
+
 # Service teams
 /sdk/appconfiguration/ @annelo-msft @AlexanderSher
 
@@ -25,7 +28,7 @@
 /sdk/eventhub/ @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
 
-/sdk/identity/azure.identity/ @schaabs
+/sdk/identity/ @schaabs
 
 /sdk/keyvault/ @schaabs @heaths
 

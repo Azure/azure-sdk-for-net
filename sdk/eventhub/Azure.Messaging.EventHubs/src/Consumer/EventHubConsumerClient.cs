@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -592,6 +593,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            if (IsClosed)
+            {
+                return;
+            }
+
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
@@ -761,7 +768,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                     if (observedException != default)
                     {
                         EventHubsEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, observedException.Message);
-                        throw observedException;
+                        ExceptionDispatchInfo.Capture(observedException).Throw();
                     }
                 }
                 finally

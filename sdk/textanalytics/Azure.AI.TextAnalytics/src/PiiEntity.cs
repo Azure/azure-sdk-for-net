@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics
             SubCategory = subCategory;
             GraphemeOffset = offset;
             GraphemeLength = length;
-            Score = score;
+            ConfidenceScore = score;
         }
 
         /// <summary>
@@ -57,6 +57,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets a score between 0 and 1, indicating the confidence that the
         /// text substring matches this inferred entity.
         /// </summary>
-        public double Score { get; }
+        public double ConfidenceScore { get; }
     }
 }

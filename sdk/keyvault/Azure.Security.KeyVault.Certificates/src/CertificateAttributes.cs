@@ -13,6 +13,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ExpiresPropertyName = "exp";
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
+        private const string RecoverableDaysPropertyName = "recoverableDays";
         private const string RecoveryLevelPropertyName = "recoveryLevel";
 
         public bool? Enabled { get; set; }
@@ -24,6 +25,8 @@ namespace Azure.Security.KeyVault.Certificates
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         public DateTimeOffset? UpdatedOn { get; internal set; }
+
+        public int? RecoverableDays { get; internal set; }
 
         public string RecoveryLevel { get; internal set; }
 
@@ -51,6 +54,10 @@ namespace Azure.Security.KeyVault.Certificates
 
                     case UpdatedPropertyName:
                         UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+
+                    case RecoverableDaysPropertyName:
+                        RecoverableDays = prop.Value.GetInt32();
                         break;
 
                     case RecoveryLevelPropertyName:

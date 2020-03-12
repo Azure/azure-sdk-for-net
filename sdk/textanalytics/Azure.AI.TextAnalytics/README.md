@@ -48,7 +48,7 @@ For more information about creating the resource or how to get the location and 
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.2
+Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
 ```
 
 ### Authenticate the client
@@ -191,7 +191,7 @@ IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
@@ -209,7 +209,7 @@ IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Val
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 
@@ -229,7 +229,7 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score}");
+        Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");
     }
 }
 ```
@@ -259,7 +259,7 @@ Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.Recogni
 Console.WriteLine($"Recognized {entities.Value.Count} entities:");
 foreach (CategorizedEntity entity in entities.Value)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 

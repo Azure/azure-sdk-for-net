@@ -313,7 +313,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The session lock has expired on the MessageSession. Accept a new MessageSession..
+        ///   Looks up a localized string similar to The session lock was lost. Request a new session receiver..
         /// </summary>
         internal static string SessionLockExpiredOnMessageSession {
             get {

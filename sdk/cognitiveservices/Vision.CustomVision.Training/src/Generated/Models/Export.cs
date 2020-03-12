@@ -32,9 +32,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="status">Status of the export. Possible values include:
         /// 'Exporting', 'Failed', 'Done'</param>
         /// <param name="downloadUri">URI used to download the model.</param>
-        /// <param name="flavor">Flavor of the export. Possible values include:
-        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM', 'TensorFlowNormal',
-        /// 'TensorFlowLite'</param>
+        /// <param name="flavor">Flavor of the export. These are
+        /// specializations of the export platform.
+        /// Docker platform has valid flavors: Linux, Windows, ARM.
+        /// Tensorflow platform has valid flavors: TensorFlowNormal,
+        /// TensorFlowLite.
+        /// ONNX platform has valid flavors: ONNX10, ONNX12. Possible values
+        /// include: 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM',
+        /// 'TensorFlowNormal', 'TensorFlowLite'</param>
         /// <param name="newerVersionAvailable">Indicates an updated version of
         /// the export package is available and should be re-exported for the
         /// latest changes.</param>
@@ -74,9 +79,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public string DownloadUri { get; private set; }
 
         /// <summary>
-        /// Gets flavor of the export. Possible values include: 'Linux',
-        /// 'Windows', 'ONNX10', 'ONNX12', 'ARM', 'TensorFlowNormal',
-        /// 'TensorFlowLite'
+        /// Gets flavor of the export. These are specializations of the export
+        /// platform.
+        /// Docker platform has valid flavors: Linux, Windows, ARM.
+        /// Tensorflow platform has valid flavors: TensorFlowNormal,
+        /// TensorFlowLite.
+        /// ONNX platform has valid flavors: ONNX10, ONNX12. Possible values
+        /// include: 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM',
+        /// 'TensorFlowNormal', 'TensorFlowLite'
         /// </summary>
         [JsonProperty(PropertyName = "flavor")]
         public string Flavor { get; private set; }

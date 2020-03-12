@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Recognized {entities.Value.Count} entities:");
             foreach (CategorizedEntity entity in entities.Value)
             {
-                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}");
+                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
             }
             #endregion
         }

@@ -194,14 +194,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpMessage.MessageAnnotations.Map.Add(ViaPartitionKeyName, sbMessage.ViaPartitionKey);
             }
 
-            if (sbMessage.UserProperties != null && sbMessage.UserProperties.Count > 0)
+            if (sbMessage.Properties != null && sbMessage.Properties.Count > 0)
             {
                 if (amqpMessage.ApplicationProperties == null)
                 {
                     amqpMessage.ApplicationProperties = new ApplicationProperties();
                 }
 
-                foreach (var pair in sbMessage.UserProperties)
+                foreach (var pair in sbMessage.Properties)
                 {
                     if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                     {
@@ -337,7 +337,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                     {
-                        sbMessage.UserProperties[pair.Key.ToString()] = netObject;
+                        sbMessage.Properties[pair.Key.ToString()] = netObject;
                     }
                 }
             }
@@ -379,7 +379,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                             {
-                                sbMessage.UserProperties[key] = netObject;
+                                sbMessage.Properties[key] = netObject;
                             }
                             break;
                     }

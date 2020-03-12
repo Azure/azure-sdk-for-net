@@ -1,5 +1,15 @@
 # Release History
 
+## 4.1.0-preview.2 (Unreleased)
+
+
+## 4.1.0-preview.1 (2020-03-09)
+
+### Added
+
+- Add "import" value to `KeyOperation` enumeration.
+- Add `RecoverableDays` property to `KeyProperties`.
+
 ## 4.0.2 (2020-03-03)
 
 ### Fixed

@@ -1953,11 +1953,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
         public async Task ConsumerCanRetrievePartitionProperties(EventHubsTransportType transportType)
         {
-            var partitionCount = 4;
+            var partitionCount = 1;
 
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
-                var options = new EventHubConnectionOptions();
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var consumerOptions = new EventHubConsumerClientOptions { ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
 
