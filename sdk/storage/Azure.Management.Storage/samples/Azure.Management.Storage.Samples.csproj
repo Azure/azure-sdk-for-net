@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <AssemblyTitle>Microsoft Azure Storage management library samples</AssemblyTitle>
     <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
