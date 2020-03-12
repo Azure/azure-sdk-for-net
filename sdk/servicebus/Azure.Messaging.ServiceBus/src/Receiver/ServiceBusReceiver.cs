@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a session receiver which can be used to interact with all messages with the same sessionId.
         /// </summary>
         ///
-        /// <param name="queueName">The name of the specific queue to associate the receiver with.</param>
+        /// <param name="entityName">The name of the specific queue to associate the receiver with.</param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="sessionId">The sessionId for this receiver</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new <see cref="ServiceBusReceiver"/>.
         /// </summary>
         ///
-        /// <param name="queueName">The name of the specific queue to associate the receiver with.</param>
+        /// <param name="entityName">The name of the specific queue to associate the receiver with.</param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="options">A set of options to apply when configuring the receiver.</param>
         ///
@@ -301,9 +301,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="fromSequenceNumber">The sequence number from where to read the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<ServiceBusReceivedMessage> PeekAt(
             long fromSequenceNumber,

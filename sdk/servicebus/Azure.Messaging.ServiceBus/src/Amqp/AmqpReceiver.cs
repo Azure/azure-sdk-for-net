@@ -748,11 +748,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveBatchAsync(int, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
-        ///
-        /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
             long? fromSequenceNumber,
@@ -934,8 +929,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>
         /// Renews the lock on the session specified by the <see cref="SessionId"/>. The lock will be renewed based on the setting specified on the entity.
-        /// </summary>
-        ///
         /// </summary>
         public override async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {

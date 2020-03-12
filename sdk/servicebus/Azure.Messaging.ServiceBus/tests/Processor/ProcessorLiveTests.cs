@@ -60,8 +60,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                     }
                     finally
                     {
+
                         var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                        completionSources[setIndex].SetResult(true);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
                     }
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));
@@ -106,15 +110,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 processor.ReceiveMode = ReceiveMode.ReceiveAndDelete;
                 await processor.StartProcessingAsync();
 
-                async Task ProcessMessage(ProcessMessageEventArgs args)
+                Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     var currentCt = Interlocked.Increment(ref messageProcessedCt);
                     TestContext.Progress.WriteLine(currentCt);
                     if (currentCt == stopAfterMessagesCt)
                     {
-                        await processor.StopProcessingAsync();
+                        // awaiting here would cause a deadlock
+                        _ = processor.StopProcessingAsync();
                         tcs.SetResult(true);
                     }
+                    return Task.CompletedTask;
                 }
                 await tcs.Task;
                 var receiver = client.GetReceiver(scope.QueueName, new ServiceBusReceiverOptions

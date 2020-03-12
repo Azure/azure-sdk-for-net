@@ -116,11 +116,6 @@ namespace Azure.Messaging.ServiceBus.Core
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
         /// Also, unlike <see cref="ReceiveBatchAsync(int, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
-        ///
-        /// </summary>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
             long? fromSequenceNumber,

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
@@ -29,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        public SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; private set; }
+        private SemaphoreSlim MaxConcurrentAcceptSessionsSemaphore { get; set; }
 
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
@@ -531,15 +532,21 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             IList<Task> tasks = new List<Task>();
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
-                // hold onto all the tasks that we are starting so that when cancellation is requested,
-                // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
-                // other than TaskCanceledExceptions
-                tasks.Add(GetAndProcessMessagesAsync(cancellationToken));
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    // hold onto all the tasks that we are starting so that when cancellation is requested,
+                    // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
+                    // other than TaskCanceledExceptions
+                    tasks.Add(GetAndProcessMessagesAsync(cancellationToken));
+                }
             }
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+            finally
+            {
+                await Task.WhenAll(tasks).ConfigureAwait(false);
+            }
         }
 
         private async Task GetAndProcessMessagesAsync(

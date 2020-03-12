@@ -64,6 +64,7 @@ namespace Azure.Messaging.ServiceBus
         /// An abstracted Service Bus transport-specific receiver that is associated with the
         /// Service Bus gateway; intended to perform delegated operations.
         /// </param>
+        /// <param name="identifier"></param>
         internal ServiceBusSessionManager(
             TransportReceiver receiver,
             string identifier)
@@ -119,8 +120,6 @@ namespace Azure.Messaging.ServiceBus
         /// Renewal of session renews all the messages in the session as well. Each individual message need not be renewed.
         /// </para>
         /// </remarks>
-        ///
-        /// </summary>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
