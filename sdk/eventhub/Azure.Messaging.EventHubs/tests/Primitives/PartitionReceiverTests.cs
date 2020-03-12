@@ -466,6 +466,78 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void ReceiveBatchAsyncValidatesTheMaximumEventCount(int maximumEventCount)
+        {
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+
+            Assert.That(async () => await receiver.ReceiveBatchAsync(maximumEventCount, TimeSpan.Zero), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        [TestCase(-100)]
+        public void ReceiveBatchAsyncValidatesTheMaximumWaitTime(int waitTimeSeconds)
+        {
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+
+            Assert.That(async () => await receiver.ReceiveBatchAsync(1, TimeSpan.FromSeconds(waitTimeSeconds)), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReceiveBatchAsyncFailsWhenPartitionReceiverIsClosed()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=someHub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+
+            await receiver.CloseAsync(cancellationSource.Token);
+
+            Assert.That(async () => await receiver.ReceiveBatchAsync(1, TimeSpan.Zero, cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.ReceiveBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReceiveBatchAsyncRespectsTheCancellationToken()
+        {
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await receiver.ReceiveBatchAsync(1, TimeSpan.Zero, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="PartitionReceiver.CloseAsync" />
         ///   method.
         /// </summary>

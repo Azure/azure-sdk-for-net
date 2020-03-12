@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -255,6 +256,30 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
             return await Connection.GetPartitionPropertiesAsync(PartitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   TODO.
+        /// </summary>
+        ///
+        /// <param name="maximumEventCount">TODO.</param>
+        /// <param name="maximumWaitTime">TODO.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>TODO.</returns>
+        ///
+        public async virtual Task<IEnumerable<EventData>> ReceiveBatchAsync(int maximumEventCount,
+                                                                            TimeSpan maximumWaitTime,
+                                                                            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotClosed(IsClosed, nameof(PartitionReceiver));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            Argument.AssertInRange(maximumEventCount, 1, int.MaxValue, nameof(maximumEventCount));
+            Argument.AssertNotNegative(maximumWaitTime, nameof(maximumWaitTime));
+
+            await Task.CompletedTask.ConfigureAwait(false);
+            return default;
         }
 
         /// <summary>
