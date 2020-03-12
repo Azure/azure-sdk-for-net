@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -174,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
         }
 
         /// <summary>
@@ -210,7 +211,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
         }
 
         /// <summary>
@@ -241,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             PartitionId = partitionId;
             InitialPosition = eventPosition;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
+            InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
         }
 
         /// <summary>
@@ -353,7 +354,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if (transportConsumerException != default)
             {
-                throw transportConsumerException;
+                ExceptionDispatchInfo.Capture(transportConsumerException).Throw();
             }
         }
 
@@ -401,9 +402,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
-        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
-        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="options">A set of options to apply when configuring the consumer.</param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -411,9 +410,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                    string partitionId,
                                                                    EventPosition eventPosition,
                                                                    EventHubsRetryPolicy retryPolicy,
-                                                                   bool trackLastEnqueuedEventProperties,
-                                                                   long? ownerLevel,
-                                                                   uint? prefetchCount) =>
-            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+                                                                   PartitionReceiverOptions options) =>
+            Connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options.TrackLastEnqueuedEventProperties, options.OwnerLevel, (uint?)options.PrefetchCount);
     }
 }

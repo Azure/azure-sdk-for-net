@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -626,7 +627,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             if (transportProducerException != default)
             {
-                throw transportProducerException;
+                ExceptionDispatchInfo.Capture(transportProducerException).Throw();
             }
         }
 

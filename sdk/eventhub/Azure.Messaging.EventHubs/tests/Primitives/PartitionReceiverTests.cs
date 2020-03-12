@@ -171,13 +171,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString, expectedOptions);
 
-            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup));
-            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId));
-            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition));
-            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy));
-            Assert.That(receiver.TransportConsumerCreatedWithTrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties));
-            Assert.That(receiver.TransportConsumerCreatedWithOwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel));
-            Assert.That(receiver.TransportConsumerCreatedWithPrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount));
+            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup), "The constructor should have used the correct consumer group.");
+            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId), "The constructor should have used the correct partition id.");
+            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition), "The constructor should have used the correct initial position.");
+            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy), "The constructor should have used the correct retry policy.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions, Is.Not.SameAs(expectedOptions), "The constructor should have cloned the options.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties), "The constructor should have used the correct track last enqueued event properties.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The constructor should have used the correct owner level.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The constructor should have used the correct prefetch count.");
         }
 
         /// <summary>
@@ -197,13 +198,14 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>(), expectedOptions);
 
-            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup));
-            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId));
-            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition));
-            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy));
-            Assert.That(receiver.TransportConsumerCreatedWithTrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties));
-            Assert.That(receiver.TransportConsumerCreatedWithOwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel));
-            Assert.That(receiver.TransportConsumerCreatedWithPrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount));
+            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup), "The constructor should have used the correct consumer group.");
+            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId), "The constructor should have used the correct partition id.");
+            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition), "The constructor should have used the correct initial position.");
+            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy), "The constructor should have used the correct retry policy.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions, Is.Not.SameAs(expectedOptions), "The constructor should have cloned the options.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties), "The constructor should have used the correct track last enqueued event properties.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The constructor should have used the correct owner level.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The constructor should have used the correct prefetch count.");
         }
 
         /// <summary>
@@ -223,13 +225,14 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>(), expectedOptions);
 
-            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup));
-            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId));
-            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition));
-            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy));
-            Assert.That(receiver.TransportConsumerCreatedWithTrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties));
-            Assert.That(receiver.TransportConsumerCreatedWithOwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel));
-            Assert.That(receiver.TransportConsumerCreatedWithPrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount));
+            Assert.That(receiver.TransportConsumerCreatedWithConsumerGroup, Is.EqualTo(receiver.ConsumerGroup), "The constructor should have used the correct consumer group.");
+            Assert.That(receiver.TransportConsumerCreatedWithPartitionId, Is.EqualTo(receiver.PartitionId), "The constructor should have used the correct partition id.");
+            Assert.That(receiver.TransportConsumerCreatedWithEventPosition, Is.EqualTo(receiver.InitialPosition), "The constructor should have used the correct initial position.");
+            Assert.That(receiver.TransportConsumerCreatedWithRetryPolicy, Is.SameAs(expectedRetryPolicy), "The constructor should have used the correct retry policy.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions, Is.Not.SameAs(expectedOptions), "The constructor should have cloned the options.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(expectedOptions.TrackLastEnqueuedEventProperties), "The constructor should have used the correct track last enqueued event properties.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.OwnerLevel, Is.EqualTo(expectedOptions.OwnerLevel), "The constructor should have used the correct owner level.");
+            Assert.That(receiver.TransportConsumerCreatedWithOptions.PrefetchCount, Is.EqualTo(expectedOptions.PrefetchCount), "The constructor should have used the correct prefetch count.");
         }
 
         /// <summary>
@@ -239,16 +242,18 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionStringConstructorCreatesDefaultOptions()
         {
-            var expected = new PartitionReceiverOptions().RetryOptions;
+            var defaultOptions = new PartitionReceiverOptions();
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, connectionString);
+            var options = receiver.TransportConsumerCreatedWithOptions;
 
-            var policy = GetRetryPolicy(receiver);
-            Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
-            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The default retry policy should be a basic policy.");
-
-            var actual = ((BasicRetryPolicy)policy).Options;
-            Assert.That(actual.IsEquivalentTo(expected), Is.True, "The default retry policy should be based on the default retry options.");
+            Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+            Assert.That(options.ConnectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.That(options.DefaultMaximumReceiveWaitTime, Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+            Assert.That(options.OwnerLevel, Is.EqualTo(defaultOptions.OwnerLevel), "The constructor should have set the correct owner level.");
+            Assert.That(options.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The constructor should have set the correct prefetch count.");
+            Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), "The constructor should have set the correct track last enqueued event properties.");
         }
 
         /// <summary>
@@ -258,15 +263,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ExpandedConstructorCreatesDefaultOptions()
         {
-            var expected = new PartitionReceiverOptions().RetryOptions;
-            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>());
+            var defaultOptions = new PartitionReceiverOptions();
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, "fqns", "eh", Mock.Of<TokenCredential>());
+            var options = receiver.TransportConsumerCreatedWithOptions;
 
-            var policy = GetRetryPolicy(receiver);
-            Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
-            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The default retry policy should be a basic policy.");
-
-            var actual = ((BasicRetryPolicy)policy).Options;
-            Assert.That(actual.IsEquivalentTo(expected), Is.True, "The default retry policy should be based on the default retry options.");
+            Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+            Assert.That(options.ConnectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.That(options.DefaultMaximumReceiveWaitTime, Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+            Assert.That(options.OwnerLevel, Is.EqualTo(defaultOptions.OwnerLevel), "The constructor should have set the correct owner level.");
+            Assert.That(options.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The constructor should have set the correct prefetch count.");
+            Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), "The constructor should have set the correct track last enqueued event properties.");
         }
 
         /// <summary>
@@ -276,15 +283,17 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionConstructorCreatesDefaultOptions()
         {
-            var expected = new PartitionReceiverOptions().RetryOptions;
-            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>());
+            var defaultOptions = new PartitionReceiverOptions();
+            var receiver = new ObservableConsumerPartitionReceiver("cg", "pid", EventPosition.Earliest, Mock.Of<EventHubConnection>());
+            var options = receiver.TransportConsumerCreatedWithOptions;
 
-            var policy = GetRetryPolicy(receiver);
-            Assert.That(policy, Is.Not.Null, "There should have been a retry policy set.");
-            Assert.That(policy, Is.InstanceOf<BasicRetryPolicy>(), "The default retry policy should be a basic policy.");
-
-            var actual = ((BasicRetryPolicy)policy).Options;
-            Assert.That(actual.IsEquivalentTo(expected), Is.True, "The default retry policy should be based on the default retry options.");
+            Assert.That(options.ConnectionOptions.TransportType, Is.EqualTo(defaultOptions.ConnectionOptions.TransportType), $"The constructor should have set the correct connection type.");
+            Assert.That(options.ConnectionOptions.Proxy, Is.EqualTo(defaultOptions.ConnectionOptions.Proxy), $"The constructor should have set the correct proxy.");
+            Assert.That(options.RetryOptions.IsEquivalentTo(defaultOptions.RetryOptions), Is.True, $"The retry options should be equivalent.");
+            Assert.That(options.DefaultMaximumReceiveWaitTime, Is.EqualTo(defaultOptions.DefaultMaximumReceiveWaitTime), "The constructor should have set the correct default maximum receive wait time.");
+            Assert.That(options.OwnerLevel, Is.EqualTo(defaultOptions.OwnerLevel), "The constructor should have set the correct owner level.");
+            Assert.That(options.PrefetchCount, Is.EqualTo(defaultOptions.PrefetchCount), "The constructor should have set the correct prefetch count.");
+            Assert.That(options.TrackLastEnqueuedEventProperties, Is.EqualTo(defaultOptions.TrackLastEnqueuedEventProperties), "The constructor should have set the correct track last enqueued event properties.");
         }
 
         /// <summary>
@@ -435,6 +444,43 @@ namespace Azure.Messaging.EventHubs.Tests
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection);
 
             Assert.That(receiver.EventHubName, Is.EqualTo(expected));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="PartitionReceiver.CreateTransportConsumer"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateTransportConsumerDelegatesToTheConnection()
+        {
+            var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var mockConnection = new Mock<EventHubConnection>(connectionString);
+            var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
+
+            var expectedConsumerGroup = "consumerGroup";
+            var expectedPartitionId = "partitionId";
+            var expectedPosition = EventPosition.FromOffset(55);
+            var expectedRetryPolicy = Mock.Of<EventHubsRetryPolicy>();
+            var expectedOptions = new PartitionReceiverOptions
+            {
+                OwnerLevel = 99,
+                PrefetchCount = 42,
+                TrackLastEnqueuedEventProperties = false
+            };
+
+            receiver.CreateTransportConsumer(expectedConsumerGroup, expectedPartitionId, expectedPosition, expectedRetryPolicy, expectedOptions);
+
+            mockConnection
+                .Verify(connection => connection.CreateTransportConsumer(
+                    expectedConsumerGroup,
+                    expectedPartitionId,
+                    expectedPosition,
+                    expectedRetryPolicy,
+                    expectedOptions.TrackLastEnqueuedEventProperties,
+                    expectedOptions.OwnerLevel,
+                    (uint?)expectedOptions.PrefetchCount),
+                Times.Once);
         }
 
         /// <summary>
@@ -674,7 +720,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Verify(consumer => consumer.CloseAsync(
-                    It.IsAny<CancellationToken>()),
+                    CancellationToken.None),
                 Times.Once);
         }
 
@@ -684,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task CloseAsyncSurfacesExceptionsForTheTransportConsumer()
+        public void CloseAsyncSurfacesExceptionsForTheTransportConsumer()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
@@ -711,19 +757,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(mockConsumer.Object);
 
             var receiver = new PartitionReceiver("cg", "pid", EventPosition.Earliest, mockConnection.Object);
-            var capturedException = default(Exception);
 
-            try
-            {
-                await receiver.CloseAsync(cancellationSource.Token);
-            }
-            catch (InsufficientMemoryException ex)
-            {
-                capturedException = ex;
-            }
-
+            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token), Throws.TypeOf(expectedException.GetType()).And.EqualTo(expectedException));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(capturedException, Is.EqualTo(expectedException));
+            Assert.That(receiver.IsClosed, Is.True, "The partition receiver should have been closed.");
         }
 
         /// <summary>
@@ -960,15 +997,29 @@ namespace Azure.Messaging.EventHubs.Tests
             public string TransportConsumerCreatedWithPartitionId { get; private set; }
             public EventPosition TransportConsumerCreatedWithEventPosition { get; private set; }
             public EventHubsRetryPolicy TransportConsumerCreatedWithRetryPolicy { get; private set; }
-            public bool TransportConsumerCreatedWithTrackLastEnqueuedEventProperties { get; private set; }
-            public long? TransportConsumerCreatedWithOwnerLevel { get; private set; }
-            public uint? TransportConsumerCreatedWithPrefetchCount { get; private set; }
+            public PartitionReceiverOptions TransportConsumerCreatedWithOptions { get; private set; }
+
+            public ObservableConsumerPartitionReceiver(string consumerGroup,
+                                                       string partitionId,
+                                                       EventPosition eventPosition,
+                                                       string connectionString) : base(consumerGroup, partitionId, eventPosition, connectionString)
+            {
+            }
 
             public ObservableConsumerPartitionReceiver(string consumerGroup,
                                                        string partitionId,
                                                        EventPosition eventPosition,
                                                        string connectionString,
-                                                       PartitionReceiverOptions options = default) : base(consumerGroup, partitionId, eventPosition, connectionString, options)
+                                                       PartitionReceiverOptions options) : base(consumerGroup, partitionId, eventPosition, connectionString, options)
+            {
+            }
+
+            public ObservableConsumerPartitionReceiver(string consumerGroup,
+                                                       string partitionId,
+                                                       EventPosition eventPosition,
+                                                       string fullyQualifiedNamespace,
+                                                       string eventHubName,
+                                                       TokenCredential credential) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential)
             {
             }
 
@@ -978,7 +1029,14 @@ namespace Azure.Messaging.EventHubs.Tests
                                                        string fullyQualifiedNamespace,
                                                        string eventHubName,
                                                        TokenCredential credential,
-                                                       PartitionReceiverOptions options = default) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential, options)
+                                                       PartitionReceiverOptions options) : base(consumerGroup, partitionId, eventPosition, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public ObservableConsumerPartitionReceiver(string consumerGroup,
+                                                       string partitionId,
+                                                       EventPosition eventPosition,
+                                                       EventHubConnection connection) : base(consumerGroup, partitionId, eventPosition, connection)
             {
             }
 
@@ -986,7 +1044,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                        string partitionId,
                                                        EventPosition eventPosition,
                                                        EventHubConnection connection,
-                                                       PartitionReceiverOptions options = default) : base(consumerGroup, partitionId, eventPosition, connection, options)
+                                                       PartitionReceiverOptions options) : base(consumerGroup, partitionId, eventPosition, connection, options)
             {
             }
 
@@ -994,19 +1052,15 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                         string partitionId,
                                                                         EventPosition eventPosition,
                                                                         EventHubsRetryPolicy retryPolicy,
-                                                                        bool trackLastEnqueuedEventProperties,
-                                                                        long? ownerLevel,
-                                                                        uint? prefetchCount)
+                                                                        PartitionReceiverOptions options)
             {
                 TransportConsumerCreatedWithConsumerGroup = consumerGroup;
                 TransportConsumerCreatedWithPartitionId = partitionId;
                 TransportConsumerCreatedWithEventPosition = eventPosition;
                 TransportConsumerCreatedWithRetryPolicy = retryPolicy;
-                TransportConsumerCreatedWithTrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
-                TransportConsumerCreatedWithOwnerLevel = ownerLevel;
-                TransportConsumerCreatedWithPrefetchCount = prefetchCount;
+                TransportConsumerCreatedWithOptions = options;
 
-                return base.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+                return base.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, options);
             }
         }
     }

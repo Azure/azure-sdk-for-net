@@ -653,7 +653,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             if (transportConsumerException != default)
             {
-                throw transportConsumerException;
+                ExceptionDispatchInfo.Capture(transportConsumerException).Throw();
             }
         }
 
