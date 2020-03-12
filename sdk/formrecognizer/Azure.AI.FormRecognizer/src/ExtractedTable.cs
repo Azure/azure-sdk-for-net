@@ -8,11 +8,11 @@ namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedTable
     {
-        internal ExtractedTable(DataTable_internal result, ReadResult_internal readResult)
+        internal ExtractedTable(DataTable_internal table, ReadResult_internal readResult)
         {
-            ColumnCount = result.Columns;
-            RowCount = result.Rows;
-            Cells = ConvertCells(result.Cells, readResult);
+            ColumnCount = table.Columns;
+            RowCount = table.Rows;
+            Cells = ConvertCells(table.Cells, readResult);
         }
 
         public IReadOnlyList<ExtractedTableCell> Cells { get; }

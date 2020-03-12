@@ -8,14 +8,14 @@ namespace Azure.AI.FormRecognizer.Models
     // Maps to FieldValue in swagger.
     public class ExtractedLabeledField
     {
-        internal ExtractedLabeledField(KeyValuePair<string, FieldValue_internal> field, ReadResult_internal readResult)
+        internal ExtractedLabeledField(KeyValuePair<string, FieldValue_internal> field, IList<ReadResult_internal> readResults)
         {
             // Supervised
             Confidence = field.Value.Confidence;
             Label = field.Key;
             Value = field.Value.Text;
             ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
-            RawExtractedItems = ExtractedField.ConvertTextReferences(readResult, field.Value.Elements);
+            RawExtractedItems = ExtractedField.ConvertTextReferences(readResults, field.Value.Elements);
 
             // TODO: Add strongly-typed value
             // https://github.com/Azure/azure-sdk-for-net/issues/10333

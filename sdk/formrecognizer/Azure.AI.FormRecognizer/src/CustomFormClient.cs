@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -183,8 +182,6 @@ namespace Azure.AI.FormRecognizer.Custom
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
         #endregion
-
-        // TODO: Add methods for labeled models
 
         #endregion Analyze
 

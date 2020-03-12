@@ -65,6 +65,16 @@ namespace Azure.AI.FormRecognizer.Models
             return extractedTexts;
         }
 
+        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(IList<ReadResult_internal> readResults, ICollection<string> references)
+        {
+            List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
+            foreach (var reference in references)
+            {
+                extractedTexts.Add(ResolveTextReference(readResults, reference));
+            }
+            return extractedTexts;
+        }
+
         //private const string SegmentReadResults = "readResults";
         //private const string SegmentLines = "lines";
         //private const string SegmentWords = "words";
@@ -127,6 +137,26 @@ namespace Azure.AI.FormRecognizer.Models
             //        }
             //    }
             //}
+        }
+
+        private static RawExtractedItem ResolveTextReference(IList<ReadResult_internal> readResults, string reference)
+        {
+            // TODO: Add additional validations here.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10363
+
+            // Example: the following should result in LineIndex = 7, WordIndex = 12
+            // "#/readResults/3/lines/7/words/12"
+            string[] segments = reference.Split('/');
+
+#pragma warning disable CA1305 // Specify IFormatProvider
+            var pageIndex = int.Parse(segments[2]);
+            var lineIndex = int.Parse(segments[4]);
+            var wordIndex = int.Parse(segments[6]);
+#pragma warning restore CA1305 // Specify IFormatProvider
+
+            // TODO: Support case where text reference is lines only, without word segment
+            // https://github.com/Azure/azure-sdk-for-net/issues/10364
+            return new RawExtractedWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex]);
         }
     }
 }

@@ -97,9 +97,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<ExtractedLabeledForm> forms = new List<ExtractedLabeledForm>();
             for (int i = 0; i < documentResults.Count; i++)
             {
-                // TODO: How do we know what pages in pageResults map to the pages in documents?
-                // Think about this in the morning.
-                forms.Add(new ExtractedLabeledForm(documentResults[i], pageResults[i], readResults[i]));
+                forms.Add(new ExtractedLabeledForm(documentResults[i], pageResults, readResults));
             }
             return forms;
         }
