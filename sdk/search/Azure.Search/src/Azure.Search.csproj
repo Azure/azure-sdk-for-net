@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search client library</AssemblyTitle>
-    <Version>1.0.0-preview.1</Version>
+    <Version>11.0.0-preview.1</Version>
     <Description>
-      Query and manage Azure Cognitive Search indexes.
+      This is the Azure Cognitive Search client library for developing .NET
+      applications with rich search experiences.  It enables you to query your
+      indexes, update documents in your indexes, and manage indexes, synonym
+      maps, indexers, data sources, or other service-level resources.
     </Description>
     <PackageTags>Azure Cognitive Search;Azure Search;Search;Cognitive;Search Engine;Azure</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

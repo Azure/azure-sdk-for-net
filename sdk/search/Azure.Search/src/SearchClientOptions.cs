@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -25,16 +26,17 @@ namespace Azure.Search
         {
             #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2019-05-06 version of the service that is Generally Available.
+            /// The 2019-05-06-Preview version of the Azure Cognitive Search
+            /// service.
             /// </summary>
-            V2019_05_06 = 1
+            V2019_05_06_Preview = 1
             #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_05_06;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_05_06_Preview;
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
@@ -92,10 +94,31 @@ namespace Azure.Search
         /// </summary>
         private void AddLoggingHeaders()
         {
-            Diagnostics.LoggedHeaderNames.Add("x-ms-version");
-            Diagnostics.LoggedHeaderNames.Add("OData-version");
+            Diagnostics.LoggedHeaderNames.Add("Accept");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Credentials");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Headers");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Methods");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Expose-Headers");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Max-Age");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Request-Headers");
+            Diagnostics.LoggedHeaderNames.Add("Access-Control-Request-Method");
+            Diagnostics.LoggedHeaderNames.Add("client-request-id");
+            Diagnostics.LoggedHeaderNames.Add("Content-Type");
             Diagnostics.LoggedHeaderNames.Add("elapsed-time");
-            // TODO: Add the rest...
+            Diagnostics.LoggedHeaderNames.Add("If-Match");
+            Diagnostics.LoggedHeaderNames.Add("If-None-Match");
+            Diagnostics.LoggedHeaderNames.Add("Location");
+            Diagnostics.LoggedHeaderNames.Add("OData-MaxVersion");
+            Diagnostics.LoggedHeaderNames.Add("OData-Version");
+            Diagnostics.LoggedHeaderNames.Add("Origin");
+            Diagnostics.LoggedHeaderNames.Add("Prefer");
+            Diagnostics.LoggedHeaderNames.Add("request-id");
+            Diagnostics.LoggedHeaderNames.Add("return-client-request-id");
+            Diagnostics.LoggedHeaderNames.Add("throttle-reason");
+            Diagnostics.LoggedHeaderNames.Add("User-Agent");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-client-request-id");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-return-client-request-id");
         }
 
         /// <summary>
@@ -106,7 +129,7 @@ namespace Azure.Search
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
-            // TODO: Add the rest...
+            Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }
 
@@ -131,7 +154,7 @@ namespace Azure.Search
         public static SearchClientOptions.ServiceVersion Validate(this SearchClientOptions.ServiceVersion version) =>
             version switch
             {
-                SearchClientOptions.ServiceVersion.V2019_05_06 => version,
+                SearchClientOptions.ServiceVersion.V2019_05_06_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -153,7 +176,7 @@ namespace Azure.Search
         public static string ToVersionString(this SearchClientOptions.ServiceVersion version) =>
             version switch
             {
-                SearchClientOptions.ServiceVersion.V2019_05_06 => "2019-05-06",
+                SearchClientOptions.ServiceVersion.V2019_05_06_Preview => "2019-05-06-Preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

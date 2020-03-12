@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Azure.Search
@@ -47,5 +48,25 @@ namespace Azure.Search
                 host.Substring(0, separator) :
                 null;
         }
+
+        /// <summary>
+        /// Join a collection of strings into a single comma separated string.
+        /// If the collection is null or empty, a null string will be returned.
+        /// </summary>
+        /// <param name="items">The items to join.</param>
+        /// <returns>The items joined together by commas.</returns>
+        public static string CommaSeparate(this ICollection<string> items) =>
+            items?.Count > 0 ? string.Join(",", items) : null;
+
+        /// <summary>
+        /// Split a collection of strings by commas.
+        /// </summary>
+        /// <param name="value">The value to split.</param>
+        /// <returns>A collection of individual values.</returns>
+        public static IList<string> CommaSplit(string value) =>
+            string.IsNullOrEmpty(value) ?
+                new List<string>() :
+                // TODO: XXXXX - Verify we don't need to worry about escaping
+                new List<string>(value.Split(','));
     }
 }

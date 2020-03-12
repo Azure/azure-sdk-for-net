@@ -35,11 +35,11 @@ directive:
 
         // Document operations
         "/docs/$count": $["/docs/$count"],
-        "/docs/search": $["/docs/search.post.search"],
+        "/docs/search.post.search": $["/docs/search.post.search"],
         "/docs('{key}')": $["/docs('{key}')"],
-        "/docs/suggest": $["/docs/search.post.suggest"],
+        "/docs/search.post.suggest": $["/docs/search.post.suggest"],
         "/docs/search.index": $["/docs/search.index"],
-        "/docs/autocomplete": $["/docs/search.post.autocomplete"]
+        "/docs/search.post.autocomplete": $["/docs/search.post.autocomplete"]
     };
 ```
 
@@ -50,6 +50,9 @@ directive:
   where: $.definitions
   transform: >
     return {
+        // General purpose
+        "SearchError": $["SearchError"],
+
         // Service Statistics models
         "ServiceStatistics": $["ServiceStatistics"],
         "ServiceCounters": $["ServiceCounters"],
@@ -94,69 +97,13 @@ directive:
 ## Swagger hacks
 These should eventually be fixed in the swagger files.
 
-### Switch to full URIs for Service operations
-``` yaml
-directive:
-- from: $(this-folder)/swagger/searchservice.json
-  where: $["x-ms-parameterized-host"]
-  transform: >
-    return {
-      "hostTemplate": "{endpoint}",
-      "useSchemePrefix": false,
-      "parameters": [
-        {
-          "name": "endpoint",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "format": "uri",
-          "x-ms-skip-url-encoding": true,
-          "description": "The URI endpoint of the search service.",
-          "x-ms-parameter-location": "client"
-        }
-      ]
-    };
-```
-
-### Switch to full URIs for Document operations
-``` yaml
-directive:
-- from: $(this-folder)/swagger/searchindex.json
-  where: $["x-ms-parameterized-host"]
-  transform: >
-    return {
-      "hostTemplate": "{endpoint}/indexes('{indexName}')",
-      "useSchemePrefix": false,
-      "parameters": [
-        {
-          "name": "endpoint",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "format": "uri",
-          "x-ms-skip-url-encoding": true,
-          "description": "The URI endpoint of the search service.",
-          "x-ms-parameter-location": "client"
-        },
-        {
-          "name": "indexName",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "x-ms-skip-url-encoding": false,
-          "description": "The name of the index.",
-          "x-ms-parameter-location": "client"
-        }
-      ]
-    };
-```
-
 ### Mark definitions as objects
 The modeler warns about all of these.
 ``` yaml
 directive:
 - from: swagger-document
   where:
+    - $.definitions.SearchError
     - $.definitions.ServiceStatistics
     - $.definitions.ServiceCounters
     - $.definitions.ServiceLimits
@@ -178,9 +125,25 @@ directive:
   transform: $.type = "object";
 ```
 
-### Add default responses
-TODO...
+### Make Loookup Document behave a little friendlier
+It's currently an empty object and adding Additional Properties will generate
+a more useful model.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/docs('{key}')"].get.responses["200"].schema
+  transform:  >
+    $.additionalProperties = true;
+```
 
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.
+
+### QueryType
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.QueryType['x-ms-enum']
+  transform: $.name = "SearchQueryType";
+```
