@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Reason value.")
         };
 
-        public static Reason ToReason(this string value) => value switch
+        public static Reason ToReason(this string value)
         {
-            "AccountNameInvalid" => Reason.AccountNameInvalid,
-            "AlreadyExists" => Reason.AlreadyExists,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Reason value.")
-        };
+            if (string.Equals(value, "AccountNameInvalid", StringComparison.InvariantCultureIgnoreCase)) return Reason.AccountNameInvalid;
+            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return Reason.AlreadyExists;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Reason value.");
+        }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccess value.")
         };
 
-        public static PublicAccess ToPublicAccess(this string value) => value switch
+        public static PublicAccess ToPublicAccess(this string value)
         {
-            "Container" => PublicAccess.Container,
-            "Blob" => PublicAccess.Blob,
-            "None" => PublicAccess.None,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccess value.")
-        };
+            if (string.Equals(value, "Container", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.Container;
+            if (string.Equals(value, "Blob", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.Blob;
+            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.None;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccess value.");
+        }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyPermission value.")
         };
 
-        public static KeyPermission ToKeyPermission(this string value) => value switch
+        public static KeyPermission ToKeyPermission(this string value)
         {
-            "Read" => KeyPermission.Read,
-            "Full" => KeyPermission.Full,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyPermission value.")
-        };
+            if (string.Equals(value, "Read", StringComparison.InvariantCultureIgnoreCase)) return KeyPermission.Read;
+            if (string.Equals(value, "Full", StringComparison.InvariantCultureIgnoreCase)) return KeyPermission.Full;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyPermission value.");
+        }
     }
 }

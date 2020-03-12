@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountExpand value.")
         };
 
-        public static StorageAccountExpand ToStorageAccountExpand(this string value) => value switch
+        public static StorageAccountExpand ToStorageAccountExpand(this string value)
         {
-            "geoReplicationStats" => StorageAccountExpand.GeoReplicationStats,
-            "blobRestoreStatus" => StorageAccountExpand.BlobRestoreStatus,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountExpand value.")
-        };
+            if (string.Equals(value, "geoReplicationStats", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountExpand.GeoReplicationStats;
+            if (string.Equals(value, "blobRestoreStatus", StringComparison.InvariantCultureIgnoreCase)) return StorageAccountExpand.BlobRestoreStatus;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountExpand value.");
+        }
     }
 }

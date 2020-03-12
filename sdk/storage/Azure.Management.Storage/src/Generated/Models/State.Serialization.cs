@@ -21,14 +21,14 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown State value.")
         };
 
-        public static State ToState(this string value) => value switch
+        public static State ToState(this string value)
         {
-            "provisioning" => State.Provisioning,
-            "deprovisioning" => State.Deprovisioning,
-            "succeeded" => State.Succeeded,
-            "failed" => State.Failed,
-            "networkSourceDeleted" => State.NetworkSourceDeleted,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown State value.")
-        };
+            if (string.Equals(value, "provisioning", StringComparison.InvariantCultureIgnoreCase)) return State.Provisioning;
+            if (string.Equals(value, "deprovisioning", StringComparison.InvariantCultureIgnoreCase)) return State.Deprovisioning;
+            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return State.Succeeded;
+            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return State.Failed;
+            if (string.Equals(value, "networkSourceDeleted", StringComparison.InvariantCultureIgnoreCase)) return State.NetworkSourceDeleted;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown State value.");
+        }
     }
 }

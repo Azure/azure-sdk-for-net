@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessTier value.")
         };
 
-        public static AccessTier ToAccessTier(this string value) => value switch
+        public static AccessTier ToAccessTier(this string value)
         {
-            "Hot" => AccessTier.Hot,
-            "Cool" => AccessTier.Cool,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessTier value.")
-        };
+            if (string.Equals(value, "Hot", StringComparison.InvariantCultureIgnoreCase)) return AccessTier.Hot;
+            if (string.Equals(value, "Cool", StringComparison.InvariantCultureIgnoreCase)) return AccessTier.Cool;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessTier value.");
+        }
     }
 }

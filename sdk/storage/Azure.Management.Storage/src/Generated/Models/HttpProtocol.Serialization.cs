@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HttpProtocol value.")
         };
 
-        public static HttpProtocol ToHttpProtocol(this string value) => value switch
+        public static HttpProtocol ToHttpProtocol(this string value)
         {
-            "https,http" => HttpProtocol.HttpsHttp,
-            "https" => HttpProtocol.Https,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HttpProtocol value.")
-        };
+            if (string.Equals(value, "https,http", StringComparison.InvariantCultureIgnoreCase)) return HttpProtocol.HttpsHttp;
+            if (string.Equals(value, "https", StringComparison.InvariantCultureIgnoreCase)) return HttpProtocol.Https;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HttpProtocol value.");
+        }
     }
 }

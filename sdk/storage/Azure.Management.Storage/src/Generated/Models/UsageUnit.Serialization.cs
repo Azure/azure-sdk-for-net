@@ -22,15 +22,15 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UsageUnit value.")
         };
 
-        public static UsageUnit ToUsageUnit(this string value) => value switch
+        public static UsageUnit ToUsageUnit(this string value)
         {
-            "Count" => UsageUnit.Count,
-            "Bytes" => UsageUnit.Bytes,
-            "Seconds" => UsageUnit.Seconds,
-            "Percent" => UsageUnit.Percent,
-            "CountsPerSecond" => UsageUnit.CountsPerSecond,
-            "BytesPerSecond" => UsageUnit.BytesPerSecond,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UsageUnit value.")
-        };
+            if (string.Equals(value, "Count", StringComparison.InvariantCultureIgnoreCase)) return UsageUnit.Count;
+            if (string.Equals(value, "Bytes", StringComparison.InvariantCultureIgnoreCase)) return UsageUnit.Bytes;
+            if (string.Equals(value, "Seconds", StringComparison.InvariantCultureIgnoreCase)) return UsageUnit.Seconds;
+            if (string.Equals(value, "Percent", StringComparison.InvariantCultureIgnoreCase)) return UsageUnit.Percent;
+            if (string.Equals(value, "CountsPerSecond", StringComparison.InvariantCultureIgnoreCase)) return UsageUnit.CountsPerSecond;
+            if (string.Equals(value, "BytesPerSecond", StringComparison.InvariantCultureIgnoreCase)) return UsageUnit.BytesPerSecond;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UsageUnit value.");
+        }
     }
 }

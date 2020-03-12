@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccountStatus value.")
         };
 
-        public static AccountStatus ToAccountStatus(this string value) => value switch
+        public static AccountStatus ToAccountStatus(this string value)
         {
-            "available" => AccountStatus.Available,
-            "unavailable" => AccountStatus.Unavailable,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccountStatus value.")
-        };
+            if (string.Equals(value, "available", StringComparison.InvariantCultureIgnoreCase)) return AccountStatus.Available;
+            if (string.Equals(value, "unavailable", StringComparison.InvariantCultureIgnoreCase)) return AccountStatus.Unavailable;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccountStatus value.");
+        }
     }
 }

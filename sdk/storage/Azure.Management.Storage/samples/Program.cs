@@ -37,19 +37,19 @@ namespace Azure.Management.Storage.Samples
                 lastKey = storageAccountKey;
             }
 
-            // TODO: This call succeeds but throws because server responds with 202 while the swagger only defines 200
-            // await storageAccountsClient.RegenerateKeyAsync(resourceGroupName, accountName, new StorageAccountRegenerateKeyParameters()
-            // {
-            //     KeyName = lastKey.Value
-            // });
+            await storageAccountsClient.RegenerateKeyAsync(resourceGroupName, accountName, new StorageAccountRegenerateKeyParameters()
+            {
+                KeyName = lastKey.KeyName
+            });
 
             account = await storageAccountsClient.UpdateAsync(resourceGroupName, accountName, new StorageAccountUpdateParameters()
             {
-                Encryption =
+                Encryption = new Encryption()
                 {
-                    Services =
+                    KeySource = KeySource.MicrosoftStorage,
+                    Services = new EncryptionServices()
                     {
-                        Blob =
+                        Blob = new EncryptionService()
                         {
                             Enabled = true
                         }
@@ -60,8 +60,8 @@ namespace Azure.Management.Storage.Samples
             Console.WriteLine($"Encryption:\n" +
                               $"Blob {account.Encryption.Services.Blob.Enabled}\n"+
                               $"File {account.Encryption.Services.File.Enabled}\n"+
-                              $"Queue {account.Encryption.Services.Queue.Enabled}\n"+
-                              $"Table {account.Encryption.Services.Table.Enabled}");
+                              $"Queue {account.Encryption.Services.Queue?.Enabled ?? false}\n"+
+                              $"Table {account.Encryption.Services.Table?.Enabled ?? false}");
 
             await storageAccountsClient.DeleteAsync(resourceGroupName, accountName);
         }

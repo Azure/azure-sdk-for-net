@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuTier value.")
         };
 
-        public static SkuTier ToSkuTier(this string value) => value switch
+        public static SkuTier ToSkuTier(this string value)
         {
-            "Standard" => SkuTier.Standard,
-            "Premium" => SkuTier.Premium,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuTier value.")
-        };
+            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return SkuTier.Standard;
+            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return SkuTier.Premium;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuTier value.");
+        }
     }
 }

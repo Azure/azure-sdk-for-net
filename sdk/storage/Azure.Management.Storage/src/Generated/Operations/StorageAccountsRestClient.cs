@@ -181,6 +181,7 @@ namespace Azure.Management.Storage
                 switch (message.Response.Status)
                 {
                     case 202:
+                    case 200:
                         return message.Response;
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -221,6 +222,7 @@ namespace Azure.Management.Storage
                 switch (message.Response.Status)
                 {
                     case 202:
+                    case 200:
                         return message.Response;
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1152,6 +1154,7 @@ namespace Azure.Management.Storage
                 switch (message.Response.Status)
                 {
                     case 202:
+                    case 200:
                         return message.Response;
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1187,6 +1190,7 @@ namespace Azure.Management.Storage
                 switch (message.Response.Status)
                 {
                     case 202:
+                    case 200:
                         return message.Response;
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1249,6 +1253,7 @@ namespace Azure.Management.Storage
                 switch (message.Response.Status)
                 {
                     case 202:
+                    case 200:
                         return message.Response;
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -1289,6 +1294,7 @@ namespace Azure.Management.Storage
                 switch (message.Response.Status)
                 {
                     case 202:
+                    case 200:
                         return message.Response;
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);

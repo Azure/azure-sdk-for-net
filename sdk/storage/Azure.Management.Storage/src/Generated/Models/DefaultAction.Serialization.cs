@@ -18,11 +18,11 @@ namespace Azure.Management.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DefaultAction value.")
         };
 
-        public static DefaultAction ToDefaultAction(this string value) => value switch
+        public static DefaultAction ToDefaultAction(this string value)
         {
-            "Allow" => DefaultAction.Allow,
-            "Deny" => DefaultAction.Deny,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DefaultAction value.")
-        };
+            if (string.Equals(value, "Allow", StringComparison.InvariantCultureIgnoreCase)) return DefaultAction.Allow;
+            if (string.Equals(value, "Deny", StringComparison.InvariantCultureIgnoreCase)) return DefaultAction.Deny;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DefaultAction value.");
+        }
     }
 }
