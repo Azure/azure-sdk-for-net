@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
 
     /// <summary>
-    /// Defines values for MigrationItemOperation.
+    /// Defines values for ProtectionHealth.
     /// </summary>
-    public static class MigrationItemOperation
+    public static class ProtectionHealth
     {
-        public const string DisableMigration = "DisableMigration";
-        public const string TestMigrate = "TestMigrate";
-        public const string TestMigrateCleanup = "TestMigrateCleanup";
-        public const string Migrate = "Migrate";
-        public const string StartResync = "StartResync";
+        public const string None = "None";
+        public const string Normal = "Normal";
+        public const string Warning = "Warning";
+        public const string Critical = "Critical";
     }
 }

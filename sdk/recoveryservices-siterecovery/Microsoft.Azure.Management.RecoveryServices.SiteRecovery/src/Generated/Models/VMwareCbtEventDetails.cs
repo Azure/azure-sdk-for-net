@@ -14,25 +14,39 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMwareCbt container creation input.
+    /// Event details for VMwareCbt provider.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VMwareCbt")]
-    public partial class VMwareCbtContainerCreationInput : ReplicationProviderSpecificContainerCreationInput
+    public partial class VMwareCbtEventDetails : EventProviderSpecificDetails
     {
         /// <summary>
-        /// Initializes a new instance of the VMwareCbtContainerCreationInput
-        /// class.
+        /// Initializes a new instance of the VMwareCbtEventDetails class.
         /// </summary>
-        public VMwareCbtContainerCreationInput()
+        public VMwareCbtEventDetails()
         {
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the VMwareCbtEventDetails class.
+        /// </summary>
+        /// <param name="migrationItemName">The migration item name.</param>
+        public VMwareCbtEventDetails(string migrationItemName = default(string))
+        {
+            MigrationItemName = migrationItemName;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the migration item name.
+        /// </summary>
+        [JsonProperty(PropertyName = "migrationItemName")]
+        public string MigrationItemName { get; private set; }
 
     }
 }

@@ -15,27 +15,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Test migrate cleanup input properties.
+    /// VMwareCbt specific resync input.
     /// </summary>
-    public partial class TestMigrateCleanupInputProperties
+    [Newtonsoft.Json.JsonObject("VMwareCbt")]
+    public partial class VMwareCbtResyncInput : ResyncProviderSpecificInput
     {
         /// <summary>
-        /// Initializes a new instance of the TestMigrateCleanupInputProperties
-        /// class.
+        /// Initializes a new instance of the VMwareCbtResyncInput class.
         /// </summary>
-        public TestMigrateCleanupInputProperties()
+        public VMwareCbtResyncInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TestMigrateCleanupInputProperties
-        /// class.
+        /// Initializes a new instance of the VMwareCbtResyncInput class.
         /// </summary>
-        /// <param name="comments">Test migrate cleanup comments.</param>
-        public TestMigrateCleanupInputProperties(string comments = default(string))
+        /// <param name="skipCbtReset">A value indicating whether CBT is to be
+        /// reset.</param>
+        public VMwareCbtResyncInput(string skipCbtReset)
         {
-            Comments = comments;
+            SkipCbtReset = skipCbtReset;
             CustomInit();
         }
 
@@ -45,10 +45,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets test migrate cleanup comments.
+        /// Gets or sets a value indicating whether CBT is to be reset.
         /// </summary>
-        [JsonProperty(PropertyName = "comments")]
-        public string Comments { get; set; }
+        [JsonProperty(PropertyName = "skipCbtReset")]
+        public string SkipCbtReset { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,12 +58,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Comments != null)
+            if (SkipCbtReset == null)
             {
-                if (Comments.Length > 1024)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Comments", 1024);
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "SkipCbtReset");
             }
         }
     }

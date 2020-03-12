@@ -10,20 +10,18 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// VMwareCbt container creation input.
+    /// Resync provider specific input.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("VMwareCbt")]
-    public partial class VMwareCbtContainerCreationInput : ReplicationProviderSpecificContainerCreationInput
+    public partial class ResyncProviderSpecificInput
     {
         /// <summary>
-        /// Initializes a new instance of the VMwareCbtContainerCreationInput
+        /// Initializes a new instance of the ResyncProviderSpecificInput
         /// class.
         /// </summary>
-        public VMwareCbtContainerCreationInput()
+        public ResyncProviderSpecificInput()
         {
             CustomInit();
         }

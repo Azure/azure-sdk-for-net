@@ -60,6 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="lastHeartbeat">The last heartbeat received from the
         /// source server.</param>
         /// <param name="processServerId">The process server Id.</param>
+        /// <param name="processServerName">The process server name.</param>
         /// <param name="multiVmGroupId">The multi vm group Id.</param>
         /// <param name="multiVmGroupName">The multi vm group name.</param>
         /// <param name="multiVmSyncStatus">A value indicating whether multi vm
@@ -122,7 +123,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="protectedManagedDisks">The list of protected managed
         /// disks.</param>
-        public InMageAzureV2ReplicationDetails(string infrastructureVmId = default(string), string vCenterInfrastructureId = default(string), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), int? resyncProgressPercentage = default(int?), long? rpoInSeconds = default(long?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), string ipAddress = default(string), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), string isAgentUpdateRequired = default(string), string isRebootAfterUpdateRequired = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), IList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default(IList<InMageAzureV2ProtectedDiskDetails>), string diskResized = default(string), string masterTargetId = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), string osType = default(string), string vhdName = default(string), string osDiskId = default(string), IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string discoveryType = default(string), string enableRdpOnTargetOption = default(string), IList<string> datastores = default(IList<string>), string targetVmId = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string useManagedDisks = default(string), string licenseType = default(string), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string), IList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = default(IList<InMageAzureV2ManagedDiskDetails>))
+        public InMageAzureV2ReplicationDetails(string infrastructureVmId = default(string), string vCenterInfrastructureId = default(string), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), int? resyncProgressPercentage = default(int?), long? rpoInSeconds = default(long?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), string ipAddress = default(string), string agentVersion = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?), string isAgentUpdateRequired = default(string), string isRebootAfterUpdateRequired = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string processServerName = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), IList<InMageAzureV2ProtectedDiskDetails> protectedDisks = default(IList<InMageAzureV2ProtectedDiskDetails>), string diskResized = default(string), string masterTargetId = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), string osType = default(string), string vhdName = default(string), string osDiskId = default(string), IList<AzureVmDiskDetails> azureVMDiskDetails = default(IList<AzureVmDiskDetails>), string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureStorageAccount = default(string), string recoveryAzureLogStorageAccountId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string discoveryType = default(string), string enableRdpOnTargetOption = default(string), IList<string> datastores = default(IList<string>), string targetVmId = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryAvailabilitySetId = default(string), string useManagedDisks = default(string), string licenseType = default(string), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string), IList<InMageAzureV2ManagedDiskDetails> protectedManagedDisks = default(IList<InMageAzureV2ManagedDiskDetails>))
         {
             InfrastructureVmId = infrastructureVmId;
             VCenterInfrastructureId = vCenterInfrastructureId;
@@ -141,6 +142,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             IsRebootAfterUpdateRequired = isRebootAfterUpdateRequired;
             LastHeartbeat = lastHeartbeat;
             ProcessServerId = processServerId;
+            ProcessServerName = processServerName;
             MultiVmGroupId = multiVmGroupId;
             MultiVmGroupName = multiVmGroupName;
             MultiVmSyncStatus = multiVmSyncStatus;
@@ -285,6 +287,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "processServerId")]
         public string ProcessServerId { get; set; }
+
+        /// <summary>
+        /// Gets the process server name.
+        /// </summary>
+        [JsonProperty(PropertyName = "processServerName")]
+        public string ProcessServerName { get; private set; }
 
         /// <summary>
         /// Gets or sets the multi vm group Id.
