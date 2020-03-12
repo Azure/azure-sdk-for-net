@@ -20,13 +20,13 @@ namespace Azure.AI.FormRecognizer.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FormContentType value.")
         };
 
-        public static FormContentType ToFormContentType(this string value) => value switch
+        public static FormContentType ToFormContentType(this string value)
         {
-            "application/pdf" => FormContentType.Pdf,
-            "image/jpeg" => FormContentType.Jpeg,
-            "image/png" => FormContentType.Png,
-            "image/tiff" => FormContentType.Tiff,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FormContentType value.")
-        };
+            if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Pdf;
+            if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Jpeg;
+            if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Png;
+            if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Tiff;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FormContentType value.");
+        }
     }
 }
