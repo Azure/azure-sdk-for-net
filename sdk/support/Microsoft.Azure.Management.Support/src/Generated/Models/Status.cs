@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Support.Models
 {
 
     /// <summary>
-    /// Defines values for SeverityLevel.
+    /// Defines values for Status.
     /// </summary>
-    public static class SeverityLevel
+    public static class Status
     {
-        public const string Minimal = "minimal";
-        public const string Moderate = "moderate";
-        public const string Critical = "critical";
-        public const string Highestcriticalimpact = "highestcriticalimpact";
+        public const string Open = "open";
+        public const string Closed = "closed";
     }
 }

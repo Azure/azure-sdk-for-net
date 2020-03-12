@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Support
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Support", "Communications", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "Operations", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "ProblemClassifications", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "Services", "2019-05-01-preview"),
-                new Tuple<string, string, string>("Support", "SupportTickets", "2019-05-01-preview"),
+                new Tuple<string, string, string>("Support", "Communications", "2020-04-01"),
+                new Tuple<string, string, string>("Support", "Operations", "2020-04-01"),
+                new Tuple<string, string, string>("Support", "ProblemClassifications", "2020-04-01"),
+                new Tuple<string, string, string>("Support", "Services", "2020-04-01"),
+                new Tuple<string, string, string>("Support", "SupportTickets", "2020-04-01"),
               }.AsEnumerable();
           }
       }
