@@ -52,15 +52,15 @@ namespace Azure.Identity
     public partial class DefaultAzureCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public DefaultAzureCredentialOptions() { }
-        public bool ExcludeAzureCliCredential { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool ExcludeEnvironmentCredential { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool ExcludeInteractiveBrowserCredential { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool ExcludeManagedIdentityCredential { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool ExcludeSharedTokenCacheCredential { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string InteractiveBrowserTenantId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string ManagedIdentityClientId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string SharedTokenCacheTenantId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string SharedTokenCacheUsername { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool ExcludeAzureCliCredential { get { throw null; } set { } }
+        public bool ExcludeEnvironmentCredential { get { throw null; } set { } }
+        public bool ExcludeInteractiveBrowserCredential { get { throw null; } set { } }
+        public bool ExcludeManagedIdentityCredential { get { throw null; } set { } }
+        public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
+        public string InteractiveBrowserTenantId { get { throw null; } set { } }
+        public string ManagedIdentityClientId { get { throw null; } set { } }
+        public string SharedTokenCacheTenantId { get { throw null; } set { } }
+        public string SharedTokenCacheUsername { get { throw null; } set { } }
     }
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
@@ -75,13 +75,13 @@ namespace Azure.Identity
     {
         private object _dummy;
         private int _dummyPrimitive;
-        public string ClientId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string DeviceCode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Message { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IReadOnlyCollection<string> Scopes { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string UserCode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Uri VerificationUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string ClientId { get { throw null; } }
+        public string DeviceCode { get { throw null; } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<string> Scopes { get { throw null; } }
+        public string UserCode { get { throw null; } }
+        public System.Uri VerificationUri { get { throw null; } }
     }
     public partial class EnvironmentCredential : Azure.Core.TokenCredential
     {
@@ -123,13 +123,13 @@ namespace Azure.Identity
     public partial class SharedTokenCacheCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public SharedTokenCacheCredentialOptions() { }
-        public string TenantId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public string Username { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
     }
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
-        public System.Uri AuthorityHost { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.Uri AuthorityHost { get { throw null; } set { } }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {

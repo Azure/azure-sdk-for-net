@@ -565,6 +565,12 @@ namespace Azure.Messaging.EventHubs.Producer
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            if (IsClosed)
+            {
+                return;
+            }
+
             IsClosed = true;
 
             var identifier = GetHashCode().ToString();

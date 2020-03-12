@@ -69,17 +69,17 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Pageable<ModelInfo> GetCustomModelsPageableModelInfo(GetModelOptions? op, CancellationToken cancellationToken = default)
+        public Pageable<CustomModelInfo> GetCustomModelsPageableModelInfo(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
-            Page<ModelInfo> FirstPageFunc(int? pageSizeHint)
+            Page<CustomModelInfo> FirstPageFunc(int? pageSizeHint)
             {
                 var response =  RestClient.GetCustomModels(op, cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
-            Page<ModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CustomModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = RestClient.GetCustomModelsNextPage(nextLink, cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
@@ -87,18 +87,18 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public AsyncPageable<ModelInfo> GetCustomModelsPageableModelInfoAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
+        public AsyncPageable<CustomModelInfo> GetCustomModelsPageableModelInfoAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
-            async Task<Page<ModelInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CustomModelInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 var response = await RestClient.GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
-            async Task<Page<ModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CustomModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = await RestClient.GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new ModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
@@ -106,31 +106,6 @@ namespace Azure.AI.FormRecognizer
         #endregion Custom
 
         #region Receipt
-
-        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
-        {
-
-            using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeReceiptAsync");
-            scope.Start();
-            try
-            {
-                using var message = RestClient.CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
-                    default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
