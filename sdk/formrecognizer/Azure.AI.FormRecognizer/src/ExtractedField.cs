@@ -6,22 +6,23 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    // Maps to KeyValuePair
     public class ExtractedField
     {
         internal ExtractedField(KeyValuePair_internal field, ReadResult_internal readResult)
         {
-            // Unsupervised
             Confidence = field.Confidence;
-            Label = field.Key.Text;
 
-            LabelBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
+            Name = field.Key.Text;
+            NameBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
+
             if (field.Key.Elements != null)
             {
-                LabelRawExtractedItems = ConvertTextReferences(readResult, field.Key.Elements);
+                NameRawExtractedItems = ConvertTextReferences(readResult, field.Key.Elements);
             }
 
             Value = field.Value.Text;
-            ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
+            ValueBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Value.BoundingBox);
 
             if (field.Value.Elements != null)
             {
@@ -29,29 +30,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        internal ExtractedField(KeyValuePair<string, FieldValue_internal> field)
-        {
-            // Supervised
-            Confidence = field.Value.Confidence;
-            Label = field.Key;
-            Value = field.Value.Text;
-            ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
-        }
+        public float Confidence { get; internal set; }
 
-        // TODO: Why can this be nullable on FieldValue.Confidence?
-        // https://github.com/Azure/azure-sdk-for-net/issues/10378
-        public float? Confidence { get; internal set; }
-        public string Label { get; internal set; }
+        public string Name { get; internal set; }
 
-        // TODO: Make this nullable to indicate that this is an optional field.
-        // https://github.com/Azure/azure-sdk-for-net/issues/10361
-        // Not currently supported for Track2 libraries.
-        public BoundingBox LabelBoundingBox { get; internal set; }
+        public BoundingBox NameBoundingBox { get; internal set; }
+
+        public IReadOnlyList<RawExtractedItem> NameRawExtractedItems { get; internal set; }
 
         public string Value { get; internal set; }
+
         public BoundingBox ValueBoundingBox { get; internal set; }
 
-        public IReadOnlyList<RawExtractedItem> LabelRawExtractedItems { get; internal set; }
         public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
 
         // TODO: Refactor to move OCR code to a common file, rather than it living in this file.

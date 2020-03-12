@@ -12,10 +12,15 @@ namespace Azure.AI.FormRecognizer.Models
         {
             // Supervised
             Confidence = field.Value.Confidence;
+            PageNumber = field.Value.Page;
             Label = field.Key;
             Value = field.Value.Text;
             ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
-            RawExtractedItems = ExtractedField.ConvertTextReferences(readResults, field.Value.Elements);
+
+            if (field.Value.Elements != null)
+            {
+                RawExtractedItems = ExtractedField.ConvertTextReferences(readResults, field.Value.Elements);
+            }
 
             // TODO: Add strongly-typed value
             // https://github.com/Azure/azure-sdk-for-net/issues/10333
@@ -24,6 +29,8 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: Why can this be nullable on FieldValue.Confidence?
         // https://github.com/Azure/azure-sdk-for-net/issues/10378
         public float? Confidence { get; internal set; }
+
+        public int? PageNumber { get; internal set; }
 
         public string Label { get; internal set; }
 

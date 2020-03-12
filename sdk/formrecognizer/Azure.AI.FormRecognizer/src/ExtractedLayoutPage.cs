@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 foreach (var table in pageResult.Tables)
                 {
-                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page], pageResult.Page));
+                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page - 1], pageResult.Page));
                 }
             }
 

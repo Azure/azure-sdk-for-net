@@ -143,10 +143,10 @@ namespace Azure.AI.FormRecognizer.Models
     public partial class ExtractedField
     {
         internal ExtractedField() { }
-        public float? Confidence { get { throw null; } }
-        public string Label { get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.BoundingBox LabelBoundingBox { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedItem> LabelRawExtractedItems { get { throw null; } }
+        public float Confidence { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.BoundingBox NameBoundingBox { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedItem> NameRawExtractedItems { get { throw null; } }
         public string Value { get { throw null; } }
         public Azure.AI.FormRecognizer.Models.BoundingBox ValueBoundingBox { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedItem> ValueRawExtractedItems { get { throw null; } }
@@ -156,6 +156,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal ExtractedLabeledField() { }
         public float? Confidence { get { throw null; } }
         public string Label { get { throw null; } }
+        public int? PageNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedItem> RawExtractedItems { get { throw null; } }
         public string Value { get { throw null; } }
         public Azure.AI.FormRecognizer.Models.BoundingBox ValueBoundingBox { get { throw null; } }
@@ -168,15 +169,7 @@ namespace Azure.AI.FormRecognizer.Models
         public string FormType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedPage> RawExtractedPages { get { throw null; } }
         public int StartPageNumber { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedTable> Tables { get { throw null; } }
-    }
-    public partial class ExtractedLabeledPage
-    {
-        internal ExtractedLabeledPage() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedField> Fields { get { throw null; } }
-        public int PageNumber { get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.RawExtractedPage RawExtractedPage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedTable> Tables { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.ExtractedLabeledTable> Tables { get { throw null; } }
     }
     public partial class ExtractedLayoutPage
     {

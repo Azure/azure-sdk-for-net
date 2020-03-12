@@ -24,7 +24,6 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResults != null)
             {
-                //RawExtractedPage = new RawExtractedPage(readResult);
                 RawExtractedPages = ConvertRawPages(readResults);
             }
         }
@@ -37,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         public IReadOnlyList<ExtractedLabeledField> Fields { get; }
 
-        public IReadOnlyList<ExtractedTable> Tables { get; }
+        public IReadOnlyList<ExtractedLabeledTable> Tables { get; }
 
         public IReadOnlyList<RawExtractedPage> RawExtractedPages { get; }
 

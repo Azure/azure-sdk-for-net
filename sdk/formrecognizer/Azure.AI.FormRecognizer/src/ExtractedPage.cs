@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    // Maps to PageResult
     public class ExtractedPage
     {
         // Unsupervised
