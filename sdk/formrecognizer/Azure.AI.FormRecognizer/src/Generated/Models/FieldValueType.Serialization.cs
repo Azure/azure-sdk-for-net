@@ -24,17 +24,17 @@ namespace Azure.AI.FormRecognizer.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
         };
 
-        public static FieldValueType ToFieldValueType(this string value) => value switch
+        public static FieldValueType ToFieldValueType(this string value)
         {
-            "string" => FieldValueType.String,
-            "date" => FieldValueType.Date,
-            "time" => FieldValueType.Time,
-            "phoneNumber" => FieldValueType.PhoneNumber,
-            "number" => FieldValueType.Number,
-            "integer" => FieldValueType.Integer,
-            "array" => FieldValueType.Array,
-            "object" => FieldValueType.Object,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
-        };
+            if (string.Equals(value, "string", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.String;
+            if (string.Equals(value, "date", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Date;
+            if (string.Equals(value, "time", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Time;
+            if (string.Equals(value, "phoneNumber", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.PhoneNumber;
+            if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Number;
+            if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Integer;
+            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Array;
+            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Object;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
+        }
     }
 }
