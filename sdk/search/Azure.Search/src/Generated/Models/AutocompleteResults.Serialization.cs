@@ -10,11 +10,16 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class IndexDocumentsResult : IUtf8JsonSerializable
+    public partial class AutocompleteResults : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Coverage != null)
+            {
+                writer.WritePropertyName("@search.coverage");
+                writer.WriteNumberValue(Coverage.Value);
+            }
             writer.WritePropertyName("value");
             writer.WriteStartArray();
             foreach (var item in Results)
@@ -24,16 +29,25 @@ namespace Azure.Search.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        internal static IndexDocumentsResult DeserializeIndexDocumentsResult(JsonElement element)
+        internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
         {
-            IndexDocumentsResult result = new IndexDocumentsResult();
+            AutocompleteResults result = new AutocompleteResults();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("@search.coverage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result.Coverage = property.Value.GetDouble();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Results.Add(IndexingResult.DeserializeIndexingResult(item));
+                        result.Results.Add(Autocompletion.DeserializeAutocompletion(item));
                     }
                     continue;
                 }

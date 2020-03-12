@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Models
 {
     /// <summary> Contains a batch of document write actions to send to the index. </summary>
-    public partial class IndexBatch
+    internal partial class IndexBatch
     {
         /// <summary> The actions in the batch. </summary>
         public IList<IndexAction> Actions { get; set; } = new List<IndexAction>();

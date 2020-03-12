@@ -11,21 +11,23 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class AutocompleteResult : IUtf8JsonSerializable
+    internal partial class SearchError : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Coverage != null)
+            if (Code != null)
             {
-                writer.WritePropertyName("@search.coverage");
-                writer.WriteNumberValue(Coverage.Value);
+                writer.WritePropertyName("code");
+                writer.WriteStringValue(Code);
             }
-            if (Results != null)
+            writer.WritePropertyName("message");
+            writer.WriteStringValue(Message);
+            if (Details != null)
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("details");
                 writer.WriteStartArray();
-                foreach (var item in Results)
+                foreach (var item in Details)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -33,30 +35,35 @@ namespace Azure.Search.Models
             }
             writer.WriteEndObject();
         }
-        internal static AutocompleteResult DeserializeAutocompleteResult(JsonElement element)
+        internal static SearchError DeserializeSearchError(JsonElement element)
         {
-            AutocompleteResult result = new AutocompleteResult();
+            SearchError result = new SearchError();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@search.coverage"))
+                if (property.NameEquals("code"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    result.Coverage = property.Value.GetDouble();
+                    result.Code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("message"))
+                {
+                    result.Message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("details"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    result.Results = new List<AutocompleteItem>();
+                    result.Details = new List<SearchError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Results.Add(AutocompleteItem.DeserializeAutocompleteItem(item));
+                        result.Details.Add(SearchError.DeserializeSearchError(item));
                     }
                     continue;
                 }

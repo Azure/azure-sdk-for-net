@@ -8,7 +8,7 @@
 namespace Azure.Search.Models
 {
     /// <summary> The result of Autocomplete requests. </summary>
-    public partial class AutocompleteItem
+    public partial class Autocompletion
     {
         /// <summary> The completed term. </summary>
         public string Text { get; internal set; }

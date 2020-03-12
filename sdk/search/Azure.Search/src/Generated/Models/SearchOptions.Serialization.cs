@@ -9,17 +9,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Models
+namespace Azure.Search
 {
-    public partial class SearchRequest : IUtf8JsonSerializable
+    public partial class SearchOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IncludeTotalResultCount != null)
+            if (IncludeTotalCount != null)
             {
                 writer.WritePropertyName("count");
-                writer.WriteBooleanValue(IncludeTotalResultCount.Value);
+                writer.WriteBooleanValue(IncludeTotalCount.Value);
             }
             if (Facets != null)
             {
@@ -36,10 +36,10 @@ namespace Azure.Search.Models
                 writer.WritePropertyName("filter");
                 writer.WriteStringValue(Filter);
             }
-            if (HighlightFields != null)
+            if (HighlightFieldsRaw != null)
             {
                 writer.WritePropertyName("highlight");
-                writer.WriteStringValue(HighlightFields);
+                writer.WriteStringValue(HighlightFieldsRaw);
             }
             if (HighlightPostTag != null)
             {
@@ -56,10 +56,10 @@ namespace Azure.Search.Models
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (OrderBy != null)
+            if (OrderByRaw != null)
             {
                 writer.WritePropertyName("orderby");
-                writer.WriteStringValue(OrderBy);
+                writer.WriteStringValue(OrderByRaw);
             }
             if (QueryType != null)
             {
@@ -86,36 +86,36 @@ namespace Azure.Search.Models
                 writer.WritePropertyName("search");
                 writer.WriteStringValue(SearchText);
             }
-            if (SearchFields != null)
+            if (SearchFieldsRaw != null)
             {
                 writer.WritePropertyName("searchFields");
-                writer.WriteStringValue(SearchFields);
+                writer.WriteStringValue(SearchFieldsRaw);
             }
             if (SearchMode != null)
             {
                 writer.WritePropertyName("searchMode");
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
-            if (Select != null)
+            if (SelectRaw != null)
             {
                 writer.WritePropertyName("select");
-                writer.WriteStringValue(Select);
+                writer.WriteStringValue(SelectRaw);
             }
             if (Skip != null)
             {
                 writer.WritePropertyName("skip");
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (Top != null)
+            if (Size != null)
             {
                 writer.WritePropertyName("top");
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
         }
-        internal static SearchRequest DeserializeSearchRequest(JsonElement element)
+        internal static SearchOptions DeserializeSearchOptions(JsonElement element)
         {
-            SearchRequest result = new SearchRequest();
+            SearchOptions result = new SearchOptions();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -124,7 +124,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.IncludeTotalResultCount = property.Value.GetBoolean();
+                    result.IncludeTotalCount = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("facets"))
@@ -155,7 +155,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.HighlightFields = property.Value.GetString();
+                    result.HighlightFieldsRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("highlightPostTag"))
@@ -191,7 +191,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.OrderBy = property.Value.GetString();
+                    result.OrderByRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queryType"))
@@ -200,7 +200,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.QueryType = property.Value.GetString().ToQueryType();
+                    result.QueryType = property.Value.GetString().ToSearchQueryType();
                     continue;
                 }
                 if (property.NameEquals("scoringParameters"))
@@ -240,7 +240,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.SearchFields = property.Value.GetString();
+                    result.SearchFieldsRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("searchMode"))
@@ -258,7 +258,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.Select = property.Value.GetString();
+                    result.SelectRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skip"))
@@ -276,7 +276,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.Top = property.Value.GetInt32();
+                    result.Size = property.Value.GetInt32();
                     continue;
                 }
             }

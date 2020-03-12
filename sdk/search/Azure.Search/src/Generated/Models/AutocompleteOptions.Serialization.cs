@@ -8,22 +8,19 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Models
+namespace Azure.Search
 {
-    public partial class AutocompleteRequest : IUtf8JsonSerializable
+    public partial class AutocompleteOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SearchText != null)
-            {
-                writer.WritePropertyName("search");
-                writer.WriteStringValue(SearchText);
-            }
-            if (AutocompleteMode != null)
+            writer.WritePropertyName("search");
+            writer.WriteStringValue(SearchText);
+            if (Mode != null)
             {
                 writer.WritePropertyName("autocompleteMode");
-                writer.WriteStringValue(AutocompleteMode.Value.ToSerialString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Filter != null)
             {
@@ -50,34 +47,27 @@ namespace Azure.Search.Models
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (SearchFields != null)
+            if (SearchFieldsRaw != null)
             {
                 writer.WritePropertyName("searchFields");
-                writer.WriteStringValue(SearchFields);
+                writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (SuggesterName != null)
-            {
-                writer.WritePropertyName("suggesterName");
-                writer.WriteStringValue(SuggesterName);
-            }
-            if (Top != null)
+            writer.WritePropertyName("suggesterName");
+            writer.WriteStringValue(SuggesterName);
+            if (Size != null)
             {
                 writer.WritePropertyName("top");
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
         }
-        internal static AutocompleteRequest DeserializeAutocompleteRequest(JsonElement element)
+        internal static AutocompleteOptions DeserializeAutocompleteOptions(JsonElement element)
         {
-            AutocompleteRequest result = new AutocompleteRequest();
+            AutocompleteOptions result = new AutocompleteOptions();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("search"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.SearchText = property.Value.GetString();
                     continue;
                 }
@@ -87,7 +77,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.AutocompleteMode = property.Value.GetString().ToAutocompleteMode();
+                    result.Mode = property.Value.GetString().ToAutocompleteMode();
                     continue;
                 }
                 if (property.NameEquals("filter"))
@@ -141,15 +131,11 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.SearchFields = property.Value.GetString();
+                    result.SearchFieldsRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("suggesterName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.SuggesterName = property.Value.GetString();
                     continue;
                 }
@@ -159,7 +145,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.Top = property.Value.GetInt32();
+                    result.Size = property.Value.GetInt32();
                     continue;
                 }
             }

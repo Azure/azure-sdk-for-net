@@ -11,7 +11,7 @@ namespace Azure.Search.Models
     public partial class SearchResourceCounter
     {
         /// <summary> The resource usage amount. </summary>
-        public long? Usage { get; set; }
+        public long Usage { get; set; }
         /// <summary> The resource amount quota. </summary>
         public long? Quota { get; set; }
     }

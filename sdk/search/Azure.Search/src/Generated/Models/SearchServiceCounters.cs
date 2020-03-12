@@ -11,16 +11,18 @@ namespace Azure.Search.Models
     public partial class SearchServiceCounters
     {
         /// <summary> Total number of documents across all indexes in the service. </summary>
-        public SearchResourceCounter DocumentCounter { get; set; }
+        public SearchResourceCounter DocumentCounter { get; set; } = new SearchResourceCounter();
         /// <summary> Total number of indexes. </summary>
-        public SearchResourceCounter IndexCounter { get; set; }
+        public SearchResourceCounter IndexCounter { get; set; } = new SearchResourceCounter();
         /// <summary> Total number of indexers. </summary>
-        public SearchResourceCounter IndexerCounter { get; set; }
+        public SearchResourceCounter IndexerCounter { get; set; } = new SearchResourceCounter();
         /// <summary> Total number of data sources. </summary>
-        public SearchResourceCounter DataSourceCounter { get; set; }
+        public SearchResourceCounter DataSourceCounter { get; set; } = new SearchResourceCounter();
         /// <summary> Total size of used storage in bytes. </summary>
-        public SearchResourceCounter StorageSizeCounter { get; set; }
+        public SearchResourceCounter StorageSizeCounter { get; set; } = new SearchResourceCounter();
         /// <summary> Total number of synonym maps. </summary>
-        public SearchResourceCounter SynonymMapCounter { get; set; }
+        public SearchResourceCounter SynonymMapCounter { get; set; } = new SearchResourceCounter();
+        /// <summary> Total number of skillsets. </summary>
+        public SearchResourceCounter SkillsetCounter { get; set; } = new SearchResourceCounter();
     }
 }

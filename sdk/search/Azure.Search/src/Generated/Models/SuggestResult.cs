@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Models
 {
     /// <summary> A result containing a document found by a suggestion query, plus associated metadata. </summary>
-    public partial class SuggestResult : IDictionary<string, object>
+    internal partial class SuggestResult : IDictionary<string, object>
     {
         /// <summary> The text of the suggestion result. </summary>
         public string Text { get; internal set; }

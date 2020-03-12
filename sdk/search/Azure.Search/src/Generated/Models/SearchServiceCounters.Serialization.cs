@@ -15,36 +15,20 @@ namespace Azure.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DocumentCounter != null)
-            {
-                writer.WritePropertyName("documentCount");
-                writer.WriteObjectValue(DocumentCounter);
-            }
-            if (IndexCounter != null)
-            {
-                writer.WritePropertyName("indexesCount");
-                writer.WriteObjectValue(IndexCounter);
-            }
-            if (IndexerCounter != null)
-            {
-                writer.WritePropertyName("indexersCount");
-                writer.WriteObjectValue(IndexerCounter);
-            }
-            if (DataSourceCounter != null)
-            {
-                writer.WritePropertyName("dataSourcesCount");
-                writer.WriteObjectValue(DataSourceCounter);
-            }
-            if (StorageSizeCounter != null)
-            {
-                writer.WritePropertyName("storageSize");
-                writer.WriteObjectValue(StorageSizeCounter);
-            }
-            if (SynonymMapCounter != null)
-            {
-                writer.WritePropertyName("synonymMaps");
-                writer.WriteObjectValue(SynonymMapCounter);
-            }
+            writer.WritePropertyName("documentCount");
+            writer.WriteObjectValue(DocumentCounter);
+            writer.WritePropertyName("indexesCount");
+            writer.WriteObjectValue(IndexCounter);
+            writer.WritePropertyName("indexersCount");
+            writer.WriteObjectValue(IndexerCounter);
+            writer.WritePropertyName("dataSourcesCount");
+            writer.WriteObjectValue(DataSourceCounter);
+            writer.WritePropertyName("storageSize");
+            writer.WriteObjectValue(StorageSizeCounter);
+            writer.WritePropertyName("synonymMaps");
+            writer.WriteObjectValue(SynonymMapCounter);
+            writer.WritePropertyName("skillsetCount");
+            writer.WriteObjectValue(SkillsetCounter);
             writer.WriteEndObject();
         }
         internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element)
@@ -54,56 +38,37 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("documentCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.DocumentCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("indexesCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.IndexCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("indexersCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.IndexerCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourcesCount"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.DataSourceCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageSize"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.StorageSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.SynonymMapCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("skillsetCount"))
+                {
+                    result.SkillsetCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
             }

@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Models
+namespace Azure.Search
 {
-    public partial class SuggestRequest : IUtf8JsonSerializable
+    public partial class SuggestOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,41 +40,35 @@ namespace Azure.Search.Models
                 writer.WritePropertyName("minimumCoverage");
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
-            if (OrderBy != null)
+            if (OrderByRaw != null)
             {
                 writer.WritePropertyName("orderby");
-                writer.WriteStringValue(OrderBy);
+                writer.WriteStringValue(OrderByRaw);
             }
-            if (SearchText != null)
-            {
-                writer.WritePropertyName("search");
-                writer.WriteStringValue(SearchText);
-            }
-            if (SearchFields != null)
+            writer.WritePropertyName("search");
+            writer.WriteStringValue(SearchText);
+            if (SearchFieldsRaw != null)
             {
                 writer.WritePropertyName("searchFields");
-                writer.WriteStringValue(SearchFields);
+                writer.WriteStringValue(SearchFieldsRaw);
             }
-            if (Select != null)
+            if (SelectRaw != null)
             {
                 writer.WritePropertyName("select");
-                writer.WriteStringValue(Select);
+                writer.WriteStringValue(SelectRaw);
             }
-            if (SuggesterName != null)
-            {
-                writer.WritePropertyName("suggesterName");
-                writer.WriteStringValue(SuggesterName);
-            }
-            if (Top != null)
+            writer.WritePropertyName("suggesterName");
+            writer.WriteStringValue(SuggesterName);
+            if (Size != null)
             {
                 writer.WritePropertyName("top");
-                writer.WriteNumberValue(Top.Value);
+                writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
         }
-        internal static SuggestRequest DeserializeSuggestRequest(JsonElement element)
+        internal static SuggestOptions DeserializeSuggestOptions(JsonElement element)
         {
-            SuggestRequest result = new SuggestRequest();
+            SuggestOptions result = new SuggestOptions();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filter"))
@@ -128,15 +122,11 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.OrderBy = property.Value.GetString();
+                    result.OrderByRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("search"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.SearchText = property.Value.GetString();
                     continue;
                 }
@@ -146,7 +136,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.SearchFields = property.Value.GetString();
+                    result.SearchFieldsRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("select"))
@@ -155,15 +145,11 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.Select = property.Value.GetString();
+                    result.SelectRaw = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("suggesterName"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.SuggesterName = property.Value.GetString();
                     continue;
                 }
@@ -173,7 +159,7 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.Top = property.Value.GetInt32();
+                    result.Size = property.Value.GetInt32();
                     continue;
                 }
             }

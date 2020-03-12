@@ -15,11 +15,8 @@ namespace Azure.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Usage != null)
-            {
-                writer.WritePropertyName("usage");
-                writer.WriteNumberValue(Usage.Value);
-            }
+            writer.WritePropertyName("usage");
+            writer.WriteNumberValue(Usage);
             if (Quota != null)
             {
                 writer.WritePropertyName("quota");
@@ -34,10 +31,6 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("usage"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Usage = property.Value.GetInt64();
                     continue;
                 }
