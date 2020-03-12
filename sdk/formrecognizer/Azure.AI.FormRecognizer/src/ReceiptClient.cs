@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken).ConfigureAwait(false);
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
