@@ -6,23 +6,36 @@ jobs:
 
     strategy:
       matrix:
-        Linux:
+        Linux (Public):
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
+          CloudType: public
+        Windows_NetCoreApp (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetFramework:
+          CloudType: public
+        Windows_NetFramework (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-        MacOs:
+          CloudType: public
+        MacOs (Public):
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-
+          CloudType: public
+        Windows_NetCoreApp (Gov):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: gov
+        Windows_NetFramework (Gov):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: gov
     pool:
       vmImage: $(OSVmImage)
 
