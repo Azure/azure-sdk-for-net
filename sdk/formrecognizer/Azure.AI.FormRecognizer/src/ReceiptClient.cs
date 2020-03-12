@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        public virtual Operation<IReadOnlyList<ExtractedReceipt>> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -53,14 +53,14 @@ namespace Azure.AI.FormRecognizer
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual Operation<IReadOnlyList<ExtractedReceipt>> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);

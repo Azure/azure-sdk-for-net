@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     public class ExtractedLabeledTable : ExtractedTable
     {

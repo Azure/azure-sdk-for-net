@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayout(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -61,14 +61,14 @@ namespace Azure.AI.FormRecognizer
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayout(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);

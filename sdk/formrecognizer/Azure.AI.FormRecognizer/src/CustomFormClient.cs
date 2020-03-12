@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Custom
         #region Analyze
 
         #region Unsupervised
-        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractPages(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -128,14 +128,14 @@ namespace Azure.AI.FormRecognizer.Custom
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractPages(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractPagesAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -143,7 +143,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractPagesAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
