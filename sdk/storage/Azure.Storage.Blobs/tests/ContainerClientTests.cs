@@ -52,6 +52,43 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
+        public void Ctor_ConnectionString_ReferenceDevelopmentStorage()
+        {
+            // From https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var connectionString = @"DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;";
+
+            var containerName = "containername";
+
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(connectionString, containerName));
+
+            var builder = new BlobUriBuilder(container.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual("", builder.BlobName);
+            Assert.AreEqual("devstoreaccount1", builder.AccountName);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
+        public void Ctor_ConnectionString_ReferenceDevelopmentStorage_WithHostname()
+        {
+            // From https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            // but with hostnames instead of IP's in endpoint specification
+            var connectionString = @"DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;TableEndpoint=http://host.docker.internal:10002/devstoreaccount1;QueueEndpoint=http://host.docker.internal:10001/devstoreaccount1;";
+
+            var containerName = "containername";
+
+            BlobContainerClient container = InstrumentClient(new BlobContainerClient(connectionString, containerName));
+
+            var builder = new BlobUriBuilder(container.Uri);
+
+            Assert.AreEqual(containerName, builder.BlobContainerName);
+            Assert.AreEqual("", builder.BlobName);
+            Assert.AreEqual("devstoreaccount1", builder.AccountName);
+        }
+
+        [Test]
         [TestCase(true)] // https://github.com/Azure/azure-sdk-for-net/issues/9110
         [TestCase(false)]
         public async Task Perform_Ctor_ConnectionString_Sas(bool includeTable)
