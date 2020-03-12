@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,86 +45,34 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync();
-
-            // TODO: this feels very bad.  Better way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            task.AsTask().Wait();
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: this is also a mess. Reconcile these together.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual Response<ExtractedReceipt> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync();
-
-            // TODO: this feels very bad.  Better way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            task.AsTask().Wait();
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: this is also a mess. Reconcile these together.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            var operationResponse = await operation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: Is this the best way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            var operationResponse = await operation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: Is this the best way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
     }
 }

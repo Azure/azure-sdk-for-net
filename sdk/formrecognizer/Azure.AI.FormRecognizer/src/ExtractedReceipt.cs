@@ -182,8 +182,8 @@ namespace Azure.AI.FormRecognizer.Models
                     // TODO: Unsuppress
                     // https://github.com/Azure/azure-sdk-for-net/issues/10376
 #pragma warning disable CA1305 // Specify IFormatProvider
-                    FieldValueType.Date => DateTimeOffset.Parse(value.ValueDate),
-                    FieldValueType.Time => DateTimeOffset.Parse(value.ValueTime),
+                    FieldValueType.Date => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate),
+                    FieldValueType.Time => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime),
 #pragma warning restore CA1305 // Specify IFormatProvider
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };
