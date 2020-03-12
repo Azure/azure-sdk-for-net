@@ -507,5 +507,10 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
+        /// <summary>
+        /// Gets the IManagedInstanceOperations.
+        /// </summary>
+        IManagedInstanceOperations ManagedInstanceOperations { get; }
+
     }
 }
