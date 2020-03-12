@@ -1,5 +1,8 @@
 # Release History
 
+## 12.3.0-preview.1 (Unreleased)
+
+
 ## 12.2.0 (2020-03)
 - Added Exists() and DeleteIfExists() to ShareClient, ShareDirectoryClient, and ShareFileClient.
 - Added CreateIfNotExists() to ShareClient and ShareDirectoryClient.
