@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Custom
     }
     public partial class CustomModelLearnedForm
     {
-        public CustomModelLearnedForm() { }
+        internal CustomModelLearnedForm() { }
         public string FormTypeId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> LearnedFields { get { throw null; } }
     }
@@ -175,6 +175,7 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal ExtractedPage() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedField> Fields { get { throw null; } }
+        public int? FormTypeId { get { throw null; } }
         public int PageNumber { get { throw null; } }
         public Azure.AI.FormRecognizer.Models.RawExtractedPage RawExtractedPage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedTable> Tables { get { throw null; } }

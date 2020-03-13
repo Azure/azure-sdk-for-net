@@ -7,6 +7,10 @@ namespace Azure.AI.FormRecognizer.Custom
 {
     public class CustomModelLearnedForm
     {
+        internal CustomModelLearnedForm()
+        {
+        }
+
         /// <summary>
         /// </summary>
         public string FormTypeId { get; internal set; }
