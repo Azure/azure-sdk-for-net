@@ -20,13 +20,13 @@ namespace Azure.AI.FormRecognizer.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationStatus value.")
         };
 
-        public static OperationStatus ToOperationStatus(this string value) => value switch
+        public static OperationStatus ToOperationStatus(this string value)
         {
-            "notStarted" => OperationStatus.NotStarted,
-            "running" => OperationStatus.Running,
-            "succeeded" => OperationStatus.Succeeded,
-            "failed" => OperationStatus.Failed,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationStatus value.")
-        };
+            if (string.Equals(value, "notStarted", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.NotStarted;
+            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.Running;
+            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.Succeeded;
+            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.Failed;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationStatus value.");
+        }
     }
 }

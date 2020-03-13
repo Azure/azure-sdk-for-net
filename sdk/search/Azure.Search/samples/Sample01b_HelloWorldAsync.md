@@ -34,7 +34,7 @@ string fakeIndexName = "doesnotexist";
 SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
 try
 {
-    await index.GetCountAsync();
+    await index.GetDocumentCountAsync();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

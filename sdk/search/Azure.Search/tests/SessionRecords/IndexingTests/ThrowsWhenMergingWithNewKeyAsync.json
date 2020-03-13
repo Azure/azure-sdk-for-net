@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-qygagdwi.search.windows.net/indexes(\u0027nblvdpts\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "53",
+        "Content-Type": "application/json",
+        "traceparent": "00-965ae0727578c84d81a61e047661f782-ad3987ef9ecfe043-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "9454778a86456b312a3ea4e6ea1645c0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": [
+          {
+            "@search.action": "merge",
+            "hotelId": "42"
+          }
+        ]
+      },
+      "StatusCode": 207,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "253",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Thu, 12 Mar 2020 06:43:52 GMT",
+        "elapsed-time": "108",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "9454778a-8645-6b31-2a3e-a4e6ea1645c0",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-qygagdwi.search.windows.net/indexes(\u0027nblvdpts\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
+        "value": [
+          {
+            "key": "42",
+            "status": false,
+            "errorMessage": "Document not found.",
+            "statusCode": 404
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1670034816",
+    "SearchIndexName": "nblvdpts",
+    "SearchServiceName": "azs-net-qygagdwi"
+  }
+}

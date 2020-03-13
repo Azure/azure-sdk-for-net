@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -14,11 +15,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class ProcessorLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        [TestCase(1)]
-        [TestCase(5)]
-        [TestCase(10)]
-        [TestCase(20)]
-        public async Task ProcessEventNextSession(int numThreads)
+        [TestCase(1, false)]
+        [TestCase(5, true)]
+        [TestCase(10, false)]
+        [TestCase(20, true)]
+        public async Task ProcessEventNextSession(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -35,7 +36,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendBatchAsync(messageBatch);
 
-                var processor = client.GetProcessor(scope.QueueName);
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete
+                };
+                var processor = client.GetProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -46,7 +52,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
-                processor.MaxConcurrentCalls = numThreads;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
@@ -55,7 +60,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         var receiver = args.Receiver;
                         var message = args.Message;
-                        await receiver.CompleteAsync(message);
+                        if (!autoComplete)
+                        {
+                            await receiver.CompleteAsync(message.LockToken);
+                        }
                         Interlocked.Increment(ref messageCt);
                     }
                     finally
@@ -96,8 +104,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, numMessages);
 
                 await sender.SendBatchAsync(messageBatch);
-
-                var processor = client.GetProcessor(scope.QueueName);
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                };
+                var processor = client.GetProcessor(scope.QueueName, options);
                 int messageProcessedCt = 0;
 
                 // stop processing halfway through
@@ -106,8 +118,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
-                processor.MaxConcurrentCalls = numThreads;
-                processor.ReceiveMode = ReceiveMode.ReceiveAndDelete;
+
                 await processor.StartProcessingAsync();
 
                 Task ProcessMessage(ProcessMessageEventArgs args)
@@ -161,10 +172,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 Assert.NotNull(args);
                 Assert.NotNull(args.Exception);
-                Assert.AreEqual(processor.Identifier, args.Identifier);
                 Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                 Assert.AreEqual(ExceptionReceivedEventArgsAction.Receive, args.Action);
-                Assert.AreEqual(processor.EntityName, args.EntityName);
+                Assert.AreEqual(processor.EntityPath, args.EntityPath);
 
                 if (args.Exception is ServiceBusException sbException)
                 {
@@ -201,11 +211,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [TestCase(1)]
-        [TestCase(5)]
-        [TestCase(10)]
-        [TestCase(20)]
-        public async Task ProcessEvent(int numThreads)
+        [TestCase(1, true)]
+        [TestCase(5, true)]
+        [TestCase(10, false)]
+        [TestCase(20, false)]
+        public async Task ProcessEvent(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -222,8 +232,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await sender.SendAsync(GetMessage(sessionId));
                     sessions.TryAdd(sessionId, true);
                 }
-
-                var processor = client.GetProcessor(scope.QueueName);
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete
+                };
+                var processor = client.GetSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -235,8 +249,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
-                processor.MaxConcurrentCalls = numThreads;
-                processor.UseSessions = true;
                 await processor.StartProcessingAsync();
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
@@ -245,7 +257,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         var message = args.Message;
                         var receiver = args.Receiver;
-                        await receiver.CompleteAsync(message);
+                        if (!autoComplete)
+                        {
+                            await receiver.CompleteAsync(message.LockToken);
+                        }
                         Interlocked.Increment(ref messageCt);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
@@ -271,11 +286,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [TestCase(1)]
-        [TestCase(5)]
-        [TestCase(10)]
-        [TestCase(20)]
-        public async Task ProcessEventConsumesAllMessages(int numThreads)
+        [TestCase(1, true)]
+        [TestCase(5, false)]
+        [TestCase(10, true)]
+        [TestCase(20, false)]
+        public async Task ProcessEventConsumesAllMessages(int numThreads, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -296,18 +311,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 int messageCt = 0;
 
                 TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var processor = client.GetProcessor(scope.QueueName);
-
-                processor.UseSessions = true;
-                processor.RetryOptions = new ServiceBusRetryOptions()
+                var options = new ServiceBusProcessorOptions
                 {
-                    // to prevent the receive batch from taking a long time when we
-                    // expect it to fail
-                    MaximumRetries = 0,
-                    TryTimeout = TimeSpan.FromSeconds(5)
+                    RetryOptions = new ServiceBusRetryOptions
+                    {
+                        MaximumRetries = 0,
+                        TryTimeout = TimeSpan.FromSeconds(5)
+                    },
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete
                 };
 
-                processor.MaxConcurrentCalls = numThreads;
+                ServiceBusProcessor processor = client.GetSessionProcessor(scope.QueueName, options);
+
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
                 await processor.StartProcessingAsync();
@@ -318,7 +334,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         var receiver = args.Receiver;
                         var message = args.Message;
-                        await receiver.CompleteAsync(message);
+                        if (!autoComplete)
+                        {
+                            await receiver.CompleteAsync(message.LockToken);
+                        }
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
                         Assert.IsNotNull(receiver.SessionManager.LockedUntil);
@@ -335,9 +354,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await taskCompletionSource.Task;
                 await processor.StopProcessingAsync();
 
-
-                // we only give each thread enough time to process one message, so the total number of messages
-                // processed should equal the number of threads
                 Assert.AreEqual(numThreads, messageCt);
 
                 // we should have received messages from each of the sessions
@@ -346,16 +362,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // try receiving to verify empty
                 // since all the messages are gone and we are using sessions, we won't actually
                 // be able to open the Receive link
-                Assert.That(async () => await client.GetSessionReceiverAsync(
-                    scope.QueueName,
-                    options: new ServiceBusReceiverOptions
-                    {
-                        RetryOptions = new ServiceBusRetryOptions
+                // only do this assertion when we complete the message ourselves,
+                // otherwise the message completion may have been cancelled if it didn't finish
+                // before calling StopProcessingAsync.
+                if (!autoComplete)
+                {
+                    Assert.That(async () => await client.GetSessionReceiverAsync(
+                        scope.QueueName,
+                        options: new ServiceBusReceiverOptions
                         {
-                            TryTimeout = TimeSpan.FromSeconds(5),
-                            MaximumRetries = 0
-                        }
-                    }), Throws.Exception);
+                            RetryOptions = new ServiceBusRetryOptions
+                            {
+                                TryTimeout = TimeSpan.FromSeconds(5),
+                                MaximumRetries = 0
+                            }
+                        }), Throws.Exception);
+                }
             }
         }
 
@@ -366,8 +388,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 var exceptionReceivedHandlerCalled = false;
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var processor = client.GetProcessor(scope.QueueName);
-                processor.UseSessions = true;
+
+                var processor = client.GetSessionProcessor(scope.QueueName);
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -409,8 +431,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 var exceptionReceivedHandlerCalled = false;
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var processor = client.GetProcessor(scope.TopicName, scope.SubscriptionNames.First());
-                processor.UseSessions = true;
+                var processor = client.GetSessionProcessor(scope.TopicName, scope.SubscriptionNames.First());
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -442,32 +463,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
 
                 Assert.True(exceptionReceivedHandlerCalled);
-            }
-        }
-
-        [Test]
-        public async Task SettingPropertiesWhileProcessingThrows()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusProcessor processor = client.GetProcessor(scope.QueueName);
-                processor.ProcessErrorAsync += ExceptionHandler;
-                processor.ProcessMessageAsync += MessageHandler;
-
-                Task MessageHandler(ProcessMessageEventArgs args)
-                {
-                    return Task.CompletedTask;
-                }
-                await processor.StartProcessingAsync();
-
-                Assert.That(() => processor.UseSessions = false, Throws.InstanceOf<InvalidOperationException>());
-                Assert.That(() => processor.PrefetchCount = 10, Throws.InstanceOf<InvalidOperationException>());
-                Assert.That(() => processor.SessionId = "sessionId", Throws.InstanceOf<InvalidOperationException>());
-                Assert.That(() => processor.ReceiveMode = ReceiveMode.PeekLock, Throws.InstanceOf<InvalidOperationException>());
-                Assert.That(() => processor.RetryOptions = new ServiceBusRetryOptions(), Throws.InstanceOf<InvalidOperationException>());
-
-                await processor.StopProcessingAsync();
             }
         }
     }

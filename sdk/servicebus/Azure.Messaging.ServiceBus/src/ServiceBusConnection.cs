@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         public bool IsClosed => _innerClient.IsClosed;
 
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   The endpoint for the Service Bus service to which the connection is associated.
@@ -93,10 +93,10 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = builder.FullyQualifiedNamespace;
             TransportType = options.TransportType;
-            EntityName = builder.EntityName;
+            EntityPath = builder.EntityName;
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityName),
+                 BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath),
                  builder.SasKeyName,
                  builder.SasKey
             );
@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus
             var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
             var tokenCredentials = new ServiceBusTokenCredential(
                 sharedCredentials,
-                BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityName));
+                BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath));
             _innerClient = CreateTransportClient(tokenCredentials, options);
         }
 
@@ -134,11 +134,11 @@ namespace Azure.Messaging.ServiceBus
                     break;
 
                 case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
                     break;
             }
 
-            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityName));
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             TransportType = options.TransportType;
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async virtual Task CloseAsync(CancellationToken cancellationToken = default) =>
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default) =>
             await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
 
 
@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus
             _innerClient.CreateSender(entityName, retryPolicy);
 
         internal virtual TransportReceiver CreateTransportReceiver(
-            string entityName,
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             bool isSessionReceiver = default) =>
                 _innerClient.CreateReceiver(
-                    entityName,
+                    entityPath,
                     retryPolicy,
                     receiveMode,
                     prefetchCount,

@@ -43,8 +43,9 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <param name="severity">A value that indicates the urgency of the
         /// case, which in turn determines the response time according to the
         /// service level agreement of the technical support plan you have with
-        /// Azure. Possible values include: 'minimal', 'moderate',
-        /// 'critical'</param>
+        /// Azure. Note: 'Highest critical impact' severity is reserved only to
+        /// our Premium customers. Possible values include: 'minimal',
+        /// 'moderate', 'critical', 'highestcriticalimpact'</param>
         /// <param name="contactDetails">Contact information of the user
         /// requesting to create a support ticket.</param>
         /// <param name="title">Title of the support ticket.</param>
@@ -60,8 +61,6 @@ namespace Microsoft.Azure.Management.Support.Models
         /// problem classification.</param>
         /// <param name="enrollmentId">Enrollment ID associated with the
         /// support ticket.</param>
-        /// <param name="productionOutage">Indicates if this issue is a
-        /// production outage.</param>
         /// <param name="require24X7Response">Indicates if this requires a 24x7
         /// response from Azure.</param>
         /// <param name="serviceLevelAgreement">Service Level Agreement
@@ -83,7 +82,7 @@ namespace Microsoft.Azure.Management.Support.Models
         /// associated with a technical support ticket request. </param>
         /// <param name="quotaTicketDetails">Additional ticket details
         /// associated with a quota support ticket request. </param>
-        public SupportTicketDetails(string description, string problemClassificationId, string severity, ContactProfile contactDetails, string title, string serviceId, string id = default(string), string name = default(string), string type = default(string), string supportTicketId = default(string), string problemClassificationDisplayName = default(string), string enrollmentId = default(string), bool? productionOutage = default(bool?), bool? require24X7Response = default(bool?), ServiceLevelAgreement serviceLevelAgreement = default(ServiceLevelAgreement), SupportEngineer supportEngineer = default(SupportEngineer), string supportPlanType = default(string), System.DateTime? problemStartTime = default(System.DateTime?), string serviceDisplayName = default(string), string status = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? modifiedDate = default(System.DateTime?), TechnicalTicketDetails technicalTicketDetails = default(TechnicalTicketDetails), QuotaTicketDetails quotaTicketDetails = default(QuotaTicketDetails))
+        public SupportTicketDetails(string description, string problemClassificationId, string severity, ContactProfile contactDetails, string title, string serviceId, string id = default(string), string name = default(string), string type = default(string), string supportTicketId = default(string), string problemClassificationDisplayName = default(string), string enrollmentId = default(string), bool? require24X7Response = default(bool?), ServiceLevelAgreement serviceLevelAgreement = default(ServiceLevelAgreement), SupportEngineer supportEngineer = default(SupportEngineer), string supportPlanType = default(string), System.DateTime? problemStartTime = default(System.DateTime?), string serviceDisplayName = default(string), string status = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? modifiedDate = default(System.DateTime?), TechnicalTicketDetails technicalTicketDetails = default(TechnicalTicketDetails), QuotaTicketDetails quotaTicketDetails = default(QuotaTicketDetails))
         {
             Id = id;
             Name = name;
@@ -94,7 +93,6 @@ namespace Microsoft.Azure.Management.Support.Models
             ProblemClassificationDisplayName = problemClassificationDisplayName;
             Severity = severity;
             EnrollmentId = enrollmentId;
-            ProductionOutage = productionOutage;
             Require24X7Response = require24X7Response;
             ContactDetails = contactDetails;
             ServiceLevelAgreement = serviceLevelAgreement;
@@ -165,8 +163,10 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Gets or sets a value that indicates the urgency of the case, which
         /// in turn determines the response time according to the service level
-        /// agreement of the technical support plan you have with Azure.
-        /// Possible values include: 'minimal', 'moderate', 'critical'
+        /// agreement of the technical support plan you have with Azure. Note:
+        /// 'Highest critical impact' severity is reserved only to our Premium
+        /// customers. Possible values include: 'minimal', 'moderate',
+        /// 'critical', 'highestcriticalimpact'
         /// </summary>
         [JsonProperty(PropertyName = "properties.severity")]
         public string Severity { get; set; }
@@ -176,12 +176,6 @@ namespace Microsoft.Azure.Management.Support.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enrollmentId")]
         public string EnrollmentId { get; private set; }
-
-        /// <summary>
-        /// Gets indicates if this issue is a production outage.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.productionOutage")]
-        public bool? ProductionOutage { get; private set; }
 
         /// <summary>
         /// Gets or sets indicates if this requires a 24x7 response from Azure.

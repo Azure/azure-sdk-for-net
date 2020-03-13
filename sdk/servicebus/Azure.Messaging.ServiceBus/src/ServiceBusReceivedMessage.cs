@@ -48,12 +48,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Specifies whether or not there is a lock token set on the current message.
-        /// </summary>
-        /// <remarks>A lock token will only be specified if the message was received using ReceiveMode.PeekLock</remarks>
-        public bool IsLockTokenSet => _lockTokenGuid != default;
-
-        /// <summary>
         /// Gets the lock token for the current message.
         /// </summary>
         /// <remarks>

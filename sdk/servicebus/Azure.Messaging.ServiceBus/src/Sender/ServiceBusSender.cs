@@ -31,11 +31,11 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
-        ///   The name of the entity that the producer is connected to, specific to the
+        ///   The path of the entity that the sender is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
-        public string Identifier { get; private set; }
+        internal string Identifier { get; private set; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -74,14 +74,9 @@ namespace Azure.Messaging.ServiceBus
         private readonly TransportSender _innerSender;
 
         /// <summary>
-        ///
-        /// </summary>
-        private ClientDiagnostics ClientDiagnostics { get; set; }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         /// <param name="connection"></param>
         /// <param name="options">A set of options to apply when configuring the producer.</param>
         /// <remarks>
@@ -91,21 +86,23 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         internal ServiceBusSender(
-            string entityName,
+            string entityPath,
             ServiceBusConnection connection,
             ServiceBusSenderOptions options)
         {
-            Argument.AssertNotNullOrWhiteSpace(entityName, nameof(entityName));
+            Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
+            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             connection.ThrowIfClosed();
 
-            EntityName = entityName;
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityName);
+            EntityPath = entityPath;
+            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
             options = options?.Clone() ?? new ServiceBusSenderOptions();
-            ClientDiagnostics = new ClientDiagnostics(options);
             _connection = connection;
             _retryPolicy = options.RetryOptions.ToRetryPolicy();
             _innerSender = _connection.CreateTransportSender(
-                entityName,
+                entityPath,
                 _retryPolicy);
         }
 
@@ -299,23 +296,22 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Closes the producer.
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />,
+        ///   including ensuring that the client itself has been closed.
         /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync()
         {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             IsClosed = true;
 
             ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusSender), Identifier);
 
             try
             {
-                await _innerSender.CloseAsync(cancellationToken).ConfigureAwait(false);
+                await _innerSender.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -325,16 +321,6 @@ namespace Azure.Messaging.ServiceBus
 
             ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusSender), Identifier);
         }
-
-        /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />,
-        ///   including ensuring that the client itself has been closed.
-        /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -364,25 +350,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-
-        /// <summary>
-        ///   Creates and configures a diagnostics scope to be used for instrumenting
-        ///   events.
-        /// </summary>
-        ///
-        /// <returns>The requested <see cref="DiagnosticScope" />.</returns>
-        ///
-        internal virtual DiagnosticScope CreateDiagnosticScope()
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.SenderActivityName);
-            scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.ServiceBusSenderType);
-            scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext);
-            scope.AddAttribute(DiagnosticProperty.ServiceBusAttribute, EntityName);
-            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _connection.ServiceEndpoint);
-            scope.Start();
-
-            return scope;
-        }
 
         /// <summary>
         ///   Performs the actions needed to instrument a set of events.

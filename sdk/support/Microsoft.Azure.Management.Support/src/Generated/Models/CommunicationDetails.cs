@@ -43,7 +43,8 @@ namespace Microsoft.Azure.Management.Support.Models
         /// include: 'web', 'phone'</param>
         /// <param name="communicationDirection">Direction of communication.
         /// Possible values include: 'inbound', 'outbound'</param>
-        /// <param name="sender">Email address of the sender</param>
+        /// <param name="sender">Email address of the sender. This property is
+        /// required if called by a service principal</param>
         /// <param name="createdDate">Time in UTC (ISO 8601 format) when the
         /// communication was created.</param>
         public CommunicationDetails(string subject, string body, string id = default(string), string name = default(string), string type = default(string), string communicationType = default(string), string communicationDirection = default(string), string sender = default(string), System.DateTime? createdDate = default(System.DateTime?))
@@ -97,7 +98,8 @@ namespace Microsoft.Azure.Management.Support.Models
         public string CommunicationDirection { get; private set; }
 
         /// <summary>
-        /// Gets or sets email address of the sender
+        /// Gets or sets email address of the sender. This property is required
+        /// if called by a service principal
         /// </summary>
         [JsonProperty(PropertyName = "properties.sender")]
         public string Sender { get; set; }

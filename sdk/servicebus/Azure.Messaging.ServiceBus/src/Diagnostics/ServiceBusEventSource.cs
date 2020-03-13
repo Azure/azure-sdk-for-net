@@ -175,12 +175,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(16, Level = EventLevel.Informational, Message = "{0}: CompleteAsync start. MessageCount = {1}, LockTokens = {2}")]
-        public void CompleteMessageStart(string identifier, int messageCount, IList<ServiceBusReceivedMessage> messages)
+        public void CompleteMessageStart(string identifier, int messageCount, IList<string> lockTokens)
         {
             if (IsEnabled())
             {
-                var formattedMessageIds = StringUtility.GetFormattedMessageIds(messages.Select(message => message.MessageId).ToList());
-                WriteEvent(16, identifier, messageCount, formattedMessageIds);
+                var formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
+                WriteEvent(16, identifier, messageCount, formattedLockTokens);
             }
         }
 
@@ -460,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         /// <summary>
         ///   Indicates that a client is closing, which may correspond to an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <see cref="ServiceBusReceiver"/>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>

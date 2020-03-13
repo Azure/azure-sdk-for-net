@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusSenderOptions : ClientOptions
+    public class ServiceBusSenderOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
         private ServiceBusClientOptions _connectionOptions = new ServiceBusClientOptions();

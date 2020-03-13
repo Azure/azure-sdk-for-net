@@ -124,6 +124,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Messages cannot be locked when working with session-enabled entities. Locks are handled at the session level..
+        /// </summary>
+        internal static string CannotLockMessageOnSessionEntity {
+            get {
+                return ResourceManager.GetString("CannotLockMessageOnSessionEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When using a sessionful entity, the Session event handler must be used..
         /// </summary>
         internal static string CannotRegisterNonSessionEventHandlerWhenUsingSession {

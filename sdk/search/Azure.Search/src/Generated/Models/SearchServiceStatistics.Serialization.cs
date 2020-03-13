@@ -15,16 +15,10 @@ namespace Azure.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Counters != null)
-            {
-                writer.WritePropertyName("counters");
-                writer.WriteObjectValue(Counters);
-            }
-            if (Limits != null)
-            {
-                writer.WritePropertyName("limits");
-                writer.WriteObjectValue(Limits);
-            }
+            writer.WritePropertyName("counters");
+            writer.WriteObjectValue(Counters);
+            writer.WritePropertyName("limits");
+            writer.WriteObjectValue(Limits);
             writer.WriteEndObject();
         }
         internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
@@ -34,19 +28,11 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("counters"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
                     continue;
                 }

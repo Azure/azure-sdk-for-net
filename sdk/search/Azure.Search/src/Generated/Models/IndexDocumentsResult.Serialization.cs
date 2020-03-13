@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,16 +15,13 @@ namespace Azure.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Results != null)
+            writer.WritePropertyName("value");
+            writer.WriteStartArray();
+            foreach (var item in Results)
             {
-                writer.WritePropertyName("value");
-                writer.WriteStartArray();
-                foreach (var item in Results)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
         internal static IndexDocumentsResult DeserializeIndexDocumentsResult(JsonElement element)
@@ -35,11 +31,6 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Results = new List<IndexingResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         result.Results.Add(IndexingResult.DeserializeIndexingResult(item));

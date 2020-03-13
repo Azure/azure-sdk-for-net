@@ -3,14 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Search;
-using Azure.Search.Models;
-using Azure.Search.Tests;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.Template.Tests
+namespace Azure.Search.Tests
 {
     public class SearchIndexClientTests : SearchTestBase
     {
@@ -30,15 +26,36 @@ namespace Microsoft.Azure.Template.Tests
             Assert.AreEqual(endpoint, index.Endpoint);
             Assert.AreEqual(serviceName, index.ServiceName);
             Assert.AreEqual(indexName, index.IndexName);
+
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, indexName, new SearchApiKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, null, new SearchApiKeyCredential("fake")));
+            Assert.Throws<ArgumentException>(() => new SearchIndexClient(endpoint, string.Empty, new SearchApiKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, indexName, null));
+            Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), indexName, null));
         }
 
         [Test]
-        public async Task GetCount()
+        public async Task ClientRequestIdRountrips()
         {
-            await using SearchResources search = await SearchResources.CreateWithHotelsIndexAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchIndexClient client = resources.GetIndexClient();
+            Guid id = Recording.Random.NewGuid();
+            Response<long> response = await client.GetDocumentCountAsync(
+                new SearchRequestOptions { ClientRequestId = id });
+
+            // TODO: #10604 - C# generator doesn't properly support ClientRequestId yet
+            // (Assertion is here to remind us to fix this when we do - just
+            // change to AreEqual and re-record)
+            Assert.AreNotEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
+        }
+
+        [Test]
+        public async Task GetDocumentCount()
+        {
+            await using SearchResources search = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchIndexClient client = search.GetIndexClient();
-            Response<long> response = await client.GetCountAsync();
+            Response<long> response = await client.GetDocumentCountAsync();
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(SearchResources.TestDocuments.Length, response.Value);
         }

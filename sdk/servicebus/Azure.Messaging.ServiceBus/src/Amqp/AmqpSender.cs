@@ -41,10 +41,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override bool IsClosed => _closed;
 
         /// <summary>
-        ///   The name of the Service Bus entity to which the producer is bound.
+        ///   The name of the Service Bus entity to which the sender is bound.
         /// </summary>
         ///
-        private readonly string _entityName;
+        private readonly string _entityPath;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the entity to which messages will be sent.</param>
+        /// <param name="entityPath">The name of the entity to which messages will be sent.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
@@ -89,15 +89,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </remarks>
         ///
         public AmqpSender(
-            string entityName,
+            string entityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _entityName = entityName;
+            _entityPath = entityPath;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 
@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
-                    _entityName,
+                    _entityPath,
                     timeout,
                     CancellationToken.None),
                 link =>
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                 {
-                    throw new ServiceBusException(string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize, _entityName), ServiceBusException.FailureReason.MessageSizeExceeded);
+                    throw new ServiceBusException(string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
                 }
 
                 // Attempt to send the message batch.
@@ -506,7 +506,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
-                _entityName,
+                _entityPath,
                 timeout,
                 cancellationToken).ConfigureAwait(false);
 

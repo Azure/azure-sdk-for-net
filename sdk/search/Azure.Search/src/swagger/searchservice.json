@@ -3,20 +3,17 @@
   "info": {
     "title": "SearchServiceClient",
     "description": "Client that can be used to manage and query indexes and documents, as well as manage other resources, on a search service.",
-    "version": "2019-05-06",
+    "version": "2019-05-06-Preview",
     "x-ms-code-generation-settings": {
       "useDateTimeOffset": true
     }
   },
   "x-ms-parameterized-host": {
-    "hostTemplate": "https://{searchServiceName}.{searchDnsSuffix}",
+    "hostTemplate": "{endpoint}",
     "useSchemePrefix": false,
     "parameters": [
       {
-        "$ref": "#/parameters/SearchServiceNameParameter"
-      },
-      {
-        "$ref": "#/parameters/SearchDnsSuffixParameter"
+        "$ref": "#/parameters/EndpointParameter"
       }
     ]
   },
@@ -88,6 +85,12 @@
             "schema": {
               "$ref": "#/definitions/DataSource"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -133,6 +136,12 @@
           },
           "404": {
             "description": ""
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -171,6 +180,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/DataSource"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -213,6 +228,12 @@
             "schema": {
               "$ref": "#/definitions/ListDataSourcesResult"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -254,6 +275,12 @@
             "schema": {
               "$ref": "#/definitions/DataSource"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       }
@@ -292,6 +319,12 @@
         "responses": {
           "204": {
             "description": ""
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       }
@@ -330,6 +363,12 @@
         "responses": {
           "202": {
             "description": ""
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       }
@@ -395,6 +434,12 @@
             "schema": {
               "$ref": "#/definitions/Indexer"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -440,6 +485,12 @@
           },
           "204": {
             "description": ""
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -478,6 +529,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/Indexer"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -520,6 +577,12 @@
             "schema": {
               "$ref": "#/definitions/ListIndexersResult"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -561,6 +624,12 @@
             "schema": {
               "$ref": "#/definitions/Indexer"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       }
@@ -601,6 +670,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/IndexerExecutionInfo"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -667,6 +742,12 @@
             "schema": {
               "$ref": "#/definitions/Skillset"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -712,6 +793,12 @@
           },
           "404": {
             "description": "The provided skillset name is not found."
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -750,6 +837,12 @@
             "description": "The skillset is successfully returned.",
             "schema": {
               "$ref": "#/definitions/Skillset"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -792,6 +885,12 @@
             "schema": {
               "$ref": "#/definitions/ListSkillsetsResult"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -832,6 +931,12 @@
             "description": "The skillset is successfully created.",
             "schema": {
               "$ref": "#/definitions/Skillset"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -898,6 +1003,12 @@
             "schema": {
               "$ref": "#/definitions/SynonymMap"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -943,6 +1054,12 @@
           },
           "404": {
             "description": ""
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -981,6 +1098,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/SynonymMap"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -1023,6 +1146,12 @@
             "schema": {
               "$ref": "#/definitions/ListSynonymMapsResult"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -1063,6 +1192,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/SynonymMap"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -1107,6 +1242,12 @@
             "schema": {
               "$ref": "#/definitions/Index"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -1145,6 +1286,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/ListIndexesResult"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -1218,6 +1365,12 @@
             "schema": {
               "$ref": "#/definitions/Index"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -1263,6 +1416,12 @@
           },
           "404": {
             "description": ""
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       },
@@ -1301,6 +1460,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/Index"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -1342,6 +1507,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/GetIndexStatisticsResult"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -1393,6 +1564,12 @@
             "schema": {
               "$ref": "#/definitions/AnalyzeResult"
             }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
+            }
           }
         }
       }
@@ -1423,6 +1600,12 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/ServiceStatistics"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/SearchError"
             }
           }
         }
@@ -1476,6 +1659,9 @@
           "description": "The list of tokens returned by the analyzer specified in the request."
         }
       },
+      "required": [
+        "tokens"
+      ],
       "description": "The result of testing an analyzer on text."
     },
     "TokenInfo": {
@@ -1489,21 +1675,30 @@
           "type": "integer",
           "format": "int32",
           "readOnly": true,
+          "x-nullable": false,
           "description": "The index of the first character of the token in the input text."
         },
         "endOffset": {
           "type": "integer",
           "format": "int32",
           "readOnly": true,
+          "x-nullable": false,
           "description": "The index of the last character of the token in the input text."
         },
         "position": {
           "type": "integer",
           "format": "int32",
           "readOnly": true,
+          "x-nullable": false,
           "description": "The position of the token in the input text relative to other tokens. The first token in the input text has position 0, the next has position 1, and so on. Depending on the analyzer used, some tokens might have the same position, for example if they are synonyms of each other."
         }
       },
+      "required": [
+        "token",
+        "startOffset",
+        "endOffset",
+        "position"
+      ],
       "description": "Information about a token returned by an analyzer."
     },
     "AnalyzerName": {
@@ -2237,7 +2432,7 @@
       "externalDocs": {
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordTokenizer.html"
       },
-      "x-ms-external": true
+      "x-az-search-deprecated": true
     },
     "KeywordTokenizerV2": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.KeywordTokenizerV2",
@@ -2457,52 +2652,6 @@
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenizer.html"
       }
     },
-    "PathHierarchyTokenizer": {
-      "x-ms-discriminator-value": "#Microsoft.Azure.Search.PathHierarchyTokenizer",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Tokenizer"
-        }
-      ],
-      "properties": {
-        "delimiter": {
-          "type": "string",
-          "format": "char",
-          "default": "/",
-          "description": "The delimiter character to use. Default is \"/\"."
-        },
-        "replacement": {
-          "type": "string",
-          "format": "char",
-          "default": "/",
-          "description": "A value that, if set, replaces the delimiter character. Default is \"/\"."
-        },
-        "bufferSize": {
-          "type": "integer",
-          "format": "int32",
-          "default": 1024,
-          "description": "The buffer size. Default is 1024."
-        },
-        "reverse": {
-          "x-ms-client-name": "ReverseTokenOrder",
-          "type": "boolean",
-          "default": false,
-          "description": "A value indicating whether to generate tokens in reverse order. Default is false."
-        },
-        "skip": {
-          "x-ms-client-name": "NumberOfTokensToSkip",
-          "type": "integer",
-          "format": "int32",
-          "default": 0,
-          "description": "The number of initial tokens to skip. Default is 0."
-        }
-      },
-      "description": "Tokenizer for path-like hierarchies. This tokenizer is implemented using Apache Lucene.",
-      "externalDocs": {
-        "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/path/PathHierarchyTokenizer.html"
-      },
-      "x-ms-external": true
-    },
     "PathHierarchyTokenizerV2": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.PathHierarchyTokenizerV2",
       "allOf": [
@@ -2597,7 +2746,7 @@
       "externalDocs": {
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/standard/StandardTokenizer.html"
       },
-      "x-ms-external": true
+      "x-az-search-deprecated": true
     },
     "StandardTokenizerV2": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.StandardTokenizerV2",
@@ -2851,7 +3000,7 @@
       "externalDocs": {
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/EdgeNGramTokenFilter.html"
       },
-      "x-ms-external": true
+      "x-az-search-deprecated": true
     },
     "EdgeNGramTokenFilterV2": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.EdgeNGramTokenFilterV2",
@@ -3044,7 +3193,7 @@
       "externalDocs": {
         "url": "http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/ngram/NGramTokenFilter.html"
       },
-      "x-ms-external": true
+      "x-az-search-deprecated": true
     },
     "NGramTokenFilterV2": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.NGramTokenFilterV2",
@@ -3780,7 +3929,8 @@
         "azuresql",
         "cosmosdb",
         "azureblob",
-        "azuretable"
+        "azuretable",
+        "mysql"
       ],
       "x-ms-enum": {
         "name": "DataSourceType",
@@ -3801,6 +3951,10 @@
           {
             "value": "azuretable",
             "name": "AzureTable"
+          },
+          {
+            "value": "mysql",
+            "name": "MySql"
           }
         ]
       },
@@ -3865,6 +4019,9 @@
           "description": "The datasources in the Search service."
         }
       },
+      "required": [
+        "value"
+      ],
       "description": "Response from a List Datasources request. If successful, it includes the full definitions of all datasources."
     },
     "IndexingSchedule": {
@@ -3904,11 +4061,6 @@
           "default": 0,
           "description": "The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0."
         },
-        "base64EncodeKeys": {
-          "type": "boolean",
-          "default": false,
-          "description": "Whether indexer will base64-encode all values that are inserted into key field of the target index. This is needed if keys can contain characters that are invalid in keys (such as dot '.'). Default is false."
-        },
         "configuration": {
           "type": "object",
           "additionalProperties": {
@@ -3917,8 +4069,7 @@
           "description": "A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type."
         }
       },
-      "description": "Represents parameters for indexer execution.",
-      "x-ms-external": true
+      "description": "Represents parameters for indexer execution."
     },
     "FieldMappingFunction": {
       "properties": {
@@ -4052,6 +4203,9 @@
           "description": "The indexers in the Search service."
         }
       },
+      "required": [
+        "value"
+      ],
       "description": "Response from a List Indexers request. If successful, it includes the full definitions of all indexers."
     },
     "ItemError": {
@@ -4089,6 +4243,10 @@
           "description": "A link to a troubleshooting guide for these classes of errors. This may not be always available."
         }
       },
+      "required": [
+        "errorMessage",
+        "statusCode"
+      ],
       "description": "Represents an item- or document-level indexing error."
     },
     "ItemWarning": {
@@ -4119,6 +4277,9 @@
           "description": "A link to a troubleshooting guide for these classes of warnings. This may not be always available."
         }
       },
+      "required": [
+        "message"
+      ],
       "description": "Represents an item-level warning."
     },
     "IndexerExecutionResult": {
@@ -4188,6 +4349,13 @@
           "description": "Change tracking state with which an indexer execution finished."
         }
       },
+      "required": [
+        "status",
+        "errors",
+        "warnings",
+        "itemsProcessed",
+        "itemsFailed"
+      ],
       "description": "Represents the result of an individual indexer execution."
     },
     "IndexerExecutionStatus": {
@@ -4199,7 +4367,8 @@
         "reset"
       ],
       "x-ms-enum": {
-        "name": "IndexerExecutionStatus"
+        "name": "IndexerExecutionStatus",
+        "modelAsString": false
       },
       "x-nullable": false,
       "description": "Represents the status of an individual indexer execution."
@@ -4230,6 +4399,11 @@
           "description": "The execution limits for the indexer."
         }
       },
+      "required": [
+        "status",
+        "executionHistory",
+        "limits"
+      ],
       "description": "Represents the current status and execution history of an indexer."
     },
     "IndexerStatus": {
@@ -4240,7 +4414,8 @@
         "running"
       ],
       "x-ms-enum": {
-        "name": "IndexerStatus"
+        "name": "IndexerStatus",
+        "modelAsString": false
       },
       "x-nullable": false,
       "description": "Represents the overall indexer status."
@@ -4566,7 +4741,8 @@
         "logarithmic"
       ],
       "x-ms-enum": {
-        "name": "ScoringFunctionInterpolation"
+        "name": "ScoringFunctionInterpolation",
+        "modelAsString": false
       },
       "description": "Defines the function used to interpolate score boosting across a range of documents."
     },
@@ -4614,7 +4790,8 @@
         "firstMatching"
       ],
       "x-ms-enum": {
-        "name": "ScoringFunctionAggregation"
+        "name": "ScoringFunctionAggregation",
+        "modelAsString": false
       },
       "description": "Defines the aggregation function used to combine the results of all the scoring functions in a scoring profile."
     },
@@ -4751,6 +4928,13 @@
             "url": "https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"
           }
         },
+        "encryptionKey": {
+          "$ref": "#/definitions/EncryptionKey",
+          "description": "A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data in Azure Cognitive Search. Once you have encrypted your data, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019.",
+          "externalDocs": {
+            "url": "https://aka.ms/azure-search-encryption-with-cmk"
+          }
+        },
         "@odata.etag": {
           "x-ms-client-name": "ETag",
           "type": "string",
@@ -4780,6 +4964,10 @@
           "description": "The amount of storage in bytes consumed by the index."
         }
       },
+      "required": [
+        "documentCount",
+        "storageSize"
+      ],
       "description": "Statistics for a given index. Statistics are collected periodically and are not guaranteed to always be up-to-date."
     },
     "ListIndexesResult": {
@@ -4794,6 +4982,9 @@
           "description": "The indexes in the Search service."
         }
       },
+      "required": [
+        "value"
+      ],
       "description": "Response from a List Indexes request. If successful, it includes the full definitions of all indexes."
     },
     "Skillset": {
@@ -5288,6 +5479,9 @@
           "description": "The skillsets defined in the Search service."
         }
       },
+      "required": [
+        "value"
+      ],
       "description": "Response from a list Skillset request. If successful, it includes the full definitions of all skillsets."
     },
     "TextExtractionAlgorithm": {
@@ -5320,10 +5514,8 @@
         "adult",
         "brands",
         "categories",
-        "color",
         "description",
         "faces",
-        "imageType",
         "objects",
         "tags"
       ],
@@ -5361,16 +5553,6 @@
         "modelAsString": false
       },
       "description": "A string indicating what entity categories to return."
-    },
-    "NamedEntityCategory": {
-      "type": "string",
-      "enum": [
-        "location",
-        "organization",
-        "person"
-      ],
-      "description": "A string indicating which named entity categories to return.",
-      "x-ms-external": true
     },
     "SentimentSkillLanguage": {
       "type": "string",
@@ -6268,6 +6450,13 @@
             "url": "https://docs.microsoft.com/rest/api/searchservice/Create-Synonym-Map#SynonymMapFormat"
           }
         },
+        "encryptionKey": {
+          "$ref": "#/definitions/EncryptionKey",
+          "description": "A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data in Azure Cognitive Search. Once you have encrypted your data, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019.",
+          "externalDocs": {
+            "url": "https://aka.ms/azure-search-encryption-with-cmk"
+          }
+        },
         "@odata.etag": {
           "x-ms-client-name": "ETag",
           "type": "string",
@@ -6293,7 +6482,55 @@
           "description": "The synonym maps in the Search service."
         }
       },
+      "required": [
+        "value"
+      ],
       "description": "Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps."
+    },
+    "EncryptionKey": {
+      "properties": {
+        "keyVaultKeyName": {
+          "type": "string",
+          "description": "The name of your Azure Key Vault key to be used to encrypt your data at rest."
+        },
+        "keyVaultKeyVersion": {
+          "type": "string",
+          "description": "The version of your Azure Key Vault key to be used to encrypt your data at rest."
+        },
+        "keyVaultUri": {
+          "type": "string",
+          "description": "The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net."
+        },
+        "accessCredentials": {
+          "$ref": "#/definitions/AzureActiveDirectoryApplicationCredentials",
+          "description": "Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead.",
+          "externalDocs": {
+            "url": "https://aka.ms/azure-search-msi"
+          }
+        }
+      },
+      "required": [
+        "keyVaultKeyName",
+        "keyVaultKeyVersion",
+        "keyVaultUri"
+      ],
+      "description": "A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest in Azure Cognitive Search, such as indexes and synonym maps."
+    },
+    "AzureActiveDirectoryApplicationCredentials": {
+      "properties": {
+        "applicationId": {
+          "type": "string",
+          "description": "An AAD Application ID that was granted the required access permissions to the Azure Key Vault that is to be used when encrypting your data at rest. The Application ID should not be confused with the Object ID for your AAD Application."
+        },
+        "applicationSecret": {
+          "type": "string",
+          "description": "The authentication key of the specified AAD application."
+        }
+      },
+      "required": [
+        "applicationId"
+      ],
+      "description": "Credentials of a registered application created for your search service, used for authenticated access to the encryption keys stored in Azure Key Vault."
     },
     "ServiceStatistics": {
       "properties": {
@@ -6306,6 +6543,10 @@
           "description": "Service level general limits."
         }
       },
+      "required": [
+        "counters",
+        "limits"
+      ],
       "description": "Response from a get service statistics request. If successful, it includes service level counters and limits."
     },
     "ServiceCounters": {
@@ -6339,8 +6580,22 @@
           "x-ms-client-name": "synonymMapCounter",
           "$ref": "#/definitions/ResourceCounter",
           "description": "Total number of synonym maps."
+        },
+        "skillsetCount": {
+          "x-ms-client-name": "skillsetCounter",
+          "$ref": "#/definitions/ResourceCounter",
+          "description": "Total number of skillsets."
         }
       },
+      "required": [
+        "documentCount",
+        "indexesCount",
+        "indexersCount",
+        "dataSourcesCount",
+        "storageSize",
+        "synonymMaps",
+        "skillsetCount"
+      ],
       "description": "Represents service-level resource counters and quotas."
     },
     "ServiceLimits": {
@@ -6387,7 +6642,36 @@
           "description": "The resource amount quota."
         }
       },
+      "required": [
+        "usage"
+      ],
       "description": "Represents a resource's usage and quota."
+    },
+    "SearchError": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "readOnly": true,
+          "description": "One of a server-defined set of error codes."
+        },
+        "message": {
+          "type": "string",
+          "readOnly": true,
+          "description": "A human-readable representation of the error."
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SearchError"
+          },
+          "readOnly": true,
+          "description": "An array of details about specific errors that led to this reported error."
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "description": "Describes an error condition for the Azure Cognitive Search API."
     }
   },
   "parameters": {
@@ -6399,7 +6683,7 @@
       "description": "Client Api Version."
     },
     "ClientRequestIdParameter": {
-      "name": "client-request-id",
+      "name": "x-ms-client-request-id",
       "in": "header",
       "required": false,
       "type": "string",
@@ -6444,23 +6728,13 @@
       "description": "For HTTP PUT requests, instructs the service to return the created/updated resource on success.",
       "x-ms-parameter-location": "method"
     },
-    "SearchServiceNameParameter": {
-      "name": "searchServiceName",
+    "EndpointParameter": {
+      "name": "endpoint",
       "in": "path",
       "required": true,
       "type": "string",
       "x-ms-skip-url-encoding": true,
-      "description": "The name of the search service.",
-      "x-ms-parameter-location": "client"
-    },
-    "SearchDnsSuffixParameter": {
-      "name": "searchDnsSuffix",
-      "in": "path",
-      "required": true,
-      "type": "string",
-      "default": "search.windows.net",
-      "x-ms-skip-url-encoding": true,
-      "description": "The DNS suffix of the search service. The default is search.windows.net.",
+      "description": "The endpoint URL of the search service.",
       "x-ms-parameter-location": "client"
     }
   }

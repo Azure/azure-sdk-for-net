@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.Search.Models
 {
     /// <summary> Contains a document found by a search query, plus associated metadata. </summary>
-    public partial class SearchResult : IDictionary<string, object>
+    internal partial class SearchResult : IDictionary<string, object>
     {
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>
-        public double? Score { get; internal set; }
+        public double Score { get; internal set; }
         /// <summary> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </summary>
         public IDictionary<string, IList<string>> Highlights { get; internal set; }
         private readonly IDictionary<string, object> _additionalProperties = new Dictionary<string, object>();

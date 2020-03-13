@@ -11,8 +11,8 @@ namespace Azure.Search.Models
     public partial class SearchServiceStatistics
     {
         /// <summary> Service level resource counters. </summary>
-        public SearchServiceCounters Counters { get; set; }
+        public SearchServiceCounters Counters { get; set; } = new SearchServiceCounters();
         /// <summary> Service level general limits. </summary>
-        public SearchServiceLimits Limits { get; set; }
+        public SearchServiceLimits Limits { get; set; } = new SearchServiceLimits();
     }
 }
