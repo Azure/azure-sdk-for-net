@@ -66,6 +66,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// in this connection.</param>
         /// <param name="peer">The reference to peerings resource.</param>
         /// <param name="enableBgp">EnableBgp flag.</param>
+        /// <param name="useLocalAzureIpAddress">Use private local Azure IP for
+        /// the connection.</param>
         /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
         /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// for data forwarding.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
+        public VirtualNetworkGatewayConnection(VirtualNetworkGateway virtualNetworkGateway1, string connectionType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGateway virtualNetworkGateway2 = default(VirtualNetworkGateway), LocalNetworkGateway localNetworkGateway2 = default(LocalNetworkGateway), string connectionProtocol = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), IList<TunnelConnectionHealth> tunnelConnectionStatus = default(IList<TunnelConnectionHealth>), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), bool? useLocalAzureIpAddress = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), string resourceGuid = default(string), string provisioningState = default(string), bool? expressRouteGatewayBypass = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -98,6 +100,7 @@ namespace Microsoft.Azure.Management.Network.Models
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
             EnableBgp = enableBgp;
+            UseLocalAzureIpAddress = useLocalAzureIpAddress;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IpsecPolicies = ipsecPolicies;
             TrafficSelectorPolicies = trafficSelectorPolicies;
@@ -199,6 +202,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// Gets or sets use private local Azure IP for the connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.useLocalAzureIpAddress")]
+        public bool? UseLocalAzureIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets enable policy-based traffic selectors.

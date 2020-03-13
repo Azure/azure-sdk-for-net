@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Network.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,11 +36,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// identifier of this BGP speaker.</param>
         /// <param name="peerWeight">The weight added to routes learned from
         /// this BGP speaker.</param>
-        public BgpSettings(long? asn = default(long?), string bgpPeeringAddress = default(string), int? peerWeight = default(int?))
+        /// <param name="bgpPeeringAddresses">BGP peering address with IP
+        /// configuration ID for virtual network gateway.</param>
+        public BgpSettings(long? asn = default(long?), string bgpPeeringAddress = default(string), int? peerWeight = default(int?), IList<IPConfigurationBgpPeeringAddress> bgpPeeringAddresses = default(IList<IPConfigurationBgpPeeringAddress>))
         {
             Asn = asn;
             BgpPeeringAddress = bgpPeeringAddress;
             PeerWeight = peerWeight;
+            BgpPeeringAddresses = bgpPeeringAddresses;
             CustomInit();
         }
 
@@ -66,6 +71,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "peerWeight")]
         public int? PeerWeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets BGP peering address with IP configuration ID for
+        /// virtual network gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "bgpPeeringAddresses")]
+        public IList<IPConfigurationBgpPeeringAddress> BgpPeeringAddresses { get; set; }
 
     }
 }
