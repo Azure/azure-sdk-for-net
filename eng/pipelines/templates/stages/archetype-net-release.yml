@@ -59,7 +59,7 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - checkout: azure-sdk-tools
+                    - checkout: self
                     - pwsh: |
                         Get-ChildItem $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
                         New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
@@ -67,7 +67,7 @@ stages:
                         Get-ChildItem $(Pipeline.Workspace)/${{artifact.safeName}}
                       displayName: Stage artifacts
                       timeoutInMinutes: 5
-                    - template: eng/pipelines/templates/scripts/create-tags-and-git-release.yml@azure-sdk-tools
+                    - template: eng/pipelines/templates/steps/create-tags-and-git-release.yml@azure-sdk-tools
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
                         PackageRepository: Nuget
@@ -143,8 +143,7 @@ stages:
                 runOnce:
                   deploy:
                     steps:
-                      - checkout: none
-                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                      - checkout: azure-sdk-tools
                       - pwsh: |
                           New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
                           New-Item -Type Directory -Name packages -Path $(Pipeline.Workspace)/${{artifact.safeName}}
@@ -157,14 +156,14 @@ stages:
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
-                      - template: tools/generic-blob-upload/publish-blobs.yml@azure-sdk-build-tools
+                      - template: eng/pipelines/templates/steps/publish-blobs.yml@azure-sdk-tools
                         parameters:
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
                           TargetLanguage: 'dotnet'
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
-                          ScriptPath: '$(AzureSDKBuildToolsPath)/scripts/copy-docs-to-blobstorage.ps1'
+                          ScriptPath: 'scripts/powershell/copy-docs-to-blobstorage.ps1'
 
           - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
             - deployment: UpdatePackageVersion
@@ -185,37 +184,16 @@ stages:
                           eng/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
                         displayName: Increment package version
                       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-                      - template: pipelines/steps/create-pull-request.yml@azure-sdk-build-tools
+                      - template: eng/pipelines/templates/steps/create-pull-request.yml@azure-sdk-tools
                         parameters:
                           RepoName: azure-sdk-for-net
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                           CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
-
-  - stage: Validation
-    dependsOn: Signing
-    jobs:
-    - job: PublishPackages
-      displayName: Publish package to burner feed
-      pool:
-        vmImage: ubuntu-16.04
-      steps:
-      - checkout: none
-      - template: tools/burner-feed/burner-feed-create.yml@azure-sdk-build-tools
-
-      - download: current
-        artifact: ${{parameters.ArtifactName}}-signed
-        timeoutInMinutes: 5
-
-      - task: NuGetCommand@2
-        displayName: 'Publish package to feed: azure-sdk-$(Build.BuildId)'
-        inputs:
-          command: push
-          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/**/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/**/*.symbols.nupkg'
-          publishVstsFeed: 'public/azure-sdk-$(Build.BuildId)'
+                          BuildToolsPath: $(AzureSDKBuildToolsPath)
 
   - stage: Integration
-    dependsOn: Validation
+    dependsOn: Signing
     jobs:
     - job: PublishPackages
       condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
@@ -234,19 +212,3 @@ stages:
         inputs:
           solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
           msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'
-
-  - stage: Cleanup
-    condition: always()
-    dependsOn:
-    - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-      - ${{ each artifact in parameters.Artifacts }}:
-        - Release_${{artifact.safeName}}
-    - Integration
-
-    jobs:
-    - job: DeleteFeed
-      pool:
-        vmImage: ubuntu-16.04
-      steps:
-      - checkout: none
-      - template: tools/burner-feed/burner-feed-delete.yml@azure-sdk-build-tools
