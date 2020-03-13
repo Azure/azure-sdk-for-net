@@ -11,13 +11,13 @@ namespace Azure.Management.Storage.Samples
 {
     public static class Program
     {
-        public static async Task Main()
+        public static async Task Main(string[] args)
         {
-            var storageAccountsClient = new StorageAccountsClient("faa080af-c1d8-40ad-9cce-e1a450ca5b57", new DefaultAzureCredential());
+            var subscriptionId = args[0];
+            var accountName = args[1];
+            var resourceGroupName = args[2];
 
-            var accountName = "my0account3";
-            var resourceGroupName = "pakrym-resources";
-
+            var storageAccountsClient = new StorageAccountsClient(subscriptionId, new DefaultAzureCredential());
             var createOperation = storageAccountsClient.StartCreate(resourceGroupName, accountName, new StorageAccountCreateParameters()
             {
                 Sku = new Sku() { Name = "Standard_LRS" },
