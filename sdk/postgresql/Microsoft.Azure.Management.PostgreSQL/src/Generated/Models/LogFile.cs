@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <summary>
         /// Initializes a new instance of the LogFile class.
         /// </summary>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="sizeInKB">Size of the log file.</param>
         /// <param name="createdTime">Creation timestamp of the log
         /// file.</param>
