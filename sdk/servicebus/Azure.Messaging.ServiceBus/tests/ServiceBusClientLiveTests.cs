@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
                 await sender.SendAsync(message);
-                await sender.CloseAsync();
+                await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
                 {
@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessage = await receiver.ReceiveAsync().ConfigureAwait(false);
                 Assert.True(Encoding.UTF8.GetString(receivedMessage.Body.ToArray()) == Encoding.UTF8.GetString(message.Body.ToArray()));
 
-                await client.CloseAsync();
+                await client.DisposeAsync();
                 if (!useSessions)
                 {
                     Assert.Throws<ObjectDisposedException>(() => client.GetReceiver(scope.QueueName));
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var message = GetMessage(useSessions ? "sessionId" : null);
                 await sender.SendAsync(message);
-                await sender.CloseAsync();
+                await sender.DisposeAsync();
                 ServiceBusReceiver receiver;
                 if (!useSessions)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 else
                 {
                     // close old receiver so we can get session lock
-                    await receiver.CloseAsync();
+                    await receiver.DisposeAsync();
                     await client.GetSessionReceiverAsync(scope.QueueName);
                 }
                 client.GetProcessor(scope.QueueName);

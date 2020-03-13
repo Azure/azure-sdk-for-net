@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorRequiresEntityName(string entityName)
         {
             Assert.That(() => new AmqpReceiver(
-                entityName: entityName,
+                entityPath: entityName,
                 receiveMode: ReceiveMode.PeekLock,
                 prefetchCount: 0,
                 connectionScope: Mock.Of<AmqpConnectionScope>(),
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorRequiresConnectionScope()
         {
             Assert.That(() => new AmqpReceiver(
-                entityName: "someQueue",
+                entityPath: "someQueue",
                 receiveMode: ReceiveMode.PeekLock,
                 prefetchCount: 0,
                 connectionScope: null,
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorRequiresTheRetryPolicy()
         {
             Assert.That(() => new AmqpReceiver(
-                entityName: "someQueue",
+                entityPath: "someQueue",
                 receiveMode: ReceiveMode.PeekLock,
                 prefetchCount: 0,
                 connectionScope: Mock.Of<AmqpConnectionScope>(),

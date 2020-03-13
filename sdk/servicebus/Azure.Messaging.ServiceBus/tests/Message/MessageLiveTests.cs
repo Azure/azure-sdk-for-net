@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await client.GetSender(scope.QueueName).SendAsync(maxSizeMessage);
                 var receiver = client.GetReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveAsync();
-                await receiver.CompleteAsync(receivedMaxSizeMessage);
+                await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
                 Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
             }
         }
