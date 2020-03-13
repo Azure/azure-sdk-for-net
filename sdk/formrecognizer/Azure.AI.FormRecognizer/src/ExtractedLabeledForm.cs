@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     public class ExtractedLabeledForm
     {
@@ -20,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             Fields = ConvertFields(documentResult.Fields, readResults);
 
-            Tables = ExtractedLayoutPage.ConvertLabeledTables(pageResults, readResults);
+            Tables = ConvertLabeledTables(pageResults, readResults);
 
             if (readResults != null)
             {
@@ -58,6 +59,21 @@ namespace Azure.AI.FormRecognizer.Models
                 rawPages.Add(new RawExtractedPage(readResult));
             }
             return rawPages;
+        }
+
+        internal static IReadOnlyList<ExtractedLabeledTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        {
+            List<ExtractedLabeledTable> tables = new List<ExtractedLabeledTable>();
+
+            foreach (var pageResult in pageResults)
+            {
+                foreach (var table in pageResult.Tables)
+                {
+                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page - 1], pageResult.Page));
+                }
+            }
+
+            return tables;
         }
     }
 }

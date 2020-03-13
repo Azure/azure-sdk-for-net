@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
-                if (update.Value.ModelInfo.Status != ModelStatus.Creating)
+                if (update.Value.ModelInfo.Status != TrainingStatus.Training)
                 {
                     _hasCompleted = true;
                     _value = new CustomModel(update.Value);

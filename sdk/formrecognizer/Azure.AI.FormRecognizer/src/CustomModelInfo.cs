@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public ModelStatus TrainingStatus { get; }
+        public TrainingStatus TrainingStatus { get; }
 
         /// <summary>
         /// </summary>

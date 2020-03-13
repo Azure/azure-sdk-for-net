@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Basic custom model information. </summary>
     internal partial class ModelInfo_internal
@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Model identifier. </summary>
         public Guid ModelId { get; set; }
         /// <summary> Status of the model. </summary>
-        public ModelStatus Status { get; set; }
+        public TrainingStatus Status { get; set; }
         /// <summary> Date and time (UTC) when the model was created. </summary>
         public DateTimeOffset CreatedDateTime { get; set; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>

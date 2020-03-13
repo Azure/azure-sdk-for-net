@@ -18,6 +18,6 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary> List of errors. </summary>
         public IList<FormRecognizerError> Errors { get; set; } = new List<FormRecognizerError>();
         /// <summary> Status of the training operation. </summary>
-        public TrainStatus Status { get; set; }
+        public TrainingOutcome Status { get; set; }
     }
 }

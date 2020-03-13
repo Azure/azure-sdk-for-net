@@ -35,20 +35,5 @@ namespace Azure.AI.FormRecognizer.Models
 
             return tables;
         }
-
-        internal static IReadOnlyList<ExtractedLabeledTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
-        {
-            List<ExtractedLabeledTable> tables = new List<ExtractedLabeledTable>();
-
-            foreach (var pageResult in pageResults)
-            {
-                foreach (var table in pageResult.Tables)
-                {
-                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page - 1], pageResult.Page));
-                }
-            }
-
-            return tables;
-        }
     }
 }

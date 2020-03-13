@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     internal partial class ModelInfo_internal : IUtf8JsonSerializable
     {
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    result.Status = property.Value.GetString().ToModelStatus();
+                    result.Status = property.Value.GetString().ToTrainingStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
