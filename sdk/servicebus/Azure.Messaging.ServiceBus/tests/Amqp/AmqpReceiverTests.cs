@@ -14,7 +14,7 @@ using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
     /// <summary>
     ///   The suite of tests for the <see cref="AmqpReceiver" />

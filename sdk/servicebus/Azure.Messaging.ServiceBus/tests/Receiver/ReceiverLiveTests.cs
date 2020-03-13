@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class ReceiverLiveTests : ServiceBusLiveTestBase
     {
@@ -315,14 +315,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveBatchAsync(messageCount)).ToArray();
 
                 var receivedMessage = receivedMessages.First();
-                var firstLockedUntilUtcTime = receivedMessage.LockedUntilUtc;
+                var firstLockedUntilUtcTime = receivedMessage.LockedUntil;
 
                 // Sleeping for 10 seconds...
                 await Task.Delay(10000);
 
                 await receiver.RenewMessageLockAsync(receivedMessage);
 
-                Assert.True(receivedMessage.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+                Assert.True(receivedMessage.LockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 
                 // Complete Messages
                 await receiver.CompleteAsync(receivedMessage);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Message
 {
     public class MessageLiveTests : ServiceBusLiveTestBase
     {

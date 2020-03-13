@@ -257,7 +257,7 @@ namespace Azure.Messaging.ServiceBus
             long sequenceNumber;
             try
             {
-                message.ScheduledEnqueueTimeUtc = scheduleEnqueueTime.UtcDateTime;
+                message.ScheduledEnqueueTime = scheduleEnqueueTime.UtcDateTime;
                 sequenceNumber = await _innerSender.ScheduleMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

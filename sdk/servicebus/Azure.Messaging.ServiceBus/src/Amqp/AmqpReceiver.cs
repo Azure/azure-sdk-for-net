@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         public override string SessionId { get; protected set; }
 
-        public override DateTime SessionLockedUntilUtc { get; protected set; }
+        public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
         private Exception LinkException { get; set; }
 
@@ -866,21 +866,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public override async Task<DateTime> RenewMessageLockAsync(
+        public override async Task<DateTimeOffset> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken)
         {
-            DateTime lockedUntilUtc = DateTime.MinValue;
+            DateTimeOffset lockedUntil = DateTimeOffset.MinValue;
             await _retryPolicy.RunOperation(
                 async (timeout) =>
                 {
-                    lockedUntilUtc = await RenewMessageLockInternalAsync(
+                    lockedUntil = await RenewMessageLockInternalAsync(
                         lockToken,
                         timeout).ConfigureAwait(false);
                 },
                 ConnectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return lockedUntilUtc;
+            return lockedUntil;
         }
 
         /// <summary>
@@ -891,11 +891,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="timeout"></param>
-        private async Task<DateTime> RenewMessageLockInternalAsync(
+        private async Task<DateTimeOffset> RenewMessageLockInternalAsync(
             string lockToken,
             TimeSpan timeout)
         {
-            DateTime lockedUntilUtc;
+            DateTimeOffset lockedUntilUtc;
 
             // Create an AmqpRequest Message to renew  lock
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
@@ -936,7 +936,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             try
             {
-                DateTime lockedUntil = default;
+                DateTimeOffset lockedUntil;
                 await _retryPolicy.RunOperation(
                     async (timeout) =>
                     {
@@ -945,7 +945,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     },
                     ConnectionScope,
                     cancellationToken).ConfigureAwait(false);
-                SessionLockedUntilUtc = lockedUntil;
+                SessionLockedUntil = lockedUntil;
             }
             catch (Exception exception)
             {
@@ -959,7 +959,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // MessagingEventSource.Log.MessageRenewLockStop(this.SessionId);
         }
 
-        internal async Task<DateTime> RenewSessionLockInternal(
+        internal async Task<DateTimeOffset> RenewSessionLockInternal(
             TimeSpan timeout)
         {
             try
@@ -979,16 +979,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     amqpRequestMessage,
                     timeout).ConfigureAwait(false);
 
-                DateTime lockedUntilUtc;
+                DateTimeOffset lockedUntil;
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
-                    lockedUntilUtc = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+                    lockedUntil = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
                 }
                 else
                 {
                     throw amqpResponseMessage.ToMessagingContractException();
                 }
-                return lockedUntilUtc;
+                return lockedUntil;
             }
             catch (Exception exception)
             {
@@ -1055,7 +1055,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;
-                            _requestResponseLockedMessages.AddOrUpdate(lockToken, message.LockedUntilUtc);
+                            _requestResponseLockedMessages.AddOrUpdate(lockToken, message.LockedUntil);
                         }
 
                         messages.Add(message);
@@ -1163,7 +1163,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     throw new ServiceBusException(true, Resources.AmqpFieldSessionId);
                 }
                 SessionId = tempSessionId;
-                SessionLockedUntilUtc = link.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
+                SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
                 ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                 : DateTime.MinValue;
                 link.Closed += OnSessionReceiverLinkClosed;

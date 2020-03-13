@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class ProcessorLiveTests : ServiceBusLiveTestBase
     {
@@ -249,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         Interlocked.Increment(ref messageCt);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(receiver.SessionManager.LockedUntilUtc);
+                        Assert.IsNotNull(receiver.SessionManager.LockedUntil);
                     }
                     finally
                     {
@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         await receiver.CompleteAsync(message);
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(receiver.SessionManager.LockedUntilUtc);
+                        Assert.IsNotNull(receiver.SessionManager.LockedUntil);
                     }
                     finally
                     {

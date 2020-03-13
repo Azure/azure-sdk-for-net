@@ -179,9 +179,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            if ((sbMessage.ScheduledEnqueueTimeUtc != null) && sbMessage.ScheduledEnqueueTimeUtc > DateTime.MinValue)
+            if ((sbMessage.ScheduledEnqueueTime != null) && sbMessage.ScheduledEnqueueTime > DateTimeOffset.MinValue)
             {
-                amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTimeUtc);
+                amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTime.UtcDateTime);
             }
 
             if (sbMessage.PartitionKey != null)
@@ -350,10 +350,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     switch (key)
                     {
                         case EnqueuedTimeUtcName:
-                            sbMessage.EnqueuedTimeUtc = (DateTime)pair.Value;
+                            sbMessage.EnqueuedTime = (DateTime)pair.Value;
                             break;
                         case ScheduledEnqueueTimeUtcName:
-                            sbMessage.ScheduledEnqueueTimeUtc = (DateTime)pair.Value;
+                            sbMessage.ScheduledEnqueueTime = (DateTime)pair.Value;
                             break;
                         case SequenceNumberName:
                             sbMessage.SequenceNumber = (long)pair.Value;
@@ -362,7 +362,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             sbMessage.EnqueuedSequenceNumber = (long)pair.Value;
                             break;
                         case LockedUntilName:
-                            sbMessage.LockedUntilUtc = (DateTime)pair.Value;
+                            sbMessage.LockedUntil = (DateTime)pair.Value >= DateTimeOffset.MaxValue.UtcDateTime ?
+                                DateTimeOffset.MaxValue : (DateTime)pair.Value;
                             break;
                         case PartitionKeyName:
                             sbMessage.PartitionKey = (string)pair.Value;

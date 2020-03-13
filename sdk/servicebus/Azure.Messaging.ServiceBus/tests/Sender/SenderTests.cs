@@ -12,7 +12,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Sender
 {
     public class SenderTests : ServiceBusTestBase
     {
