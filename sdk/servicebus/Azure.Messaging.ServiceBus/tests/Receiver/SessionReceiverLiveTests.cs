@@ -231,18 +231,15 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
 
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
                 foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
-                    receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                     Assert.AreEqual(item.DeliveryCount, 1);
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
 
                 messageEnum.Reset();
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
@@ -357,25 +354,19 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
                     sessionId: useSpecificSession ? sessionId : null);
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                while (receivedMessageCount < messageCount)
+                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
-                    {
-                        receivedMessageCount++;
-                        messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                        await receiver.AbandonAsync(item.LockToken);
-                        Assert.AreEqual(item.DeliveryCount, 1);
-                    }
+                    messageEnum.MoveNext();
+                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                    await receiver.AbandonAsync(item.LockToken);
+                    Assert.AreEqual(item.DeliveryCount, 1);
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
 
                 messageEnum.Reset();
-                receivedMessageCount = 0;
+                var receivedMessageCount = 0;
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
