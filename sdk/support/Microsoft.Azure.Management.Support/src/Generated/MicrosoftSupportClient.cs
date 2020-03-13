@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Support
             SupportTickets = new SupportTicketsOperations(this);
             Communications = new CommunicationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-05-01-preview";
+            ApiVersion = "2020-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

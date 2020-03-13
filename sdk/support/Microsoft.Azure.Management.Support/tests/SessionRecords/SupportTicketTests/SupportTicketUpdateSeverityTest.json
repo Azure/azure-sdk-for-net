@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7de8c61f-beb0-4a95-812b-05cdf0ce3513"
+          "3052adc1-f339-4356-bf56-115b48b7c519"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Mar 2020 01:56:44 GMT"
+          "Thu, 12 Mar 2020 01:58:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,19 +33,19 @@
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11994"
+          "11987"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3ee86c56-e2be-4cd7-abff-06197c087c21"
+          "bc030146-ff6f-40ee-a8a7-8191aaa2afef"
         ],
         "x-ms-correlation-request-id": [
-          "3ee86c56-e2be-4cd7-abff-06197c087c21"
+          "bc030146-ff6f-40ee-a8a7-8191aaa2afef"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20200312T015644Z:3ee86c56-e2be-4cd7-abff-06197c087c21"
+          "CENTRALUSEUAP:20200312T015839Z:bc030146-ff6f-40ee-a8a7-8191aaa2afef"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -64,13 +64,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications?api-version=2020-04-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zZXJ2aWNlcy80ODRlMjIzNi1iYzZkLWIxYmItNzZkMi03ZDA5Mjc4Y2Y5ZWEvcHJvYmxlbUNsYXNzaWZpY2F0aW9ucz9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestUri": "/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications?api-version=2020-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zZXJ2aWNlcy81MTdmMmRhNi03OGZkLTA0OTgtNGUyMi1hZDI2OTk2YjFkZmMvcHJvYmxlbUNsYXNzaWZpY2F0aW9ucz9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "56202cf6-c479-4887-9707-219b375097cd"
+          "5df403f3-1cd9-4c68-9991-33f55b1bb69f"
         ],
         "accept-language": [
           "en-US"
@@ -87,7 +87,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 12 Mar 2020 01:56:44 GMT"
+          "Thu, 12 Mar 2020 01:58:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -96,25 +96,25 @@
           "Kestrel"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "11993"
+          "11986"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a39a0cb8-d8e6-4ba1-9922-a936daca7380"
+          "b652a8a8-bfc0-4aa8-b33a-b640337732f8"
         ],
         "x-ms-correlation-request-id": [
-          "a39a0cb8-d8e6-4ba1-9922-a936daca7380"
+          "b652a8a8-bfc0-4aa8-b33a-b640337732f8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20200312T015644Z:a39a0cb8-d8e6-4ba1-9922-a936daca7380"
+          "CENTRALUSEUAP:20200312T015840Z:b652a8a8-bfc0-4aa8-b33a-b640337732f8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "4154"
+          "16930"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,11 +123,270 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/9dfa5fc1-4b66-106b-d3f3-453568873162\",\r\n      \"name\": \"9dfa5fc1-4b66-106b-d3f3-453568873162\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"I can't configure Export of Activity Log / Configuring export in Azure Portal\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/feb105d8-f457-4af4-c887-ad87f35bd81f\",\r\n      \"name\": \"feb105d8-f457-4af4-c887-ad87f35bd81f\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"I can't configure Export of Activity Log / Configuring export using PowerShell or CLI\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/dedd4374-f696-d2a7-5e94-e97af375eb22\",\r\n      \"name\": \"dedd4374-f696-d2a7-5e94-e97af375eb22\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"I can't configure Export of Activity Log / Configuring export using REST API\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/68a53b41-9db6-818d-868c-819510efe106\",\r\n      \"name\": \"68a53b41-9db6-818d-868c-819510efe106\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"I can't view Activity Log in Log Analytics\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/682cdc67-9e71-35b1-2931-d6e691f4eb91\",\r\n      \"name\": \"682cdc67-9e71-35b1-2931-d6e691f4eb91\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Integration with 3rd party SIEM tools\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/c9805a0b-9410-1708-2989-0befc008e963\",\r\n      \"name\": \"c9805a0b-9410-1708-2989-0befc008e963\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Activity Log Alerts\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/c98da85c-d35d-a0de-66a5-adec086b6b04\",\r\n      \"name\": \"c98da85c-d35d-a0de-66a5-adec086b6b04\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Viewing or Querying Activity Log / Expected information is missing in the log\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/2e5a91a4-146b-5521-250b-feb114bb8564\",\r\n      \"name\": \"2e5a91a4-146b-5521-250b-feb114bb8564\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Viewing or Querying Activity Log / I can’t query Activity Log using CLI\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/4ed4f45e-35df-d0b9-721c-87421d9f10c5\",\r\n      \"name\": \"4ed4f45e-35df-d0b9-721c-87421d9f10c5\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Viewing or Querying Activity Log / I can’t query Activity Log using PowerShell\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/a4816543-0185-1eec-7a4c-cdb1bb8f89a6\",\r\n      \"name\": \"a4816543-0185-1eec-7a4c-cdb1bb8f89a6\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Viewing or Querying Activity Log / I can’t query Activity Log using REST API\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/48b8f1d3-a8bc-bdc8-e27f-0196741a0d0a\",\r\n      \"name\": \"48b8f1d3-a8bc-bdc8-e27f-0196741a0d0a\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Viewing or Querying Activity Log / I cannot find the logs for expected event\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/484e2236-bc6d-b1bb-76d2-7d09278cf9ea/problemClassifications/a1025835-1fbf-b1f2-f87a-e9d530e2a38d\",\r\n      \"name\": \"a1025835-1fbf-b1f2-f87a-e9d530e2a38d\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Issues with Viewing or Querying Activity Log / My logs are not showing up when expected\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n      \"name\": \"3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Add or update VAT, tax id, PO number or profile information\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/0c04be9f-8434-be1f-8a08-a6a25a730844\",\r\n      \"name\": \"0c04be9f-8434-be1f-8a08-a6a25a730844\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Pricing / Assist me with pricing model\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/15da022a-a108-c566-b944-c6d46ccd6479\",\r\n      \"name\": \"15da022a-a108-c566-b944-c6d46ccd6479\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Pricing / Help me understand when I will be charged\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/1ca6ee84-ab07-56ee-b6d2-d508c7120710\",\r\n      \"name\": \"1ca6ee84-ab07-56ee-b6d2-d508c7120710\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Pricing / I have questions about my spending limit\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/dc1655d0-baa0-76a1-8521-717732d5eb5a\",\r\n      \"name\": \"dc1655d0-baa0-76a1-8521-717732d5eb5a\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Pricing / My issue is not listed above\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/dd3d4786-02f7-c870-a97a-ac839db5d668\",\r\n      \"name\": \"dd3d4786-02f7-c870-a97a-ac839db5d668\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Payment / Change or update my payment method\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/e25dacdb-2c22-d5c9-108e-c43a5e43872b\",\r\n      \"name\": \"e25dacdb-2c22-d5c9-108e-c43a5e43872b\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Payment / Make immediate payment\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/a71b6140-5657-404b-f83e-a7dd1b63fcbe\",\r\n      \"name\": \"a71b6140-5657-404b-f83e-a7dd1b63fcbe\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Payment / Switch to pay by invoice\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/f3f57428-9dc8-14ed-8aef-08608b50afca\",\r\n      \"name\": \"f3f57428-9dc8-14ed-8aef-08608b50afca\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Payment / Help me with supported currency or payment options\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/d0f16bf7-e011-3f3b-1c26-3147f84e0896\",\r\n      \"name\": \"d0f16bf7-e011-3f3b-1c26-3147f84e0896\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Assistance with bill or usage / Help me understand my bill and usage\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/01a923f7-8ef0-c400-50ef-d6ef3a163cd7\",\r\n      \"name\": \"01a923f7-8ef0-c400-50ef-d6ef3a163cd7\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Assistance with bill or usage / Request a copy of my bill or usage\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/6d607aed-0da2-0322-dfd1-987002d9f410\",\r\n      \"name\": \"6d607aed-0da2-0322-dfd1-987002d9f410\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Assistance with bill or usage / My issue is not listed above\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/5c3e2a5f-619a-335b-b5ab-9dec9537d66b\",\r\n      \"name\": \"5c3e2a5f-619a-335b-b5ab-9dec9537d66b\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Unexpected Charges / I'm still getting charged for a cancelled service\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/5685912f-1c11-616b-1d48-54646f49a5ea\",\r\n      \"name\": \"5685912f-1c11-616b-1d48-54646f49a5ea\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Unexpected Charges / I need assistance with free trial or account charges\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/13317528-9ad5-fa15-c5c7-898cfaddd700\",\r\n      \"name\": \"13317528-9ad5-fa15-c5c7-898cfaddd700\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Unexpected Charges / Help me understand why I see a charge\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/baa2cd27-9baf-a57e-0d3b-e9ecf84286b2\",\r\n      \"name\": \"baa2cd27-9baf-a57e-0d3b-e9ecf84286b2\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Unexpected Charges / My issue is not listed above\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/057f6615-3650-5370-57b2-e1a64af3b037\",\r\n      \"name\": \"057f6615-3650-5370-57b2-e1a64af3b037\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Reserved instance requests / Cancel or change an existing reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/69103c54-633a-058d-a66b-6ab02c9c806e\",\r\n      \"name\": \"69103c54-633a-058d-a66b-6ab02c9c806e\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Reserved instance requests / How am I billed for Windows and SQL when reservation discounts is applied?\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/0b759e67-2619-49bf-441d-ed952a5f32c5\",\r\n      \"name\": \"0b759e67-2619-49bf-441d-ed952a5f32c5\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Reserved instance requests / Reservation billing and invoice\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/f3d95681-a339-3bdb-9825-1f3c09d376f2\",\r\n      \"name\": \"f3d95681-a339-3bdb-9825-1f3c09d376f2\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Reserved instance requests / Unable to purchase or questions before purchase\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/fb851540-8284-7777-9d25-ffbfe5ec8eb8\",\r\n      \"name\": \"fb851540-8284-7777-9d25-ffbfe5ec8eb8\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Reserved instance requests / Which resource (VM, etc.) consumed the reservation?\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/cff282e6-4e7b-2958-af63-320cff7dcbab\",\r\n      \"name\": \"cff282e6-4e7b-2958-af63-320cff7dcbab\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Reserved instance requests / Reservation underutilized or not applying to my resource\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/a2906ca5-ef36-e2d4-52dd-3144be0dd172\",\r\n      \"name\": \"a2906ca5-ef36-e2d4-52dd-3144be0dd172\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Billing API / Download consumption data by using billing API\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/112c798f-1ff9-8168-193d-a7f171564dac\",\r\n      \"name\": \"112c798f-1ff9-8168-193d-a7f171564dac\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Billing API / General billing API and EA API questions\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/8b6c2e08-cd75-c2d1-7a12-e4daf1e16f2e\",\r\n      \"name\": \"8b6c2e08-cd75-c2d1-7a12-e4daf1e16f2e\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Refund request\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/41271b30-6cc3-7c87-f423-f1e4e24adde5\",\r\n      \"name\": \"41271b30-6cc3-7c87-f423-f1e4e24adde5\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / Help me understand my cost recommendations\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/9bc71cda-662c-0336-aee7-6f556d7c0fd2\",\r\n      \"name\": \"9bc71cda-662c-0336-aee7-6f556d7c0fd2\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / I have an issue with Cost Management APIs (Query, Exports, Budgets, Forecast or Usage details)\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/6bb902c6-b903-0b03-f17f-37ca5ce605c2\",\r\n      \"name\": \"6bb902c6-b903-0b03-f17f-37ca5ce605c2\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / I see costs but other data is missing or not as expected (i.e. tags, service names etc.)\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/4f8c94bd-0ef0-52b2-1714-7dd131b166fd\",\r\n      \"name\": \"4f8c94bd-0ef0-52b2-1714-7dd131b166fd\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / I need assistance with alerts, budgets or forecasted cost\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/9359c605-5360-f754-2195-99e1f42a598b\",\r\n      \"name\": \"9359c605-5360-f754-2195-99e1f42a598b\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / I see unexpected costs in “Cost Analysis” or in “PowerBI”\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/76ea362a-2219-833b-d371-d91738e4e31a\",\r\n      \"name\": \"76ea362a-2219-833b-d371-d91738e4e31a\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / Cost data is inconsistent or lagging\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/a7096926-dcd0-2504-ba61-a40ec81b9566\",\r\n      \"name\": \"a7096926-dcd0-2504-ba61-a40ec81b9566\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / I get an error when setting up exports or I didn’t receive the exported file\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/750bbf33-ccd8-21b8-03be-db99ca762450\",\r\n      \"name\": \"750bbf33-ccd8-21b8-03be-db99ca762450\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / Need assistance with AWS connector issue or I see unexpected AWS costs\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/44114011-6a66-e902-c00f-e419b6b4509f\",\r\n      \"name\": \"44114011-6a66-e902-c00f-e419b6b4509f\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / I have access but cost is not loading for me\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/9159711c-9fcc-f727-c69e-778405723652\",\r\n      \"name\": \"9159711c-9fcc-f727-c69e-778405723652\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cost Management / My issue is not listed above\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/8e830758-ed8f-4281-ee9e-f0a8deb333b3\",\r\n      \"name\": \"8e830758-ed8f-4281-ee9e-f0a8deb333b3\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Account lockout or requesting access from an alternate admin\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/edb757ad-16ed-b106-350e-5f489a989a39\",\r\n      \"name\": \"edb757ad-16ed-b106-350e-5f489a989a39\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Cost discrepancy or missing data\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/00f795fb-6024-045b-72b9-c016af720793\",\r\n      \"name\": \"00f795fb-6024-045b-72b9-c016af720793\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with Azure resource group tags\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/f043d503-ea2f-2c82-1c5a-6d1ad376be0b\",\r\n      \"name\": \"f043d503-ea2f-2c82-1c5a-6d1ad376be0b\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with budgets\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/c25e0c9b-c44b-580f-488a-db3b5cc96c89\",\r\n      \"name\": \"c25e0c9b-c44b-580f-488a-db3b5cc96c89\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with Category Manager\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/2c46f257-c6e9-fa48-1ffd-77d0ac25cbed\",\r\n      \"name\": \"2c46f257-c6e9-fa48-1ffd-77d0ac25cbed\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with cost allocation\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/52b7d7af-754c-f42f-d57a-1206c8901ada\",\r\n      \"name\": \"52b7d7af-754c-f42f-d57a-1206c8901ada\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with dashboards or reports\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/495f67ae-f501-88c4-51bc-629bfd5c5807\",\r\n      \"name\": \"495f67ae-f501-88c4-51bc-629bfd5c5807\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with optimization\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/183684e7-ab21-55f5-91ad-df584f42a744\",\r\n      \"name\": \"183684e7-ab21-55f5-91ad-df584f42a744\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Help with user management\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/c73b82b2-c47b-c407-2895-6883053ccea6\",\r\n      \"name\": \"c73b82b2-c47b-c407-2895-6883053ccea6\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Setup help for AWS account\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/c9b967f6-4616-e27b-abad-9f0049fc0a89\",\r\n      \"name\": \"c9b967f6-4616-e27b-abad-9f0049fc0a89\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Setup help for Azure CSP (Secret Key or Rate ID)\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/6f7b5bce-6e13-6f21-b1b6-e25a2f418e17\",\r\n      \"name\": \"6f7b5bce-6e13-6f21-b1b6-e25a2f418e17\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Setup help for Azure EA (ARM or API Key)\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/472ab48c-aaae-dc44-2b0e-c2742faeaed5\",\r\n      \"name\": \"472ab48c-aaae-dc44-2b0e-c2742faeaed5\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Setup help for Azure web direct (subscription owner or offer ID)\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/73d1507c-b625-0a03-7e04-8a44f8308646\",\r\n      \"name\": \"73d1507c-b625-0a03-7e04-8a44f8308646\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / setup help for CSP custom charges\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/55a8faee-55cb-d8ad-caad-de9def77944a\",\r\n      \"name\": \"55a8faee-55cb-d8ad-caad-de9def77944a\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Setup help for Google account\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/5fe819a9-d7f9-5f17-1ed8-ddf099ff2542\",\r\n      \"name\": \"5fe819a9-d7f9-5f17-1ed8-ddf099ff2542\",\r\n      \"type\": \"Microsoft.Support/problemClassifications\",\r\n      \"properties\": {\r\n        \"displayName\": \"Cloudyn Legacy / Setup help for memory metrics\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest7891?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cy9TZGtOZXRUZXN0Nzg5MT9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \"test ticket from sdk test. please ignore and close\",\r\n    \"problemClassificationId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n    \"severity\": \"minimal\",\r\n    \"contactDetails\": {\r\n      \"firstName\": \"first name\",\r\n      \"lastName\": \"last name\",\r\n      \"preferredContactMethod\": \"Email\",\r\n      \"primaryEmailAddress\": \"user@contoso.com\",\r\n      \"preferredTimeZone\": \"pacific standard time\",\r\n      \"country\": \"usa\",\r\n      \"preferredSupportLanguage\": \"en-us\"\r\n    },\r\n    \"title\": \"test ticket from sdk test. please ignore and close\",\r\n    \"serviceId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4b07e2fe-a3d8-41bf-bd73-fab7136fc775"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Support.MicrosoftSupportClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "775"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 12 Mar 2020 01:58:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://centraluseuap.management.azure.com/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/operationResults/bdb585fb-d49f-4bc3-a85f-9cbfd50b5ee4?api-version=2020-04-01"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Azure-AsyncOperation": [
+          "https://centraluseuap.management.azure.com/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/operationsStatus/bdb585fb-d49f-4bc3-a85f-9cbfd50b5ee4?api-version=2020-04-01"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "dd7f58f7-b545-46da-a82c-2dd89d44b1e8"
+        ],
+        "x-ms-correlation-request-id": [
+          "dd7f58f7-b545-46da-a82c-2dd89d44b1e8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20200312T015840Z:dd7f58f7-b545-46da-a82c-2dd89d44b1e8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/operationsStatus/bdb585fb-d49f-4bc3-a85f-9cbfd50b5ee4?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9vcGVyYXRpb25zU3RhdHVzL2JkYjU4NWZiLWQ0OWYtNGJjMy1hODVmLTljYmZkNTBiNWVlND9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Support.MicrosoftSupportClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 12 Mar 2020 01:59:10 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b607aaa5-d4f9-43fd-a28f-5981d821462d"
+        ],
+        "x-ms-correlation-request-id": [
+          "b607aaa5-d4f9-43fd-a28f-5981d821462d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20200312T015911Z:b607aaa5-d4f9-43fd-a28f-5981d821462d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "212"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/operationsStatus/bdb585fb-d49f-4bc3-a85f-9cbfd50b5ee4\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"supportTicketCreationWarning\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest7891?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cy9TZGtOZXRUZXN0Nzg5MT9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Support.MicrosoftSupportClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 12 Mar 2020 01:59:11 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "5a24c5a7-025e-498a-8d2e-2782d1b624e9"
+        ],
+        "x-ms-correlation-request-id": [
+          "5a24c5a7-025e-498a-8d2e-2782d1b624e9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20200312T015911Z:5a24c5a7-025e-498a-8d2e-2782d1b624e9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1304"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest7891\",\r\n  \"name\": \"SdkNetTest7891\",\r\n  \"type\": \"Microsoft.Support/supportTickets\",\r\n  \"properties\": {\r\n    \"description\": \"test ticket from sdk test. please ignore and close\",\r\n    \"problemClassificationId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n    \"problemClassificationDisplayName\": \"Add or update VAT, tax id, PO number or profile information\",\r\n    \"severity\": \"Minimal\",\r\n    \"require24X7Response\": false,\r\n    \"enrollmentId\": \"\",\r\n    \"contactDetails\": {\r\n      \"firstName\": \"first name\",\r\n      \"lastName\": \"last name\",\r\n      \"preferredContactMethod\": \"Email\",\r\n      \"primaryEmailAddress\": \"user@contoso.com\",\r\n      \"preferredTimeZone\": \"Pacific Standard Time\",\r\n      \"country\": \"USA\",\r\n      \"preferredSupportLanguage\": \"en-us\"\r\n    },\r\n    \"serviceLevelAgreement\": {\r\n      \"startTime\": \"2020-03-12T13:00:00Z\",\r\n      \"expirationTime\": \"2020-03-12T17:00:00Z\",\r\n      \"slaMinutes\": 240\r\n    },\r\n    \"supportEngineer\": {},\r\n    \"supportPlanType\": \"Premier\",\r\n    \"supportTicketId\": \"120031221000105\",\r\n    \"title\": \"test ticket from sdk test. please ignore and close\",\r\n    \"serviceId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc\",\r\n    \"serviceDisplayName\": \"Billing\",\r\n    \"status\": \"Open\",\r\n    \"createdDate\": \"2020-03-12T01:58:45Z\",\r\n    \"modifiedDate\": \"2020-03-12T01:58:46Z\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest7891?api-version=2020-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cy9TZGtOZXRUZXN0Nzg5MT9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"severity\": \"moderate\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "af3fbe99-66f8-4319-9e79-d64b756f48ba"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Support.MicrosoftSupportClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "30"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 12 Mar 2020 01:59:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "257633ee-3517-49a7-abcc-9d5c5161506e"
+        ],
+        "x-ms-correlation-request-id": [
+          "257633ee-3517-49a7-abcc-9d5c5161506e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20200312T015914Z:257633ee-3517-49a7-abcc-9d5c5161506e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1305"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest7891\",\r\n  \"name\": \"SdkNetTest7891\",\r\n  \"type\": \"Microsoft.Support/supportTickets\",\r\n  \"properties\": {\r\n    \"description\": \"test ticket from sdk test. please ignore and close\",\r\n    \"problemClassificationId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n    \"problemClassificationDisplayName\": \"Add or update VAT, tax id, PO number or profile information\",\r\n    \"severity\": \"Moderate\",\r\n    \"require24X7Response\": false,\r\n    \"enrollmentId\": \"\",\r\n    \"contactDetails\": {\r\n      \"firstName\": \"first name\",\r\n      \"lastName\": \"last name\",\r\n      \"preferredContactMethod\": \"Email\",\r\n      \"primaryEmailAddress\": \"user@contoso.com\",\r\n      \"preferredTimeZone\": \"Pacific Standard Time\",\r\n      \"country\": \"USA\",\r\n      \"preferredSupportLanguage\": \"en-us\"\r\n    },\r\n    \"serviceLevelAgreement\": {\r\n      \"startTime\": \"2020-03-12T13:00:00Z\",\r\n      \"expirationTime\": \"2020-03-12T17:00:00Z\",\r\n      \"slaMinutes\": 240\r\n    },\r\n    \"supportEngineer\": {},\r\n    \"supportPlanType\": \"Premier\",\r\n    \"supportTicketId\": \"120031221000105\",\r\n    \"title\": \"test ticket from sdk test. please ignore and close\",\r\n    \"serviceId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc\",\r\n    \"serviceDisplayName\": \"Billing\",\r\n    \"status\": \"Open\",\r\n    \"createdDate\": \"2020-03-12T01:58:45Z\",\r\n    \"modifiedDate\": \"2020-03-12T01:59:12Z\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
-  "Names": {},
+  "Names": {
+    "SupportTicketUpdateSeverityTest": [
+      "SdkNetTest7891"
+    ]
+  },
   "Variables": {
     "SubscriptionId": "76cb77fa-8b17-4eab-9493-b65dace99813"
   }

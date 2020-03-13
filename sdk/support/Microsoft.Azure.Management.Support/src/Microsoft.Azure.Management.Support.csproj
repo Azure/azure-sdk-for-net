@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Support</PackageId>
     <Description>Azure Support SDK allows creation and management of Azure support tickets. Using the operations for support case management, you can (1) Open a technical, billing, subscription management, or quota increase support ticket, (2) Get list and detailed information about support tickets, (3) Update severity, contact information of a support ticket (4) Add a new communication and get list of communications for a support ticket.</Description>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Support</AssemblyName>
-    <PackageTags>Management.Suppport;Support;SupportTickets</PackageTags>
+    <PackageTags>Management.Suppport;Support;SupportTickets;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public preview release of the Azure Support SDK. It allows creation and management of Azure support tickets. Using the operations for support case management, you can (1) Open a technical, billing, subscription management, or quota increase support ticket, (2) Get list and detailed information about support tickets, (3) Update severity, contact information of a support ticket (4) Add a new communication and get list of communications for a support ticket.
+        This is a stable release of the Azure Support SDK. It allows creation and management of Azure support tickets. Using the operations for support case management, you can (1) Open a technical, billing, subscription management, or quota increase support ticket, (2) Get list and detailed information about support tickets, (3) Update severity, contact information of a support ticket (4) Add a new communication and get list of communications for a support ticket.
       ]]>
 </PackageReleaseNotes>
   </PropertyGroup>
