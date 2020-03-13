@@ -131,13 +131,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var maximumSize = 100;
             var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
-            var eventMessages = new AmqpMessage[3];
+            var messages = new AmqpMessage[3];
 
             var batch = new AmqpMessageBatch(options);
 
-            for (var index = 0; index < eventMessages.Length; ++index)
+            for (var index = 0; index < messages.Length; ++index)
             {
-                if (index == eventMessages.Length - 1)
+                if (index == messages.Length - 1)
                 {
                     Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[10])), Is.False, "The final addition should not fit in the available space.");
                 }
