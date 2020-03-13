@@ -238,23 +238,23 @@ namespace Azure.Messaging.ServiceBus
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="scheduleEnqueueTime">The UTC time at which the message should be available for processing</param>
+        /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
-            DateTimeOffset scheduleEnqueueTime,
+            DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ScheduleMessageStart(Identifier, scheduleEnqueueTime);
+            ServiceBusEventSource.Log.ScheduleMessageStart(Identifier, scheduledEnqueueTime);
 
             long sequenceNumber;
             try
             {
-                message.ScheduledEnqueueTimeUtc = scheduleEnqueueTime.UtcDateTime;
+                message.ScheduledEnqueueTime = scheduledEnqueueTime.UtcDateTime;
                 sequenceNumber = await _innerSender.ScheduleMessageAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

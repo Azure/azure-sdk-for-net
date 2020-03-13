@@ -680,11 +680,11 @@ namespace Azure.Messaging.ServiceBus
                     DateTimeOffset lockedUntil = default;
                     if (IsSessionProcessor)
                     {
-                        lockedUntil = receiver.SessionManager.LockedUntilUtc;
+                        lockedUntil = receiver.SessionManager.LockedUntil;
                     }
                     else
                     {
-                        lockedUntil = message.LockedUntilUtc;
+                        lockedUntil = message.LockedUntil;
                     }
 
                     TimeSpan delay = CalculateRenewDelay(lockedUntil);
@@ -739,9 +739,9 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntilUtc)
+        private static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
         {
-            var remainingTime = lockedUntilUtc - DateTime.UtcNow;
+            var remainingTime = lockedUntil - DateTimeOffset.UtcNow;
 
             if (remainingTime < TimeSpan.FromMilliseconds(400))
             {

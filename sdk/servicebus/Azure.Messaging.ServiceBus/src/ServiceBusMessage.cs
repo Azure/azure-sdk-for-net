@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
         /// It is utilized to delay messages sending to a specific time in the future.</value>
         /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
         /// depends on the queue's workload and its state.</remarks>
-        public DateTime ScheduledEnqueueTimeUtc { get; set; }
+        public DateTimeOffset ScheduledEnqueueTime { get; set; }
 
         // TODO: Calculate the size of the properties and body
         /// <summary>

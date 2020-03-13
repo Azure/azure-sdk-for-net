@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
-        public abstract DateTime SessionLockedUntilUtc { get; protected set; }
+        public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
         /// <summary>
         /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
@@ -187,7 +187,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public abstract Task<DateTime> RenewMessageLockAsync(
+        public abstract Task<DateTimeOffset> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken);
 

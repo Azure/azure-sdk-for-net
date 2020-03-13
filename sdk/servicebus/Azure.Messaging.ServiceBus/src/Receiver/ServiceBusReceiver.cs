@@ -714,10 +714,10 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            DateTime lockedUntilUtc = await RenewMessageLockAsync(
+            DateTimeOffset lockedUntil = await RenewMessageLockAsync(
                 message.LockToken,
                 cancellationToken).ConfigureAwait(false);
-            message.LockedUntilUtc = lockedUntilUtc;
+            message.LockedUntil = lockedUntil;
 
         }
 
@@ -734,7 +734,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to renew the lock for.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public virtual async Task<DateTime> RenewMessageLockAsync(
+        public virtual async Task<DateTimeOffset> RenewMessageLockAsync(
             string lockToken,
             CancellationToken cancellationToken = default)
         {
@@ -744,10 +744,10 @@ namespace Azure.Messaging.ServiceBus
             ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewMessageLockStart(Identifier, 1, lockToken);
-            DateTime lockedUntilUtc;
+            DateTimeOffset lockedUntil;
             try
             {
-                lockedUntilUtc = await _innerReceiver.RenewMessageLockAsync(
+                lockedUntil = await _innerReceiver.RenewMessageLockAsync(
                     lockToken,
                     cancellationToken).ConfigureAwait(false);
             }
@@ -759,7 +759,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewMessageLockComplete(Identifier);
-            return lockedUntilUtc;
+            return lockedUntil;
         }
 
         /// <summary>

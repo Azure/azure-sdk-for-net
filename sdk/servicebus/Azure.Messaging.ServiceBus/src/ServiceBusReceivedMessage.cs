@@ -75,7 +75,7 @@ namespace Azure.Messaging.ServiceBus
         ///     instant until which the message is held locked in the queue/subscription. When the lock expires, the <see cref="DeliveryCount"/>
         ///     is incremented and the message is again available for retrieval. This property is read-only.
         /// </remarks>
-        public DateTime LockedUntilUtc { get; internal set; }
+        public DateTimeOffset LockedUntil { get; internal set; }
 
         /// <summary>Gets the unique number assigned to a message by Service Bus.</summary>
         /// <remarks>
@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus
         ///    This value can be used as an authoritative and neutral arrival time indicator when
         ///    the receiver does not want to trust the sender's clock. This property is read-only.
         /// </remarks>
-        public DateTime EnqueuedTimeUtc { get; internal set; }
+        public DateTimeOffset EnqueuedTime { get; internal set; }
 
         internal Guid LockTokenGuid
         {
@@ -136,17 +136,17 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>
         ///  The UTC instant at which the message is marked for removal and no longer available for retrieval
         ///  from the entity due to expiration. Expiry is controlled by the <see cref="ServiceBusMessage.TimeToLive"/> property
-        ///  and this property is computed from <see cref="EnqueuedTimeUtc"/>+<see cref="ServiceBusMessage.TimeToLive"/></remarks>
-        public DateTime ExpiresAtUtc
+        ///  and this property is computed from <see cref="EnqueuedTime"/>+<see cref="ServiceBusMessage.TimeToLive"/></remarks>
+        public DateTimeOffset ExpiresAt
         {
             get
             {
-                if (TimeToLive >= DateTime.MaxValue.Subtract(EnqueuedTimeUtc))
+                if (TimeToLive >= DateTimeOffset.MaxValue.Subtract(EnqueuedTime))
                 {
-                    return DateTime.MaxValue;
+                    return DateTimeOffset.MaxValue;
                 }
 
-                return EnqueuedTimeUtc.Add(TimeToLive);
+                return EnqueuedTime.Add(TimeToLive);
             }
         }
     }

@@ -184,7 +184,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 await using var receiver = client.GetReceiver(scope.QueueName);
                 ServiceBusMessage msg = await receiver.PeekAtAsync(sequenceNum);
-                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
+                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
 
                 await sender.CancelScheduledMessageAsync(sequenceNum);
                 msg = await receiver.PeekAtAsync(sequenceNum);
@@ -211,7 +211,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 // receive should still work
                 await using var receiver = client.GetReceiver(scope.QueueName);
                 ServiceBusMessage msg = await receiver.PeekAtAsync(sequenceNum);
-                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
+                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
             }
         }
 
