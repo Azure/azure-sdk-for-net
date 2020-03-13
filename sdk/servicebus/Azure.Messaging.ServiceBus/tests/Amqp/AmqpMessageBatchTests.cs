@@ -7,7 +7,6 @@ using System.Linq;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
@@ -103,18 +102,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddAcceptsAMessageSmallerThanTheMaximumSize()
         {
             var maximumSize = 50;
-            var messageSize = 40;
             var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
-            var mockEnvelope = new Mock<AmqpMessage>();
-            var mockMessage = new Mock<AmqpMessage>();
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(0);
-
-            mockMessage
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(messageSize);
 
             var batch = new AmqpMessageBatch(options);
 
@@ -158,11 +146,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
             var messages = new AmqpMessage[5];
-            var mockEnvelope = new Mock<AmqpMessage>();
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(0);
 
             for (var index = 0; index < messages.Length; ++index)
             {
@@ -190,11 +173,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void AsEnumerableValidatesTheTypeParameter()
         {
             var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
-            var mockEnvelope = new Mock<AmqpMessage>();
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(0);
 
             var batch = new AmqpMessageBatch(options);
             Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
@@ -210,24 +188,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var maximumSize = 5000;
             var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
-            var messages = new AmqpMessage[5];
             var batchMessages = new ServiceBusMessage[5];
-            var mockEnvelope = new Mock<AmqpMessage>();
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(0);
-
-            for (var index = 0; index < messages.Length; ++index)
-            {
-                var message = new Mock<AmqpMessage>();
-                message.Setup(msg => msg.SerializedMessageSize).Returns(50);
-                messages[index] = message.Object;
-            }
 
             var batch = new AmqpMessageBatch(options);
 
-            for (var index = 0; index < messages.Length; ++index)
+            for (var index = 0; index < batchMessages.Length; ++index)
             {
                 batchMessages[index] = new ServiceBusMessage(new byte[0]);
                 batch.TryAdd(batchMessages[index]);
@@ -255,16 +220,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
             var messages = new AmqpMessage[5];
-            var mockEnvelope = new Mock<AmqpMessage>();
-
-            mockEnvelope
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(0);
-
-            for (var index = 0; index < messages.Length; ++index)
-            {
-                messages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
-            }
 
             // Add the messages to the batch; all should be accepted.
 
@@ -289,13 +244,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void DisposeClearsTheSize()
         {
-            var mockMessage = new Mock<AmqpMessage>();
-
-            mockMessage
-                .Setup(message => message.SerializedMessageSize)
-                .Returns(9959);
-
             var batch = new AmqpMessageBatch(new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[10])), Is.True);
+
             batch.Dispose();
 
             Assert.That(batch.SizeInBytes, Is.EqualTo(0));

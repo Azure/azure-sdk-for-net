@@ -744,10 +744,10 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                DateTimeOffset lockedUntilUtc = await _innerReceiver.RenewMessageLockAsync(
+                DateTimeOffset lockedUntil = await _innerReceiver.RenewMessageLockAsync(
                     message.LockToken,
                     cancellationToken).ConfigureAwait(false);
-                message.LockedUntil = lockedUntilUtc;
+                message.LockedUntil = lockedUntil;
             }
             catch (Exception exception)
             {

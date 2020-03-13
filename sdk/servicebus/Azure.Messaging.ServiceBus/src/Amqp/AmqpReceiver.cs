@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -895,7 +894,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string lockToken,
             TimeSpan timeout)
         {
-            DateTimeOffset lockedUntilUtc;
+            DateTimeOffset lockedUntil;
 
             // Create an AmqpRequest Message to renew  lock
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
@@ -917,14 +916,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
                 IEnumerable<DateTime> lockedUntilUtcTimes = amqpResponseMessage.GetValue<IEnumerable<DateTime>>(ManagementConstants.Properties.Expirations);
-                lockedUntilUtc = lockedUntilUtcTimes.First();
+                lockedUntil = lockedUntilUtcTimes.First();
             }
             else
             {
                 throw amqpResponseMessage.ToMessagingContractException();
             }
 
-            return lockedUntilUtc;
+            return lockedUntil;
         }
 
         /// <summary>

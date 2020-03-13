@@ -802,9 +802,9 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntilUtc)
+        private static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)
         {
-            var remainingTime = lockedUntilUtc - DateTimeOffset.UtcNow;
+            var remainingTime = lockedUntil - DateTimeOffset.UtcNow;
 
             if (remainingTime < TimeSpan.FromMilliseconds(400))
             {
