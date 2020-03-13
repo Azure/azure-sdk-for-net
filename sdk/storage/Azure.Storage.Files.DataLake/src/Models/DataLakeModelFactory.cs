@@ -12,58 +12,58 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public static partial class DataLakeModelFactory
     {
-        #region ChangeAccessControlListResult
+        #region ChangeAccessControlResult
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlListResult"/> instance for mocking.
+        /// Creates a new <see cref="ChangeAccessControlResult"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlListResult ChangeAccessControlListResult(
+        public static ChangeAccessControlResult ChangeAccessControlResult(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount
-            ) => new ChangeAccessControlListResult()
+            ) => new ChangeAccessControlResult()
             {
                 DirectoriesSuccessfulCount = directoriesSuccessfulCount,
                 FilesSuccessfulCount = filesSuccessfulCount,
                 FailureCount = failureCount,
             };
-        #endregion ChangeAccessControlListResult
+        #endregion ChangeAccessControlResult
 
-        #region ChangeAccessControlListPartialResult
+        #region ChangeAccessControlPartialResult
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlListPartialResult"/> instance for mocking.
+        /// Creates a new <see cref="ChangeAccessControlPartialResult"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlListPartialResult ChangeAccessControlListPartialResult(
+        public static ChangeAccessControlPartialResult ChangeAccessControlPartialResult(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount,
-            IEnumerable<ChangeAccessControlListResultFailedEntry> failedEntries
-            ) => new ChangeAccessControlListPartialResult()
+            IEnumerable<ChangeAccessControlResultFailedEntry> failedEntries
+            ) => new ChangeAccessControlPartialResult()
             {
                 DirectoriesSuccessfulCount = directoriesSuccessfulCount,
                 FilesSuccessfulCount = filesSuccessfulCount,
                 FailureCount = failureCount,
                 FailedEntries = failedEntries,
             };
-        #endregion ChangeAccessControlListResult
+        #endregion ChangeAccessControlResult
 
-        #region ChangeAccessControlListResultFailedEntry
+        #region ChangeAccessControlResultFailedEntry
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlListResultFailedEntry"/> instance for mocking.
+        /// Creates a new <see cref="ChangeAccessControlResultFailedEntry"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlListResultFailedEntry ChangeAccessControlListResultFailedEntry(
+        public static ChangeAccessControlResultFailedEntry ChangeAccessControlResultFailedEntry(
             string name,
             string type,
             string errorMessage
-            ) => new ChangeAccessControlListResultFailedEntry()
+            ) => new ChangeAccessControlResultFailedEntry()
             {
                 Name = name,
                 Type = type,
                 ErrorMessage = errorMessage,
             };
-        #endregion ChangeAccessControlListResultFailedEntry
+        #endregion ChangeAccessControlResultFailedEntry
 
         #region FileDownloadDetails
         /// <summary>

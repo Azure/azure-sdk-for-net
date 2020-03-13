@@ -951,7 +951,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(AccessControlList);
+            ChangeAccessControlResult result = await directory.SetAccessControlRecursiveAsync(AccessControlList);
 
             // Assert
             Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
@@ -973,7 +973,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 batchSize: 2);
 
@@ -996,12 +996,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
-            Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
+            Mock<IProgress<ChangeAccessControlPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlPartialResult>>();
 
             int batchSize = 2;
 
             // Act
-            ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 batchSize: batchSize,
                 progressHandler: progresMonitorMock.Object);
@@ -1012,7 +1012,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, result.FailureCount);
 
             progresMonitorMock.Verify(
-                x => x.Report(It.Is<ChangeAccessControlListPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
+                x => x.Report(It.Is<ChangeAccessControlPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
                 Times.Exactly(4));
         }
 
@@ -1043,17 +1043,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
 
-            InMemoryChangeChangeAccessControlListPartialResultProgress progress = new InMemoryChangeChangeAccessControlListPartialResultProgress();
+            InMemoryChangeChangeAccessControlPartialResultProgress progress = new InMemoryChangeChangeAccessControlPartialResultProgress();
 
             // Act
-            ChangeAccessControlListResult result = await directory.SetAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 progressHandler: progress);
 
             // Assert
             Assert.AreEqual(1, result.FailureCount);
             Assert.AreEqual(1, progress.FailedEntries.Count);
-            ChangeAccessControlListResultFailedEntry failedEntry = progress.FailedEntries[0];
+            ChangeAccessControlResultFailedEntry failedEntry = progress.FailedEntries[0];
             StringAssert.Contains(file4.Name, failedEntry.Name);
             Assert.That(failedEntry.Type, Is.Not.Null.Or.Empty);
             Assert.That(failedEntry.ErrorMessage, Is.Not.Null.Or.Empty);
@@ -1061,7 +1061,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task ModifyAccessControlRecursiveAsync()
+        public async Task UpdateAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -1073,7 +1073,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(AccessControlList);
+            ChangeAccessControlResult result = await directory.UpdateAccessControlRecursiveAsync(AccessControlList);
 
             // Assert
             Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
@@ -1083,7 +1083,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task ModifyAccessControlRecursiveAsync_InBatches()
+        public async Task UpdateAccessControlRecursiveAsync_InBatches()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -1095,7 +1095,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 batchSize: 2);
 
@@ -1107,7 +1107,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task ModifyAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
+        public async Task UpdateAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -1118,12 +1118,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
-            Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
+            Mock<IProgress<ChangeAccessControlPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlPartialResult>>();
 
             int batchSize = 2;
 
             // Act
-            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 batchSize: batchSize,
                 progressHandler: progresMonitorMock.Object);
@@ -1134,13 +1134,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, result.FailureCount);
 
             progresMonitorMock.Verify(
-                x => x.Report(It.Is<ChangeAccessControlListPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
+                x => x.Report(It.Is<ChangeAccessControlPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
                 Times.Exactly(4));
         }
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task ModifyAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
+        public async Task UpdateAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
             string fileSystemName = GetNewFileSystemName();
             string topDirectoryName = GetNewDirectoryName();
@@ -1165,17 +1165,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
 
-            InMemoryChangeChangeAccessControlListPartialResultProgress progress = new InMemoryChangeChangeAccessControlListPartialResultProgress();
+            InMemoryChangeChangeAccessControlPartialResultProgress progress = new InMemoryChangeChangeAccessControlPartialResultProgress();
 
             // Act
-            ChangeAccessControlListResult result = await directory.ModifyAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 progressHandler: progress);
 
             // Assert
             Assert.AreEqual(1, result.FailureCount);
             Assert.AreEqual(1, progress.FailedEntries.Count);
-            ChangeAccessControlListResultFailedEntry failedEntry = progress.FailedEntries[0];
+            ChangeAccessControlResultFailedEntry failedEntry = progress.FailedEntries[0];
             StringAssert.Contains(file4.Name, failedEntry.Name);
             Assert.That(failedEntry.Type, Is.Not.Null.Or.Empty);
             Assert.That(failedEntry.ErrorMessage, Is.Not.Null.Or.Empty);
@@ -1195,7 +1195,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(RemoveAccessControlList);
+            ChangeAccessControlResult result = await directory.RemoveAccessControlRecursiveAsync(RemoveAccessControlList);
 
             // Assert
             Assert.AreEqual(3, result.DirectoriesSuccessfulCount);
@@ -1217,7 +1217,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
                 batchSize: 2);
 
@@ -1240,12 +1240,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
-            Mock<IProgress<ChangeAccessControlListPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlListPartialResult>>();
+            Mock<IProgress<ChangeAccessControlPartialResult>> progresMonitorMock = new Mock<IProgress<ChangeAccessControlPartialResult>>();
 
             int batchSize = 2;
 
             // Act
-            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
                 batchSize: batchSize,
                 progressHandler: progresMonitorMock.Object);
@@ -1256,7 +1256,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, result.FailureCount);
 
             progresMonitorMock.Verify(
-                x => x.Report(It.Is<ChangeAccessControlListPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
+                x => x.Report(It.Is<ChangeAccessControlPartialResult>(arg => arg.DirectoriesSuccessfulCount + arg.FilesSuccessfulCount <= batchSize)),
                 Times.Exactly(4));
         }
 
@@ -1287,17 +1287,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
 
-            InMemoryChangeChangeAccessControlListPartialResultProgress progress = new InMemoryChangeChangeAccessControlListPartialResultProgress();
+            InMemoryChangeChangeAccessControlPartialResultProgress progress = new InMemoryChangeChangeAccessControlPartialResultProgress();
 
             // Act
-            ChangeAccessControlListResult result = await directory.RemoveAccessControlListRecursiveAsync(
+            ChangeAccessControlResult result = await directory.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
                 progressHandler: progress);
 
             // Assert
             Assert.AreEqual(1, result.FailureCount);
             Assert.AreEqual(1, progress.FailedEntries.Count);
-            ChangeAccessControlListResultFailedEntry failedEntry = progress.FailedEntries[0];
+            ChangeAccessControlResultFailedEntry failedEntry = progress.FailedEntries[0];
             StringAssert.Contains(file4.Name, failedEntry.Name);
             Assert.That(failedEntry.Type, Is.Not.Null.Or.Empty);
             Assert.That(failedEntry.ErrorMessage, Is.Not.Null.Or.Empty);

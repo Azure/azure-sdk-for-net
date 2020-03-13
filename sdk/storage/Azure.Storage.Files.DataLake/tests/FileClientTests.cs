@@ -991,7 +991,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await file.SetAccessControlListRecursiveAsync(AccessControlList);
+            ChangeAccessControlResult result = await file.SetAccessControlRecursiveAsync(AccessControlList);
 
             // Assert
             Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
@@ -1001,14 +1001,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task ModifyAccessControlRecursiveAsync()
+        public async Task UpdateAccessControlRecursiveAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await file.ModifyAccessControlListRecursiveAsync(AccessControlList);
+            ChangeAccessControlResult result = await file.UpdateAccessControlRecursiveAsync(AccessControlList);
 
             // Assert
             Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlListResult result = await file.RemoveAccessControlListRecursiveAsync(RemoveAccessControlList);
+            ChangeAccessControlResult result = await file.RemoveAccessControlRecursiveAsync(RemoveAccessControlList);
 
             // Assert
             Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
