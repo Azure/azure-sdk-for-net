@@ -121,11 +121,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(10, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
-        public void ScheduleMessageStart(string identifier, DateTimeOffset scheduleEnqueueTimeUtc)
+        public void ScheduleMessageStart(string identifier, DateTimeOffset scheduledEnqueueTime)
         {
             if (IsEnabled())
             {
-                WriteEvent(10, identifier, scheduleEnqueueTimeUtc.ToString());
+                WriteEvent(10, identifier, scheduledEnqueueTime.ToString());
             }
         }
 
