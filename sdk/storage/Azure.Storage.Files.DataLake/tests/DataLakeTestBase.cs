@@ -28,6 +28,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly string ContentType = "type";
         public readonly IList<PathAccessControlItem> AccessControlList
             = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,other::---,mask::rwx");
+        public readonly IList<PathAccessControlItem> ExecuteOnlyAccessControlList
+            = PathAccessControlExtensions.ParseAccessControlList("user::--x,group::--x,other::--x");
         public readonly IList<RemovePathAccessControlItem> RemoveAccessControlList
             = RemovePathAccessControlExtensions.ParseAccessControlList(
                 "mask," +

@@ -94,5 +94,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             public string NoneMatch { get; set; }
             public string LeaseId { get; set; }
         }
+
+        public class InMemoryChangeChangeAccessControlListPartialResultProgress : IProgress<ChangeAccessControlListPartialResult>
+        {
+            public List<ChangeAccessControlListResultFailedEntry> FailedEntries { get; } = new List<ChangeAccessControlListResultFailedEntry>();
+
+            public void Report(ChangeAccessControlListPartialResult value)
+            {
+                FailedEntries.AddRange(value.FailedEntries);
+            }
+        }
     }
 }
