@@ -108,9 +108,8 @@ namespace Azure.Search.Models
 
             SuggestResults<T> suggestions = new SuggestResults<T>();
             reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read())
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                if (reader.TokenType == JsonTokenType.EndObject) { break; }
                 switch (reader.ExpectsPropertyName())
                 {
                     case Constants.SearchCoverageKey:
@@ -118,9 +117,8 @@ namespace Azure.Search.Models
                         break;
                     case Constants.ValueKey:
                         reader.Expects(JsonTokenType.StartArray);
-                        while (reader.Read())
+                        while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                         {
-                            if (reader.TokenType == JsonTokenType.EndArray) { break; }
                             SearchSuggestion<T> suggestion =
                                 _suggestionConverter.Read(ref reader, _suggestionType, options);
                             suggestions.Results.Add(suggestion);

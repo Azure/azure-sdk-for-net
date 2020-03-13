@@ -17,7 +17,7 @@ namespace Azure.Search
         /// retrieved will be missing from the returned document.  If empty,
         /// all fields marked as retrievable in the schema are returned.
         /// </summary>
-        public IList<string> SelectedFields { get; set; } = new List<string>();
+        public IList<string> SelectedFields { get; internal set; } = new List<string>();
 
         /// <summary>
         /// Gets the selected fields.  If the collection is null or empty, we

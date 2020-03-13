@@ -1574,7 +1574,7 @@ namespace Azure.Search
                             JsonDocument.Parse(message.Response.ContentStream, default);
                         IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
 
-                        // TODO: XXXXX - Ensure input and output document order is in sync
+                        // TODO: #10593 - Ensure input and output document order is in sync while batching
                         // (waiting until we figure out the broader batching
                         // story)
 
@@ -1586,7 +1586,7 @@ namespace Azure.Search
                             {
                                 if (!result.Succeeded)
                                 {
-                                    // TODO: XXXXX - Aggregate the failed operations into a single exception
+                                    // TODO: #10594 - Aggregate the failed operations into a single exception
                                     // (waiting until we figure out the broader
                                     // batching story)
                                     throw new RequestFailedException(result.Status, result.ErrorMessage);

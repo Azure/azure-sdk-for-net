@@ -18,11 +18,11 @@ namespace Azure.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
         };
 
-        public static SearchQueryType ToSearchQueryType(this string value) => value switch
+        public static SearchQueryType ToSearchQueryType(this string value)
         {
-            "simple" => SearchQueryType.Simple,
-            "full" => SearchQueryType.Full,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
-        };
+            if (string.Equals(value, "simple", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Simple;
+            if (string.Equals(value, "full", StringComparison.InvariantCultureIgnoreCase)) return SearchQueryType.Full;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
+        }
     }
 }

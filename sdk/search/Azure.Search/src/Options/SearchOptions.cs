@@ -34,7 +34,7 @@ namespace Azure.Search
         /// The list of field names to use for hit highlights.  Only searchable
         /// fields can be used for hit highlighting.
         /// </summary>
-        public IList<string> HighlightFields { get; set; } = new List<string>();
+        public IList<string> HighlightFields { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("highlight")]
         internal string HighlightFieldsRaw
         {
-            get => HighlightFields.CommaSeparate();
+            get => HighlightFields.CommaJoin();
             set => HighlightFields = SearchExtensions.CommaSplit(value);
         }
         #pragma warning restore CA1822
@@ -54,7 +54,7 @@ namespace Azure.Search
         /// Lucene query, the field names of each fielded search expression
         /// take precedence over any field names listed in this parameter.
         /// </summary>
-        public IList<string> SearchFields { get; set; } = new List<string>();
+        public IList<string> SearchFields { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("searchFields")]
         internal string SearchFieldsRaw
         {
-            get => SearchFields.CommaSeparate();
+            get => SearchFields.CommaJoin();
             set => SearchFields = SearchExtensions.CommaSplit(value);
         }
         #pragma warning restore CA1822
@@ -72,7 +72,7 @@ namespace Azure.Search
         /// The list of fields to retrieve.  If unspecified, all fields marked
         /// as retrievable in the schema are included.
         /// </summary>
-        public IList<string> Select { get; set; } = new List<string>();
+        public IList<string> Select { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("select")]
         internal string SelectRaw
         {
-            get => Select.CommaSeparate();
+            get => Select.CommaJoin();
             set => Select = SearchExtensions.CommaSplit(value);
         }
         #pragma warning restore CA1822
@@ -107,7 +107,7 @@ namespace Azure.Search
         /// specified, the default sort order is descending by document match
         /// score. There can be at most 32 $orderby clauses.
         /// </summary>
-        public IList<string> OrderBy { get; set; } = new List<string>();
+        public IList<string> OrderBy { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("orderby")]
         internal string OrderByRaw
         {
-            get => OrderBy.CommaSeparate();
+            get => OrderBy.CommaJoin();
             set => OrderBy = SearchExtensions.CommaSplit(value);
         }
         #pragma warning restore CA1822
@@ -132,14 +132,21 @@ namespace Azure.Search
         public bool? IncludeTotalCount { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the SearchOptions class.
+        /// The list of facet expressions to apply to the search query. Each
+        /// facet expression contains a field name, optionally followed by a
+        /// comma-separated list of name:value pairs.
         /// </summary>
-        public SearchOptions()
-        {
-            // Create default collection instances for the generated
-            // properties that we haven't customized.
-            Facets = new List<string>();
-            ScoringParameters = new List<string>();
-        }
+        [CodeGenSchemaMember("facets")]
+        public IList<string> Facets { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// The list of parameter values to be used in scoring functions (for
+        /// example, referencePointParameter) using the format name-values. For
+        /// example, if the scoring profile defines a function with a parameter
+        /// called &apos;mylocation&apos; the parameter string would be
+        /// &quot;mylocation--122.2,44.8&quot; (without the quotes).
+        /// </summary>
+        [CodeGenSchemaMember("scoringParameters")]
+        public IList<string> ScoringParameters { get; internal set; } = new List<string>();
     }
 }

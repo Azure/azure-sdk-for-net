@@ -62,22 +62,17 @@ namespace Azure.Search.Models
             Debug.Assert(writer != null);
 
             writer.WriteStartObject();
+            writer.WriteString(Constants.SearchActionKey, ActionType.ToSerialString());
 
-            writer.WritePropertyName("@search.action");
-            writer.WriteStringValue(ActionType.ToSerialString());
-
-            // TODO: XXXXX - Investigate a more efficient way of injecting properties into user models with System.Text.Json
+            // TODO: #10589 - Investigate a more efficient way of injecting properties into user models with System.Text.Json
 
             // HACK: Serialize the user's model, parse it, and then write each
             // of its properties as if they were our own.
-            string json = JsonSerializer.Serialize<T>(Document, JsonExtensions.SerializerOptions);
+            byte[] json = JsonSerializer.SerializeToUtf8Bytes<T>(Document, JsonExtensions.SerializerOptions);
             using JsonDocument nested = JsonDocument.Parse(json);
-            if (nested.RootElement.ValueKind == JsonValueKind.Object)
+            foreach (JsonProperty property in nested.RootElement.EnumerateObject())
             {
-                foreach (JsonProperty property in nested.RootElement.EnumerateObject())
-                {
-                    property.WriteTo(writer);
-                }
+                property.WriteTo(writer);
             }
 
             writer.WriteEndObject();

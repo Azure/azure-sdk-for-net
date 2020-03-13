@@ -70,7 +70,7 @@ namespace Azure.Search
                     DateTimeOffset x => JsonExtensions.Date(x, formatProvider),
                     DateTime x => JsonExtensions.Date(x, formatProvider),
 
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
 
                     // Text
                     string x => Quote(x),

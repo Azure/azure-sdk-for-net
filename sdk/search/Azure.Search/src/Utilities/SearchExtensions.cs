@@ -55,7 +55,7 @@ namespace Azure.Search
         /// </summary>
         /// <param name="items">The items to join.</param>
         /// <returns>The items joined together by commas.</returns>
-        public static string CommaSeparate(this ICollection<string> items) =>
+        public static string CommaJoin(this ICollection<string> items) =>
             items?.Count > 0 ? string.Join(",", items) : null;
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.Search
         public static IList<string> CommaSplit(string value) =>
             string.IsNullOrEmpty(value) ?
                 new List<string>() :
-                // TODO: XXXXX - Verify we don't need to worry about escaping
+                // TODO: #10600 - Verify we don't need to worry about escaping
                 new List<string>(value.Split(','));
     }
 }

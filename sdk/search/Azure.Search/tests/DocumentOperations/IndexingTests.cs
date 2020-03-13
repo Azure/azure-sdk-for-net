@@ -72,7 +72,7 @@ namespace Azure.Search.Tests
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
-                        // TODO: XXXXX - Unify on an Azure.Core spatial type
+                        // TODO: #10592- Unify on an Azure.Core spatial type
                         ["location"] = null,
                         // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
                         ["address"] = new SearchDocument()
@@ -122,7 +122,7 @@ namespace Azure.Search.Tests
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         ["rating"] = 4,
-                        // TODO: XXXXX - Unify on an Azure.Core spatial type
+                        // TODO: #10592- Unify on an Azure.Core spatial type
                         ["location"] = null,
                         // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
                         ["address"] = new SearchDocument()
@@ -221,7 +221,7 @@ namespace Azure.Search.Tests
                         SmokingAllowed = true,
                         LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         Rating = 4,
-                        // TODO: XXXXX - Unify on an Azure.Core spatial type
+                        // TODO: #10592- Unify on an Azure.Core spatial type
                         // Location = GeographyPoint.Create(40.760586, -73.975403),
                         Address = new HotelAddress
                         {
@@ -270,7 +270,7 @@ namespace Azure.Search.Tests
                         SmokingAllowed = true,
                         LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                         Rating = 3,
-                        // TODO: XXXXX - Unify on an Azure.Core spatial type
+                        // TODO: #10592- Unify on an Azure.Core spatial type
                         // Location = GeographyPoint.Create(35.904160, -78.940483),
                         Address = new HotelAddress()
                         {
@@ -700,7 +700,7 @@ namespace Azure.Search.Tests
                     ["smokingAllowed"] = true,
                     ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     ["rating"] = 4L,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     ["location"] = null,
                     // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
                     ["address"] = new SearchDocument
@@ -824,7 +824,7 @@ namespace Azure.Search.Tests
         }
 
         [Test]
-        [Ignore("TODO: XXXXX - Fix static merge test")]
+        [Ignore("TODO: #10602 - Fix static merge test")]
         public async Task MergeDocumentsStatic()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
@@ -842,7 +842,7 @@ namespace Azure.Search.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                     Rating = 4,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // Location = GeographyPoint.Create(40.760586, -73.975403),
                     Address = new HotelAddress
                     {
@@ -917,7 +917,7 @@ namespace Azure.Search.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1970, 1, 18, 5, 0, 0, TimeSpan.Zero),
                     Rating = 3,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // Location = GeographyPoint.Create(40.760586, -73.975403),
                     Address = new HotelAddress()
                     {
@@ -956,7 +956,7 @@ namespace Azure.Search.Tests
             Hotel actualDoc = await client.GetDocumentAsync<Hotel>("1");
             Assert.AreEqual(expected, actualDoc);
             /*
-            TODO: XXXXX - Fix static merge test
+            TODO: #10602 - Fix static merge test
             Message:
               Expected: <ID: 1; Name: Secret Point Motel; Description: ; Description (French): L'hôtel est idéalement situé sur la principale artère commerciale de la ville en plein cœur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d'autres lieux d'intérêt qui font de New York l'une des villes les plus attractives et cosmopolites de l'Amérique.; Category: Economy; Tags: pool,air conditioning; Parking: True; Smoking: True; LastRenovationDate: ; Rating: 3; Location: [0, 0]; Address: { StreetAddress: 677 5th Ave; City: New York; State/Province: NY; Country: USA; PostalCode: 10022 }; Rooms: [{ Description: ; Description (French): ; Type: Budget Room; BaseRate: 10.5; Bed Options: 1 Queen Bed; Sleeps: 2; Smoking: True; Tags: vcr/dvd,balcony }]>
               But was:  <ID: 1; Name: Secret Point Motel; Description: ; Description (French): ; Category: Economy; Tags: pool,air conditioning; Parking: True; Smoking: ; LastRenovationDate: ; Rating: 3; Location: [0, 0]; Address: { StreetAddress: ; City: ; State/Province: ; Country: ; PostalCode:  }; Rooms: [{ Description: ; Description (French): ; Type: Budget Room; BaseRate: 10.5; Bed Options: 1 Queen Bed; Sleeps: 2; Smoking: ; Tags: vcr/dvd,balcony }]>
@@ -1132,7 +1132,7 @@ namespace Azure.Search.Tests
                     HotelId = "1",
                     Category = string.Empty,
                     LastRenovationDate = DateTimeOffset.MinValue,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // South pole, date line from the west
                     // Location = GeographyPoint.Create(-90, -180),
                     ParkingIncluded = false,
@@ -1153,7 +1153,7 @@ namespace Azure.Search.Tests
                     // (other than payload size or term length).
                     Category = "test",
                     LastRenovationDate = DateTimeOffset.MaxValue,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // North pole, date line from the east
                     // Location = GeographyPoint.Create(90, 180),
                     ParkingIncluded = true,
@@ -1173,7 +1173,7 @@ namespace Azure.Search.Tests
                     HotelId = "3",
                     Category = null,
                     LastRenovationDate = null,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // Equator, meridian
                     // Location = GeographyPoint.Create(0, 0),
                     ParkingIncluded = null,

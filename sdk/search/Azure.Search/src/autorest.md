@@ -139,11 +139,3 @@ directive:
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.
-
-### QueryType
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.QueryType['x-ms-enum']
-  transform: $.name = "SearchQueryType";
-```

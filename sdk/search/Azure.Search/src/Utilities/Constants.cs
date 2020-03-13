@@ -10,7 +10,7 @@ namespace Azure.Search
     /// </summary>
     internal static class Constants
     {
-        // TODO: XXXXX - Switch constants to use JsonEncodedText
+        // TODO: #10596 - Switch constants to use JsonEncodedText
 
         /// <summary>
         /// The name of the API key header used for signing requests in the
@@ -69,6 +69,11 @@ namespace Azure.Search
         public const string SearchHighlightsKey = "@search.highlights";
 
         /// <summary>
+        /// The @search.action key.
+        /// </summary>
+        public const string SearchActionKey = "@search.action";
+
+        /// <summary>
         /// The @odata.count key.
         /// </summary>
         public const string ODataCountKey = "@odata.count";
@@ -99,5 +104,12 @@ namespace Azure.Search
         /// <see cref="JsonExtensions.Deserialize{T}"/> method.
         /// </summary>
         public static ReadOnlySpan<byte> Utf8Bom => new byte[] { 0xEF, 0xBB, 0xBF };
+
+        /// <summary>
+        /// The default recursion limit if we don't get a value from
+        /// <see cref="System.Text.Json.JsonSerializerOptions.MaxDepth"/>.
+        /// The service limit is (currently) 10.
+        /// </summary>
+        public static int MaxJsonRecursionDepth = 64;
     }
 }

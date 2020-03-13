@@ -16,6 +16,7 @@ namespace Azure.Search
     [CodeGenClient("Documents")]
     internal partial class DocumentsClient { }
 
+    // https://github.com/Azure/autorest.csharp/issues/486
     // Work-around the generator not enjoying mixing model types between the
     // main and .Models namespaces.
     internal static partial class SearchExtensions

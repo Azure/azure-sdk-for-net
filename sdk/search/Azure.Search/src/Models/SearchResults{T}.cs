@@ -200,7 +200,7 @@ namespace Azure.Search.Models
         public override IReadOnlyList<SearchResult<T>> Values =>
             _values ??= new ReadOnlyCollection<SearchResult<T>>(_results.Values);
 
-        // TODO: #XXXXX - Add durable continuation tokens
+        // TODO: #10590 - Add durable continuation tokens
         #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
         /// <inheritdoc />
         public override string ContinuationToken => throw new NotImplementedException();
@@ -231,7 +231,7 @@ namespace Azure.Search.Models
         /// <inheritdoc />
         public override async IAsyncEnumerable<Page<SearchResult<T>>> AsPages(string continuationToken = default, int? pageSizeHint = default)
         {
-            SearchResults<T> initial = _results; // TODO: #XXXXX - Add durable continuation tokens
+            SearchResults<T> initial = _results; // TODO: #10590 - Add durable continuation tokens
             for (SearchResults<T> results = initial;
                  results != null;
                  results = await results.GetNextPageAsync(async: true, CancellationToken).ConfigureAwait(false))
@@ -262,7 +262,7 @@ namespace Azure.Search.Models
         /// <inheritdoc />
         public override IEnumerable<Page<SearchResult<T>>> AsPages(string continuationToken = default, int? pageSizeHint = default)
         {
-            SearchResults<T> initial = _results; // TODO: #XXXXX - Add durable continuation tokens
+            SearchResults<T> initial = _results; // TODO: #10590 - Add durable continuation tokens
             for (SearchResults<T> results = initial;
                  results != null;
                  results = results.GetNextPageAsync(async: false, CancellationToken).EnsureCompleted())
@@ -336,9 +336,8 @@ namespace Azure.Search.Models
 
             SearchResults<T> results = new SearchResults<T>();
             reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read())
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                if (reader.TokenType == JsonTokenType.EndObject) { break; }
                 switch (reader.ExpectsPropertyName())
                 {
                     case Constants.ODataCountKey:
@@ -348,7 +347,7 @@ namespace Azure.Search.Models
                         results.Coverage = reader.ExpectsNullableDouble();
                         break;
                     case Constants.SearchFacetsKey:
-                        ReadFacets(ref reader, results);
+                        ReadFacets(ref reader, results, options);
                         break;
                     case Constants.ODataNextLinkKey:
                         results.NextUri = new Uri(reader.ExpectsString());
@@ -358,9 +357,8 @@ namespace Azure.Search.Models
                         break;
                     case Constants.ValueKey:
                         reader.Expects(JsonTokenType.StartArray);
-                        while (reader.Read())
+                        while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                         {
-                            if (reader.TokenType == JsonTokenType.EndArray) { break; }
                             SearchResult<T> result = _resultConverter.Read(ref reader, _resultType, options);
                             results.Values.Add(result);
                         }
@@ -379,7 +377,11 @@ namespace Azure.Search.Models
         /// </summary>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="results">The SearchResults to add the facets to.</param>
-        private static void ReadFacets(ref Utf8JsonReader reader, SearchResults<T> results)
+        /// <param name="options">JSON serializer options.</param>
+        private static void ReadFacets(
+            ref Utf8JsonReader reader,
+            SearchResults<T> results,
+            JsonSerializerOptions options)
         {
             Debug.Assert(results != null);
 
@@ -391,20 +393,17 @@ namespace Azure.Search.Models
 
             results.Facets = new Dictionary<string, IList<FacetResult>>();
             reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read())
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                if (reader.TokenType == JsonTokenType.EndObject) { break; }
-
                 // Get the name of the facet
                 string facetName = reader.ExpectsPropertyName();
 
                 // Get the values of the facet
                 List<FacetResult> facets = new List<FacetResult>();
                 reader.Expects(JsonTokenType.StartArray);
-                while (reader.Read())
+                while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                 {
-                    if (reader.TokenType == JsonTokenType.EndArray) { break; }
-                    FacetResult facet = ReadFacetResult(ref reader);
+                    FacetResult facet = ReadFacetResult(ref reader, options);
                     facets.Add(facet);
                 }
 
@@ -417,15 +416,16 @@ namespace Azure.Search.Models
         /// Read the facet result value.
         /// </summary>
         /// <param name="reader">JSON reader.</param>
+        /// <param name="options">Serializer options.</param>
         /// <returns>The facet result.</returns>
-        private static FacetResult ReadFacetResult(ref Utf8JsonReader reader)
+        private static FacetResult ReadFacetResult(
+            ref Utf8JsonReader reader,
+            JsonSerializerOptions options)
         {
             FacetResult facet = new FacetResult();
             reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read())
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                if (reader.TokenType == JsonTokenType.EndObject) { break; }
-
                 // Get the name of the facet property
                 string facetName = reader.ExpectsPropertyName();
                 if (facetName == Constants.CountKey)
@@ -434,7 +434,7 @@ namespace Azure.Search.Models
                 }
                 else
                 {
-                    object value = reader.ReadObject();
+                    object value = reader.ReadObject(options);
                     facet[facetName] = value;
                 }
             }

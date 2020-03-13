@@ -305,7 +305,7 @@ namespace Azure.Search.Tests
 
         [IsSearchable, IsFilterable, IsFacetable]
         [JsonPropertyName("tags")]
-        // TODO: XXXXX - Investigate JsonConverter for null arrays
+        // TODO: #10596 - Investigate JsonConverter for null arrays
         public string[] Tags { get; set; } = new string[] { };
 
         [IsFilterable, IsSortable, IsFacetable]
@@ -325,7 +325,7 @@ namespace Azure.Search.Tests
         public int? Rating { get; set; }
 
         [IsFilterable, IsSortable]
-        // TODO: XXXXX - Unify on an Azure.Core spatial type
+        // TODO: #10592- Unify on an Azure.Core spatial type
         [JsonIgnore]
         public GeographyPoint Location { get; set; } = null;
 
@@ -333,7 +333,7 @@ namespace Azure.Search.Tests
         public HotelAddress Address { get; set; }
 
         [JsonPropertyName("rooms")]
-        // TODO: XXXXX - Investigate JsonConverter for null arrays
+        // TODO: #10596 - Investigate JsonConverter for null arrays
         public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };
 
         public override bool Equals(object obj) =>
@@ -348,7 +348,7 @@ namespace Azure.Search.Tests
             SmokingAllowed == other.SmokingAllowed &&
             LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
             Rating == other.Rating &&
-            // TODO: XXXXX - Unify on an Azure.Core spatial type
+            // TODO: #10592- Unify on an Azure.Core spatial type
             // Location.EqualsNullSafe(other.Location) &&
             Address.EqualsNullSafe(other.Address) &&
             Rooms.SequenceEqualsNullSafe(other.Rooms);
@@ -380,7 +380,7 @@ namespace Azure.Search.Tests
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating,
-                // TODO: XXXXX - Unify on an Azure.Core spatial type
+                // TODO: #10592- Unify on an Azure.Core spatial type
                 // ["location"] = Location,
                 ["location"] = Location == null ? null : new SearchDocument()
                 {
@@ -482,7 +482,7 @@ namespace Azure.Search.Tests
 
         [IsSearchable, IsFilterable, IsFacetable]
         [JsonPropertyName("tags")]
-        // TODO: XXXXX - Investigate JsonConverter for null arrays
+        // TODO: #10596 - Investigate JsonConverter for null arrays
         public string[] Tags { get; set; } = new string[] { };
 
         public override bool Equals(object obj) =>

@@ -100,21 +100,18 @@ SearchApiKeyCredential credential = new SearchApiKeyCredential(apiKey);
 SearchIndexClient client = new SearchIndexClient(serviceEndpoint, indexName, credential);
 
 // Let's get the top 5 jobs related to Microsoft
-string searchText = "Microsoft";
-SearchOptions options = new SearchOptions { Size = 5 };
-SearchResults<SearchDocument> response = client.Search(searchText, options);
+SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
 foreach (SearchResult<SearchDocument> result in response.GetResults())
 {
     // Print out the title and job description (we'll see below how to
     // use C# objects to make accessing these fields much easier)
-    string id = (string)result.Document["job_id"];
     string title = (string)result.Document["business_title"];
     string description = (string)result.Document["job_description"];
-    Console.WriteLine($"{id}: {title}\n{description}\n");
+    Console.WriteLine($"{title}\n{description}\n");
 }
 ```
-You can paste that into a new console app, [install the Azure.Search package](#Install-the-package), add a `using Azure.Search;` statement, and then hit F5
-to run.
+You can paste that into a new console app, [install the Azure.Search package](#Install-the-package),
+add a `using Azure.Search;` statement, and then hit F5 to run.
 
 ## Key concepts
 
@@ -124,19 +121,24 @@ _(If you're brand new to Search, you can make a very rough analogy between
 indexes and database tables.)_  The **Azure.Search client library** exposes
 operations on these resources through two main client types:
 
+- `SearchIndexClient` helps with
+   - [Searching](https://docs.microsoft.com/en-us/azure/search/search-lucene-query-architecture)
+     your indexed documents using
+     [rich queries](https://docs.microsoft.com/azure/search/search-query-overview)
+     and [powerful data shaping](https://docs.microsoft.com/azure/search/search-filters)
+   - [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete)
+     partially typed search terms based on documents in the index
+   - [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
+    the most likely matching text in documents as a user types
+   - [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents)
+     documents from an index
+
 - `SearchServiceClient` allows you to:
   - [Create, delete, update, or configure a search index](https://docs.microsoft.com/rest/api/searchservice/index-operations)
   - [Start indexers to automatically crawl data sources](https://docs.microsoft.com/rest/api/searchservice/indexer-operations)
   - [Define AI powered Skillsets to transform and enrich your data](https://docs.microsoft.com/rest/api/searchservice/skillset-operations)
   - [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
   - Most of the `SearchServiceClient` functionality is not yet available in our current preview
-
-- `SearchIndexClient` helps with
-   - [Searching]() your indexed documents using [rich queries](https://docs.microsoft.com/azure/search/search-query-overview) and [powerful data shaping](https://docs.microsoft.com/azure/search/search-filters)
-   - [Autocompleting](https://docs.microsoft.com/rest/api/searchservice/autocomplete) partially typed search terms based on documents in the index
-   - [Suggesting](https://docs.microsoft.com/rest/api/searchservice/suggestions)
-    the most likely matching text in documents as a user types
-   - [Adding, Updating or Deleting Documents](https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents) documents from an index
 
 _The `Azure.Search` client library (v11) is a brand new offering for .NET
 developers who want to use search technology in their applications.  There is an
@@ -154,13 +156,13 @@ much more.
 
 ### Querying
 
-Let's start by importing our namespace
+Let's start by importing our namespace.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure.Search;
 ```
 
-and creating a `SearchIndexClient` to access our hotels search index.
+We'll then create a `SearchIndexClient` to access our hotels search index.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Client
 // Get the service endpoint and API key from the environment
@@ -254,8 +256,9 @@ SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 
 ### Adding documents to your index
 
-You can Upload, Merge, UploadOrMerge, and Delete multiple documents from an
-index in a single batched request.  There are [a few special rules for merging](https://docs.microsoft.com/en-us/rest/api/searchservice/addupdate-or-delete-documents#document-actions)
+You can `Upload`, `Merge`, `MergeOrUpload`, and `Delete` multiple documents from
+an index in a single batched request.  There are
+[a few special rules for merging](https://docs.microsoft.com/en-us/rest/api/searchservice/addupdate-or-delete-documents#document-actions)
 to be aware of.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Index
@@ -289,7 +292,7 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
 ## Troubleshooting
 
 Any Azure.Search operation that fails will throw a
-[RequestFailedException][RequestFailedException] with
+[`RequestFailedException`][RequestFailedException] with
 helpful [`Status` codes][status_codes].  Many of these errors are recoverable.
 
 

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Search.Models;
 
 namespace Azure.Search
@@ -13,8 +12,6 @@ namespace Azure.Search
     /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
     public partial class SearchOptions
     {
-        /// <summary> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </summary>
-        public IList<string> Facets { get; set; }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </summary>
         public string HighlightPostTag { get; set; }
         /// <summary> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &amp;lt;em&amp;gt;. </summary>
@@ -23,8 +20,6 @@ namespace Azure.Search
         public double? MinimumCoverage { get; set; }
         /// <summary> A value that specifies the syntax of the search query. The default is &apos;simple&apos;. Use &apos;full&apos; if your query uses the Lucene query syntax. </summary>
         public SearchQueryType? QueryType { get; set; }
-        /// <summary> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called &apos;mylocation&apos; the parameter string would be &quot;mylocation--122.2,44.8&quot; (without the quotes). </summary>
-        public IList<string> ScoringParameters { get; set; }
         /// <summary> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </summary>
         public string ScoringProfile { get; set; }
         /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>

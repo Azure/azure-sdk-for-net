@@ -298,7 +298,7 @@ namespace Azure.Search.Tests
             {
                 ["hotelId"] = "1",
                 ["hotelName"] = "2015-02-11T12:58:00Z",
-                // TODO: XXXXX - Unify on an Azure.Core spatial type
+                // TODO: #10592- Unify on an Azure.Core spatial type
                 // ["location"] = GeographyPoint.Create(40.760586, -73.975403), // Test that we don't confuse Geo-JSON & complex types.
                 ["rooms"] = new[]
                 {
@@ -315,13 +315,13 @@ namespace Azure.Search.Tests
                 {
                     ["hotelId"] = "1",
                     ["hotelName"] = new DateTimeOffset(2015, 2, 11, 12, 58, 0, TimeSpan.Zero),
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // ["location"] = GeographyPoint.Create(40.760586, -73.975403),
                     ["rooms"] = new[]
                     {
                         new SearchDocument
                         {
-                            // TODO: XXXXX - Verify it's okay to change from "NaN" in the Track 1 tests
+                            // TODO: #10601 - Verify it's okay to change from "NaN" in the Track 1 tests
                             ["baseRate"] = double.NaN
                         }
                     }
@@ -466,7 +466,7 @@ namespace Azure.Search.Tests
                     SmokingAllowed = true,
                     LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 3,
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
                     // Location = GeographyPoint.Create(35.904160, -78.940483),
                     Address = new HotelAddress()
                     {

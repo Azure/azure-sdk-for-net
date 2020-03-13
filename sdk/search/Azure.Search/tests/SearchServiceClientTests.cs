@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -95,10 +97,36 @@ namespace Azure.Search.Tests
                 await client.GetStatisticsAsync(
                     new SearchRequestOptions { ClientRequestId = id });
 
-            // TODO: XXXXX - C# generator doesn't properly support ClientRequestId yet
+            // TODO: #10604 - C# generator doesn't properly support ClientRequestId yet
             // (Assertion is here to remind us to fix this when we do - just
             // change to AreEqual and re-record)
             Assert.AreNotEqual(id.ToString(), response.GetRawResponse().ClientRequestId);
+        }
+
+        [Test]
+        public void DiagnosticsAreUnique()
+        {
+            // Make sure we're not repeating Header/Query names already defined
+            // in the base ClientOptions
+            SearchClientOptions options = new SearchClientOptions();
+            Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
+            Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
+
+            // CollectionAssert.Unique doesn't give you the duplicate values
+            // which is less helpful than it could be
+            static string GetDuplicates(IEnumerable<string> values)
+            {
+                List<string> duplicates = new List<string>();
+                HashSet<string> unique = new HashSet<string>();
+                foreach (string value in values)
+                {
+                    if (!unique.Add(value))
+                    {
+                        duplicates.Add(value);
+                    }
+                }
+                return string.Join(", ", duplicates);
+            }
         }
 
         [Test]

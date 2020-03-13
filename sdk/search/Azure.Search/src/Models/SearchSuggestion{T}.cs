@@ -91,10 +91,8 @@ namespace Azure.Search.Models
             // the user's model type.
             Utf8JsonReader clone = reader;
             clone.Expects(JsonTokenType.StartObject);
-            while (clone.Read())
+            while (clone.Read() && clone.TokenType != JsonTokenType.EndObject)
             {
-                if (clone.TokenType == JsonTokenType.EndObject) { break; }
-
                 string name = clone.ExpectsPropertyName();
                 if (name == Constants.SearchTextKey)
                 {

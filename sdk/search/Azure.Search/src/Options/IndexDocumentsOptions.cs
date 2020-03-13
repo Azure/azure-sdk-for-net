@@ -13,7 +13,6 @@ namespace Azure.Search
         /// <summary>
         /// Gets or sets a value indicating whether to throw an exception on
         /// any individual failure in the batch of document write operations.
-        ///
         /// Set this to true if you're not inspecting the results of the Index
         /// Documents action.
         /// </summary>

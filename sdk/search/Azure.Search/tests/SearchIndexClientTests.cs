@@ -43,7 +43,7 @@ namespace Azure.Search.Tests
             Response<long> response = await client.GetDocumentCountAsync(
                 new SearchRequestOptions { ClientRequestId = id });
 
-            // TODO: XXXXX - C# generator doesn't properly support ClientRequestId yet
+            // TODO: #10604 - C# generator doesn't properly support ClientRequestId yet
             // (Assertion is here to remind us to fix this when we do - just
             // change to AreEqual and re-record)
             Assert.AreNotEqual(id.ToString(), response.GetRawResponse().ClientRequestId);

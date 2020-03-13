@@ -97,28 +97,34 @@ namespace Azure.Search
         /// <param name="reader">The JSON reader.</param>
         /// <param name="typeToConvert">The type to convert to.</param>
         /// <param name="options">Serialization options.</param>
+        /// <param name="recursionDepth">
+        /// Depth of the current read recursion to bail out of circular
+        /// references.
+        /// </param>
         /// <returns>A deserialized SearchDocument.</returns>
         public static SearchDocument ReadSearchDocument(
             ref Utf8JsonReader reader,
             Type typeToConvert,
-            JsonSerializerOptions options)
+            JsonSerializerOptions options,
+            int? recursionDepth = null)
         {
             Debug.Assert(typeToConvert != null);
             Debug.Assert(typeToConvert.IsAssignableFrom(typeof(SearchDocument)));
 
+            recursionDepth ??= options.GetMaxRecursionDepth();
+            AssertRecursionDepth(recursionDepth.Value);
+
             SearchDocument doc = new SearchDocument();
             reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read())
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                if (reader.TokenType == JsonTokenType.EndObject) { break; }
-
                 string propertyName = reader.ExpectsPropertyName();
 
                 // Ignore OData properties - we don't expose those on custom
                 // user schemas
                 if (!propertyName.StartsWith(Constants.ODataKeyPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    object value = ReadSearchDocObject(ref reader);
+                    object value = ReadSearchDocObject(ref reader, recursionDepth.Value - 1);
                     doc[propertyName] = value;
                 }
                 else
@@ -128,7 +134,7 @@ namespace Azure.Search
             }
             return doc;
 
-            // TODO: XXXXX - Investigate using JsonSerializer for reading SearchDocument properties
+            // TODO: #10596 - Investigate using JsonSerializer for reading SearchDocument properties
 
             // The built in converters for JsonSerializer are a little more
             // helpful than we want right now and will do things like turn "1"
@@ -137,8 +143,9 @@ namespace Azure.Search
             // that we're hard coding them here for now.  We'll revisit with
             // Search experts and their customer scenarios to get this right in
             // the next preview.
-            object ReadSearchDocObject(ref Utf8JsonReader reader)
+            object ReadSearchDocObject(ref Utf8JsonReader reader, int depth)
             {
+                AssertRecursionDepth(depth);
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.String:
@@ -149,16 +156,16 @@ namespace Azure.Search
                     case JsonTokenType.Null:
                         return ReadPrimitiveValue(ref reader);
                     case JsonTokenType.StartObject:
-                        // TODO: XXXXX - Unify on an Azure.Core spatial type
+                        // TODO: #10592- Unify on an Azure.Core spatial type
 
                         // Return a complex object
-                        return ReadSearchDocument(ref reader, typeof(SearchDocument), options);
+                        return ReadSearchDocument(ref reader, typeof(SearchDocument), options, depth - 1);
                     case JsonTokenType.StartArray:
                         var list = new List<object>();
-                        while (reader.Read())
+                        while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                         {
-                            if (reader.TokenType == JsonTokenType.EndArray) { break; }
-                            object value = ReadSearchDocObject(ref reader);
+                            recursionDepth--;
+                            object value = ReadSearchDocObject(ref reader, depth - 1);
                             list.Add(value);
                         }
                         return list.ToArray();
@@ -209,9 +216,21 @@ namespace Azure.Search
         /// Read a .NET object from the head of a JSON reader.
         /// </summary>
         /// <param name="reader">The JSON reader.</param>
+        /// <param name="options">JSON serializer options.</param>
+        /// <param name="recursionDepth">
+        /// Depth of the current read recursion to bail out of circular
+        /// references.
+        /// </param>
         /// <returns>The object.</returns>
-        public static object ReadObject(this ref Utf8JsonReader reader)
+        public static object ReadObject(
+            this ref Utf8JsonReader reader,
+            JsonSerializerOptions options,
+            int? recursionDepth = null)
         {
+            Debug.Assert(options != null);
+            recursionDepth ??= options.GetMaxRecursionDepth();
+            AssertRecursionDepth(recursionDepth.Value);
+
             switch (reader.TokenType)
             {
                 case JsonTokenType.String:
@@ -222,25 +241,23 @@ namespace Azure.Search
                 case JsonTokenType.Null:
                     return ReadPrimitiveValue(ref reader);
                 case JsonTokenType.StartObject:
-                    // TODO: XXXXX - Unify on an Azure.Core spatial type
+                    // TODO: #10592- Unify on an Azure.Core spatial type
 
                     // Return a complex object
                     IDictionary<string, object> obj = new Dictionary<string, object>();
                     reader.Expects(JsonTokenType.StartObject);
-                    while (reader.Read())
+                    while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
                     {
-                        if (reader.TokenType == JsonTokenType.EndObject) { break; }
                         string property = reader.ExpectsPropertyName();
-                        object value = ReadObject(ref reader);
+                        object value = ReadObject(ref reader, options, recursionDepth - 1);
                         obj[property] = value;
                     }
                     return obj;
                 case JsonTokenType.StartArray:
                     var list = new List<object>();
-                    while (reader.Read())
+                    while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                     {
-                        if (reader.TokenType == JsonTokenType.EndArray) { break; }
-                        object value = ReadObject(ref reader);
+                        object value = ReadObject(ref reader, options, recursionDepth - 1);
                         list.Add(value);
                     }
                     return list.ToArray();
@@ -282,13 +299,41 @@ namespace Azure.Search
         }
 
         /// <summary>
+        /// Get the default max recursion depth.
+        /// </summary>
+        /// <param name="options">Serialization options.</param>
+        /// <returns>The default max recursion depth.</returns>
+        public static int GetMaxRecursionDepth(this JsonSerializerOptions options)
+        {
+            int depth = options?.MaxDepth ?? Constants.MaxJsonRecursionDepth;
+            if (depth <= 0)
+            {
+                // JsonSerializerOptions uses 0 to mean pick their default of 64
+                depth = Constants.MaxJsonRecursionDepth;
+            }
+            return depth;
+        }
+
+        /// <summary>
+        /// Throw if we've recursed beyond the maximum recursion depth.
+        /// </summary>
+        /// <param name="depth">Current depth.</param>
+        public static void AssertRecursionDepth(int depth)
+        {
+            if (depth <= 0)
+            {
+                throw new JsonException("Exceeded maximum recursion depth.");
+            }
+        }
+
+        /// <summary>
         /// Verify that the next token to be read matches our expectation or
         /// throw an exception otherwise.
         /// </summary>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expected">The expected token type.</param>
         public static void Expects(
-            this ref Utf8JsonReader reader,
+            this in Utf8JsonReader reader,
             JsonTokenType expected)
         {
             if (reader.TokenType != expected)
@@ -373,7 +418,7 @@ namespace Azure.Search
             this Stream json,
             CancellationToken cancellationToken)
         {
-            if (json == null)
+            if (json is null)
             {
                 return default;
             }
@@ -398,7 +443,7 @@ namespace Azure.Search
         public static T Deserialize<T>(this Stream json)
         {
             // Short circuit for empty/erroneous streams.
-            if (json == null)
+            if (json is null)
             {
                 return default;
             }

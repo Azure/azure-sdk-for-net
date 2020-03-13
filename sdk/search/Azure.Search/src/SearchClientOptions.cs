@@ -94,7 +94,6 @@ namespace Azure.Search
         /// </summary>
         private void AddLoggingHeaders()
         {
-            Diagnostics.LoggedHeaderNames.Add("Accept");
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Credentials");
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Headers");
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Methods");
@@ -104,10 +103,7 @@ namespace Azure.Search
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Request-Headers");
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Request-Method");
             Diagnostics.LoggedHeaderNames.Add("client-request-id");
-            Diagnostics.LoggedHeaderNames.Add("Content-Type");
             Diagnostics.LoggedHeaderNames.Add("elapsed-time");
-            Diagnostics.LoggedHeaderNames.Add("If-Match");
-            Diagnostics.LoggedHeaderNames.Add("If-None-Match");
             Diagnostics.LoggedHeaderNames.Add("Location");
             Diagnostics.LoggedHeaderNames.Add("OData-MaxVersion");
             Diagnostics.LoggedHeaderNames.Add("OData-Version");
@@ -116,9 +112,6 @@ namespace Azure.Search
             Diagnostics.LoggedHeaderNames.Add("request-id");
             Diagnostics.LoggedHeaderNames.Add("return-client-request-id");
             Diagnostics.LoggedHeaderNames.Add("throttle-reason");
-            Diagnostics.LoggedHeaderNames.Add("User-Agent");
-            Diagnostics.LoggedHeaderNames.Add("x-ms-client-request-id");
-            Diagnostics.LoggedHeaderNames.Add("x-ms-return-client-request-id");
         }
 
         /// <summary>

@@ -46,7 +46,7 @@ namespace Azure.Core.Pipeline
                         message ??= error?.Message;
                         errorCode ??= error?.Code;
 
-                        // TODO: XXXXX - Determine the correct approach for
+                        // TODO: #10598 - Determine the correct approach for
                         // surfacing what appear to be nested SearchError
                         // instances.
                         Debug.Assert(!(error?.Details?.Count > 0));

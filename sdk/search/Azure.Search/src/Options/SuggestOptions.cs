@@ -42,7 +42,7 @@ namespace Azure.Search
         /// The list of field names to search for the specified search text.
         /// Target fields must be included in the specified suggester.
         /// </summary>
-        public IList<string> SearchFields { get; set; } = new List<string>();
+        public IList<string> SearchFields { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("searchFields")]
         internal string SearchFieldsRaw
         {
-            get => SearchFields.CommaSeparate();
+            get => SearchFields.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
         #pragma warning restore CA1822
@@ -60,7 +60,7 @@ namespace Azure.Search
         /// The list of fields to retrieve. If unspecified, only the key field
         /// will be included in the results.
         /// </summary>
-        public IList<string> Select { get; set; } = new List<string>();
+        public IList<string> Select { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("select")]
         internal string SelectRaw
         {
-            get => Select.CommaSeparate();
+            get => Select.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
         #pragma warning restore CA1822
@@ -91,7 +91,7 @@ namespace Azure.Search
         /// specified, the default sort order is descending by document match
         /// score. There can be at most 32 $orderby clauses.
         /// </summary>
-        public IList<string> OrderBy { get; set; } = new List<string>();
+        public IList<string> OrderBy { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("orderby")]
         internal string OrderByRaw
         {
-            get => OrderBy.CommaSeparate();
+            get => OrderBy.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
         #pragma warning restore CA1822

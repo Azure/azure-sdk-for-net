@@ -56,6 +56,7 @@ namespace Azure.Search
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
             Debug.Assert(CanConvert(typeToConvert));
+            Debug.Assert(typeToConvert.GetGenericArguments()?.Length == 1);
             Type modelType = typeToConvert.GetGenericArguments()[0];
             Type converterType = GenericConverterType.MakeGenericType(new[] { modelType });
 

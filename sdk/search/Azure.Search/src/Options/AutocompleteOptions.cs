@@ -59,7 +59,7 @@ namespace Azure.Search
         /// auto-completed terms. Target fields must be included in the
         /// specified suggester.
         /// </summary>
-        public IList<string> SearchFields { get; set; } = new List<string>();
+        public IList<string> SearchFields { get; internal set; } = new List<string>();
 
         #pragma warning disable CA1822 // Only (unused but required) setters are static
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.Search
         [CodeGenSchemaMember("searchFields")]
         internal string SearchFieldsRaw
         {
-            get => SearchFields.CommaSeparate();
+            get => SearchFields.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(AutocompleteOptions)}.");
         }
         #pragma warning restore CA1822

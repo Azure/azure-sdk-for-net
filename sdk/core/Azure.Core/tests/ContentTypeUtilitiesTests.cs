@@ -18,6 +18,9 @@ namespace Azure.Core.Tests
         [TestCase("something/else+json", true, "Unicode (UTF-8)")]
         [TestCase("something/else+xml", true, "Unicode (UTF-8)")]
         [TestCase("random/thing; charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/json; odata.metadata=minimal", true, "Unicode (UTF-8)")]
+        [TestCase("application/json; odata.metadata=full", true, "Unicode (UTF-8)")]
+        [TestCase("application/json; odata.metadata=none", true, "Unicode (UTF-8)")]
 
         public void DetectsTextContentTypes(string contentType, bool isText, string expectedEncoding)
         {

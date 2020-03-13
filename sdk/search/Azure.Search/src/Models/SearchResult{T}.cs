@@ -99,23 +99,26 @@ namespace Azure.Search.Models
             // the user's model type.
             Utf8JsonReader clone = reader;
 
-            // Keep track of how many of properties we've found so we can stop
-            // reading through the cloned object
-            int propertiesNeeded = 2;
+            // Keep track of the properties we've found so we can stop reading
+            // through the cloned object
+            bool parsedScore = false;
+            bool parsedHighlights = false;
 
             clone.Expects(JsonTokenType.StartObject);
-            while (propertiesNeeded > 0 && clone.Read())
+            while (
+                (!parsedScore || !parsedHighlights) &&
+                clone.Read() &&
+                clone.TokenType != JsonTokenType.EndObject)
             {
-                if (clone.TokenType == JsonTokenType.EndObject) { break; }
                 string name = clone.ExpectsPropertyName();
                 if (name == Constants.SearchScoreKey)
                 {
-                    propertiesNeeded--;
+                    parsedScore = true;
                     result.Score = clone.ExpectsNullableDouble();
                 }
                 else if (name == Constants.SearchHighlightsKey)
                 {
-                    propertiesNeeded--;
+                    parsedHighlights = true;
                     ReadHighlights(ref clone, result);
                 }
                 else
@@ -142,19 +145,16 @@ namespace Azure.Search.Models
             Debug.Assert(result != null);
             result.Highlights = new Dictionary<string, IList<string>>();
             reader.Expects(JsonTokenType.StartObject);
-            while (reader.Read())
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                if (reader.TokenType == JsonTokenType.EndObject) { break; }
-
                 // Get the highlight field name
                 string name = reader.ExpectsPropertyName();
 
                 // Get the highlight values
                 List<string> values = new List<string>();
                 reader.Expects(JsonTokenType.StartArray);
-                while (reader.Read())
+                while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                 {
-                    if (reader.TokenType == JsonTokenType.EndArray) { break; }
                     values.Add(reader.ExpectsString());
                 }
 

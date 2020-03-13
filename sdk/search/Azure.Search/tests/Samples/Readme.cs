@@ -40,19 +40,16 @@ namespace Azure.Search.Tests.Samples
             SearchIndexClient client = new SearchIndexClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
-            string searchText = "Microsoft";
-            SearchOptions options = new SearchOptions { Size = 5 };
-            //@@ SearchResults<SearchDocument> response = client.Search(searchText, options);
+            //@@ SearchResults<SearchDocument> response = client.Search("Microsoft", new SearchOptions { Size = 5 });
             //@@ foreach (SearchResult<SearchDocument> result in response.GetResults())
-            /*@@*/ SearchResults<SearchDocument> response = await client.SearchAsync(searchText, options);
+            /*@@*/ SearchResults<SearchDocument> response = await client.SearchAsync("Microsoft", new SearchOptions { Size = 5 });
             /*@@*/ await foreach (SearchResult<SearchDocument> result in response.GetResultsAsync())
             {
                 // Print out the title and job description (we'll see below how to
                 // use C# objects to make accessing these fields much easier)
-                string id = (string)result.Document["job_id"];
                 string title = (string)result.Document["business_title"];
                 string description = (string)result.Document["job_description"];
-                Console.WriteLine($"{id}: {title}\n{description}\n");
+                Console.WriteLine($"{title}\n{description}\n");
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
         }
@@ -187,9 +184,9 @@ namespace Azure.Search.Tests.Samples
             }
         }
 
-        // TODO: XXXXX - UseSyncMethodInterceptor doesn't like generic and exceptions together
+        // TODO: #10603 - UseSyncMethodInterceptor doesn't like generic and exceptions together
         [Test]
-        [Ignore("UseSyncMethodInterceptor doesn't like generic and exceptions together")]
+        [Ignore("#10603 - UseSyncMethodInterceptor doesn't like generic and exceptions together")]
         public async Task Troubleshooting()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
