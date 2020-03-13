@@ -65,14 +65,18 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var receiver = client.GetReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
-
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                var remainingMessages = messageCount;
+                while (remainingMessages > 0)
                 {
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(item.DeliveryCount, 1);
+                    }
                 }
-
+                Assert.AreEqual(0, remainingMessages);
                 messageEnum.Reset();
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
@@ -97,21 +101,20 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
+                var remainingMessages = messageCount;
 
-
-                while (receivedMessageCount < messageCount)
+                while (remainingMessages > 0)
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
                     {
-                        receivedMessageCount++;
+                        remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         await receiver.CompleteAsync(item.LockToken);
                     }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var peekedMessage = receiver.PeekAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -135,15 +138,19 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receiver = client.GetReceiver(scope.QueueName);
 
                 var messageEnum = messages.GetEnumerator();
-
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                var remainingMessages = messageCount;
+                while (remainingMessages > 0)
                 {
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.AbandonAsync(item.LockToken);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        await receiver.AbandonAsync(item.LockToken);
+                        Assert.AreEqual(item.DeliveryCount, 1);
+                    }
                 }
-
+                Assert.AreEqual(0, remainingMessages);
                 messageEnum.Reset();
                 var receivedMessageCount = 0;
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
@@ -171,37 +178,40 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
-                var receivedMessageCount = 0;
+                var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (remainingMessages > 0)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.MoveToDeadLetterQueueAsync(item.LockToken);
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        await receiver.MoveToDeadLetterQueueAsync(item.LockToken);
+                    }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var peekedMessage = receiver.PeekAsync();
                 Assert.IsNull(peekedMessage.Result);
 
                 messageEnum.Reset();
-                receivedMessageCount = 0;
                 string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
                 var deadLetterReceiver = client.GetReceiver(deadLetterQueuePath);
+                remainingMessages = messageCount;
 
-                while (receivedMessageCount < messageCount)
+                while (remainingMessages > 0)
                 {
-                    foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))
+                    foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(remainingMessages))
                     {
-                        receivedMessageCount++;
+                        remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         await deadLetterReceiver.CompleteAsync(item.LockToken);
                     }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var deadLetterMessage = deadLetterReceiver.PeekAsync();
                 Assert.IsNull(deadLetterMessage.Result);
@@ -223,22 +233,22 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await sender.SendBatchAsync(batch);
 
                 var receiver = client.GetReceiver(scope.QueueName);
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
                 IList<long> sequenceNumbers = new List<long>();
+                var remainingMessages = messageCount;
 
-                while (receivedMessageCount < messageCount)
+                while (remainingMessages > 0)
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
                     {
-                        receivedMessageCount++;
+                        remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers.Add(item.SequenceNumber);
                         await receiver.DeferAsync(item.LockToken);
                     }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessageBatchAsync(sequenceNumbers);
 
@@ -270,19 +280,18 @@ namespace Azure.Messaging.ServiceBus.Tests
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
                 var receiver = client.GetReceiver(scope.QueueName, clientOptions);
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
-
-                while (receivedMessageCount < messageCount)
+                var remainingMessages = messageCount;
+                while (remainingMessages > 0)
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount).ConfigureAwait(false))
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages).ConfigureAwait(false))
                     {
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        receivedMessageCount++;
+                        remainingMessages--;
                     }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var peekedMessage = receiver.PeekAsync();
                 Assert.IsNull(peekedMessage.Result);

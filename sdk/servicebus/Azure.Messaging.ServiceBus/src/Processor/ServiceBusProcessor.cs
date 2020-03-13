@@ -638,9 +638,10 @@ namespace Azure.Messaging.ServiceBus
                     new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
 
                 // if the message or session lock was lost, do not attempt to abandon the message
-                if (!(ex is ServiceBusException sbException) ||
+                if (ReceiveMode == ReceiveMode.PeekLock &&
+                    (!(ex is ServiceBusException sbException) ||
                     (sbException.Reason != ServiceBusException.FailureReason.SessionLockLost) &&
-                     sbException.Reason != ServiceBusException.FailureReason.MessageLockLost)
+                     sbException.Reason != ServiceBusException.FailureReason.MessageLockLost))
                 {
                     await receiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
                 }
