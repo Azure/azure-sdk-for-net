@@ -128,13 +128,6 @@ namespace Azure.AI.FormRecognizer.Models
         internal BoundingBox() { }
         public System.Drawing.PointF[] Points { get { throw null; } }
     }
-    public enum ContentType
-    {
-        ApplicationPdf = 0,
-        ImageJpeg = 1,
-        ImagePng = 2,
-        ImageTiff = 3,
-    }
     public partial class ExtractedField
     {
         internal ExtractedField() { }
