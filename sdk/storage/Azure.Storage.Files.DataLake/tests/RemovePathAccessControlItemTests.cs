@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -44,25 +45,25 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.Mask),
-                RemovePathAccessControlItem.Parse("mask"));
+                new RemovePathAccessControlItem("mask"));
 
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.Mask),
-                RemovePathAccessControlItem.Parse("mask:"));
+                new RemovePathAccessControlItem("mask:"));
 
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.Mask,
                     true),
-                RemovePathAccessControlItem.Parse("default:mask"));
+                new RemovePathAccessControlItem("default:mask"));
 
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.User,
                     true,
                     _entityId),
-                RemovePathAccessControlItem.Parse("default:user:entityId"));
+                new RemovePathAccessControlItem("default:user:entityId"));
         }
 
         [Test]
@@ -71,16 +72,87 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(null, PathAccessControlItem.Parse(null));
 
             TestHelper.AssertExpectedException(
-                () => RemovePathAccessControlItem.Parse(""),
-                new ArgumentException("s is invalid"));
+                () => new RemovePathAccessControlItem(""),
+                new ArgumentException("s must have 1 to 3 parts delimited by colons.  Value is \"\""));
 
             TestHelper.AssertExpectedException(
-                () => RemovePathAccessControlItem.Parse("a:b:c:d"),
-                new ArgumentException("s should have 1 to 3 parts delimited by colons.  Value is \"a:b:c:d\""));
+                () => new RemovePathAccessControlItem("a:b:c:d"),
+                new ArgumentException("s must have 1 to 3 parts delimited by colons.  Value is \"a:b:c:d\""));
 
             TestHelper.AssertExpectedException(
-                () => RemovePathAccessControlItem.Parse("a:b:c"),
+                () => new RemovePathAccessControlItem("a:b:c"),
                 new ArgumentException("If s is 3 parts, the first must be \"default\".  Value is \"a:b:c\""));
+        }
+
+        [Test]
+        public void SerializeRemoveAccessControlList()
+        {
+            // Arrange
+            RemovePathAccessControlItem accessControlEntry = new RemovePathAccessControlItem(
+                AccessControlType.User,
+                true,
+                _entityId);
+
+            // Act
+            string result = RemovePathAccessControlItem.ToAccessControlListString(new List<RemovePathAccessControlItem>()
+            {
+                accessControlEntry
+            });
+
+            // Assert
+            Assert.AreEqual("default:user:entityId", result);
+
+            // Act
+            result = RemovePathAccessControlItem.ToAccessControlListString(new List<RemovePathAccessControlItem>()
+            {
+                accessControlEntry,
+                new RemovePathAccessControlItem(
+                    AccessControlType.Mask,
+                    true),
+            });
+
+            // Assert
+            Assert.AreEqual("default:user:entityId,default:mask", result);
+        }
+
+        [Test]
+        public void SerializeRemoveAccessControlList_Invalid()
+        {
+            Assert.AreEqual(null, RemovePathAccessControlItem.ToAccessControlListString(null));
+        }
+
+        [Test]
+        public void DeserializeRemoveAccessControlList()
+        {
+            // Arrange
+            RemovePathAccessControlItem accessControlEntry = new RemovePathAccessControlItem(
+                AccessControlType.User,
+                true,
+                _entityId);
+
+            // Act
+            IList<RemovePathAccessControlItem> list = RemovePathAccessControlItem.ParseAccessControlList("default:user:entityId");
+
+            // Assert
+            Assert.AreEqual(1, list.Count);
+            AssertRemovePathAccessControlEntryEquality(accessControlEntry, list[0]);
+
+            // Act
+            list = RemovePathAccessControlItem.ParseAccessControlList("default:user:entityId,default:mask");
+
+            // Assert
+            Assert.AreEqual(2, list.Count);
+            AssertRemovePathAccessControlEntryEquality(accessControlEntry, list[0]);
+            AssertRemovePathAccessControlEntryEquality(new RemovePathAccessControlItem(
+                    AccessControlType.Mask,
+                    true),
+                list[1]);
+        }
+
+        [Test]
+        public void DeserializeRemoveAccessControlList_Invalid()
+        {
+            Assert.AreEqual(null, RemovePathAccessControlItem.ParseAccessControlList(null));
         }
     }
 }

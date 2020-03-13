@@ -2309,7 +2309,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return SetAccessControlRecursiveInternal(
-                    RemovePathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
                     PathSetAccessControlRecursiveMode.Remove,
                     batchSize,
                     progressHandler,
@@ -2375,7 +2375,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return await SetAccessControlRecursiveInternal(
-                    RemovePathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                    RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
                     PathSetAccessControlRecursiveMode.Remove,
                     batchSize,
                     progressHandler,

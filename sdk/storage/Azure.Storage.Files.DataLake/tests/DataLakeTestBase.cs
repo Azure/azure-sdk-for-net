@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly IList<PathAccessControlItem> ExecuteOnlyAccessControlList
             = PathAccessControlExtensions.ParseAccessControlList("user::--x,group::--x,other::--x");
         public readonly IList<RemovePathAccessControlItem> RemoveAccessControlList
-            = RemovePathAccessControlExtensions.ParseAccessControlList(
+            = RemovePathAccessControlItem.ParseAccessControlList(
                 "mask," +
                 "default:user,default:group," +
                 "user:ec3595d6-2c17-4696-8caa-7e139758d24a,group:ec3595d6-2c17-4696-8caa-7e139758d24a," +

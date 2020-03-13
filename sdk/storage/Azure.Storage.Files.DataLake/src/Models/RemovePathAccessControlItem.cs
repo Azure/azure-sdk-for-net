@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -55,6 +56,44 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="serializedAccessControl">The string representation of the access control list.</param>
+        public RemovePathAccessControlItem(string serializedAccessControl)
+        {
+            if (string.IsNullOrWhiteSpace(serializedAccessControl))
+            {
+                throw DataLakeErrors.RemovePathAccessControlItemInvalidString(serializedAccessControl);
+            }
+
+            string[] parts = serializedAccessControl.Split(':');
+            int indexOffset = 0;
+
+            if (parts.Length < 1 || parts.Length > 3)
+            {
+                throw DataLakeErrors.RemovePathAccessControlItemInvalidString(serializedAccessControl);
+            }
+
+            if (parts.Length == 3 && !parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw DataLakeErrors.RemovePathAccessControlItemStringInvalidPrefix(serializedAccessControl);
+            }
+
+            if (parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
+            {
+                DefaultScope = true;
+                indexOffset = 1;
+            }
+
+            AccessControlType = ParseAccesControlType(parts[indexOffset]);
+
+            if ((1 + indexOffset) < parts.Length && !string.IsNullOrEmpty(parts[1 + indexOffset]))
+            {
+                EntityId = parts[1 + indexOffset];
+            }
+        }
+
+        /// <summary>
         /// Override of ToString().
         /// </summary>
         /// <returns></returns>
@@ -77,45 +116,44 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary>
-        /// Parses the provided string into a <see cref="RemovePathAccessControlItem"/>
+        /// Converts the Access Control List for removal to a <see cref="string"/>.
         /// </summary>
-        /// <param name="s">The string representation of the access control list.</param>
-        /// <returns>A <see cref="RemovePathAccessControlItem"/>.</returns>
-        public static RemovePathAccessControlItem Parse(string s)
+        /// <param name="accessControlList">The Access Control List for removal to serialize</param>
+        /// <returns>string.</returns>
+        public static string ToAccessControlListString(IList<RemovePathAccessControlItem> accessControlList)
+        {
+            if (accessControlList == null)
+            {
+                return null;
+            }
+
+            IList<string> serializedAcl = new List<string>();
+            foreach (RemovePathAccessControlItem ac in accessControlList)
+            {
+                serializedAcl.Add(ac.ToString());
+            }
+            return string.Join(",", serializedAcl);
+        }
+
+        /// <summary>
+        /// Deseralizes an access control list string for removal into a list of RemovePathAccessControlItem.
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <returns>A List of <see cref="RemovePathAccessControlItem"/>.</returns>
+        public static IList<RemovePathAccessControlItem> ParseAccessControlList(string s)
         {
             if (s == null)
             {
                 return null;
             }
 
-            RemovePathAccessControlItem entry = new RemovePathAccessControlItem();
-            string[] parts = s.Split(':');
-            int indexOffset = 0;
-
-            if (parts.Length < 1 || parts.Length > 3)
+            string[] strings = s.Split(',');
+            List<RemovePathAccessControlItem> accessControlList = new List<RemovePathAccessControlItem>();
+            foreach (string entry in strings)
             {
-                throw DataLakeErrors.RemovePathAccessControlItemStringInvalidLength(s);
+                accessControlList.Add(new RemovePathAccessControlItem(entry));
             }
-
-            if (parts.Length == 3 && !parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
-            {
-                throw DataLakeErrors.RemovePathAccessControlItemStringInvalidPrefix(s);
-            }
-
-            if (parts[0].Equals("default", StringComparison.OrdinalIgnoreCase))
-            {
-                entry.DefaultScope = true;
-                indexOffset = 1;
-            }
-
-            entry.AccessControlType = ParseAccesControlType(parts[indexOffset]);
-
-            if ((1 + indexOffset) < parts.Length && !string.IsNullOrEmpty(parts[1 + indexOffset]))
-            {
-                entry.EntityId = parts[1 + indexOffset];
-            }
-
-            return entry;
+            return accessControlList;
         }
 
         internal static AccessControlType ParseAccesControlType(string s)

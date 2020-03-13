@@ -662,7 +662,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 #region Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
                 // Remove Access Control List Recursively
                 IList<RemovePathAccessControlItem> removeAccessControlList
-                    = RemovePathAccessControlExtensions.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
+                    = RemovePathAccessControlItem.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
                 subDirectoryClient.RemoveAccessControlRecursive(removeAccessControlList);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
 

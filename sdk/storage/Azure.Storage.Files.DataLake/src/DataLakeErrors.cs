@@ -18,8 +18,8 @@ namespace Azure.Storage.Files.DataLake
         public static ArgumentException PathAccessControlItemStringInvalidPrefix(string s)
             => new ArgumentException($"If {nameof(s)} is 4 parts, the first must be \"default\".  Value is \"{s}\"");
 
-        public static ArgumentException RemovePathAccessControlItemStringInvalidLength(string s)
-           => new ArgumentException($"{nameof(s)} should have 1 to 3 parts delimited by colons.  Value is \"{s}\"");
+        public static ArgumentException RemovePathAccessControlItemInvalidString(string s)
+            => new ArgumentException($"{nameof(s)} must have 1 to 3 parts delimited by colons.  Value is \"{s}\"");
 
         public static ArgumentException RemovePathAccessControlItemStringInvalidPrefix(string s)
             => new ArgumentException($"If {nameof(s)} is 3 parts, the first must be \"default\".  Value is \"{s}\"");
