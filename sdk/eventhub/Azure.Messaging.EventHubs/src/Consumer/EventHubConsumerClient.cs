@@ -845,7 +845,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             {
                 var failedAttemptCount = 0;
                 var writtenItems = 0;
-                var receivedItems = default(IEnumerable<EventData>);
+                var receivedItems = default(IReadOnlyList<EventData>);
                 var retryDelay = default(TimeSpan?);
                 var activeException = default(Exception);
 
@@ -859,7 +859,6 @@ namespace Azure.Messaging.EventHubs.Consumer
                         if (receivedItems == default)
                         {
                             receivedItems = await transportConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
-                            receivedItems = (receivedItems as IList<EventData>) ?? receivedItems.ToList();
                         }
 
                         foreach (EventData item in receivedItems)
@@ -920,10 +919,10 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                             if ((receivedItems != default) && (writtenItems > 0))
                             {
-                                receivedItems = receivedItems.Skip(writtenItems);
+                                receivedItems = receivedItems.Skip(writtenItems).ToList();
                             }
 
-                            await Task.Delay(retryDelay.Value).ConfigureAwait(false);
+                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
                             activeException = null;
                         }
                         else

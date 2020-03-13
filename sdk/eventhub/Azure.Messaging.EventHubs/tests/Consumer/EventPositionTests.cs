@@ -21,23 +21,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void AnInstanceIsEqualToItself()
-        {
-            var first = EventPosition.FromOffset(12);
-            var second = first;
-
-            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventPosition "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
         public void EarliestAndLatestAreNotEqual()
         {
             var first = EventPosition.Earliest;

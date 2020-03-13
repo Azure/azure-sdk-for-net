@@ -739,7 +739,7 @@ namespace Azure.Messaging.EventHubs
                 {
                     var attributes = new Dictionary<string, string>()
                     {
-                        { DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeSeconds().ToString() }
+                        { DiagnosticProperty.EnqueuedTimeAttribute, partitionEvent.Data.EnqueuedTime.ToUnixTimeMilliseconds().ToString() }
                     };
 
                     diagnosticScope.AddLink(diagnosticId, attributes);

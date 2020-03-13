@@ -220,7 +220,7 @@
     <value>{0} has already been closed and cannot perform the requested operation.</value>
   </data>
   <data name="TrackLastEnqueuedEventPropertiesNotSet" xml:space="preserve">
-    <value>This information is only available when TrackLastEnqueuedEventProperties is set on the Event Hub consumer options.</value>
+    <value>This information is only available when TrackLastEnqueuedEventProperties is set as part of the options.</value>
   </data>
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
     <value>Cannot begin processing without {0} handler set.</value>
@@ -229,7 +229,7 @@
     <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
   </data>
   <data name="ClientNeededForThisInformation" xml:space="preserve">
-    <value>The Event Hub client responsible for this information</value>
+    <value>The Event Hub client responsible for this information is not available.</value>
   </data>
   <data name="BlobsResourceDoesNotExist" xml:space="preserve">
     <value>The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.</value>
@@ -263,5 +263,11 @@
   </data>
   <data name="CannotReadLastEnqueuedEventPropertiesWithoutEvent" xml:space="preserve">
     <value>The last enqueued event properties cannot be read when an event is not available.</value>
+  </data>
+  <data name="DeveloperCodeError" xml:space="preserve">
+    <value>An error was encountered while executing custom code, such as in an event handler.</value>
+  </data>
+  <data name="DeveloperCodeExceptionMessageMask" xml:space="preserve">
+    <value>[Developer Code Exception] : {0}.</value>
   </data>
 </root>
