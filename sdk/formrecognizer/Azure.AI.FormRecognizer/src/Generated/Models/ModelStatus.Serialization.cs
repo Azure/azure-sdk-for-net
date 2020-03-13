@@ -19,12 +19,12 @@ namespace Azure.AI.FormRecognizer.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModelStatus value.")
         };
 
-        public static ModelStatus ToModelStatus(this string value) => value switch
+        public static ModelStatus ToModelStatus(this string value)
         {
-            "creating" => ModelStatus.Creating,
-            "ready" => ModelStatus.Ready,
-            "invalid" => ModelStatus.Invalid,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModelStatus value.")
-        };
+            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Creating;
+            if (string.Equals(value, "ready", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Ready;
+            if (string.Equals(value, "invalid", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Invalid;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModelStatus value.");
+        }
     }
 }

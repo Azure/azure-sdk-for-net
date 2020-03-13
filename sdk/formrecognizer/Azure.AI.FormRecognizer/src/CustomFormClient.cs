@@ -32,18 +32,14 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomFormClient"/>.
         /// </summary>
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         public CustomFormClient(Uri endpoint, FormRecognizerApiKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomFormClient"/>.
         /// </summary>
-#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         public CustomFormClient(Uri endpoint, FormRecognizerApiKeyCredential credential, FormRecognizerClientOptions options)
-#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
             _diagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));

@@ -11,20 +11,6 @@
     <!-- We don't have to worry about Breaking Changes until GA -->
     <EnableApiCompat>false</EnableApiCompat>
 
-    <!-- *ClientOptions Analyzer blocked by https://github.com/Azure/azure-sdk-tools/issues/127 -->
-    <NoWarn>$(NoWarn);AZC0007;</NoWarn>
-
-    <!-- Ignore generated warnings until https://github.com/Azure/autorest.csharp/issues/206 is fixed -->
-    <NoWarn>
-      $(NoWarn);
-      AZC0001;
-      CA1056;
-      CA1507;
-      CA1717;
-      CA1812;
-      CS1591;
-      SA1649;
-    </NoWarn>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->

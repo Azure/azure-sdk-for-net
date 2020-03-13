@@ -18,11 +18,11 @@ namespace Azure.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.")
         };
 
-        public static SearchMode ToSearchMode(this string value) => value switch
+        public static SearchMode ToSearchMode(this string value)
         {
-            "any" => SearchMode.Any,
-            "all" => SearchMode.All,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.")
-        };
+            if (string.Equals(value, "any", StringComparison.InvariantCultureIgnoreCase)) return SearchMode.Any;
+            if (string.Equals(value, "all", StringComparison.InvariantCultureIgnoreCase)) return SearchMode.All;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.");
+        }
     }
 }

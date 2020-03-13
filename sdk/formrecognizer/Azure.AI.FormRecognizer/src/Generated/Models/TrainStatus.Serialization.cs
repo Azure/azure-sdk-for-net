@@ -19,12 +19,12 @@ namespace Azure.AI.FormRecognizer.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TrainStatus value.")
         };
 
-        public static TrainStatus ToTrainStatus(this string value) => value switch
+        public static TrainStatus ToTrainStatus(this string value)
         {
-            "succeeded" => TrainStatus.Succeeded,
-            "partiallySucceeded" => TrainStatus.PartiallySucceeded,
-            "failed" => TrainStatus.Failed,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TrainStatus value.")
-        };
+            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return TrainStatus.Succeeded;
+            if (string.Equals(value, "partiallySucceeded", StringComparison.InvariantCultureIgnoreCase)) return TrainStatus.PartiallySucceeded;
+            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return TrainStatus.Failed;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TrainStatus value.");
+        }
     }
 }

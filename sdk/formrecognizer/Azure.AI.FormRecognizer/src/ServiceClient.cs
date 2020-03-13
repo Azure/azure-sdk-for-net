@@ -107,31 +107,6 @@ namespace Azure.AI.FormRecognizer
 
         #region Receipt
 
-        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
-        {
-
-            using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeReceiptAsync");
-            scope.Start();
-            try
-            {
-                using var message = RestClient.CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
-                    default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
         {
 

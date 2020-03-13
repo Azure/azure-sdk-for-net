@@ -10,36 +10,33 @@
 
 namespace Microsoft.Azure.Management.IotCentral.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Error details.
+    /// Details of error response.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class ErrorDetails
+    public partial class CloudErrorBody
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the CloudErrorBody class.
         /// </summary>
-        public ErrorDetails()
+        public CloudErrorBody()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the CloudErrorBody class.
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="message">The error message.</param>
         /// <param name="target">The target of the particular error.</param>
         /// <param name="details">A list of additional details about the
         /// error.</param>
-        public ErrorDetails(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponseBody> details = default(IList<ErrorResponseBody>))
+        public CloudErrorBody(string code = default(string), string message = default(string), string target = default(string), IList<CloudErrorBody> details = default(IList<CloudErrorBody>))
         {
             Code = code;
             Message = message;
@@ -56,26 +53,26 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <summary>
         /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "error.code")]
+        [JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
         /// Gets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "error.message")]
+        [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
         /// Gets the target of the particular error.
         /// </summary>
-        [JsonProperty(PropertyName = "error.target")]
+        [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of additional details about the error.
         /// </summary>
-        [JsonProperty(PropertyName = "error.details")]
-        public IList<ErrorResponseBody> Details { get; set; }
+        [JsonProperty(PropertyName = "details")]
+        public IList<CloudErrorBody> Details { get; set; }
 
     }
 }
