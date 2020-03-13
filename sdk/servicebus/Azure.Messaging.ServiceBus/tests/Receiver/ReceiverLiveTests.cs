@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -35,11 +36,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 }
 
                 var ct = 0;
-                foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAsync(
-                    maxMessages: messageCt))
+                while (ct < messageCt)
                 {
-                    var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
-                    ct++;
+                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAsync(
+                    maxMessages: messageCt))
+                    {
+                        var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
+                        ct++;
+                    }
                 }
                 Assert.AreEqual(messageCt, ct);
             }
@@ -63,12 +67,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(item.DeliveryCount, 1);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -99,12 +106,16 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.CompleteAsync(item.LockToken);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        await receiver.CompleteAsync(item.LockToken);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -131,13 +142,16 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await receiver.AbandonAsync(item.LockToken);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        await receiver.AbandonAsync(item.LockToken);
+                        Assert.AreEqual(item.DeliveryCount, 1);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -188,12 +202,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                 string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
                 var deadLetterReceiver = client.GetReceiver(deadLetterQueuePath);
 
-                foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    await deadLetterReceiver.CompleteAsync(item.LockToken);
+                    foreach (var item in await deadLetterReceiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        await deadLetterReceiver.CompleteAsync(item.LockToken);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -221,13 +238,16 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var messageEnum = messages.GetEnumerator();
                 IList<long> sequenceNumbers = new List<long>();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    sequenceNumbers.Add(item.SequenceNumber);
-                    await receiver.DeferAsync(item.LockToken);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        sequenceNumbers.Add(item.SequenceNumber);
+                        await receiver.DeferAsync(item.LockToken);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -264,11 +284,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount).ConfigureAwait(false))
+                while (receivedMessageCount < messageCount)
                 {
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    receivedMessageCount++;
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount).ConfigureAwait(false))
+                    {
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        receivedMessageCount++;
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 

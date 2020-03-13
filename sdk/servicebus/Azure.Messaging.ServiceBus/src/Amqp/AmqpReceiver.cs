@@ -679,15 +679,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
             }
 
-            if (isSessionReceiver)
-            {
-                ThrowIfSessionLockLost();
-            }
+            AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
+                timeout,
+                amqpRequestMessage).ConfigureAwait(false);
 
-            AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
-                _managementLink,
-                amqpRequestMessage,
-                timeout).ConfigureAwait(false);
             if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
             {
                 throw amqpResponseMessage.ToMessagingContractException();
@@ -909,10 +904,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new[] { new Guid(lockToken) };
 
-            AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
-                _managementLink,
-                amqpRequestMessage,
-                timeout).ConfigureAwait(false);
+            AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
+                timeout,
+                amqpRequestMessage).ConfigureAwait(false);
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
@@ -925,6 +919,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return lockedUntilUtc;
+        }
+
+        private async Task<AmqpResponseMessage> ExecuteRequest(TimeSpan timeout, AmqpRequestMessage amqpRequestMessage)
+        {
+            ThrowIfSessionLockLost();
+            AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                _managementLink,
+                amqpRequestMessage,
+                timeout).ConfigureAwait(false);
+            return amqpResponseMessage;
         }
 
         /// <summary>
@@ -974,10 +978,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
 
-                AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
-                    _managementLink,
-                    amqpRequestMessage,
-                    timeout).ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
+                    timeout,
+                    amqpRequestMessage).ConfigureAwait(false);
 
                 DateTime lockedUntilUtc;
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
@@ -1039,10 +1042,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
                 }
 
-                var response = await ManagementUtilities.ExecuteRequestResponseAsync(
-                    _managementLink,
-                    amqpRequestMessage,
-                    timeout).ConfigureAwait(false);
+                var response = await ExecuteRequest(
+                    timeout,
+                    amqpRequestMessage).ConfigureAwait(false);
 
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {

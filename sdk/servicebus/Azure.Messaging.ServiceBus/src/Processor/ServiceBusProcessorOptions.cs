@@ -82,9 +82,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
         /// Receiver.CompleteAsync() on messages after the callback has completed processing.
-        /// The default value is false.</summary>
+        /// The default value is true.</summary>
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
-        public bool AutoComplete { get; set; } = false;
+        public bool AutoComplete { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This

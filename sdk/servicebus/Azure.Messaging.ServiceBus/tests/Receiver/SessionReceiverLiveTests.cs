@@ -319,13 +319,16 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.CompleteAsync(item.LockToken);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        await receiver.CompleteAsync(item.LockToken);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -357,14 +360,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.AbandonAsync(item.LockToken);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        await receiver.AbandonAsync(item.LockToken);
+                        Assert.AreEqual(item.DeliveryCount, 1);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
 
@@ -461,14 +467,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
                 IList<long> sequenceNumbers = new List<long>();
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (receivedMessageCount < messageCount)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    sequenceNumbers.Add(item.SequenceNumber);
-                    await receiver.DeferAsync(item.LockToken);
+                    foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                    {
+                        receivedMessageCount++;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        sequenceNumbers.Add(item.SequenceNumber);
+                        await receiver.DeferAsync(item.LockToken);
+                    }
                 }
                 Assert.AreEqual(messageCount, receivedMessageCount);
                 IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessageBatchAsync(sequenceNumbers);
