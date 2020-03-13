@@ -12,6 +12,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer
 {
+
+    /// <summary>
+    /// The client to use to with the Form Recognizer Azure Cognitive Service, to extract values from receipts.
+    /// </summary>
     public class ReceiptClient
     {
         private readonly ClientDiagnostics _diagnostics;
@@ -45,6 +49,14 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="stream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
         public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -53,6 +65,14 @@ namespace Azure.AI.FormRecognizer
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="stream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
         public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -60,6 +80,14 @@ namespace Azure.AI.FormRecognizer
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -68,6 +96,13 @@ namespace Azure.AI.FormRecognizer
             return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
