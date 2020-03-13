@@ -59,7 +59,10 @@ To quickly create the needed resources in Azure and to receive connection string
 
 - [Process events in batches](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample09_ProcessEventsByBatch.cs)  
   An example of grouping events into batches for downstream processing.
-  
+
+- [Run in Azure Stack](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample10_RunningInAzureStack.cs)
+  An example of running the Event Processor in the Azure Stack platform.
+
 ## Contributing  
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
