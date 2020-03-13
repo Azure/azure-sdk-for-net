@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-emlsaoyx.search.windows.net/indexes(\u0027doesnotexist\u0027)/docs/$count?api-version=2019-05-06",
+      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027doesnotexist\u0027)/docs/$count?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "api-key": "Sanitized",
-        "traceparent": "00-a280a5f85d5dec448b029da5db376f81-ecca69240b954f47-00",
+        "traceparent": "00-cf1ac5a2baa5b0499bc5fe69271349c7-699542117e16f548-00",
         "User-Agent": [
-          "azsdk-net-Search/1.0.0-dev.20200228.1",
+          "azsdk-net-Search/11.0.0-dev.20200308.1",
           "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "bdf277a09cfdbcab9f579200c3b85093",
+        "x-ms-client-request-id": "74da84cc969d91270b8cb602179371eb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,21 +20,22 @@
         "Content-Language": "en",
         "Content-Length": "84",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 28 Feb 2020 19:15:10 GMT",
-        "elapsed-time": "501",
+        "Date": "Sun, 08 Mar 2020 23:05:23 GMT",
+        "elapsed-time": "6",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "bdf277a0-9cfd-bcab-9f57-9200c3b85093",
+        "request-id": "74da84cc-969d-9127-0b8c-b602179371eb",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "Message": "The index \u0027doesnotexist\u0027 for service \u0027azs-net-emlsaoyx\u0027 was not found."
+        "Message": "The index \u0027doesnotexist\u0027 for service \u0027azs-net-gjxdhkdl\u0027 was not found."
       }
     }
   ],
   "Variables": {
     "RandomSeed": "266578448",
-    "SearchCreateAttempts": "1"
+    "SearchIndexName": "grurisvf",
+    "SearchServiceName": "azs-net-gjxdhkdl"
   }
 }

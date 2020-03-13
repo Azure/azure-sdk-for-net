@@ -11,16 +11,13 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class SearchResult : IUtf8JsonSerializable
+    internal partial class SearchResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Score != null)
-            {
-                writer.WritePropertyName("@search.score");
-                writer.WriteNumberValue(Score.Value);
-            }
+            writer.WritePropertyName("@search.score");
+            writer.WriteNumberValue(Score);
             if (Highlights != null)
             {
                 writer.WritePropertyName("@search.highlights");
@@ -51,10 +48,6 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("@search.score"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Score = property.Value.GetDouble();
                     continue;
                 }

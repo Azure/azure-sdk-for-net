@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-nknpyoel.search.windows.net/indexes(\u0027wcyxhjhn\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "traceparent": "00-c5610bb5aa8ed04393db4763cea835ff-b8157fb4c0b72d4d-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "1c37d00995567ff4f9c8d2a72cb6e71b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4",
+        "Content-Type": "text/plain",
+        "Date": "Thu, 12 Mar 2020 06:28:54 GMT",
+        "elapsed-time": "113",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "1c37d009-9556-7ff4-f9c8-d2a72cb6e71b",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": "\uFEFF0"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "486317286",
+    "SearchIndexName": "wcyxhjhn",
+    "SearchServiceName": "azs-net-nknpyoel"
+  }
+}

@@ -56,7 +56,7 @@ namespace Azure.Search
         /// <summary>
         /// Gets the generated service level operations to make requests.
         /// </summary>
-        private ServiceClient Operations { get; }
+        private ServiceRestClient Protocol { get; }
 
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class for
@@ -132,7 +132,7 @@ namespace Azure.Search
             Pipeline = options.Build(credential);
             Version = options.Version;
 
-            Operations = new ServiceClient(
+            Protocol = new ServiceRestClient(
                 ClientDiagnostics,
                 Pipeline,
                 Endpoint.ToString(),
@@ -140,9 +140,9 @@ namespace Azure.Search
         }
 
         /// <summary>
-        /// Get a SearchIndexClient for the given <paramref name="indexName"/>
-        /// to use for document operations like querying or adding documents to
-        /// a Search Index.
+        /// Get a <see cref="SearchIndexClient"/> for the given
+        /// <paramref name="indexName"/> to use for document operations like
+        /// querying or adding documents to a Search Index.
         /// </summary>
         /// <param name="indexName">
         /// The name of the desired Search Index.
@@ -186,10 +186,8 @@ namespace Azure.Search
         /// by this API may not reflect changes caused by recent indexing
         /// operations.
         /// </summary>
-        /// <param name="clientRequestId">
-        /// An optional caller-defined value that identifies the given request.
-        /// If specified, this will be included in response information as a
-        /// way to map the request.
+        /// <param name="options">
+        /// Options to customize the operation's behavior.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -201,10 +199,10 @@ namespace Azure.Search
         /// </exception>
         [ForwardsClientCalls]
         public virtual Response<SearchServiceStatistics> GetStatistics(
-            Guid? clientRequestId = null,
+            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
-            Operations.GetServiceStatistics(
-                clientRequestId,
+            Protocol.GetServiceStatistics(
+                options?.ClientRequestId,
                 cancellationToken);
 
         /// <summary>
@@ -221,10 +219,8 @@ namespace Azure.Search
         /// by this API may not reflect changes caused by recent indexing
         /// operations.
         /// </summary>
-        /// <param name="clientRequestId">
-        /// An optional caller-defined value that identifies the given request.
-        /// If specified, this will be included in response information as a
-        /// way to map the request.
+        /// <param name="options">
+        /// Options to customize the operation's behavior.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -236,10 +232,10 @@ namespace Azure.Search
         /// </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SearchServiceStatistics>> GetStatisticsAsync(
-            Guid? clientRequestId = null,
+            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
-            await Operations.GetServiceStatisticsAsync(
-                clientRequestId,
+            await Protocol.GetServiceStatisticsAsync(
+                options?.ClientRequestId,
                 cancellationToken)
                 .ConfigureAwait(false);
     }

@@ -1,0 +1,50 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "54",
+        "Content-Type": "application/json",
+        "traceparent": "00-33b711590e37e340b7e5dd5847a25c8f-94ddc6fab84a6241-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200309.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "bcadf003578d82f6430593e81346ab31",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "hotel",
+        "suggesterName": "Invalid suggester"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Language": "en",
+        "Content-Length": "147",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 09 Mar 2020 09:47:48 GMT",
+        "elapsed-time": "4",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "bcadf003-578d-82f6-4305-93e81346ab31",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "",
+          "message": "The specified suggester name \u0027Invalid suggester\u0027 does not exist in this index definition.\r\nParameter name: name"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "931425957",
+    "SearchIndexName": "bapsfvkb",
+    "SearchServiceName": "azs-net-wvqysflr"
+  }
+}

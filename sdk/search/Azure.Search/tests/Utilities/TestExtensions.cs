@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Search.Tests
 {
@@ -12,6 +14,54 @@ namespace Azure.Search.Tests
     /// </summary>
     internal static partial class TestExtensions
     {
+        /// <summary>
+        /// Get the first element in an AsyncPageable.
+        /// </summary>
+        /// <typeparam name="T">Type of elements.</typeparam>
+        /// <param name="pageable">The AsyncPageable.</param>
+        /// <returns>The first element.</returns>
+        public static async Task<T> FirstAsync<T>(this AsyncPageable<T> pageable)
+        {
+            await foreach (T value in pageable)
+            {
+                return value;
+            }
+            Assert.Fail("No elements in pageable!");
+            return default; // The compiler doesn't know that'll throw...
+        }
+
+        /// <summary>
+        /// Convert an AsyncPageable into a List.
+        /// </summary>
+        /// <typeparam name="T">Type of elements.</typeparam>
+        /// <param name="pageable">The AsyncPageable.</param>
+        /// <returns>A list of the elements.</returns>
+        public static async Task<List<T>> ToListAsync<T>(this AsyncPageable<T> pageable)
+        {
+            List<T> values = new List<T>();
+            await foreach (T value in pageable)
+            {
+                values.Add(value);
+            }
+            return values;
+        }
+
+        /// <summary>
+        /// Convert an AsyncPageable into a List of pages
+        /// </summary>
+        /// <typeparam name="T">Type of elements.</typeparam>
+        /// <param name="pageable">The AsyncPageable.</param>
+        /// <returns>A list of the pages.</returns>
+        public static async Task<List<Page<T>>> ToPagesListAsync<T>(this AsyncPageable<T> pageable)
+        {
+            List<Page<T>> pages = new List<Page<T>>();
+            await foreach (Page<T> page in pageable.AsPages())
+            {
+                pages.Add(page);
+            }
+            return pages;
+        }
+
         /// <summary>
         /// Generate a random name of alphabetic characters.
         /// </summary>

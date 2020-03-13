@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "73",
+        "Content-Type": "application/json",
+        "traceparent": "00-fbb611c8c7452d41afa1593a6be4f61b-baea505360104244-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200308.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "3dc4828d45d45e614c9b358bb2ee8cb7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "po",
+        "autocompleteMode": "oneTerm",
+        "suggesterName": "sg",
+        "top": 2
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "260",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sun, 08 Mar 2020 23:05:22 GMT",
+        "elapsed-time": "6",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "3dc4828d-45d4-5e61-4c9b-358bb2ee8cb7",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.AutocompleteItem)",
+        "value": [
+          {
+            "text": "point",
+            "queryPlusText": "point"
+          },
+          {
+            "text": "police",
+            "queryPlusText": "police"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1444061374",
+    "SearchIndexName": "grurisvf",
+    "SearchServiceName": "azs-net-gjxdhkdl"
+  }
+}

@@ -8,10 +8,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search;
 
 namespace Azure.Search.Models
 {
-    public partial class SearchDocumentsResult : IUtf8JsonSerializable
+    internal partial class SearchDocumentsResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,16 +48,13 @@ namespace Azure.Search.Models
                 writer.WritePropertyName("@search.nextPageParameters");
                 writer.WriteObjectValue(NextPageParameters);
             }
-            if (Results != null)
+            writer.WritePropertyName("value");
+            writer.WriteStartArray();
+            foreach (var item in Results)
             {
-                writer.WritePropertyName("value");
-                writer.WriteStartArray();
-                foreach (var item in Results)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item);
             }
+            writer.WriteEndArray();
             if (NextLink != null)
             {
                 writer.WritePropertyName("@odata.nextLink");
@@ -111,16 +109,11 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.NextPageParameters = SearchRequest.DeserializeSearchRequest(property.Value);
+                    result.NextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Results = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         result.Results.Add(SearchResult.DeserializeSearchResult(item));
