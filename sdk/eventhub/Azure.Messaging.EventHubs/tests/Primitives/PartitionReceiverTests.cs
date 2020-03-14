@@ -73,6 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("amqps://namespace.windows.servicebus.net")]
         public void ConstructorValidatesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
             Assert.That(() => new PartitionReceiver("cg", "pid", EventPosition.Earliest, fullyQualifiedNamespace, "eh", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The constructor should perform validation.");

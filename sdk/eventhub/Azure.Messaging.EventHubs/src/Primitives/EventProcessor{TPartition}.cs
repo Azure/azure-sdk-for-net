@@ -39,6 +39,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
         private bool? _isRunningOverride;
 
+        /// <summary>Indicates the current state of the processor; used for mocking and manual status updates.</summary>
+        private EventProcessorStatus? _statusOverride;
+
         /// <summary>The task responsible for managing the operations of the processor when it is running.</summary>
         private Task _runningProcessorTask;
 
@@ -80,10 +83,29 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             get
             {
-                if (_isRunningOverride.HasValue)
+                var running = _isRunningOverride;
+
+                if (running.HasValue)
                 {
-                    return _isRunningOverride.Value;
+                    return running.Value;
                 }
+
+                var status = Status;
+                return ((status == EventProcessorStatus.Running) || (status == EventProcessorStatus.Stopping));
+            }
+
+            protected set => _isRunningOverride = value;
+        }
+
+        /// <summary>
+        ///   Indicates the current state of the processor.
+        /// </summary>
+        ///
+        internal EventProcessorStatus Status
+        {
+            get
+            {
+                EventProcessorStatus? statusOverride;
 
                 // If there is no active processor task, ensure that it is not
                 // in the process of starting by attempting to acquire the semaphore.
@@ -98,19 +120,38 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         if (!ProcessorRunningSync.Wait(100))
                         {
-                            return false;
+                            return (_statusOverride ?? EventProcessorStatus.NotRunning);
                         }
+
+                        statusOverride = _statusOverride;
                     }
                     finally
                     {
                         ProcessorRunningSync.Release();
                     }
                 }
+                else
+                {
+                    statusOverride = _statusOverride;
+                }
 
-                return  ((!_runningProcessorTask?.IsCompleted) ?? (false));
+                if (statusOverride.HasValue)
+                {
+                    return statusOverride.Value;
+                }
+
+                if ((_runningProcessorTask?.IsFaulted) ?? (false))
+                {
+                    return EventProcessorStatus.Faulted;
+                }
+
+                if ((!_runningProcessorTask?.IsCompleted) ?? (false))
+                {
+                    return EventProcessorStatus.Running;
+                }
+
+                return EventProcessorStatus.NotRunning;
             }
-
-            protected set => _isRunningOverride = value;
         }
 
         /// <summary>
@@ -172,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -848,6 +889,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
 
                 releaseSync = true;
+                _statusOverride = EventProcessorStatus.Starting;
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If the processor is already running, then it was started before the
@@ -876,6 +918,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
+                _statusOverride = null;
                 Logger.EventProcessorStartComplete(Identifier, EventHubName, ConsumerGroup);
 
                 // If the cancellation token was signaled during the attempt to acquire the
@@ -919,6 +962,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
 
                 releaseSync = true;
+                _statusOverride = EventProcessorStatus.Stopping;
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If the processor is not running, then it was never started or has been stopped
@@ -996,6 +1040,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
+                _statusOverride = null;
                 Logger.EventProcessorStopComplete(Identifier, EventHubName, ConsumerGroup);
 
                 // If the cancellation token was signaled during the attempt to acquire the

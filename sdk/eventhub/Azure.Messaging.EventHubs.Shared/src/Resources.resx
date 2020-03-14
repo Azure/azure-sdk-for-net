@@ -270,4 +270,7 @@
   <data name="DeveloperCodeExceptionMessageMask" xml:space="preserve">
     <value>[Developer Code Exception] : {0}.</value>
   </data>
+  <data name="InvalidFullyQualifiedNamespace" xml:space="preserve">
+    <value>The value '{0}' is not a well-formed Event Hubs fully qualified namespace.</value>
+  </data>
 </root>
