@@ -14,28 +14,26 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateOrUpdate operation.
+    /// Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
     /// </summary>
-    public partial class PropertyCreateOrUpdateHeaders
+    public partial class PropertyValueContract
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyCreateOrUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the PropertyValueContract class.
         /// </summary>
-        public PropertyCreateOrUpdateHeaders()
+        public PropertyValueContract()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyCreateOrUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the PropertyValueContract class.
         /// </summary>
-        /// <param name="eTag">Current entity state version. Should be treated
-        /// as opaque and used to make conditional HTTP requests.</param>
-        public PropertyCreateOrUpdateHeaders(string eTag = default(string))
+        /// <param name="value">This is secret value of the NamedValue
+        /// entity.</param>
+        public PropertyValueContract(string value = default(string))
         {
-            ETag = eTag;
+            Value = value;
             CustomInit();
         }
 
@@ -45,11 +43,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets current entity state version. Should be treated as
-        /// opaque and used to make conditional HTTP requests.
+        /// Gets or sets this is secret value of the NamedValue entity.
         /// </summary>
-        [JsonProperty(PropertyName = "ETag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }

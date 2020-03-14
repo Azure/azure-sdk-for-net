@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for Get operation.
+    /// Control Plane Apis version constraint for the API Management service.
     /// </summary>
-    public partial class PropertyGetHeaders
+    public partial class ApiVersionConstraint
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyGetHeaders class.
+        /// Initializes a new instance of the ApiVersionConstraint class.
         /// </summary>
-        public PropertyGetHeaders()
+        public ApiVersionConstraint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyGetHeaders class.
+        /// Initializes a new instance of the ApiVersionConstraint class.
         /// </summary>
-        /// <param name="eTag">Current entity state version. Should be treated
-        /// as opaque and used to make conditional HTTP requests.</param>
-        public PropertyGetHeaders(string eTag = default(string))
+        /// <param name="minApiVersion">Limit control plane API calls to API
+        /// Management service with version equal to or newer than this
+        /// value.</param>
+        public ApiVersionConstraint(string minApiVersion = default(string))
         {
-            ETag = eTag;
+            MinApiVersion = minApiVersion;
             CustomInit();
         }
 
@@ -43,11 +44,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets current entity state version. Should be treated as
-        /// opaque and used to make conditional HTTP requests.
+        /// Gets or sets limit control plane API calls to API Management
+        /// service with version equal to or newer than this value.
         /// </summary>
-        [JsonProperty(PropertyName = "ETag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "minApiVersion")]
+        public string MinApiVersion { get; set; }
 
     }
 }

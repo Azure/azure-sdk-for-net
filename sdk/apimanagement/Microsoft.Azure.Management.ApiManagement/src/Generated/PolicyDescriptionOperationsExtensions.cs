@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PolicySnippetOperations.
+    /// Extension methods for PolicyDescriptionOperations.
     /// </summary>
-    public static partial class PolicySnippetOperationsExtensions
+    public static partial class PolicyDescriptionOperationsExtensions
     {
             /// <summary>
-            /// Lists all policy snippets.
+            /// Lists all policy descriptions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Policy scope. Possible values include: 'Tenant', 'Product', 'Api',
             /// 'Operation', 'All'
             /// </param>
-            public static PolicySnippetsCollection ListByService(this IPolicySnippetOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?))
+            public static PolicyDescriptionCollection ListByService(this IPolicyDescriptionOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?))
             {
                 return operations.ListByServiceAsync(resourceGroupName, serviceName, scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all policy snippets.
+            /// Lists all policy descriptions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicySnippetsCollection> ListByServiceAsync(this IPolicySnippetOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyDescriptionCollection> ListByServiceAsync(this IPolicyDescriptionOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, scope, null, cancellationToken).ConfigureAwait(false))
                 {
