@@ -25,7 +25,7 @@ For other installation methods, please see the package information on [NuGet][nu
 -->
 
 ### Authenticate a Form Recognizer client
-In order to interact with the Form Recognizer service, you'll need to select either a ReceiptClient, FormLayoutClient, or CustomFormClient, and create an instance of this class.  For the remainder of this README, we will use CustomFormClient as an example.  You will need an **endpoint**, and either a **subscription key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Form Recognizer service, you'll need to select either a `ReceiptClient`, `FormLayoutClient`, or `CustomFormClient`, and create an instance of this class.  In the following samples, we will use CustomFormClient as an example.  You will need an **endpoint**, and either a **subscription key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get Subscription Key
 
@@ -40,7 +40,6 @@ az cognitiveservices account keys list --resource-group <your-resource-group-nam
 #### Create CustomFormClient with Subscription Key Credential
 Once you have the value for the subscription key, create a `FormRecognizerApiKeyCredential`. This will allow you to update the subscription key by using the `UpdateCredential` method without creating a new client.
 
- <!-- TODO: link -->
 With the value of the endpoint and a `FormRecognizerApiKeyCredential`, you can create the [CustomFormClient][formreco_custom_client_class]:
 
 ```C# Snippet:CreateCustomFormClient
@@ -73,7 +72,7 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredenti
 ## Key concepts
 
 ### ReceiptClient
-A `ReceiptClient` is the Form Recognizer interface to use for receipt recognition.  It provides operations to extract receipt field values and locations.
+A `ReceiptClient` is the Form Recognizer interface to use for analyzing receipts.  It provides operations to extract receipt field values and locations from receipts from the United States.
 
 ### FormLayoutClient
 A `FormLayoutClient` is the Form Recognizer interface to extract layout items from forms.  It provides operations to extract table data and geometry.
@@ -87,24 +86,24 @@ Using the `CustomFormClient`, you can train a machine-learned model on your own 
 #### Training without labels
 A model trained without labels uses unsupervised learning to understand the layout and relationships between field names and values in your forms. The learning algorithm clusters the training forms by type and learns what fields and tables are present in each form type. 
 
-This approach doesn't require manual data labeling or intensive coding and maintenance, and we recommend you try this method first.
+This approach doesn't require manual data labeling or intensive coding and maintenance, and we recommend you try this method first when training custom models.
 
 #### Training with labels
-A model trained with labels uses supervised learning to extract values you specify by adding labels to your training forms.  The learning algorithm uses a label file you provide to learn what fields are found at various locations in the form, and typicaly labeled to indicate the value's semantics.
+A model trained with labels uses supervised learning to extract values you specify by adding labels to your training forms.  The learning algorithm uses a label file you provide to learn what fields are found at various locations in the form, and learns to extract just those values.
 
 This approach can result in better-performing models, and those models can work with more complex form structures.
 
 ### Extracting values from forms
-Using the `CustomFormClient`, you can use your own trained models to extract field values and locations, as well as table data, from forms of the type you trained the model on.  The output of models trained with and without labels differs as described below.
+Using the `CustomFormClient`, you can use your own trained models to extract field values and locations, as well as table data, from forms of the type you trained your models on.  The output of models trained with and without labels differs as described below.
 
 #### Using models trained without labels
 Models trained without labels consider each form page to be a different form type.  For example, if you train your model on 3-page forms, it will learn that these are three different types of forms.  When you send a form to it for analysis, it will return a collection of three pages, where each page contains the field names, values, and locations, as well as table data, found on that page.
 
 #### Using models trained with labels
-Models trained with labels consider a form as a holistic unit.  For example, if you train your model on 3-page forms with labels, it will learn to extract field values from the locations you've labeled.  When you send a document containing two forms to it for analysis, it will return a collection of two forms, where each form contains the field names, values, and locations, as well as table data, found in that form.  Fields and tables have page numbers to identify the pages where they were found.
+Models trained with labels consider a form as a single unit.  For example, if you train your model on 3-page forms with labels, it will learn to extract field values from the locations you've labeled across all pages in the form.  If you sent a document containing two forms to it for analysis, it would return a collection of two forms, where each form contains the field names, values, and locations, as well as table data, found in that form.  Fields and tables have page numbers to identify the pages where they were found.
 
 ### Managing Custom Models
-Using the `CustomFormClient`, you can get, list, and delete the custom models you've trained.  You can also view the count of model you've trained and the maximum number of models your subscription will allow you to store.
+Using the `CustomFormClient`, you can get, list, and delete the custom models you've trained.  You can also view the count of models you've trained and the maximum number of models your subscription will allow you to store.
 
 ## Contributing
 
