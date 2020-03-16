@@ -386,9 +386,6 @@ namespace Microsoft.Azure.Management.Logic
         /// <param name='workflowName'>
         /// The workflow name.
         /// </param>
-        /// <param name='workflow'>
-        /// The workflow definition.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -401,7 +398,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ValidateByLocationWithHttpMessagesAsync(string resourceGroupName, string location, string workflowName, Workflow workflow, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ValidateByLocationWithHttpMessagesAsync(string resourceGroupName, string location, string workflowName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Moves an existing workflow.
         /// </summary>
