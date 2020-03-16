@@ -243,6 +243,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The value '{0}' is not a well-formed Event Hubs fully qualified namespace..
+        /// </summary>
+        internal static string InvalidFullyQualifiedNamespace
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidFullyQualifiedNamespace", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}.
         /// </summary>
         internal static string InvalidMessageBody
