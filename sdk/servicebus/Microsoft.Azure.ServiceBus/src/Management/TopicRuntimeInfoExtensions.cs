@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+
 namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
@@ -89,6 +91,35 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
 
             return topicRuntimeInfo;
+        }
+
+        public static List<TopicRuntimeInfo> ParseCollectionFromContent(string xml)
+        {
+            try
+            {
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
+                {
+                    if (xDoc.Name.LocalName == "feed")
+                    {
+                        var topicList = new List<TopicRuntimeInfo>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
+                        foreach (var entry in entryList)
+                        {
+                            topicList.Add(ParseFromEntryElement(entry));
+                        }
+
+                        return topicList;
+                    }
+                }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
+            }
+
+            throw new MessagingEntityNotFoundException("Topic was not found");
         }
     }
 }

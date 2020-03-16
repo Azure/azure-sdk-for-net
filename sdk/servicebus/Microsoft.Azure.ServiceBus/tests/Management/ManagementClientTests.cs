@@ -380,7 +380,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task GetTopicAndSubscriptionRuntimeInfoTest()
+        public async Task GetSubscriptionRuntimeInfoTest()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
@@ -394,13 +394,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Changing Last Updated Time
                 td.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
-                var updatedT = await client.UpdateTopicAsync(td);
+                await client.UpdateTopicAsync(td);
                         
                 var sd = await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
                 // Changing Last Updated Time for subscription
                 sd.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
-                var updatedS = await client.UpdateSubscriptionAsync(sd);
+                await client.UpdateSubscriptionAsync(sd);
 
                 // Populating 1 active message, 1 dead letter message and 1 scheduled message
                 // Changing Last Accessed Time
@@ -411,28 +411,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 var msg = await receiver.ReceiveAsync();
                 await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
 
-                var topicRI = await client.GetTopicRuntimeInfoAsync(topicName);
                 var subscriptionRI = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
 
-                Assert.Equal(topicName, topicRI.Path);
                 Assert.Equal(topicName, subscriptionRI.TopicPath);
                 Assert.Equal(subscriptionName, subscriptionRI.SubscriptionName);
 
-                Assert.True(topicRI.CreatedAt < topicRI.UpdatedAt);
-                Assert.True(topicRI.UpdatedAt < topicRI.AccessedAt);
                 Assert.True(subscriptionRI.CreatedAt < subscriptionRI.UpdatedAt);
                 Assert.True(subscriptionRI.UpdatedAt < subscriptionRI.AccessedAt);
-                Assert.True(topicRI.UpdatedAt < subscriptionRI.UpdatedAt);
 
-                Assert.Equal(0, topicRI.MessageCountDetails.ActiveMessageCount);
-                Assert.Equal(0, topicRI.MessageCountDetails.DeadLetterMessageCount);
-                Assert.Equal(1, topicRI.MessageCountDetails.ScheduledMessageCount);
                 Assert.Equal(1, subscriptionRI.MessageCountDetails.ActiveMessageCount);
                 Assert.Equal(1, subscriptionRI.MessageCountDetails.DeadLetterMessageCount);
                 Assert.Equal(0, subscriptionRI.MessageCountDetails.ScheduledMessageCount);
                 Assert.Equal(2, subscriptionRI.MessageCount);
-                Assert.Equal(1, topicRI.SubscriptionCount);
-                Assert.True(topicRI.SizeInBytes > 0);
 
                 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
                 await client.DeleteTopicAsync(topicName);                
@@ -446,6 +436,72 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             {
                 await sender.CloseAsync();
                 await receiver.CloseAsync();
+                await client.CloseAsync();
+            }
+        }
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task GetTopicRuntimeInfoTest()
+        {
+            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, topicName);
+
+            try
+            {
+                var td = await client.CreateTopicAsync(topicName);
+
+                // Changing Last Updated Time
+                td.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
+                await client.UpdateTopicAsync(td);
+
+                await client.CreateSubscriptionAsync(topicName, subscriptionName);
+
+                // Populating 1 active message and 1 scheduled message
+                // Changing Last Accessed Time
+               
+                await sender.SendAsync(new Message() { MessageId = "1" });
+                await sender.SendAsync(new Message() { MessageId = "2" });
+                await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
+
+                var topicsRI = await client.GetTopicsRuntimeInfoAsync();
+                var topicRI = topicsRI.FirstOrDefault(t => topicName.Equals(t.Path, StringComparison.OrdinalIgnoreCase));
+                
+                Assert.Equal(topicName, topicRI.Path);
+
+                Assert.True(topicRI.CreatedAt < topicRI.UpdatedAt);
+                Assert.True(topicRI.UpdatedAt < topicRI.AccessedAt);
+
+                Assert.Equal(0, topicRI.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(0, topicRI.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(1, topicRI.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(1, topicRI.SubscriptionCount);
+                Assert.True(topicRI.SizeInBytes > 0);
+
+                var singleTopicRI = await client.GetTopicRuntimeInfoAsync(topicRI.Path);
+
+                Assert.Equal(topicRI.AccessedAt, singleTopicRI.AccessedAt);
+                Assert.Equal(topicRI.CreatedAt, singleTopicRI.CreatedAt);
+                Assert.Equal(topicRI.UpdatedAt, singleTopicRI.UpdatedAt);
+                Assert.Equal(topicRI.MessageCountDetails.ActiveMessageCount, singleTopicRI.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(topicRI.MessageCountDetails.DeadLetterMessageCount, singleTopicRI.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(topicRI.MessageCountDetails.ScheduledMessageCount, singleTopicRI.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(topicRI.SizeInBytes, singleTopicRI.SizeInBytes);
+                Assert.Equal(topicRI.SubscriptionCount, singleTopicRI.SubscriptionCount);
+
+                await client.DeleteSubscriptionAsync(topicName, subscriptionName);
+                await client.DeleteTopicAsync(topicName);                
+            }
+            catch
+            {
+                await SafeDeleteTopic(client, topicName);
+                throw;
+            }
+            finally
+            {
+                await sender.CloseAsync();
                 await client.CloseAsync();
             }
         }
