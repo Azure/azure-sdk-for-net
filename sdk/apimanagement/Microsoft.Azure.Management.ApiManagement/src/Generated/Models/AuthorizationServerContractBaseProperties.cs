@@ -60,15 +60,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// values.</param>
         /// <param name="bearerTokenSendingMethods">Specifies the mechanism by
         /// which access token is passed to the API. </param>
-        /// <param name="clientSecret">Client or app secret registered with
-        /// this authorization server.</param>
         /// <param name="resourceOwnerUsername">Can be optionally specified
         /// when resource owner password grant type is supported by this
         /// authorization server. Default resource owner username.</param>
         /// <param name="resourceOwnerPassword">Can be optionally specified
         /// when resource owner password grant type is supported by this
         /// authorization server. Default resource owner password.</param>
-        public AuthorizationServerContractBaseProperties(string description = default(string), IList<AuthorizationMethod?> authorizationMethods = default(IList<AuthorizationMethod?>), IList<string> clientAuthenticationMethod = default(IList<string>), IList<TokenBodyParameterContract> tokenBodyParameters = default(IList<TokenBodyParameterContract>), string tokenEndpoint = default(string), bool? supportState = default(bool?), string defaultScope = default(string), IList<string> bearerTokenSendingMethods = default(IList<string>), string clientSecret = default(string), string resourceOwnerUsername = default(string), string resourceOwnerPassword = default(string))
+        public AuthorizationServerContractBaseProperties(string description = default(string), IList<AuthorizationMethod?> authorizationMethods = default(IList<AuthorizationMethod?>), IList<string> clientAuthenticationMethod = default(IList<string>), IList<TokenBodyParameterContract> tokenBodyParameters = default(IList<TokenBodyParameterContract>), string tokenEndpoint = default(string), bool? supportState = default(bool?), string defaultScope = default(string), IList<string> bearerTokenSendingMethods = default(IList<string>), string resourceOwnerUsername = default(string), string resourceOwnerPassword = default(string))
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
@@ -78,7 +76,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             SupportState = supportState;
             DefaultScope = defaultScope;
             BearerTokenSendingMethods = bearerTokenSendingMethods;
-            ClientSecret = clientSecret;
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
             CustomInit();
@@ -151,13 +148,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "bearerTokenSendingMethods")]
         public IList<string> BearerTokenSendingMethods { get; set; }
-
-        /// <summary>
-        /// Gets or sets client or app secret registered with this
-        /// authorization server.
-        /// </summary>
-        [JsonProperty(PropertyName = "clientSecret")]
-        public string ClientSecret { get; set; }
 
         /// <summary>
         /// Gets or sets can be optionally specified when resource owner

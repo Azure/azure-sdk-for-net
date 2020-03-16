@@ -41,17 +41,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi`
         /// Schema use `application/vnd.oai.openapi.components+json`
         /// &lt;/br&gt; - `WADL Schema` use
-        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`. </param>
+        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        /// <param name="document">Properties of the Schema Document.</param>
-        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), object document = default(object))
+        /// <param name="value">Json escaped string defining the document
+        /// representing the Schema. Used for schemas other than
+        /// Swagger/OpenAPI.</param>
+        /// <param name="definitions">Types definitions. Used for
+        /// Swagger/OpenAPI schemas only, null otherwise.</param>
+        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), string value = default(string), object definitions = default(object))
             : base(id, name, type)
         {
             ContentType = contentType;
-            Document = document;
+            Value = value;
+            Definitions = definitions;
             CustomInit();
         }
 
@@ -76,10 +81,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of the Schema Document.
+        /// Gets or sets json escaped string defining the document representing
+        /// the Schema. Used for schemas other than Swagger/OpenAPI.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.document")]
-        public object Document { get; set; }
+        [JsonProperty(PropertyName = "properties.document.value")]
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets types definitions. Used for Swagger/OpenAPI schemas
+        /// only, null otherwise.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.document.definitions")]
+        public object Definitions { get; set; }
 
         /// <summary>
         /// Validate the object.

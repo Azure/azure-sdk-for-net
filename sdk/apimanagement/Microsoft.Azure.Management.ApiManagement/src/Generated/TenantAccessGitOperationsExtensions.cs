@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class TenantAccessGitOperationsExtensions
     {
             /// <summary>
-            /// Gets the Git access configuration for the tenant.
+            /// Gets the Git access configuration for the tenant. Without secrets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Gets the Git access configuration for the tenant.
+            /// Gets the Git access configuration for the tenant. Without secrets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,6 +133,46 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task RegenerateSecondaryKeyAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the Git access configuration for the tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static AccessInformationContract ListSecrets(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Git access configuration for the tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessInformationContract> ListSecretsAsync(this ITenantAccessGitOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
