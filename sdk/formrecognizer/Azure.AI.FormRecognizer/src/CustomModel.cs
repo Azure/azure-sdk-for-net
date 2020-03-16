@@ -3,9 +3,13 @@
 
 using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Models;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// Description of a custom model that was trained without labels.
+    /// </summary>
     public class CustomModel
     {
         internal CustomModel(Model_internal model)
@@ -14,21 +18,27 @@ namespace Azure.AI.FormRecognizer.Custom
             LearnedForms = ConvertLearnedForms(model.Keys);
             ModelInfo = new CustomModelInfo(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
+
+            //LearnedForms.ToList().ForEach(f => f.LearnedFields.
         }
 
         /// <summary>
+        /// The unique identifier of the model.
         /// </summary>
         public string ModelId { get; internal set; }
 
         /// <summary>
+        /// List of forms the model learned to recognize, including form fields found in each form.
         /// </summary>
         public IReadOnlyList<CustomModelLearnedForm> LearnedForms { get; internal set; }
 
         /// <summary>
+        /// Information about the trained model, including model ID and training completion status.
         /// </summary>
         public CustomModelInfo ModelInfo { get; internal set; }
 
         /// <summary>
+        /// Information about documents used to train the model and errors encountered during training.
         /// </summary>
         public TrainingInfo TrainingInfo { get; internal set; }
 
