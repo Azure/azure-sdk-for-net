@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class ServiceBusRuleManager
+    internal class ServiceBusRuleManager
     {
         /// <summary>
         /// TODO implement

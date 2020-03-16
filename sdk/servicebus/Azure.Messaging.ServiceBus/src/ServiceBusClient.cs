@@ -317,7 +317,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
         /// </summary>
-        public ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName) =>
+        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName) =>
             new ServiceBusRuleManager(topicName, subscriptionName);
     }
 }
