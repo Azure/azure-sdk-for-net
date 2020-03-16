@@ -42,7 +42,7 @@ Once you have the value for the subscription key, create a `FormRecognizerApiKey
 
 With the value of the endpoint and a `FormRecognizerApiKeyCredential`, you can create the [CustomFormClient][formreco_custom_client_class]:
 
-```C# Snippet:CreateCustomFormClient
+```
 string endpoint = "<endpoint>";
 string subscriptionKey = "<subscriptionKey>";
 var credential = new FormRecognizerApiKeyCredential(subscriptionKey);
