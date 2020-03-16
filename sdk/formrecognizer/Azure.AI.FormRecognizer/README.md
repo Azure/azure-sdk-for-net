@@ -1,7 +1,7 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to extract text and table data from form documents. It allows you to train custom models using your own forms, to extract field names and values, and table data from them.  It also provides a prebuilt models you can use to extract values from receipts, or tables from any form.
 
-[Source code][formreco_client_src] | [Package (NuGet)]() | [API reference documentation]() | [Product documentation][formreco_docs] | [Samples]()
+[Source code][formreco_client_src] | <!--[Package (NuGet)]() | [API reference documentation]() |--> [Product documentation][formreco_docs] <!--| [Samples]()-->
 
 ## Getting started
 
