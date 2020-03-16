@@ -2000,6 +2000,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Flaky test; fixed in a forthcoming PR")]
         public async Task CreatePartitionProcessorProcessingTaskWrapsAnOperationCanceledExceptionAndConsidersItFatal()
         {
             using var cancellationSource = new CancellationTokenSource();
