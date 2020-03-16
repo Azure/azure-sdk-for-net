@@ -46,10 +46,10 @@ With the value of the endpoint and a `FormRecognizerApiKeyCredential`, you can c
 string endpoint = "<endpoint>";
 string subscriptionKey = "<subscriptionKey>";
 var credential = new FormRecognizerApiKeyCredential(subscriptionKey);
-var client = new FormRecognizerClient(new Uri(endpoint), credential);
+var client = new CustomFormClient(new Uri(endpoint), credential);
 ```
 
-<!-- #### Create FormRecognizerClient with Azure Active Directory Credential
+<!-- #### Create CustomFormClient with Azure Active Directory Credential
 
 Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
 
