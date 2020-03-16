@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
-
 namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
     using System.Xml.Linq;
+    using System.Collections.Generic;
 
     internal static class TopicRuntimeInfoExtensions
     {
