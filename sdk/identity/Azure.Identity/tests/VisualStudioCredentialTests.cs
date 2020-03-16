@@ -13,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class VisualStudioCredentialLiveTests : ClientTestBase
+    public class VisualStudioCredentialTests : ClientTestBase
     {
-        public VisualStudioCredentialLiveTests(bool isAsync) : base(isAsync) { }
+        public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         public async Task AuthenticateWithVsCredential()
@@ -100,7 +100,7 @@ namespace Azure.Identity.Tests
         public void AuthenticateWithVsCredential_CanceledOnProcessRun()
         {
             var cts = new CancellationTokenSource();
-            var fileSystem = CreateTestFileSystem();;
+            var fileSystem = CreateTestFileSystem();
             var testProcess = new TestProcess { Timeout = 10000 };
             testProcess.Started += (o, e) => cts.Cancel();
 
@@ -145,7 +145,6 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = "Some error" };
             var fileSystem = CreateTestFileSystem();
             var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
-
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 

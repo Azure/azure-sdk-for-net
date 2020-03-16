@@ -23,14 +23,14 @@ namespace Azure.Identity
         {
             _process = process;
             _cancellationToken = cancellationToken;
-            _tcs = new TaskCompletionSource<string>();
+            _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            _ctRegistration = cancellationToken.Register(QueueHandleCancel);
+            _ctRegistration = cancellationToken.Register(HandleCancel, false);
             if (timeout.TotalMilliseconds >= 0)
             {
                 _timeoutCts = new CancellationTokenSource();
                 _timeoutCancellationToken = _timeoutCts.Token;
-                _timeoutCtRegistration = _timeoutCts.Token.Register(QueueHandleCancel);
+                _timeoutCtRegistration = _timeoutCts.Token.Register(HandleCancel, false);
                 _timeoutCts.CancelAfter(timeout);
             }
 
@@ -39,7 +39,7 @@ namespace Azure.Identity
 
         public Task<string> RunAsync()
         {
-            if (!IsCanceled() && !_tcs.Task.IsCompleted)
+            if (!TrySetCanceled() && !_tcs.Task.IsCompleted)
             {
                 _process.Start();
             }
@@ -49,7 +49,7 @@ namespace Azure.Identity
 
         public string Run()
         {
-            if (!IsCanceled() && !_tcs.Task.IsCompleted)
+            if (!TrySetCanceled() && !_tcs.Task.IsCompleted)
             {
                 _process.Start();
             }
@@ -59,7 +59,7 @@ namespace Azure.Identity
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
-        private bool IsCanceled() => TrySetCanceled(_timeoutCancellationToken) || TrySetCanceled(_cancellationToken);
+        private bool TrySetCanceled() => TrySetCanceled(_timeoutCancellationToken) || TrySetCanceled(_cancellationToken);
 
         private void HandleExit()
         {
@@ -73,15 +73,7 @@ namespace Azure.Identity
             }
         }
 
-        private void QueueHandleCancel()
-        {
-            if (!_tcs.Task.IsCompleted)
-            {
-                ThreadPool.QueueUserWorkItem(HandleCancel);
-            }
-        }
-
-        private void HandleCancel(object state)
+        private void HandleCancel()
         {
             if (_tcs.Task.IsCompleted)
             {
@@ -101,7 +93,7 @@ namespace Azure.Identity
                 }
             }
 
-            IsCanceled();
+            TrySetCanceled();
         }
 
         private void TrySetResult(string result)

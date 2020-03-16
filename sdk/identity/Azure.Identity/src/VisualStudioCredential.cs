@@ -19,7 +19,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using data from Visual Studio
     /// </summary>
-    public class VisualStudioCredential : TokenCredential
+    internal class VisualStudioCredential : TokenCredential
     {
         private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
         private const string ResourceArgumentName = "--resource";
@@ -30,11 +30,13 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
 
-        /// <inheritdoc />
-        public VisualStudioCredential() : this(default, default) {}
+        /// <summary>
+        /// Protected constructor for mocking
+        /// </summary>
+        protected VisualStudioCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        public VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
+        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
 
         internal VisualStudioCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IProcessService processService)
         {
@@ -66,7 +68,7 @@ namespace Azure.Identity
 
                 if (processStartInfos.Count == 0)
                 {
-                    throw new CredentialUnavailableException($"No installed instance of Visual Studio was found");
+                    throw new CredentialUnavailableException("No installed instance of Visual Studio was found");
                 }
 
                 return await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
@@ -112,7 +114,7 @@ namespace Azure.Identity
 
             switch (exceptions.Count) {
                 case 0:
-                    throw new InvalidOperationException();
+                    throw new CredentialUnavailableException("No installed instance of Visual Studio was able to get credentials.");
                 case 1:
                     ExceptionDispatchInfo.Capture(exceptions[0]).Throw();
                     return default;
@@ -182,9 +184,9 @@ namespace Azure.Identity
             {
                 JsonElement providerElement = providersElement[i];
 
-                var path = GetStringPropertyValue(providerElement, "Path");
+                var path = providerElement.GetProperty("Path").GetString();
+                var preference = providerElement.GetProperty("Preference").GetInt32();
                 var arguments = GetStringArrayPropertyValue(providerElement, "Arguments");
-                var preference = GetInt32PropertyValue(providerElement, "Preference");
 
                 providers[i] = new VisualStudioTokenProvider(path, arguments, preference);
             }
@@ -205,10 +207,6 @@ namespace Azure.Identity
             }
         }
 
-        private static string GetStringPropertyValue(JsonElement element, string name) => element.GetProperty(name).GetString();
-
-        private static int GetInt32PropertyValue(JsonElement element, string name) => element.GetProperty(name).GetInt32();
-
         private static string[] GetStringArrayPropertyValue(JsonElement element, string name)
         {
             JsonElement arrayElement = element.GetProperty(name);
@@ -222,7 +220,7 @@ namespace Azure.Identity
             return array;
         }
 
-        private struct VisualStudioTokenProvider : IComparable<VisualStudioTokenProvider>
+        private readonly struct VisualStudioTokenProvider : IComparable<VisualStudioTokenProvider>
         {
             private readonly int _preference;
 
