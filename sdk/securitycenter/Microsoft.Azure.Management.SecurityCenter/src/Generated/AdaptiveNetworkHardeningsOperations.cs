@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AdaptiveApplicationControlsOperations operations.
+    /// AdaptiveNetworkHardeningsOperations operations.
     /// </summary>
-    internal partial class AdaptiveApplicationControlsOperations : IServiceOperations<SecurityCenterClient>, IAdaptiveApplicationControlsOperations
+    internal partial class AdaptiveNetworkHardeningsOperations : IServiceOperations<SecurityCenterClient>, IAdaptiveNetworkHardeningsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the AdaptiveApplicationControlsOperations class.
+        /// Initializes a new instance of the AdaptiveNetworkHardeningsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal AdaptiveApplicationControlsOperations(SecurityCenterClient client)
+        internal AdaptiveNetworkHardeningsOperations(SecurityCenterClient client)
         {
             if (client == null)
             {
@@ -51,13 +51,21 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a list of application control VM/server groups for the subscription.
+        /// Gets a list of Adaptive Network Hardenings resources in scope of an
+        /// extended resource.
         /// </summary>
-        /// <param name='includePathRecommendations'>
-        /// Include the policy rules
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
         /// </param>
-        /// <param name='summary'>
-        /// Return output in a summarized form
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,7 +88,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AdaptiveNetworkHardening>>> ListByExtendedResourceWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -93,7 +101,38 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2015-06-01-preview";
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (resourceNamespace == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
+            }
+            if (resourceType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -101,28 +140,26 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceNamespace", resourceNamespace);
+                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("includePathRecommendations", includePathRecommendations);
-                tracingParameters.Add("summary", summary);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByExtendedResource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
+            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (includePathRecommendations != null)
-            {
-                _queryParameters.Add(string.Format("includePathRecommendations={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(includePathRecommendations, Client.SerializationSettings).Trim('"'))));
-            }
-            if (summary != null)
-            {
-                _queryParameters.Add(string.Format("summary={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(summary, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -217,7 +254,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AppWhitelistingGroups>();
+            var _result = new AzureOperationResponse<IPage<AdaptiveNetworkHardening>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -230,7 +267,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroups>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AdaptiveNetworkHardening>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -250,10 +287,23 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Gets an application control VM/server group.
+        /// Gets a single Adaptive Network Hardening resource
         /// </summary>
-        /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='adaptiveNetworkHardeningResourceName'>
+        /// The name of the Adaptive Network Hardening resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -276,7 +326,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AdaptiveNetworkHardening>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -289,15 +339,42 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (groupName == null)
+            if (resourceGroupName != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
-            string apiVersion = "2015-06-01-preview";
+            if (resourceNamespace == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
+            }
+            if (resourceType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (adaptiveNetworkHardeningResourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "adaptiveNetworkHardeningResourceName");
+            }
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -305,17 +382,24 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("groupName", groupName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceNamespace", resourceNamespace);
+                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("adaptiveNetworkHardeningResourceName", adaptiveNetworkHardeningResourceName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
-            _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
+            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
+            _url = _url.Replace("{adaptiveNetworkHardeningResourceName}", System.Uri.EscapeDataString(adaptiveNetworkHardeningResourceName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -414,7 +498,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AppWhitelistingGroup>();
+            var _result = new AzureOperationResponse<AdaptiveNetworkHardening>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -427,7 +511,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroup>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AdaptiveNetworkHardening>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -447,13 +531,71 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Update an application control VM/server group
+        /// Enforces the given rules on the NSG(s) listed in the request
         /// </summary>
-        /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
         /// </param>
-        /// <param name='body'>
-        /// The updated VM/server group data
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='adaptiveNetworkHardeningResourceName'>
+        /// The name of the Adaptive Network Hardening resource.
+        /// </param>
+        /// <param name='rules'>
+        /// The rules to enforce
+        /// </param>
+        /// <param name='networkSecurityGroups'>
+        /// The Azure resource IDs of the effective network security groups that will
+        /// be updated with the created security rules from the Adaptive Network
+        /// Hardening rules
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> EnforceWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, IList<Rule> rules, IList<string> networkSecurityGroups, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginEnforceWithHttpMessagesAsync(resourceGroupName, resourceNamespace, resourceType, resourceName, adaptiveNetworkHardeningResourceName, rules, networkSecurityGroups, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Enforces the given rules on the NSG(s) listed in the request
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='adaptiveNetworkHardeningResourceName'>
+        /// The name of the Adaptive Network Hardening resource.
+        /// </param>
+        /// <param name='rules'>
+        /// The rules to enforce
+        /// </param>
+        /// <param name='networkSecurityGroups'>
+        /// The Azure resource IDs of the effective network security groups that will
+        /// be updated with the created security rules from the Adaptive Network
+        /// Hardening rules
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -464,9 +606,6 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -476,7 +615,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingPutGroupData body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginEnforceWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName, IList<Rule> rules, IList<string> networkSecurityGroups, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -489,19 +628,57 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (groupName == null)
+            if (resourceGroupName != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
-            if (body == null)
+            if (resourceNamespace == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceNamespace");
             }
-            string apiVersion = "2015-06-01-preview";
+            if (resourceType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceType");
+            }
+            if (resourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
+            }
+            if (adaptiveNetworkHardeningResourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "adaptiveNetworkHardeningResourceName");
+            }
+            if (rules == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "rules");
+            }
+            if (networkSecurityGroups == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "networkSecurityGroups");
+            }
+            string adaptiveNetworkHardeningEnforceAction = "enforce";
+            string apiVersion = "2020-01-01";
+            AdaptiveNetworkHardeningEnforceRequest body = new AdaptiveNetworkHardeningEnforceRequest();
+            if (rules != null || networkSecurityGroups != null)
+            {
+                body.Rules = rules;
+                body.NetworkSecurityGroups = networkSecurityGroups;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -509,18 +686,27 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("groupName", groupName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("resourceNamespace", resourceNamespace);
+                tracingParameters.Add("resourceType", resourceType);
+                tracingParameters.Add("resourceName", resourceName);
+                tracingParameters.Add("adaptiveNetworkHardeningResourceName", adaptiveNetworkHardeningResourceName);
+                tracingParameters.Add("adaptiveNetworkHardeningEnforceAction", adaptiveNetworkHardeningEnforceAction);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Put", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginEnforce", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}/{adaptiveNetworkHardeningEnforceAction}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
-            _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{resourceNamespace}", System.Uri.EscapeDataString(resourceNamespace));
+            _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
+            _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
+            _url = _url.Replace("{adaptiveNetworkHardeningResourceName}", System.Uri.EscapeDataString(adaptiveNetworkHardeningResourceName));
+            _url = _url.Replace("{adaptiveNetworkHardeningEnforceAction}", System.Uri.EscapeDataString(adaptiveNetworkHardeningEnforceAction));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -533,7 +719,7 @@ namespace Microsoft.Azure.Management.Security
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -590,7 +776,7 @@ namespace Microsoft.Azure.Management.Security
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -625,30 +811,12 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AppWhitelistingGroup>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroup>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
@@ -658,10 +826,11 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Delete an application control VM/server group
+        /// Gets a list of Adaptive Network Hardenings resources in scope of an
+        /// extended resource.
         /// </summary>
-        /// <param name='groupName'>
-        /// Name of an application control VM/server group
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -672,6 +841,9 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -681,28 +853,12 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<AdaptiveNetworkHardening>>> ListByExtendedResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (Client.AscLocation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
-            }
-            if (groupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
-            }
-            string apiVersion = "2015-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -710,22 +866,14 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("groupName", groupName);
-                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByExtendedResourceNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
-            _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -733,7 +881,7 @@ namespace Microsoft.Azure.Management.Security
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -784,7 +932,7 @@ namespace Microsoft.Azure.Management.Security
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -819,12 +967,30 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<IPage<AdaptiveNetworkHardening>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AdaptiveNetworkHardening>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
