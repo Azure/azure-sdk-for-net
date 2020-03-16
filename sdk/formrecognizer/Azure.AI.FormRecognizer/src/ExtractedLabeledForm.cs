@@ -7,6 +7,8 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedLabeledForm
     {
         internal ExtractedLabeledForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
@@ -29,16 +31,28 @@ namespace Azure.AI.FormRecognizer.Custom
             }
         }
 
+        /// <summary>
+        /// </summary>
         public string FormType { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public int StartPageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public int EndPageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<ExtractedLabeledField> Fields { get; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<ExtractedLabeledTable> Tables { get; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<RawExtractedPage> RawExtractedPages { get; }
 
         private static IReadOnlyList<ExtractedLabeledField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)

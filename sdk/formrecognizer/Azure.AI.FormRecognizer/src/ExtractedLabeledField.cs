@@ -6,6 +6,9 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+
+    /// <summary>
+    /// </summary>
     // Maps to FieldValue in swagger.
     public class ExtractedLabeledField
     {
@@ -27,18 +30,30 @@ namespace Azure.AI.FormRecognizer.Custom
             // https://github.com/Azure/azure-sdk-for-net/issues/10333
         }
 
+        /// <summary>
+        /// </summary>
         // TODO: Why can this be nullable on FieldValue.Confidence?
         // https://github.com/Azure/azure-sdk-for-net/issues/10378
         public float? Confidence { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public int? PageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public string Label { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public string Value { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public BoundingBox ValueBoundingBox { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<RawExtractedItem> RawExtractedItems { get; internal set; }
     }
 }

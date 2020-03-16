@@ -8,6 +8,8 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedReceipt
     {
         internal ExtractedReceipt(DocumentResult_internal documentResult, ReadResult_internal readResult)
@@ -22,30 +24,69 @@ namespace Azure.AI.FormRecognizer.Models
                 RawExtractedPage = new RawExtractedPage(readResult);
             }
         }
+        /// <summary>
+        /// </summary>
         public int StartPageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public int EndPageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
         // https://github.com/Azure/azure-sdk-for-net/issues/10361
         public IReadOnlyList<ExtractedReceiptItem> Items { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string MerchantAddress { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string MerchantName { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string MerchantPhoneNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public ExtractedReceiptType ReceiptType { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Subtotal { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Tax { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Tip { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Total { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public DateTimeOffset? TransactionDate { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public DateTimeOffset? TransactionTime { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
         public IReadOnlyDictionary<string, ExtractedReceiptField> ExtractedFields { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public RawExtractedPage RawExtractedPage { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)

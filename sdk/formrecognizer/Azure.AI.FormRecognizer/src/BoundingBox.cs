@@ -7,6 +7,8 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class BoundingBox
     {
         internal BoundingBox(ICollection<float> boundingBox)
@@ -24,6 +26,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
+        /// <summary>
+        /// </summary>
         public PointF[] Points { get; }
     }
 }

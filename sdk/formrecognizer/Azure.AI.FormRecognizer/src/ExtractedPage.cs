@@ -6,6 +6,8 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     // Maps to PageResult
     public class ExtractedPage
     {
@@ -23,14 +25,26 @@ namespace Azure.AI.FormRecognizer.Custom
             }
         }
 
+        /// <summary>
+        /// </summary>
         public int PageNumber { get; }
 
+        /// <summary>
+        /// </summary>
         public int? FormTypeId { get; }
+
+        /// <summary>
+        /// </summary>
 
         public IReadOnlyList<ExtractedField> Fields { get; }
 
+        /// <summary>
+        /// </summary>
+
         public IReadOnlyList<ExtractedTable> Tables { get; }
 
+        /// <summary>
+        /// </summary>
         public RawExtractedPage RawExtractedPage { get; }
 
         private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)

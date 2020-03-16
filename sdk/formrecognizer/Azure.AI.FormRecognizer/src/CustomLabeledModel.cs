@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Models;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Custom
 {

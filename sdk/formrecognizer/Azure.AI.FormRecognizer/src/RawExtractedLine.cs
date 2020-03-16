@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class RawExtractedLine : RawExtractedItem
     {
         internal RawExtractedLine(TextLine_internal textLine)
@@ -21,6 +23,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<RawExtractedWord> Words { get; internal set; }
 
+
+        /// <summary>
+        /// </summary>
         public static implicit operator string(RawExtractedLine line) => line.Text;
 
         private static IReadOnlyList<RawExtractedWord> ConvertWords(ICollection<TextWord_internal> textWords)

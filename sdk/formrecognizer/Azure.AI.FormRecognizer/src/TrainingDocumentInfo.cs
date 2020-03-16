@@ -5,9 +5,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     [CodeGenSchema("TrainingDocumentInfo")]
     public partial class TrainingDocumentInfo
     {
+        /// <summary>
+        /// </summary>
         [CodeGenSchemaMember("pages")]
         public int PageCount { get; set; }
     }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class CustomModelLearnedForm
     {
         internal CustomModelLearnedForm()

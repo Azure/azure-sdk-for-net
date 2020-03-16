@@ -8,6 +8,8 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedLabeledTable : ExtractedTable
     {
         internal ExtractedLabeledTable(DataTable_internal table, ReadResult_internal readResult, int pageNumber)
@@ -16,6 +18,8 @@ namespace Azure.AI.FormRecognizer.Custom
             PageNumber = pageNumber;
         }
 
+        /// <summary>
+        /// </summary>
         public int PageNumber { get; }
     }
 }

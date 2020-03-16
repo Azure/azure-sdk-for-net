@@ -61,7 +61,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<CustomModel>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;CustomModel&gt; to wait on this long-running operation.  Its Operation &lt; CustomModel &gt; .Value upon successful
+        /// completion will contain meta-data about the trained model.</returns>
         public virtual Operation<CustomModel> StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
@@ -86,7 +87,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<CustomModel>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;CustomModel&gt; to wait on this long-running operation.  Its Operation &lt; CustomModel &gt; .Value upon successful
+        /// completion will contain meta-data about the trained model.</returns>
         public virtual async Task<Operation<CustomModel>> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
@@ -108,7 +110,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<CustomLabeledModel>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
         public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
@@ -130,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<CustomLabeledModel>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
         public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
@@ -160,7 +162,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
         public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -176,7 +179,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="uri">The absolute URI of the remote file to extract elements from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
         public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -192,7 +196,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -209,7 +214,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="uri">The absolute URI of the remote file to extract elements from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -229,7 +235,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted forms from the input document.</returns>
         public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -245,7 +252,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="uri">The absolute URI of the remote file to extract elements from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted forms from the input document.</returns>
         public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -261,7 +269,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted forms from the input document.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -277,7 +286,8 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="uri">The absolute URI of the remote file to extract elements from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
+        /// completion will contain extracted forms from the input document.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };

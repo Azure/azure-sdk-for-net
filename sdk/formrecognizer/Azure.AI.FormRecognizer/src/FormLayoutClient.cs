@@ -24,6 +24,8 @@ namespace Azure.AI.FormRecognizer
 
         internal const string LayoutRoute = "/layout";
 
+        /// <summary>
+        /// </summary>
         protected FormLayoutClient()
         {
         }
@@ -56,7 +58,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedLayoutPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
         public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -72,7 +75,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedLayoutPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -87,7 +91,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="uri">The absolute URI of the remote file to extract elements from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedLayoutPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
         public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -101,7 +106,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="uri">The absolute URI of the remote file to extract elements from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedLayoutPage>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };

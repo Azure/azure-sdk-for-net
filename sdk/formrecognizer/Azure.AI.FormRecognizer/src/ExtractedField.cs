@@ -8,6 +8,9 @@ using Azure.AI.FormRecognizer.Models;
 namespace Azure.AI.FormRecognizer.Custom
 {
     // Maps to KeyValuePair
+
+    /// <summary>
+    /// </summary>
     public class ExtractedField
     {
         internal ExtractedField(KeyValuePair_internal field, ReadResult_internal readResult)
@@ -31,18 +34,32 @@ namespace Azure.AI.FormRecognizer.Custom
             }
         }
 
+        /// <summary>
+        /// </summary>
         public float Confidence { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public string Name { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public BoundingBox NameBoundingBox { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<RawExtractedItem> NameRawExtractedItems { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public string Value { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public BoundingBox ValueBoundingBox { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
 
         // TODO: Refactor to move OCR code to a common file, rather than it living in this file.

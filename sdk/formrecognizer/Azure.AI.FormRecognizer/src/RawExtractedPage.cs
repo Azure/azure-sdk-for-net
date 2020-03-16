@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class RawExtractedPage
     {
         internal RawExtractedPage(ReadResult_internal readResult)

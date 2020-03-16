@@ -18,8 +18,6 @@ namespace Azure.AI.FormRecognizer.Custom
             LearnedForms = ConvertLearnedForms(model.Keys);
             ModelInfo = new CustomModelInfo(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
-
-            //LearnedForms.ToList().ForEach(f => f.LearnedFields.
         }
 
         /// <summary>

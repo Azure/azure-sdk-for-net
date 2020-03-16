@@ -12,7 +12,6 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer
 {
-
     /// <summary>
     /// The client to use to with the Form Recognizer Azure Cognitive Service, to extract values from receipts.
     /// </summary>
@@ -24,6 +23,8 @@ namespace Azure.AI.FormRecognizer
 
         internal const string ReceiptsRoute = "/prebuilt/receipt";
 
+        /// <summary>
+        /// </summary>
         protected ReceiptClient()
         {
         }
@@ -56,7 +57,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
         public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -68,11 +70,11 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Extracts values from one or more receipts.
         /// </summary>
-        /// <param name="stream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
         public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -84,10 +86,12 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Extracts values from one or more receipts.
         /// </summary>
-        /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="stream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -102,7 +106,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation<IReadOnlyList<ExtractedReceipt>>"/> to wait on this long-running operation.</returns>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
         public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };

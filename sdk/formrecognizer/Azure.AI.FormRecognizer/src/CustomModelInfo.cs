@@ -6,6 +6,8 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class CustomModelInfo
     {
         internal CustomModelInfo(ModelInfo_internal modelInfo)
