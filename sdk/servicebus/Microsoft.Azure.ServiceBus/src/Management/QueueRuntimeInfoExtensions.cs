@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
     using System.Xml.Linq;
+    using System.Collections.Generic;
 
     internal static class QueueRuntimeInfoExtensions
     {
@@ -89,6 +90,35 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
 
             return qRuntime;
+        }
+
+        public static IList<QueueRuntimeInfo> ParseCollectionFromContent(string xml)
+        {
+            try
+            {
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
+                {
+                    if (xDoc.Name.LocalName == "feed")
+                    {
+                        var queueList = new List<QueueRuntimeInfo>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
+                        foreach (var entry in entryList)
+                        {
+                            queueList.Add(ParseFromEntryElement(entry));
+                        }
+
+                        return queueList;
+                    }
+                }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
+            }
+
+            throw new MessagingEntityNotFoundException("No queues were found");
         }
     }
 }
