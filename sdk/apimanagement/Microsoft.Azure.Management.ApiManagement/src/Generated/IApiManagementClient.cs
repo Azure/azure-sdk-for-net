@@ -147,11 +147,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOperationOperations Operation { get; }
 
         /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        IApiExportOperations ApiExport { get; }
-
-        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         IApiVersionSetOperations ApiVersionSet { get; }
@@ -375,6 +370,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
+
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        IApiExportOperations ApiExport { get; }
 
     }
 }
