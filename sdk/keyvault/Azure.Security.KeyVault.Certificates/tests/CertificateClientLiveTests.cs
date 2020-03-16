@@ -557,14 +557,133 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(mergedServerCertificate.Cer, completedServerCertificate.Cer);
         }
 
-        // Backup Restore
-        // GetCertificates
-        // GetCertificatsIncludePending
-        // GetCertificateVersions
-        // GetDeletedCertificates
-        // GetUpdatePolicy
-        // IssuerCrud
-        // ContactsCrud
+        [Test]
+        public async Task VerifyGetIssuer()
+        {
+            string issuerName = Recording.GenerateId();
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName);
+
+            RegisterForCleanupIssuer(issuerName);
+
+            await Client.CreateIssuerAsync(issuer);
+            Response<CertificateIssuer> getIssuerResponse = await Client.GetIssuerAsync(issuerName);
+
+            CertificateIssuer getIssuer = getIssuerResponse.Value;
+
+            Assert.NotNull(getIssuer);
+            Assert.NotNull(getIssuer.Id);
+            Assert.AreEqual(issuerName, getIssuer.Name);
+        }
+
+        [Test]
+        public async Task VerifyUpdateIssuer()
+        {
+            string issuerName = Recording.GenerateId();
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName);
+
+            RegisterForCleanupIssuer(issuerName);
+
+            await Client.CreateIssuerAsync(issuer);
+
+            IssuerProperties issuerProperties = new IssuerProperties("test");
+            Assert.NotNull(issuerProperties.Name);
+            Assert.NotNull(issuerProperties.Id);
+
+            issuer = new CertificateIssuer(issuerProperties);
+
+            Response<CertificateIssuer> updateIssuerResponse = await Client.UpdateIssuerAsync(issuer);
+
+            CertificateIssuer updateIssuer = updateIssuerResponse.Value;
+
+            Assert.NotNull(updateIssuer);
+            Assert.NotNull(updateIssuer.Id);
+            Assert.AreEqual("test", updateIssuer.Name);
+        }
+
+        public async Task VerifyGetContacts()
+        {
+            var contact1 = new CertificateContact
+            {
+                Name = Recording.GenerateId(),
+                Phone = Recording.GenerateId(),
+                Email = Recording.GenerateId()
+            };
+
+            var contact2 = new CertificateContact
+            {
+                Name = Recording.GenerateId(),
+                Phone = Recording.GenerateId(),
+                Email = Recording.GenerateId()
+            };
+
+            var contacts = new List<CertificateContact>
+            {
+                contact1,
+                contact2
+            };
+
+            RegisterForCleanUpContacts(contacts);
+
+            await Client.SetContactsAsync(contacts);
+            Response<IList<CertificateContact>> getContactsResponse = await Client.GetContactsAsync();
+
+            IList<CertificateContact> getContacts = getContactsResponse.Value;
+
+            Assert.NotNull(getContacts);
+            Assert.AreEqual(2, getContacts.Count);
+            Assert.IsTrue(getContacts.Equals(contacts));
+            Assert.IsTrue(getContacts.Contains(contact1));
+            Assert.IsTrue(getContacts.Contains(contact2));
+        }
+
+        public async Task VerifyGetCertificatePolicy()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+
+            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            RegisterForCleanup(certName);
+
+            Response<CertificatePolicy> policyResponse = Client.GetCertificatePolicy(certName);
+
+            CertificatePolicy policy = policyResponse.Value;
+
+            Assert.NotNull(policy);
+            Assert.AreEqual(CertificateKeyType.Rsa, policy.KeyType);
+            Assert.AreEqual(WellKnownIssuerNames.Self, policy.IssuerName);
+            Assert.AreEqual(false, policy.ReuseKey);
+        }
+
+        public async Task VerifyUpdateCertificatePolicy()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+
+            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            RegisterForCleanup(certName);
+
+            certificatePolicy = new CertificatePolicy
+            {
+                IssuerName = "update",
+                KeyType = CertificateKeyType.Ec,
+                ReuseKey = true
+            };
+
+            Response<CertificatePolicy> updatePolicyResponse = await Client.UpdateCertificatePolicyAsync(certName, certificatePolicy);
+
+            CertificatePolicy updatePolicy = updatePolicyResponse.Value;
+
+            Assert.NotNull(updatePolicy);
+            Assert.AreEqual(certificatePolicy.KeyType, updatePolicy.KeyType);
+            Assert.AreEqual(certificatePolicy.IssuerName, updatePolicy.IssuerName);
+            Assert.AreEqual(certificatePolicy.ReuseKey, updatePolicy.ReuseKey);
+        }
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {
