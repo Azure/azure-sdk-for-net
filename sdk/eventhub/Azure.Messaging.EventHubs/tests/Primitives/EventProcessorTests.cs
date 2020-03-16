@@ -1976,9 +1976,9 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CreatePartitionProcessorProcessingTaskDoesNotReplaceTheConsumerOnFatalExceptions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(20));
 
-            var expectedException = new StackOverflowException("We be overflowing!");
+            var expectedException = new TaskCanceledException("Like the others, but this one is special!");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -2005,7 +2005,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             cancellationSource.Cancel();
-            Assert.That(async () => await partitionProcessor.ProcessingTask, Throws.TypeOf(expectedException.GetType()).And.EqualTo(expectedException), "The exception should have been surfaced by the task.");
+            Assert.That(async () => await partitionProcessor.ProcessingTask, Throws.TypeOf(expectedException.GetType()).And.Message.EqualTo(expectedException.Message), "The exception should have been surfaced by the task.");
 
             mockProcessor
                 .Verify(processor => processor.CreateConsumer(
@@ -2023,7 +2023,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Flaky test; fixed in a forthcoming PR")]
         public async Task CreatePartitionProcessorProcessingTaskWrapsAnOperationCanceledExceptionAndConsidersItFatal()
         {
             using var cancellationSource = new CancellationTokenSource();
