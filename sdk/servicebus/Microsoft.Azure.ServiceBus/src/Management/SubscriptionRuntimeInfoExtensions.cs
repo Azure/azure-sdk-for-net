@@ -115,7 +115,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 throw new ServiceBusException(false, ex);
             }
 
-            throw new MessagingEntityNotFoundException("Subscription was not found");
+            throw new MessagingEntityNotFoundException("No subscriptions were found");
         }
     }
 }

@@ -118,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 throw new ServiceBusException(false, ex);
             }
 
-            throw new MessagingEntityNotFoundException("Queue was not found");
+            throw new MessagingEntityNotFoundException("No queues were found");
         }
     }
 }
