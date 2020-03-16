@@ -352,6 +352,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 Assert.Equal(3, runtimeInfo.MessageCount);
                 Assert.True(runtimeInfo.SizeInBytes > 0);
 
+                var singleRuntimeInfo = await client.GetQueueRuntimeInfoAsync(runtimeInfo.Path);
+
+                Assert.Equal(runtimeInfo.AccessedAt, singleRuntimeInfo.AccessedAt);
+                Assert.Equal(runtimeInfo.CreatedAt, singleRuntimeInfo.CreatedAt);
+                Assert.Equal(runtimeInfo.UpdatedAt, singleRuntimeInfo.UpdatedAt);
+                Assert.Equal(runtimeInfo.MessageCount, singleRuntimeInfo.MessageCount);
+                Assert.Equal(runtimeInfo.MessageCountDetails.ActiveMessageCount, singleRuntimeInfo.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(runtimeInfo.MessageCountDetails.DeadLetterMessageCount, singleRuntimeInfo.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(runtimeInfo.MessageCountDetails.ScheduledMessageCount, singleRuntimeInfo.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(runtimeInfo.SizeInBytes, singleRuntimeInfo.SizeInBytes);
+
                 await client.DeleteQueueAsync(queueName);
             }
             catch
