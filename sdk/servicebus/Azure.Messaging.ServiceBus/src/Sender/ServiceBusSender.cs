@@ -78,7 +78,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="entityPath"></param>
         /// <param name="connection"></param>
-        /// <param name="options">A set of options to apply when configuring the producer.</param>
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
         ///   and can be used directly without passing the  name="entityName" />.  The name of the Service Bus entity should be
@@ -87,20 +86,17 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal ServiceBusSender(
             string entityPath,
-            ServiceBusConnection connection,
-            ServiceBusSenderOptions options)
+            ServiceBusConnection connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
+            Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             connection.ThrowIfClosed();
 
             EntityPath = entityPath;
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
-            options = options?.Clone() ?? new ServiceBusSenderOptions();
             _connection = connection;
-            _retryPolicy = options.RetryOptions.ToRetryPolicy();
+            _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
             _innerSender = _connection.CreateTransportSender(
                 entityPath,
                 _retryPolicy);

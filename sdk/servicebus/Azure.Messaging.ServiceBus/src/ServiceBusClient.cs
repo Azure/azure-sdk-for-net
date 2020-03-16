@@ -39,11 +39,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
-        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
-        /// </summary>
-        public ServiceBusSubscriptionRuleManager SubscriptionRuleManager { get; private set; }
-
-        /// <summary>
         ///   A unique name used to identify this client.
         /// </summary>
         ///
@@ -106,7 +101,6 @@ namespace Azure.Messaging.ServiceBus
         {
             Connection = new ServiceBusConnection(connectionString, options);
             Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
-            SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
 
         /// <summary>
@@ -132,7 +126,6 @@ namespace Azure.Messaging.ServiceBus
                 fullyQualifiedNamespace,
                 credential,
                 options);
-            SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
 
         /// <summary>
@@ -143,20 +136,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusSender GetSender(string entityName) =>
             new ServiceBusSender(
                 entityPath: entityName,
-                connection: Connection,
-                options: new ServiceBusSenderOptions());
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="entityName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName, ServiceBusSenderOptions options) =>
-            new ServiceBusSender(
-                entityPath: entityName,
-                connection: Connection,
-                options: options);
+                connection: Connection);
 
         /// <summary>
         ///
@@ -333,5 +313,11 @@ namespace Azure.Messaging.ServiceBus
                 isSessionEntity: true,
                 sessionId: sessionId,
                 options: options ?? new ServiceBusProcessorOptions());
+
+        /// <summary>
+        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
+        /// </summary>
+        public ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName) =>
+            new ServiceBusRuleManager(topicName, subscriptionName);
     }
 }

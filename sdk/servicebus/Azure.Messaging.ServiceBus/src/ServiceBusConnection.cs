@@ -59,6 +59,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ServiceBusTransportType TransportType { get; }
 
+        /// <summary>
+        /// The retry options associated with this connection.
+        /// </summary>
+        public virtual ServiceBusRetryOptions RetryOptions { get; }
+
         private readonly TransportClient _innerClient;
 
         /// <summary>
@@ -93,6 +98,7 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = builder.FullyQualifiedNamespace;
             TransportType = options.TransportType;
+            RetryOptions = options.RetryOptions;
             EntityPath = builder.EntityName;
             var sharedAccessSignature = new SharedAccessSignature
             (
@@ -142,7 +148,7 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             TransportType = options.TransportType;
-
+            RetryOptions = options.RetryOptions;
             _innerClient = CreateTransportClient(tokenCredential, options);
         }
 
@@ -215,52 +221,6 @@ namespace Azure.Messaging.ServiceBus
                     identifier,
                     sessionId,
                     isSessionReceiver);
-
-        ///// <summary>
-        /////   Creates a producer strongly aligned with the active protocol and transport,
-        /////   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
-        ///// </summary>
-        ///// <param name="entityName"></param>
-        ///// <param name="entityConnectionString"></param>
-        /////
-        ///// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /////
-        ///// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
-        /////
-        //internal virtual TransportSender CreateTransportProducer(
-        //    ServiceBusRetryPolicy retryPolicy,
-        //    string entityName = default,
-        //    string entityConnectionString = default)
-        //{
-        //    CreateTransportClient(entityName, entityConnectionString, _connectionOptions);
-        //    Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
-        //    return InnerClient.CreateSender(retryPolicy);
-        //}
-
-        ///// <summary>
-        /////   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        /////   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
-        ///// </summary>
-        /////
-        ///// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        ///// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        ///// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
-        ///// <param name="sessionId"></param>
-        ///// <param name="isSessionReceiver"></param>
-        /////
-        ///// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
-        /////
-        //internal virtual TransportConsumer CreateTransportConsumer(
-        //    ServiceBusRetryPolicy retryPolicy,
-        //    ReceiveMode receiveMode = default,
-        //    int? prefetchCount = default,
-        //    string sessionId = default,
-        //    bool isSessionReceiver = default)
-        //{
-        //    Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-        //    return InnerClient.CreateConsumer(retryPolicy, receiveMode, prefetchCount, sessionId, isSessionReceiver);
-        //}
 
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the

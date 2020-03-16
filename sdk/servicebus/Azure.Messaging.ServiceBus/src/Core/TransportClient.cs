@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
-        ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
+        ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
         /// <param name="entityPath"></param>

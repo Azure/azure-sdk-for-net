@@ -42,18 +42,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var options = new ServiceBusClientOptions
                 {
                     TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = WebRequest.DefaultWebProxy
-                };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-
-                var senderOptions = new ServiceBusSenderOptions
-                {
+                    Proxy = WebRequest.DefaultWebProxy,
                     RetryOptions = new ServiceBusRetryOptions()
                     {
                         Mode = ServiceBusRetryMode.Exponential
                     }
                 };
-                ServiceBusSender sender = client.GetSender(scope.TopicName, senderOptions);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+
+                ServiceBusSender sender = client.GetSender(scope.TopicName);
                 await sender.SendAsync(GetMessage());
             }
         }
@@ -66,18 +63,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var options = new ServiceBusClientOptions
                 {
                     TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = WebRequest.DefaultWebProxy
-                };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-
-                var senderOptions = new ServiceBusSenderOptions
-                {
+                    Proxy = WebRequest.DefaultWebProxy,
                     RetryOptions = new ServiceBusRetryOptions()
                     {
                         Mode = ServiceBusRetryMode.Exponential
                     }
                 };
-                ServiceBusSender sender = client.GetSender(scope.TopicName, senderOptions);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+
+                ServiceBusSender sender = client.GetSender(scope.TopicName);
                 await sender.SendAsync(GetMessage("sessionId"));
             }
         }

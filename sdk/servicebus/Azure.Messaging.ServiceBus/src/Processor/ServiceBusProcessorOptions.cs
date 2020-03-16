@@ -21,11 +21,6 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusClientOptions _connectionOptions = new ServiceBusClientOptions();
 
         /// <summary>
-        /// The set of options to govern retry behavior and try timeouts.
-        /// </summary>
-        internal ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
-
-        /// <summary>
         /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
@@ -62,21 +57,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 Argument.AssertNotNull(value, nameof(ConnectionOptions));
                 _connectionOptions = value;
-            }
-        }
-
-        /// <summary>
-        /// The set of options to use for determining whether a failed operation should be retried and,
-        /// if so, the amount of time to wait between retry attempts.  These options also control the
-        /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
-        /// </summary>
-        public ServiceBusRetryOptions RetryOptions
-        {
-            get => _retryOptions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
             }
         }
 
@@ -163,7 +143,6 @@ namespace Azure.Messaging.ServiceBus
             new ServiceBusProcessorOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone(),
                 ReceiveMode = ReceiveMode,
                 AutoComplete = AutoComplete,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration
