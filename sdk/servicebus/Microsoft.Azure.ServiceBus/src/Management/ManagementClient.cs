@@ -514,7 +514,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
         /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
-        public virtual async Task<List<TopicRuntimeInfo>> GetTopicsRuntimeInfoAsync(int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        public virtual async Task<IList<TopicRuntimeInfo>> GetTopicsRuntimeInfoAsync(int count = 100, int skip = 0, CancellationToken cancellationToken = default)
         {
              if (count > 100 || count < 1)
              { 
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or an unexpected exception occured.</exception>
         /// <remarks>You can simulate pages of list of entities by manipulating <paramref name="count"/> and <paramref name="skip"/>.
         /// skip(0)+count(100) gives first 100 entities. skip(100)+count(100) gives the next 100 entities.</remarks>
-        public virtual async Task<List<SubscriptionRuntimeInfo>> GetSubscriptionsRuntimeInfoAsync(string topicPath, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
+        public virtual async Task<IList<SubscriptionRuntimeInfo>> GetSubscriptionsRuntimeInfoAsync(string topicPath, int count = 100, int skip = 0, CancellationToken cancellationToken = default)
         {
              if (count > 100 || count < 1)
              { 
