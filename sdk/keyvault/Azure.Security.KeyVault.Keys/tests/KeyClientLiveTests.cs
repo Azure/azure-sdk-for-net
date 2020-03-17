@@ -69,19 +69,24 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task CreateEcHsmKey()
         {
-            var echsmkey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey keyHsm = await Client.CreateEcKeyAsync(echsmkey);
-            RegisterForCleanup(keyHsm.Name);
+            string keyName = Recording.GenerateId();
 
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyHsm.Name);
-            AssertKeyVaultKeysEqual(keyHsm, keyReturned);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmkey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
         }
 
         [Test]
         public async Task CreateEcKey()
         {
-            var eckey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false);
-            KeyVaultKey keyNoHsm = await Client.CreateEcKeyAsync(eckey);
+            string keyName = Recording.GenerateId();
+
+            var ecKey = new CreateEcKeyOptions(keyName, hardwareProtected: false);
+            KeyVaultKey keyNoHsm = await Client.CreateEcKeyAsync(ecKey);
             RegisterForCleanup(keyNoHsm.Name);
 
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
@@ -107,12 +112,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task CreateRsaHsmKey()
         {
-            var rsaHsmkey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey keyHsm = await Client.CreateRsaKeyAsync(rsaHsmkey);
-            RegisterForCleanup(keyHsm.Name);
+            string keyName = Recording.GenerateId();
 
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyHsm.Name);
-            AssertKeyVaultKeysEqual(keyHsm, keyReturned);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmkey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(rsaHsmkey, keyReturned);
         }
 
         [Test]
@@ -158,27 +166,31 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task UpdateEcHsmKey()
         {
-            var ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey keyHsm = await Client.CreateEcKeyAsync(ecHsmKey);
-            RegisterForCleanup(keyHsm.Name);
+            string keyName = Recording.GenerateId();
 
-            keyHsm.Properties.ExpiresOn = keyHsm.Properties.CreatedOn;
-            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties, keyHsm.KeyOperations);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            AssertKeyVaultKeysEqual(keyHsm, updateResult);
+            ecHsmKey.Properties.ExpiresOn = ecHsmKey.Properties.CreatedOn;
+            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(ecHsmKey.Properties, ecHsmKey.KeyOperations);
+
+            AssertKeyVaultKeysEqual(ecHsmKey, updateResult);
         }
 
         [Test]
         public async Task UpdateRsaHsmKey()
         {
-            var rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey keyHsm = await Client.CreateRsaKeyAsync(rsaHsmKey);
-            RegisterForCleanup(keyHsm.Name);
+            string keyName = Recording.GenerateId();
 
-            keyHsm.Properties.ExpiresOn = keyHsm.Properties.CreatedOn;
-            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties, keyHsm.KeyOperations);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            AssertKeyVaultKeysEqual(keyHsm, updateResult);
+            rsaHsmKey.Properties.ExpiresOn = rsaHsmKey.Properties.CreatedOn;
+            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(rsaHsmKey.Properties, rsaHsmKey.KeyOperations);
+
+            AssertKeyVaultKeysEqual(rsaHsmKey, updateResult);
         }
 
         [Test]
@@ -199,13 +211,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task UpdateEcHsmKeyEnabled()
         {
-            var ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey keyHsm = await Client.CreateEcKeyAsync(ecHsmKey);
-            RegisterForCleanup(keyHsm.Name);
+            string keyName = Recording.GenerateId();
 
-            keyHsm.Properties.Enabled = false;
-            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties, keyHsm.KeyOperations);
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyHsm.Name);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            ecHsmKey.Properties.Enabled = false;
+            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(ecHsmKey.Properties, ecHsmKey.KeyOperations);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
             AssertKeyVaultKeysEqual(keyReturned, updateResult);
         }
@@ -213,13 +227,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task UpdateRsaHsmKeyEnabled()
         {
-            var rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey keyHsm = await Client.CreateRsaKeyAsync(rsaHsmKey);
-            RegisterForCleanup(keyHsm.Name);
+            string keyName = Recording.GenerateId();
 
-            keyHsm.Properties.Enabled = false;
-            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties, keyHsm.KeyOperations);
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyHsm.Name);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            rsaHsmKey.Properties.Enabled = false;
+            KeyVaultKey updateResult = await Client.UpdateKeyPropertiesAsync(rsaHsmKey.Properties, rsaHsmKey.KeyOperations);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
             AssertKeyVaultKeysEqual(keyReturned, updateResult);
         }
@@ -264,18 +280,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            KeyVaultKey key = await Client.CreateEcKeyAsync(options);
-            RegisterForCleanup(key.Name);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            AssertAreEqual(new[] { KeyOperation.Verify }, key.KeyOperations);
+            AssertAreEqual(new[] { KeyOperation.Verify }, ecHsmKey.KeyOperations);
 
-            key.Properties.ExpiresOn = DateTimeOffset.Now.AddDays(1);
+            ecHsmKey.Properties.ExpiresOn = DateTimeOffset.Now.AddDays(1);
 
-            key = await Client.UpdateKeyPropertiesAsync(key.Properties);
-            AssertAreEqual(new[] { KeyOperation.Verify }, key.KeyOperations);
+            ecHsmKey = await Client.UpdateKeyPropertiesAsync(ecHsmKey.Properties);
+            AssertAreEqual(new[] { KeyOperation.Verify }, ecHsmKey.KeyOperations);
 
-            key = await Client.UpdateKeyPropertiesAsync(key.Properties, new[] { KeyOperation.Sign, KeyOperation.Verify });
-            AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, key.KeyOperations);
+            ecHsmKey = await Client.UpdateKeyPropertiesAsync(ecHsmKey.Properties, new[] { KeyOperation.Sign, KeyOperation.Verify });
+            AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, ecHsmKey.KeyOperations);
         }
 
         [Test]
@@ -291,18 +307,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            KeyVaultKey key = await Client.CreateRsaKeyAsync(options);
-            RegisterForCleanup(key.Name);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            AssertAreEqual(new[] { KeyOperation.Verify }, key.KeyOperations);
+            AssertAreEqual(new[] { KeyOperation.Verify }, rsaHsmKey.KeyOperations);
 
-            key.Properties.ExpiresOn = DateTimeOffset.Now.AddDays(1);
+            rsaHsmKey.Properties.ExpiresOn = DateTimeOffset.Now.AddDays(1);
 
-            key = await Client.UpdateKeyPropertiesAsync(key.Properties);
-            AssertAreEqual(new[] { KeyOperation.Verify }, key.KeyOperations);
+            rsaHsmKey = await Client.UpdateKeyPropertiesAsync(rsaHsmKey.Properties);
+            AssertAreEqual(new[] { KeyOperation.Verify }, rsaHsmKey.KeyOperations);
 
-            key = await Client.UpdateKeyPropertiesAsync(key.Properties, new[] { KeyOperation.Sign, KeyOperation.Verify });
-            AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, key.KeyOperations);
+            rsaHsmKey = await Client.UpdateKeyPropertiesAsync(rsaHsmKey.Properties, new[] { KeyOperation.Sign, KeyOperation.Verify });
+            AssertAreEqual(new[] { KeyOperation.Sign, KeyOperation.Verify }, rsaHsmKey.KeyOperations);
         }
 
         [Test]
@@ -360,7 +376,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task UpdateEcHsmKeyTags()
         {
-            var ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true)
+            string keyName = Recording.GenerateId();
+
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true)
             {
                 Tags =
                 {
@@ -369,8 +387,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            KeyVaultKey keyHsm = await Client.CreateEcKeyAsync(ecHsmKey);
-            RegisterForCleanup(keyHsm.Name);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
 
             IDictionary<string, string> expectedTags = new Dictionary<string, string>
             {
@@ -378,12 +396,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ["B"] = "2",
             };
 
-            AssertAreEqual(expectedTags, keyHsm.Properties.Tags);
+            AssertAreEqual(expectedTags, ecHsmKey.Properties.Tags);
 
-            keyHsm.Properties.Tags["B"] = "3";
-            keyHsm.Properties.Tags["C"] = "4";
+            ecHsmKey.Properties.Tags["B"] = "3";
+            ecHsmKey.Properties.Tags["C"] = "4";
 
-            keyHsm = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties);
+            ecHsmKey = await Client.UpdateKeyPropertiesAsync(ecHsmKey.Properties);
 
             expectedTags = new Dictionary<string, string>
             {
@@ -392,25 +410,27 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ["C"] = "4",
             };
 
-            AssertAreEqual(expectedTags, keyHsm.Properties.Tags);
+            AssertAreEqual(expectedTags, ecHsmKey.Properties.Tags);
 
-            keyHsm.Properties.Tags.Clear();
-            keyHsm.Properties.Tags["D"] = "5";
+            ecHsmKey.Properties.Tags.Clear();
+            ecHsmKey.Properties.Tags["D"] = "5";
 
-            keyHsm = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties);
+            ecHsmKey = await Client.UpdateKeyPropertiesAsync(ecHsmKey.Properties);
 
             expectedTags = new Dictionary<string, string>
             {
                 ["D"] = "5",
             };
 
-            AssertAreEqual(expectedTags, keyHsm.Properties.Tags);
+            AssertAreEqual(expectedTags, ecHsmKey.Properties.Tags);
         }
 
         [Test]
         public async Task UpdateRsaHsmKeyTags()
         {
-            var rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true)
+            string keyName = Recording.GenerateId();
+
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true)
             {
                 Tags =
                 {
@@ -419,8 +439,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 },
             };
 
-            KeyVaultKey keyHsm = await Client.CreateRsaKeyAsync(rsaHsmKey);
-            RegisterForCleanup(keyHsm.Name);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
 
             IDictionary<string, string> expectedTags = new Dictionary<string, string>
             {
@@ -428,12 +448,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ["B"] = "2",
             };
 
-            AssertAreEqual(expectedTags, keyHsm.Properties.Tags);
+            AssertAreEqual(expectedTags, rsaHsmKey.Properties.Tags);
 
-            keyHsm.Properties.Tags["B"] = "3";
-            keyHsm.Properties.Tags["C"] = "4";
+            rsaHsmKey.Properties.Tags["B"] = "3";
+            rsaHsmKey.Properties.Tags["C"] = "4";
 
-            keyHsm = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties);
+            rsaHsmKey = await Client.UpdateKeyPropertiesAsync(rsaHsmKey.Properties);
 
             expectedTags = new Dictionary<string, string>
             {
@@ -442,19 +462,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ["C"] = "4",
             };
 
-            AssertAreEqual(expectedTags, keyHsm.Properties.Tags);
+            AssertAreEqual(expectedTags, rsaHsmKey.Properties.Tags);
 
-            keyHsm.Properties.Tags.Clear();
-            keyHsm.Properties.Tags["D"] = "5";
+            rsaHsmKey.Properties.Tags.Clear();
+            rsaHsmKey.Properties.Tags["D"] = "5";
 
-            keyHsm = await Client.UpdateKeyPropertiesAsync(keyHsm.Properties);
+            rsaHsmKey = await Client.UpdateKeyPropertiesAsync(rsaHsmKey.Properties);
 
             expectedTags = new Dictionary<string, string>
             {
                 ["D"] = "5",
             };
 
-            AssertAreEqual(expectedTags, keyHsm.Properties.Tags);
+            AssertAreEqual(expectedTags, rsaHsmKey.Properties.Tags);
         }
 
         [Test]
@@ -472,25 +492,29 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task GetEcHsmKey()
         {
-            CreateEcKeyOptions ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateEcKeyAsync(ecHsmKey);
-            RegisterForCleanup(key.Name);
+            string keyName = Recording.GenerateId();
 
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(key.Name);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            AssertKeyVaultKeysEqual(key, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(ecHsmKey, keyReturned);
         }
 
         [Test]
         public async Task GetRsaHsmKey()
         {
-            CreateRsaKeyOptions rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateRsaKeyAsync(rsaHsmKey);
-            RegisterForCleanup(key.Name);
+            string keyName = Recording.GenerateId();
 
-            KeyVaultKey keyReturned = await Client.GetKeyAsync(key.Name);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            AssertKeyVaultKeysEqual(key, keyReturned);
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+
+            AssertKeyVaultKeysEqual(rsaHsmKey, keyReturned);
         }
 
         [Test]
@@ -534,37 +558,41 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task DeleteEcHsmKey()
         {
-            CreateEcKeyOptions ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateEcKeyAsync(ecHsmKey);
-            RegisterForCleanup(key.Name);
+            string keyName = Recording.GenerateId();
 
-            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(key.Name);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
             Assert.NotNull(deletedKey.ScheduledPurgeDate);
-            AssertKeyVaultKeysEqual(key, deletedKey);
+            AssertKeyVaultKeysEqual(ecHsmKey, deletedKey);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(key.Name));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
 
         [Test]
         public async Task DeleteRsaHsmKey()
         {
-            CreateRsaKeyOptions rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateRsaKeyAsync(rsaHsmKey);
-            RegisterForCleanup(key.Name);
+            string keyName = Recording.GenerateId();
 
-            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(key.Name);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
             Assert.NotNull(deletedKey.ScheduledPurgeDate);
-            AssertKeyVaultKeysEqual(key, deletedKey);
+            AssertKeyVaultKeysEqual(rsaHsmKey, deletedKey);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(key.Name));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
         }
 
         [Test]
@@ -600,45 +628,49 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task GetDeletedEcHsmKey()
         {
-            CreateEcKeyOptions ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateEcKeyAsync(ecHsmKey);
-            RegisterForCleanup(key.Name);
+            string keyName = Recording.GenerateId();
 
-            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(key.Name);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            await WaitForDeletedKey(key.Name);
+            await WaitForDeletedKey(keyName);
 
-            DeletedKey polledSecret = await Client.GetDeletedKeyAsync(key.Name);
+            DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
             Assert.NotNull(deletedKey.ScheduledPurgeDate);
 
             AssertKeyVaultKeysEqual(deletedKey, polledSecret);
-            AssertKeyVaultKeysEqual(key, polledSecret);
+            AssertKeyVaultKeysEqual(ecHsmKey, polledSecret);
         }
 
         [Test]
         public async Task GetDeletedRsaHsmKey()
         {
-            CreateRsaKeyOptions rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateRsaKeyAsync(rsaHsmKey);
-            RegisterForCleanup(key.Name);
+            string keyName = Recording.GenerateId();
 
-            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(key.Name);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
+            RegisterForCleanup(keyName);
+
+            DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            await WaitForDeletedKey(key.Name);
+            await WaitForDeletedKey(keyName);
 
-            DeletedKey polledSecret = await Client.GetDeletedKeyAsync(key.Name);
+            DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
             Assert.NotNull(deletedKey.ScheduledPurgeDate);
 
             AssertKeyVaultKeysEqual(deletedKey, polledSecret);
-            AssertKeyVaultKeysEqual(key, polledSecret);
+            AssertKeyVaultKeysEqual(rsaHsmKey, polledSecret);
         }
 
         [Test]
@@ -678,57 +710,59 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task RecoverDeletedEcHsmKey()
         {
+            string keyName = Recording.GenerateId();
 
-            CreateEcKeyOptions ecHsmKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateEcKeyAsync(ecHsmKey);
+            CreateEcKeyOptions options = new CreateEcKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
 
-            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(key.Name);
+            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = deleteOperation.Value;
 
-            await WaitForDeletedKey(key.Name);
+            await WaitForDeletedKey(keyName);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(key.Name));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
-            RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(key.Name);
+            RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
             KeyVaultKey recoverKeyResult = recoverOperation.Value;
 
-            await WaitForKey(key.Name);
+            await WaitForKey(keyName);
 
-            KeyVaultKey recoveredKey = await Client.GetKeyAsync(key.Name);
+            KeyVaultKey recoveredKey = await Client.GetKeyAsync(keyName);
 
             RegisterForCleanup(recoveredKey.Name);
 
-            AssertKeyVaultKeysEqual(key, deletedKey);
-            AssertKeyVaultKeysEqual(key, recoverKeyResult);
-            AssertKeyVaultKeysEqual(key, recoveredKey);
+            AssertKeyVaultKeysEqual(ecHsmKey, deletedKey);
+            AssertKeyVaultKeysEqual(ecHsmKey, recoverKeyResult);
+            AssertKeyVaultKeysEqual(ecHsmKey, recoveredKey);
         }
 
         [Test]
         public async Task RecoverDeletedRsaHsmKey()
         {
+            string keyName = Recording.GenerateId();
 
-            CreateRsaKeyOptions rsaHsmKey = new CreateRsaKeyOptions(Recording.GenerateId(), hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateRsaKeyAsync(rsaHsmKey);
+            CreateRsaKeyOptions options = new CreateRsaKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
 
-            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(key.Name);
+            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = deleteOperation.Value;
 
-            await WaitForDeletedKey(key.Name);
+            await WaitForDeletedKey(keyName);
 
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(key.Name));
+            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
-            RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(key.Name);
+            RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
             KeyVaultKey recoverKeyResult = recoverOperation.Value;
 
-            await WaitForKey(key.Name);
+            await WaitForKey(keyName);
 
-            KeyVaultKey recoveredKey = await Client.GetKeyAsync(key.Name);
+            KeyVaultKey recoveredKey = await Client.GetKeyAsync(keyName);
 
             RegisterForCleanup(recoveredKey.Name);
 
-            AssertKeyVaultKeysEqual(key, deletedKey);
-            AssertKeyVaultKeysEqual(key, recoverKeyResult);
-            AssertKeyVaultKeysEqual(key, recoveredKey);
+            AssertKeyVaultKeysEqual(rsaHsmKey, deletedKey);
+            AssertKeyVaultKeysEqual(rsaHsmKey, recoverKeyResult);
+            AssertKeyVaultKeysEqual(rsaHsmKey, recoveredKey);
         }
 
         [Test]
