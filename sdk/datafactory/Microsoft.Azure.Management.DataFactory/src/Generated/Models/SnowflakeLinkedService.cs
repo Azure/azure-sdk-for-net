@@ -18,23 +18,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// SAP HANA Linked Service.
+    /// Snowflake linked service.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("SapHana")]
+    [Newtonsoft.Json.JsonObject("Snowflake")]
     [Rest.Serialization.JsonTransformation]
-    public partial class SapHanaLinkedService : LinkedService
+    public partial class SnowflakeLinkedService : LinkedService
     {
         /// <summary>
-        /// Initializes a new instance of the SapHanaLinkedService class.
+        /// Initializes a new instance of the SnowflakeLinkedService class.
         /// </summary>
-        public SapHanaLinkedService()
+        public SnowflakeLinkedService()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SapHanaLinkedService class.
+        /// Initializes a new instance of the SnowflakeLinkedService class.
         /// </summary>
+        /// <param name="connectionString">The connection string of snowflake.
+        /// Type: string, SecureString.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -42,28 +44,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
-        /// <param name="connectionString">SAP HANA ODBC connection string.
-        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
-        /// <param name="server">Host name of the SAP HANA server. Type: string
-        /// (or Expression with resultType string).</param>
-        /// <param name="authenticationType">The authentication type to be used
-        /// to connect to the SAP HANA server. Possible values include:
-        /// 'Basic', 'Windows'</param>
-        /// <param name="userName">Username to access the SAP HANA server.
-        /// Type: string (or Expression with resultType string).</param>
-        /// <param name="password">Password to access the SAP HANA
-        /// server.</param>
+        /// <param name="password">The Azure key vault secret reference of
+        /// password in connection string.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SapHanaLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object server = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public SnowflakeLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
-            Server = server;
-            AuthenticationType = authenticationType;
-            UserName = userName;
             Password = password;
             EncryptedCredential = encryptedCredential;
             CustomInit();
@@ -75,38 +65,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SAP HANA ODBC connection string. Type: string,
-        /// SecureString or AzureKeyVaultSecretReference.
+        /// Gets or sets the connection string of snowflake. Type: string,
+        /// SecureString.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
         public object ConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets host name of the SAP HANA server. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.server")]
-        public object Server { get; set; }
-
-        /// <summary>
-        /// Gets or sets the authentication type to be used to connect to the
-        /// SAP HANA server. Possible values include: 'Basic', 'Windows'
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.authenticationType")]
-        public string AuthenticationType { get; set; }
-
-        /// <summary>
-        /// Gets or sets username to access the SAP HANA server. Type: string
-        /// (or Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.userName")]
-        public object UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets password to access the SAP HANA server.
+        /// Gets or sets the Azure key vault secret reference of password in
+        /// connection string.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecretBase Password { get; set; }
+        public AzureKeyVaultSecretReference Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -125,6 +95,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (ConnectionString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
+            if (Password != null)
+            {
+                Password.Validate();
+            }
         }
     }
 }
