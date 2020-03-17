@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "ef37ac44-d98c-37c0-0a7f-be567ea37bed",
         "x-ms-date": "Thu, 05 Mar 2020 21:58:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "ef37ac44-d98c-37c0-0a7f-be567ea37bed",
         "x-ms-request-id": "60900829-901e-0049-2c39-f3d0d0000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "1b3395e9-4a54-7b9e-b298-4870d0e0ebd4",
         "x-ms-date": "Thu, 05 Mar 2020 21:58:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -68,7 +68,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "60900835-901e-0049-3539-f3d0d0000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -85,7 +85,7 @@
         "x-ms-client-request-id": "e86c9e45-606f-4398-0569-d69708c3adad",
         "x-ms-date": "Thu, 05 Mar 2020 21:58:30 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -98,7 +98,7 @@
         ],
         "x-ms-client-request-id": "e86c9e45-606f-4398-0569-d69708c3adad",
         "x-ms-request-id": "6090083b-901e-0049-3b39-f3d0d0000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "cc466058-fe31-6b34-8d26-ce4647044087",
         "x-ms-date": "Thu, 05 Mar 2020 21:59:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "cc466058-fe31-6b34-8d26-ce4647044087",
         "x-ms-request-id": "27aa4937-e01e-000e-5a39-f3bb8b000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "4120633a-8681-95cb-2a38-34804685311d",
         "x-ms-date": "Thu, 05 Mar 2020 21:59:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -61,7 +61,7 @@
         ],
         "x-ms-client-request-id": "4120633a-8681-95cb-2a38-34804685311d",
         "x-ms-request-id": "0234fe4e-701f-0033-1239-f3cd90000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "d6746fc7-894f-755b-f8be-a303a70842f4",
         "x-ms-date": "Thu, 05 Mar 2020 21:59:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -91,7 +91,7 @@
         ],
         "x-ms-client-request-id": "d6746fc7-894f-755b-f8be-a303a70842f4",
         "x-ms-request-id": "0234fe4f-701f-0033-1339-f3cd90000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -108,7 +108,7 @@
         "x-ms-client-request-id": "d7b8b792-5a10-d2cd-96d3-8af2ce48097a",
         "x-ms-date": "Thu, 05 Mar 2020 21:59:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -121,7 +121,7 @@
         ],
         "x-ms-client-request-id": "d7b8b792-5a10-d2cd-96d3-8af2ce48097a",
         "x-ms-request-id": "27aa493f-e01e-000e-5e39-f3bb8b000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }
