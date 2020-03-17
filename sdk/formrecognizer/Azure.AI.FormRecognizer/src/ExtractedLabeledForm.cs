@@ -55,6 +55,22 @@ namespace Azure.AI.FormRecognizer.Custom
         /// </summary>
         public IReadOnlyList<RawExtractedPage> RawExtractedPages { get; }
 
+        /// <summary>
+        /// Return the field value text for a given label.
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns></returns>
+        public string GetFieldValue(string label)
+        {
+            var field = Fields.Where(f => f.Label == label).FirstOrDefault();
+            if (field == default)
+            {
+                throw new FieldNotFoundException($"Field '{label}' not found on form.");
+            }
+
+            return field.Value;
+        }
+
         private static IReadOnlyList<ExtractedLabeledField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
         {
             List<ExtractedLabeledField> list = new List<ExtractedLabeledField>();

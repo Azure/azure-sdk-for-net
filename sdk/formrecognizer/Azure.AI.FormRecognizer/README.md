@@ -42,7 +42,7 @@ Once you have the value for the subscription key, create a `FormRecognizerApiKey
 
 With the value of the endpoint and a `FormRecognizerApiKeyCredential`, you can create the [CustomFormClient][formreco_custom_client_class]:
 
-```
+```C#
 string endpoint = "<endpoint>";
 string subscriptionKey = "<subscriptionKey>";
 var credential = new FormRecognizerApiKeyCredential(subscriptionKey);
@@ -80,6 +80,11 @@ A `FormLayoutClient` is the Form Recognizer interface to extract layout items fr
 ### CustomFormClient
 A `CustomFormClient` is the Form Recognizer interface to use for creating, using, and managing custom machine-learned models. It provides operations for training models on forms you provide, and extracting field values and locations from your custom forms.  It also provides operations for viewing and deleting models, as well as understanding how close you are to reaching subscription limits for the number of models you can train.
 
+### Long-Running Operations
+Long-running operations are operations which consist of an initial request sent to the service to start an operation,followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
+
+Methods that train models or extract values from forms are modeled as long-running operations.  The client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  Callers should wait for the operation to complete by calling `WaitForCompletionAsync()` on the operation returned from the `Start<operation-name>` method.  A sample code snippet is provided to illustrate using long-running operations [below](#extracting-receipt-values-with-a-long-running-operation).
+
 ### Training models
 Using the `CustomFormClient`, you can train a machine-learned model on your own form type.  The resulting model will be able to extract values from the types of forms it was trained on.
 
@@ -104,6 +109,27 @@ Models trained with labels consider a form as a single unit.  For example, if yo
 
 ### Managing Custom Models
 Using the `CustomFormClient`, you can get, list, and delete the custom models you've trained.  You can also view the count of models you've trained and the maximum number of models your subscription will allow you to store.
+
+## Examples
+The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API.
+
+### Extracting receipt values with a long-running operation
+```C#
+string endpoint = "<endpoint>";
+string subscriptionKey = "<subscriptionKey>";
+var credential = new FormRecognizerApiKeyCredential(subscriptionKey);
+var client = new ReceiptClient(new Uri(endpoint), credential);
+
+using (FileStream stream = new FileStream(@"C:\path\to\receipt.jpg", FileMode.Open))
+{
+    var extractReceiptOperation = client.StartExtractReceipts(stream, FormContentType.Jpeg);
+    await extractReceiptOperation.WaitForCompletionAsync();
+    if (extractReceiptOperation.HasValue)
+    {
+        IReadOnlyList<ExtractedReceipt> result = extractReceiptOperation.Value;
+    }
+}
+```
 
 ## Contributing
 

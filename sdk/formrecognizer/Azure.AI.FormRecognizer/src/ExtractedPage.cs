@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Models;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
@@ -46,6 +47,22 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// </summary>
         public RawExtractedPage RawExtractedPage { get; }
+
+        /// <summary>
+        /// Return the field value text for a given fieldName.
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
+        public string GetFieldValue(string fieldName)
+        {
+            var field = Fields.Where(f => f.Name == fieldName).FirstOrDefault();
+            if (field == default)
+            {
+                throw new FieldNotFoundException($"Field '{fieldName}' not found on form.");
+            }
+
+            return field.Value;
+        }
 
         private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
         {

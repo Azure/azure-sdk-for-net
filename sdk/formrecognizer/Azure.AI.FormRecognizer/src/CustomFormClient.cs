@@ -226,6 +226,18 @@ namespace Azure.AI.FormRecognizer.Custom
 
         #region Supervised
 
+        ///// ```csharp
+        ///// using (FileStream stream = File.Open(@"c:\path\to\form.pdf"))
+        ///// {
+        /////    var extractFormOperation = client.StartExtractLabeledForms(modelId, stream, FormContentType.Pdf);
+        /////
+        /////    await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
+        /////    if (extractFormOperation.HasValue)
+        /////    {
+        /////        IReadOnlyList&lt;ExtractedLabeledForm&gt; forms = extractFormOperation.Value;
+        /////    }
+        ///// }
+        ///// ```
 
         /// <summary>
         /// Extract form content from one or more forms, using a model trained with labels.
