@@ -950,7 +950,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file3 = await subdirectory2.CreateFileAsync(GetNewFileName());
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
-            // Act x
+            // Act
             ChangeAccessControlResult result = await directory.SetAccessControlRecursiveAsync(AccessControlList);
 
             // Assert
