@@ -195,14 +195,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res9506/providers/Microsoft.Storage/storageAccounts/sto7096\",\r\n  \"name\": \"sto7096\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"privateEndpointConnections\": [],\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": [],\r\n      \"defaultAction\": \"Allow\"\r\n    },\r\n    \"supportsHttpsTrafficOnly\": true,\r\n    \"encryption\": {\r\n      \"services\": {\r\n        \"file\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2019-10-10T08:19:48.8175416Z\"\r\n        },\r\n        \"blob\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2019-10-10T08:19:48.8175416Z\"\r\n        }\r\n      },\r\n      \"keySource\": \"Microsoft.Storage\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2019-10-10T08:19:48.7393835Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto7096.blob.core.windows.net/\",\r\n      \"queue\": \"https://sto7096.queue.core.windows.net/\",\r\n      \"table\": \"https://sto7096.table.core.windows.net/\",\r\n      \"file\": \"https://sto7096.file.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfSecondary\": \"available\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_GRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"id\": \"/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res9506/providers/Microsoft.Storage/storageAccounts/sto7096\",\r\n  \"name\": \"sto7096\",\r\n  \"type\": \"Microsoft.Storage/storageAccounts\",\r\n  \"location\": \"eastus2(stage)\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"privateEndpointConnections\": [],\r\n    \"networkAcls\": {\r\n      \"bypass\": \"AzureServices\",\r\n      \"virtualNetworkRules\": [],\r\n      \"ipRules\": [],\r\n      \"defaultAction\": \"Allow\"\r\n    },\r\n    \"supportsHttpsTrafficOnly\": true,\r\n    \"encryption\": {\r\n      \"services\": {\r\n        \"file\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2019-12-12T08:19:48.8175416Z\"\r\n        },\r\n        \"blob\": {\r\n          \"enabled\": true,\r\n          \"lastEnabledTime\": \"2019-12-12T08:19:48.8175416Z\"\r\n        }\r\n      },\r\n      \"keySource\": \"Microsoft.Storage\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"creationTime\": \"2019-12-12T08:19:48.7393835Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://sto7096.blob.core.windows.net/\",\r\n      \"queue\": \"https://sto7096.queue.core.windows.net/\",\r\n      \"table\": \"https://sto7096.table.core.windows.net/\",\r\n      \"file\": \"https://sto7096.file.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"eastus2(stage)\",\r\n    \"statusOfPrimary\": \"available\",\r\n    \"secondaryLocation\": \"northcentralus(stage)\",\r\n    \"statusOfSecondary\": \"available\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/ce4a7590-4722-4bcf-a2c6-e473e9f11778/resourceGroups/res9506/providers/Microsoft.Storage/storageAccounts/sto7096/ListServiceSas?api-version=2019-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvY2U0YTc1OTAtNDcyMi00YmNmLWEyYzYtZTQ3M2U5ZjExNzc4L3Jlc291cmNlR3JvdXBzL3Jlczk1MDYvcHJvdmlkZXJzL01pY3Jvc29mdC5TdG9yYWdlL3N0b3JhZ2VBY2NvdW50cy9zdG83MDk2L0xpc3RTZXJ2aWNlU2FzP2FwaS12ZXJzaW9uPTIwMTktMDYtMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"canonicalizedResource\": \"/blob/sto7096/music\",\r\n  \"signedResource\": \"c\",\r\n  \"signedPermission\": \"rl\",\r\n  \"signedExpiry\": \"2019-10-10T09:20:06.6794233Z\"\r\n}",
+      "RequestBody": "{\r\n  \"canonicalizedResource\": \"/blob/sto7096/music\",\r\n  \"signedResource\": \"c\",\r\n  \"signedPermission\": \"rl\",\r\n  \"signedExpiry\": \"2019-12-12T09:20:06.6794233Z\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "fdb56be7-b0dc-494c-8d54-1884e87d5ade"
@@ -264,7 +264,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"serviceSasToken\": \"sv=2015-04-05&sr=c&se=2019-10-10T09%3A20%3A06.6794233Z&sp=rl&sig=Cdp2oiTm%2FpDEzRn4x8CSUle2Sp6nO%2FkmuDXp74S2lg0%3D\"\r\n}",
+      "ResponseBody": "{\r\n  \"serviceSasToken\": \"sv=2015-04-05&sr=c&se=2019-12-12T09%3A20%3A06.6794233Z&sp=rl&sig=Cdp2oiTm%2FpDEzRn4x8CSUle2Sp6nO%2FkmuDXp74S2lg0%3D\"\r\n}",
       "StatusCode": 200
     }
   ],
