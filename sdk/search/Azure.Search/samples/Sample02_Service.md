@@ -15,7 +15,7 @@ reflect changes caused by recent indexing operations.
 ```C# Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
 // Create a new SearchServiceClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-SearchApiKeyCredential credential = new SearchApiKeyCredential(
+AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 SearchServiceClient search = new SearchServiceClient(endpoint, credential);
 

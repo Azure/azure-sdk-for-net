@@ -96,7 +96,7 @@ string apiKey = "252044BE3886FE4A8E3BAA4F595114BB";
 
 // Create a SearchIndexClient to send queries
 Uri serviceEndpoint = new Uri($"https://{serviceName}.search.windows.net/");
-SearchApiKeyCredential credential = new SearchApiKeyCredential(apiKey);
+AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 SearchIndexClient client = new SearchIndexClient(serviceEndpoint, indexName, credential);
 
 // Let's get the top 5 jobs related to Microsoft
@@ -171,7 +171,7 @@ string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 string indexName = "hotels";
 
 // Create a client
-SearchApiKeyCredential credential = new SearchApiKeyCredential(key);
+AzureKeyCredential credential = new AzureKeyCredential(key);
 SearchIndexClient client = new SearchIndexClient(endpoint, indexName, credential);
 ```
 

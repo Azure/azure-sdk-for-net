@@ -86,7 +86,7 @@ namespace Azure.Search
         /// <exception cref="ArgumentException">
         /// Thrown when the <paramref name="endpoint"/> is not using HTTPS.
         /// </exception>
-        public SearchServiceClient(Uri endpoint, SearchApiKeyCredential credential) :
+        public SearchServiceClient(Uri endpoint, AzureKeyCredential credential) :
             this(endpoint, credential, null)
         {
         }
@@ -119,7 +119,7 @@ namespace Azure.Search
         /// </exception>
         public SearchServiceClient(
             Uri endpoint,
-            SearchApiKeyCredential credential,
+            AzureKeyCredential credential,
             SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));

@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.Search.Tests
 {
@@ -21,15 +22,15 @@ namespace Azure.Search.Tests
             var serviceName = "my-svc-name";
             var indexName = "my-index-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
-            var index = new SearchIndexClient(endpoint, indexName, new SearchApiKeyCredential("fake"));
+            var index = new SearchIndexClient(endpoint, indexName, new AzureKeyCredential("fake"));
             Assert.NotNull(index);
             Assert.AreEqual(endpoint, index.Endpoint);
             Assert.AreEqual(serviceName, index.ServiceName);
             Assert.AreEqual(indexName, index.IndexName);
 
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, indexName, new SearchApiKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, null, new SearchApiKeyCredential("fake")));
-            Assert.Throws<ArgumentException>(() => new SearchIndexClient(endpoint, string.Empty, new SearchApiKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, indexName, new AzureKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, null, new AzureKeyCredential("fake")));
+            Assert.Throws<ArgumentException>(() => new SearchIndexClient(endpoint, string.Empty, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, indexName, null));
             Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), indexName, null));
         }

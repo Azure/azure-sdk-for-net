@@ -10,6 +10,7 @@ using Azure.Search.Models;
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Search.Tests.Samples
 {
@@ -36,7 +37,7 @@ namespace Azure.Search.Tests.Samples
 
             // Create a SearchIndexClient to send queries
             Uri serviceEndpoint = new Uri($"https://{serviceName}.search.windows.net/");
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(apiKey);
+            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             SearchIndexClient client = new SearchIndexClient(serviceEndpoint, indexName, credential);
 
             // Let's get the top 5 jobs related to Microsoft
@@ -69,7 +70,7 @@ namespace Azure.Search.Tests.Samples
             //@@ string indexName = "hotels";
 
             // Create a client
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(key);
+            AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchIndexClient client = new SearchIndexClient(endpoint, indexName, credential);
             /*@@*/ client = InstrumentClient(new SearchIndexClient(endpoint, indexName, credential, GetSearchClientOptions()));
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Client

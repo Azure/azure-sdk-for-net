@@ -25,12 +25,12 @@ namespace Azure.Search.Tests
         {
             var serviceName = "my-svc-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
-            var service = new SearchServiceClient(endpoint, new SearchApiKeyCredential("fake"));
+            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
             Assert.NotNull(service);
             Assert.AreEqual(endpoint, service.Endpoint);
             Assert.AreEqual(serviceName, service.ServiceName);
 
-            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(null, new SearchApiKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(null, new AzureKeyCredential("fake")));
             Assert.Throws<ArgumentNullException>(() => new SearchServiceClient(endpoint, null));
             Assert.Throws<ArgumentException>(() => new SearchServiceClient(new Uri("http://bing.com"), null));
         }
@@ -40,7 +40,7 @@ namespace Azure.Search.Tests
         {
             var serviceName = "my-svc-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
-            var service = new SearchServiceClient(endpoint, new SearchApiKeyCredential("fake"));
+            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
 
             var indexName = "my-index-name";
             var index = service.GetSearchIndexClient(indexName);
@@ -56,11 +56,11 @@ namespace Azure.Search.Tests
         [Test]
         public void SearchApiKeyCredential()
         {
-            Assert.Throws<ArgumentNullException>(() => new SearchApiKeyCredential(null));
-            Assert.Throws<ArgumentException>(() => new SearchApiKeyCredential(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential(null));
+            Assert.Throws<ArgumentException>(() => new AzureKeyCredential(string.Empty));
 
-            Assert.Throws<ArgumentNullException>(() => new SearchApiKeyCredential("fake").Refresh(null));
-            Assert.Throws<ArgumentException>(() => new SearchApiKeyCredential("fake").Refresh(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential("fake").UpdateCredential(null));
+            Assert.Throws<ArgumentException>(() => new AzureKeyCredential("fake").UpdateCredential(string.Empty));
         }
 
         private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
