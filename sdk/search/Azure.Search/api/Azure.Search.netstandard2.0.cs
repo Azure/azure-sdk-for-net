@@ -130,19 +130,19 @@ namespace Azure.Search.Models
     }
     public partial class AutocompleteResults
     {
-        public AutocompleteResults() { }
+        internal AutocompleteResults() { }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Models.Autocompletion> Results { get { throw null; } }
     }
     public partial class Autocompletion
     {
-        public Autocompletion() { }
+        internal Autocompletion() { }
         public string QueryPlusText { get { throw null; } }
         public string Text { get { throw null; } }
     }
     public partial class FacetResult : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
-        public FacetResult() { }
+        internal FacetResult() { }
         public long? Count { get { throw null; } }
         public object this[string key] { get { throw null; } set { } }
         public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
@@ -206,12 +206,12 @@ namespace Azure.Search.Models
     }
     public partial class IndexDocumentsResult
     {
-        public IndexDocumentsResult() { }
+        internal IndexDocumentsResult() { }
         public System.Collections.Generic.IList<Azure.Search.Models.IndexingResult> Results { get { throw null; } }
     }
     public partial class IndexingResult
     {
-        public IndexingResult() { }
+        internal IndexingResult() { }
         public string ErrorMessage { get { throw null; } }
         public string Key { get { throw null; } }
         public int Status { get { throw null; } }
@@ -253,9 +253,9 @@ namespace Azure.Search.Models
     }
     public partial class SearchResourceCounter
     {
-        public SearchResourceCounter() { }
-        public long? Quota { get { throw null; } set { } }
-        public long Usage { get { throw null; } set { } }
+        internal SearchResourceCounter() { }
+        public long? Quota { get { throw null; } }
+        public long Usage { get { throw null; } }
     }
     public partial class SearchResultsPage<T> : Azure.Page<Azure.Search.Models.SearchResult<T>>
     {
@@ -285,28 +285,28 @@ namespace Azure.Search.Models
     }
     public partial class SearchServiceCounters
     {
-        public SearchServiceCounters() { }
-        public Azure.Search.Models.SearchResourceCounter DataSourceCounter { get { throw null; } set { } }
-        public Azure.Search.Models.SearchResourceCounter DocumentCounter { get { throw null; } set { } }
-        public Azure.Search.Models.SearchResourceCounter IndexCounter { get { throw null; } set { } }
-        public Azure.Search.Models.SearchResourceCounter IndexerCounter { get { throw null; } set { } }
-        public Azure.Search.Models.SearchResourceCounter SkillsetCounter { get { throw null; } set { } }
-        public Azure.Search.Models.SearchResourceCounter StorageSizeCounter { get { throw null; } set { } }
-        public Azure.Search.Models.SearchResourceCounter SynonymMapCounter { get { throw null; } set { } }
+        internal SearchServiceCounters() { }
+        public Azure.Search.Models.SearchResourceCounter DataSourceCounter { get { throw null; } }
+        public Azure.Search.Models.SearchResourceCounter DocumentCounter { get { throw null; } }
+        public Azure.Search.Models.SearchResourceCounter IndexCounter { get { throw null; } }
+        public Azure.Search.Models.SearchResourceCounter IndexerCounter { get { throw null; } }
+        public Azure.Search.Models.SearchResourceCounter SkillsetCounter { get { throw null; } }
+        public Azure.Search.Models.SearchResourceCounter StorageSizeCounter { get { throw null; } }
+        public Azure.Search.Models.SearchResourceCounter SynonymMapCounter { get { throw null; } }
     }
     public partial class SearchServiceLimits
     {
-        public SearchServiceLimits() { }
-        public int? MaxComplexCollectionFieldsPerIndex { get { throw null; } set { } }
-        public int? MaxComplexObjectsInCollectionsPerDocument { get { throw null; } set { } }
-        public int? MaxFieldNestingDepthPerIndex { get { throw null; } set { } }
-        public int? MaxFieldsPerIndex { get { throw null; } set { } }
+        internal SearchServiceLimits() { }
+        public int? MaxComplexCollectionFieldsPerIndex { get { throw null; } }
+        public int? MaxComplexObjectsInCollectionsPerDocument { get { throw null; } }
+        public int? MaxFieldNestingDepthPerIndex { get { throw null; } }
+        public int? MaxFieldsPerIndex { get { throw null; } }
     }
     public partial class SearchServiceStatistics
     {
-        public SearchServiceStatistics() { }
-        public Azure.Search.Models.SearchServiceCounters Counters { get { throw null; } set { } }
-        public Azure.Search.Models.SearchServiceLimits Limits { get { throw null; } set { } }
+        internal SearchServiceStatistics() { }
+        public Azure.Search.Models.SearchServiceCounters Counters { get { throw null; } }
+        public Azure.Search.Models.SearchServiceLimits Limits { get { throw null; } }
     }
     public partial class SearchSuggestion<T>
     {
