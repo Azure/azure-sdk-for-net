@@ -50,8 +50,7 @@ namespace Azure.Identity.Tests
             var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
             cts.CancelAfter(100);
 
-            var exception = Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
-            Assert.AreEqual(cts.Token, exception.CancellationToken);
+            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
         }
 
         [Test]
@@ -61,8 +60,7 @@ namespace Azure.Identity.Tests
             var cancellationToken = new CancellationToken(true);
             var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cancellationToken);
 
-            var exception = Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
-            Assert.AreEqual(cancellationToken, exception.CancellationToken);
+            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
         }
 
         [Test]
@@ -74,8 +72,7 @@ namespace Azure.Identity.Tests
 
             cts.Cancel();
 
-            var exception = Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
-            Assert.AreEqual(cts.Token, exception.CancellationToken);
+            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
         }
 
         [Test]

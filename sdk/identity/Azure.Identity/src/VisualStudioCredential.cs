@@ -117,7 +117,7 @@ namespace Azure.Identity
                     DateTimeOffset expiresOn = root.GetProperty("expires_on").GetDateTimeOffset();
                     return new AccessToken(accessToken, expiresOn);
                 }
-                catch (OperationCanceledException oce) when (oce.CancellationToken != cancellationToken)
+                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
                 {
                     exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
                 }

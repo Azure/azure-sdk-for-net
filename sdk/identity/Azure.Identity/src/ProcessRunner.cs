@@ -14,22 +14,23 @@ namespace Azure.Identity
         private readonly IProcess _process;
         private readonly TaskCompletionSource<string> _tcs;
         private readonly CancellationToken _cancellationToken;
-        private readonly CancellationToken _timeoutCancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
         private CancellationTokenRegistration _ctRegistration;
-        private CancellationTokenRegistration _timeoutCtRegistration;
 
         public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
         {
             _process = process;
-            _cancellationToken = cancellationToken;
             _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             if (timeout.TotalMilliseconds >= 0)
             {
-                _timeoutCts = new CancellationTokenSource();
-                _timeoutCancellationToken = _timeoutCts.Token;
+                _timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                _cancellationToken = _timeoutCts.Token;
                 _timeoutCts.CancelAfter(timeout);
+            }
+            else
+            {
+                _cancellationToken = cancellationToken;
             }
 
             process.Exited += (o, e) => HandleExit();
@@ -55,7 +56,6 @@ namespace Azure.Identity
             {
                 _process.Start();
                 _ctRegistration = _cancellationToken.Register(HandleCancel, false);
-                _timeoutCtRegistration = _timeoutCancellationToken.Register(HandleCancel, false);
             }
         }
 
@@ -100,17 +100,15 @@ namespace Azure.Identity
             _tcs.TrySetResult(result);
         }
 
-        private bool TrySetCanceled() => TrySetCanceled(_timeoutCancellationToken) || TrySetCanceled(_cancellationToken);
-
-        private bool TrySetCanceled(CancellationToken cancellationToken)
+        private bool TrySetCanceled()
         {
-            if (cancellationToken.IsCancellationRequested)
+            if (_cancellationToken.IsCancellationRequested)
             {
                 DisposeProcess();
-                _tcs.TrySetCanceled(cancellationToken);
+                _tcs.TrySetCanceled(_cancellationToken);
             }
 
-            return cancellationToken.IsCancellationRequested;
+            return _cancellationToken.IsCancellationRequested;
         }
 
         private void TrySetException(Exception exception)
@@ -124,7 +122,6 @@ namespace Azure.Identity
             _process.Dispose();
             _ctRegistration.Dispose();
             _timeoutCts?.Dispose();
-            _timeoutCtRegistration.Dispose();
         }
     }
 }
