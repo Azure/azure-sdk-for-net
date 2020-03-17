@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class FacetResult : IUtf8JsonSerializable
+    public partial class FacetResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Count != null)
-            {
-                writer.WritePropertyName("count");
-                writer.WriteNumberValue(Count.Value);
-            }
-            foreach (var item in this)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static FacetResult DeserializeFacetResult(JsonElement element)
         {
             FacetResult result = new FacetResult();

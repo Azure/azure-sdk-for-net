@@ -10,34 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextLine_internal : IUtf8JsonSerializable
+    internal partial class TextLine_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("boundingBox");
-            writer.WriteStartArray();
-            foreach (var item in BoundingBox)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            if (Language != null)
-            {
-                writer.WritePropertyName("language");
-                writer.WriteStringValue(Language.Value.ToString());
-            }
-            writer.WritePropertyName("words");
-            writer.WriteStartArray();
-            foreach (var item0 in Words)
-            {
-                writer.WriteObjectValue(item0);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
         internal static TextLine_internal DeserializeTextLine_internal(JsonElement element)
         {
             TextLine_internal result = new TextLine_internal();

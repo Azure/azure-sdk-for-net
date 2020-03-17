@@ -10,20 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    internal partial class SuggestResult : IUtf8JsonSerializable
+    internal partial class SuggestResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@search.text");
-            writer.WriteStringValue(Text);
-            foreach (var item in this)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static SuggestResult DeserializeSuggestResult(JsonElement element)
         {
             SuggestResult result = new SuggestResult();

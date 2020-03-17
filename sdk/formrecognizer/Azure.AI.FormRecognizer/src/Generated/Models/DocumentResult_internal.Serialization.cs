@@ -10,30 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DocumentResult_internal : IUtf8JsonSerializable
+    internal partial class DocumentResult_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("docType");
-            writer.WriteStringValue(DocType);
-            writer.WritePropertyName("pageRange");
-            writer.WriteStartArray();
-            foreach (var item in PageRange)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("fields");
-            writer.WriteStartObject();
-            foreach (var item0 in Fields)
-            {
-                writer.WritePropertyName(item0.Key);
-                writer.WriteObjectValue(item0.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
         internal static DocumentResult_internal DeserializeDocumentResult_internal(JsonElement element)
         {
             DocumentResult_internal result = new DocumentResult_internal();

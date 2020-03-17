@@ -27,23 +27,5 @@ namespace Azure.Search.Models
             }
             writer.WriteEndObject();
         }
-        internal static IndexAction DeserializeIndexAction(JsonElement element)
-        {
-            IndexAction result = new IndexAction();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@search.action"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ActionType = property.Value.GetString().ToIndexActionType();
-                    continue;
-                }
-                result.Add(property.Name, property.Value.GetObject());
-            }
-            return result;
-        }
     }
 }

@@ -10,25 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class AutocompleteResults : IUtf8JsonSerializable
+    public partial class AutocompleteResults
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Coverage != null)
-            {
-                writer.WritePropertyName("@search.coverage");
-                writer.WriteNumberValue(Coverage.Value);
-            }
-            writer.WritePropertyName("value");
-            writer.WriteStartArray();
-            foreach (var item in Results)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
         internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
         {
             AutocompleteResults result = new AutocompleteResults();

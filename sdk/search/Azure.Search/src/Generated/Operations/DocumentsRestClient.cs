@@ -24,6 +24,7 @@ namespace Azure.Search
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of DocumentsRestClient. </summary>
         public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string ApiVersion = "2019-05-06-Preview")
         {
@@ -46,6 +47,7 @@ namespace Azure.Search
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         internal HttpMessage CreateCountRequest(Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
@@ -65,11 +67,13 @@ namespace Azure.Search
             }
             return message;
         }
+
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<long>> CountAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
@@ -94,11 +98,13 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<long> Count(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
@@ -123,6 +129,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         internal HttpMessage CreateSearchPostRequest(Guid? xMsClientRequestId, SearchOptions searchRequest)
         {
             var message = pipeline.CreateMessage();
@@ -146,6 +153,7 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
@@ -181,6 +189,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
@@ -216,6 +225,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
@@ -241,6 +251,7 @@ namespace Azure.Search
             }
             return message;
         }
+
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
@@ -281,6 +292,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
@@ -321,6 +333,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         internal HttpMessage CreateSuggestPostRequest(Guid? xMsClientRequestId, SuggestOptions suggestRequest)
         {
             var message = pipeline.CreateMessage();
@@ -344,6 +357,7 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
@@ -379,6 +393,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
@@ -414,6 +429,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         internal HttpMessage CreateIndexRequest(Guid? xMsClientRequestId, IndexBatch batch)
         {
             var message = pipeline.CreateMessage();
@@ -437,6 +453,7 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
@@ -472,6 +489,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
@@ -507,6 +525,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         internal HttpMessage CreateAutocompletePostRequest(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest)
         {
             var message = pipeline.CreateMessage();
@@ -530,6 +549,7 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
@@ -565,6 +585,7 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>

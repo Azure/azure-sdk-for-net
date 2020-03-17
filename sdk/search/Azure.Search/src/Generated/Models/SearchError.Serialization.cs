@@ -11,30 +11,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    internal partial class SearchError : IUtf8JsonSerializable
+    internal partial class SearchError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Code != null)
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-            writer.WritePropertyName("message");
-            writer.WriteStringValue(Message);
-            if (Details != null)
-            {
-                writer.WritePropertyName("details");
-                writer.WriteStartArray();
-                foreach (var item in Details)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static SearchError DeserializeSearchError(JsonElement element)
         {
             SearchError result = new SearchError();

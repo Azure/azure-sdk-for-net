@@ -13,6 +13,20 @@ namespace Azure.Search.Models
     /// <summary> Contains a document found by a search query, plus associated metadata. </summary>
     internal partial class SearchResult : IDictionary<string, object>
     {
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        internal SearchResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <param name="score"> The relevance score of the document compared to other documents returned by the query. </param>
+        /// <param name="highlights"> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </param>
+        internal SearchResult(double score, IDictionary<string, IList<string>> highlights)
+        {
+            Score = score;
+            Highlights = highlights;
+        }
+
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>
         public double Score { get; internal set; }
         /// <summary> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </summary>

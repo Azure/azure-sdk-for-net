@@ -10,24 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DataTable_internal : IUtf8JsonSerializable
+    internal partial class DataTable_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("rows");
-            writer.WriteNumberValue(Rows);
-            writer.WritePropertyName("columns");
-            writer.WriteNumberValue(Columns);
-            writer.WritePropertyName("cells");
-            writer.WriteStartArray();
-            foreach (var item in Cells)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
         internal static DataTable_internal DeserializeDataTable_internal(JsonElement element)
         {
             DataTable_internal result = new DataTable_internal();

@@ -10,17 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class Autocompletion : IUtf8JsonSerializable
+    public partial class Autocompletion
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("queryPlusText");
-            writer.WriteStringValue(QueryPlusText);
-            writer.WriteEndObject();
-        }
         internal static Autocompletion DeserializeAutocompletion(JsonElement element)
         {
             Autocompletion result = new Autocompletion();

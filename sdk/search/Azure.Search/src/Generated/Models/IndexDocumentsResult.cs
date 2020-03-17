@@ -12,6 +12,18 @@ namespace Azure.Search.Models
     /// <summary> Response containing the status of operations for all documents in the indexing request. </summary>
     public partial class IndexDocumentsResult
     {
+        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
+        internal IndexDocumentsResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
+        /// <param name="results"> The list of status information for each document in the indexing request. </param>
+        internal IndexDocumentsResult(IList<IndexingResult> results)
+        {
+            Results = results;
+        }
+
         /// <summary> The list of status information for each document in the indexing request. </summary>
         public IList<IndexingResult> Results { get; internal set; } = new List<IndexingResult>();
     }

@@ -13,6 +13,18 @@ namespace Azure.Search.Models
     /// <summary> A result containing a document found by a suggestion query, plus associated metadata. </summary>
     internal partial class SuggestResult : IDictionary<string, object>
     {
+        /// <summary> Initializes a new instance of SuggestResult. </summary>
+        internal SuggestResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SuggestResult. </summary>
+        /// <param name="text"> The text of the suggestion result. </param>
+        internal SuggestResult(string text)
+        {
+            Text = text;
+        }
+
         /// <summary> The text of the suggestion result. </summary>
         public string Text { get; internal set; }
         private readonly IDictionary<string, object> _additionalProperties = new Dictionary<string, object>();

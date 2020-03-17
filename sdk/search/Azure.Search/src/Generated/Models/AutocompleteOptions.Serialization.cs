@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Models;
 
 namespace Azure.Search
 {
@@ -60,96 +61,6 @@ namespace Azure.Search
                 writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
-        }
-        internal static AutocompleteOptions DeserializeAutocompleteOptions(JsonElement element)
-        {
-            AutocompleteOptions result = new AutocompleteOptions();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("search"))
-                {
-                    result.SearchText = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autocompleteMode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Mode = property.Value.GetString().ToAutocompleteMode();
-                    continue;
-                }
-                if (property.NameEquals("filter"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Filter = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("fuzzy"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.UseFuzzyMatching = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("highlightPostTag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.HighlightPostTag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("highlightPreTag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.HighlightPreTag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("minimumCoverage"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.MinimumCoverage = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("searchFields"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.SearchFieldsRaw = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("suggesterName"))
-                {
-                    result.SuggesterName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("top"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Size = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return result;
         }
     }
 }
