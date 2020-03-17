@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
@@ -48,6 +49,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         internal string Identifier { get; }
+
+        /// <summary>
+        ///   The set of client options used for creation of client.
+        /// </summary>
+        ///
+        private ServiceBusClientOptions Options { get; set; }
+
+        internal bool isConnectionPropertiesValidationNeeded { get; set; }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -105,6 +114,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             Connection = new ServiceBusConnection(connectionString, options);
+            isConnectionPropertiesValidationNeeded = true;
+            Options = Connection.Options;
             Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
             SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
@@ -132,6 +143,8 @@ namespace Azure.Messaging.ServiceBus
                 fullyQualifiedNamespace,
                 credential,
                 options);
+            isConnectionPropertiesValidationNeeded = false;
+            Options = Connection.Options;
             SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
 
@@ -140,11 +153,21 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="entityName"></param>
         /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName) =>
-            new ServiceBusSender(
-                entityPath: entityName,
-                connection: Connection,
-                options: new ServiceBusSenderOptions());
+        public ServiceBusSender GetSender(string entityName)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                entityName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusSender(
+                 entityPath: entityName,
+                 connection: Connection,
+                 options: new ServiceBusSenderOptions());
+        }
 
         /// <summary>
         ///
@@ -152,23 +175,45 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName, ServiceBusSenderOptions options) =>
-            new ServiceBusSender(
+        public ServiceBusSender GetSender(
+            string entityName,
+            ServiceBusSenderOptions options)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                entityName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusSender(
                 entityPath: entityName,
                 connection: Connection,
                 options: options);
+        }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string queueName) =>
-            new ServiceBusReceiver(
+        public ServiceBusReceiver GetReceiver(string queueName)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                queueName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusReceiver(
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
                 options: new ServiceBusReceiverOptions());
+        }
 
         /// <summary>
         ///
@@ -176,12 +221,24 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string queueName, ServiceBusReceiverOptions options) =>
-            new ServiceBusReceiver(
+        public ServiceBusReceiver GetReceiver(
+            string queueName,
+            ServiceBusReceiverOptions options)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                queueName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusReceiver(
                 connection: Connection,
                 entityPath: queueName,
                 isSessionEntity: false,
                 options: options);
+        }
 
         /// <summary>
         ///
@@ -189,12 +246,24 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string topicName, string subscriptionName) =>
-            new ServiceBusReceiver(
+        public ServiceBusReceiver GetReceiver(
+            string topicName,
+            string subscriptionName)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                topicName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusReceiver(
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
                 options: new ServiceBusReceiverOptions());
+        }
 
         /// <summary>
         ///
@@ -206,12 +275,22 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiver GetReceiver(
             string topicName,
             string subscriptionName,
-            ServiceBusReceiverOptions options) =>
-            new ServiceBusReceiver(
+            ServiceBusReceiverOptions options)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                topicName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusReceiver(
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 isSessionEntity: false,
                 options: options);
+        }
 
         /// <summary>
         ///
@@ -221,13 +300,23 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             ServiceBusReceiverOptions options = default,
             string sessionId = default,
-            CancellationToken cancellationToken = default) =>
-            await ServiceBusReceiver.CreateSessionReceiverAsync(
+            CancellationToken cancellationToken = default)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                queueName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return await ServiceBusReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
                 sessionId: sessionId,
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///
@@ -238,25 +327,45 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusReceiverOptions options = default,
             string sessionId = default,
-            CancellationToken cancellationToken = default) =>
-            await ServiceBusReceiver.CreateSessionReceiverAsync(
+            CancellationToken cancellationToken = default)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                topicName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return await ServiceBusReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 sessionId: sessionId,
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName) =>
-            new ServiceBusProcessor(
+        public ServiceBusProcessor GetProcessor(string queueName)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                queueName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusProcessor(
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
                 options: new ServiceBusProcessorOptions());
+        }
 
         /// <summary>
         ///
@@ -264,12 +373,24 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName, ServiceBusProcessorOptions options) =>
-            new ServiceBusProcessor(
+        public ServiceBusProcessor GetProcessor(
+            string queueName,
+            ServiceBusProcessorOptions options)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                queueName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusProcessor(
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
                 options: options);
+        }
 
         /// <summary>
         ///
@@ -277,12 +398,24 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string topicName, string subscriptionName) =>
-            new ServiceBusProcessor(
+        public ServiceBusProcessor GetProcessor(
+            string topicName,
+            string subscriptionName)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                topicName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
                 options: new ServiceBusProcessorOptions());
+        }
 
         /// <summary>
         ///
@@ -294,12 +427,22 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusProcessor GetProcessor(
             string topicName,
             string subscriptionName,
-            ServiceBusProcessorOptions options) =>
-            new ServiceBusProcessor(
+            ServiceBusProcessorOptions options)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                topicName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: false,
                 options: options);
+        }
 
         /// <summary>
         ///
@@ -309,13 +452,23 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             ServiceBusProcessorOptions options = default,
             string sessionId = default,
-            CancellationToken cancellationToken = default) =>
-            new ServiceBusProcessor(
+            CancellationToken cancellationToken = default)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                queueName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusProcessor(
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: true,
                 sessionId: sessionId,
                 options: options ?? new ServiceBusProcessorOptions());
+        }
 
         /// <summary>
         ///
@@ -326,12 +479,63 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusProcessorOptions options = default,
             string sessionId = default,
-            CancellationToken cancellationToken = default) =>
-            new ServiceBusProcessor(
+            CancellationToken cancellationToken = default)
+        {
+            if (isConnectionPropertiesValidationNeeded)
+            {
+                ValidateConnectionProperties(
+                Connection.ConnectionStringProperties,
+                topicName,
+                Connection.ConnectionStringArgumentName);
+            }
+
+            return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 isSessionEntity: true,
                 sessionId: sessionId,
                 options: options ?? new ServiceBusProcessorOptions());
+        }
+
+        /// <summary>
+        ///   Performs the actions needed to validate the set of properties for connecting to the
+        ///   Service Bus service, as passed to this client during creation.
+        /// </summary>
+        ///
+        /// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
+        /// <param name="entityName">The name of the entity passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
+        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
+        ///
+        /// <remarks>
+        ///   In the case that the properties violate an invariant or otherwise represent a combination that
+        ///   is not permissible, an appropriate exception will be thrown.
+        /// </remarks>
+        ///
+        private static void ValidateConnectionProperties(
+            ConnectionStringProperties properties,
+            string entityName,
+            string connectionStringArgumentName)
+        {
+            // The entity name may only be specified in one of the possible forms, either as part of the
+            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
+            // value, then do not consider this a failure.
+
+            if ((!string.IsNullOrEmpty(entityName))
+                && (!string.IsNullOrEmpty(properties.EntityPath))
+                && (!string.Equals(entityName, properties.EntityPath, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified, connectionStringArgumentName);
+            }
+
+            // Ensure that each of the needed components are present for connecting.
+
+            if ((string.IsNullOrEmpty(entityName)) && (string.IsNullOrEmpty(properties.EntityPath))
+                || (string.IsNullOrEmpty(properties.Endpoint?.Host))
+                || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
+                || (string.IsNullOrEmpty(properties.SharedAccessKey)))
+            {
+                throw new ArgumentException(Resources1.MissingConnectionInformation, connectionStringArgumentName);
+            }
+        }
     }
 }

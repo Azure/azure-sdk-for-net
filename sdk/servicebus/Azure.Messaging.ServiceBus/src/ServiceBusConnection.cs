@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
@@ -11,8 +10,6 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -61,6 +58,19 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly TransportClient _innerClient;
 
+        internal ConnectionStringProperties ConnectionStringProperties { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        internal string ConnectionStringArgumentName { get; }
+
+        /// <summary>
+        ///   The set of client options used for creation of client.
+        /// </summary>
+        ///
+        internal ServiceBusClientOptions Options { get; set; }
+
         /// <summary>
         /// Parameterless constructor to allow mocking.
         /// </summary>
@@ -84,28 +94,37 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(options, nameof(options));
 
-            options = options.Clone();
+            options = options?.Clone() ?? new ServiceBusClientOptions();
 
             ValidateConnectionOptions(options);
-            var builder = new ServiceBusConnectionStringBuilder(connectionString);
+            ConnectionStringProperties = ConnectionStringParser.Parse(connectionString);
+            ConnectionStringArgumentName = nameof(connectionString);
 
-            FullyQualifiedNamespace = builder.FullyQualifiedNamespace;
+            if (string.IsNullOrEmpty(ConnectionStringProperties.Endpoint?.Host)
+                || string.IsNullOrEmpty(ConnectionStringProperties.SharedAccessKeyName)
+                || string.IsNullOrEmpty(ConnectionStringProperties.SharedAccessKey))
+            {
+                throw new ArgumentException(Resources1.MissingConnectionInformation, ConnectionStringArgumentName);
+            }
+
+            FullyQualifiedNamespace = ConnectionStringProperties.Endpoint.Host;
             TransportType = options.TransportType;
-            EntityPath = builder.EntityName;
+            EntityPath = ConnectionStringProperties.EntityPath;
+            Options = options;
+
             var sharedAccessSignature = new SharedAccessSignature
             (
                  BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath),
-                 builder.SasKeyName,
-                 builder.SasKey
+                 ConnectionStringProperties.SharedAccessKeyName,
+                 ConnectionStringProperties.SharedAccessKey
             );
 
-            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredentials = new ServiceBusTokenCredential(
-                sharedCredentials,
-                BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath));
-            _innerClient = CreateTransportClient(tokenCredentials, options);
+            var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);
+            var tokenCredential = new ServiceBusTokenCredential(
+                sharedCredential,
+                BuildAudienceResource(TransportType, FullyQualifiedNamespace, EntityPath));
+            _innerClient = CreateTransportClient(tokenCredential, options);
         }
 
 
@@ -122,11 +141,10 @@ namespace Azure.Messaging.ServiceBus
             TokenCredential credential,
             ServiceBusClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
 
-            options = options.Clone();
+            options = options?.Clone() ?? new ServiceBusClientOptions();
             ValidateConnectionOptions(options);
             switch (credential)
             {
@@ -142,6 +160,7 @@ namespace Azure.Messaging.ServiceBus
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             TransportType = options.TransportType;
+            Options = options;
 
             _innerClient = CreateTransportClient(tokenCredential, options);
         }
@@ -326,43 +345,6 @@ namespace Azure.Messaging.ServiceBus
 
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
-
-        ///// <summary>
-        /////   Performs the actions needed to validate the set of properties for connecting to the
-        /////   Service Bus service, as passed to this client during creation.
-        ///// </summary>
-        /////
-        ///// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        ///// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
-        /////
-        ///// <remarks>
-        /////   In the case that the properties violate an invariant or otherwise represent a combination that
-        /////   is not permissible, an appropriate exception will be thrown.
-        ///// </remarks>
-        /////
-        //private static void ValidateConnectionProperties(ConnectionStringProperties properties,
-        //                                                 string connectionStringArgumentName)
-        //{
-        //    // The Service Bus entity name may only be specified in one of the possible forms, either as part of the
-        //    // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
-        //    // value, then do not consider this a failure.
-
-        //    if ((!string.IsNullOrEmpty(properties.EntityName))
-        //        && (!string.Equals(properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
-        //    {
-        //        throw new ArgumentException(Resources1.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
-        //    }
-
-        //    // Ensure that each of the needed components are present for connecting.
-
-        //    if (
-        //          (string.IsNullOrEmpty(properties.Endpoint?.Host))
-        //        || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
-        //        || (string.IsNullOrEmpty(properties.SharedAccessKey)))
-        //    {
-        //        throw new ArgumentException(Resources1.MissingConnectionInformation, connectionStringArgumentName);
-        //    }
-        //}
 
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="ServiceBusClientOptions" /> associated
