@@ -32,7 +32,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 ### Changing log level
 
-The `CreateConsoleLogger` has an optional parameter that specifies a minimum log level to display messages for.
+The `CreateConsoleLogger` method has an optional parameter that specifies a minimum log level to display messages for.
 
 ```C# Snippet:ConsoleLoggingLevel
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
