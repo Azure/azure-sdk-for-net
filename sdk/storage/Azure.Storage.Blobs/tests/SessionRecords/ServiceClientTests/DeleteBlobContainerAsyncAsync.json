@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "722fd5cc-6d8c-e9ab-0654-b66e01edf428",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "722fd5cc-6d8c-e9ab-0654-b66e01edf428",
         "x-ms-request-id": "c0f38378-a01e-0020-0133-f3e99c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "82a72bc3-31ec-20fd-5028-a3ef2cd29566",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:17 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -58,7 +58,7 @@
         ],
         "x-ms-client-request-id": "82a72bc3-31ec-20fd-5028-a3ef2cd29566",
         "x-ms-request-id": "c0f3837b-a01e-0020-0233-f3e99c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -75,7 +75,7 @@
         "x-ms-client-request-id": "d6ab20c4-7245-343b-539b-1299145b9544",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -91,7 +91,7 @@
         "x-ms-client-request-id": "d6ab20c4-7245-343b-539b-1299145b9544",
         "x-ms-error-code": "ContainerNotFound",
         "x-ms-request-id": "c0f3837c-a01e-0020-0333-f3e99c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",

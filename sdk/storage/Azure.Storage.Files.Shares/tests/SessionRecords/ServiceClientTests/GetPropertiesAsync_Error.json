@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "1a3ce210-a630-d6fa-93c3-60dfe2e4ae17",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 400,
@@ -27,7 +27,7 @@
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
         "RequestId:b40fd70f-401a-00c6-1937-f3243f000000\n",
-        "Time:2020-03-05T21:48:18.9708936Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-10-10\u003C/HeaderValue\u003E\u003C/Error\u003E"
+        "Time:2020-03-05T21:48:18.9708936Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-12-12\u003C/HeaderValue\u003E\u003C/Error\u003E"
       ]
     }
   ],

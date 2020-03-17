@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "87c02aa7-2259-9968-f130-cd63e9d433c4",
         "x-ms-date": "Thu, 05 Mar 2020 21:13:48 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "87c02aa7-2259-9968-f130-cd63e9d433c4",
         "x-ms-request-id": "2d184511-901e-0004-3732-f31f3c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -51,7 +51,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -66,7 +66,7 @@
         "x-ms-client-request-id": "49c6dea2-563b-6cc7-d0cf-0ddd74bb2cf7",
         "x-ms-error-code": "ConditionNotMet",
         "x-ms-request-id": "2d184513-901e-0004-3832-f31f3c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EConditionNotMet\u003C/Code\u003E\u003CMessage\u003EThe condition specified using HTTP conditional header(s) is not met.\n",
@@ -87,7 +87,7 @@
         "x-ms-client-request-id": "0bc1ff59-ea0d-2388-8dca-b3a7475ce049",
         "x-ms-date": "Thu, 05 Mar 2020 21:13:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -100,7 +100,7 @@
         ],
         "x-ms-client-request-id": "0bc1ff59-ea0d-2388-8dca-b3a7475ce049",
         "x-ms-request-id": "2d184514-901e-0004-3932-f31f3c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -118,7 +118,7 @@
         "x-ms-client-request-id": "5b1a378b-52eb-1ad5-2b3d-669992b84fea",
         "x-ms-date": "Thu, 05 Mar 2020 21:13:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -133,7 +133,7 @@
         ],
         "x-ms-client-request-id": "5b1a378b-52eb-1ad5-2b3d-669992b84fea",
         "x-ms-request-id": "d521862e-301e-0022-3d32-f35724000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -155,7 +155,7 @@
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -170,7 +170,7 @@
         "x-ms-client-request-id": "9c45c368-cd88-e8c4-e069-49bdba509581",
         "x-ms-error-code": "LeaseNotPresentWithContainerOperation",
         "x-ms-request-id": "d5218631-301e-0022-3f32-f35724000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseNotPresentWithContainerOperation\u003C/Code\u003E\u003CMessage\u003EThere is currently no lease on the container.\n",
@@ -191,7 +191,7 @@
         "x-ms-client-request-id": "cf305424-b273-d362-3f84-b16e22912dad",
         "x-ms-date": "Thu, 05 Mar 2020 21:13:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -204,7 +204,7 @@
         ],
         "x-ms-client-request-id": "cf305424-b273-d362-3f84-b16e22912dad",
         "x-ms-request-id": "d5218633-301e-0022-4132-f35724000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

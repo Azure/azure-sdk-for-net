@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "bd78749b-b0de-03f6-4a46-71424a8756f6",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "bd78749b-b0de-03f6-4a46-71424a8756f6",
         "x-ms-request-id": "728ba28a-801e-0018-3733-f34d5c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "cc58cf88-c9bb-8084-a6e6-9b035bd8ef91",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -62,7 +62,7 @@
         ],
         "x-ms-client-request-id": "cc58cf88-c9bb-8084-a6e6-9b035bd8ef91",
         "x-ms-request-id": "728ba28d-801e-0018-3833-f34d5c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -78,7 +78,7 @@
         "x-ms-client-request-id": "4495b6cf-9b60-8f58-3aca-cd153076123f",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -93,7 +93,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "4495b6cf-9b60-8f58-3aca-cd153076123f",
         "x-ms-request-id": "728ba290-801e-0018-3a33-f34d5c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanstagetest.blob.core.windows.net/\u0022\u003E\u003CMaxResults\u003E1\u003C/MaxResults\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003E$root\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:06:36 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FC61F4D091\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker\u003E/seanstagetest/$web\u003C/NextMarker\u003E\u003C/EnumerationResults\u003E"
     },
@@ -110,7 +110,7 @@
         "x-ms-client-request-id": "a4344aab-ab42-4431-055a-507215e5bcdb",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -123,7 +123,7 @@
         ],
         "x-ms-client-request-id": "a4344aab-ab42-4431-055a-507215e5bcdb",
         "x-ms-request-id": "728ba291-801e-0018-3b33-f34d5c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -140,7 +140,7 @@
         "x-ms-client-request-id": "e66a4f46-6e42-76fc-5b81-f58d2fef91ef",
         "x-ms-date": "Thu, 05 Mar 2020 21:17:40 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -153,7 +153,7 @@
         ],
         "x-ms-client-request-id": "e66a4f46-6e42-76fc-5b81-f58d2fef91ef",
         "x-ms-request-id": "728ba293-801e-0018-3d33-f34d5c000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

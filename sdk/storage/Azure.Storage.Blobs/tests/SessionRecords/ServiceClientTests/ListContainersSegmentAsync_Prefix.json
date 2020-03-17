@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "eba45aab-4061-53d7-bc22-1e30658b6efd",
         "x-ms-date": "Thu, 05 Mar 2020 21:16:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "eba45aab-4061-53d7-bc22-1e30658b6efd",
         "x-ms-request-id": "b9ea2fb0-001e-0016-2233-f364ec000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "c0b1ac7d-6539-f68e-68e8-4af6c92bee8f",
         "x-ms-date": "Thu, 05 Mar 2020 21:16:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -60,7 +60,7 @@
         "Vary": "Origin",
         "x-ms-client-request-id": "c0b1ac7d-6539-f68e-68e8-4af6c92bee8f",
         "x-ms-request-id": "b9ea2fb4-001e-0016-2533-f364ec000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanstagetest.blob.core.windows.net/\u0022\u003E\u003CPrefix\u003Eaaa\u003C/Prefix\u003E\u003CContainers\u003E\u003CContainer\u003E\u003CName\u003Eaaatest-container-4b31ac55-fb97-71e1-3d75-7f5c1bde51ef\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Mar 2020 21:16:58 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7C14A8A2E60D9\u0022\u003C/Etag\u003E\u003CLeaseStatus\u003Eunlocked\u003C/LeaseStatus\u003E\u003CLeaseState\u003Eavailable\u003C/LeaseState\u003E\u003CPublicAccess\u003Econtainer\u003C/PublicAccess\u003E\u003CDefaultEncryptionScope\u003E$account-encryption-key\u003C/DefaultEncryptionScope\u003E\u003CDenyEncryptionScopeOverride\u003Efalse\u003C/DenyEncryptionScopeOverride\u003E\u003CHasImmutabilityPolicy\u003Efalse\u003C/HasImmutabilityPolicy\u003E\u003CHasLegalHold\u003Efalse\u003C/HasLegalHold\u003E\u003C/Properties\u003E\u003C/Container\u003E\u003C/Containers\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -77,7 +77,7 @@
         "x-ms-client-request-id": "b8b3f865-adda-51c4-73fe-01b5d924a324",
         "x-ms-date": "Thu, 05 Mar 2020 21:16:58 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -90,7 +90,7 @@
         ],
         "x-ms-client-request-id": "b8b3f865-adda-51c4-73fe-01b5d924a324",
         "x-ms-request-id": "b9ea2fba-001e-0016-2933-f364ec000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "590a1325-285b-e29a-16ec-a4488596979f",
         "x-ms-date": "Thu, 05 Mar 2020 21:16:34 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -30,7 +30,7 @@
         "x-ms-is-hns-enabled": "false",
         "x-ms-request-id": "c0f38128-a01e-0020-4033-f3e99c000000",
         "x-ms-sku-name": "Standard_LRS",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

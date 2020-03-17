@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "76eaf63b-1dfd-79cb-a1bb-8140c0e0e84b",
         "x-ms-date": "Thu, 05 Mar 2020 21:10:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "76eaf63b-1dfd-79cb-a1bb-8140c0e0e84b",
         "x-ms-request-id": "417edf40-601e-002f-3f32-f39ff0000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -48,7 +48,7 @@
         "x-ms-client-request-id": "30ab3e85-1bbf-cb01-e17e-c3cbc19e4592",
         "x-ms-date": "Thu, 05 Mar 2020 21:10:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": "\u003CBlockList\u003E\u003CUncommitted\u003EdGVzdC1ibG9jay02Y2NkNzVlYy1jNzI4LTUxOGMtOWRlZS1mNDlkOWU1Y2IxNzA=\u003C/Uncommitted\u003E\u003C/BlockList\u003E",
       "StatusCode": 400,
@@ -63,7 +63,7 @@
         "x-ms-client-request-id": "30ab3e85-1bbf-cb01-e17e-c3cbc19e4592",
         "x-ms-error-code": "InvalidBlockList",
         "x-ms-request-id": "417edf44-601e-002f-4232-f39ff0000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidBlockList\u003C/Code\u003E\u003CMessage\u003EThe specified block list is invalid.\n",
@@ -84,7 +84,7 @@
         "x-ms-client-request-id": "5f172495-80b0-5bb1-bf03-05cabeb2bdd4",
         "x-ms-date": "Thu, 05 Mar 2020 21:10:45 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -97,7 +97,7 @@
         ],
         "x-ms-client-request-id": "5f172495-80b0-5bb1-bf03-05cabeb2bdd4",
         "x-ms-request-id": "417edf47-601e-002f-4532-f39ff0000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

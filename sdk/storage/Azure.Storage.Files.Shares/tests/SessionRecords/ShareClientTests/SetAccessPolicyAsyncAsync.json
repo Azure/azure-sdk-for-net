@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "19146f05-ef99-0e85-90ac-25a651b45b57",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:51 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "19146f05-ef99-0e85-90ac-25a651b45b57",
         "x-ms-request-id": "c9ef6e89-f01a-0012-3137-f3e9eb000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-client-request-id": "bae3c6f9-88e2-b011-153d-759b74388d01",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:51 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": "\u003CSignedIdentifiers\u003E\u003CSignedIdentifier\u003E\u003CId\u003Eddiitbwvrcqhnghuacdu\u003C/Id\u003E\u003CAccessPolicy\u003E\u003CStart\u003E2020-03-05T20:48:51.1577033Z\u003C/Start\u003E\u003CExpiry\u003E2020-03-05T22:48:51.1577033Z\u003C/Expiry\u003E\u003CPermission\u003Erw\u003C/Permission\u003E\u003C/AccessPolicy\u003E\u003C/SignedIdentifier\u003E\u003C/SignedIdentifiers\u003E",
       "StatusCode": 200,
@@ -62,7 +62,7 @@
         ],
         "x-ms-client-request-id": "bae3c6f9-88e2-b011-153d-759b74388d01",
         "x-ms-request-id": "c9ef6e8e-f01a-0012-3337-f3e9eb000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -80,7 +80,7 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:51 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -93,7 +93,7 @@
         ],
         "x-ms-client-request-id": "52f295d5-3a6c-c3ec-9eed-0c46ef35e9ad",
         "x-ms-request-id": "c9ef6e8f-f01a-0012-3437-f3e9eb000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }

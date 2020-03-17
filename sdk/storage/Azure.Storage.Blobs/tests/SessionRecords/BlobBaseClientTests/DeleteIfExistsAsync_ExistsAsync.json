@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "ed112f26-6102-a7ff-3e88-524c9cf996ac",
         "x-ms-date": "Thu, 05 Mar 2020 21:04:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "ed112f26-6102-a7ff-3e88-524c9cf996ac",
         "x-ms-request-id": "fcb20c43-001e-0039-2031-f36927000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -46,7 +46,7 @@
         "x-ms-client-request-id": "1dd6f16f-c66d-997f-e31c-f0bf78b8c7e3",
         "x-ms-date": "Thu, 05 Mar 2020 21:04:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -61,7 +61,7 @@
         "x-ms-client-request-id": "1dd6f16f-c66d-997f-e31c-f0bf78b8c7e3",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "fcb20c46-001e-0039-2131-f36927000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -82,7 +82,7 @@
         "x-ms-client-request-id": "eed7705e-5084-a244-88ae-154b48e974b4",
         "x-ms-date": "Thu, 05 Mar 2020 21:04:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -97,7 +97,7 @@
         "x-ms-client-request-id": "eed7705e-5084-a244-88ae-154b48e974b4",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "fcb20c4d-001e-0039-2831-f36927000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -114,7 +114,7 @@
         "x-ms-client-request-id": "0860734b-d8e1-c95e-5c3f-0c0387f917bd",
         "x-ms-date": "Thu, 05 Mar 2020 21:04:39 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -127,7 +127,7 @@
         ],
         "x-ms-client-request-id": "0860734b-d8e1-c95e-5c3f-0c0387f917bd",
         "x-ms-request-id": "fcb20c50-001e-0039-2b31-f36927000000",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     }
