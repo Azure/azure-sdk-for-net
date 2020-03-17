@@ -30,6 +30,7 @@ namespace Azure.Search
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -37,6 +38,7 @@ namespace Azure.Search
         {
             return await RestClient.GetServiceStatisticsAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

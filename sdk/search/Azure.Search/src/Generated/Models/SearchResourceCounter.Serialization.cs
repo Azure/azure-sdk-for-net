@@ -10,20 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class SearchResourceCounter : IUtf8JsonSerializable
+    public partial class SearchResourceCounter
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("usage");
-            writer.WriteNumberValue(Usage);
-            if (Quota != null)
-            {
-                writer.WritePropertyName("quota");
-                writer.WriteNumberValue(Quota.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static SearchResourceCounter DeserializeSearchResourceCounter(JsonElement element)
         {
             SearchResourceCounter result = new SearchResourceCounter();

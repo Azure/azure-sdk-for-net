@@ -29,12 +29,14 @@ namespace Azure.Template
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
         {
             return await RestClient.OperationAsync(body, cancellationToken).ConfigureAwait(false);
         }
+
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<Model> Operation(Model body, CancellationToken cancellationToken = default)

@@ -10,24 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class IndexingResult : IUtf8JsonSerializable
+    public partial class IndexingResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("key");
-            writer.WriteStringValue(Key);
-            if (ErrorMessage != null)
-            {
-                writer.WritePropertyName("errorMessage");
-                writer.WriteStringValue(ErrorMessage);
-            }
-            writer.WritePropertyName("status");
-            writer.WriteBooleanValue(Succeeded);
-            writer.WritePropertyName("statusCode");
-            writer.WriteNumberValue(Status);
-            writer.WriteEndObject();
-        }
         internal static IndexingResult DeserializeIndexingResult(JsonElement element)
         {
             IndexingResult result = new IndexingResult();

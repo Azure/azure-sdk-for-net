@@ -31,6 +31,7 @@ namespace Azure.Search
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -38,6 +39,7 @@ namespace Azure.Search
         {
             return await RestClient.CountAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -45,6 +47,7 @@ namespace Azure.Search
         {
             return RestClient.Count(xMsClientRequestId, cancellationToken);
         }
+
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
@@ -53,6 +56,7 @@ namespace Azure.Search
         {
             return await RestClient.SearchPostAsync(xMsClientRequestId, searchRequest, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Searches for documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
@@ -61,6 +65,7 @@ namespace Azure.Search
         {
             return RestClient.SearchPost(xMsClientRequestId, searchRequest, cancellationToken);
         }
+
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
@@ -70,6 +75,7 @@ namespace Azure.Search
         {
             return await RestClient.GetAsync(key, selectedFields, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
@@ -79,6 +85,7 @@ namespace Azure.Search
         {
             return RestClient.Get(key, selectedFields, xMsClientRequestId, cancellationToken);
         }
+
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
@@ -87,6 +94,7 @@ namespace Azure.Search
         {
             return await RestClient.SuggestPostAsync(xMsClientRequestId, suggestRequest, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
@@ -95,6 +103,7 @@ namespace Azure.Search
         {
             return RestClient.SuggestPost(xMsClientRequestId, suggestRequest, cancellationToken);
         }
+
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
@@ -103,6 +112,7 @@ namespace Azure.Search
         {
             return await RestClient.IndexAsync(xMsClientRequestId, batch, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Sends a batch of document write actions to the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
@@ -111,6 +121,7 @@ namespace Azure.Search
         {
             return RestClient.Index(xMsClientRequestId, batch, cancellationToken);
         }
+
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
@@ -119,6 +130,7 @@ namespace Azure.Search
         {
             return await RestClient.AutocompletePostAsync(xMsClientRequestId, autocompleteRequest, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>

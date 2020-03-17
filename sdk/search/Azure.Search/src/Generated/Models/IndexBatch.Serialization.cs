@@ -24,21 +24,5 @@ namespace Azure.Search.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
-        internal static IndexBatch DeserializeIndexBatch(JsonElement element)
-        {
-            IndexBatch result = new IndexBatch();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("value"))
-                {
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        result.Actions.Add(IndexAction.DeserializeIndexAction(item));
-                    }
-                    continue;
-                }
-            }
-            return result;
-        }
     }
 }

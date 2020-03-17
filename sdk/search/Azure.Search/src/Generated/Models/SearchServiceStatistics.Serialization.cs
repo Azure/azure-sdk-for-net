@@ -10,17 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class SearchServiceStatistics : IUtf8JsonSerializable
+    public partial class SearchServiceStatistics
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("counters");
-            writer.WriteObjectValue(Counters);
-            writer.WritePropertyName("limits");
-            writer.WriteObjectValue(Limits);
-            writer.WriteEndObject();
-        }
         internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
         {
             SearchServiceStatistics result = new SearchServiceStatistics();

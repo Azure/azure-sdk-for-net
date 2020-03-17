@@ -10,6 +10,20 @@ namespace Azure.Search.Models
     /// <summary> The result of Autocomplete requests. </summary>
     public partial class Autocompletion
     {
+        /// <summary> Initializes a new instance of Autocompletion. </summary>
+        internal Autocompletion()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Autocompletion. </summary>
+        /// <param name="text"> The completed term. </param>
+        /// <param name="queryPlusText"> The query along with the completed term. </param>
+        internal Autocompletion(string text, string queryPlusText)
+        {
+            Text = text;
+            QueryPlusText = queryPlusText;
+        }
+
         /// <summary> The completed term. </summary>
         public string Text { get; internal set; }
         /// <summary> The query along with the completed term. </summary>

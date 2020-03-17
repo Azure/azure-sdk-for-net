@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Models;
 
 namespace Azure.Search
 {
@@ -113,6 +114,7 @@ namespace Azure.Search
             }
             writer.WriteEndObject();
         }
+
         internal static SearchOptions DeserializeSearchOptions(JsonElement element)
         {
             SearchOptions result = new SearchOptions();

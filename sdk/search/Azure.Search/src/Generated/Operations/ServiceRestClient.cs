@@ -22,6 +22,7 @@ namespace Azure.Search
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
         {
@@ -39,6 +40,7 @@ namespace Azure.Search
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         internal HttpMessage CreateGetServiceStatisticsRequest(Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
@@ -55,11 +57,13 @@ namespace Azure.Search
             }
             return message;
         }
+
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
@@ -84,11 +88,13 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try

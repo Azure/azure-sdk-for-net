@@ -12,56 +12,8 @@ using Azure.Search;
 
 namespace Azure.Search.Models
 {
-    internal partial class SearchDocumentsResult : IUtf8JsonSerializable
+    internal partial class SearchDocumentsResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Count != null)
-            {
-                writer.WritePropertyName("@odata.count");
-                writer.WriteNumberValue(Count.Value);
-            }
-            if (Coverage != null)
-            {
-                writer.WritePropertyName("@search.coverage");
-                writer.WriteNumberValue(Coverage.Value);
-            }
-            if (Facets != null)
-            {
-                writer.WritePropertyName("@search.facets");
-                writer.WriteStartObject();
-                foreach (var item in Facets)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WriteObjectValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndObject();
-            }
-            if (NextPageParameters != null)
-            {
-                writer.WritePropertyName("@search.nextPageParameters");
-                writer.WriteObjectValue(NextPageParameters);
-            }
-            writer.WritePropertyName("value");
-            writer.WriteStartArray();
-            foreach (var item in Results)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (NextLink != null)
-            {
-                writer.WritePropertyName("@odata.nextLink");
-                writer.WriteStringValue(NextLink);
-            }
-            writer.WriteEndObject();
-        }
         internal static SearchDocumentsResult DeserializeSearchDocumentsResult(JsonElement element)
         {
             SearchDocumentsResult result = new SearchDocumentsResult();

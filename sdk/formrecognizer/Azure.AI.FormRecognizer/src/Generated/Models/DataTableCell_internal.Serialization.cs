@@ -11,58 +11,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DataTableCell_internal : IUtf8JsonSerializable
+    internal partial class DataTableCell_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("rowIndex");
-            writer.WriteNumberValue(RowIndex);
-            writer.WritePropertyName("columnIndex");
-            writer.WriteNumberValue(ColumnIndex);
-            if (RowSpan != null)
-            {
-                writer.WritePropertyName("rowSpan");
-                writer.WriteNumberValue(RowSpan.Value);
-            }
-            if (ColumnSpan != null)
-            {
-                writer.WritePropertyName("columnSpan");
-                writer.WriteNumberValue(ColumnSpan.Value);
-            }
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("boundingBox");
-            writer.WriteStartArray();
-            foreach (var item in BoundingBox)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("confidence");
-            writer.WriteNumberValue(Confidence);
-            if (Elements != null)
-            {
-                writer.WritePropertyName("elements");
-                writer.WriteStartArray();
-                foreach (var item0 in Elements)
-                {
-                    writer.WriteStringValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            if (IsHeader != null)
-            {
-                writer.WritePropertyName("isHeader");
-                writer.WriteBooleanValue(IsHeader.Value);
-            }
-            if (IsFooter != null)
-            {
-                writer.WritePropertyName("isFooter");
-                writer.WriteBooleanValue(IsFooter.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static DataTableCell_internal DeserializeDataTableCell_internal(JsonElement element)
         {
             DataTableCell_internal result = new DataTableCell_internal();

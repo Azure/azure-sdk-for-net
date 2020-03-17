@@ -26,6 +26,7 @@ namespace Azure.Template.Models
             writer.WriteStringValue(DaysOfWeek.ToString());
             writer.WriteEndObject();
         }
+
         internal static Model DeserializeModel(JsonElement element)
         {
             Model result = new Model();

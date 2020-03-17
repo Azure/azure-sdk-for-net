@@ -12,6 +12,18 @@ namespace Azure.Search.Models
     /// <summary> Contains a batch of document write actions to send to the index. </summary>
     internal partial class IndexBatch
     {
+        /// <summary> Initializes a new instance of IndexBatch. </summary>
+        public IndexBatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of IndexBatch. </summary>
+        /// <param name="actions"> The actions in the batch. </param>
+        internal IndexBatch(IList<IndexAction> actions)
+        {
+            Actions = actions;
+        }
+
         /// <summary> The actions in the batch. </summary>
         public IList<IndexAction> Actions { get; set; } = new List<IndexAction>();
     }

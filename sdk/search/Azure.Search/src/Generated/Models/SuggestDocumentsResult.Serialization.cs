@@ -10,25 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    internal partial class SuggestDocumentsResult : IUtf8JsonSerializable
+    internal partial class SuggestDocumentsResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("value");
-            writer.WriteStartArray();
-            foreach (var item in Results)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Coverage != null)
-            {
-                writer.WritePropertyName("@search.coverage");
-                writer.WriteNumberValue(Coverage.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
         {
             SuggestDocumentsResult result = new SuggestDocumentsResult();
