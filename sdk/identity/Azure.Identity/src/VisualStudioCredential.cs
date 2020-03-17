@@ -89,16 +89,12 @@ namespace Azure.Identity
             }
         }
 
-        private static string GetTokenProviderPath()
-        {
-            switch (Environment.OSVersion.Platform)
+        private static string GetTokenProviderPath() =>
+            Environment.OSVersion.Platform switch
             {
-                case PlatformID.Win32NT:
-                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
-                default:
-                    throw new CredentialUnavailableException($"Operating system {Environment.OSVersion.Platform} isn't supported.");
-            }
-        }
+                PlatformID.Win32NT => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath),
+                _ => throw new CredentialUnavailableException($"Operating system {Environment.OSVersion.Platform} isn't supported.")
+            };
 
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
         {
