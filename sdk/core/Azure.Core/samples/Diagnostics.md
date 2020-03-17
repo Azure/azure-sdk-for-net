@@ -30,6 +30,14 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
+### Changing log level
+
+The `CreateConsoleLogger` has an optional parameter that specifies a minimum log level to display messages for.
+
+```C# Snippet:ConsoleLoggingLevel
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
+```
+
 ### Logging redacted headers and query parameters
 
 Some sensitive headers and query parameters are not logged by default and are displayed as "REDACTED", to include them in logs use the `Diagnostics.LoggedHeaderNames` and `Diagnostics.LoggedQueryParameters` client options.
