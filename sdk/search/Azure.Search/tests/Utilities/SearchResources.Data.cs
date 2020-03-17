@@ -8,6 +8,13 @@ using Azure.Search.Models;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Spatial;
+using AnalyzerName = Microsoft.Azure.Search.Models.AnalyzerName;
+using DataType = Microsoft.Azure.Search.Models.DataType;
+using DistanceScoringFunction = Microsoft.Azure.Search.Models.DistanceScoringFunction;
+using DistanceScoringParameters = Microsoft.Azure.Search.Models.DistanceScoringParameters;
+using ScoringFunctionAggregation = Microsoft.Azure.Search.Models.ScoringFunctionAggregation;
+using ScoringProfile = Microsoft.Azure.Search.Models.ScoringProfile;
+using Suggester = Microsoft.Azure.Search.Models.Suggester;
 
 #pragma warning disable SA1402 // File may only contain a single type
 

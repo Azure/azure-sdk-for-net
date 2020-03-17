@@ -15,6 +15,7 @@ namespace Azure.Search.Models
         {
             SearchMode.Any => "any",
             SearchMode.All => "all",
+            SearchMode.AnalyzingInfixMatching => "analyzingInfixMatching",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.Search.Models
         {
             if (string.Equals(value, "any", StringComparison.InvariantCultureIgnoreCase)) return SearchMode.Any;
             if (string.Equals(value, "all", StringComparison.InvariantCultureIgnoreCase)) return SearchMode.All;
+            if (string.Equals(value, "analyzingInfixMatching", StringComparison.InvariantCultureIgnoreCase)) return SearchMode.AnalyzingInfixMatching;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.");
         }
     }
