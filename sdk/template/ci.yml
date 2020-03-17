@@ -7,11 +7,9 @@ resources:
       type: github
       name: Azure/azure-sdk-tools
       endpoint: azure
-      ref: refs/heads/MakingToolsOpenSource
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/heads/MakeEngSysToolsPublic
 
 trigger:
   branches:
