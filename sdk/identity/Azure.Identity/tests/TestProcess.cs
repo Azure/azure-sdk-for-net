@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
                     return _hasExited;
                 }
 
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("No process is associated with this object");
             }
         }
 
@@ -86,15 +86,7 @@ namespace Azure.Identity.Tests
 
         private void FinishProcessRun(Task delayTask)
         {
-            if (delayTask.IsCanceled)
-            {
-                _hasExited = true;
-                if (ExceptionOnProcessKill != default)
-                {
-                    throw ExceptionOnProcessKill;
-                }
-            }
-            else
+            if (!delayTask.IsCanceled)
             {
                 FinishProcessRun();
             }
@@ -132,6 +124,12 @@ namespace Azure.Identity.Tests
         public void Kill()
         {
             _cts?.Cancel();
+
+            if (ExceptionOnProcessKill != default)
+            {
+                _hasExited = true;
+                throw ExceptionOnProcessKill;
+            }
         }
     }
 }

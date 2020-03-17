@@ -60,7 +60,7 @@ namespace Azure.Identity
 
             try
             {
-                var tokenProviderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
+                var tokenProviderPath = GetTokenProviderPath();
                 var tokenProviders = GetTokenProviders(tokenProviderPath);
 
                 var resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
@@ -89,6 +89,17 @@ namespace Azure.Identity
             }
         }
 
+        private static string GetTokenProviderPath()
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Win32NT:
+                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
+                default:
+                    throw new CredentialUnavailableException($"Operating system {Environment.OSVersion.Platform} isn't supported.");
+            }
+        }
+
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
         {
             var exceptions = new List<Exception>();
@@ -105,6 +116,10 @@ namespace Azure.Identity
                     string accessToken = root.GetProperty("access_token").GetString();
                     DateTimeOffset expiresOn = root.GetProperty("expires_on").GetDateTimeOffset();
                     return new AccessToken(accessToken, expiresOn);
+                }
+                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+                {
+                    exceptions.Add(new CredentialUnavailableException($"Process \"{processStartInfo.FileName}\" has failed to get access token in 30 seconds."));
                 }
                 catch (Exception exception)
                 {
