@@ -1182,7 +1182,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Intermittent CI failure; investigating")]
         public async Task CreatePartitionProcessorCanReadLastEventProperties()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1197,23 +1196,28 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer.Object.SetLastEvent(lastEvent);
 
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Callback(() => completionSource.TrySetResult(true))
+                .ReturnsAsync(EmptyBatch);
+
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(mockConnection);
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
-                .Returns(mockConsumer.Object)
-                .Callback(() => completionSource.TrySetResult(true));
+                .Returns(mockConsumer.Object);
 
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            cancellationSource.Cancel();
 
             var lastEventProperties = partitionProcessor.ReadLastEnqueuedEventProperties();
             Assert.That(lastEventProperties, Is.EqualTo(new LastEnqueuedEventProperties(lastEvent)));
+
+            cancellationSource.Cancel();
         }
 
         /// <summary>
@@ -1222,7 +1226,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Intermittent CI failure; investigating")]
         public async Task CreatePartitionProcessorCanReadLastEventPropertiesWhenTheConsumerIsReplaced()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1241,6 +1244,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Callback(() => completionSource.TrySetResult(true))
                 .ReturnsAsync(EmptyBatch);
 
             badMockConsumer
@@ -1254,20 +1258,17 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(badMockConsumer.Object)
-                .Returns(() =>
-                {
-                    completionSource.TrySetResult(true);
-                    return mockConsumer.Object;
-                });
+                .Returns(mockConsumer.Object);
 
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            cancellationSource.Cancel();
 
             var lastEventProperties = partitionProcessor.ReadLastEnqueuedEventProperties();
             Assert.That(lastEventProperties, Is.EqualTo(new LastEnqueuedEventProperties(lastEvent)));
+
+            cancellationSource.Cancel();
 
             mockProcessor
                 .Verify(processor => processor.CreateConsumer(
