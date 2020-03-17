@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -89,12 +90,15 @@ namespace Azure.Identity
             }
         }
 
-        private static string GetTokenProviderPath() =>
-            Environment.OSVersion.Platform switch
+        private static string GetTokenProviderPath()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                PlatformID.Win32NT => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath),
-                _ => throw new CredentialUnavailableException($"Operating system {Environment.OSVersion.Platform} isn't supported.")
-            };
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
+            }
+
+            throw new CredentialUnavailableException($"Operating system {RuntimeInformation.OSDescription} isn't supported.");
+        }
 
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
         {

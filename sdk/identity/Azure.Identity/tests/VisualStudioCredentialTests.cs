@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    [RunOnlyOnPlatforms(Windows = true)]
     public class VisualStudioCredentialTests : ClientTestBase
     {
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
