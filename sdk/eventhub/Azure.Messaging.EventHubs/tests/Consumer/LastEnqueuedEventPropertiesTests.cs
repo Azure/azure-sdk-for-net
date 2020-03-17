@@ -119,5 +119,26 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="LastEnqueuedEventProperties.ToString "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringReflectsTheState()
+        {
+            var offset = 123;
+            var sequence = 778;
+            var enqueued = DateTimeOffset.Now.AddHours(1);
+            var received = DateTimeOffset.Now.AddHours(7);
+            var properties = new LastEnqueuedEventProperties(sequence, offset, enqueued, received);
+            var toStringValue = properties.ToString();
+
+            Assert.That(toStringValue, Contains.Substring($"[{ offset }]"), "The offset should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{ sequence }]"), "The sequence number should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{ received }]"), "The received time should be represented.");
+        }
     }
 }

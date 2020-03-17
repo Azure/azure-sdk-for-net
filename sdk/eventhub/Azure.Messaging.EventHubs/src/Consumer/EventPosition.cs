@@ -180,7 +180,16 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString() =>
+            this switch
+            {
+                EventPosition _ when (Offset == StartOfStreamOffset) => nameof(Earliest),
+                EventPosition _ when (Offset == EndOfStreamOffset) => nameof(Latest),
+                EventPosition _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
+                EventPosition _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
+                EventPosition _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
+                _ => base.ToString()
+            };
 
         /// <summary>
         ///   Corresponds to the event in the partition at the provided offset.

@@ -200,5 +200,27 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventPosition.ToString "/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToStringReflectsTheState()
+        {
+            var inclusive = true;
+            var offset = 123;
+            var sequence = 778;
+            var enqueued = DateTimeOffset.Now.AddHours(1);
+
+            Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
+            Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
+            Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{ offset }]"), "The offset should be represented.");
+            Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{ sequence }]"), "The sequence should be represented.");
+            Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
+            Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the offset.");
+            Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the sequence number.");
+        }
     }
 }
