@@ -16,8 +16,8 @@ Deploys live test resources defined for a service directory to Azure.
 ```
 New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
  [-TestApplicationSecret <String>] [-TestApplicationOid <String>] [-DeleteAfterHours <Int32>]
- [-Location <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
@@ -25,8 +25,8 @@ New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestAppli
 New-TestResources.ps1 [-BaseName] <String> -ServiceDirectory <String> -TestApplicationId <String>
  [-TestApplicationSecret <String>] [-TestApplicationOid <String>] -TenantId <String>
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>]
- [-Location <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-Location <String>] [-Environment <String>] [-AdditionalParameters <Hashtable>] [-CI] [-Force] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -294,6 +294,23 @@ Aliases:
 Required: False
 Position: Named
 Default value: Westus2
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Environment
+Name of the cloud environment.
+The default is the Azure Public Cloud
+('PublicCloud')
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: AzureCloud
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
