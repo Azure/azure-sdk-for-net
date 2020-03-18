@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The exception that most accurately represents the error that was encountered.</returns>
         ///
-        public static Exception CreateExceptionForError(
+        private static Exception CreateExceptionForError(
             Error error,
             string serviceBusResource)
         {

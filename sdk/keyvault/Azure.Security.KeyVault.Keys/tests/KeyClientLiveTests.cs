@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         private const int PagedKeyCount = 2;
 
-        public KeyClientLiveTests(bool isAsync) : base(isAsync)
+        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
         }
 

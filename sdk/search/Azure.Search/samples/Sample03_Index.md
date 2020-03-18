@@ -11,6 +11,6 @@ string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 SearchIndexClient index = new SearchIndexClient(endpoint, indexName, credential);
 
 // Get and report the number of documents in the index
-Response<long> count = await index.GetCountAsync();
+Response<long> count = await index.GetDocumentCountAsync();
 Console.WriteLine($"Search index {indexName} has {count.Value} documents.");
 ```

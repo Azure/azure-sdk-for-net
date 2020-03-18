@@ -11,39 +11,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class SearchResult : IUtf8JsonSerializable
+    internal partial class SearchResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Score != null)
-            {
-                writer.WritePropertyName("@search.score");
-                writer.WriteNumberValue(Score.Value);
-            }
-            if (Highlights != null)
-            {
-                writer.WritePropertyName("@search.highlights");
-                writer.WriteStartObject();
-                foreach (var item in Highlights)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndObject();
-            }
-            foreach (var item in this)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static SearchResult DeserializeSearchResult(JsonElement element)
         {
             SearchResult result = new SearchResult();
@@ -51,10 +20,6 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("@search.score"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Score = property.Value.GetDouble();
                     continue;
                 }
@@ -64,10 +29,10 @@ namespace Azure.Search.Models
                     {
                         continue;
                     }
-                    result.Highlights = new Dictionary<string, ICollection<string>>();
+                    result.Highlights = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        ICollection<string> value = new List<string>();
+                        IList<string> value = new List<string>();
                         foreach (var item in property0.Value.EnumerateArray())
                         {
                             value.Add(item.GetString());

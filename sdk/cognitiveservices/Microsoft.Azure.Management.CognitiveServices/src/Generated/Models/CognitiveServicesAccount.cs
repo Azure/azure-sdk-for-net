@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
         /// <param name="type">Resource type</param>
-        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), CognitiveServicesAccountProperties properties = default(CognitiveServicesAccountProperties), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
+        /// <param name="identity">The identity of Cognitive Services
+        /// account.</param>
+        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), CognitiveServicesAccountProperties properties = default(CognitiveServicesAccountProperties), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), Identity identity = default(Identity))
         {
             Etag = etag;
             Id = id;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
             Sku = sku;
             Tags = tags;
             Type = type;
+            Identity = identity;
             CustomInit();
         }
 
@@ -127,6 +130,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets or sets the identity of Cognitive Services account.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -134,10 +143,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Properties != null)
-            {
-                Properties.Validate();
-            }
             if (Sku != null)
             {
                 Sku.Validate();

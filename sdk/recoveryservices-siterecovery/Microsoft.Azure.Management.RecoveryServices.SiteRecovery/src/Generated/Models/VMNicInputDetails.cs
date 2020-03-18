@@ -52,7 +52,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// has accelerated networking enabled.</param>
         /// <param name="tfoIPConfigs">The IP configurations to be used by NIC
         /// during test failover.</param>
-        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryPublicIpAddressId = default(string), string recoveryNetworkSecurityGroupId = default(string), IList<string> recoveryLBBackendAddressPoolIds = default(IList<string>), bool? enableAcceleratedNetworkingOnRecovery = default(bool?), string tfoVMSubnetName = default(string), string tfoNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnTfo = default(bool?), IList<IPConfig> tfoIPConfigs = default(IList<IPConfig>))
+        /// <param name="recoveryNicName">The name of the NIC to be used when
+        /// creating target NICs.</param>
+        /// <param name="recoveryNicResourceGroupName">The resource group of
+        /// the NIC to be used when creating target NICs.</param>
+        /// <param name="reuseExistingNic">A value indicating whether an
+        /// existing NIC is allowed to be reused during failover subject to
+        /// availability.</param>
+        /// <param name="tfoNicName">The name of the NIC to be used when
+        /// creating target NICs in TFO.</param>
+        /// <param name="tfoNicResourceGroupName">The resource group of the NIC
+        /// to be used when creating target NICs in TFO.</param>
+        /// <param name="tfoReuseExistingNic">A value indicating whether an
+        /// existing NIC is allowed to be reused during test failover subject
+        /// to availability.</param>
+        public VMNicInputDetails(string nicId = default(string), string recoveryVMSubnetName = default(string), string replicaNicStaticIPAddress = default(string), string selectionType = default(string), string recoveryPublicIpAddressId = default(string), string recoveryNetworkSecurityGroupId = default(string), IList<string> recoveryLBBackendAddressPoolIds = default(IList<string>), bool? enableAcceleratedNetworkingOnRecovery = default(bool?), string tfoVMSubnetName = default(string), string tfoNetworkSecurityGroupId = default(string), bool? enableAcceleratedNetworkingOnTfo = default(bool?), IList<IPConfig> tfoIPConfigs = default(IList<IPConfig>), string recoveryNicName = default(string), string recoveryNicResourceGroupName = default(string), bool? reuseExistingNic = default(bool?), string tfoNicName = default(string), string tfoNicResourceGroupName = default(string), bool? tfoReuseExistingNic = default(bool?))
         {
             NicId = nicId;
             RecoveryVMSubnetName = recoveryVMSubnetName;
@@ -66,6 +80,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TfoNetworkSecurityGroupId = tfoNetworkSecurityGroupId;
             EnableAcceleratedNetworkingOnTfo = enableAcceleratedNetworkingOnTfo;
             TfoIPConfigs = tfoIPConfigs;
+            RecoveryNicName = recoveryNicName;
+            RecoveryNicResourceGroupName = recoveryNicResourceGroupName;
+            ReuseExistingNic = reuseExistingNic;
+            TfoNicName = tfoNicName;
+            TfoNicResourceGroupName = tfoNicResourceGroupName;
+            TfoReuseExistingNic = tfoReuseExistingNic;
             CustomInit();
         }
 
@@ -148,6 +168,48 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "tfoIPConfigs")]
         public IList<IPConfig> TfoIPConfigs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the NIC to be used when creating target
+        /// NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryNicName")]
+        public string RecoveryNicName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource group of the NIC to be used when creating
+        /// target NICs.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryNicResourceGroupName")]
+        public string RecoveryNicResourceGroupName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an existing NIC is allowed
+        /// to be reused during failover subject to availability.
+        /// </summary>
+        [JsonProperty(PropertyName = "reuseExistingNic")]
+        public bool? ReuseExistingNic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the NIC to be used when creating target
+        /// NICs in TFO.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoNicName")]
+        public string TfoNicName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource group of the NIC to be used when creating
+        /// target NICs in TFO.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoNicResourceGroupName")]
+        public string TfoNicResourceGroupName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an existing NIC is allowed
+        /// to be reused during test failover subject to availability.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoReuseExistingNic")]
+        public bool? TfoReuseExistingNic { get; set; }
 
     }
 }

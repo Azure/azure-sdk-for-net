@@ -5,34 +5,13 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class SuggestDocumentsResult : IUtf8JsonSerializable
+    internal partial class SuggestDocumentsResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Results != null)
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStartArray();
-                foreach (var item in Results)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Coverage != null)
-            {
-                writer.WritePropertyName("@search.coverage");
-                writer.WriteNumberValue(Coverage.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
         {
             SuggestDocumentsResult result = new SuggestDocumentsResult();
@@ -40,11 +19,6 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Results = new List<SuggestResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         result.Results.Add(SuggestResult.DeserializeSuggestResult(item));

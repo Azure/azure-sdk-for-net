@@ -39,12 +39,26 @@ namespace Azure.Messaging.EventHubs.Tests
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
+            var connectionStringNoHub = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123";
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
 
             yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", connectionString), "connection string with default options" };
             yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", connectionString, default(EventProcessorClientOptions)), "connection string with explicit null options" };
+            yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", connectionStringNoHub, "hub"), "connection string and event hub name with default options" };
+            yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", connectionStringNoHub, "hub", default(EventProcessorClientOptions)), "connection string and event hub name with explicit null options" };
             yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object), "namespace with default options" };
             yield return new object[] { new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, default(EventProcessorClientOptions)), "namespace with explicit null options" };
+        }
+
+        /// <summary>
+        ///   Provides test cases iterations for the stress testing.
+        /// </summary>
+        ///
+        public static IEnumerable<object> StressTestCases()
+        {
+            return Enumerable.Range(0, 100)
+                    .Select(i => i.ToString())
+                    .ToArray();
         }
 
         /// <summary>
@@ -97,6 +111,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("http://namspace.servciebus.windows.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -853,7 +868,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
         public async Task StopProcessingAsyncStopsProcessingForEveryPartition()
         {
             var maximumWaitTimeInMilli = 100;
@@ -3595,6 +3609,7 @@ namespace Azure.Messaging.EventHubs.Tests
             while (!cancellationToken.IsCancellationRequested)
             {
                 await Task.Delay(maximumWaitTime.Value, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 yield return new PartitionEvent();
             }
 

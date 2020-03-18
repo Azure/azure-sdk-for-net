@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -74,5 +76,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
             return text;
         }
+
+        protected TokenCredential GetTokenCredential() =>
+        new ClientSecretCredential(
+            TestEnvironment.ServiceBusTenant,
+            TestEnvironment.ServiceBusClient,
+            TestEnvironment.ServiceBusSecret);
     }
 }

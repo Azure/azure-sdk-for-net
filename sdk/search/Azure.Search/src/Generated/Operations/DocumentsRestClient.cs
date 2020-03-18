@@ -24,8 +24,9 @@ namespace Azure.Search
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of DocumentsRestClient. </summary>
-        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string ApiVersion = "2019-05-06")
+        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string ApiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
@@ -46,11 +47,12 @@ namespace Azure.Search
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
-        internal HttpMessage CreateCountRequest(Guid? clientRequestId)
+
+        internal HttpMessage CreateCountRequest(Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethodAdditional.Get;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/indexes('", false);
@@ -59,22 +61,24 @@ namespace Azure.Search
             uri.AppendPath("/docs/$count", false);
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             return message;
         }
+
         /// <summary> Queries the number of documents in the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<long>> CountAsync(Guid? clientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<long>> CountAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
             {
-                using var message = CreateCountRequest(clientRequestId);
+                using var message = CreateCountRequest(xMsClientRequestId);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -94,16 +98,18 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Queries the number of documents in the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<long> Count(Guid? clientRequestId, CancellationToken cancellationToken = default)
+        public Response<long> Count(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
             {
-                using var message = CreateCountRequest(clientRequestId);
+                using var message = CreateCountRequest(xMsClientRequestId);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -123,22 +129,23 @@ namespace Azure.Search
                 throw;
             }
         }
-        internal HttpMessage CreateSearchPostRequest(Guid? clientRequestId, SearchRequest searchRequest)
+
+        internal HttpMessage CreateSearchPostRequest(Guid? xMsClientRequestId, SearchOptions searchRequest)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/indexes('", false);
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
-            uri.AppendPath("/docs/search", false);
+            uri.AppendPath("/docs/search.post.search", false);
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
@@ -146,11 +153,12 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchDocumentsResult>> SearchPostAsync(Guid? clientRequestId, SearchRequest searchRequest, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchDocumentsResult>> SearchPostAsync(Guid? xMsClientRequestId, SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
@@ -161,7 +169,7 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateSearchPostRequest(clientRequestId, searchRequest);
+                using var message = CreateSearchPostRequest(xMsClientRequestId, searchRequest);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -181,11 +189,12 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchDocumentsResult> SearchPost(Guid? clientRequestId, SearchRequest searchRequest, CancellationToken cancellationToken = default)
+        public Response<SearchDocumentsResult> SearchPost(Guid? xMsClientRequestId, SearchOptions searchRequest, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
@@ -196,7 +205,7 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateSearchPostRequest(clientRequestId, searchRequest);
+                using var message = CreateSearchPostRequest(xMsClientRequestId, searchRequest);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -216,11 +225,12 @@ namespace Azure.Search
                 throw;
             }
         }
-        internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields, Guid? clientRequestId)
+
+        internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethodAdditional.Get;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/indexes('", false);
@@ -235,18 +245,19 @@ namespace Azure.Search
             }
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             return message;
         }
+
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<object>> GetAsync(string key, IEnumerable<string> selectedFields, Guid? clientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -257,14 +268,18 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateGetRequest(key, selectedFields, clientRequestId);
+                using var message = CreateGetRequest(key, selectedFields, xMsClientRequestId);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = document.RootElement.GetObject();
+                            IDictionary<string, object> value = new Dictionary<string, object>();
+                            foreach (var property in document.RootElement.EnumerateObject())
+                            {
+                                value.Add(property.Name, property.Value.GetObject());
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -277,12 +292,13 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Retrieves a document from the index. </summary>
         /// <param name="key"> The key of the document to retrieve. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<object> Get(string key, IEnumerable<string> selectedFields, Guid? clientRequestId, CancellationToken cancellationToken = default)
+        public Response<IDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -293,14 +309,18 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateGetRequest(key, selectedFields, clientRequestId);
+                using var message = CreateGetRequest(key, selectedFields, xMsClientRequestId);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = document.RootElement.GetObject();
+                            IDictionary<string, object> value = new Dictionary<string, object>();
+                            foreach (var property in document.RootElement.EnumerateObject())
+                            {
+                                value.Add(property.Name, property.Value.GetObject());
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -313,22 +333,23 @@ namespace Azure.Search
                 throw;
             }
         }
-        internal HttpMessage CreateSuggestPostRequest(Guid? clientRequestId, SuggestRequest suggestRequest)
+
+        internal HttpMessage CreateSuggestPostRequest(Guid? xMsClientRequestId, SuggestOptions suggestRequest)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/indexes('", false);
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
-            uri.AppendPath("/docs/suggest", false);
+            uri.AppendPath("/docs/search.post.suggest", false);
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
@@ -336,11 +357,12 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SuggestDocumentsResult>> SuggestPostAsync(Guid? clientRequestId, SuggestRequest suggestRequest, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SuggestDocumentsResult>> SuggestPostAsync(Guid? xMsClientRequestId, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
@@ -351,7 +373,7 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateSuggestPostRequest(clientRequestId, suggestRequest);
+                using var message = CreateSuggestPostRequest(xMsClientRequestId, suggestRequest);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -371,11 +393,12 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SuggestDocumentsResult> SuggestPost(Guid? clientRequestId, SuggestRequest suggestRequest, CancellationToken cancellationToken = default)
+        public Response<SuggestDocumentsResult> SuggestPost(Guid? xMsClientRequestId, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
@@ -386,7 +409,7 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateSuggestPostRequest(clientRequestId, suggestRequest);
+                using var message = CreateSuggestPostRequest(xMsClientRequestId, suggestRequest);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -406,11 +429,12 @@ namespace Azure.Search
                 throw;
             }
         }
-        internal HttpMessage CreateIndexRequest(Guid? clientRequestId, IndexBatch batch)
+
+        internal HttpMessage CreateIndexRequest(Guid? xMsClientRequestId, IndexBatch batch)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/indexes('", false);
@@ -419,9 +443,9 @@ namespace Azure.Search
             uri.AppendPath("/docs/search.index", false);
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
@@ -429,11 +453,12 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Sends a batch of document write actions to the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IndexDocumentsResult>> IndexAsync(Guid? clientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IndexDocumentsResult>> IndexAsync(Guid? xMsClientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
@@ -444,7 +469,7 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateIndexRequest(clientRequestId, batch);
+                using var message = CreateIndexRequest(xMsClientRequestId, batch);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -464,11 +489,12 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Sends a batch of document write actions to the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IndexDocumentsResult> Index(Guid? clientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
+        public Response<IndexDocumentsResult> Index(Guid? xMsClientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
@@ -479,7 +505,7 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateIndexRequest(clientRequestId, batch);
+                using var message = CreateIndexRequest(xMsClientRequestId, batch);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -499,22 +525,23 @@ namespace Azure.Search
                 throw;
             }
         }
-        internal HttpMessage CreateAutocompletePostRequest(Guid? clientRequestId, AutocompleteRequest autocompleteRequest)
+
+        internal HttpMessage CreateAutocompletePostRequest(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethodAdditional.Post;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendRaw("/indexes('", false);
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
-            uri.AppendPath("/docs/autocomplete", false);
+            uri.AppendPath("/docs/search.post.autocomplete", false);
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             request.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
@@ -522,11 +549,12 @@ namespace Azure.Search
             request.Content = content;
             return message;
         }
+
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AutocompleteResult>> AutocompletePostAsync(Guid? clientRequestId, AutocompleteRequest autocompleteRequest, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<AutocompleteResults>> AutocompletePostAsync(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {
@@ -537,14 +565,14 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateAutocompletePostRequest(clientRequestId, autocompleteRequest);
+                using var message = CreateAutocompletePostRequest(xMsClientRequestId, autocompleteRequest);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AutocompleteResult.DeserializeAutocompleteResult(document.RootElement);
+                            var value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -557,11 +585,12 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AutocompleteResult> AutocompletePost(Guid? clientRequestId, AutocompleteRequest autocompleteRequest, CancellationToken cancellationToken = default)
+        public Response<AutocompleteResults> AutocompletePost(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {
@@ -572,14 +601,14 @@ namespace Azure.Search
             scope.Start();
             try
             {
-                using var message = CreateAutocompletePostRequest(clientRequestId, autocompleteRequest);
+                using var message = CreateAutocompletePostRequest(xMsClientRequestId, autocompleteRequest);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AutocompleteResult.DeserializeAutocompleteResult(document.RootElement);
+                            var value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

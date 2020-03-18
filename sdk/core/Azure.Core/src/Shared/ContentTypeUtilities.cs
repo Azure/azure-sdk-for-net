@@ -22,6 +22,7 @@ namespace Azure.Core.Pipeline
             const string utf8Charset = "utf-8";
             const string textContentTypePrefix = "text/";
             const string jsonSuffix = "json";
+            const string appJsonPrefix = "application/json";
             const string xmlSuffix = "xml";
             const string urlEncodedSuffix = "-urlencoded";
 
@@ -45,7 +46,8 @@ namespace Azure.Core.Pipeline
             if (contentType.StartsWith(textContentTypePrefix, StringComparison.OrdinalIgnoreCase) ||
                 contentType.EndsWith(jsonSuffix, StringComparison.OrdinalIgnoreCase) ||
                 contentType.EndsWith(xmlSuffix, StringComparison.OrdinalIgnoreCase) ||
-                contentType.EndsWith(urlEncodedSuffix, StringComparison.OrdinalIgnoreCase))
+                contentType.EndsWith(urlEncodedSuffix, StringComparison.OrdinalIgnoreCase) ||
+                contentType.StartsWith(appJsonPrefix, StringComparison.OrdinalIgnoreCase))
             {
                 encoding = Encoding.UTF8;
                 return true;

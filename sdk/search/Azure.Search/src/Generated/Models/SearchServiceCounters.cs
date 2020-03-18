@@ -10,17 +10,43 @@ namespace Azure.Search.Models
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
     {
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        internal SearchServiceCounters()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
+        {
+            DocumentCounter = documentCounter;
+            IndexCounter = indexCounter;
+            IndexerCounter = indexerCounter;
+            DataSourceCounter = dataSourceCounter;
+            StorageSizeCounter = storageSizeCounter;
+            SynonymMapCounter = synonymMapCounter;
+            SkillsetCounter = skillsetCounter;
+        }
+
         /// <summary> Total number of documents across all indexes in the service. </summary>
-        public SearchResourceCounter DocumentCounter { get; set; }
+        public SearchResourceCounter DocumentCounter { get; internal set; } = new SearchResourceCounter();
         /// <summary> Total number of indexes. </summary>
-        public SearchResourceCounter IndexCounter { get; set; }
+        public SearchResourceCounter IndexCounter { get; internal set; } = new SearchResourceCounter();
         /// <summary> Total number of indexers. </summary>
-        public SearchResourceCounter IndexerCounter { get; set; }
+        public SearchResourceCounter IndexerCounter { get; internal set; } = new SearchResourceCounter();
         /// <summary> Total number of data sources. </summary>
-        public SearchResourceCounter DataSourceCounter { get; set; }
+        public SearchResourceCounter DataSourceCounter { get; internal set; } = new SearchResourceCounter();
         /// <summary> Total size of used storage in bytes. </summary>
-        public SearchResourceCounter StorageSizeCounter { get; set; }
+        public SearchResourceCounter StorageSizeCounter { get; internal set; } = new SearchResourceCounter();
         /// <summary> Total number of synonym maps. </summary>
-        public SearchResourceCounter SynonymMapCounter { get; set; }
+        public SearchResourceCounter SynonymMapCounter { get; internal set; } = new SearchResourceCounter();
+        /// <summary> Total number of skillsets. </summary>
+        public SearchResourceCounter SkillsetCounter { get; internal set; } = new SearchResourceCounter();
     }
 }

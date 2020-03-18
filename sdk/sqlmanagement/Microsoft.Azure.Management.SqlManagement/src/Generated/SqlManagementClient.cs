@@ -498,6 +498,10 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstanceOperations.
+        /// </summary>
+        public virtual IManagedInstanceOperations ManagedInstanceOperations { get; private set; }
+        
         /// Gets the IManagedDatabaseRestoreDetailsOperations.
         /// </summary>
         public virtual IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; private set; }
@@ -834,6 +838,7 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstances = new ManagedInstancesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            ManagedInstanceOperations = new ManagedInstanceOperations(this);
             Servers = new ServersOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             LongTermRetentionManagedInstanceBackups = new LongTermRetentionManagedInstanceBackupsOperations(this);

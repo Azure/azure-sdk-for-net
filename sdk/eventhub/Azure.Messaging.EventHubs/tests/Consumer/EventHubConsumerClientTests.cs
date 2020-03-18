@@ -86,6 +86,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("amqp://namespace.place.ext")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -275,7 +276,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ConsumerDelegatesForTheFullyQualifiedNamespaceName()
+        public void ConsumerDelegatesForTheFullyQualifiedNamespace()
         {
             var expected = "SomeNamespace";
             var mockConnection = new MockConnection(expected);
@@ -1136,7 +1137,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedReceiveCalls = (maximumRetries + 1);
             var receiveCalls = 0;
 
-            Func<int, TimeSpan?, IEnumerable<EventData>> receiveCallback = (_max, _time) =>
+            Func<int, TimeSpan?, IReadOnlyList<EventData>> receiveCallback = (_max, _time) =>
             {
                 ++receiveCalls;
                 throw exception;
@@ -1181,7 +1182,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var receiveCalls = 0;
 
-            Func<int, TimeSpan?, IEnumerable<EventData>> receiveCallback = (_max, _time) =>
+            Func<int, TimeSpan?, IReadOnlyList<EventData>> receiveCallback = (_max, _time) =>
             {
                 ++receiveCalls;
                 throw exception;
@@ -1944,7 +1945,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var receiveCalls = 0;
 
-            Func<int, TimeSpan?, IEnumerable<EventData>> receiveCallback = (_max, _time) =>
+            Func<int, TimeSpan?, IReadOnlyList<EventData>> receiveCallback = (_max, _time) =>
             {
                 ++receiveCalls;
                 throw exception;
@@ -1990,7 +1991,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var receiveCalls = 0;
 
-            Func<int, TimeSpan?, IEnumerable<EventData>> receiveCallback = (_max, _time) =>
+            Func<int, TimeSpan?, IReadOnlyList<EventData>> receiveCallback = (_max, _time) =>
             {
                 ++receiveCalls;
                 throw exception;
@@ -2269,12 +2270,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 set => base.LastReceivedEvent = value;
             }
 
-            public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                      TimeSpan? maximumWaitTime,
-                                                                      CancellationToken cancellationToken)
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                        TimeSpan? maximumWaitTime,
+                                                                        CancellationToken cancellationToken)
             {
                 ReceiveCalledWith = (maximumMessageCount, maximumWaitTime);
-                return Task.FromResult(Enumerable.Empty<EventData>());
+                return Task.FromResult((IReadOnlyList<EventData>)new List<EventData>(0));
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken)
@@ -2310,7 +2311,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
+            public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
             {
                 var stopWatch = Stopwatch.StartNew();
                 PublishDelayCallback?.Invoke();
@@ -2321,8 +2322,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Delay execution in this path to prevent a tight loop, starving other Tasks.
 
                     await Task.Delay(100).ConfigureAwait(false);
-
-                    return Enumerable.Empty<EventData>();
+                    return new List<EventData>(0);
                 }
 
                 var index = PublishIndex;
@@ -2334,9 +2334,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 LastMaximumMessageCount = maximumMessageCount;
                 PublishIndex = (index + maximumMessageCount);
-                var source = EventsToPublish.Skip(index).Take(maximumMessageCount).ToList();
 
-                return (IEnumerable<EventData>)source;
+                return EventsToPublish.Skip(index).Take(maximumMessageCount).ToList();
             }
 
             public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
@@ -2349,9 +2348,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ReceiveCallbackTransportConsumerMock : TransportConsumer
         {
-            public Func<int, TimeSpan?, IEnumerable<EventData>> ReceiveCallback = (_max, _wait) => Enumerable.Empty<EventData>();
+            public Func<int, TimeSpan?, IReadOnlyList<EventData>> ReceiveCallback = (_max, _wait) => new List<EventData>(0);
 
-            public ReceiveCallbackTransportConsumerMock(Func<int, TimeSpan?, IEnumerable<EventData>> receiveCallback = null) : base()
+            public ReceiveCallbackTransportConsumerMock(Func<int, TimeSpan?, IReadOnlyList<EventData>> receiveCallback = null) : base()
             {
                 if (receiveCallback != null)
                 {
@@ -2359,9 +2358,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
             }
 
-            public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken)
             {
-                IEnumerable<EventData> results = ReceiveCallback(maximumMessageCount, maximumWaitTime);
+                var results = ReceiveCallback(maximumMessageCount, maximumWaitTime);
                 return Task.FromResult(results);
             }
 
@@ -2408,7 +2407,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
             }
 
-            internal async override Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
+            internal override async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 GetPartitionIdsInvokedWith = retryPolicy;

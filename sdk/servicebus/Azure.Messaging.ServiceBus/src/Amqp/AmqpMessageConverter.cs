@@ -179,9 +179,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            if ((sbMessage.ScheduledEnqueueTimeUtc != null) && sbMessage.ScheduledEnqueueTimeUtc > DateTime.MinValue)
+            if ((sbMessage.ScheduledEnqueueTime != null) && sbMessage.ScheduledEnqueueTime > DateTimeOffset.MinValue)
             {
-                amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTimeUtc);
+                amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTime.UtcDateTime);
             }
 
             if (sbMessage.PartitionKey != null)
@@ -194,14 +194,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpMessage.MessageAnnotations.Map.Add(ViaPartitionKeyName, sbMessage.ViaPartitionKey);
             }
 
-            if (sbMessage.UserProperties != null && sbMessage.UserProperties.Count > 0)
+            if (sbMessage.Properties != null && sbMessage.Properties.Count > 0)
             {
                 if (amqpMessage.ApplicationProperties == null)
                 {
                     amqpMessage.ApplicationProperties = new ApplicationProperties();
                 }
 
-                foreach (var pair in sbMessage.UserProperties)
+                foreach (var pair in sbMessage.Properties)
                 {
                     if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                     {
@@ -337,7 +337,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                     {
-                        sbMessage.UserProperties[pair.Key.ToString()] = netObject;
+                        sbMessage.Properties[pair.Key.ToString()] = netObject;
                     }
                 }
             }
@@ -350,10 +350,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     switch (key)
                     {
                         case EnqueuedTimeUtcName:
-                            sbMessage.EnqueuedTimeUtc = (DateTime)pair.Value;
+                            sbMessage.EnqueuedTime = (DateTime)pair.Value;
                             break;
                         case ScheduledEnqueueTimeUtcName:
-                            sbMessage.ScheduledEnqueueTimeUtc = (DateTime)pair.Value;
+                            sbMessage.ScheduledEnqueueTime = (DateTime)pair.Value;
                             break;
                         case SequenceNumberName:
                             sbMessage.SequenceNumber = (long)pair.Value;
@@ -362,7 +362,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             sbMessage.EnqueuedSequenceNumber = (long)pair.Value;
                             break;
                         case LockedUntilName:
-                            sbMessage.LockedUntilUtc = (DateTime)pair.Value;
+                            sbMessage.LockedUntil = (DateTime)pair.Value >= DateTimeOffset.MaxValue.UtcDateTime ?
+                                DateTimeOffset.MaxValue : (DateTime)pair.Value;
                             break;
                         case PartitionKeyName:
                             sbMessage.PartitionKey = (string)pair.Value;
@@ -379,7 +380,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
                             {
-                                sbMessage.UserProperties[key] = netObject;
+                                sbMessage.Properties[key] = netObject;
                             }
                             break;
                     }

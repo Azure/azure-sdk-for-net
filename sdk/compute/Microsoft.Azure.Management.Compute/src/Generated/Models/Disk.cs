@@ -44,6 +44,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="managedBy">A relative URI containing the ID of the VM
         /// that has the disk attached.</param>
+        /// <param name="managedByExtended">List of relative URIs containing
+        /// the IDs of the VMs that have the disk attached. maxShares should be
+        /// set to a value greater than one for disks to allow attaching them
+        /// to multiple VMs.</param>
         /// <param name="zones">The Logical zone list for Disk.</param>
         /// <param name="timeCreated">The time when the disk was
         /// created.</param>
@@ -74,16 +78,30 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk; only settable for UltraSSD disks. MBps means millions of
         /// bytes per second - MB here uses the ISO notation, of powers of
         /// 10.</param>
+        /// <param name="diskIOPSReadOnly">The total number of IOPS that will
+        /// be allowed across all VMs mounting the shared disk as ReadOnly. One
+        /// operation can transfer between 4k and 256k bytes.</param>
+        /// <param name="diskMBpsReadOnly">The total throughput (MBps) that
+        /// will be allowed across all VMs mounting the shared disk as
+        /// ReadOnly. MBps means millions of bytes per second - MB here uses
+        /// the ISO notation, of powers of 10.</param>
         /// <param name="diskState">The state of the disk. Possible values
         /// include: 'Unattached', 'Attached', 'Reserved', 'ActiveSAS',
         /// 'ReadyToUpload', 'ActiveUpload'</param>
         /// <param name="encryption">Encryption property can be used to encrypt
         /// data at rest with customer managed keys or platform managed
         /// keys.</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), string diskState = default(string), Encryption encryption = default(Encryption))
+        /// <param name="maxShares">The maximum number of VMs that can attach
+        /// to the disk at the same time. Value greater than one indicates a
+        /// disk that can be mounted on multiple VMs at the same time.</param>
+        /// <param name="shareInfo">Details of the list of all VMs that have
+        /// the disk attached. maxShares should be set to a value greater than
+        /// one for disks to allow attaching them to multiple VMs.</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
+            ManagedByExtended = managedByExtended;
             Sku = sku;
             Zones = zones;
             TimeCreated = timeCreated;
@@ -97,8 +115,12 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskIOPSReadOnly = diskIOPSReadOnly;
+            DiskMBpsReadOnly = diskMBpsReadOnly;
             DiskState = diskState;
             Encryption = encryption;
+            MaxShares = maxShares;
+            ShareInfo = shareInfo;
             CustomInit();
         }
 
@@ -113,6 +135,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; private set; }
+
+        /// <summary>
+        /// Gets list of relative URIs containing the IDs of the VMs that have
+        /// the disk attached. maxShares should be set to a value greater than
+        /// one for disks to allow attaching them to multiple VMs.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedByExtended")]
+        public IList<string> ManagedByExtended { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -202,7 +232,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// uses the ISO notation, of powers of 10.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskMBpsReadWrite")]
-        public int? DiskMBpsReadWrite { get; set; }
+        public long? DiskMBpsReadWrite { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total number of IOPS that will be allowed across
+        /// all VMs mounting the shared disk as ReadOnly. One operation can
+        /// transfer between 4k and 256k bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskIOPSReadOnly")]
+        public long? DiskIOPSReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total throughput (MBps) that will be allowed
+        /// across all VMs mounting the shared disk as ReadOnly. MBps means
+        /// millions of bytes per second - MB here uses the ISO notation, of
+        /// powers of 10.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskMBpsReadOnly")]
+        public long? DiskMBpsReadOnly { get; set; }
 
         /// <summary>
         /// Gets the state of the disk. Possible values include: 'Unattached',
@@ -218,6 +265,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of VMs that can attach to the disk
+        /// at the same time. Value greater than one indicates a disk that can
+        /// be mounted on multiple VMs at the same time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxShares")]
+        public int? MaxShares { get; set; }
+
+        /// <summary>
+        /// Gets details of the list of all VMs that have the disk attached.
+        /// maxShares should be set to a value greater than one for disks to
+        /// allow attaching them to multiple VMs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.shareInfo")]
+        public IList<ShareInfoElement> ShareInfo { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -239,10 +302,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (EncryptionSettingsCollection != null)
             {
                 EncryptionSettingsCollection.Validate();
-            }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
             }
         }
     }

@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="type">Resource type.</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
-        /// Enabled, storageEndpoint is required.</param>
+        /// Enabled, storageEndpoint or isAzureMonitorTargetEnabled is
+        /// required.</param>
         /// <param name="storageAccountAccessKey">Specifies the identifier key
         /// of the auditing storage account. If state is Enabled and
         /// storageEndpoint is specified, storageAccountAccessKey is
@@ -148,7 +149,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// or [Diagnostic Settings
         /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// </param>
-        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?))
+        /// <param name="queueDelayMs">Specifies the amount of time in
+        /// milliseconds that can elapse before audit actions are forced to be
+        /// processed.
+        /// The default minimum value is 1000 (1 second). The maximum is
+        /// 2,147,483,647.</param>
+        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?))
             : base(id, name, type)
         {
             State = state;
@@ -159,6 +165,7 @@ namespace Microsoft.Azure.Management.Sql.Models
             StorageAccountSubscriptionId = storageAccountSubscriptionId;
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
+            QueueDelayMs = queueDelayMs;
             CustomInit();
         }
 
@@ -178,7 +185,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets specifies the blob storage endpoint (e.g.
         /// https://MyAccount.blob.core.windows.net). If state is Enabled,
-        /// storageEndpoint is required.
+        /// storageEndpoint or isAzureMonitorTargetEnabled is required.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEndpoint")]
         public string StorageEndpoint { get; set; }
@@ -314,6 +321,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAzureMonitorTargetEnabled")]
         public bool? IsAzureMonitorTargetEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the amount of time in milliseconds that can
+        /// elapse before audit actions are forced to be processed.
+        /// The default minimum value is 1000 (1 second). The maximum is
+        /// 2,147,483,647.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.queueDelayMs")]
+        public int? QueueDelayMs { get; set; }
 
         /// <summary>
         /// Validate the object.

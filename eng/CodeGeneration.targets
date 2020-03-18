@@ -1,9 +1,9 @@
 <Project>
 
   <PropertyGroup>
-    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6191/autorest-3.0.6191.tgz</_AutoRestVersion>
-    <_AutoRestCoreVersion>3.0.6237</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/1.0.0-dev.20200304.4/autorest-csharp-v3-1.0.0-dev.20200304.4.tgz</_AutoRestCSharpVersion>
+    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6207/autorest-3.0.6207.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion>3.0.6257</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/1.0.0-dev.20200316.6/autorest-csharp-v3-1.0.0-dev.20200316.6.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <AutoRestConfiguration Condition="'$(AutoRestConfiguration)' == ''">autorest.md</AutoRestConfiguration>
 

@@ -51,22 +51,15 @@ namespace Microsoft.Azure.Management.Support
         public MicrosoftSupportClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all the Azure services available for support ticket creation. Here
-        /// are the Service Ids for **Billing**, **Subscription Management**, and
-        /// **Service and subscription limits (Quotas)** issues:
-        /// &lt;br/&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;u&gt;Issue
-        /// type&lt;/u&gt;&lt;/td&gt;&lt;td&gt;&lt;u&gt;Service
-        /// Id&lt;/u&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Billing&lt;/td&gt;&lt;td&gt;'/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc'&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Subscription
-        /// Management&lt;/td&gt;&lt;td&gt;'/providers/Microsoft.Support/services/f3dc5421-79ef-1efa-41a5-42bf3cbb52c6'&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Quota&lt;/td&gt;&lt;td&gt;'/providers/Microsoft.Support/services/06bfd9d3-516b-d5c6-5802-169c800dec89'&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-        /// &lt;br/&gt;&lt;br/&gt; For **Technical** issues, select the Service Id that
-        /// maps to the Azure service/product as displayed in the **Services**
-        /// drop-down list on the Azure portal's &lt;a target='_blank'
-        /// href='https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview'&gt;New
-        /// support request&lt;/a&gt; page. &lt;br/&gt;&lt;br/&gt; Always use the
-        /// service and it's corresponding problem classification(s) obtained
-        /// programmatically for support ticket creation. This practice ensures that
-        /// you always have the most recent set of service and problem classification
-        /// Ids.
+        /// Lists all the Azure services available for support ticket creation. For
+        /// **Technical** issues, select the Service Id that maps to the Azure
+        /// service/product as displayed in the **Services** drop-down list on the
+        /// Azure portal's [New support
+        /// request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview)
+        /// page. Always use the service and it's corresponding problem
+        /// classification(s) obtained programmatically for support ticket creation.
+        /// This practice ensures that you always have the most recent set of service
+        /// and problem classification Ids.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

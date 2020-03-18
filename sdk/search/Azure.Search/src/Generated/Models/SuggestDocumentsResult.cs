@@ -10,10 +10,24 @@ using System.Collections.Generic;
 namespace Azure.Search.Models
 {
     /// <summary> Response containing suggestion query results from an index. </summary>
-    public partial class SuggestDocumentsResult
+    internal partial class SuggestDocumentsResult
     {
+        /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
+        internal SuggestDocumentsResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
+        /// <param name="results"> The sequence of results returned by the query. </param>
+        /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </param>
+        internal SuggestDocumentsResult(IList<SuggestResult> results, double? coverage)
+        {
+            Results = results;
+            Coverage = coverage;
+        }
+
         /// <summary> The sequence of results returned by the query. </summary>
-        public ICollection<SuggestResult> Results { get; internal set; }
+        public IList<SuggestResult> Results { get; internal set; } = new List<SuggestResult>();
         /// <summary> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </summary>
         public double? Coverage { get; internal set; }
     }

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res1009?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczEwMDk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzk4OT9hcGktdmVyc2lvbj0yMDIwLTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 989,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc989@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bc6e95e6-65f6-4a45-b2e1-c139c332dfb1"
+          "8274b074-8e33-43e7-8fb7-f8ee65bf84bd"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,79 +16,13 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "31"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
-        ],
-        "x-ms-request-id": [
-          "7ab3e0c0-6703-487a-8aab-3cbc811461b0"
-        ],
-        "x-ms-correlation-request-id": [
-          "7ab3e0c0-6703-487a-8aab-3cbc811461b0"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222241Z:7ab3e0c0-6703-487a-8aab-3cbc811461b0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
-        ],
-        "Content-Length": [
-          "170"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009\",\r\n  \"name\": \"res1009\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 3040,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc3040@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7c04fc48-9eb7-4bd3-b741-d47c44da22a9"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "263"
+          "261"
         ]
       },
       "ResponseHeaders": {
@@ -99,29 +33,29 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "8866a3b3-c885-43f3-a5dd-ed33368511f4"
+          "7b4ad7a3-b8b4-4133-b074-1b7bf565e1cf"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
+          "Fri, 28 Feb 2020 00:00:26 GMT"
         ],
         "Content-Length": [
-          "432"
+          "428"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 3040,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc3040@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Pending\"\r\n  },\r\n  \"name\": \"AS3040\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 989,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc989@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Pending\"\r\n  },\r\n  \"name\": \"AS989\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzk4OT9hcGktdmVyc2lvbj0yMDIwLTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1e114106-4772-409d-9921-a780f4da6982"
+          "d13d93b4-4a8d-46e8-a43b-0b8023972254"
         ],
         "Accept-Language": [
           "en-US"
@@ -130,7 +64,7 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -141,29 +75,29 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "24557b62-ba78-458d-b8cc-d002ca97fd9b"
+          "afe33fde-bc68-43f9-a7d7-ad15d9dbfe2f"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
+          "Fri, 28 Feb 2020 00:00:27 GMT"
         ],
         "Content-Length": [
-          "433"
+          "429"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 3040,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc3040@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  },\r\n  \"name\": \"AS3040\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"peerAsn\": 989,\r\n    \"peerContactDetail\": [\r\n      {\r\n        \"role\": \"Noc\",\r\n        \"email\": \"noc989@contoso.com\",\r\n        \"phone\": \"8888988888\"\r\n      }\r\n    ],\r\n    \"peerName\": \"Contoso\",\r\n    \"validationState\": \"Approved\"\r\n  },\r\n  \"name\": \"AS989\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989\",\r\n  \"type\": \"Microsoft.Peering/peerAsns\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzk4OT9hcGktdmVyc2lvbj0yMDIwLTAxLTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "954c47ce-cc74-45e8-aea7-22e16a7c6ea0"
+          "f56a5838-10b3-43e5-91e5-83aadf9a7921"
         ],
         "Accept-Language": [
           "en-US"
@@ -172,7 +106,7 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -183,10 +117,10 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "50b0b8d0-f9c6-4044-827c-60dd350ba409"
+          "867feaca-f4d5-4fbd-b55c-b6cd4478975f"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:23:45 GMT"
+          "Fri, 28 Feb 2020 00:00:27 GMT"
         ],
         "Content-Length": [
           "68"
@@ -199,13 +133,13 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/exchangepeering3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"bgpSession\": {\r\n            \"peerSessionIPv4Address\": \"10.12.97.184\",\r\n            \"maxPrefixesAdvertisedV4\": 20000\r\n          },\r\n          \"connectionIdentifier\": \"adb28313-88bb-4793-8897-67006811365c\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_8790\": \"Active\"\r\n  }\r\n}",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peeringLocations?kind=Direct&directPeeringType=Edge&api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyaW5nTG9jYXRpb25zP2tpbmQ9RGlyZWN0JmRpcmVjdFBlZXJpbmdUeXBlPUVkZ2UmYXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c6491d69-62a6-4f92-98b3-4b010a0fbef9"
+          "ec6e0574-227b-4aaf-8f1e-42bb5ad6d1f2"
         ],
         "Accept-Language": [
           "en-US"
@@ -214,13 +148,7 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "693"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -231,29 +159,77 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "10758eb4-9210-4cc1-8efb-6932fce2fe29"
+          "f72dca4f-b982-468e-9209-94bbe8876cd6"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
+          "Thu, 05 Mar 2020 17:54:10 GMT"
         ],
         "Content-Length": [
-          "1353"
+          "70079"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\",\r\n    \"tier\": \"Basic\",\r\n    \"family\": \"Exchange\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"bgpSession\": {\r\n            \"sessionPrefixV4\": \"10.12.97.128/26\",\r\n            \"microsoftSessionIPv4Address\": \"10.12.97.129\",\r\n            \"peerSessionIPv4Address\": \"10.12.97.184\",\r\n            \"sessionStateV4\": \"None\",\r\n            \"sessionStateV6\": \"None\",\r\n            \"maxPrefixesAdvertisedV4\": 20000,\r\n            \"maxPrefixesAdvertisedV6\": 0\r\n          },\r\n          \"connectionIdentifier\": \"adb28313-88bb-4793-8897-67006811365c\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_8790\": \"Active\"\r\n  },\r\n  \"eTag\": \"6a675c95-256f-49db-a399-f410feda2d9b\",\r\n  \"name\": \"exchangepeering3040\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/exchangepeering3040\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"21715 Filigree Ct\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Ashburn\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Ashburn\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"529 Bryant St\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 5,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/5\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Palo Alto\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Palo Alto\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"11 Great Oaks Blvd\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 6,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/6\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"San Jose\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"San Jose\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"350 E Cermak Rd\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 7,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/7\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Chicago\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Chicago\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"600 W 7th St\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 8,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/8\"\r\n            },\r\n            {\r\n              \"address\": \"624 S. Grand Ave.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 19,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/19\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Los Angeles\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Los Angeles\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"56 Marietta St NW\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 11,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/11\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Atlanta\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Atlanta\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"50 NE 9th St\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 15,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/15\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Miami\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Miami\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"14 Coriander Avenue\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 34,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/34\"\r\n            },\r\n            {\r\n              \"address\": \"14 Coriander Avenue\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 39,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/39\"\r\n            },\r\n            {\r\n              \"address\": \"Sovereign House\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 40,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/40\"\r\n            },\r\n            {\r\n              \"address\": \"8 Buckingham Avenue\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 832,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/832\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"London\",\r\n        \"country\": \"GB\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"London\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"111 8th Avenue\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 38,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/38\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"New York\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"New York\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"137 Boulevard Voltaire\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 53,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/53\"\r\n            },\r\n            {\r\n              \"address\": \"11-13 Avenue des Arts et Metiers\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 714,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/714\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Paris\",\r\n        \"country\": \"FR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Paris\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Hanauer Landstrasse 298\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 58,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/58\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Frankfurt\",\r\n        \"country\": \"DE\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Frankfurt\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Johan Huizingalaan 759\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 63,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/63\"\r\n            },\r\n            {\r\n              \"address\": \"Cessnalaan 1\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 64,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/64\"\r\n            },\r\n            {\r\n              \"address\": \"Schepenbergweg 42\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1236,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1236\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Amsterdam\",\r\n        \"country\": \"NL\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Amsterdam\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Louis-Haefliger-Gasse 10\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 67,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/67\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Vienna\",\r\n        \"country\": \"AT\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Vienna\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Wezenbeekstraat 2\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 68,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/68\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Brussels\",\r\n        \"country\": \"BE\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Brussels\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"1950 N Stemmons Fwy\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 69,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/69\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Dallas\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Dallas\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"2001 Sixth Avenue\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 71,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/71\"\r\n            },\r\n            {\r\n              \"address\": \"One Microsoft Way, Redmond\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 99999,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/ix/99999\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Seattle\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Seattle\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Manchester Science Park\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 76,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/76\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Manchester\",\r\n        \"country\": \"GB\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Manchester\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Sagereistrasse 35\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 81,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/81\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Zurich\",\r\n        \"country\": \"CH\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Zurich\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Carrer de l'Acer 30-32\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 122,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/122\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Barcelona\",\r\n        \"country\": \"ES\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Barcelona\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Av. Severiano Falcao, 14\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 126,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/126\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Lisbon\",\r\n        \"country\": \"PT\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Lisbon\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"C/ Albasanz 71\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 130,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/130\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Madrid\",\r\n        \"country\": \"ES\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Madrid\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Unit B 639 Gardeners Road\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 131,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/131\"\r\n            },\r\n            {\r\n              \"address\": \"4 Eden Park Drive\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1660,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1660\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Sydney\",\r\n        \"country\": \"AU\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Sydney\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Otemachi Building\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 142,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/142\"\r\n            },\r\n            {\r\n              \"address\": \"ComSpace Bldg.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 599,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/599\"\r\n            },\r\n            {\r\n              \"address\": \"Otemachi Finance City\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1893,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1893\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Tokyo\",\r\n        \"country\": \"JP\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Tokyo\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"3F LG CNS Bldg\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 143,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/143\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Seoul\",\r\n        \"country\": \"KR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Seoul\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Industriparken 20A\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 148,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/148\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Copenhagen\",\r\n        \"country\": \"DK\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Copenhagen\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Mariehällsvägen 36\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 156,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/156\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Stockholm\",\r\n        \"country\": \"SE\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Stockholm\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Unit 4027, Kingswood Road\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 164,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/164\"\r\n            },\r\n            {\r\n              \"address\": \"Unit 35 Lavery Avenue\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 177,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/177\"\r\n            },\r\n            {\r\n              \"address\": \"Unit 2, North West Business Park\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1065,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1065\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Dublin\",\r\n        \"country\": \"IE\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Dublin\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Ceci Avenue, 1900\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 165,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/165\"\r\n            },\r\n            {\r\n              \"address\": \"Alameda Araguaia 3641\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1283,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1283\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Sao Paulo\",\r\n        \"country\": \"BR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Sao Paulo\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"17/F Global Gateway\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 170,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/170\"\r\n            },\r\n            {\r\n              \"address\": \"399 Chai Wan Road\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 225,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/225\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Hong Kong\",\r\n        \"country\": \"HK\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Hong Kong\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Nad Elektrarnou 1428/47\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 214,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/214\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Prague\",\r\n        \"country\": \"CZ\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Prague\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"40 avenue Roger Salengro\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 226,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/226\"\r\n            },\r\n            {\r\n              \"address\": \"71 Avenue André Roussin\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1879,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1879\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Marseille\",\r\n        \"country\": \"FR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Marseille\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"20 Ayer Rajah Crescent\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 282,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/282\"\r\n            },\r\n            {\r\n              \"address\": \" 2 TAI SENG AVENUE\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 388,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/388\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Singapore\",\r\n        \"country\": \"SG\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Singapore\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Asztalos Sandor u. 13.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 301,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/301\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Budapest\",\r\n        \"country\": \"HU\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Budapest\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"8 Marta 14\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 349,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/349\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Moscow\",\r\n        \"country\": \"RU\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Moscow\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"910 15th Street\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 389,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/389\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Denver\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Denver\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"8, Dimitrie Pompeiu Blvd., 3rd fl.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 439,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/439\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Bucharest\",\r\n        \"country\": \"RO\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Bucharest\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"No. 250, Yang-Guang Street, Nei-hu District\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 456,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/456\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Taipei\",\r\n        \"country\": \"TW\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Taipei\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Ground Floor, Menara AIMS\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 460,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/460\"\r\n            },\r\n            {\r\n              \"address\": \"CSF Building, Computer Exchange\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1279,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1279\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Kuala Lumpur\",\r\n        \"country\": \"MY\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Kuala Lumpur\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Nonnendammallee 15\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 478,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/478\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Berlin\",\r\n        \"country\": \"DE\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Berlin\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Al. Jerozolimskie 65/79\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 509,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/509\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Warsaw\",\r\n        \"country\": \"PL\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Warsaw\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"4th floor, 2nd block\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 552,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/552\"\r\n            },\r\n            {\r\n              \"address\": \"Bharti Towers\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 2006,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/2006\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Chennai\",\r\n        \"country\": \"IN\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Chennai\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Kashinath Dhuru Marg\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 554,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/554\"\r\n            },\r\n            {\r\n              \"address\": \"Plot No, TPS-2, 14/3, 2nd floor\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 2046,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/2046\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Mumbai\",\r\n        \"country\": \"IN\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Mumbai\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"1 William Street\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 568,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/568\"\r\n            },\r\n            {\r\n              \"address\": \"4 Millrose Drive\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1940,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1940\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Perth\",\r\n        \"country\": \"AU\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Perth\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"70 Innerbelt Rd\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 584,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/584\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Boston\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Boston\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"122 Ovcho Pole str.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 663,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/663\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Sofia\",\r\n        \"country\": \"BG\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Sofia\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"7135 S Decatur Boulevard\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 770,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/770\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Las Vegas\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Las Vegas\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"151 Front St W.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 775,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/775\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Toronto\",\r\n        \"country\": \"CA\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Toronto\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"5 Brewery Street\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 850,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/850\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Johannesburg\",\r\n        \"country\": \"ZA\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Johannesburg\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"NTT DATA Dojima Bldg\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1157,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1157\"\r\n            },\r\n            {\r\n              \"address\": \"3-1-7 Dojima, Kita-ku, Osaka-shi\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 2072,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/2072\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Osaka\",\r\n        \"country\": \"JP\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Osaka\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Great Westerford Building, 240 Main Road\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1225,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1225\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Cape Town\",\r\n        \"country\": \"ZA\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Cape Town\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"555 West Hastings St\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1330,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1330\"\r\n            },\r\n            {\r\n              \"address\": \"1050 W Pender Street\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1881,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1881\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Vancouver\",\r\n        \"country\": \"CA\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Vancouver\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"820 Lorimer Street\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1339,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1339\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Melbourne\",\r\n        \"country\": \"AU\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Melbourne\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"20 Wharf Street\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1340,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1340\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Brisbane\",\r\n        \"country\": \"AU\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Brisbane\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"7A Parkhead Place\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1353,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1353\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Auckland\",\r\n        \"country\": \"NZ\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Auckland\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Selska cesta 93\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1368,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1368\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Zagreb\",\r\n        \"country\": \"HR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Zagreb\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"329 - Sao Cristovao\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1374,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1374\"\r\n            },\r\n            {\r\n              \"address\": \"Estrada Adhemar Bebiano, 1380\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1899,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1899\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Rio de Janeiro\",\r\n        \"country\": \"BR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Rio de Janeiro\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Parrukatu 2\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1457,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1457\"\r\n            },\r\n            {\r\n              \"address\": \"Sahamyllyntie 4\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1459,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1459\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Helsinki\",\r\n        \"country\": \"FI\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Helsinki\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"5150 & 5170 Westway Park Blvd\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1476,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1476\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Houston\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Houston\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"9999 Westover Hills Blvd\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1484,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1484\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"San Antonio\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"San Antonio\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"2335 South Ellis Road\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1488,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1488\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Phoenix\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Phoenix\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Privada de la Princesa 4\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1778,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1778\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Mexico\",\r\n        \"country\": \"MX\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Mexico\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Santa Marta de Huechuraba 6951\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 2093,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/2093\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Santiago\",\r\n        \"country\": \"CL\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Santiago\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"1250 Rene Levesque West\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1944,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1944\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Montreal\",\r\n        \"country\": \"CA\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Montreal\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Ifestou 76\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1949,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1949\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Athens\",\r\n        \"country\": \"GR\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Athens\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Via Caldera, 21\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1974,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1974\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Milan\",\r\n        \"country\": \"IT\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Milan\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"VSNL Colony\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1982,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1982\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"New Delhi\",\r\n        \"country\": \"IN\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"New Delhi\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"3375 Koapaka St\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 2526,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/2526\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Honolulu\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Honolulu\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"3F PLDT Bldg. Danny Floro St. corner CP Garcia St.\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 4810,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/4810\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Manila\",\r\n        \"country\": \"PH\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Manila\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"HUDA Techno Enclave, HITEC City\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 5236,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/5236\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Hyderabad\",\r\n        \"country\": \"IN\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Hyderabad\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"165 Halsey St\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 9,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/9\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Newark\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Newark\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"12100 Sunrise Valley Drive\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 668,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/668\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Reston\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Reston\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"3020 Coronado Drive\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 3344,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/3344\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Santa Clara\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Santa Clara\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Carrera 106 No. 15A-25\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1354,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1354\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Bogota\",\r\n        \"country\": \"CO\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Bogota\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Cyber Building, 1st floor. Jl. Kuningan Barat no. 8\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 2368,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/2368\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Jakarta\",\r\n        \"country\": \"ID\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Jakarta\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"Hodneveien 240\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 5343,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/5343\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Rennesoy\",\r\n        \"country\": \"NO\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Rennesoy\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"91 Moo12, Phahonyothin Road\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 6741,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/6741\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Pathum Thani\",\r\n        \"country\": \"TH\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Pathum Thani\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    },\r\n    {\r\n      \"kind\": \"Direct\",\r\n      \"properties\": {\r\n        \"direct\": {\r\n          \"peeringFacilities\": [\r\n            {\r\n              \"address\": \"6327 NE Evergreen Parkway\",\r\n              \"directPeeringType\": \"Edge\",\r\n              \"peeringDBFacilityId\": 1922,\r\n              \"peeringDBFacilityLink\": \"https://www.peeringdb.com/fac/1922\"\r\n            }\r\n          ],\r\n          \"bandwidthOffers\": [\r\n            {\r\n              \"offerName\": \"10Gbps\",\r\n              \"valueInMbps\": 10000\r\n            },\r\n            {\r\n              \"offerName\": \"100Gbps\",\r\n              \"valueInMbps\": 100000\r\n            }\r\n          ]\r\n        },\r\n        \"peeringLocation\": \"Portland\",\r\n        \"country\": \"US\",\r\n        \"azureRegion\": \"local\"\r\n      },\r\n      \"name\": \"Portland\",\r\n      \"type\": \"Microsoft.Peering/peeringLocations\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium_Direct_Free\"\r\n  },\r\n  \"kind\": \"Direct\",\r\n  \"properties\": {\r\n    \"direct\": {\r\n      \"connections\": [\r\n        {\r\n          \"bandwidthInMbps\": 10000,\r\n          \"sessionAddressProvider\": \"Microsoft\",\r\n          \"useForPeeringService\": true,\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionIdentifier\": \"5b67f329-7027-40be-bec3-045bfeb1116a\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989\"\r\n      },\r\n      \"directPeeringType\": \"Edge\"\r\n    },\r\n    \"peeringLocation\": \"Seattle\"\r\n  },\r\n  \"location\": \"local\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cf8db38c-47ce-4b3a-acb9-99f7346ef181"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "661"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "ad343f66-ca81-4833-8ebb-074f15c492b7"
+        ],
+        "Date": [
+          "Fri, 28 Feb 2020 00:00:27 GMT"
+        ],
+        "Content-Length": [
+          "1154"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium_Direct_Free\",\r\n    \"tier\": \"Premium\",\r\n    \"family\": \"Direct\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Direct\",\r\n  \"properties\": {\r\n    \"direct\": {\r\n      \"connections\": [\r\n        {\r\n          \"bandwidthInMbps\": 10000,\r\n          \"provisionedBandwidthInMbps\": 0,\r\n          \"sessionAddressProvider\": \"Microsoft\",\r\n          \"useForPeeringService\": true,\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"connectionIdentifier\": \"5b67f329-7027-40be-bec3-045bfeb1116a\"\r\n        }\r\n      ],\r\n      \"useForPeeringService\": true,\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989\"\r\n      },\r\n      \"directPeeringType\": \"Edge\"\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"local\",\r\n  \"eTag\": \"35dc7cb4-3f37-401d-9d12-e1b8ddcc8a10\",\r\n  \"name\": \"direct_4880\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/exchangepeering3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "12e0cc89-9d49-4484-9130-eac84339d771"
+          "e59eb5a8-6032-40a8-8228-2ac35d8906a9"
         ],
         "Accept-Language": [
           "en-US"
@@ -262,7 +238,7 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -273,29 +249,29 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "304a1edc-1606-405b-9c65-a43b46e4b58a"
+          "907e0490-7125-4c24-aba1-1b45a0080c73"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
+          "Fri, 28 Feb 2020 00:00:27 GMT"
         ],
         "Content-Length": [
-          "1353"
+          "1154"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic_Exchange_Free\",\r\n    \"tier\": \"Basic\",\r\n    \"family\": \"Exchange\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Exchange\",\r\n  \"properties\": {\r\n    \"exchange\": {\r\n      \"connections\": [\r\n        {\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"bgpSession\": {\r\n            \"sessionPrefixV4\": \"10.12.97.128/26\",\r\n            \"microsoftSessionIPv4Address\": \"10.12.97.129\",\r\n            \"peerSessionIPv4Address\": \"10.12.97.184\",\r\n            \"sessionStateV4\": \"None\",\r\n            \"sessionStateV6\": \"None\",\r\n            \"maxPrefixesAdvertisedV4\": 20000,\r\n            \"maxPrefixesAdvertisedV6\": 0\r\n          },\r\n          \"connectionIdentifier\": \"adb28313-88bb-4793-8897-67006811365c\"\r\n        }\r\n      ],\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040\"\r\n      }\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"centralus\",\r\n  \"tags\": {\r\n    \"tfs_8790\": \"Active\"\r\n  },\r\n  \"eTag\": \"6a675c95-256f-49db-a399-f410feda2d9b\",\r\n  \"name\": \"exchangepeering3040\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/exchangepeering3040\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium_Direct_Free\",\r\n    \"tier\": \"Premium\",\r\n    \"family\": \"Direct\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Direct\",\r\n  \"properties\": {\r\n    \"direct\": {\r\n      \"connections\": [\r\n        {\r\n          \"bandwidthInMbps\": 10000,\r\n          \"provisionedBandwidthInMbps\": 0,\r\n          \"sessionAddressProvider\": \"Microsoft\",\r\n          \"useForPeeringService\": true,\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"connectionIdentifier\": \"5b67f329-7027-40be-bec3-045bfeb1116a\"\r\n        }\r\n      ],\r\n      \"useForPeeringService\": true,\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989\"\r\n      },\r\n      \"directPeeringType\": \"Edge\"\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"location\": \"local\",\r\n  \"eTag\": \"35dc7cb4-3f37-401d-9d12-e1b8ddcc8a10\",\r\n  \"name\": \"direct_4880\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/exchangepeering3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e08e9fc9-da1a-4c86-a823-ece4a1bd33d2"
+          "db712968-765e-475a-9ecf-92b018162728"
         ],
         "Accept-Language": [
           "en-US"
@@ -304,7 +280,7 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -315,26 +291,29 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "5c5fc148-4fda-469c-8e62-cbc307e1e051"
+          "49bdfa9e-3bee-4589-89ef-995a81ebc17b"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
+          "Fri, 28 Feb 2020 00:00:27 GMT"
         ],
         "Content-Length": [
-          "0"
+          "1153"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "",
-      "StatusCode": 404
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium_Direct_Free\",\r\n    \"tier\": \"Premium\",\r\n    \"family\": \"Direct\",\r\n    \"size\": \"Free\"\r\n  },\r\n  \"kind\": \"Direct\",\r\n  \"properties\": {\r\n    \"direct\": {\r\n      \"connections\": [\r\n        {\r\n          \"bandwidthInMbps\": 10000,\r\n          \"provisionedBandwidthInMbps\": 0,\r\n          \"sessionAddressProvider\": \"Microsoft\",\r\n          \"useForPeeringService\": true,\r\n          \"peeringDBFacilityId\": 99999,\r\n          \"connectionState\": \"PendingApproval\",\r\n          \"connectionIdentifier\": \"5b67f329-7027-40be-bec3-045bfeb1116a\"\r\n        }\r\n      ],\r\n      \"useForPeeringService\": true,\r\n      \"peerAsn\": {\r\n        \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989\"\r\n      },\r\n      \"directPeeringType\": \"Edge\"\r\n    },\r\n    \"peeringLocation\": \"Seattle\",\r\n    \"provisioningState\": \"Deleting\"\r\n  },\r\n  \"location\": \"local\",\r\n  \"eTag\": \"edffbb1f-066c-4041-98e8-b525e659c029\",\r\n  \"name\": \"direct_4880\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880\",\r\n  \"type\": \"Microsoft.Peering/peerings\"\r\n}",
+      "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/peerings/registeredPrefixes/exchangepeering3040_prefix2016?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL3BlZXJpbmdzL3JlZ2lzdGVyZWRQcmVmaXhlcy9leGNoYW5nZXBlZXJpbmczMDQwX3ByZWZpeDIwMTY/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwL3JlZ2lzdGVyZWRQcmVmaXhlcy9kaXJlY3RfNDg4MHByZWZpeF83NzI1P2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"prefix\": \"10.10.0.0/24\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"prefix\": \"52.78.253.0/30\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "da9a8173-39b2-4e86-92de-f24114035e87"
+          "84b88648-796e-4734-9e0f-c015b57fe7b7"
         ],
         "Accept-Language": [
           "en-US"
@@ -343,193 +322,13 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "58"
-        ]
-      },
-      "ResponseHeaders": {
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate-dSTS": [
-          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/peerings/registeredPrefixes/exchangepeering3040_prefix2016?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL3BlZXJpbmdzL3JlZ2lzdGVyZWRQcmVmaXhlcy9leGNoYW5nZXBlZXJpbmczMDQwX3ByZWZpeDIwMTY/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "6d0cf91c-db0f-428e-9e9d-0c0bb6fb31c1"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate-dSTS": [
-          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/peerings/registeredPrefixes/exchangepeering3040_prefix2016?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL3BlZXJpbmdzL3JlZ2lzdGVyZWRQcmVmaXhlcy9leGNoYW5nZXBlZXJpbmczMDQwX3ByZWZpeDIwMTY/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ad158e10-f589-4eb6-ab10-7b80c7de7cc8"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate-dSTS": [
-          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/peerings/registeredPrefixes?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL3BlZXJpbmdzL3JlZ2lzdGVyZWRQcmVmaXhlcz9hcGktdmVyc2lvbj0yMDIwLTAxLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "e2503960-18a0-424f-85a6-cdcc768cb7a6"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate-dSTS": [
-          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/peerings/registeredPrefixes/exchangepeering3040_prefix2016?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL3BlZXJpbmdzL3JlZ2lzdGVyZWRQcmVmaXhlcy9leGNoYW5nZXBlZXJpbmczMDQwX3ByZWZpeDIwMTY/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "b4d4ffca-0791-4aac-bec1-df1fb116cdf6"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate-dSTS": [
-          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res1009/providers/Microsoft.Peering/peerings/exchangepeering3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczEwMDkvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2V4Y2hhbmdlcGVlcmluZzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "087ff361-58a1-48c4-8e76-9612b1d73a62"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "60"
         ]
       },
       "ResponseHeaders": {
@@ -540,425 +339,113 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "70d5b3f3-1b47-48d6-9bb5-8b53d53d3e18"
+          "a1726920-b2c9-47cb-a866-ffeeef14dee3"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:22:41 GMT"
+          "Fri, 28 Feb 2020 00:00:27 GMT"
         ],
         "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res1009?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczEwMDk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ea7b2fb0-c6e9-4811-b7f2-0ee643efa427"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14997"
-        ],
-        "x-ms-request-id": [
-          "e1a53795-4daa-46cc-ae14-bf5038616af1"
-        ],
-        "x-ms-correlation-request-id": [
-          "e1a53795-4daa-46cc-ae14-bf5038616af1"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222243Z:e1a53795-4daa-46cc-ae14-bf5038616af1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:42 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNeE1EQTVMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
-        ],
-        "x-ms-request-id": [
-          "29206e9a-9ad9-49d7-88b1-e73cdf015072"
-        ],
-        "x-ms-correlation-request-id": [
-          "29206e9a-9ad9-49d7-88b1-e73cdf015072"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222258Z:29206e9a-9ad9-49d7-88b1-e73cdf015072"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:22:58 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNeE1EQTVMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
-        ],
-        "x-ms-request-id": [
-          "feb397aa-16ec-49ad-9461-d46da8ecab35"
-        ],
-        "x-ms-correlation-request-id": [
-          "feb397aa-16ec-49ad-9461-d46da8ecab35"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222314Z:feb397aa-16ec-49ad-9461-d46da8ecab35"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:23:13 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNeE1EQTVMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
-        ],
-        "x-ms-request-id": [
-          "9c6bc431-42a4-4773-8cff-bf2f431cff6c"
-        ],
-        "x-ms-correlation-request-id": [
-          "9c6bc431-42a4-4773-8cff-bf2f431cff6c"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222329Z:9c6bc431-42a4-4773-8cff-bf2f431cff6c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:23:28 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNeE1EQTVMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
-        ],
-        "x-ms-request-id": [
-          "d715d91d-7a86-4acd-9c3c-0b3c31d2625f"
-        ],
-        "x-ms-correlation-request-id": [
-          "d715d91d-7a86-4acd-9c3c-0b3c31d2625f"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222344Z:d715d91d-7a86-4acd-9c3c-0b3c31d2625f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:23:44 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1SRVMxMDA5LUNFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoiY2VudHJhbHVzIn0?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFTUlZNeE1EQTVMVU5GVGxSU1FVeFZVeUlzSW1wdllreHZZMkYwYVc5dUlqb2lZMlZ1ZEhKaGJIVnpJbjA/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
-        ],
-        "x-ms-request-id": [
-          "8ae73dc9-076d-454b-98ee-dba13662fc37"
-        ],
-        "x-ms-correlation-request-id": [
-          "8ae73dc9-076d-454b-98ee-dba13662fc37"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222345Z:8ae73dc9-076d-454b-98ee-dba13662fc37"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:23:44 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourcegroups/res1009?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlZ3JvdXBzL3JlczEwMDk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "b2c4cd32-997f-4676-860a-4db0446b7eb2"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.28325.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-failure-cause": [
-          "gateway"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
-        ],
-        "x-ms-request-id": [
-          "c44b168b-d1e9-49cb-8abc-83dba6139238"
-        ],
-        "x-ms-correlation-request-id": [
-          "c44b168b-d1e9-49cb-8abc-83dba6139238"
-        ],
-        "x-ms-routing-request-id": [
-          "NORTHEUROPE:20200127T222345Z:c44b168b-d1e9-49cb-8abc-83dba6139238"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Mon, 27 Jan 2020 22:23:44 GMT"
+          "535"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "99"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'res1009' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"prefix\": \"52.78.253.0/30\",\r\n    \"prefixValidationState\": \"None\",\r\n    \"peeringServicePrefixKey\": \"268db2f9-29af-4aa0-becf-8d9d6923bbcd\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"eTag\": \"435b4318-7245-4595-9f32-61d03423e6e9\",\r\n  \"name\": \"direct_4880prefix_7725\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725\",\r\n  \"type\": \"Microsoft.Peering/peerings/registeredPrefixes\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwL3JlZ2lzdGVyZWRQcmVmaXhlcy9kaXJlY3RfNDg4MHByZWZpeF83NzI1P2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "adee37f3-cb28-4241-a853-8e9fde749cbd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "5587f97e-d094-4626-869d-4781996345fd"
+        ],
+        "Date": [
+          "Fri, 28 Feb 2020 00:00:27 GMT"
+        ],
+        "Content-Length": [
+          "535"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"prefix\": \"52.78.253.0/30\",\r\n    \"prefixValidationState\": \"None\",\r\n    \"peeringServicePrefixKey\": \"268db2f9-29af-4aa0-becf-8d9d6923bbcd\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"eTag\": \"435b4318-7245-4595-9f32-61d03423e6e9\",\r\n  \"name\": \"direct_4880prefix_7725\",\r\n  \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725\",\r\n  \"type\": \"Microsoft.Peering/peerings/registeredPrefixes\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwL3JlZ2lzdGVyZWRQcmVmaXhlcy9kaXJlY3RfNDg4MHByZWZpeF83NzI1P2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6afdf361-2bcb-41a2-9b71-db8f7241b0ec"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "8151c0f2-8406-4b6f-89bf-53e38c014234"
+        ],
+        "Date": [
+          "Fri, 28 Feb 2020 00:00:27 GMT"
+        ],
+        "Content-Length": [
+          "68"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"Resource does not exist.\"\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS3040?api-version=2020-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzMwNDA/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "DELETE",
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwL3JlZ2lzdGVyZWRQcmVmaXhlcz9hcGktdmVyc2lvbj0yMDIwLTAxLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b073fd6-174d-40a8-bc86-78d088922b86"
+          "5f829f29-bbd4-4fc3-a74d-f873e1c92312"
         ],
         "Accept-Language": [
           "en-US"
@@ -967,7 +454,7 @@
           "FxVersion/4.6.28325.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Peering.PeeringManagementClient/0.13.0.0"
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
         ]
       },
       "ResponseHeaders": {
@@ -978,10 +465,130 @@
           "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
         ],
         "x-ms-request-id": [
-          "2af52bf5-12a6-45bd-abc0-df193402fd2d"
+          "e9a2ec12-905d-4bf0-aa52-2c969a98edeb"
         ],
         "Date": [
-          "Mon, 27 Jan 2020 22:23:45 GMT"
+          "Fri, 28 Feb 2020 00:00:27 GMT"
+        ],
+        "Content-Length": [
+          "608"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"prefix\": \"52.78.253.0/30\",\r\n        \"prefixValidationState\": \"None\",\r\n        \"peeringServicePrefixKey\": \"268db2f9-29af-4aa0-becf-8d9d6923bbcd\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"eTag\": \"435b4318-7245-4595-9f32-61d03423e6e9\",\r\n      \"name\": \"direct_4880prefix_7725\",\r\n      \"id\": \"/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725\",\r\n      \"type\": \"Microsoft.Peering/peerings/registeredPrefixes\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880/registeredPrefixes/direct_4880prefix_7725?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwL3JlZ2lzdGVyZWRQcmVmaXhlcy9kaXJlY3RfNDg4MHByZWZpeF83NzI1P2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "19062e04-a669-430e-a196-ad33adf5fb93"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "62fbb18f-c220-4e32-8dc1-d26da0fad52a"
+        ],
+        "Date": [
+          "Fri, 28 Feb 2020 00:00:27 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/resourceGroups/res5661/providers/Microsoft.Peering/peerings/direct_4880?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Jlc291cmNlR3JvdXBzL3JlczU2NjEvcHJvdmlkZXJzL01pY3Jvc29mdC5QZWVyaW5nL3BlZXJpbmdzL2RpcmVjdF80ODgwP2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a6367212-3901-47e6-8681-6e2b04b48c6c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "fa7702de-fedc-47aa-a1ca-3c11877f551f"
+        ],
+        "Date": [
+          "Fri, 28 Feb 2020 00:00:27 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3e919f9a-4e26-4736-aa8d-d596d9a49239/providers/Microsoft.Peering/peerAsns/AS989?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U5MTlmOWEtNGUyNi00NzM2LWFhOGQtZDU5NmQ5YTQ5MjM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9wZWVyQXNucy9BUzk4OT9hcGktdmVyc2lvbj0yMDIwLTAxLTAxLXByZXZpZXc=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f157334e-7d2c-4fe0-81fb-ce61995dde7f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28325.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Peering.PeeringManagementClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate-dSTS": [
+          "http://schemas.microsoft.com/dsts/saml2-bearer metadata-version=1,sts-realm=realm://dsts.core.azure-test.net/,certificate-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/certificate,issued-token-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/v2/wstrust/13/issuedtoken-bearer,discovery-sts-address=https://co2agg04-dsts.dsts.core.azure-test.net/2012/IDstsDiscoveryService,service-dns-name=secrets.wanrr-test.radar.core.azure-test.net,known-sts-thumbprints=ForBackwardCompatibility,trusted-sts-thumbprints=ForBackwardCompatibility,error=3,error-description=\"The security token is invalid. Cannot decode base64 encoded string. The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters. \""
+        ],
+        "x-ms-request-id": [
+          "9e93068c-3802-4e82-a241-c7662365ed62"
+        ],
+        "Date": [
+          "Fri, 28 Feb 2020 00:00:27 GMT"
         ],
         "Content-Length": [
           "0"
@@ -992,19 +599,16 @@
     }
   ],
   "Names": {
-    "CreateGetListAndDeleteRegisteredPrefix": [
-      "03040",
-      "_prefix2016"
-    ],
     "CreateResourceGroup": [
-      "res1009"
+      "res5661"
     ],
-    "CreateExchangePeeringModel": [
-      "tfs_8790"
+    "CreateGetListAndDeleteRegisteredPrefix": [
+      "0989",
+      "prefix_7725",
+      "direct_4880"
     ]
   },
   "Variables": {
-    "SubscriptionId": "3e919f9a-4e26-4736-aa8d-d596d9a49239",
-    "ipAddress": "184"
+    "SubscriptionId": "3e919f9a-4e26-4736-aa8d-d596d9a49239"
   }
 }

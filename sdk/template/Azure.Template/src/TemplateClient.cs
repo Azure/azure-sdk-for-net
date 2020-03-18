@@ -18,13 +18,6 @@ namespace Azure.Template
     public partial class TemplateClient
     {
         /// <summary>
-        /// Mocking ctor only.
-        /// </summary>
-        protected TemplateClient()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TemplateClient"/>.
         /// </summary>
         public TemplateClient(Uri endpoint) : this(endpoint, new TemplateClientOptions())

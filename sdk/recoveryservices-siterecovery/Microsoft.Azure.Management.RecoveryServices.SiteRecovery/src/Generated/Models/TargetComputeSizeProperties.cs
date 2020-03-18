@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// name.</param>
         /// <param name="cpuCoresCount">The maximum cpu cores count supported
         /// by target compute size.</param>
+        /// <param name="vCPUsAvailable">The Available vCPUs supported by
+        /// target compute size.</param>
         /// <param name="memoryInGB">The maximum memory in GB supported by
         /// target compute size.</param>
         /// <param name="maxDataDiskCount">The maximum data disks count
@@ -48,16 +50,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// applicable for the protected item.</param>
         /// <param name="highIopsSupported">The value indicating whether the
         /// target compute size supports high Iops.</param>
-        public TargetComputeSizeProperties(string name = default(string), string friendlyName = default(string), int? cpuCoresCount = default(int?), double? memoryInGB = default(double?), int? maxDataDiskCount = default(int?), int? maxNicsCount = default(int?), IList<ComputeSizeErrorDetails> errors = default(IList<ComputeSizeErrorDetails>), string highIopsSupported = default(string))
+        /// <param name="hyperVGenerations">The supported HyperV
+        /// Generations.</param>
+        public TargetComputeSizeProperties(string name = default(string), string friendlyName = default(string), int? cpuCoresCount = default(int?), int? vCPUsAvailable = default(int?), double? memoryInGB = default(double?), int? maxDataDiskCount = default(int?), int? maxNicsCount = default(int?), IList<ComputeSizeErrorDetails> errors = default(IList<ComputeSizeErrorDetails>), string highIopsSupported = default(string), IList<string> hyperVGenerations = default(IList<string>))
         {
             Name = name;
             FriendlyName = friendlyName;
             CpuCoresCount = cpuCoresCount;
+            VCPUsAvailable = vCPUsAvailable;
             MemoryInGB = memoryInGB;
             MaxDataDiskCount = maxDataDiskCount;
             MaxNicsCount = maxNicsCount;
             Errors = errors;
             HighIopsSupported = highIopsSupported;
+            HyperVGenerations = hyperVGenerations;
             CustomInit();
         }
 
@@ -84,6 +90,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "cpuCoresCount")]
         public int? CpuCoresCount { get; set; }
+
+        /// <summary>
+        /// Gets the Available vCPUs supported by target compute size.
+        /// </summary>
+        [JsonProperty(PropertyName = "vCPUsAvailable")]
+        public int? VCPUsAvailable { get; private set; }
 
         /// <summary>
         /// Gets or sets the maximum memory in GB supported by target compute
@@ -119,6 +131,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "highIopsSupported")]
         public string HighIopsSupported { get; set; }
+
+        /// <summary>
+        /// Gets the supported HyperV Generations.
+        /// </summary>
+        [JsonProperty(PropertyName = "hyperVGenerations")]
+        public IList<string> HyperVGenerations { get; private set; }
 
     }
 }

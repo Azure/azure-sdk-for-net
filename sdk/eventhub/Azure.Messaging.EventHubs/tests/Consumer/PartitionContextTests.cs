@@ -133,7 +133,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 LastReceivedEvent = lastEvent;
             }
 
-            public override Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => throw new NotImplementedException();
             public override Task CloseAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
         }
     }

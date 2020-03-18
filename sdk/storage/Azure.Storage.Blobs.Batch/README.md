@@ -162,7 +162,7 @@ catch (AggregateException)
 
 ## Next steps
 
-Check out our [sync](../Azure.Storage.Blobs/samples/Sample03a_Batching.cs) and [async](../Azure.Storage.Blobs/samples/Sample03b_BatchingAsync.cs) samples for more.
+Check out our [sync](../Azure.Storage.Blobs.Batch/samples/Sample03a_Batching.cs) and [async](../Azure.Storage.Blobs.Batch/samples/Sample03b_BatchingAsync.cs) samples for more.
 
 ## Contributing
 

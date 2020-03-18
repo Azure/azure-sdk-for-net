@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -185,11 +185,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty set is returned.</returns>
         ///
-        public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                        TimeSpan? maximumWaitTime,
-                                                                        CancellationToken cancellationToken)
+        public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                          TimeSpan? maximumWaitTime,
+                                                                          CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         // No events were available.
 
-                        return Enumerable.Empty<EventData>();
+                        return new List<EventData>(0);
                     }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
@@ -270,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // amount of time to wait for events, a timeout isn't considered an error condition,
                         // rather a sign that no events were available in the requested period.
 
-                        return Enumerable.Empty<EventData>();
+                        return new List<EventData>(0);
                     }
                     catch (Exception ex)
                     {
@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {

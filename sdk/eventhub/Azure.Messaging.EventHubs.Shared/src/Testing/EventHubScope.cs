@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -269,6 +270,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     })
                 ).ConfigureAwait(false);
 
+                groups.Insert(0, EventHubConsumerClient.DefaultConsumerGroupName);
                 return new EventHubScope(eventHub.Name, groups, shouldRemoveEventHubAtScopeCompletion: true);
             }
         }

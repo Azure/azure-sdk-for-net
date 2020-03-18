@@ -330,7 +330,7 @@ namespace Azure.Storage.Files.DataLake
         /// root directory of the file system.
         /// </summary>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
-        public virtual DataLakeDirectoryClient GetRootDirectoryClient()
+        internal virtual DataLakeDirectoryClient GetRootDirectoryClient()
         {
             return GetDirectoryClient(string.Empty);
         }

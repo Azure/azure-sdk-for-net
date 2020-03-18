@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/create?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/create?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/create?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/create?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -102,7 +102,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/d196221f2cdf4311bff902008d7845ae?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/d196221f2cdf4311bff902008d7845ae?api-version=7.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -159,7 +159,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/d196221f2cdf4311bff902008d7845ae/sign?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728/d196221f2cdf4311bff902008d7845ae/sign?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -202,7 +202,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/1527537728?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -262,7 +262,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/deletedkeys/1527537728?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/deletedkeys/1527537728?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
