@@ -22,11 +22,6 @@ namespace Azure.Search
         public IndexDocumentsOptions() { }
         public bool ThrowOnAnyError { get { throw null; } set { } }
     }
-    public partial class SearchApiKeyCredential
-    {
-        public SearchApiKeyCredential(string apiKey) { }
-        public void Refresh(string apiKey) { }
-    }
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.SearchClientOptions.ServiceVersion version = Azure.Search.SearchClientOptions.ServiceVersion.V2019_05_06_Preview) { }
@@ -44,8 +39,8 @@ namespace Azure.Search
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
-        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.Search.SearchApiKeyCredential credential) { }
-        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.Search.SearchApiKeyCredential credential, Azure.Search.SearchClientOptions options) { }
+        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.Core.AzureKeyCredential credential) { }
+        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.Core.AzureKeyCredential credential, Azure.Search.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
@@ -98,8 +93,8 @@ namespace Azure.Search
     public partial class SearchServiceClient
     {
         protected SearchServiceClient() { }
-        public SearchServiceClient(System.Uri endpoint, Azure.Search.SearchApiKeyCredential credential) { }
-        public SearchServiceClient(System.Uri endpoint, Azure.Search.SearchApiKeyCredential credential, Azure.Search.SearchClientOptions options) { }
+        public SearchServiceClient(System.Uri endpoint, Azure.Core.AzureKeyCredential credential) { }
+        public SearchServiceClient(System.Uri endpoint, Azure.Core.AzureKeyCredential credential, Azure.Search.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Search.SearchIndexClient GetSearchIndexClient(string indexName) { throw null; }
