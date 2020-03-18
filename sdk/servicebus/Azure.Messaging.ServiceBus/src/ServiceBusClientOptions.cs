@@ -3,6 +3,8 @@
 
 using System.ComponentModel;
 using System.Net;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -13,6 +15,8 @@ namespace Azure.Messaging.ServiceBus
     ///
     public class ServiceBusClientOptions
     {
+        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
         ///   service.
@@ -31,6 +35,20 @@ namespace Azure.Messaging.ServiceBus
         ///
         public IWebProxy Proxy { get; set; } = null;
 
+        /// <summary>
+        /// The set of options to use for determining whether a failed operation should be retried and,
+        /// if so, the amount of time to wait between retry attempts.  These options also control the
+        /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
+        /// </summary>
+        public ServiceBusRetryOptions RetryOptions
+        {
+            get => _retryOptions;
+            set
+            {
+                Argument.AssertNotNull(value, nameof(RetryOptions));
+                _retryOptions = value;
+            }
+        }
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
@@ -66,11 +84,12 @@ namespace Azure.Messaging.ServiceBus
         ///        ///
         /// <returns>A new copy of <see cref="ServiceBusClientOptions" />.</returns>
         ///
-        public ServiceBusClientOptions Clone() =>
+        internal ServiceBusClientOptions Clone() =>
             new ServiceBusClientOptions
             {
                 TransportType = TransportType,
-                Proxy = Proxy
+                Proxy = Proxy,
+                RetryOptions = RetryOptions.Clone()
             };
     }
 }

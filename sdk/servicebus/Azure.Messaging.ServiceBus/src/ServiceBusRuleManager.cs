@@ -12,8 +12,15 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class ServiceBusSubscriptionRuleManager
+    internal class ServiceBusRuleManager
     {
+        /// <summary>
+        /// TODO implement
+        /// </summary>
+        /// <param name="topicName"></param>
+        /// <param name="subscriptionName"></param>
+        internal ServiceBusRuleManager(string topicName, string subscriptionName) { }
+
         /// <summary>
         /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
         /// </summary>

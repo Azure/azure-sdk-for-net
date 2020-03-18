@@ -165,15 +165,15 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
             Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(options.RetryOptions, nameof(options.RetryOptions));
             connection.ThrowIfClosed();
 
             _connection = connection;
             EntityPath = entityPath;
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
-            _retryOptions = options.RetryOptions;
+            _retryOptions = _connection.RetryOptions;
             ReceiveMode = options.ReceiveMode;
             PrefetchCount = options.PrefetchCount;
             MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
@@ -390,7 +390,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ReceiveMode,
-                RetryOptions = _retryOptions,
                 PrefetchCount = PrefetchCount
             };
         }
@@ -673,6 +672,7 @@ namespace Azure.Messaging.ServiceBus
         {
             cancellationTokenSource.CancelAfter(MaxAutoLockRenewalDuration);
             var cancellationToken = cancellationTokenSource.Token;
+            ServiceBusSessionManager sessionManager = null;
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
@@ -680,7 +680,8 @@ namespace Azure.Messaging.ServiceBus
                     DateTimeOffset lockedUntil = default;
                     if (IsSessionProcessor)
                     {
-                        lockedUntil = receiver.SessionManager.LockedUntil;
+                        sessionManager = receiver.GetSessionManager();
+                        lockedUntil = sessionManager.LockedUntil;
                     }
                     else
                     {
@@ -701,7 +702,7 @@ namespace Azure.Messaging.ServiceBus
 
                     if (IsSessionProcessor)
                     {
-                        await receiver.SessionManager.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+                        await sessionManager.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
