@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for FrontDoorQuery.
+    /// Defines values for HeaderActionType.
     /// </summary>
-    public static class FrontDoorQuery
+    public static class HeaderActionType
     {
-        public const string StripNone = "StripNone";
-        public const string StripAll = "StripAll";
-        public const string StripOnly = "StripOnly";
-        public const string StripAllExcept = "StripAllExcept";
+        public const string Append = "Append";
+        public const string Delete = "Delete";
+        public const string Overwrite = "Overwrite";
     }
 }
