@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
         public async Task ProcessRunnerRealProcessSucceeded()
         {
             var output = "Test output";
-            var process = CreateRealProcess(output);
+            var process = CreateRealProcess($"echo {output}", $"echo {output}");
             var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
             var result = await Run(runner);
 
@@ -56,32 +56,11 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ProcessRunnerRealProcessCanceledByTimeout()
-        {
-            var cts = new CancellationTokenSource();
-            var process = CreateRealProcess("Test output", 5);
-            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(100), cts.Token);
-
-            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
-        }
-
-        [Test]
         public void ProcessRunnerCanceledByCancellationToken()
         {
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
             var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
-            cts.CancelAfter(100);
-
-            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
-        }
-
-        [Test]
-        public void ProcessRunnerRealProcessCanceledByCancellationToken()
-        {
-            var cts = new CancellationTokenSource();
-            var process = CreateRealProcess("Test output", 5);
-            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), cts.Token);
             cts.CancelAfter(100);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
@@ -134,7 +113,7 @@ namespace Azure.Identity.Tests
         public void ProcessRunnerRealProcessFailedWithErrorMessage()
         {
             var error = "Test error";
-            var process = CreateRealProcess($"{error} 1>&2 & exit 1");
+            var process = CreateRealProcess($"echo {error} 1>&2 & exit 1", $">&2 echo {error} & exit 1");
             var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
@@ -154,28 +133,13 @@ namespace Azure.Identity.Tests
 
         private async Task<string> Run(ProcessRunner runner) => IsAsync ? await runner.RunAsync() : runner.Run();
 
-        private static IProcess CreateRealProcess(string output, int timeoutInSeconds = 0)
+        private static IProcess CreateRealProcess(string windowsCommand, string nonWindowsCommand)
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             var fileName = isWindows ? "cmd" : "sh";
-            var argumentsBuilder = new StringBuilder();
+            var arguments = isWindows ? $"/C \"{windowsCommand}\"" : $"-c \"{nonWindowsCommand}\"";
 
-            if (isWindows)
-            {
-                argumentsBuilder.Append("/C ");
-            }
-
-            if (timeoutInSeconds > 0)
-            {
-                argumentsBuilder
-                    .Append("timeout ")
-                    .Append(timeoutInSeconds)
-                    .Append(" & ");
-            }
-
-            argumentsBuilder.Append("echo ").Append(output);
-
-            return ProcessService.Default.Create(new ProcessStartInfo {FileName = fileName, Arguments = argumentsBuilder.ToString(), ErrorDialog = false, CreateNoWindow = true});
+            return ProcessService.Default.Create(new ProcessStartInfo {FileName = fileName, Arguments = arguments, ErrorDialog = false, CreateNoWindow = true});
         }
     }
 }
