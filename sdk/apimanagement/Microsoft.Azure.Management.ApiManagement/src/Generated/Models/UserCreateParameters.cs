@@ -48,10 +48,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="identities">Collection of user identities.</param>
         /// <param name="password">User Password. If no value is provided, a
         /// default password is generated.</param>
+        /// <param name="appType">Determines the type of application which send
+        /// the create user request. Default is old publisher portal. Possible
+        /// values include: 'developerPortal'</param>
         /// <param name="confirmation">Determines the type of confirmation
         /// e-mail that will be sent to the newly created user. Possible values
         /// include: 'signup', 'invite'</param>
-        public UserCreateParameters(string email, string firstName, string lastName, string state = default(string), string note = default(string), IList<UserIdentityContract> identities = default(IList<UserIdentityContract>), string password = default(string), string confirmation = default(string))
+        public UserCreateParameters(string email, string firstName, string lastName, string state = default(string), string note = default(string), IList<UserIdentityContract> identities = default(IList<UserIdentityContract>), string password = default(string), string appType = default(string), string confirmation = default(string))
         {
             State = state;
             Note = note;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             FirstName = firstName;
             LastName = lastName;
             Password = password;
+            AppType = appType;
             Confirmation = confirmation;
             CustomInit();
         }
@@ -117,6 +121,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Password { get; set; }
 
         /// <summary>
+        /// Gets or sets determines the type of application which send the
+        /// create user request. Default is old publisher portal. Possible
+        /// values include: 'developerPortal'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.appType")]
+        public string AppType { get; set; }
+
+        /// <summary>
         /// Gets or sets determines the type of confirmation e-mail that will
         /// be sent to the newly created user. Possible values include:
         /// 'signup', 'invite'
@@ -143,6 +155,39 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (LastName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "LastName");
+            }
+            if (Email != null)
+            {
+                if (Email.Length > 254)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Email", 254);
+                }
+                if (Email.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Email", 1);
+                }
+            }
+            if (FirstName != null)
+            {
+                if (FirstName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "FirstName", 100);
+                }
+                if (FirstName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "FirstName", 1);
+                }
+            }
+            if (LastName != null)
+            {
+                if (LastName.Length > 100)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LastName", 100);
+                }
+                if (LastName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "LastName", 1);
+                }
             }
         }
     }

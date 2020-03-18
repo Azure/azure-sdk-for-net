@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -136,5 +137,25 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         [JsonProperty(PropertyName = "state")]
         public ProductState? State { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Description != null)
+            {
+                if (Description.Length > 1000)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 1000);
+                }
+                if (Description.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Description", 1);
+                }
+            }
+        }
     }
 }
