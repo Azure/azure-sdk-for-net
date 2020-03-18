@@ -79,11 +79,6 @@ namespace Azure.Identity
                 scope.Failed(e);
                 throw;
             }
-            catch (CredentialUnavailableException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e)
             {
                 throw scope.FailAndWrap(e);
