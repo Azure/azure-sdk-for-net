@@ -198,7 +198,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
                     var session = receiver.GetSessionManager();
-                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAtAsync(
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAtAsync(
                         sequenceNumber: 1,
                         maxMessages: 10))
                     {

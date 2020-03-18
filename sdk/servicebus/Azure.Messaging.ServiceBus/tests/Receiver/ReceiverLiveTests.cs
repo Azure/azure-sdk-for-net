@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var ct = 0;
                 while (ct < messageCt)
                 {
-                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAsync(
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAsync(
                     maxMessages: messageCt))
                     {
                         var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());

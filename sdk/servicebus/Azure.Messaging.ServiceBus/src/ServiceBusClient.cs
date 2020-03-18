@@ -131,11 +131,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="queueOrTopicName"></param>
         /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName) =>
+        public ServiceBusSender GetSender(string queueOrTopicName) =>
             new ServiceBusSender(
-                entityPath: entityName,
+                entityPath: queueOrTopicName,
                 connection: Connection);
 
         /// <summary>

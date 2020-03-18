@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (amqpMessage.Header.Ttl != null)
                 {
-                    sbMessage.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
+                    sbMessage.SentMessage.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
                 }
 
                 if (amqpMessage.Header.DeliveryCount != null)
@@ -290,42 +290,42 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (amqpMessage.Properties.MessageId != null)
                 {
-                    sbMessage.MessageId = amqpMessage.Properties.MessageId.ToString();
+                    sbMessage.SentMessage.MessageId = amqpMessage.Properties.MessageId.ToString();
                 }
 
                 if (amqpMessage.Properties.CorrelationId != null)
                 {
-                    sbMessage.CorrelationId = amqpMessage.Properties.CorrelationId.ToString();
+                    sbMessage.SentMessage.CorrelationId = amqpMessage.Properties.CorrelationId.ToString();
                 }
 
                 if (amqpMessage.Properties.ContentType.Value != null)
                 {
-                    sbMessage.ContentType = amqpMessage.Properties.ContentType.Value;
+                    sbMessage.SentMessage.ContentType = amqpMessage.Properties.ContentType.Value;
                 }
 
                 if (amqpMessage.Properties.Subject != null)
                 {
-                    sbMessage.Label = amqpMessage.Properties.Subject;
+                    sbMessage.SentMessage.Label = amqpMessage.Properties.Subject;
                 }
 
                 if (amqpMessage.Properties.To != null)
                 {
-                    sbMessage.To = amqpMessage.Properties.To.ToString();
+                    sbMessage.SentMessage.To = amqpMessage.Properties.To.ToString();
                 }
 
                 if (amqpMessage.Properties.ReplyTo != null)
                 {
-                    sbMessage.ReplyTo = amqpMessage.Properties.ReplyTo.ToString();
+                    sbMessage.SentMessage.ReplyTo = amqpMessage.Properties.ReplyTo.ToString();
                 }
 
                 if (amqpMessage.Properties.GroupId != null)
                 {
-                    sbMessage.SessionId = amqpMessage.Properties.GroupId;
+                    sbMessage.SentMessage.SessionId = amqpMessage.Properties.GroupId;
                 }
 
                 if (amqpMessage.Properties.ReplyToGroupId != null)
                 {
-                    sbMessage.ReplyToSessionId = amqpMessage.Properties.ReplyToGroupId;
+                    sbMessage.SentMessage.ReplyToSessionId = amqpMessage.Properties.ReplyToGroupId;
                 }
             }
 
@@ -353,7 +353,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             sbMessage.EnqueuedTime = (DateTime)pair.Value;
                             break;
                         case ScheduledEnqueueTimeUtcName:
-                            sbMessage.ScheduledEnqueueTime = (DateTime)pair.Value;
+                            sbMessage.SentMessage.ScheduledEnqueueTime = (DateTime)pair.Value;
                             break;
                         case SequenceNumberName:
                             sbMessage.SequenceNumber = (long)pair.Value;
@@ -366,13 +366,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                 DateTimeOffset.MaxValue : (DateTime)pair.Value;
                             break;
                         case PartitionKeyName:
-                            sbMessage.PartitionKey = (string)pair.Value;
+                            sbMessage.SentMessage.PartitionKey = (string)pair.Value;
                             break;
                         case PartitionIdName:
                             sbMessage.PartitionId = (short)pair.Value;
                             break;
                         case ViaPartitionKeyName:
-                            sbMessage.ViaPartitionKey = (string)pair.Value;
+                            sbMessage.SentMessage.ViaPartitionKey = (string)pair.Value;
                             break;
                         case DeadLetterSourceName:
                             sbMessage.DeadLetterSource = (string)pair.Value;

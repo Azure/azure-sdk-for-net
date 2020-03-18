@@ -260,21 +260,38 @@ namespace Azure.Messaging.ServiceBus
             return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
         }
 
-        ///// <summary>Clones the body of a message, so that it is possible to send a clone of an already received
-        ///// message as a new message.</summary>
-        ///// <returns>A cloned <see cref="ServiceBusMessage" />.</returns>
-        //public ServiceBusMessage Clone()
-        //{
-        //    var clone = (ServiceBusMessage)MemberwiseClone();
-
-        //    if (!Body.IsEmpty)
-        //    {
-        //        var clonedBody = new byte[Body.Length];
-        //        Array.Copy(Body.ToArray(), clonedBody, Body.Length);
-        //        clone.Body = clonedBody;
-        //    }
-        //    return clone;
-        //}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static ServiceBusMessage CreateFrom(ServiceBusReceivedMessage message)
+        {
+            var copiedMessage = new ServiceBusMessage()
+            {
+                ContentType = message.ContentType,
+                CorrelationId = message.CorrelationId,
+                Label = message.Label,
+                MessageId = message.MessageId,
+                PartitionKey = message.PartitionKey,
+                ReplyTo = message.ReplyTo,
+                ReplyToSessionId = message.ReplyToSessionId,
+                SessionId = message.SessionId,
+                ScheduledEnqueueTime = message.ScheduledEnqueueTime,
+                TimeToLive = message.TimeToLive,
+                To = message.To,
+                ViaPartitionKey = message.ViaPartitionKey,
+            };
+            var originalBody = message.Body;
+            if (!originalBody.IsEmpty)
+            {
+                var clonedBody = new byte[originalBody.Length];
+                Array.Copy(originalBody.ToArray(), clonedBody, originalBody.Length);
+                copiedMessage.Body = clonedBody;
+            }
+            copiedMessage.Properties = new Dictionary<string, object>(message.Properties);
+            return copiedMessage;
+        }
 
         private static void ValidateMessageId(string messageId)
         {
