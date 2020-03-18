@@ -24,6 +24,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static Sku DeserializeSku(JsonElement element)
         {
             Sku result = new Sku();

@@ -32,6 +32,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element)
         {
             ManagementPolicyBaseBlob result = new ManagementPolicyBaseBlob();

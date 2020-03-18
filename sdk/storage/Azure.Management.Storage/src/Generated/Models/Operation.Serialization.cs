@@ -10,36 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class Operation : IUtf8JsonSerializable
+    public partial class Operation
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Display != null)
-            {
-                writer.WritePropertyName("display");
-                writer.WriteObjectValue(Display);
-            }
-            if (Origin != null)
-            {
-                writer.WritePropertyName("origin");
-                writer.WriteStringValue(Origin);
-            }
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (ServiceSpecification != null)
-            {
-                writer.WritePropertyName("serviceSpecification");
-                writer.WriteObjectValue(ServiceSpecification);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
         internal static Operation DeserializeOperation(JsonElement element)
         {
             Operation result = new Operation();

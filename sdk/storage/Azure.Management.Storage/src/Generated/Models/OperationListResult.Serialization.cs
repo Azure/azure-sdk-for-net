@@ -11,23 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class OperationListResult : IUtf8JsonSerializable
+    public partial class OperationListResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Value != null)
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {
             OperationListResult result = new OperationListResult();

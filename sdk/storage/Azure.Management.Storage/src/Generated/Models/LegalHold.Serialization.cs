@@ -29,6 +29,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
+
         internal static LegalHold DeserializeLegalHold(JsonElement element)
         {
             LegalHold result = new LegalHold();

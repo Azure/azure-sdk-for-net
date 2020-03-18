@@ -24,6 +24,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static AzureFilesIdentityBasedAuthentication DeserializeAzureFilesIdentityBasedAuthentication(JsonElement element)
         {
             AzureFilesIdentityBasedAuthentication result = new AzureFilesIdentityBasedAuthentication();

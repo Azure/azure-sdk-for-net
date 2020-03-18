@@ -57,6 +57,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static Endpoints DeserializeEndpoints(JsonElement element)
         {
             Endpoints result = new Endpoints();

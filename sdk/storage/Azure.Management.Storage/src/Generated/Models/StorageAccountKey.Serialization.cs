@@ -10,28 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class StorageAccountKey : IUtf8JsonSerializable
+    public partial class StorageAccountKey
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (KeyName != null)
-            {
-                writer.WritePropertyName("keyName");
-                writer.WriteStringValue(KeyName);
-            }
-            if (Value != null)
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
-            }
-            if (Permissions != null)
-            {
-                writer.WritePropertyName("permissions");
-                writer.WriteStringValue(Permissions.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-        }
         internal static StorageAccountKey DeserializeStorageAccountKey(JsonElement element)
         {
             StorageAccountKey result = new StorageAccountKey();

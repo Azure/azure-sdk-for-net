@@ -19,18 +19,5 @@ namespace Azure.Management.Storage.Models
             writer.WriteStringValue(KeyName);
             writer.WriteEndObject();
         }
-        internal static StorageAccountRegenerateKeyParameters DeserializeStorageAccountRegenerateKeyParameters(JsonElement element)
-        {
-            StorageAccountRegenerateKeyParameters result = new StorageAccountRegenerateKeyParameters();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("keyName"))
-                {
-                    result.KeyName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return result;
-        }
     }
 }

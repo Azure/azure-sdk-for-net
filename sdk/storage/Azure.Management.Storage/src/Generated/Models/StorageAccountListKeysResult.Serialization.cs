@@ -11,23 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class StorageAccountListKeysResult : IUtf8JsonSerializable
+    public partial class StorageAccountListKeysResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Keys != null)
-            {
-                writer.WritePropertyName("keys");
-                writer.WriteStartArray();
-                foreach (var item in Keys)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static StorageAccountListKeysResult DeserializeStorageAccountListKeysResult(JsonElement element)
         {
             StorageAccountListKeysResult result = new StorageAccountListKeysResult();

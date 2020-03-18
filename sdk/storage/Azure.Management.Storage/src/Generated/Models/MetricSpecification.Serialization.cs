@@ -11,63 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class MetricSpecification : IUtf8JsonSerializable
+    public partial class MetricSpecification
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (DisplayName != null)
-            {
-                writer.WritePropertyName("displayName");
-                writer.WriteStringValue(DisplayName);
-            }
-            if (DisplayDescription != null)
-            {
-                writer.WritePropertyName("displayDescription");
-                writer.WriteStringValue(DisplayDescription);
-            }
-            if (Unit != null)
-            {
-                writer.WritePropertyName("unit");
-                writer.WriteStringValue(Unit);
-            }
-            if (Dimensions != null)
-            {
-                writer.WritePropertyName("dimensions");
-                writer.WriteStartArray();
-                foreach (var item in Dimensions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (AggregationType != null)
-            {
-                writer.WritePropertyName("aggregationType");
-                writer.WriteStringValue(AggregationType);
-            }
-            if (FillGapWithZero != null)
-            {
-                writer.WritePropertyName("fillGapWithZero");
-                writer.WriteBooleanValue(FillGapWithZero.Value);
-            }
-            if (Category != null)
-            {
-                writer.WritePropertyName("category");
-                writer.WriteStringValue(Category);
-            }
-            if (ResourceIdDimensionNameOverride != null)
-            {
-                writer.WritePropertyName("resourceIdDimensionNameOverride");
-                writer.WriteStringValue(ResourceIdDimensionNameOverride);
-            }
-            writer.WriteEndObject();
-        }
         internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
         {
             MetricSpecification result = new MetricSpecification();

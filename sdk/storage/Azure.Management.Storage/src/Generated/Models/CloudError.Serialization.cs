@@ -10,18 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class CloudError : IUtf8JsonSerializable
+    public partial class CloudError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Error != null)
-            {
-                writer.WritePropertyName("error");
-                writer.WriteObjectValue(Error);
-            }
-            writer.WriteEndObject();
-        }
         internal static CloudError DeserializeCloudError(JsonElement element)
         {
             CloudError result = new CloudError();

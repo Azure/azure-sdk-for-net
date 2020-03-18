@@ -37,6 +37,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static StorageAccountInternetEndpoints DeserializeStorageAccountInternetEndpoints(JsonElement element)
         {
             StorageAccountInternetEndpoints result = new StorageAccountInternetEndpoints();

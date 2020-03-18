@@ -37,6 +37,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element)
         {
             BlobRestoreStatus result = new BlobRestoreStatus();

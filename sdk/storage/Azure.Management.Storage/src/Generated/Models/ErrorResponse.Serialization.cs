@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class ErrorResponse : IUtf8JsonSerializable
+    public partial class ErrorResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Code != null)
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-            if (Message != null)
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            writer.WriteEndObject();
-        }
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
             ErrorResponse result = new ErrorResponse();

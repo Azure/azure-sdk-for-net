@@ -45,6 +45,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteStringValue(DefaultAction.ToSerialString());
             writer.WriteEndObject();
         }
+
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
             NetworkRuleSet result = new NetworkRuleSet();

@@ -32,6 +32,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static Resource DeserializeResource(JsonElement element)
         {
             Resource result = new Resource();

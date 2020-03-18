@@ -11,23 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class ServiceSpecification : IUtf8JsonSerializable
+    public partial class ServiceSpecification
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (MetricSpecifications != null)
-            {
-                writer.WritePropertyName("metricSpecifications");
-                writer.WriteStartArray();
-                foreach (var item in MetricSpecifications)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
         {
             ServiceSpecification result = new ServiceSpecification();

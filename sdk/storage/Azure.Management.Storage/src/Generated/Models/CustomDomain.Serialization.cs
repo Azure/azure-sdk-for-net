@@ -24,6 +24,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static CustomDomain DeserializeCustomDomain(JsonElement element)
         {
             CustomDomain result = new CustomDomain();

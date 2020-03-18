@@ -13,6 +13,71 @@ namespace Azure.Management.Storage.Models
     /// <summary> The storage account. </summary>
     public partial class StorageAccount : TrackedResource
     {
+        /// <summary> Initializes a new instance of StorageAccount. </summary>
+        public StorageAccount()
+        {
+        }
+
+        /// <summary> Initializes a new instance of StorageAccount. </summary>
+        /// <param name="sku"> Gets the SKU. </param>
+        /// <param name="kind"> Gets the Kind. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="provisioningState"> Gets the status of the storage account at the time the operation was called. </param>
+        /// <param name="primaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </param>
+        /// <param name="primaryLocation"> Gets the location of the primary data center for the storage account. </param>
+        /// <param name="statusOfPrimary"> Gets the status indicating whether the primary location of the storage account is available or unavailable. </param>
+        /// <param name="lastGeoFailoverTime"> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
+        /// <param name="secondaryLocation"> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </param>
+        /// <param name="statusOfSecondary"> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </param>
+        /// <param name="creationTime"> Gets the creation date and time of the storage account in UTC. </param>
+        /// <param name="customDomain"> Gets the custom domain the user assigned to this storage account. </param>
+        /// <param name="secondaryEndpoints"> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </param>
+        /// <param name="encryption"> Gets the encryption settings on the account. If unspecified, the account is unencrypted. </param>
+        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </param>
+        /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
+        /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. </param>
+        /// <param name="networkRuleSet"> Network rule set. </param>
+        /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
+        /// <param name="geoReplicationStats"> Geo Replication Stats. </param>
+        /// <param name="failoverInProgress"> If the failover is in progress, the value will be true, otherwise, it will be null. </param>
+        /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage account. </param>
+        /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
+        /// <param name="blobRestoreStatus"> Blob restore status. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal StorageAccount(Sku sku, Kind? kind, Identity identity, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverTime, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationTime, CustomDomain customDomain, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IList<PrivateEndpointConnection> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, IDictionary<string, string> tags, string location, string id, string name, string type) : base(tags, location, id, name, type)
+        {
+            Sku = sku;
+            Kind = kind;
+            Identity = identity;
+            ProvisioningState = provisioningState;
+            PrimaryEndpoints = primaryEndpoints;
+            PrimaryLocation = primaryLocation;
+            StatusOfPrimary = statusOfPrimary;
+            LastGeoFailoverTime = lastGeoFailoverTime;
+            SecondaryLocation = secondaryLocation;
+            StatusOfSecondary = statusOfSecondary;
+            CreationTime = creationTime;
+            CustomDomain = customDomain;
+            SecondaryEndpoints = secondaryEndpoints;
+            Encryption = encryption;
+            AccessTier = accessTier;
+            AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
+            EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
+            NetworkRuleSet = networkRuleSet;
+            IsHnsEnabled = isHnsEnabled;
+            GeoReplicationStats = geoReplicationStats;
+            FailoverInProgress = failoverInProgress;
+            LargeFileSharesState = largeFileSharesState;
+            PrivateEndpointConnections = privateEndpointConnections;
+            RoutingPreference = routingPreference;
+            BlobRestoreStatus = blobRestoreStatus;
+        }
+
         /// <summary> Gets the SKU. </summary>
         public Sku Sku { get; internal set; }
         /// <summary> Gets the Kind. </summary>

@@ -13,6 +13,26 @@ namespace Azure.Management.Storage.Models
     /// <summary> Properties of the file share, including Id, resource name, resource type, Etag. </summary>
     public partial class FileShare : AzureEntityResource
     {
+        /// <summary> Initializes a new instance of FileShare. </summary>
+        public FileShare()
+        {
+        }
+
+        /// <summary> Initializes a new instance of FileShare. </summary>
+        /// <param name="lastModifiedTime"> Returns the date and time the share was last modified. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal FileShare(DateTimeOffset? lastModifiedTime, IDictionary<string, string> metadata, int? shareQuota, string etag, string id, string name, string type) : base(etag, id, name, type)
+        {
+            LastModifiedTime = lastModifiedTime;
+            Metadata = metadata;
+            ShareQuota = shareQuota;
+        }
+
         /// <summary> Returns the date and time the share was last modified. </summary>
         public DateTimeOffset? LastModifiedTime { get; internal set; }
         /// <summary> A name-value pair to associate with the share as metadata. </summary>

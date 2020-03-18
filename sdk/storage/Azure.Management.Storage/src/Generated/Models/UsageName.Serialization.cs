@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class UsageName : IUtf8JsonSerializable
+    public partial class UsageName
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Value != null)
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
-            }
-            if (LocalizedValue != null)
-            {
-                writer.WritePropertyName("localizedValue");
-                writer.WriteStringValue(LocalizedValue);
-            }
-            writer.WriteEndObject();
-        }
         internal static UsageName DeserializeUsageName(JsonElement element)
         {
             UsageName result = new UsageName();

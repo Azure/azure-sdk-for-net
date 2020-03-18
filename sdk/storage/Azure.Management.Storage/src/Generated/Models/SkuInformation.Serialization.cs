@@ -11,60 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class SkuInformation : IUtf8JsonSerializable
+    public partial class SkuInformation
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name.ToString());
-            if (Tier != null)
-            {
-                writer.WritePropertyName("tier");
-                writer.WriteStringValue(Tier.Value.ToSerialString());
-            }
-            if (ResourceType != null)
-            {
-                writer.WritePropertyName("resourceType");
-                writer.WriteStringValue(ResourceType);
-            }
-            if (Kind != null)
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
-            if (Locations != null)
-            {
-                writer.WritePropertyName("locations");
-                writer.WriteStartArray();
-                foreach (var item in Locations)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Capabilities != null)
-            {
-                writer.WritePropertyName("capabilities");
-                writer.WriteStartArray();
-                foreach (var item in Capabilities)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Restrictions != null)
-            {
-                writer.WritePropertyName("restrictions");
-                writer.WriteStartArray();
-                foreach (var item in Restrictions)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static SkuInformation DeserializeSkuInformation(JsonElement element)
         {
             SkuInformation result = new SkuInformation();

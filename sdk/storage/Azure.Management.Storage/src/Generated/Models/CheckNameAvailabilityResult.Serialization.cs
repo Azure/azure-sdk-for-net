@@ -10,28 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class CheckNameAvailabilityResult : IUtf8JsonSerializable
+    public partial class CheckNameAvailabilityResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (NameAvailable != null)
-            {
-                writer.WritePropertyName("nameAvailable");
-                writer.WriteBooleanValue(NameAvailable.Value);
-            }
-            if (Reason != null)
-            {
-                writer.WritePropertyName("reason");
-                writer.WriteStringValue(Reason.Value.ToSerialString());
-            }
-            if (Message != null)
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-            writer.WriteEndObject();
-        }
         internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
         {
             CheckNameAvailabilityResult result = new CheckNameAvailabilityResult();

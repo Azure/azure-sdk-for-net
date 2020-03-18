@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class SKUCapability : IUtf8JsonSerializable
+    public partial class SKUCapability
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Value != null)
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static SKUCapability DeserializeSKUCapability(JsonElement element)
         {
             SKUCapability result = new SKUCapability();

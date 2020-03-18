@@ -30,6 +30,7 @@ namespace Azure.Management.Storage
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Lists all of the available Storage Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<Operation> ListAsync(CancellationToken cancellationToken = default)
@@ -46,6 +47,7 @@ namespace Azure.Management.Storage
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
         /// <summary> Lists all of the available Storage Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<Operation> List(CancellationToken cancellationToken = default)

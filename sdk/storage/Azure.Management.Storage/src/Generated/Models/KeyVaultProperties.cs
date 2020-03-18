@@ -10,6 +10,22 @@ namespace Azure.Management.Storage.Models
     /// <summary> Properties of key vault. </summary>
     public partial class KeyVaultProperties
     {
+        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        public KeyVaultProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <param name="keyName"> The name of KeyVault key. </param>
+        /// <param name="keyVersion"> The version of KeyVault key. </param>
+        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
+        internal KeyVaultProperties(string keyName, string keyVersion, string keyVaultUri)
+        {
+            KeyName = keyName;
+            KeyVersion = keyVersion;
+            KeyVaultUri = keyVaultUri;
+        }
+
         /// <summary> The name of KeyVault key. </summary>
         public string KeyName { get; set; }
         /// <summary> The version of KeyVault key. </summary>

@@ -37,6 +37,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static AzureEntityResource DeserializeAzureEntityResource(JsonElement element)
         {
             AzureEntityResource result = new AzureEntityResource();

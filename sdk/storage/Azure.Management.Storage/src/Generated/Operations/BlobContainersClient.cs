@@ -31,6 +31,7 @@ namespace Azure.Management.Storage
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -41,6 +42,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.CreateAsync(resourceGroupName, accountName, containerName, blobContainer, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -51,6 +53,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Create(resourceGroupName, accountName, containerName, blobContainer, cancellationToken);
         }
+
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -61,6 +64,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.UpdateAsync(resourceGroupName, accountName, containerName, blobContainer, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -71,6 +75,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Update(resourceGroupName, accountName, containerName, blobContainer, cancellationToken);
         }
+
         /// <summary> Gets properties of a specified container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -80,6 +85,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.GetAsync(resourceGroupName, accountName, containerName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Gets properties of a specified container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -89,6 +95,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Get(resourceGroupName, accountName, containerName, cancellationToken);
         }
+
         /// <summary> Deletes specified container under its account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -98,6 +105,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.DeleteAsync(resourceGroupName, accountName, containerName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Deletes specified container under its account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -107,6 +115,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Delete(resourceGroupName, accountName, containerName, cancellationToken);
         }
+
         /// <summary> Sets legal hold tags. Setting the same tag results in an idempotent operation. SetLegalHold follows an append pattern and does not clear out the existing tags that are not specified in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -117,6 +126,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.SetLegalHoldAsync(resourceGroupName, accountName, containerName, legalHold, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Sets legal hold tags. Setting the same tag results in an idempotent operation. SetLegalHold follows an append pattern and does not clear out the existing tags that are not specified in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -127,6 +137,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.SetLegalHold(resourceGroupName, accountName, containerName, legalHold, cancellationToken);
         }
+
         /// <summary> Clears legal hold tags. Clearing the same or non-existent tag results in an idempotent operation. ClearLegalHold clears out only the specified tags in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -137,6 +148,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.ClearLegalHoldAsync(resourceGroupName, accountName, containerName, legalHold, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Clears legal hold tags. Clearing the same or non-existent tag results in an idempotent operation. ClearLegalHold clears out only the specified tags in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -147,6 +159,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.ClearLegalHold(resourceGroupName, accountName, containerName, legalHold, cancellationToken);
         }
+
         /// <summary> Creates or updates an unlocked immutability policy. ETag in If-Match is honored if given but not required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -158,6 +171,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Creates or updates an unlocked immutability policy. ETag in If-Match is honored if given but not required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -169,6 +183,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.CreateOrUpdateImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken);
         }
+
         /// <summary> Gets the existing immutability policy along with the corresponding ETag in response headers and body. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -179,6 +194,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.GetImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Gets the existing immutability policy along with the corresponding ETag in response headers and body. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -189,6 +205,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.GetImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, cancellationToken);
         }
+
         /// <summary> Aborts an unlocked immutability policy. The response of delete has immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is required for this operation. Deleting a locked immutability policy is not allowed, only way is to delete the container after deleting all blobs inside the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -199,6 +216,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.DeleteImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Aborts an unlocked immutability policy. The response of delete has immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is required for this operation. Deleting a locked immutability policy is not allowed, only way is to delete the container after deleting all blobs inside the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -209,6 +227,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.DeleteImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, cancellationToken);
         }
+
         /// <summary> Sets the ImmutabilityPolicy to Locked state. The only action allowed on a Locked policy is ExtendImmutabilityPolicy action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -219,6 +238,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.LockImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Sets the ImmutabilityPolicy to Locked state. The only action allowed on a Locked policy is ExtendImmutabilityPolicy action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -229,6 +249,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.LockImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, cancellationToken);
         }
+
         /// <summary> Extends the immutabilityPeriodSinceCreationInDays of a locked immutabilityPolicy. The only action allowed on a Locked policy will be this action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -240,6 +261,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.ExtendImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Extends the immutabilityPeriodSinceCreationInDays of a locked immutabilityPolicy. The only action allowed on a Locked policy will be this action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -251,6 +273,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.ExtendImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken);
         }
+
         /// <summary> The Lease Container operation establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -261,6 +284,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.LeaseAsync(resourceGroupName, accountName, containerName, parameters, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> The Lease Container operation establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -271,6 +295,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Lease(resourceGroupName, accountName, containerName, parameters, cancellationToken);
         }
+
         /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -300,6 +325,7 @@ namespace Azure.Management.Storage
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
         /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>

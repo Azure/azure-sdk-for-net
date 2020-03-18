@@ -21,6 +21,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteStringValue(Action);
             writer.WriteEndObject();
         }
+
         internal static IPRule DeserializeIPRule(JsonElement element)
         {
             IPRule result = new IPRule();

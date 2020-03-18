@@ -27,6 +27,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static ManagementPolicyAction DeserializeManagementPolicyAction(JsonElement element)
         {
             ManagementPolicyAction result = new ManagementPolicyAction();

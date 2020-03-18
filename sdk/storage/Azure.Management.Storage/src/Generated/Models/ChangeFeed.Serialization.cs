@@ -22,6 +22,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static ChangeFeed DeserializeChangeFeed(JsonElement element)
         {
             ChangeFeed result = new ChangeFeed();

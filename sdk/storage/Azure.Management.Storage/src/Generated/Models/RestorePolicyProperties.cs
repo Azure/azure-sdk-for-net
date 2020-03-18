@@ -10,6 +10,20 @@ namespace Azure.Management.Storage.Models
     /// <summary> The blob service properties for blob restore policy. </summary>
     public partial class RestorePolicyProperties
     {
+        /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
+        public RestorePolicyProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
+        /// <param name="enabled"> Blob restore is enabled if set to true. </param>
+        /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
+        internal RestorePolicyProperties(bool enabled, int? days)
+        {
+            Enabled = enabled;
+            Days = days;
+        }
+
         /// <summary> Blob restore is enabled if set to true. </summary>
         public bool Enabled { get; set; }
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>

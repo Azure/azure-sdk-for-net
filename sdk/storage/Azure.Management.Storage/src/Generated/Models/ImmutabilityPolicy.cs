@@ -10,6 +10,26 @@ namespace Azure.Management.Storage.Models
     /// <summary> The ImmutabilityPolicy property of a blob container, including Id, resource name, resource type, Etag. </summary>
     public partial class ImmutabilityPolicy : AzureEntityResource
     {
+        /// <summary> Initializes a new instance of ImmutabilityPolicy. </summary>
+        public ImmutabilityPolicy()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ImmutabilityPolicy. </summary>
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal ImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, string etag, string id, string name, string type) : base(etag, id, name, type)
+        {
+            ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
+            State = state;
+            AllowProtectedAppendWrites = allowProtectedAppendWrites;
+        }
+
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
         public int? ImmutabilityPeriodSinceCreationInDays { get; set; }
         /// <summary> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </summary>

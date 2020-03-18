@@ -10,6 +10,25 @@ namespace Azure.Management.Storage.Models
     /// <summary> The Private Endpoint Connection resource. </summary>
     public partial class PrivateEndpointConnection : Resource
     {
+        /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
+        public PrivateEndpointConnection()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
+        /// <param name="privateEndpoint"> The resource of private end point. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal PrivateEndpointConnection(PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState, string id, string name, string type) : base(id, name, type)
+        {
+            PrivateEndpoint = privateEndpoint;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ProvisioningState = provisioningState;
+        }
+
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

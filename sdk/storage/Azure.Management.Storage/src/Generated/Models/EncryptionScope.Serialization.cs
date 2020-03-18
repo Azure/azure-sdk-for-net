@@ -60,6 +60,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
+
         internal static EncryptionScope DeserializeEncryptionScope(JsonElement element)
         {
             EncryptionScope result = new EncryptionScope();

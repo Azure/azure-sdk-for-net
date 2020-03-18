@@ -19,6 +19,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteNumberValue(DaysAfterModificationGreaterThan);
             writer.WriteEndObject();
         }
+
         internal static DateAfterModification DeserializeDateAfterModification(JsonElement element)
         {
             DateAfterModification result = new DateAfterModification();

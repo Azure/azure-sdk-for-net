@@ -10,33 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class Usage : IUtf8JsonSerializable
+    public partial class Usage
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Unit != null)
-            {
-                writer.WritePropertyName("unit");
-                writer.WriteStringValue(Unit.Value.ToSerialString());
-            }
-            if (CurrentValue != null)
-            {
-                writer.WritePropertyName("currentValue");
-                writer.WriteNumberValue(CurrentValue.Value);
-            }
-            if (Limit != null)
-            {
-                writer.WritePropertyName("limit");
-                writer.WriteNumberValue(Limit.Value);
-            }
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteObjectValue(Name);
-            }
-            writer.WriteEndObject();
-        }
         internal static Usage DeserializeUsage(JsonElement element)
         {
             Usage result = new Usage();

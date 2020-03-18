@@ -12,7 +12,19 @@ namespace Azure.Management.Storage.Models
     /// <summary> The response from the List Usages operation. </summary>
     public partial class UsageListResult
     {
+        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        internal UsageListResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
+        internal UsageListResult(IList<Usage> value)
+        {
+            Value = value;
+        }
+
         /// <summary> Gets or sets the list of Storage Resource Usages. </summary>
-        public IList<Usage> Value { get; set; }
+        public IList<Usage> Value { get; internal set; }
     }
 }

@@ -47,6 +47,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static UpdateHistoryProperty DeserializeUpdateHistoryProperty(JsonElement element)
         {
             UpdateHistoryProperty result = new UpdateHistoryProperty();

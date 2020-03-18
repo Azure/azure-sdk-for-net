@@ -10,6 +10,20 @@ namespace Azure.Management.Storage.Models
     /// <summary> An object that defines the Lifecycle rule. Each definition is made up with a filters set and an actions set. </summary>
     public partial class ManagementPolicyDefinition
     {
+        /// <summary> Initializes a new instance of ManagementPolicyDefinition. </summary>
+        public ManagementPolicyDefinition()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ManagementPolicyDefinition. </summary>
+        /// <param name="actions"> An object that defines the action set. </param>
+        /// <param name="filters"> An object that defines the filter set. </param>
+        internal ManagementPolicyDefinition(ManagementPolicyAction actions, ManagementPolicyFilter filters)
+        {
+            Actions = actions;
+            Filters = filters;
+        }
+
         /// <summary> An object that defines the action set. </summary>
         public ManagementPolicyAction Actions { get; set; } = new ManagementPolicyAction();
         /// <summary> An object that defines the filter set. </summary>

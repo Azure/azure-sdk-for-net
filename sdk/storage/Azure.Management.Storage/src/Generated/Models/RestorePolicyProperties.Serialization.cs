@@ -24,6 +24,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static RestorePolicyProperties DeserializeRestorePolicyProperties(JsonElement element)
         {
             RestorePolicyProperties result = new RestorePolicyProperties();

@@ -10,6 +10,28 @@ namespace Azure.Management.Storage.Models
     /// <summary> Settings properties for Active Directory (AD). </summary>
     public partial class ActiveDirectoryProperties
     {
+        /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
+        public ActiveDirectoryProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
+        /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
+        /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
+        /// <param name="forestName"> Specifies the Active Directory forest to get. </param>
+        /// <param name="domainGuid"> Specifies the domain GUID. </param>
+        /// <param name="domainSid"> Specifies the security identifier (SID). </param>
+        /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
+        internal ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
+        {
+            DomainName = domainName;
+            NetBiosDomainName = netBiosDomainName;
+            ForestName = forestName;
+            DomainGuid = domainGuid;
+            DomainSid = domainSid;
+            AzureStorageSid = azureStorageSid;
+        }
+
         /// <summary> Specifies the primary domain that the AD DNS server is authoritative for. </summary>
         public string DomainName { get; set; }
         /// <summary> Specifies the NetBIOS domain name. </summary>

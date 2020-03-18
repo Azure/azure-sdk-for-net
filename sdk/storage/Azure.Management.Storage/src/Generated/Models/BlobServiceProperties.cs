@@ -10,6 +10,37 @@ namespace Azure.Management.Storage.Models
     /// <summary> The properties of a storage account’s Blob service. </summary>
     public partial class BlobServiceProperties : Resource
     {
+        /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
+        public BlobServiceProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
+        /// <param name="sku"> Sku name and tier. </param>
+        /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
+        /// <param name="defaultServiceVersion"> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
+        /// <param name="deleteRetentionPolicy"> The blob service properties for blob soft delete. </param>
+        /// <param name="isVersioningEnabled"> Versioning is enabled if set to true. </param>
+        /// <param name="automaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
+        /// <param name="changeFeed"> The blob service properties for change feed events. </param>
+        /// <param name="restorePolicy"> The blob service properties for blob restore policy. </param>
+        /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal BlobServiceProperties(Sku sku, CorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? automaticSnapshotPolicyEnabled, ChangeFeed changeFeed, RestorePolicyProperties restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, string id, string name, string type) : base(id, name, type)
+        {
+            Sku = sku;
+            Cors = cors;
+            DefaultServiceVersion = defaultServiceVersion;
+            DeleteRetentionPolicy = deleteRetentionPolicy;
+            IsVersioningEnabled = isVersioningEnabled;
+            AutomaticSnapshotPolicyEnabled = automaticSnapshotPolicyEnabled;
+            ChangeFeed = changeFeed;
+            RestorePolicy = restorePolicy;
+            ContainerDeleteRetentionPolicy = containerDeleteRetentionPolicy;
+        }
+
         /// <summary> Sku name and tier. </summary>
         public Sku Sku { get; internal set; }
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>

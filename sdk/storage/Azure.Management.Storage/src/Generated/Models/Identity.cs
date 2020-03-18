@@ -10,6 +10,22 @@ namespace Azure.Management.Storage.Models
     /// <summary> Identity for the resource. </summary>
     public partial class Identity
     {
+        /// <summary> Initializes a new instance of Identity. </summary>
+        public Identity()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Identity. </summary>
+        /// <param name="principalId"> The principal ID of resource identity. </param>
+        /// <param name="tenantId"> The tenant ID of resource. </param>
+        /// <param name="type"> The identity type. </param>
+        internal Identity(string principalId, string tenantId, string type)
+        {
+            PrincipalId = principalId;
+            TenantId = tenantId;
+            Type = type;
+        }
+
         /// <summary> The principal ID of resource identity. </summary>
         public string PrincipalId { get; internal set; }
         /// <summary> The tenant ID of resource. </summary>

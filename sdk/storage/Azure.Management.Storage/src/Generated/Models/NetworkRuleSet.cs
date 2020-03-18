@@ -12,6 +12,24 @@ namespace Azure.Management.Storage.Models
     /// <summary> Network rule set. </summary>
     public partial class NetworkRuleSet
     {
+        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        public NetworkRuleSet()
+        {
+        }
+
+        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <param name="bypass"> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, &quot;Logging, Metrics&quot;), or None to bypass none of those traffics. </param>
+        /// <param name="virtualNetworkRules"> Sets the virtual network rules. </param>
+        /// <param name="ipRules"> Sets the IP ACL rules. </param>
+        /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
+        internal NetworkRuleSet(Bypass? bypass, IList<VirtualNetworkRule> virtualNetworkRules, IList<IPRule> ipRules, DefaultAction defaultAction)
+        {
+            Bypass = bypass;
+            VirtualNetworkRules = virtualNetworkRules;
+            IpRules = ipRules;
+            DefaultAction = defaultAction;
+        }
+
         /// <summary> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, &quot;Logging, Metrics&quot;), or None to bypass none of those traffics. </summary>
         public Bypass? Bypass { get; set; }
         /// <summary> Sets the virtual network rules. </summary>

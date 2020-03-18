@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class Dimension : IUtf8JsonSerializable
+    public partial class Dimension
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (DisplayName != null)
-            {
-                writer.WritePropertyName("displayName");
-                writer.WriteStringValue(DisplayName);
-            }
-            writer.WriteEndObject();
-        }
         internal static Dimension DeserializeDimension(JsonElement element)
         {
             Dimension result = new Dimension();

@@ -12,6 +12,18 @@ namespace Azure.Management.Storage.Models
     /// <summary> The BlobServiceItems. </summary>
     public partial class BlobServiceItems
     {
+        /// <summary> Initializes a new instance of BlobServiceItems. </summary>
+        internal BlobServiceItems()
+        {
+        }
+
+        /// <summary> Initializes a new instance of BlobServiceItems. </summary>
+        /// <param name="value"> List of blob services returned. </param>
+        internal BlobServiceItems(IList<BlobServiceProperties> value)
+        {
+            Value = value;
+        }
+
         /// <summary> List of blob services returned. </summary>
         public IList<BlobServiceProperties> Value { get; internal set; }
     }

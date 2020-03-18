@@ -32,6 +32,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static GeoReplicationStats DeserializeGeoReplicationStats(JsonElement element)
         {
             GeoReplicationStats result = new GeoReplicationStats();

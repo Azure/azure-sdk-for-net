@@ -12,6 +12,29 @@ namespace Azure.Management.Storage.Models
     /// <summary> The Encryption Scope resource. </summary>
     public partial class EncryptionScope : Resource
     {
+        /// <summary> Initializes a new instance of EncryptionScope. </summary>
+        public EncryptionScope()
+        {
+        }
+
+        /// <summary> Initializes a new instance of EncryptionScope. </summary>
+        /// <param name="source"> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </param>
+        /// <param name="state"> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </param>
+        /// <param name="creationTime"> Gets the creation date and time of the encryption scope in UTC. </param>
+        /// <param name="lastModifiedTime"> Gets the last modification date and time of the encryption scope in UTC. </param>
+        /// <param name="keyVaultProperties"> The key vault properties for the encryption scope. This is a required field if encryption scope &apos;source&apos; attribute is set to &apos;Microsoft.KeyVault&apos;. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal EncryptionScope(EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? creationTime, DateTimeOffset? lastModifiedTime, EncryptionScopeKeyVaultProperties keyVaultProperties, string id, string name, string type) : base(id, name, type)
+        {
+            Source = source;
+            State = state;
+            CreationTime = creationTime;
+            LastModifiedTime = lastModifiedTime;
+            KeyVaultProperties = keyVaultProperties;
+        }
+
         /// <summary> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </summary>
         public EncryptionScopeSource? Source { get; set; }
         /// <summary> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </summary>

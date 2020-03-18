@@ -10,6 +10,21 @@ namespace Azure.Management.Storage.Models
     /// <summary> The resource model definition for a Azure Resource Manager resource with an etag. </summary>
     public partial class AzureEntityResource : Resource
     {
+        /// <summary> Initializes a new instance of AzureEntityResource. </summary>
+        public AzureEntityResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of AzureEntityResource. </summary>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        internal AzureEntityResource(string etag, string id, string name, string type) : base(id, name, type)
+        {
+            Etag = etag;
+        }
+
         /// <summary> Resource Etag. </summary>
         public string Etag { get; internal set; }
     }

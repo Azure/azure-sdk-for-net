@@ -11,33 +11,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class Restriction : IUtf8JsonSerializable
+    public partial class Restriction
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Type != null)
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
-            }
-            if (Values != null)
-            {
-                writer.WritePropertyName("values");
-                writer.WriteStartArray();
-                foreach (var item in Values)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (ReasonCode != null)
-            {
-                writer.WritePropertyName("reasonCode");
-                writer.WriteStringValue(ReasonCode.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
         internal static Restriction DeserializeRestriction(JsonElement element)
         {
             Restriction result = new Restriction();

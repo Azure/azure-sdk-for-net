@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class LeaseContainerResponse : IUtf8JsonSerializable
+    public partial class LeaseContainerResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (LeaseId != null)
-            {
-                writer.WritePropertyName("leaseId");
-                writer.WriteStringValue(LeaseId);
-            }
-            if (LeaseTimeSeconds != null)
-            {
-                writer.WritePropertyName("leaseTimeSeconds");
-                writer.WriteStringValue(LeaseTimeSeconds);
-            }
-            writer.WriteEndObject();
-        }
         internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element)
         {
             LeaseContainerResponse result = new LeaseContainerResponse();

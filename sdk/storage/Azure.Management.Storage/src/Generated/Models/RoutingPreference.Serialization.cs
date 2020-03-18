@@ -32,6 +32,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static RoutingPreference DeserializeRoutingPreference(JsonElement element)
         {
             RoutingPreference result = new RoutingPreference();

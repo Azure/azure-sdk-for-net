@@ -29,6 +29,7 @@ namespace Azure.Management.Storage
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Gets the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -38,6 +39,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.GetAsync(resourceGroupName, accountName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Gets the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -47,6 +49,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Get(resourceGroupName, accountName, privateEndpointConnectionName, cancellationToken);
         }
+
         /// <summary> Update the state of specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -57,6 +60,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.PutAsync(resourceGroupName, accountName, privateEndpointConnectionName, properties, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Update the state of specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -67,6 +71,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Put(resourceGroupName, accountName, privateEndpointConnectionName, properties, cancellationToken);
         }
+
         /// <summary> Deletes the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -76,6 +81,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.DeleteAsync(resourceGroupName, accountName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Deletes the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>

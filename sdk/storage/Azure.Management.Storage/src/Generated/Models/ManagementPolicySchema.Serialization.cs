@@ -24,6 +24,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
+
         internal static ManagementPolicySchema DeserializeManagementPolicySchema(JsonElement element)
         {
             ManagementPolicySchema result = new ManagementPolicySchema();

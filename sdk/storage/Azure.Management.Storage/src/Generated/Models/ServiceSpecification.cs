@@ -12,7 +12,19 @@ namespace Azure.Management.Storage.Models
     /// <summary> One property of operation, include metric specifications. </summary>
     public partial class ServiceSpecification
     {
+        /// <summary> Initializes a new instance of ServiceSpecification. </summary>
+        internal ServiceSpecification()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ServiceSpecification. </summary>
+        /// <param name="metricSpecifications"> Metric specifications of operation. </param>
+        internal ServiceSpecification(IList<MetricSpecification> metricSpecifications)
+        {
+            MetricSpecifications = metricSpecifications;
+        }
+
         /// <summary> Metric specifications of operation. </summary>
-        public IList<MetricSpecification> MetricSpecifications { get; set; }
+        public IList<MetricSpecification> MetricSpecifications { get; internal set; }
     }
 }

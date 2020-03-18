@@ -29,6 +29,7 @@ namespace Azure.Management.Storage
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -37,6 +38,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.GetAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Gets the managementpolicy associated with the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -45,6 +47,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.Get(resourceGroupName, accountName, cancellationToken);
         }
+
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -54,6 +57,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.CreateOrUpdateAsync(resourceGroupName, accountName, properties, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -63,6 +67,7 @@ namespace Azure.Management.Storage
         {
             return RestClient.CreateOrUpdate(resourceGroupName, accountName, properties, cancellationToken);
         }
+
         /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -71,6 +76,7 @@ namespace Azure.Management.Storage
         {
             return await RestClient.DeleteAsync(resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Deletes the managementpolicy associated with the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>

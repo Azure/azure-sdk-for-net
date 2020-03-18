@@ -39,54 +39,5 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
-        internal static LeaseContainerRequest DeserializeLeaseContainerRequest(JsonElement element)
-        {
-            LeaseContainerRequest result = new LeaseContainerRequest();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("action"))
-                {
-                    result.Action = new LeaseContainerRequestAction(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("leaseId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.LeaseId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("breakPeriod"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.BreakPeriod = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("leaseDuration"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.LeaseDuration = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("proposedLeaseId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ProposedLeaseId = property.Value.GetString();
-                    continue;
-                }
-            }
-            return result;
-        }
     }
 }

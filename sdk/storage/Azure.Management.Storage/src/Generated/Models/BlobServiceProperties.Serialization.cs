@@ -80,6 +80,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
+
         internal static BlobServiceProperties DeserializeBlobServiceProperties(JsonElement element)
         {
             BlobServiceProperties result = new BlobServiceProperties();

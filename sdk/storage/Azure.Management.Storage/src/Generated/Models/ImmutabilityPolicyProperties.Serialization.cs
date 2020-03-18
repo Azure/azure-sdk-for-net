@@ -51,6 +51,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
+
         internal static ImmutabilityPolicyProperties DeserializeImmutabilityPolicyProperties(JsonElement element)
         {
             ImmutabilityPolicyProperties result = new ImmutabilityPolicyProperties();

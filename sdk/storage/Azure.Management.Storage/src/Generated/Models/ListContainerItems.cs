@@ -12,6 +12,20 @@ namespace Azure.Management.Storage.Models
     /// <summary> Response schema. Contains list of blobs returned, and if paging is requested or required, a URL to next page of containers. </summary>
     public partial class ListContainerItems
     {
+        /// <summary> Initializes a new instance of ListContainerItems. </summary>
+        internal ListContainerItems()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ListContainerItems. </summary>
+        /// <param name="value"> List of blobs containers returned. </param>
+        /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
+        internal ListContainerItems(IList<ListContainerItem> value, string nextLink)
+        {
+            Value = value;
+            NextLink = nextLink;
+        }
+
         /// <summary> List of blobs containers returned. </summary>
         public IList<ListContainerItem> Value { get; internal set; }
         /// <summary> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </summary>

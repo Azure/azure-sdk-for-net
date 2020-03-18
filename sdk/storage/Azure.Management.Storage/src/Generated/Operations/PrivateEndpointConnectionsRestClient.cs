@@ -23,6 +23,7 @@ namespace Azure.Management.Storage
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of PrivateEndpointConnectionsRestClient. </summary>
         public PrivateEndpointConnectionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
@@ -45,6 +46,7 @@ namespace Azure.Management.Storage
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string privateEndpointConnectionName)
         {
             var message = pipeline.CreateMessage();
@@ -64,6 +66,7 @@ namespace Azure.Management.Storage
             request.Uri = uri;
             return message;
         }
+
         /// <summary> Gets the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -108,6 +111,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Gets the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -152,6 +156,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreatePutRequest(string resourceGroupName, string accountName, string privateEndpointConnectionName, PrivateEndpointConnection properties)
         {
             var message = pipeline.CreateMessage();
@@ -175,6 +180,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Update the state of specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -224,6 +230,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Update the state of specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -273,6 +280,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string privateEndpointConnectionName)
         {
             var message = pipeline.CreateMessage();
@@ -292,6 +300,7 @@ namespace Azure.Management.Storage
             request.Uri = uri;
             return message;
         }
+
         /// <summary> Deletes the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -332,6 +341,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Deletes the specified private endpoint connection associated with the storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>

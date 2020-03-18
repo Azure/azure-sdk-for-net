@@ -23,6 +23,7 @@ namespace Azure.Management.Storage
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of BlobContainersRestClient. </summary>
         public BlobContainersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
         {
@@ -45,6 +46,7 @@ namespace Azure.Management.Storage
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         internal HttpMessage CreateListRequest(string resourceGroupName, string accountName, string maxpagesize, string filter)
         {
             var message = pipeline.CreateMessage();
@@ -71,6 +73,7 @@ namespace Azure.Management.Storage
             request.Uri = uri;
             return message;
         }
+
         /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -112,6 +115,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -153,6 +157,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer)
         {
             var message = pipeline.CreateMessage();
@@ -176,6 +181,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -225,6 +231,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -274,6 +281,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer)
         {
             var message = pipeline.CreateMessage();
@@ -297,6 +305,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -346,6 +355,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -395,6 +405,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateGetRequest(string resourceGroupName, string accountName, string containerName)
         {
             var message = pipeline.CreateMessage();
@@ -414,6 +425,7 @@ namespace Azure.Management.Storage
             request.Uri = uri;
             return message;
         }
+
         /// <summary> Gets properties of a specified container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -458,6 +470,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Gets properties of a specified container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -502,6 +515,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateDeleteRequest(string resourceGroupName, string accountName, string containerName)
         {
             var message = pipeline.CreateMessage();
@@ -521,6 +535,7 @@ namespace Azure.Management.Storage
             request.Uri = uri;
             return message;
         }
+
         /// <summary> Deletes specified container under its account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -561,6 +576,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Deletes specified container under its account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -601,6 +617,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateSetLegalHoldRequest(string resourceGroupName, string accountName, string containerName, LegalHold legalHold)
         {
             var message = pipeline.CreateMessage();
@@ -625,6 +642,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Sets legal hold tags. Setting the same tag results in an idempotent operation. SetLegalHold follows an append pattern and does not clear out the existing tags that are not specified in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -674,6 +692,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Sets legal hold tags. Setting the same tag results in an idempotent operation. SetLegalHold follows an append pattern and does not clear out the existing tags that are not specified in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -723,6 +742,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateClearLegalHoldRequest(string resourceGroupName, string accountName, string containerName, LegalHold legalHold)
         {
             var message = pipeline.CreateMessage();
@@ -747,6 +767,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Clears legal hold tags. Clearing the same or non-existent tag results in an idempotent operation. ClearLegalHold clears out only the specified tags in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -796,6 +817,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Clears legal hold tags. Clearing the same or non-existent tag results in an idempotent operation. ClearLegalHold clears out only the specified tags in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -845,6 +867,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateCreateOrUpdateImmutabilityPolicyRequest(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters)
         {
             var message = pipeline.CreateMessage();
@@ -874,6 +897,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Creates or updates an unlocked immutability policy. ETag in If-Match is honored if given but not required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -920,6 +944,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Creates or updates an unlocked immutability policy. ETag in If-Match is honored if given but not required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -966,6 +991,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateGetImmutabilityPolicyRequest(string resourceGroupName, string accountName, string containerName, string ifMatch)
         {
             var message = pipeline.CreateMessage();
@@ -991,6 +1017,7 @@ namespace Azure.Management.Storage
             }
             return message;
         }
+
         /// <summary> Gets the existing immutability policy along with the corresponding ETag in response headers and body. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1036,6 +1063,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Gets the existing immutability policy along with the corresponding ETag in response headers and body. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1081,6 +1109,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateDeleteImmutabilityPolicyRequest(string resourceGroupName, string accountName, string containerName, string ifMatch)
         {
             var message = pipeline.CreateMessage();
@@ -1103,6 +1132,7 @@ namespace Azure.Management.Storage
             request.Headers.Add("If-Match", ifMatch);
             return message;
         }
+
         /// <summary> Aborts an unlocked immutability policy. The response of delete has immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is required for this operation. Deleting a locked immutability policy is not allowed, only way is to delete the container after deleting all blobs inside the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1152,6 +1182,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Aborts an unlocked immutability policy. The response of delete has immutabilityPeriodSinceCreationInDays set to 0. ETag in If-Match is required for this operation. Deleting a locked immutability policy is not allowed, only way is to delete the container after deleting all blobs inside the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1201,6 +1232,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateLockImmutabilityPolicyRequest(string resourceGroupName, string accountName, string containerName, string ifMatch)
         {
             var message = pipeline.CreateMessage();
@@ -1222,6 +1254,7 @@ namespace Azure.Management.Storage
             request.Headers.Add("If-Match", ifMatch);
             return message;
         }
+
         /// <summary> Sets the ImmutabilityPolicy to Locked state. The only action allowed on a Locked policy is ExtendImmutabilityPolicy action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1271,6 +1304,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Sets the ImmutabilityPolicy to Locked state. The only action allowed on a Locked policy is ExtendImmutabilityPolicy action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1320,6 +1354,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateExtendImmutabilityPolicyRequest(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters)
         {
             var message = pipeline.CreateMessage();
@@ -1345,6 +1380,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> Extends the immutabilityPeriodSinceCreationInDays of a locked immutabilityPolicy. The only action allowed on a Locked policy will be this action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1395,6 +1431,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Extends the immutabilityPeriodSinceCreationInDays of a locked immutabilityPolicy. The only action allowed on a Locked policy will be this action. ETag in If-Match is required for this operation. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1445,6 +1482,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateLeaseRequest(string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters)
         {
             var message = pipeline.CreateMessage();
@@ -1469,6 +1507,7 @@ namespace Azure.Management.Storage
             request.Content = content;
             return message;
         }
+
         /// <summary> The Lease Container operation establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1514,6 +1553,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> The Lease Container operation establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -1559,6 +1599,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = pipeline.CreateMessage();
@@ -1569,6 +1610,7 @@ namespace Azure.Management.Storage
             request.Uri = uri;
             return message;
         }
+
         /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1603,6 +1645,7 @@ namespace Azure.Management.Storage
                 throw;
             }
         }
+
         /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

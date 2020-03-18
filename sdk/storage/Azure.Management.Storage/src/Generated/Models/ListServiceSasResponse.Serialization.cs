@@ -10,18 +10,8 @@ using Azure.Core;
 
 namespace Azure.Management.Storage.Models
 {
-    public partial class ListServiceSasResponse : IUtf8JsonSerializable
+    public partial class ListServiceSasResponse
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (ServiceSasToken != null)
-            {
-                writer.WritePropertyName("serviceSasToken");
-                writer.WriteStringValue(ServiceSasToken);
-            }
-            writer.WriteEndObject();
-        }
         internal static ListServiceSasResponse DeserializeListServiceSasResponse(JsonElement element)
         {
             ListServiceSasResponse result = new ListServiceSasResponse();

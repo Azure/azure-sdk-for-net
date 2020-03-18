@@ -29,6 +29,7 @@ namespace Azure.Management.Storage.Models
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
+
         internal static Identity DeserializeIdentity(JsonElement element)
         {
             Identity result = new Identity();

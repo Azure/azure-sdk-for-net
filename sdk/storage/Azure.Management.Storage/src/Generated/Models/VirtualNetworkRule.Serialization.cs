@@ -26,6 +26,7 @@ namespace Azure.Management.Storage.Models
             }
             writer.WriteEndObject();
         }
+
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
             VirtualNetworkRule result = new VirtualNetworkRule();
