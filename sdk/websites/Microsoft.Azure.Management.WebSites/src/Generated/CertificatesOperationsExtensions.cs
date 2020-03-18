@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a certificate.
             /// </summary>
             /// <remarks>
-            /// Get a certificate.
+            /// Description for Get a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a certificate.
             /// </summary>
             /// <remarks>
-            /// Get a certificate.
+            /// Description for Get a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a certificate.
             /// </summary>
             /// <remarks>
-            /// Delete a certificate.
+            /// Description for Delete a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a certificate.
             /// </summary>
             /// <remarks>
-            /// Delete a certificate.
+            /// Description for Delete a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Create or update a certificate.
             /// </summary>
             /// <remarks>
-            /// Create or update a certificate.
+            /// Description for Create or update a certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates for a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all certificates for a subscription.
+            /// Description for Get all certificates for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all certificates in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all certificates in a resource group.
+            /// Description for Get all certificates in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

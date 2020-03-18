@@ -14,27 +14,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// A global distribution definition.
+    /// Azure API management (APIM) configuration linked to the app.
     /// </summary>
-    public partial class GeoDistribution
+    public partial class ApiManagementConfig
     {
         /// <summary>
-        /// Initializes a new instance of the GeoDistribution class.
+        /// Initializes a new instance of the ApiManagementConfig class.
         /// </summary>
-        public GeoDistribution()
+        public ApiManagementConfig()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GeoDistribution class.
+        /// Initializes a new instance of the ApiManagementConfig class.
         /// </summary>
-        /// <param name="location">Location.</param>
-        /// <param name="numberOfWorkers">NumberOfWorkers.</param>
-        public GeoDistribution(string location = default(string), int? numberOfWorkers = default(int?))
+        /// <param name="id">APIM-Api Identifier.</param>
+        public ApiManagementConfig(string id = default(string))
         {
-            Location = location;
-            NumberOfWorkers = numberOfWorkers;
+            Id = id;
             CustomInit();
         }
 
@@ -44,16 +42,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets location.
+        /// Gets or sets aPIM-Api Identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets numberOfWorkers.
-        /// </summary>
-        [JsonProperty(PropertyName = "numberOfWorkers")]
-        public int? NumberOfWorkers { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
