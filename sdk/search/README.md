@@ -15,8 +15,8 @@ persisted index that you create, own, and store in your service.
 
 Functionality is exposed through several client libraries:
 
-- [Azure.Search](./Azure.Search/) is a preview experience built on top of
-  [Azure.Core](../core/Azure.Core/README.md) and the
+- [Azure.Search.Documents](./Azure.Search.Documents/) is a preview experience
+  built on top of [Azure.Core](../core/Azure.Core/README.md) and the
   [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 - [Microsoft.Azure.Search](./Microsoft.Azure.Search/) is the officially
@@ -37,7 +37,7 @@ following client libraries:
 
 ## Contributing
 
-See the Azure.Search [CONTRIBUTING.md](./CONTRIBUTING.md) for details on
+See the Azure.Search.Documents [CONTRIBUTING.md](./CONTRIBUTING.md) for details on
 building, testing, and contributing to these libraries.
 
 This project welcomes contributions and suggestions.  Most contributions
