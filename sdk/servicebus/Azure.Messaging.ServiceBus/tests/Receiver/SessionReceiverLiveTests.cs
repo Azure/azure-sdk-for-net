@@ -357,19 +357,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sessionId: useSpecificSession ? sessionId : null);
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
+                IList<ServiceBusReceivedMessage> receivedMessages = new List<ServiceBusReceivedMessage>();
+
                 while (remainingMessages > 0)
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    foreach (var msg in await receiver.ReceiveBatchAsync(remainingMessages))
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                        await receiver.AbandonAsync(item.LockToken);
-                        Assert.AreEqual(item.DeliveryCount, 1);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
+                        receivedMessages.Add(msg);
+                        Assert.AreEqual(msg.DeliveryCount, 1);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
+
+                // don't abandon in the receive loop
+                // as this would make the message available to be immediately received again
+                foreach (var msg in receivedMessages)
+                {
+                    await receiver.AbandonAsync(msg);
+                }
 
                 messageEnum.Reset();
                 var receivedMessageCount = 0;
