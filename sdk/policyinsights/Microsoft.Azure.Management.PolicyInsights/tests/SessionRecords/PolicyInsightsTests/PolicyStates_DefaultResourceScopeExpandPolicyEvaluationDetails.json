@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8f7526f9-c20b-401c-ab8f-fc1c2a529e0e"
+          "e75cfb53-a6b2-40b9-912e-dcf2fbf5dd14"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/2.0.2.0"
+          "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/3.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 25 Nov 2019 22:58:07 GMT"
+          "Wed, 18 Mar 2020 21:51:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,19 +33,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-policy-insights-requests": [
-          "597"
+          "594"
         ],
         "x-ms-request-id": [
-          ":5b3f635f-7f12-400e-8f42-ce33dbc34bf0"
+          ":75dd98d3-d6db-4979-8f9e-e7f96dfebe52"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "73160387-3a7f-453d-b346-94144f8624b2"
+          "67c48519-2157-4a91-a376-8fe3099d0a94"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191125T225807Z:73160387-3a7f-453d-b346-94144f8624b2"
+          "WESTUS:20200318T215141Z:67c48519-2157-4a91-a376-8fe3099d0a94"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -68,7 +68,5 @@
     }
   ],
   "Names": {},
-  "Variables": {
-    "SubscriptionId": "0b40be06-04e8-4f70-abde-a502b2646fe8"
-  }
+  "Variables": {}
 }
