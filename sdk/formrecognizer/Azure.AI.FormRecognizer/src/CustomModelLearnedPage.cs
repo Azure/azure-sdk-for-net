@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary>
     /// </summary>
-    public class CustomModelLearnedForm
+    public class CustomModelLearnedPage
     {
-        internal CustomModelLearnedForm()
+        internal CustomModelLearnedPage()
         {
         }
 
