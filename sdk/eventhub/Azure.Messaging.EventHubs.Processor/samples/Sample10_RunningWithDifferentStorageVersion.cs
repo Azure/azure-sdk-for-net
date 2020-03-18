@@ -16,22 +16,22 @@ using Azure.Storage.Blobs;
 namespace Azure.Messaging.EventHubs.Processor.Samples
 {
     /// <summary>
-    ///   An example of running the Event Processor in the Azure Stack platform.
+    ///   An example of running the Event Processor with a different version of the Azure Storage service.
     /// </summary>
     ///
-    public class Sample10_RunningInAzureStack : IEventHubsBlobCheckpointSample
+    public class Sample10_RunningWithDifferentStorageVersion : IEventHubsBlobCheckpointSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name => nameof(Sample10_RunningInAzureStack);
+        public string Name => nameof(Sample10_RunningWithDifferentStorageVersion);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description => "An example of running the Event Processor in the Azure Stack platform.";
+        public string Description => "An example of running the Event Processor with a different version of the Azure Storage service.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs and Azure storage connection information.
@@ -47,19 +47,23 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                                    string blobStorageConnectionString,
                                    string blobContainerName)
         {
-            // The latest Azure Storage API supported with Azure Stack Hub version 2002 is not compatible with the one that the Azure
-            // Storage SDK officially supports.  For this reason, the Event Processor Client, which makes use of the Azure Storage
-            // Blobs SDK, cannot be used with Azure Stack resources by default.  This sample illustrates how to work around this issue
-            // by using a pipeline policy to force the Azure Storage SDK to downgrade its version.
+            // Sometimes the environment you are targeting uses a service version that's different from the one set by default by the
+            // SDK.  The SDK targets the Azure cloud by default, and you may need to manually specify a different version in case you
+            // are trying to run in another platform.
             //
-            // In order to do this, create a Blob Client Options instance and add a Downgrade Version Policy to it.  These options
+            // For instance, this will happen when you try to run the Event Processor Client with resources in Azure Stack Hub version
+            // 2002.  The processor makes use of the Azure Storage SDK, which sets a default Azure Storage service version that's different
+            // from the ones expected by the Azure Stack Hub.  This sample illustrates how to work around this issue by using a pipeline
+            // policy to request the Azure Storage SDK to change its service version.
+            //
+            // In order to do this, create a Blob Client Options instance and add a Storage API Version Policy to it.  These options
             // will be passed to the Blob Container Client used by the processor.  The implementation of the policy is provided at
             // the end of this sample.
 
             string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
             BlobClientOptions storageClientOptions = new BlobClientOptions();
-            storageClientOptions.AddPolicy(new DowngradeVersionPolicy(), HttpPipelinePosition.PerCall);
+            storageClientOptions.AddPolicy(new StorageAPIVersionPolicy(), HttpPipelinePosition.PerCall);
 
             BlobContainerClient storageClient = new BlobContainerClient(blobStorageConnectionString, blobContainerName, storageClientOptions);
             EventProcessorClient processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
@@ -172,22 +176,24 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
         ///   request sent by the client, making it possible to specify the Azure Storage version they will target.
         /// </summary>
         ///
-        private class DowngradeVersionPolicy : HttpPipelineSynchronousPolicy
+        private class StorageAPIVersionPolicy : HttpPipelineSynchronousPolicy
         {
             /// <summary>
-            ///   The Azure Storage version we want to downgrade to.
+            ///   The Azure Storage version we want to use.
             /// </summary>
             ///
             /// <remarks>
-            ///   2017-11-09 is the latest version available in Azure Stack 2002.  Older available versions could
+            ///   2017-11-09 is the latest version available in Azure Stack Hub 2002.  Other available versions could
             ///   always be specified as long as all operations used by the Event Processor Client are supported.
             /// </remarks>
+            ///
+            /// <seealso href="https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-acs-differences#api-version"></seealso>
             ///
             private string Version => @"2017-11-09";
 
             /// <summary>
             ///   A method that will be called before a request is sent to the Azure Storage service.  Here we are
-            ///   overriding this method and injecting the version we want to downgrade to into the request headers.
+            ///   overriding this method and injecting the version we want to change to into the request headers.
             /// </summary>
             ///
             /// <param name="message">The message to be sent to the Azure Storage service.</param>
