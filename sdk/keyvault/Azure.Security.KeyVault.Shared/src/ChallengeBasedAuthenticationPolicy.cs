@@ -162,18 +162,20 @@ namespace Azure.Security.KeyVault
                     // if the challenge is non-null cache it
                     if (challenge != null)
                     {
+                        string authority = GetRequestAuthority(message.Request);
                         lock (s_cacheLock)
                         {
-                            s_cache[GetRequestAuthority(message.Request)] = challenge;
+                            s_cache[authority] = challenge;
                         }
                     }
                 }
                 else
                 {
                     // try to get the challenge from the cache
+                    string authority = GetRequestAuthority(message.Request);
                     lock (s_cacheLock)
                     {
-                        s_cache.TryGetValue(GetRequestAuthority(message.Request), out challenge);
+                        s_cache.TryGetValue(authority, out challenge);
                     }
                 }
 
