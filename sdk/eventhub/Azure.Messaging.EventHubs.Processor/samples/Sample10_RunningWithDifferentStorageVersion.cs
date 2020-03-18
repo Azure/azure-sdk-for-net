@@ -13,8 +13,8 @@ using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 
-/**
- * The following sample can be used if the environment you are targeting supports a different version of Storage Blob SDK than those
+/*
+ * The following sample can be used if the environment you are targeting supports a different version of Storage Blobs SDK than those
  * typically available on Azure. For example, if you are running Event Hubs on an Azure Stack Hub version 2002, the highest available
  * version for the Storage service is version 2017-11-09. In this case, you will need to use the following code to change the Storage
  * service API version to 2017-11-09. For more information on the Azure Storage service versions supported on Azure Stack Hub, please
@@ -64,14 +64,14 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
             // the ones expected by the Azure Stack Hub.  This sample illustrates how to work around this issue by using a pipeline
             // policy to request the Azure Storage SDK to change its service version.
             //
-            // In order to do this, create a Blob Client Options instance and add a Storage API Version Policy to it.  These options
+            // In order to do this, create a Blob Client Options instance and add a Storage Api Version Policy to it.  These options
             // will be passed to the Blob Container Client used by the processor.  The implementation of the policy is provided at
             // the end of this sample.
 
             string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
             BlobClientOptions storageClientOptions = new BlobClientOptions();
-            storageClientOptions.AddPolicy(new StorageAPIVersionPolicy(), HttpPipelinePosition.PerCall);
+            storageClientOptions.AddPolicy(new StorageApiVersionPolicy(), HttpPipelinePosition.PerCall);
 
             BlobContainerClient storageClient = new BlobContainerClient(blobStorageConnectionString, blobContainerName, storageClientOptions);
             EventProcessorClient processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
         ///   request sent by the client, making it possible to specify the Azure Storage version they will target.
         /// </summary>
         ///
-        private class StorageAPIVersionPolicy : HttpPipelineSynchronousPolicy
+        private class StorageApiVersionPolicy : HttpPipelineSynchronousPolicy
         {
             /// <summary>
             ///   The Azure Storage version we want to use.
