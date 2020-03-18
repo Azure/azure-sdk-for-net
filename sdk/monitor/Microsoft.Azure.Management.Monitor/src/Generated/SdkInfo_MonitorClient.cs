@@ -40,6 +40,11 @@ namespace Microsoft.Azure.Management.Monitor
                 new Tuple<string, string, string>("insights", "Operations", "2015-04-01"),
                 new Tuple<string, string, string>("insights", "ScheduledQueryRules", "2018-04-16"),
                 new Tuple<string, string, string>("insights", "TenantActivityLogs", "2015-04-01"),
+                new Tuple<string, string, string>("Insights", "PrivateEndpointConnections", "2019-10-17-preview"),
+                new Tuple<string, string, string>("Insights", "PrivateLinkResources", "2019-10-17-preview"),
+                new Tuple<string, string, string>("Insights", "PrivateLinkScopedResources", "2019-10-17-preview"),
+                new Tuple<string, string, string>("insights", "PrivateLinkScopeOperationStatus", "2019-10-17-preview"),
+                new Tuple<string, string, string>("insights", "PrivateLinkScopes", "2019-10-17-preview"),
               }.AsEnumerable();
           }
       }
