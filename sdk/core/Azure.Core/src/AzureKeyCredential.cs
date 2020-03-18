@@ -28,6 +28,12 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="AzureKeyCredential"/> class.
         /// </summary>
         /// <param name="key">Key to use to authenticate with the Azure service.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when the <paramref name="key"/> is null.
+        /// </exception>
+        /// <exception cref="System.ArgumentException">
+        /// Thrown when the <paramref name="key"/> is empty.
+        /// </exception>
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public AzureKeyCredential(string key) => Update(key);
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
@@ -38,6 +44,12 @@ namespace Azure.Core
         /// and want to update long lived clients.
         /// </summary>
         /// <param name="key">Key to authenticate the service against.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when the <paramref name="key"/> is null.
+        /// </exception>
+        /// <exception cref="System.ArgumentException">
+        /// Thrown when the <paramref name="key"/> is empty.
+        /// </exception>
         public void Update(string key)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
