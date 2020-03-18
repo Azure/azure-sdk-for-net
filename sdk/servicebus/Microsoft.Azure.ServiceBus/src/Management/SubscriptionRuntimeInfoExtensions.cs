@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
     using System.Xml.Linq;
+    using System.Collections.Generic;
 
     internal static class SubscriptionRuntimeInfoExtensions
     {
@@ -86,6 +87,35 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
 
             return subscriptionRuntimeInfo;
+        }
+
+        public static List<SubscriptionRuntimeInfo> ParseCollectionFromContent(string topicPath, string xml)
+        {
+            try
+            {
+                var xDoc = XElement.Parse(xml);
+                if (!xDoc.IsEmpty)
+                {
+                    if (xDoc.Name.LocalName == "feed")
+                    {
+                        var subscriptionList = new List<SubscriptionRuntimeInfo>();
+
+                        var entryList = xDoc.Elements(XName.Get("entry", ManagementClientConstants.AtomNamespace));
+                        foreach (var entry in entryList)
+                        {
+                            subscriptionList.Add(ParseFromEntryElement(topicPath, entry));
+                        }
+
+                        return subscriptionList;
+                    }
+                }
+            }
+            catch (Exception ex) when (!(ex is ServiceBusException))
+            {
+                throw new ServiceBusException(false, ex);
+            }
+
+            throw new MessagingEntityNotFoundException("No subscriptions were found");
         }
     }
 }

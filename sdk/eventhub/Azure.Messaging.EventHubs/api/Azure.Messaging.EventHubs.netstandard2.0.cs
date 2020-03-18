@@ -180,7 +180,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         private int _dummyPrimitive;
         public static Azure.Messaging.EventHubs.Consumer.EventPosition Earliest { get { throw null; } }
         public static Azure.Messaging.EventHubs.Consumer.EventPosition Latest { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Messaging.EventHubs.Consumer.EventPosition other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -189,19 +188,28 @@ namespace Azure.Messaging.EventHubs.Consumer
         public static Azure.Messaging.EventHubs.Consumer.EventPosition FromSequenceNumber(long sequenceNumber, bool isInclusive = true) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Messaging.EventHubs.Consumer.EventPosition first, Azure.Messaging.EventHubs.Consumer.EventPosition second) { throw null; }
-        public static bool operator !=(Azure.Messaging.EventHubs.Consumer.EventPosition first, Azure.Messaging.EventHubs.Consumer.EventPosition second) { throw null; }
+        public static bool operator ==(Azure.Messaging.EventHubs.Consumer.EventPosition left, Azure.Messaging.EventHubs.Consumer.EventPosition right) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventHubs.Consumer.EventPosition left, Azure.Messaging.EventHubs.Consumer.EventPosition right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct LastEnqueuedEventProperties
+    public partial struct LastEnqueuedEventProperties : System.IEquatable<Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties>
     {
         public LastEnqueuedEventProperties(long? lastSequenceNumber, long? lastOffset, System.DateTimeOffset? lastEnqueuedTime, System.DateTimeOffset? lastReceivedTime) { throw null; }
         public System.DateTimeOffset? EnqueuedTime { get { throw null; } }
         public System.DateTimeOffset? LastReceivedTime { get { throw null; } }
         public long? Offset { get { throw null; } }
         public long? SequenceNumber { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties left, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties right) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties left, Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties right) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
     }
     public partial class PartitionContext
     {

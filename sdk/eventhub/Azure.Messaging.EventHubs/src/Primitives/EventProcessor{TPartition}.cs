@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -29,11 +30,17 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
+        /// <summary>The maximum number of failed consumers to allow when processing a partition; failed consumers are those which have been unable to receive and process events.</summary>
+        private const int MaximumFailedConsumerCount = 1;
+
         /// <summary>The primitive for synchronizing access when starting and stopping the processor.</summary>
         private readonly SemaphoreSlim ProcessorRunningSync = new SemaphoreSlim(1, 1);
 
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
         private bool? _isRunningOverride;
+
+        /// <summary>Indicates the current state of the processor; used for mocking and manual status updates.</summary>
+        private EventProcessorStatus? _statusOverride;
 
         /// <summary>The task responsible for managing the operations of the processor when it is running.</summary>
         private Task _runningProcessorTask;
@@ -76,10 +83,29 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             get
             {
-                if (_isRunningOverride.HasValue)
+                var running = _isRunningOverride;
+
+                if (running.HasValue)
                 {
-                    return _isRunningOverride.Value;
+                    return running.Value;
                 }
+
+                var status = Status;
+                return ((status == EventProcessorStatus.Running) || (status == EventProcessorStatus.Stopping));
+            }
+
+            protected set => _isRunningOverride = value;
+        }
+
+        /// <summary>
+        ///   Indicates the current state of the processor.
+        /// </summary>
+        ///
+        internal EventProcessorStatus Status
+        {
+            get
+            {
+                EventProcessorStatus? statusOverride;
 
                 // If there is no active processor task, ensure that it is not
                 // in the process of starting by attempting to acquire the semaphore.
@@ -94,19 +120,38 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         if (!ProcessorRunningSync.Wait(100))
                         {
-                            return false;
+                            return (_statusOverride ?? EventProcessorStatus.NotRunning);
                         }
+
+                        statusOverride = _statusOverride;
                     }
                     finally
                     {
                         ProcessorRunningSync.Release();
                     }
                 }
+                else
+                {
+                    statusOverride = _statusOverride;
+                }
 
-                return  ((!_runningProcessorTask?.IsCompleted) ?? (false));
+                if (statusOverride.HasValue)
+                {
+                    return statusOverride.Value;
+                }
+
+                if ((_runningProcessorTask?.IsFaulted) ?? (false))
+                {
+                    return EventProcessorStatus.Faulted;
+                }
+
+                if ((!_runningProcessorTask?.IsCompleted) ?? (false))
+                {
+                    return EventProcessorStatus.Running;
+                }
+
+                return EventProcessorStatus.NotRunning;
             }
-
-            protected set => _isRunningOverride = value;
         }
 
         /// <summary>
@@ -168,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -407,6 +452,261 @@ namespace Azure.Messaging.EventHubs.Primitives
             new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration);
 
         /// <summary>
+        ///   Creates the infrastructure for tracking the processing of a partition and begins processing the
+        ///   partition in the background until cancellation is requested.
+        /// </summary>
+        ///
+        /// <param name="partition">The Event Hub partition whose processing should be started.</param>
+        /// <param name="startingPosition">The position within the event stream that processing should begin.</param>
+        /// <param name="cancellationSource">A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The <see cref="PartitionProcessor" /> encapsulating the processing task, its cancellation token, and associated state.</returns>
+        ///
+        /// <remarks>
+        ///   This method makes liberal use of class methods and state in addition to the received parameters.
+        /// </remarks>
+        ///
+        internal virtual PartitionProcessor CreatePartitionProcessor(TPartition partition,
+                                                                     EventPosition startingPosition,
+                                                                     CancellationTokenSource cancellationSource)
+        {
+            cancellationSource.Token.ThrowIfCancellationRequested<TaskCanceledException>();
+            var consumer = default(TransportConsumer);
+
+            // If the tracking of the last enqueued event properties was requested, then read the
+            // properties from the active consumer, which can change during processing in the event of
+            // error scenarios.
+
+            LastEnqueuedEventProperties readLastEnquedEventInformation()
+            {
+                if (!Options.TrackLastEnqueuedEventProperties)
+                {
+                    throw new InvalidOperationException(Resources.TrackLastEnqueuedEventPropertiesNotSet);
+                }
+
+                // This is not an expected scenario; the guard exists to prevent a race condition that is
+                // unlikely, but possible, when partition processing is being stopped or consumer creation
+                // outright failed.
+
+                if ((consumer == null) || (consumer.IsClosed))
+                {
+                    throw new InvalidOperationException(Resources.ClientNeededForThisInformationNotAvailable);
+                }
+
+                return new LastEnqueuedEventProperties(consumer.LastReceivedEvent);
+            }
+
+            // Define the routine to handle processing for the partition.
+
+            async Task performProcessing()
+            {
+                var connection = CreateConnection();
+                await using var connectionAwaiter = connection.ConfigureAwait(false);
+
+                var retryPolicy = Options.RetryOptions.ToRetryPolicy();
+                var retryDelay = default(TimeSpan?);
+                var capturedException = default(Exception);
+                var eventBatch = default(IReadOnlyList<EventData>);
+                var lastEvent = default(EventData);
+                var failedAttemptCount = 0;
+                var failedConsumerCount = 0;
+
+                // Continue processing the partition until cancellation is signaled or until the count of failed consumers is too great.
+                // Consumers which been consistently unable to receive and process events will be considered invalid and abandoned for a new consumer.
+
+                while ((!cancellationSource.IsCancellationRequested) && (failedConsumerCount <= MaximumFailedConsumerCount))
+                {
+                    try
+                    {
+                        consumer = CreateConsumer(ConsumerGroup, partition.PartitionId, startingPosition, connection, Options);
+
+                        // Allow the core dispatching loop to apply an additional set of retries over any provided by the consumer
+                        // itself, as a processor should be as resilient as possible and retain partition ownership if processing is
+                        // able to make forward progress.  If the retries are exhausted or a non-retriable exception occurs, the
+                        // consumer will be considered invalid and potentially refreshed.
+
+                        while (!cancellationSource.IsCancellationRequested)
+                        {
+                            try
+                            {
+                                eventBatch = await consumer.ReceiveAsync(EventBatchMaximumCount, Options.MaximumWaitTime, cancellationSource.Token).ConfigureAwait(false);
+                                await ProcessEventBatchAsync(partition, eventBatch, Options.MaximumWaitTime.HasValue, cancellationSource.Token).ConfigureAwait(false);
+
+                                // If the batch was successfully processed, capture the last event as the current starting position, in the
+                                // event that the consumer becomes invalid and needs to be replaced.
+
+                                lastEvent = eventBatch?.LastOrDefault();
+
+                                if ((lastEvent != null) && (lastEvent.Offset != long.MinValue))
+                                {
+                                    startingPosition = EventPosition.FromOffset(lastEvent.Offset, false);
+                                }
+
+                                // If event batches are successfully processed, then the need for forward progress is
+                                // satisfied, and the failure counts should reset.
+
+                                failedAttemptCount = 0;
+                                failedConsumerCount = 0;
+                            }
+                            catch (TaskCanceledException) when (cancellationSource.IsCancellationRequested)
+                            {
+                                // Do not log; this is an expected scenario when partition processing is asked to stop.
+
+                                throw;
+                            }
+                            catch (Exception ex) when (!(ex is DeveloperCodeException))
+                            {
+                                // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
+                                // for observing or surfacing exceptions that may occur in the handler.
+
+                                _ = OnProcessingErrorAsync(ex, partition, Resources.OperationReadEvents, CancellationToken.None);
+
+                                Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                                retryDelay = retryPolicy.CalculateRetryDelay(ex, ++failedAttemptCount);
+
+                                if (!retryDelay.HasValue)
+                                {
+                                    // If the exception should not be retried, then allow it to pass to the outer loop; this is intended
+                                    // to prevent being stuck in a corrupt state where the consumer is unable to read events.
+
+                                    throw;
+                                }
+
+                                await Task.Delay(retryDelay.Value, cancellationSource.Token).ConfigureAwait(false);
+                            }
+                        }
+                    }
+                    catch (OperationCanceledException ex)
+                    {
+                        throw new TaskCanceledException(ex.Message, ex);
+                    }
+                    catch (DeveloperCodeException ex)
+                    {
+                        // Record that an exception was observed in developer-provided code, but consider it fatal and take no further
+                        // steps to handle or dispatch it.
+
+                        var message = string.Format(CultureInfo.InvariantCulture, Resources.DeveloperCodeExceptionMessageMask, ex.InnerException.Message);
+                        Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, message);
+
+                        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                    }
+                    catch (Exception ex) when
+                        (ex is TaskCanceledException
+                        || ex is OutOfMemoryException
+                        || ex is StackOverflowException
+                        || ex is ThreadAbortException)
+                    {
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        ++failedConsumerCount;
+                        capturedException = ex;
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            if (consumer != null)
+                            {
+                                await consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                            // Do not bubble the exception, as the consumer is being refreshed; failure to close this consumer is non-fatal.
+                        }
+                    }
+                }
+
+                // If there was an exception captured, then surface it.  Otherwise signal that cancellation took place.
+
+                if (capturedException != null)
+                {
+                    ExceptionDispatchInfo.Capture(capturedException).Throw();
+                }
+
+                throw new TaskCanceledException();
+            }
+
+            // Start processing in the background and return the processor
+            // metadata.
+
+            return new PartitionProcessor
+            (
+                Task.Run(performProcessing, cancellationSource.Token),
+                readLastEnquedEventInformation,
+                cancellationSource
+            );
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to process a batch of events.
+        /// </summary>
+        ///
+        /// <param name="partition">The Event Hub partition whose processing should be started.</param>
+        /// <param name="eventBatch">The batch of events to process.</param>
+        /// <param name="dispatchEmptyBatches"><c>true</c> if empty batches should be dispatched to the handler; otherwise, <c>false</c>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.</param>
+        ///
+        internal virtual async Task ProcessEventBatchAsync(TPartition partition,
+                                                           IReadOnlyList<EventData> eventBatch,
+                                                           bool dispatchEmptyBatches,
+                                                           CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            // If there were no events in the batch and empty batches should not be emitted,
+            // take no further action.
+
+            if (((eventBatch == null) || (eventBatch.Count <= 0)) && (!dispatchEmptyBatches))
+            {
+                return;
+            }
+
+            // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
+
+            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+            diagnosticScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind);
+            diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
+            diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+
+            if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
+            {
+                foreach (var eventData in eventBatch)
+                {
+                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                    {
+                        var attributes = new Dictionary<string, string>(1)
+                        {
+                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString() }
+                        };
+
+                        diagnosticScope.AddLink(diagnosticId, attributes);
+                    }
+                }
+            }
+
+            diagnosticScope.Start();
+
+            // Dispatch the batch to the handler for processing.  Exceptions in the handler code are intended to be
+            // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
+            // code.
+
+            try
+            {
+                await OnProcessingEventBatchAsync(eventBatch, partition, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                diagnosticScope.Failed(ex);
+                throw new DeveloperCodeException(ex);
+            }
+        }
+
+        /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
         ///   event processor instance, so that processing for a given set of partitions can be properly initialized.
         /// </summary>
@@ -589,6 +889,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
 
                 releaseSync = true;
+                _statusOverride = EventProcessorStatus.Starting;
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If the processor is already running, then it was started before the
@@ -617,6 +918,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
+                _statusOverride = null;
                 Logger.EventProcessorStartComplete(Identifier, EventHubName, ConsumerGroup);
 
                 // If the cancellation token was signaled during the attempt to acquire the
@@ -660,6 +962,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
 
                 releaseSync = true;
+                _statusOverride = EventProcessorStatus.Stopping;
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If the processor is not running, then it was never started or has been stopped
@@ -699,7 +1002,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
                 catch (Exception ex)
                 {
-                    Logger.EventProcessingTaskError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                    Logger.EventProcessorTaskError(Identifier, EventHubName, ConsumerGroup, ex.Message);
                     processingException = ex;
                 }
 
@@ -737,6 +1040,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
+                _statusOverride = null;
                 Logger.EventProcessorStopComplete(Identifier, EventHubName, ConsumerGroup);
 
                 // If the cancellation token was signaled during the attempt to acquire the
@@ -768,6 +1072,21 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             CreateConnection();
             await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Begin processing the requested partition in the background and update tracking state
+        ///   so that processing can be stopped.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing should be started.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        internal async virtual Task StartProcessingPartitionAsync(string partitionId,
+                                                                  CancellationToken cancellationToken)
+        {
+            await Task.Delay(1).ConfigureAwait(false);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -870,7 +1189,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   of a partition.
         /// </summary>
         ///
-        private class PartitionProcessor
+        internal class PartitionProcessor
         {
             /// <summary>The task that is performing the processing.</summary>
             public readonly Task ProcessingTask;
@@ -878,15 +1197,20 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <summary>The source token that can be used to cancel the processing for the associated <see cref="ProcessingTask" />.</summary>
             public readonly CancellationTokenSource CancellationSource;
 
+            /// <summary>A function that can be used to read the information about the last enqueued event of the partition.</summary>
+            public readonly Func<LastEnqueuedEventProperties> ReadLastEnqueuedEventProperties;
+
             /// <summary>
             ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
             /// </summary>
             ///
             /// <param name="processingTask">The task that is performing the processing.</param>
+            /// <param name="readLastEnqueuedEventProperties">A function that can be used to read the information about the last enqueued event of the partition.</param>
             /// <param name="cancellationSource">he source token that can be used to cancel the processing.</param>
             ///
             public PartitionProcessor(Task processingTask,
-                                      CancellationTokenSource cancellationSource) => (ProcessingTask, CancellationSource) = (processingTask, cancellationSource);
+                                      Func<LastEnqueuedEventProperties> readLastEnqueuedEventProperties,
+                                      CancellationTokenSource cancellationSource) => (ProcessingTask, ReadLastEnqueuedEventProperties, CancellationSource) = (processingTask, readLastEnqueuedEventProperties, cancellationSource);
         }
     }
 }

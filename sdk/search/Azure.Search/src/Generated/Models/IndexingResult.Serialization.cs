@@ -10,33 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class IndexingResult : IUtf8JsonSerializable
+    public partial class IndexingResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Key != null)
-            {
-                writer.WritePropertyName("key");
-                writer.WriteStringValue(Key);
-            }
-            if (ErrorMessage != null)
-            {
-                writer.WritePropertyName("errorMessage");
-                writer.WriteStringValue(ErrorMessage);
-            }
-            if (Succeeded != null)
-            {
-                writer.WritePropertyName("status");
-                writer.WriteBooleanValue(Succeeded.Value);
-            }
-            if (StatusCode != null)
-            {
-                writer.WritePropertyName("statusCode");
-                writer.WriteNumberValue(StatusCode.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static IndexingResult DeserializeIndexingResult(JsonElement element)
         {
             IndexingResult result = new IndexingResult();
@@ -44,10 +19,6 @@ namespace Azure.Search.Models
             {
                 if (property.NameEquals("key"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Key = property.Value.GetString();
                     continue;
                 }
@@ -62,20 +33,12 @@ namespace Azure.Search.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     result.Succeeded = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("statusCode"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.StatusCode = property.Value.GetInt32();
+                    result.Status = property.Value.GetInt32();
                     continue;
                 }
             }

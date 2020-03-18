@@ -30,8 +30,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the AccessInformationContract class.
         /// </summary>
         /// <param name="id">Identifier.</param>
-        /// <param name="primaryKey">Primary access key.</param>
-        /// <param name="secondaryKey">Secondary access key.</param>
+        /// <param name="primaryKey">Primary access key. This property will not
+        /// be filled on 'GET' operations! Use '/listSecrets' POST request to
+        /// get the value.</param>
+        /// <param name="secondaryKey">Secondary access key. This property will
+        /// not be filled on 'GET' operations! Use '/listSecrets' POST request
+        /// to get the value.</param>
         /// <param name="enabled">Determines whether direct access is
         /// enabled.</param>
         public AccessInformationContract(string id = default(string), string primaryKey = default(string), string secondaryKey = default(string), bool? enabled = default(bool?))
@@ -55,13 +59,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets primary access key.
+        /// Gets or sets primary access key. This property will not be filled
+        /// on 'GET' operations! Use '/listSecrets' POST request to get the
+        /// value.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; set; }
 
         /// <summary>
-        /// Gets or sets secondary access key.
+        /// Gets or sets secondary access key. This property will not be filled
+        /// on 'GET' operations! Use '/listSecrets' POST request to get the
+        /// value.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; set; }

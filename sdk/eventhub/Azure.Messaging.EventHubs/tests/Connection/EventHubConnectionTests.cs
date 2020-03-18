@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { "FakeNamespace", null, credential.Object };
             yield return new object[] { "FakNamespace", "", credential.Object };
             yield return new object[] { "FakeNamespace", "FakePath", null };
+            yield return new object[] { "sb://fakenamspace.com", "FakePath", credential.Object };
         }
 
         /// <summary>

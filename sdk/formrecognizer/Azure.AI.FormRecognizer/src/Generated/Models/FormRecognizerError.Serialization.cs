@@ -10,17 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class FormRecognizerError : IUtf8JsonSerializable
+    public partial class FormRecognizerError
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("code");
-            writer.WriteStringValue(Code);
-            writer.WritePropertyName("message");
-            writer.WriteStringValue(Message);
-            writer.WriteEndObject();
-        }
         internal static FormRecognizerError DeserializeFormRecognizerError(JsonElement element)
         {
             FormRecognizerError result = new FormRecognizerError();

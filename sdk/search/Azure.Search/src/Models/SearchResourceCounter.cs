@@ -7,5 +7,7 @@ using Azure.Core;
 namespace Azure.Search.Models
 {
     [CodeGenSchema("ResourceCounter")]
-    public partial class SearchResourceCounter { }
+    public partial class SearchResourceCounter
+    {
+    }
 }

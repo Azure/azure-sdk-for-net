@@ -11,7 +11,7 @@ parameters:
 
 steps:
     # New-TestResources command requires Az module
-    - pwsh: Install-Module -Name Az -Scope CurrentUser -Force
+    - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
       displayName: Install Azure PowerShell module
 
     # Command sets an environment variable in the pipeline's context:

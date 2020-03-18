@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).GetSender(scope.QueueName);
-                Assert.AreEqual(scope.QueueName, sender.EntityName);
+                Assert.AreEqual(scope.QueueName, sender.EntityPath);
                 Assert.AreEqual(TestEnvironment.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             }
         }
@@ -183,11 +183,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
                 await using var receiver = client.GetReceiver(scope.QueueName);
-                ServiceBusMessage msg = await receiver.PeekAt(sequenceNum);
-                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
+                ServiceBusMessage msg = await receiver.PeekAtAsync(sequenceNum);
+                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
 
                 await sender.CancelScheduledMessageAsync(sequenceNum);
-                msg = await receiver.PeekAt(sequenceNum);
+                msg = await receiver.PeekAtAsync(sequenceNum);
                 Assert.IsNull(msg);
             }
         }
@@ -201,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var sender = client.GetSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
-                await sender.CloseAsync(); // shouldn't close connection, but should close send link
+                await sender.DisposeAsync(); // shouldn't close connection, but should close send link
 
                 Assert.That(async () => await sender.SendAsync(GetMessage()),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ClientClosed));
@@ -210,8 +210,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 // receive should still work
                 await using var receiver = client.GetReceiver(scope.QueueName);
-                ServiceBusMessage msg = await receiver.PeekAt(sequenceNum);
-                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
+                ServiceBusMessage msg = await receiver.PeekAtAsync(sequenceNum);
+                Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
             }
         }
 

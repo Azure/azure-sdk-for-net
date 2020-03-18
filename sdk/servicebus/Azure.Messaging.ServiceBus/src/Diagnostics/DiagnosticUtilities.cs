@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 {
     internal static class DiagnosticUtilities
     {
-        internal static string GenerateIdentifier(string entityName) =>
-            $"{entityName}-{Guid.NewGuid()}";
+        internal static string GenerateIdentifier(string entityPath) =>
+            $"{entityPath}-{Guid.NewGuid()}";
     }
 }

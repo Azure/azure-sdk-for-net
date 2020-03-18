@@ -114,19 +114,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Creates a producer strongly aligned with the active protocol and transport,
         ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public override TransportSender CreateSender(string entityName, ServiceBusRetryPolicy retryPolicy)
+        public override TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
             return new AmqpSender
             (
-                entityName,
+                entityPath,
                 ConnectionScope,
                 retryPolicy
             );
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
         public override TransportReceiver CreateReceiver(
-            string entityName,
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             return new AmqpReceiver
             (
-                entityName,
+                entityPath,
                 receiveMode,
                 prefetchCount,
                 ConnectionScope,
@@ -186,12 +186,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
-            var clientType = GetType();
-
             try
             {
-                //ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 ConnectionScope?.Dispose();
                 return Task.CompletedTask;
@@ -199,13 +195,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception)
             {
                 _closed = false;
-                //ServiceBusEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
-
                 throw;
-            }
-            finally
-            {
-                //ServiceBusEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
             }
         }
 

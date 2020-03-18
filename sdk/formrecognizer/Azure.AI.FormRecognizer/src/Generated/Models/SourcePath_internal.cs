@@ -10,6 +10,18 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Uri or local path to source data. </summary>
     internal partial class SourcePath_internal
     {
+        /// <summary> Initializes a new instance of SourcePath_internal. </summary>
+        public SourcePath_internal()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SourcePath_internal. </summary>
+        /// <param name="source"> File source path. </param>
+        internal SourcePath_internal(string source)
+        {
+            Source = source;
+        }
+
         /// <summary> File source path. </summary>
         public string Source { get; set; }
     }

@@ -85,8 +85,8 @@ namespace Azure.AI.FormRecognizer.Custom
     }
     public partial class FieldPredictionAccuracy
     {
-        public FieldPredictionAccuracy() { }
-        public float Accuracy { get { throw null; } set { } }
+        internal FieldPredictionAccuracy() { }
+        public float Accuracy { get { throw null; } }
         public string Label { get { throw null; } }
     }
     public partial class SubscriptionProperties
@@ -98,11 +98,11 @@ namespace Azure.AI.FormRecognizer.Custom
     }
     public partial class TrainingDocumentInfo
     {
-        public TrainingDocumentInfo() { }
-        public string DocumentName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } set { } }
+        internal TrainingDocumentInfo() { }
+        public string DocumentName { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } }
         public int PageCount { get { throw null; } set { } }
-        public Azure.AI.FormRecognizer.Models.TrainStatus Status { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.Models.TrainStatus Status { get { throw null; } }
     }
     public partial class TrainingFileFilter
     {
@@ -251,9 +251,9 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public partial class FormRecognizerError
     {
-        public FormRecognizerError() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
+        internal FormRecognizerError() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public enum LengthUnit
     {

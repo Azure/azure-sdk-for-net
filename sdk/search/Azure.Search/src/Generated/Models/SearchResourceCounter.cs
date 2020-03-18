@@ -10,9 +10,23 @@ namespace Azure.Search.Models
     /// <summary> Represents a resource&apos;s usage and quota. </summary>
     public partial class SearchResourceCounter
     {
+        /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
+        internal SearchResourceCounter()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
+        /// <param name="usage"> The resource usage amount. </param>
+        /// <param name="quota"> The resource amount quota. </param>
+        internal SearchResourceCounter(long usage, long? quota)
+        {
+            Usage = usage;
+            Quota = quota;
+        }
+
         /// <summary> The resource usage amount. </summary>
-        public long? Usage { get; set; }
+        public long Usage { get; internal set; }
         /// <summary> The resource amount quota. </summary>
-        public long? Quota { get; set; }
+        public long? Quota { get; internal set; }
     }
 }

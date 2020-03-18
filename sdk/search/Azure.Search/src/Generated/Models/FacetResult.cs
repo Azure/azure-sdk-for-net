@@ -13,6 +13,18 @@ namespace Azure.Search.Models
     /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
     public partial class FacetResult : IDictionary<string, object>
     {
+        /// <summary> Initializes a new instance of FacetResult. </summary>
+        internal FacetResult()
+        {
+        }
+
+        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        internal FacetResult(long? count)
+        {
+            Count = count;
+        }
+
         /// <summary> The approximate count of documents falling within the bucket described by this facet. </summary>
         public long? Count { get; internal set; }
         private readonly IDictionary<string, object> _additionalProperties = new Dictionary<string, object>();

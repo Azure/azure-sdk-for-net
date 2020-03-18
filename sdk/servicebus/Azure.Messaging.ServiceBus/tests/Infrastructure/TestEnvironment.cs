@@ -227,7 +227,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 return new NamespaceProperties
                 (
                     parsed.Endpoint.Host.Substring(0, parsed.Endpoint.Host.IndexOf('.')),
-                    ServiceBusOverrideConnectionString.Value.Replace($";EntityPath={ parsed.EntityName }", string.Empty),
+                    ServiceBusOverrideConnectionString.Value.Replace($";EntityPath={ parsed.EntityPath }", string.Empty),
                     false
                 );
             }

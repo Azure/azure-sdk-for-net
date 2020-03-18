@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class IndexAction : IUtf8JsonSerializable
+    internal partial class IndexAction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,24 +26,6 @@ namespace Azure.Search.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-        }
-        internal static IndexAction DeserializeIndexAction(JsonElement element)
-        {
-            IndexAction result = new IndexAction();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@search.action"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.ActionType = property.Value.GetString().ToIndexActionType();
-                    continue;
-                }
-                result.Add(property.Name, property.Value.GetObject());
-            }
-            return result;
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
-        public DateTime LockedUntilUtc => _receiver.SessionLockedUntilUtc;
+        public DateTimeOffset LockedUntil => _receiver.SessionLockedUntil;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.

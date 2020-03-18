@@ -10,17 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    public partial class FieldPredictionAccuracy : IUtf8JsonSerializable
+    public partial class FieldPredictionAccuracy
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("fieldName");
-            writer.WriteStringValue(Label);
-            writer.WritePropertyName("accuracy");
-            writer.WriteNumberValue(Accuracy);
-            writer.WriteEndObject();
-        }
         internal static FieldPredictionAccuracy DeserializeFieldPredictionAccuracy(JsonElement element)
         {
             FieldPredictionAccuracy result = new FieldPredictionAccuracy();

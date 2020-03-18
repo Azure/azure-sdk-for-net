@@ -37,6 +37,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.IsTrue(receiver.IsSessionReceiver);
         }
 
+        [Test]
+        public void SessionReceiverCannotPerformMessageLock()
+        {
+            var receiver = new ServiceBusReceiver(
+                Mock.Of<ServiceBusConnection>(),
+                "fakeQueue",
+                true,
+                options: new ServiceBusReceiverOptions());
+
+            Assert.That(async () => await receiver.RenewMessageLockAsync(
+                new ServiceBusReceivedMessage()),
+                Throws.InstanceOf<InvalidOperationException>());
+        }
+
         //[Test]
         // TODO add test that validates service error thrown
         // now that we removed assumption that subscription path
@@ -69,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
             var receiver = new ServiceBusClient(connString).GetReceiver(queueName);
-            Assert.AreEqual(queueName, receiver.EntityName);
+            Assert.AreEqual(queueName, receiver.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
             Assert.IsNotNull(receiver.Identifier);
             Assert.IsFalse(receiver.IsSessionReceiver);

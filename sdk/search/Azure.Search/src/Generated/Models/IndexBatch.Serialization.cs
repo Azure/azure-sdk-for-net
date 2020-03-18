@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Models
 {
-    public partial class IndexBatch : IUtf8JsonSerializable
+    internal partial class IndexBatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,22 +23,6 @@ namespace Azure.Search.Models
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
-        }
-        internal static IndexBatch DeserializeIndexBatch(JsonElement element)
-        {
-            IndexBatch result = new IndexBatch();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("value"))
-                {
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        result.Actions.Add(IndexAction.DeserializeIndexAction(item));
-                    }
-                    continue;
-                }
-            }
-            return result;
         }
     }
 }
