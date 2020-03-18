@@ -13,6 +13,14 @@ using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 
+/**
+ * The following sample can be used if the environment you are targeting supports a different version of Storage Blob SDK than those
+ * typically available on Azure. For example, if you are running Event Hubs on an Azure Stack Hub version 2002, the highest available
+ * version for the Storage service is version 2017-11-09. In this case, you will need to use the following code to change the Storage
+ * service API version to 2017-11-09. For more information on the Azure Storage service versions supported on Azure Stack Hub, please
+ * refer to <see href="http://docs.microsoft.com/en-us/azure-stack/user/azure-stack-acs-differences"/>.
+ */
+
 namespace Azure.Messaging.EventHubs.Processor.Samples
 {
     /// <summary>
@@ -51,9 +59,9 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
             // SDK.  The SDK targets the Azure cloud by default, and you may need to manually specify a different version in case you
             // are trying to run in another platform.
             //
-            // For instance, this will happen when you try to run the Event Processor Client with resources in Azure Stack Hub version
-            // 2002.  The processor makes use of the Azure Storage SDK, which sets a default Azure Storage service version that's different
-            // from the ones expected by the Azure Stack Hub.  This sample illustrates how to work around this issue by using a pipeline
+            // For instance, this will happen when you try to run the Event Processor Client on an Azure Stack Hub version 2002.  The
+            // processor makes use of the Azure Storage SDK, which sets a default Azure Storage service version that's different from
+            // the ones expected by the Azure Stack Hub.  This sample illustrates how to work around this issue by using a pipeline
             // policy to request the Azure Storage SDK to change its service version.
             //
             // In order to do this, create a Blob Client Options instance and add a Storage API Version Policy to it.  These options
@@ -186,8 +194,6 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
             ///   2017-11-09 is the latest version available in Azure Stack Hub 2002.  Other available versions could
             ///   always be specified as long as all operations used by the Event Processor Client are supported.
             /// </remarks>
-            ///
-            /// <seealso href="https://docs.microsoft.com/en-us/azure-stack/user/azure-stack-acs-differences#api-version"></seealso>
             ///
             private string Version => @"2017-11-09";
 
