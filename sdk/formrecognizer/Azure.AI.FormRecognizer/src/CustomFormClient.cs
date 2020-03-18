@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -198,7 +198,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -226,19 +226,6 @@ namespace Azure.AI.FormRecognizer.Custom
 
         #region Supervised
 
-        ///// ```csharp
-        ///// using (FileStream stream = File.Open(@"c:\path\to\form.pdf"))
-        ///// {
-        /////    var extractFormOperation = client.StartExtractLabeledForms(modelId, stream, FormContentType.Pdf);
-        /////
-        /////    await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
-        /////    if (extractFormOperation.HasValue)
-        /////    {
-        /////        IReadOnlyList&lt;ExtractedLabeledForm&gt; forms = extractFormOperation.Value;
-        /////    }
-        ///// }
-        ///// ```
-
         /// <summary>
         /// Extract form content from one or more forms, using a model trained with labels.
         /// </summary>
@@ -249,7 +236,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted forms from the input document.</returns>
-        public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -283,7 +270,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted forms from the input document.</returns>
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329

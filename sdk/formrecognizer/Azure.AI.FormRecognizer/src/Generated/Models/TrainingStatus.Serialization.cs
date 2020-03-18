@@ -13,17 +13,17 @@ namespace Azure.AI.FormRecognizer.Custom
     {
         public static string ToSerialString(this TrainingStatus value) => value switch
         {
-            TrainingStatus.Training => "creating",
-            TrainingStatus.Ready => "ready",
-            TrainingStatus.Invalid => "invalid",
+            TrainingStatus.Succeeded => "succeeded",
+            TrainingStatus.PartiallySucceeded => "partiallySucceeded",
+            TrainingStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TrainingStatus value.")
         };
 
         public static TrainingStatus ToTrainingStatus(this string value)
         {
-            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Training;
-            if (string.Equals(value, "ready", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Ready;
-            if (string.Equals(value, "invalid", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Invalid;
+            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Succeeded;
+            if (string.Equals(value, "partiallySucceeded", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.PartiallySucceeded;
+            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TrainingStatus value.");
         }
     }

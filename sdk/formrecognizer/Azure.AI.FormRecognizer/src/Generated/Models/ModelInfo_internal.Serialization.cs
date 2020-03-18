@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 }
                 if (property.NameEquals("status"))
                 {
-                    result.Status = property.Value.GetString().ToTrainingStatus();
+                    result.Status = property.Value.GetString().ToModelStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))

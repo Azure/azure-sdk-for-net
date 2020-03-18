@@ -327,7 +327,7 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, FormContentType? contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -356,7 +356,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, FormContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
@@ -385,7 +385,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, FormContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
@@ -561,7 +561,7 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, FormContentType? contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, ContentType? contentType, Stream fileStream)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -587,7 +587,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, FormContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
@@ -615,7 +615,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, FormContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
@@ -783,7 +783,7 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType? contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType? contentType, Stream fileStream)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -804,7 +804,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
@@ -831,7 +831,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();

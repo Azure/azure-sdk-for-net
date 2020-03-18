@@ -117,6 +117,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RawExtractedPage> RawExtractedPages { get { throw null; } }
         public int StartPageNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledTable> Tables { get { throw null; } }
+        public string GetFieldValue(string label) { throw null; }
     }
     public partial class ExtractedLabeledTable : Azure.AI.FormRecognizer.Models.ExtractedTable
     {
@@ -131,6 +132,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public int PageNumber { get { throw null; } }
         public Azure.AI.FormRecognizer.Models.RawExtractedPage RawExtractedPage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedTable> Tables { get { throw null; } }
+        public string GetFieldValue(string fieldName) { throw null; }
     }
     public partial class FieldPredictionAccuracy
     {

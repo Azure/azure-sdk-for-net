@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329

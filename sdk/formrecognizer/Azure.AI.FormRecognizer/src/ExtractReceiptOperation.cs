@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
             {

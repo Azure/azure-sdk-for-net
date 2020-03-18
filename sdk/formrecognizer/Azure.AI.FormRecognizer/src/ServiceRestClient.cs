@@ -12,19 +12,19 @@ namespace Azure.AI.FormRecognizer
 {
     internal partial class ServiceRestClient
     {
-        internal static string GetContentTypeString(FormContentType contentType)
+        internal static string GetContentTypeString(ContentType contentType)
         {
             return contentType switch
             {
-                FormContentType.Pdf => "application/pdf",
-                FormContentType.Png => "image/png",
-                FormContentType.Jpeg => "image/jpeg",
-                FormContentType.Tiff => "image/tiff",
+                ContentType.Pdf => "application/pdf",
+                ContentType.Png => "image/png",
+                ContentType.Jpeg => "image/jpeg",
+                ContentType.Tiff => "image/tiff",
                 _ => throw new NotSupportedException($"The content type {contentType} is not supported."),
             };
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, Stream stream, ContentType contentType)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, Stream stream, FormContentType contentType)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, Stream stream, ContentType contentType)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer
 
         // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
         // This is missing from the swagger -- following up with service team.
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(Stream stream, FormContentType contentType)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(Stream stream, ContentType contentType)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
