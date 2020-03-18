@@ -11,7 +11,7 @@ Create a `SearchServiceClient` and send a request.
 ```C# Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 // Get the service endpoint and API key from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-SearchApiKeyCredential credential = new SearchApiKeyCredential(
+AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 // Create a new SearchServiceClient
@@ -26,7 +26,7 @@ Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} inde
 All Search operations will throw a RequestFailedException on failure.
 ```C# Snippet:Azure_Search_Tests_Samples_HandleErrorsAsync
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-SearchApiKeyCredential credential = new SearchApiKeyCredential(
+AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
 // Create an invalid SearchIndexClientClient

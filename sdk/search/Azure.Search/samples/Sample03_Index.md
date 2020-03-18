@@ -5,7 +5,7 @@ Retrieve a count of the number of documents in this search index.
 ```C# Snippet:Azure_Search_Tests_Samples_GetCountAsync
 // Create a SearchIndexClient
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-SearchApiKeyCredential credential = new SearchApiKeyCredential(
+AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 SearchIndexClient index = new SearchIndexClient(endpoint, indexName, credential);

@@ -16,12 +16,15 @@
 
     <!-- These are still firing but not valid -->
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
+    <!-- Use latest changes from Azure Core that haven't been published -->
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

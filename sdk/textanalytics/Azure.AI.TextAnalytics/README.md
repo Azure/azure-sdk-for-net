@@ -72,7 +72,7 @@ With the value of the endpoint and a `TextAnalyticsApiKeyCredential`, you can cr
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var credential = new TextAnalyticsApiKeyCredential(apiKey);
+var credential = new AzureKeyCredential(apiKey);
 var client = new TextAnalyticsClient(new Uri(endpoint), credential);
 ```
 

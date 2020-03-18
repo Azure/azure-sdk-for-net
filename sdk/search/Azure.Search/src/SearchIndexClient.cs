@@ -106,7 +106,7 @@ namespace Azure.Search
         public SearchIndexClient(
             Uri endpoint,
             string indexName,
-            SearchApiKeyCredential credential) :
+            AzureKeyCredential credential) :
             this(endpoint, indexName, credential, null)
         {
         }
@@ -146,7 +146,7 @@ namespace Azure.Search
         public SearchIndexClient(
             Uri endpoint,
             string indexName,
-            SearchApiKeyCredential credential,
+            AzureKeyCredential credential,
             SearchClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));

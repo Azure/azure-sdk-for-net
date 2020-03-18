@@ -75,15 +75,15 @@ namespace Azure.Search
         /// Service.
         /// </summary>
         /// <param name="credential">
-        /// The <see cref="SearchApiKeyCredential"/> to authenticate requests.
+        /// The <see cref="AzureKeyCredential"/> to authenticate requests.
         /// </param>
         /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
-        internal HttpPipeline Build(SearchApiKeyCredential credential)
+        internal HttpPipeline Build(AzureKeyCredential credential)
         {
             Debug.Assert(credential != null);
             return HttpPipelineBuilder.Build(
                 options: this,
-                perCallPolicies: new[] { new SearchApiKeyCredentialPolicy(credential) },
+                perCallPolicies: new[] { new AzureKeyCredentialPolicy(credential, Constants.ApiKeyHeaderName) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
         }

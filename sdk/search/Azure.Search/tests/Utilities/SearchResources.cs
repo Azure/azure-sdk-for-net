@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -249,7 +250,7 @@ namespace Azure.Search.Tests
             TestFixture.InstrumentClient(
                 new SearchServiceClient(
                     Endpoint,
-                    new SearchApiKeyCredential(PrimaryApiKey),
+                    new AzureKeyCredential(PrimaryApiKey),
                     TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
@@ -276,7 +277,7 @@ namespace Azure.Search.Tests
                 new SearchIndexClient(
                     Endpoint,
                     IndexName,
-                    new SearchApiKeyCredential(QueryApiKey),
+                    new AzureKeyCredential(QueryApiKey),
                     TestFixture.GetSearchClientOptions(options)));
         }
         #endregion Get Clients

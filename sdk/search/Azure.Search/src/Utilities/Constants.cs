@@ -13,8 +13,7 @@ namespace Azure.Search
         // TODO: #10596 - Switch constants to use JsonEncodedText
 
         /// <summary>
-        /// The name of the API key header used for signing requests in the
-        /// <see cref="SearchApiKeyCredentialPolicy"/>.
+        /// The name of the API key header used for signing requests.
         /// </summary>
         public const string ApiKeyHeaderName = "api-key";
 

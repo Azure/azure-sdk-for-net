@@ -9,6 +9,7 @@ using Azure.Search.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Core.Testing;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.Search.Tests.Samples
 {
@@ -29,7 +30,7 @@ namespace Azure.Search.Tests.Samples
             #region Snippet:Azure_Search_Tests_Samples_CreateClient
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(
+            AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
             // Create a new SearchServiceClient
@@ -55,7 +56,7 @@ namespace Azure.Search.Tests.Samples
             #region Snippet:Azure_Search_Tests_Samples_CreateClientAsync
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(
+            AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
             // Create a new SearchServiceClient
@@ -79,7 +80,7 @@ namespace Azure.Search.Tests.Samples
 
             #region Snippet:Azure_Search_Tests_Samples_HandleErrors
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(
+            AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
             // Create an invalid SearchIndexClientClient
@@ -107,7 +108,7 @@ namespace Azure.Search.Tests.Samples
 
             #region Snippet:Azure_Search_Tests_Samples_HandleErrorsAsync
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(
+            AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
             // Create an invalid SearchIndexClientClient
@@ -135,7 +136,7 @@ namespace Azure.Search.Tests.Samples
             #region Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
             // Create a new SearchServiceClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(
+            AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
             SearchServiceClient search = new SearchServiceClient(endpoint, credential);
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
@@ -157,7 +158,7 @@ namespace Azure.Search.Tests.Samples
             #region Snippet:Azure_Search_Tests_Samples_GetCountAsync
             // Create a SearchIndexClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-            SearchApiKeyCredential credential = new SearchApiKeyCredential(
+            AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
             string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
             SearchIndexClient index = new SearchIndexClient(endpoint, indexName, credential);

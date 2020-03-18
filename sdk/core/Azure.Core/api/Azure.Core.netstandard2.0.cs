@@ -159,6 +159,13 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    public partial class AzureKeyCredential
+    {
+        public AzureKeyCredential(string key) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Key { get { throw null; } }
+        public void Update(string key) { }
+    }
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }

@@ -8,7 +8,7 @@ To create a new `TextAnalyticsClient` to recognize Personally Identifiable Infor
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample5CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing Personally Identifiable Information in a single document
