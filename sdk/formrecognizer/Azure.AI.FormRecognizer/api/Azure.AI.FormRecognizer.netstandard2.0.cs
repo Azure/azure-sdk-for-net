@@ -5,9 +5,9 @@ namespace Azure.AI.FormRecognizer
         protected FormLayoutClient() { }
         public FormLayoutClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential) { }
         public FormLayoutClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential, Azure.AI.FormRecognizer.FormRecognizerClientOptions options) { }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedLayoutPage>> StartExtractLayouts(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedLayoutPage>> StartExtractLayouts(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedLayoutPage>> StartExtractLayouts(System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedLayoutPage>>> StartExtractLayoutsAsync(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedLayoutPage>>> StartExtractLayoutsAsync(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedLayoutPage>>> StartExtractLayoutsAsync(System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FormRecognizerClientOptions : Azure.Core.ClientOptions
@@ -24,9 +24,9 @@ namespace Azure.AI.FormRecognizer
         protected ReceiptClient() { }
         public ReceiptClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential) { }
         public ReceiptClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential, Azure.AI.FormRecognizer.FormRecognizerClientOptions options) { }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceipt>> StartExtractReceipts(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceipt>> StartExtractReceipts(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceipt>> StartExtractReceipts(System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceipt>>> StartExtractReceiptsAsync(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceipt>>> StartExtractReceiptsAsync(System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.ExtractedReceipt>>> StartExtractReceiptsAsync(System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -43,13 +43,13 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual Azure.AsyncPageable<Azure.AI.FormRecognizer.Custom.CustomModelInfo> GetModelInfosAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.FormRecognizer.Custom.SubscriptionProperties> GetSubscriptionProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.Custom.SubscriptionProperties>> GetSubscriptionPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedPage>> StartExtractFormPages(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedPage>> StartExtractFormPages(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedPage>> StartExtractFormPages(string modelId, System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedPage>>> StartExtractFormPagesAsync(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedPage>>> StartExtractFormPagesAsync(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedPage>>> StartExtractFormPagesAsync(string modelId, System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.FormContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, System.IO.Stream stream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, System.Uri uri, bool includeRawPageExtractions = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.FormRecognizer.Custom.CustomModel> StartTraining(string source, Azure.AI.FormRecognizer.Custom.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Custom.CustomModel>> StartTrainingAsync(string source, Azure.AI.FormRecognizer.Custom.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string ModelId { get { throw null; } }
-        public Azure.AI.FormRecognizer.Custom.TrainingStatus TrainingStatus { get { throw null; } }
+        public Azure.AI.FormRecognizer.Custom.ModelStatus Status { get { throw null; } }
     }
     public partial class CustomModelLearnedForm
     {
@@ -140,6 +140,12 @@ namespace Azure.AI.FormRecognizer.Custom
         public float Accuracy { get { throw null; } set { } }
         public string Label { get { throw null; } }
     }
+    public enum ModelStatus
+    {
+        Training = 0,
+        Ready = 1,
+        Invalid = 2,
+    }
     public partial class SubscriptionProperties
     {
         internal SubscriptionProperties() { }
@@ -153,7 +159,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public string DocumentName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } set { } }
         public int PageCount { get { throw null; } set { } }
-        public Azure.AI.FormRecognizer.Custom.TrainingOutcome Status { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.Custom.TrainingStatus Status { get { throw null; } set { } }
     }
     public partial class TrainingFileFilter
     {
@@ -167,17 +173,11 @@ namespace Azure.AI.FormRecognizer.Custom
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Custom.TrainingDocumentInfo> PerDocumentInfo { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> TrainingErrors { get { throw null; } }
     }
-    public enum TrainingOutcome
+    public enum TrainingStatus
     {
         Succeeded = 0,
         PartiallySucceeded = 1,
         Failed = 2,
-    }
-    public enum TrainingStatus
-    {
-        Training = 0,
-        Ready = 1,
-        Invalid = 2,
     }
 }
 namespace Azure.AI.FormRecognizer.Models
@@ -186,6 +186,13 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal BoundingBox() { }
         public System.Drawing.PointF[] Points { get { throw null; } }
+    }
+    public enum ContentType
+    {
+        Pdf = 1,
+        Png = 2,
+        Jpeg = 3,
+        Tiff = 4,
     }
     public partial class ExtractedLayoutPage
     {
@@ -265,13 +272,6 @@ namespace Azure.AI.FormRecognizer.Models
         Integer = 5,
         Array = 6,
         Object = 7,
-    }
-    public enum FormContentType
-    {
-        Pdf = 1,
-        Png = 2,
-        Jpeg = 3,
-        Tiff = 4,
     }
     public partial class FormRecognizerApiKeyCredential
     {
