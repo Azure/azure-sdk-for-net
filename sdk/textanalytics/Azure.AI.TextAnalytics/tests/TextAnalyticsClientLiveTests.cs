@@ -1082,12 +1082,12 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.DetectLanguageAsync(input);
 
             // Rotate the API key to an invalid value and make sure it fails
-            credential.UpdateCredential("Invalid");
+            credential.Update("Invalid");
             Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.DetectLanguageAsync(input));
 
             // Re-rotate the API key and make sure it succeeds again
-            credential.UpdateCredential(apiKey);
+            credential.Update(apiKey);
             await client.DetectLanguageAsync(input);
         }
 

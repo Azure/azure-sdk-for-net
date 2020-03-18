@@ -59,8 +59,8 @@ namespace Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential(null));
             Assert.Throws<ArgumentException>(() => new AzureKeyCredential(string.Empty));
 
-            Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential("fake").UpdateCredential(null));
-            Assert.Throws<ArgumentException>(() => new AzureKeyCredential("fake").UpdateCredential(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential("fake").Update(null));
+            Assert.Throws<ArgumentException>(() => new AzureKeyCredential("fake").Update(string.Empty));
         }
 
         private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
