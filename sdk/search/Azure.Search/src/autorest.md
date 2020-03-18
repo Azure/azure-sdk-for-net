@@ -12,72 +12,17 @@ we should merge the Service and Index swagger files together but for now we
 copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 input-file:
-    -  $(this-folder)/swagger/searchindex.json
-    -  $(this-folder)/swagger/searchservice.json
+- $(this-folder)/swagger/searchindex.json
+- $(this-folder)/swagger/searchservice.json
 ```
 
-## Release Schedule hacks
-We're planning to roll out the API in stages so I'm temporarily removing APIs
-that shouldn't be part of the first preview.  All of this needs to eventually
-disappear.  Note - we're doing these transforms first to scope down the other
-transforms needed below.
-
-### Only expose document operations or service stats
-And also only include the POST variants when there are two.
+## Release hacks
+We only want certain client methods for our search query client.
 ``` yaml
 directive:
-- from: swagger-document
-  where: $.paths
-  transform: >
-    return {
-        // Service operations
-        "/servicestats": $["/servicestats"],
-
-        // Document operations
-        "/docs/$count": $["/docs/$count"],
-        "/docs/search.post.search": $["/docs/search.post.search"],
-        "/docs('{key}')": $["/docs('{key}')"],
-        "/docs/search.post.suggest": $["/docs/search.post.suggest"],
-        "/docs/search.index": $["/docs/search.index"],
-        "/docs/search.post.autocomplete": $["/docs/search.post.autocomplete"]
-    };
-```
-
-### Only expose models used by the above operations
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions
-  transform: >
-    return {
-        // General purpose
-        "SearchError": $["SearchError"],
-
-        // Service Statistics models
-        "ServiceStatistics": $["ServiceStatistics"],
-        "ServiceCounters": $["ServiceCounters"],
-        "ServiceLimits": $["ServiceLimits"],
-        "ResourceCounter": $["ResourceCounter"],
-
-        // Documents models
-        "SuggestDocumentsResult": $["SuggestDocumentsResult"],
-        "SuggestResult": $["SuggestResult"],
-        "FacetResult": $["FacetResult"],
-        "SearchDocumentsResult": $["SearchDocumentsResult"],
-        "SearchResult": $["SearchResult"],
-        "IndexBatch": $["IndexBatch"],
-        "IndexAction": $["IndexAction"],
-        "IndexingResult": $["IndexingResult"],
-        "IndexDocumentsResult": $["IndexDocumentsResult"],
-        "SearchMode": $["SearchMode"],
-        "QueryType": $["QueryType"],
-        "AutocompleteMode": $["AutocompleteMode"],
-        "SearchRequest": $["SearchRequest"],
-        "SuggestRequest": $["SuggestRequest"],
-        "AutocompleteRequest": $["AutocompleteRequest"],
-        "AutocompleteResult": $["AutocompleteResult"],
-        "AutocompleteItem": $["AutocompleteItem"]
-    };
+- remove-operation: Documents_AutocompleteGet
+- remove-operation: Documents_SearchGet
+- remove-operation: Documents_SuggestGet
 ```
 
 ## CodeGen hacks
@@ -98,31 +43,15 @@ directive:
 These should eventually be fixed in the swagger files.
 
 ### Mark definitions as objects
-The modeler warns about all of these.
+The modeler warns about models without an explicit type.
 ``` yaml
 directive:
 - from: swagger-document
-  where:
-    - $.definitions.SearchError
-    - $.definitions.ServiceStatistics
-    - $.definitions.ServiceCounters
-    - $.definitions.ServiceLimits
-    - $.definitions.ResourceCounter
-    - $.definitions.SearchRequest
-    - $.definitions.SearchResult
-    - $.definitions.SearchDocumentsResult
-    - $.definitions.AutocompleteRequest
-    - $.definitions.AutocompleteResult
-    - $.definitions.AutocompleteItem
-    - $.definitions.IndexDocumentsResult
-    - $.definitions.IndexingResult
-    - $.definitions.IndexAction
-    - $.definitions.IndexBatch
-    - $.definitions.FacetResult
-    - $.definitions.SuggestRequest
-    - $.definitions.SuggestResult
-    - $.definitions.SuggestDocumentsResult
-  transform: $.type = "object";
+  where: $.definitions.*
+  transform: >
+    if (typeof $.type === "undefined") {
+        $.type = "object";
+    }
 ```
 
 ### Make Loookup Document behave a little friendlier
@@ -139,3 +68,30 @@ directive:
 ## C# Customizations
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.
+
+### Add documentation
+Add documentation to nodes that do not have it. These should be fixed in swagger.
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions..properties["@odata.type"]
+  transform: $.description = "The model type.";
+- from: swagger-document
+  where: $.definitions.CognitiveServicesAccount.properties.description
+  transform: $.description = "Description of the cognitive resource attached to a skillset.";
+- from: swagger-document
+  where: $.definitions.CognitiveServicesAccountKey.properties.key
+  transform: $.description = "The key used to provision a cognitive resource attached to a skillset.";
+- from: swagger-document
+  where: $.definitions.ScoringFunction.properties.type
+  transform: $.description = "Required for scoring functions. Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. You can include more than one function in each scoring profile. The function name must be lower case.";
+```
+
+### Property name changes
+Change the name of some properties so they are properly CamelCased.
+``` yaml
+modelerfour:
+  naming:
+    override:
+      "@odata.type": ODataType
+```
