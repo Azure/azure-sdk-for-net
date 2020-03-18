@@ -2026,6 +2026,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Test unstable in CI; requires investigation")]
         public async Task CreatePartitionProcessorProcessingTaskWrapsAnOperationCanceledExceptionAndConsidersItFatal()
         {
             using var cancellationSource = new CancellationTokenSource();
