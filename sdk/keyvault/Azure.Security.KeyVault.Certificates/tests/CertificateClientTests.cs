@@ -74,15 +74,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
-        [Ignore("SetContactsAsync() should assert empty!")]
         public void SetContactsArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(null));
             Assert.AreEqual("contacts", ex.ParamName);
 
-            // This test got very stranged.
-            var contacts = new List<CertificateContact>();
-            //Assert.IsNull(contacts);
+            // Below test failed since SetContactsAsync() method doesn't assert empty.
+            // Consider assert contacts empty scenario ?
+            List<CertificateContact> contacts = new List<CertificateContact>();
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(contacts));
             Assert.AreEqual("contacts", ex.ParamName);
         }
@@ -99,15 +98,26 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
-        [Ignore("Policy should set argument validation!")]
         public void UpdateCertificatePolicyArgumentValidation()
         {
-            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateCertificatePolicyAsync("test", null));
+            CertificatePolicy policy = new CertificatePolicy { Exportable = true, ContentType = CertificateContentType.Pkcs12 };
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateCertificatePolicyAsync(null, policy));
             Assert.AreEqual("certificateName", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync(string.Empty, null));
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync(string.Empty, policy));
             Assert.AreEqual("certificateName", ex.ParamName);
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
+
+            // Below test failed since UpdateCertificatePolicyAsync() method doesn't assert policy.
+            // Consider assert policy scenario ?
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync("test", null));
+            Assert.AreEqual("policy", ex.ParamName);
+
+            policy = new CertificatePolicy();
+
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync("test", policy));
+            Assert.AreEqual("policy", ex.ParamName);
         }
 
         [Test]

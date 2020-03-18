@@ -33,10 +33,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
 
         private readonly ConcurrentQueue<string> _issuerToDelete = new ConcurrentQueue<string>();
-        //private readonly ConcurrentStack<string> _issuerToPurge = new ConcurrentStack<string>();
 
         private readonly ConcurrentQueue<List<CertificateContact>> _contactsToDelete = new ConcurrentQueue<List<CertificateContact>>();
-        //private readonly ConcurrentQueue<List<CertificateContact>> _contactsToPurge = new ConcurrentQueue<List<CertificateContact>>();
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
@@ -80,6 +78,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 _certificatesToPurge.Push(name);
             }
+
+            while (_issuerToDelete.TryDequeue(out string name))
+            {
+                await DeleteIssuer(name);
+            }
+
+            while (_contactsToDelete.TryDequeue(out List<CertificateContact> contacts))
+            {
+                await DeleteContacts();
+            }
         }
 
         [OneTimeTearDown]
@@ -91,26 +99,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             while (_certificatesToPurge.TryPop(out string name))
             {
                 await PurgeCertificate(name).ConfigureAwait(false);
-            }
-        }
-
-        [TearDown]
-        public async Task CleanUpIssuer()
-        {
-            // Start deleteing issuer resources as soon as possible.
-            while (_issuerToDelete.TryDequeue(out string name))
-            {
-                await DeleteIssuer(name);
-            }
-        }
-
-        [TearDown]
-        public async Task CleanUpContacts()
-        {
-            while (_contactsToDelete.TryDequeue(out List<CertificateContact> contacts))
-            {
-                await DeleteContacts();
-
             }
         }
 
