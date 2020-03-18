@@ -14,7 +14,7 @@ namespace Azure.Identity.Tests
 
         public TestProcessService()
         {
-            CreateHandler = psi => new TestProcess { ProcessStartInfo = psi };
+            CreateHandler = psi => new TestProcess { StartInfo = psi };
         }
 
         public TestProcessService(params IProcess[] processes)

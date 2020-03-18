@@ -12,6 +12,7 @@ namespace Azure.Identity
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly IProcess _process;
+        private readonly TimeSpan _timeout;
         private readonly TaskCompletionSource<string> _tcs;
         private readonly CancellationToken _cancellationToken;
         private readonly CancellationTokenSource _timeoutCts;
@@ -20,20 +21,18 @@ namespace Azure.Identity
         public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
         {
             _process = process;
+            _timeout = timeout;
             _tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             if (timeout.TotalMilliseconds >= 0)
             {
                 _timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                 _cancellationToken = _timeoutCts.Token;
-                _timeoutCts.CancelAfter(timeout);
             }
             else
             {
                 _cancellationToken = cancellationToken;
             }
-
-            process.Exited += (o, e) => HandleExit();
         }
 
         public Task<string> RunAsync()
@@ -52,11 +51,21 @@ namespace Azure.Identity
 
         private void StartProcess()
         {
-            if (!TrySetCanceled() && !_tcs.Task.IsCompleted)
+            if (TrySetCanceled() || _tcs.Task.IsCompleted)
             {
-                _process.Start();
-                _ctRegistration = _cancellationToken.Register(HandleCancel, false);
+                return;
             }
+
+            _process.Exited += (o, e) => HandleExit();
+
+            _process.StartInfo.UseShellExecute = false;
+            _process.StartInfo.RedirectStandardOutput = true;
+            _process.StartInfo.RedirectStandardError = true;
+
+            _process.Start();
+
+            _timeoutCts?.CancelAfter(_timeout);
+            _ctRegistration = _cancellationToken.Register(HandleCancel, false);
         }
 
         private void HandleExit()

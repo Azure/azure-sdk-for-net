@@ -174,12 +174,8 @@ namespace Azure.Identity
                 {
                     FileName = tokenProvider.Path,
                     Arguments = arguments.ToString(),
-                    UseShellExecute = false,
                     ErrorDialog = false,
                     CreateNoWindow = true,
-                    RedirectStandardInput = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
                 };
 
                 processStartInfos.Add(startInfo);

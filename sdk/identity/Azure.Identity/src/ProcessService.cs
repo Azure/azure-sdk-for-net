@@ -33,6 +33,12 @@ namespace Azure.Identity
             public StreamReader StandardOutput => _process.StandardOutput;
             public StreamReader StandardError => _process.StandardError;
 
+            public ProcessStartInfo StartInfo
+            {
+                get => _process.StartInfo;
+                set => _process.StartInfo = value;
+            }
+
             public event EventHandler Exited
             {
                 add => _process.Exited += value;

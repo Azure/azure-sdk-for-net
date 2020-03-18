@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Azure.Identity
@@ -12,6 +13,7 @@ namespace Azure.Identity
         int ExitCode { get; }
         StreamReader StandardOutput { get; }
         StreamReader StandardError { get; }
+        ProcessStartInfo StartInfo { get; set; }
 
         event EventHandler Exited;
 

@@ -3,6 +3,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -32,14 +35,34 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task ProcessRunnerRealProcessSucceeded()
+        {
+            var output = "Test output";
+            var process = CreateRealProcess(output);
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+            var result = await Run(runner);
+
+            Assert.AreEqual(output, result.TrimEnd());
+        }
+
+        [Test]
         public void ProcessRunnerCanceledByTimeout()
         {
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
             var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(100), cts.Token);
 
-            var exception = Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
-            Assert.AreNotEqual(cts.Token, exception.CancellationToken);
+            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
+        }
+
+        [Test]
+        public void ProcessRunnerRealProcessCanceledByTimeout()
+        {
+            var cts = new CancellationTokenSource();
+            var process = CreateRealProcess("Test output", 5);
+            var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(100), cts.Token);
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
         }
 
         [Test]
@@ -48,6 +71,17 @@ namespace Azure.Identity.Tests
             var cts = new CancellationTokenSource();
             var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
             var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
+            cts.CancelAfter(100);
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
+        }
+
+        [Test]
+        public void ProcessRunnerRealProcessCanceledByCancellationToken()
+        {
+            var cts = new CancellationTokenSource();
+            var process = CreateRealProcess("Test output", 5);
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), cts.Token);
             cts.CancelAfter(100);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
@@ -97,6 +131,17 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void ProcessRunnerRealProcessFailedWithErrorMessage()
+        {
+            var error = "Test error";
+            var process = CreateRealProcess($"{error} 1>&2 & exit 1");
+            var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
+
+            var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
+            Assert.AreEqual(error, exception.Message.Trim());
+        }
+
+        [Test]
         public void ProcessRunnerFailedOnKillProcess()
         {
             var output = "Test output";
@@ -108,5 +153,29 @@ namespace Azure.Identity.Tests
         }
 
         private async Task<string> Run(ProcessRunner runner) => IsAsync ? await runner.RunAsync() : runner.Run();
+
+        private static IProcess CreateRealProcess(string output, int timeoutInSeconds = 0)
+        {
+            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            var fileName = isWindows ? "cmd" : "sh";
+            var argumentsBuilder = new StringBuilder();
+
+            if (isWindows)
+            {
+                argumentsBuilder.Append("/C ");
+            }
+
+            if (timeoutInSeconds > 0)
+            {
+                argumentsBuilder
+                    .Append("timeout ")
+                    .Append(timeoutInSeconds)
+                    .Append(" & ");
+            }
+
+            argumentsBuilder.Append("echo ").Append(output);
+
+            return ProcessService.Default.Create(new ProcessStartInfo {FileName = fileName, Arguments = argumentsBuilder.ToString(), ErrorDialog = false, CreateNoWindow = true});
+        }
     }
 }

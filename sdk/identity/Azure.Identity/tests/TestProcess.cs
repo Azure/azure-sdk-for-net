@@ -19,8 +19,14 @@ namespace Azure.Identity.Tests
         private StreamReader _errorStreamReader;
         private StreamWriter _outputStreamWriter;
         private StreamWriter _errorStreamWriter;
+        private ProcessStartInfo _startInfo;
 
-        public ProcessStartInfo ProcessStartInfo { get; set; }
+        public ProcessStartInfo StartInfo
+        {
+            get => _startInfo ??= new ProcessStartInfo();
+            set => _startInfo = value;
+        }
+
         public string Output { get; set; }
         public string Error { get; set; }
         public int? CodeOnExit { get; set; }
