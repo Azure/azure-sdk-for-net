@@ -20,28 +20,30 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// An azure resource object
     /// </summary>
-    public partial class ProxyResource : IResource
+    public partial class PrivateLinkScopesResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the ProxyResource class.
+        /// Initializes a new instance of the PrivateLinkScopesResource class.
         /// </summary>
-        public ProxyResource()
+        public PrivateLinkScopesResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ProxyResource class.
+        /// Initializes a new instance of the PrivateLinkScopesResource class.
         /// </summary>
+        /// <param name="location">Resource location</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
-        /// <param name="tags">Azure Resource tags</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="tags">Resource tags</param>
+        public PrivateLinkScopesResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
             Type = type;
+            Location = location;
             Tags = tags;
             CustomInit();
         }
@@ -70,10 +72,29 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets azure resource tags
+        /// Gets or sets resource location
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+        }
     }
 }
