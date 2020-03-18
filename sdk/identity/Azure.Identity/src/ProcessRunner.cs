@@ -61,10 +61,10 @@ namespace Azure.Identity
             _process.StartInfo.UseShellExecute = false;
             _process.StartInfo.RedirectStandardOutput = true;
             _process.StartInfo.RedirectStandardError = true;
+            
+            _timeoutCts?.CancelAfter(_timeout);
 
             _process.Start();
-
-            _timeoutCts?.CancelAfter(_timeout);
             _ctRegistration = _cancellationToken.Register(HandleCancel, false);
         }
 
