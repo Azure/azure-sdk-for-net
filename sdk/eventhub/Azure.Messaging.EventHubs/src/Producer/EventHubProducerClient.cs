@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -206,8 +207,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                       TokenCredential credential,
                                       EventHubProducerClientOptions clientOptions = default)
         {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -279,10 +279,10 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-            return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
+            return await Connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,11 +299,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-        public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
 
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-            return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
+            return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -316,11 +316,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
-        public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                             CancellationToken cancellationToken = default)
+        public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
+                                                                                   CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-            return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
+            return await Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -338,11 +338,11 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
-        internal virtual Task SendAsync(EventData eventData,
-                                        CancellationToken cancellationToken = default)
+        internal virtual async Task SendAsync(EventData eventData,
+                                              CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
-            return SendAsync(new[] { eventData }, null, cancellationToken);
+            await SendAsync(new[] { eventData }, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,12 +361,12 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
         ///
-        internal virtual Task SendAsync(EventData eventData,
-                                        SendEventOptions options,
-                                        CancellationToken cancellationToken = default)
+        internal virtual async Task SendAsync(EventData eventData,
+                                              SendEventOptions options,
+                                              CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(eventData, nameof(eventData));
-            return SendAsync(new[] { eventData }, options, cancellationToken);
+            await SendAsync(new[] { eventData }, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -381,8 +381,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)"/>
         ///
-        internal virtual Task SendAsync(IEnumerable<EventData> events,
-                                        CancellationToken cancellationToken = default) => SendAsync(events, null, cancellationToken);
+        internal virtual async Task SendAsync(IEnumerable<EventData> events,
+                                              CancellationToken cancellationToken = default) => await SendAsync(events, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -526,7 +526,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        public virtual ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+        public virtual async ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => await CreateBatchAsync(null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
@@ -626,7 +626,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             if (transportProducerException != default)
             {
-                throw transportProducerException;
+                ExceptionDispatchInfo.Capture(transportProducerException).Throw();
             }
         }
 

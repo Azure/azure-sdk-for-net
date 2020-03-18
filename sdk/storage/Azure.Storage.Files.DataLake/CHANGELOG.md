@@ -1,5 +1,8 @@
 # Release History
 
+## 12.1.0-preview.1 (Unreleased)
+
+
 ## 12.0.0 (2020-03)
 - Added DataLakeFileClient.Upload(), which creates a file, appends data to it, and flushes the file in one user-facing API call.
 - Added Exists(), CreateIfNotExists(), and DeleteIfExists() to DataLakeFileSystemClient, DataLakePathClient, DataLakeDirectoryClient, and DataLakeFileClient.

@@ -4,9 +4,11 @@
 using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
+using Azure.Search.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Tests
@@ -15,7 +17,7 @@ namespace Azure.Search.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
     public abstract partial class SearchTestBase : RecordedTestBase
     {
         /// <summary>
@@ -24,10 +26,12 @@ namespace Azure.Search.Tests
         private const int MaxRetries = 5;
 
         /// <summary>
-        /// The default timeout for HTTP requests.  It's gratuitously long for
-        /// the sake of live tests in a hammered environment.
+        /// Shared HTTP client instance with a longer timeout.  It's
+        /// gratuitously long for the sake of live tests in a hammered
+        /// environment.
         /// </summary>
-        private static TimeSpan TestHttpTimeout { get; } = TimeSpan.FromSeconds(1000);
+        private static readonly HttpClient s_httpClient =
+            new HttpClient() { Timeout = TimeSpan.FromSeconds(1000) };
 
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
@@ -61,21 +65,19 @@ namespace Azure.Search.Tests
         /// Create default client options for testing (and instrument them with
         /// the recording transports).
         /// </summary>
+        /// <param name="options">Optional client options.</param>
         /// <returns>SearchClientOptions for testing</returns>
-        public SearchClientOptions GetSearchClientOptions() =>
-            Recording.InstrumentClientOptions(
-                new SearchClientOptions(ServiceVersion)
-                {
-                    Diagnostics = { IsLoggingEnabled = true },
-                    Retry =
-                    {
-                        Mode = RetryMode.Exponential,
-                        MaxRetries = MaxRetries,
-                        Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                        MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                    },
-                    Transport = new HttpClientTransport(new HttpClient() { Timeout = TestHttpTimeout })
-                });
+        public SearchClientOptions GetSearchClientOptions(SearchClientOptions options = null)
+        {
+            options ??= new SearchClientOptions(ServiceVersion);
+            options.Diagnostics.IsLoggingEnabled = true;
+            options.Retry.Mode = RetryMode.Exponential;
+            options.Retry.MaxRetries = MaxRetries;
+            options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5);
+            options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10);
+            options.Transport = new HttpClientTransport(s_httpClient);
+            return Recording.InstrumentClientOptions(options);
+        }
 
         #region Log Failures
         /// <summary>
@@ -123,5 +125,82 @@ namespace Azure.Search.Tests
         [TearDown]
         public void OutputEventsForTest() => Logger?.OutputEventsForTest();
         #endregion Log Failures
+
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="delay">The time to wait.  Defaults to 1s.</param>
+        /// <param name="playbackDelay">
+        /// An optional time wait if we're playing back a recorded test.  This
+        /// is useful for allowing client side events to get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
+        public async Task DelayAsync(TimeSpan? delay = null, TimeSpan? playbackDelay = null)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(delay ?? TimeSpan.FromSeconds(1));
+            }
+            else if (playbackDelay != null)
+            {
+                await Task.Delay(playbackDelay.Value);
+            }
+        }
+
+        /// <summary>
+        /// Assert that we can catch the desired exception.  NUnit's default
+        /// forces everything to be sync.
+        /// </summary>
+        /// <typeparam name="T">The type of the exception.</typeparam>
+        /// <param name="action">An action that raises the exception.</param>
+        /// <returns>The caught exception.</returns>
+        public static async Task<T> CatchAsync<T>(Func<Task> action)
+            where T : Exception
+        {
+            Assert.IsNotNull(action);
+            try
+            {
+                await action().ConfigureAwait(false);
+                Assert.Fail("Expected exception not found");
+            }
+            catch (T ex)
+            {
+                return ex;
+            }
+            catch (Exception other)
+            {
+                Assert.Fail($"Expected exception of type {typeof(T).Name}, not {other.ToString()}");
+            }
+
+            // The compiler doesn't realize Assert.Fail is a hard stop.
+            throw new InvalidOperationException("Won't ever get here!");
+        }
+
+        /// <summary>
+        /// Assert that two documents are the same.  This is a regular
+        /// Assert.AreEqual check for statically typed documents.
+        /// Dynamic documents will ignore any extra fields on the actual
+        /// document that weren't present on the expected document.
+        /// </summary>
+        /// <typeparam name="T">The type of documents.</typeparam>
+        /// <param name="expected">The expected document.</param>
+        /// <param name="actual">The actual document.</param>
+        public static void AssertApproximate<T>(T expected, T actual)
+        {
+            if (expected is SearchDocument e && actual is SearchDocument a)
+            {
+                foreach (string key in e.Keys)
+                {
+                    Assert.AreEqual(e[key], a[key]);
+                }
+            }
+            else
+            {
+                Assert.AreEqual(expected, actual);
+            }
+        }
     }
 }

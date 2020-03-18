@@ -49,9 +49,9 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public abstract Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                  TimeSpan? maximumWaitTime,
-                                                                  CancellationToken cancellationToken);
+        public abstract Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                    TimeSpan? maximumWaitTime,
+                                                                    CancellationToken cancellationToken);
 
         /// <summary>
         ///   Closes the connection to the transport producer instance.

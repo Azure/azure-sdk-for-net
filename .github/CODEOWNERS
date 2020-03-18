@@ -33,7 +33,10 @@
 /sdk/keyvault/ @schaabs @heaths
 
 /sdk/search/ @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/Microsoft.*/ @brjohnstmsft @arv100kri @bleroy
+
 /sdk/servicebus/ @nemakam @jsquire
+
 /sdk/storage/ @seanmcc-msft @amnguye @tg-msft @JoshLove-msft
 
 /sdk/textanalytics/ @annelo-msft @maririos

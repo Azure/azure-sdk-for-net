@@ -19,9 +19,8 @@ namespace Microsoft.Azure.Management.Support.Models
     /// Additional set of information required for quota increase support
     /// ticket for certain quota types, e.g.: Virtual machine cores. Get
     /// complete details about Quota payload support request along with
-    /// examples at &lt;a target=''
-    /// href='https://aka.ms/supportrpquotarequestpayload'&gt;Support quota
-    /// request&lt;/a&gt;.
+    /// examples at [Support quota
+    /// request](https://aka.ms/supportrpquotarequestpayload).
     /// </summary>
     public partial class QuotaTicketDetails
     {

@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>The name of the Service Bus entity, if available; otherwise, <c>null</c>.</value>
         ///
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   Gets a message that describes the current exception.
@@ -46,12 +46,12 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (string.IsNullOrEmpty(EntityName))
+                if (string.IsNullOrEmpty(EntityPath))
                 {
                     return base.Message;
                 }
 
-                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EntityName);
+                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EntityPath);
             }
         }
 
@@ -62,14 +62,14 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
+        /// <param name="entityPath">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="innerException"></param>
         ///
         public ServiceBusException(
             string message,
             FailureReason reason,
-            string entityName = default,
-            Exception innerException = default) : this(default, entityName, message, reason, innerException)
+            string entityPath = default,
+            Exception innerException = default) : this(default, entityPath, message, reason, innerException)
         {
             switch (reason)
             {
@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus
                                   Exception innerException = default) : base(message, innerException)
         {
             IsTransient = isTransient;
-            EntityName = entityName;
+            EntityPath = entityName;
             Reason = reason;
         }
 

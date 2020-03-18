@@ -51,6 +51,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Generation2'</param>
         /// <param name="enableBgp">Whether BGP is enabled for this virtual
         /// network gateway or not.</param>
+        /// <param name="enablePrivateIpAddress">Whether private IP needs to be
+        /// enabled on this gateway for connections or not.</param>
         /// <param name="activeActive">ActiveActive flag.</param>
         /// <param name="gatewayDefaultSite">The reference to the
         /// LocalNetworkGateway resource which represents local network site
@@ -78,7 +80,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// by the gateway to which dns requests can be sent.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), string vpnGatewayGeneration = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = default(string), string etag = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), string vpnGatewayGeneration = default(string), bool? enableBgp = default(bool?), bool? enablePrivateIpAddress = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -86,6 +88,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnType = vpnType;
             VpnGatewayGeneration = vpnGatewayGeneration;
             EnableBgp = enableBgp;
+            EnablePrivateIpAddress = enablePrivateIpAddress;
             ActiveActive = activeActive;
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
@@ -139,6 +142,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether private IP needs to be enabled on this gateway
+        /// for connections or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablePrivateIpAddress")]
+        public bool? EnablePrivateIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets activeActive flag.

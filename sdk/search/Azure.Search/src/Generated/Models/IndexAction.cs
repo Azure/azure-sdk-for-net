@@ -11,8 +11,20 @@ using System.Collections.Generic;
 namespace Azure.Search.Models
 {
     /// <summary> Represents an index action that operates on a document. </summary>
-    public partial class IndexAction : IDictionary<string, object>
+    internal partial class IndexAction : IDictionary<string, object>
     {
+        /// <summary> Initializes a new instance of IndexAction. </summary>
+        public IndexAction()
+        {
+        }
+
+        /// <summary> Initializes a new instance of IndexAction. </summary>
+        /// <param name="actionType"> The operation to perform on a document in an indexing batch. </param>
+        internal IndexAction(IndexActionType? actionType)
+        {
+            ActionType = actionType;
+        }
+
         /// <summary> The operation to perform on a document in an indexing batch. </summary>
         public IndexActionType? ActionType { get; set; }
         private readonly IDictionary<string, object> _additionalProperties = new Dictionary<string, object>();

@@ -44,6 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("sb://test.place.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -743,7 +744,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
             }
 
-            internal async override Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
+            internal override async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 GetPartitionIdsInvokedWith = retryPolicy;

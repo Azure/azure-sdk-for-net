@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Message
 {
     public class MessageLiveTests : ServiceBusLiveTestBase
     {
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await client.GetSender(scope.QueueName).SendAsync(maxSizeMessage);
                 var receiver = client.GetReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveAsync();
-                await receiver.CompleteAsync(receivedMaxSizeMessage);
+                await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
                 Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
             }
         }

@@ -208,5 +208,45 @@ namespace Microsoft.Azure.Management.ApiManagement
                 }
             }
 
+            /// <summary>
+            /// Gets the secret validation key of the DelegationSettings.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static PortalSettingValidationKeyContract ListSecrets(this IDelegationSettingsOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the secret validation key of the DelegationSettings.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PortalSettingValidationKeyContract> ListSecretsAsync(this IDelegationSettingsOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

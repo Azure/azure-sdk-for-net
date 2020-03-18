@@ -22,8 +22,9 @@ namespace Azure.Search
         private string ApiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
@@ -39,7 +40,8 @@ namespace Azure.Search
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
-        internal HttpMessage CreateGetServiceStatisticsRequest(Guid? clientRequestId)
+
+        internal HttpMessage CreateGetServiceStatisticsRequest(Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -49,22 +51,24 @@ namespace Azure.Search
             uri.AppendPath("/servicestats", false);
             uri.AppendQuery("api-version", ApiVersion, true);
             request.Uri = uri;
-            if (clientRequestId != null)
+            if (xMsClientRequestId != null)
             {
-                request.Headers.Add("client-request-id", clientRequestId.Value);
+                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
             return message;
         }
+
         /// <summary> Gets service level statistics for a search service. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? clientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
             {
-                using var message = CreateGetServiceStatisticsRequest(clientRequestId);
+                using var message = CreateGetServiceStatisticsRequest(xMsClientRequestId);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -84,16 +88,18 @@ namespace Azure.Search
                 throw;
             }
         }
+
         /// <summary> Gets service level statistics for a search service. </summary>
-        /// <param name="clientRequestId"> The tracking ID sent with the request to help with debugging. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? clientRequestId, CancellationToken cancellationToken = default)
+        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
             {
-                using var message = CreateGetServiceStatisticsRequest(clientRequestId);
+                using var message = CreateGetServiceStatisticsRequest(xMsClientRequestId);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
