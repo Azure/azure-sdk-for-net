@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -91,11 +92,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         private void SetLearnedFormType(int? clusterId)
         {
-            // TODO: Provide IFormatProvider
-            // https://github.com/Azure/azure-sdk-for-net/issues/10376
-#pragma warning disable CA1305 // Specify IFormatProvider
-            string formId = clusterId?.ToString();
-#pragma warning restore CA1305 // Specify IFormatProvider
+            string formId = clusterId?.ToString(CultureInfo.InvariantCulture);
 
             if (formId != null)
             {
