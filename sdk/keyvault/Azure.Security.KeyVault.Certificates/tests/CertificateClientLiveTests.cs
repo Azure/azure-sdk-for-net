@@ -577,7 +577,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(getIssuer);
             Assert.NotNull(getIssuer.Id);
-            Assert.AreEqual(issuerName, getIssuer.Name);
+            StringAssert.Equals(issuerName, getIssuer.Name);
         }
 
         [Test]
@@ -606,29 +606,25 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(updateIssuer);
             Assert.NotNull(updateIssuer.UpdatedOn);
-            Assert.AreEqual(updateIssuerName, updateIssuer.Name);
+            StringAssert.Equals(updateIssuerName, updateIssuer.Name);
         }
 
         [Test]
         public async Task VerifyGetContacts()
         {
-            CertificateContact contact1 = new CertificateContact
+            List<CertificateContact> contacts = new List<CertificateContact>();
+            contacts.Add(new CertificateContact
             {
                 Name = Recording.GenerateId(),
                 Phone = Recording.GenerateId(),
                 Email = "test@microsoft.com"
-            };
-
-            CertificateContact contact2 = new CertificateContact
+            });
+            contacts.Add(new CertificateContact
             {
                 Name = Recording.GenerateId(),
                 Phone = Recording.GenerateId(),
                 Email = "test1@microsoft.com"
-            };
-
-            List<CertificateContact> contacts = new List<CertificateContact>();
-            contacts.Add(contact1);
-            contacts.Add(contact2);
+            });
 
             RegisterForCleanUpContacts(contacts);
 
@@ -666,7 +662,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(policy);
             Assert.AreEqual(DefaultPolicy.KeyType, policy.KeyType);
-            Assert.AreEqual(DefaultPolicy.IssuerName, policy.IssuerName);
+            StringAssert.Equals(DefaultPolicy.IssuerName, policy.IssuerName);
             Assert.AreEqual(DefaultPolicy.ReuseKey, policy.ReuseKey);
         }
 
@@ -683,7 +679,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             certificatePolicy = new CertificatePolicy
             {
-                Subject = "CN=CertificateTest",
+                Subject = "CN=certificateTest",
                 ReuseKey = true,
                 Exportable = false
             };
