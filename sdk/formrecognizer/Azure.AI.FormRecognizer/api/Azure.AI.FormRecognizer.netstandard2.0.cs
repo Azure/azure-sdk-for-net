@@ -137,7 +137,7 @@ namespace Azure.AI.FormRecognizer.Custom
     public partial class FieldPredictionAccuracy
     {
         internal FieldPredictionAccuracy() { }
-        public float Accuracy { get { throw null; } set { } }
+        public float Accuracy { get { throw null; } }
         public string Label { get { throw null; } }
     }
     public enum ModelStatus
@@ -156,10 +156,10 @@ namespace Azure.AI.FormRecognizer.Custom
     public partial class TrainingDocumentInfo
     {
         internal TrainingDocumentInfo() { }
-        public string DocumentName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } set { } }
+        public string DocumentName { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } }
         public int PageCount { get { throw null; } set { } }
-        public Azure.AI.FormRecognizer.Custom.TrainingStatus Status { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.Custom.TrainingStatus Status { get { throw null; } }
     }
     public partial class TrainingFileFilter
     {
@@ -189,10 +189,10 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public enum ContentType
     {
-        Pdf = 1,
-        Png = 2,
-        Jpeg = 3,
-        Tiff = 4,
+        Pdf = 0,
+        Png = 1,
+        Jpeg = 2,
+        Tiff = 3,
     }
     public partial class ExtractedLayoutPage
     {
@@ -237,8 +237,8 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public enum ExtractedReceiptType
     {
-        Unrecognized = 1,
-        Itemized = 2,
+        Unrecognized = 0,
+        Itemized = 1,
     }
     public partial class ExtractedTable
     {
@@ -280,7 +280,7 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public partial class FormRecognizerError
     {
-        public FormRecognizerError() { }
+        internal FormRecognizerError() { }
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
     }

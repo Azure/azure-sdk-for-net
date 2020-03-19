@@ -13,18 +13,18 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary>application/pdf</summary>
         [CodeGenSchemaMember("ApplicationPdf")]
-        Pdf = 1,
+        Pdf,
 
         /// <summary>image/png</summary>
         [CodeGenSchemaMember("ImagePng")]
-        Png = 2,
+        Png,
 
         /// <summary>image/jpeg</summary>
         [CodeGenSchemaMember("ImageJpeg")]
-        Jpeg = 3,
+        Jpeg,
 
         /// <summary>image/tiff</summary>
         [CodeGenSchemaMember("ImageTiff")]
-        Tiff = 4,
+        Tiff,
     }
 }
