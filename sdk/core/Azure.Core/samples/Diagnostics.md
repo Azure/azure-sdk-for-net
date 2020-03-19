@@ -77,7 +77,7 @@ The `AzureEventSourceListener` class can also be used with a custom callback tha
 
 ```C# Snippet:LoggingCallback
 using AzureEventSourceListener listener = new AzureEventSourceListener(
-    (e, message) => Console.WriteLine($"{DateTime.Now} {message}"),
+    (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}] {1}", e.TimeStamp.ToLocalTime(), message),
     level: EventLevel.Verbose);
 ```
 
