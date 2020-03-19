@@ -153,7 +153,7 @@
   <data name="MissingConnectionInformation" xml:space="preserve">
     <value>The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately.</value>
   </data>
-  <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
+  <data name="OnlyOneEntityNameMayBeSpecified" xml:space="preserve">
     <value>The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both.</value>
   </data>
   <data name="UnknownConnectionType" xml:space="preserve">
@@ -225,7 +225,7 @@
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
     <value>Cannot begin processing without {0} handler set.</value>
   </data>
-  <data name="RunningMessageProcessor" xml:space="preserve">
+  <data name="RunningMessageProcessorCannotPerformOperation" xml:space="preserve">
     <value>The message processor is already running and needs to be stopped in order to perform this operation.</value>
   </data>
   <data name="ClientNeededForThisInformation" xml:space="preserve">
@@ -269,5 +269,8 @@
   </data>
   <data name="MaxPermittedLength" xml:space="preserve">
     <value>Maximum permitted length is {0}</value>
+  </data>
+  <data name="InvalidFullyQualifiedNamespace" xml:space="preserve">
+    <value>The value '{0}' is not a well-formed Service Bus fully qualified namespace.</value>
   </data>
 </root>
