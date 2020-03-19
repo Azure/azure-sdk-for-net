@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await using var client = new ServiceBusClient(connectionString);
 
                 ServiceBusSender sender = client.GetSender("FakeEntity");
-                Assert.That(async () => await sender.CreateBatchAsync(), Throws.InstanceOf<ServiceBusException>());
+                Assert.That(async () => await sender.CreateBatchAsync(), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.MessagingEntityNotFound));
             }
         }
     }

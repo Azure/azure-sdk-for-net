@@ -33,9 +33,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
         [Test]
         [TestCaseSource(nameof(TestDataConnectionStringParserEndpointShouldFormatUri))]
-        public void ConnectionStringParserEndpointShouldFormatUri(string endpoint, string expectedFormattedEndpoint)
+        public void ConnectionStringParserEndpointShouldFormatUri(string fakeConnection, string expectedFormattedEndpoint)
         {
-            var ConnectionStringProperties = ConnectionStringParser.Parse(endpoint);
+            var ConnectionStringProperties = ConnectionStringParser.Parse(fakeConnection);
             Assert.AreEqual(expectedFormattedEndpoint, ConnectionStringProperties.Endpoint.AbsoluteUri);
         }
 

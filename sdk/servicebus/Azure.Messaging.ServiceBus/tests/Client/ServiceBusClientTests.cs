@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];EntityPath=[value]")]
         public void ConstructorValidatesConnectionString(string connectionString)
         {
-            Assert.That(() => new ServiceBusClient(connectionString), Throws.ArgumentException);
+            Assert.That(() => new ServiceBusClient(connectionString), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
             var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
 
-            Assert.That(() => new ServiceBusClient(fakeConnection, invalidOptions), Throws.ArgumentException, "The connection string constructor should validate client options");
+            Assert.That(() => new ServiceBusClient(fakeConnection, invalidOptions), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate client options");
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             var token = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
-            Assert.That(() => new ServiceBusClient("fullyQualifiedNamespace", Mock.Of<TokenCredential>(), invalidOptions), Throws.ArgumentException, "The expanded argument constructor should validate client options");
+            Assert.That(() => new ServiceBusClient("fullyQualifiedNamespace", Mock.Of<TokenCredential>(), invalidOptions), Throws.InstanceOf<ArgumentException>(), "The expanded argument constructor should validate client options");
         }
 
         /// <summary>

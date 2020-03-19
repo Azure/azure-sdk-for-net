@@ -58,13 +58,6 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly TransportClient _innerClient;
 
-        internal ConnectionStringProperties ConnectionStringProperties { get; }
-
-        /// <summary>
-        ///
-        /// </summary>
-        internal string ConnectionStringArgumentName { get; }
-
         /// <summary>
         ///   The set of client options used for creation of client.
         /// </summary>
@@ -98,26 +91,25 @@ namespace Azure.Messaging.ServiceBus
             options = options?.Clone() ?? new ServiceBusClientOptions();
 
             ValidateConnectionOptions(options);
-            ConnectionStringProperties = ConnectionStringParser.Parse(connectionString);
-            ConnectionStringArgumentName = nameof(connectionString);
+            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            if (string.IsNullOrEmpty(ConnectionStringProperties.Endpoint?.Host)
-                || string.IsNullOrEmpty(ConnectionStringProperties.SharedAccessKeyName)
-                || string.IsNullOrEmpty(ConnectionStringProperties.SharedAccessKey))
+            if (string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host)
+                || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)
+                || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKey))
             {
-                throw new ArgumentException(Resources1.MissingConnectionInformation, ConnectionStringArgumentName);
+                throw new ArgumentException(Resources1.MissingConnectionInformation, nameof(connectionString));
             }
 
-            FullyQualifiedNamespace = ConnectionStringProperties.Endpoint.Host;
+            FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             TransportType = options.TransportType;
-            EntityPath = ConnectionStringProperties.EntityPath;
+            EntityPath = connectionStringProperties.EntityPath;
             Options = options;
 
             var sharedAccessSignature = new SharedAccessSignature
             (
                  BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath),
-                 ConnectionStringProperties.SharedAccessKeyName,
-                 ConnectionStringProperties.SharedAccessKey
+                 connectionStringProperties.SharedAccessKeyName,
+                 connectionStringProperties.SharedAccessKey
             );
 
             var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);

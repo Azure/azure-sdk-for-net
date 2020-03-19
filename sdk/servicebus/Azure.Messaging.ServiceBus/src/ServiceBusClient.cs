@@ -56,8 +56,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         private ServiceBusClientOptions Options { get; set; }
 
-        internal bool isConnectionPropertiesValidationNeeded { get; set; }
-
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
         ///   including ensuring that the connection itself has been closed.
@@ -114,7 +112,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             Connection = new ServiceBusConnection(connectionString, options);
-            isConnectionPropertiesValidationNeeded = true;
             Options = Connection.Options;
             Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
             SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
@@ -143,7 +140,6 @@ namespace Azure.Messaging.ServiceBus
                 fullyQualifiedNamespace,
                 credential,
                 options);
-            isConnectionPropertiesValidationNeeded = false;
             Options = Connection.Options;
             SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
@@ -155,12 +151,9 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusSender GetSender(string entityName)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                entityName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(entityName);
             }
 
             return new ServiceBusSender(
@@ -179,12 +172,9 @@ namespace Azure.Messaging.ServiceBus
             string entityName,
             ServiceBusSenderOptions options)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                entityName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(entityName);
             }
 
             return new ServiceBusSender(
@@ -200,12 +190,9 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetReceiver(string queueName)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                queueName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(queueName);
             }
 
             return new ServiceBusReceiver(
@@ -225,12 +212,9 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             ServiceBusReceiverOptions options)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                queueName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(queueName);
             }
 
             return new ServiceBusReceiver(
@@ -250,12 +234,9 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                topicName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(topicName);
             }
 
             return new ServiceBusReceiver(
@@ -277,12 +258,9 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusReceiverOptions options)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                topicName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(topicName);
             }
 
             return new ServiceBusReceiver(
@@ -302,12 +280,9 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                queueName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(queueName);
             }
 
             return await ServiceBusReceiver.CreateSessionReceiverAsync(
@@ -329,12 +304,9 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                topicName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(topicName);
             }
 
             return await ServiceBusReceiver.CreateSessionReceiverAsync(
@@ -352,12 +324,9 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusProcessor GetProcessor(string queueName)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                queueName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(queueName);
             }
 
             return new ServiceBusProcessor(
@@ -377,12 +346,9 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             ServiceBusProcessorOptions options)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                queueName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(queueName);
             }
 
             return new ServiceBusProcessor(
@@ -402,12 +368,9 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                topicName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(topicName);
             }
 
             return new ServiceBusProcessor(
@@ -429,12 +392,9 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusProcessorOptions options)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                topicName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(topicName);
             }
 
             return new ServiceBusProcessor(
@@ -454,12 +414,9 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                queueName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(queueName);
             }
 
             return new ServiceBusProcessor(
@@ -481,12 +438,9 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (isConnectionPropertiesValidationNeeded)
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
             {
-                ValidateConnectionProperties(
-                Connection.ConnectionStringProperties,
-                topicName,
-                Connection.ConnectionStringArgumentName);
+                ValidateEntityName(topicName);
             }
 
             return new ServiceBusProcessor(
@@ -497,44 +451,15 @@ namespace Azure.Messaging.ServiceBus
                 options: options ?? new ServiceBusProcessorOptions());
         }
 
-        /// <summary>
-        ///   Performs the actions needed to validate the set of properties for connecting to the
-        ///   Service Bus service, as passed to this client during creation.
-        /// </summary>
-        ///
-        /// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        /// <param name="entityName">The name of the entity passed independent of the connection string, allowing easier use of a namespace-level connection string.</param>
-        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
-        ///
-        /// <remarks>
-        ///   In the case that the properties violate an invariant or otherwise represent a combination that
-        ///   is not permissible, an appropriate exception will be thrown.
-        /// </remarks>
-        ///
-        private static void ValidateConnectionProperties(
-            ConnectionStringProperties properties,
-            string entityName,
-            string connectionStringArgumentName)
+        private void ValidateEntityName(string entityName)
         {
             // The entity name may only be specified in one of the possible forms, either as part of the
             // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
             // value, then do not consider this a failure.
 
-            if ((!string.IsNullOrEmpty(entityName))
-                && (!string.IsNullOrEmpty(properties.EntityPath))
-                && (!string.Equals(entityName, properties.EntityPath, StringComparison.InvariantCultureIgnoreCase)))
+            if (!string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified, connectionStringArgumentName);
-            }
-
-            // Ensure that each of the needed components are present for connecting.
-
-            if ((string.IsNullOrEmpty(entityName)) && (string.IsNullOrEmpty(properties.EntityPath))
-                || (string.IsNullOrEmpty(properties.Endpoint?.Host))
-                || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
-                || (string.IsNullOrEmpty(properties.SharedAccessKey)))
-            {
-                throw new ArgumentException(Resources1.MissingConnectionInformation, connectionStringArgumentName);
+                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
             }
         }
     }
