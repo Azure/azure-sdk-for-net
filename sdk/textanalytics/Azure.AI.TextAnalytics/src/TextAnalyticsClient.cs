@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextAnalyticsClient"/>
+        /// Initializes a new instance of the <see cref="AzureKeyCredential"/>
         /// class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
@@ -75,13 +75,13 @@ namespace Azure.AI.TextAnalytics
         /// <param name="credential">The API key used to access
         /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
-        public TextAnalyticsClient(Uri endpoint, TextAnalyticsApiKeyCredential credential)
+        public TextAnalyticsClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextAnalyticsClient"/>
+        /// Initializes a new instance of the <see cref="AzureKeyCredential"/>
         /// class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
@@ -91,7 +91,7 @@ namespace Azure.AI.TextAnalytics
         /// without creating a new client.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
-        public TextAnalyticsClient(Uri endpoint, TextAnalyticsApiKeyCredential credential, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, AzureKeyCredential credential, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -99,7 +99,7 @@ namespace Azure.AI.TextAnalytics
 
             _baseUri = endpoint;
             _apiVersion = options.GetVersionString();
-            _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
         }

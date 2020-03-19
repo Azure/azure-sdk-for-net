@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample5CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
             #region Snippet:RecognizePiiEntities

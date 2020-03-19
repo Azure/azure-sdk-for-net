@@ -9,7 +9,7 @@ To create a new `TextAnalyticsClient` to analyze the sentiment in a document, yo
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample2CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Analyzing the sentiment of a single document

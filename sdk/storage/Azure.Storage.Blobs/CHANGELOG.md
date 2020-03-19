@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.0-preview.1 (Unreleased)
+
+
 ## 12.4.0 (2020-03)
 - Fixed bug in BlobBaseClient.Download() and BlobClient.Upload() where TransferOptions.MaximumTransferLength was ignored.
 

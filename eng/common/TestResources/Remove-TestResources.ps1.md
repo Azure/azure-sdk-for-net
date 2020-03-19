@@ -14,24 +14,28 @@ Deletes the resource group deployed for a service directory from Azure.
 
 ### Default (Default)
 ```
-Remove-TestResources.ps1 [-BaseName] <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 [-BaseName] <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### Default+Provisioner
 ```
 Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> -ProvisionerApplicationId <String>
- -ProvisionerApplicationSecret <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+ -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ResourceGroup+Provisioner
 ```
 Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> -ProvisionerApplicationId <String>
- -ProvisionerApplicationSecret <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+ -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ResourceGroup
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 -ResourceGroupName <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -144,6 +148,23 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Environment
+Name of the cloud environment.
+The default is the Azure Public Cloud
+('PublicCloud')
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: AzureCloud
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

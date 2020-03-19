@@ -40,11 +40,6 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
-        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
-        /// </summary>
-        public ServiceBusSubscriptionRuleManager SubscriptionRuleManager { get; private set; }
-
-        /// <summary>
         ///   A unique name used to identify this client.
         /// </summary>
         ///
@@ -114,7 +109,6 @@ namespace Azure.Messaging.ServiceBus
             Connection = new ServiceBusConnection(connectionString, options);
             Options = Connection.Options;
             Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
-            SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
 
         /// <summary>
@@ -141,40 +135,20 @@ namespace Azure.Messaging.ServiceBus
                 credential,
                 options);
             Options = Connection.Options;
-            SubscriptionRuleManager = new ServiceBusSubscriptionRuleManager();
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="queueOrTopicName"></param>
         /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName)
+        public ServiceBusSender GetSender(string queueOrTopicName)
         {
-            ValidateEntityName(entityName);
+            ValidateEntityName(queueOrTopicName);
 
             return new ServiceBusSender(
-                 entityPath: entityName,
-                 connection: Connection,
-                 options: new ServiceBusSenderOptions());
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="entityName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusSender GetSender(
-            string entityName,
-            ServiceBusSenderOptions options)
-        {
-            ValidateEntityName(entityName);
-
-            return new ServiceBusSender(
-                entityPath: entityName,
-                connection: Connection,
-                options: options);
+                entityPath: queueOrTopicName,
+                connection: Connection);
         }
 
         /// <summary>
@@ -420,5 +394,11 @@ namespace Azure.Messaging.ServiceBus
                 throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
             }
         }
+
+        /// <summary>
+        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
+        /// </summary>
+        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName) =>
+            new ServiceBusRuleManager(topicName, subscriptionName);
     }
 }

@@ -42,18 +42,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var options = new ServiceBusClientOptions
                 {
                     TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = WebRequest.DefaultWebProxy
-                };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-
-                var senderOptions = new ServiceBusSenderOptions
-                {
+                    Proxy = WebRequest.DefaultWebProxy,
                     RetryOptions = new ServiceBusRetryOptions()
                     {
                         Mode = ServiceBusRetryMode.Exponential
                     }
                 };
-                ServiceBusSender sender = client.GetSender(scope.TopicName, senderOptions);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+
+                ServiceBusSender sender = client.GetSender(scope.TopicName);
                 await sender.SendAsync(GetMessage());
             }
         }
@@ -66,18 +63,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var options = new ServiceBusClientOptions
                 {
                     TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = WebRequest.DefaultWebProxy
-                };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
-
-                var senderOptions = new ServiceBusSenderOptions
-                {
+                    Proxy = WebRequest.DefaultWebProxy,
                     RetryOptions = new ServiceBusRetryOptions()
                     {
                         Mode = ServiceBusRetryMode.Exponential
                     }
                 };
-                ServiceBusSender sender = client.GetSender(scope.TopicName, senderOptions);
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+
+                ServiceBusSender sender = client.GetSender(scope.TopicName);
                 await sender.SendAsync(GetMessage("sessionId"));
             }
         }
@@ -183,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
                 await using var receiver = client.GetReceiver(scope.QueueName);
-                ServiceBusMessage msg = await receiver.PeekAtAsync(sequenceNum);
+                ServiceBusReceivedMessage msg = await receiver.PeekAtAsync(sequenceNum);
                 Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
 
                 await sender.CancelScheduledMessageAsync(sequenceNum);
@@ -210,7 +204,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 // receive should still work
                 await using var receiver = client.GetReceiver(scope.QueueName);
-                ServiceBusMessage msg = await receiver.PeekAtAsync(sequenceNum);
+                ServiceBusReceivedMessage msg = await receiver.PeekAtAsync(sequenceNum);
                 Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTime.Ticks).TotalSeconds));
             }
         }
@@ -251,7 +245,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
                 foreach (ServiceBusReceivedMessage msg in receivedMessages)
                 {
-                    await sender.SendAsync(msg);
+                    await sender.SendAsync(ServiceBusMessage.CreateFrom(msg));
                 }
 
                 int receivedMessageCount = 0;

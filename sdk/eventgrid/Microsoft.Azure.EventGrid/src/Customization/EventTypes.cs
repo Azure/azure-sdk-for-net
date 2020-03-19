@@ -36,6 +36,13 @@ namespace Microsoft.Azure.EventGrid
         // Event Hub Events
         public const string EventHubCaptureFileCreatedEvent = "Microsoft.EventHub.CaptureFileCreated";
 
+        // MachineLearningServices events
+        public const string MachineLearningServicesDatasetDriftDetectedEvent = "Microsoft.MachineLearningServices.DatasetDriftDetected";
+        public const string MachineLearningServicesModelDeployedEvent = "Microsoft.MachineLearningServices.ModelDeployed";
+        public const string MachineLearningServicesModelRegisteredEvent = "Microsoft.MachineLearningServices.ModelRegistered";
+        public const string MachineLearningServicesRunCompletedEvent = "Microsoft.MachineLearningServices.RunCompleted";
+        public const string MachineLearningServicesRunStatusChangedEvent = "Microsoft.MachineLearningServices.RunStatusChanged";
+
         // Maps events
         public const string MapsGeofenceEnteredEvent = "Microsoft.Maps.GeofenceEntered";
         public const string MapsGeofenceExitedEvent = "Microsoft.Maps.GeofenceExited";

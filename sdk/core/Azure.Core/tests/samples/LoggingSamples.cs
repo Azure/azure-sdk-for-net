@@ -23,6 +23,14 @@ namespace Azure.Core.Samples
         }
 
         [Test]
+        public void LoggingLevel()
+        {
+            #region Snippet:ConsoleLoggingLevel
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
+            #endregion
+        }
+
+        [Test]
         public void LoggingCallback()
         {
             #region Snippet:LoggingCallback

@@ -2,6 +2,8 @@
 
 ## 1.2.0-preview.1 (Unreleased)
 
+### Added
+- `AzureKeyCredential` and its respective policy.
 
 ## 1.1.0 (2020-03-05)
 
