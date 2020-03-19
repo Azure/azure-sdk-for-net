@@ -151,10 +151,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusSender GetSender(string entityName)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(entityName);
-            }
+            ValidateEntityName(entityName);
 
             return new ServiceBusSender(
                  entityPath: entityName,
@@ -172,10 +169,7 @@ namespace Azure.Messaging.ServiceBus
             string entityName,
             ServiceBusSenderOptions options)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(entityName);
-            }
+            ValidateEntityName(entityName);
 
             return new ServiceBusSender(
                 entityPath: entityName,
@@ -190,10 +184,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetReceiver(string queueName)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(queueName);
-            }
+            ValidateEntityName(queueName);
 
             return new ServiceBusReceiver(
                 connection: Connection,
@@ -212,10 +203,7 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             ServiceBusReceiverOptions options)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(queueName);
-            }
+            ValidateEntityName(queueName);
 
             return new ServiceBusReceiver(
                 connection: Connection,
@@ -234,10 +222,7 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(topicName);
-            }
+            ValidateEntityName(topicName);
 
             return new ServiceBusReceiver(
                 connection: Connection,
@@ -258,10 +243,7 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusReceiverOptions options)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(topicName);
-            }
+            ValidateEntityName(topicName);
 
             return new ServiceBusReceiver(
                 connection: Connection,
@@ -280,10 +262,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(queueName);
-            }
+            ValidateEntityName(queueName);
 
             return await ServiceBusReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
@@ -304,10 +283,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(topicName);
-            }
+            ValidateEntityName(topicName);
 
             return await ServiceBusReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
@@ -324,10 +300,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusProcessor GetProcessor(string queueName)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(queueName);
-            }
+            ValidateEntityName(queueName);
 
             return new ServiceBusProcessor(
                 entityPath: queueName,
@@ -346,10 +319,7 @@ namespace Azure.Messaging.ServiceBus
             string queueName,
             ServiceBusProcessorOptions options)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(queueName);
-            }
+            ValidateEntityName(queueName);
 
             return new ServiceBusProcessor(
                 entityPath: queueName,
@@ -368,10 +338,7 @@ namespace Azure.Messaging.ServiceBus
             string topicName,
             string subscriptionName)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(topicName);
-            }
+            ValidateEntityName(topicName);
 
             return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
@@ -392,10 +359,7 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusProcessorOptions options)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(topicName);
-            }
+            ValidateEntityName(topicName);
 
             return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
@@ -414,10 +378,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(queueName);
-            }
+            ValidateEntityName(queueName);
 
             return new ServiceBusProcessor(
                 entityPath: queueName,
@@ -438,10 +399,7 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = default,
             CancellationToken cancellationToken = default)
         {
-            if (!string.IsNullOrEmpty(Connection.EntityPath))
-            {
-                ValidateEntityName(topicName);
-            }
+            ValidateEntityName(topicName);
 
             return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
@@ -457,7 +415,7 @@ namespace Azure.Messaging.ServiceBus
             // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
             // value, then do not consider this a failure.
 
-            if (!string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
             }
