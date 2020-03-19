@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.Blueprint.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Represents a blueprint artifact.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Artifact")]
     public partial class Artifact : AzureResourceBase
     {
         /// <summary>
