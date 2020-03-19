@@ -147,6 +147,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOperationOperations Operation { get; }
 
         /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        IApiExportOperations ApiExport { get; }
+
+        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         IApiVersionSetOperations ApiVersionSet { get; }
@@ -252,9 +257,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         IPolicyOperations Policy { get; }
 
         /// <summary>
-        /// Gets the IPolicySnippetOperations.
+        /// Gets the IPolicyDescriptionOperations.
         /// </summary>
-        IPolicySnippetOperations PolicySnippet { get; }
+        IPolicyDescriptionOperations PolicyDescription { get; }
 
         /// <summary>
         /// Gets the ISignInSettingsOperations.
@@ -297,9 +302,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         IProductPolicyOperations ProductPolicy { get; }
 
         /// <summary>
-        /// Gets the IPropertyOperations.
+        /// Gets the INamedValueOperations.
         /// </summary>
-        IPropertyOperations Property { get; }
+        INamedValueOperations NamedValue { get; }
 
         /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
@@ -370,11 +375,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
-
-        /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        IApiExportOperations ApiExport { get; }
 
     }
 }

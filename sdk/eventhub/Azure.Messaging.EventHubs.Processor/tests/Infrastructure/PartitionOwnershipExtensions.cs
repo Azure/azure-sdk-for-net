@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Primitives;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
-    ///   The set of extension methods for the <see cref="PartitionOwnership" />
+    ///   The set of extension methods for the <see cref="EventProcessorPartitionOwnership" />
     ///   class.
     /// </summary>
     ///
@@ -22,8 +23,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         /// <returns><c>true</c>, if the two ownership are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
-        public static bool IsEquivalentTo(this PartitionOwnership instance,
-                                          PartitionOwnership other)
+        public static bool IsEquivalentTo(this EventProcessorPartitionOwnership instance,
+                                          EventProcessorPartitionOwnership other)
         {
             // If the ownership are the same instance, they're equal.  This should only happen
             // if both are null or they are the exact same instance.
@@ -52,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 && instance.OwnerIdentifier == other.OwnerIdentifier
                 && instance.PartitionId == other.PartitionId
                 && instance.LastModifiedTime == other.LastModifiedTime
-                && instance.ETag == other.ETag
+                && instance.Version == other.Version
             );
         }
     }

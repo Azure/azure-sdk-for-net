@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -12,12 +12,16 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
+    [ClientTestFixture(
+        CertificateClientOptions.ServiceVersion.V7_0,
+        CertificateClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
 
@@ -27,19 +31,28 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
 
-        public CertificatesTestBase(bool isAsync) : base(isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         internal CertificateClient GetClient(TestRecording recording = null)
         {
             recording ??= Recording;
 
+            CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached,
+                }
+            };
+
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new CertificateClientOptions())));
+                    recording.InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()
@@ -129,7 +142,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 if (IsAsync)
                 {
-                    await operation.WaitForCompletionAsync(cts.Token);
+                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
                 }
                 else
                 {
@@ -202,6 +215,26 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         protected void RegisterForCleanup(string certificateName)
         {
             _certificatesToDelete.Enqueue(certificateName);
+        }
+
+        protected IAsyncDisposable EnsureDeleted(CertificateOperation operation) => new CertificateOperationDeleter(operation);
+
+        private class CertificateOperationDeleter : IAsyncDisposable
+        {
+            private readonly CertificateOperation _operation;
+
+            public CertificateOperationDeleter(CertificateOperation operation)
+            {
+                _operation = operation;
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                if (!_operation.HasCompleted)
+                {
+                    await _operation.DeleteAsync();
+                }
+            }
         }
     }
 }

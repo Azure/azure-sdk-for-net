@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_02_02;
+        internal const ServiceVersion LatestVersion = StorageVersionExtensions.LatestVersion;
 
         /// <summary>
         /// The versions of Azure Data Lake Sevice supported by this client
@@ -31,7 +31,12 @@ namespace Azure.Storage.Files.DataLake
             /// The 2019-02-02 service version described at
             /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The 2019-07-07 service version.
+            /// </summary>
+            V2019_07_07 = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -52,7 +57,16 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            if (version == ServiceVersion.V2019_07_07
+                || version == ServiceVersion.V2019_02_02)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.VersionNotSupported(nameof(version));
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }
@@ -74,6 +88,7 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private void AddHeadersAndQueryParameters()
         {
+            // Data Lake headers
             Diagnostics.LoggedHeaderNames.Add("x-ms-properties");
             Diagnostics.LoggedHeaderNames.Add("x-ms-client-request-id");
             Diagnostics.LoggedHeaderNames.Add("If-Modified-Since");
@@ -87,18 +102,22 @@ namespace Azure.Storage.Files.DataLake
             Diagnostics.LoggedHeaderNames.Add("x-ms-owner");
             Diagnostics.LoggedHeaderNames.Add("x-ms-group");
             Diagnostics.LoggedHeaderNames.Add("x-ms-acl");
-            Diagnostics.LoggedHeaderNames.Add("continuation");
-            Diagnostics.LoggedHeaderNames.Add("maxResults");
-            Diagnostics.LoggedHeaderNames.Add("mode");
-            Diagnostics.LoggedHeaderNames.Add("recursive");
-            Diagnostics.LoggedHeaderNames.Add("action");
-            Diagnostics.LoggedHeaderNames.Add("upn");
-            Diagnostics.LoggedHeaderNames.Add("resource");
-            Diagnostics.LoggedHeaderNames.Add("directory");
-            Diagnostics.LoggedHeaderNames.Add("position");
-            Diagnostics.LoggedHeaderNames.Add("retainUncommittedData");
-            Diagnostics.LoggedHeaderNames.Add("close");
 
+            // Data Lake query parameters
+            Diagnostics.LoggedQueryParameters.Add("recursive");
+            Diagnostics.LoggedQueryParameters.Add("resource");
+            Diagnostics.LoggedQueryParameters.Add("action");
+            Diagnostics.LoggedQueryParameters.Add("position");
+            Diagnostics.LoggedQueryParameters.Add("retainUncommittedData");
+            Diagnostics.LoggedQueryParameters.Add("close");
+            Diagnostics.LoggedQueryParameters.Add("timeout");
+            Diagnostics.LoggedQueryParameters.Add("directory");
+            Diagnostics.LoggedQueryParameters.Add("continuation");
+            Diagnostics.LoggedQueryParameters.Add("upn");
+            Diagnostics.LoggedQueryParameters.Add("maxResults");
+            Diagnostics.LoggedQueryParameters.Add("mode");
+
+            // Blob headers
             Diagnostics.LoggedHeaderNames.Add("Access-Control-Allow-Origin");
             Diagnostics.LoggedHeaderNames.Add("x-ms-date");
             Diagnostics.LoggedHeaderNames.Add("x-ms-error-code");
@@ -175,6 +194,7 @@ namespace Azure.Storage.Files.DataLake
             Diagnostics.LoggedHeaderNames.Add("x-ms-tag-count");
             Diagnostics.LoggedHeaderNames.Add("x-ms-encryption-key-sha256");
 
+            // Blob query parameters
             Diagnostics.LoggedQueryParameters.Add("comp");
             Diagnostics.LoggedQueryParameters.Add("maxresults");
             Diagnostics.LoggedQueryParameters.Add("rscc");

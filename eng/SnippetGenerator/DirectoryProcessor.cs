@@ -22,6 +22,7 @@ namespace SnippetGenerator
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
             RegexOptions.Compiled | RegexOptions.Singleline);
+        private const string _codeOnlyPattern = "/*@@*/";
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
@@ -121,7 +122,10 @@ namespace SnippetGenerator
                 var line = lines[index];
                 line = string.IsNullOrWhiteSpace(line) ? string.Empty : line.Substring(minIndent);
                 line = RemoveMarkdownOnlyPrefix(line);
-                stringBuilder.AppendLine(line);
+                if (!IsCodeOnlyLine(line))
+                {
+                    stringBuilder.AppendLine(line);
+                }
             }
 
             return stringBuilder.ToString();
@@ -152,6 +156,21 @@ namespace SnippetGenerator
                 }
                 return line;
             });
+
+        /// <summary>
+        /// There are occasions where we might want to keep a line of code out
+        /// of the snippets.  Comments like
+        ///
+        ///     /*@@*/ bool onlyInCode = true;
+        ///
+        /// will be stripped out of the markdown text.
+        /// </summary>
+        /// <param name="line">The line of text.</param>
+        /// <returns>
+        /// Whether the line should be removed.
+        /// </returns>
+        private static bool IsCodeOnlyLine(string line) =>
+            line.IndexOf(_codeOnlyPattern) >= 0;
 
         private List<Snippet> GetSnippetsInDirectory(string baseDirectory)
         {

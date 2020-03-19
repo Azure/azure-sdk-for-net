@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/1370449546?api-version=7.0",
+      "RequestUri": "https://dotnettestvault.vault.azure.net/keys/1370449546?api-version=7.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

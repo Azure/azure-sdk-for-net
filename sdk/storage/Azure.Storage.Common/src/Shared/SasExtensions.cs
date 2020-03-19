@@ -140,6 +140,10 @@ namespace Azure.Storage.Sas
             {
                 sb.Append(Constants.Sas.AccountServices.Queue);
             }
+            if ((services & AccountSasServices.Tables) == AccountSasServices.Tables)
+            {
+                sb.Append(Constants.Sas.AccountServices.Table);
+            }
             return sb.ToString();
         }
 
@@ -163,8 +167,10 @@ namespace Azure.Storage.Sas
                     Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
                     Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
                     Constants.Sas.AccountServices.File => AccountSasServices.Files,
+                    Constants.Sas.AccountServices.Table => AccountSasServices.Tables,
                     _ => throw Errors.InvalidService(ch),
                 };
+                ;
             }
             return svcs;
         }
@@ -254,27 +260,27 @@ namespace Azure.Storage.Sas
 
             if (!string.IsNullOrWhiteSpace(parameters.CacheControl))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, parameters.CacheControl);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, WebUtility.UrlEncode(parameters.CacheControl));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentDisposition))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, parameters.ContentDisposition);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, WebUtility.UrlEncode(parameters.ContentDisposition));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentEncoding))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, parameters.ContentEncoding);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, WebUtility.UrlEncode(parameters.ContentEncoding));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentLanguage))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, parameters.ContentLanguage);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, WebUtility.UrlEncode(parameters.ContentLanguage));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.ContentType))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, parameters.ContentType);
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, WebUtility.UrlEncode(parameters.ContentType));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.Signature))

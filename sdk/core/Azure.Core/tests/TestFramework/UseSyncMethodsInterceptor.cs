@@ -75,6 +75,12 @@ namespace Azure.Core.Testing
 
             try
             {
+                // If we've got GetAsync<Model>() and just found Get<T>(), we
+                // need to change the method to Get<Model>().
+                if (methodInfo.ContainsGenericParameters)
+                {
+                    methodInfo = methodInfo.MakeGenericMethod(invocation.Method.GetGenericArguments());
+                }
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
                 // Map IEnumerable to IAsyncEnumerable
@@ -108,6 +114,18 @@ namespace Azure.Core.Testing
             Type methodReturnType = invocation.Method.ReturnType;
             if (methodReturnType.IsGenericType)
             {
+                // If the sync method returned Response<Model> and the async
+                // method's return type is still an open Response<U>, we need
+                // to close it to Response<Model> as well.  We don't care about
+                // this if Response<> has already been closed.
+                if (returnType.IsGenericType &&
+                    returnType.GetGenericTypeDefinition() == typeof(Response<>) &&
+                    returnType.ContainsGenericParameters)
+                {
+                    Type modelType = methodReturnType.GetGenericArguments()[0].GetGenericArguments()[0];
+                    returnType = returnType.GetGenericTypeDefinition().MakeGenericType(modelType);
+                }
+
                 if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                 {
                     invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
@@ -145,10 +163,62 @@ namespace Azure.Core.Testing
             throw new NotSupportedException();
         }
 
-        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types) =>
-            IsInternal(invocation.Method)
-                ? invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.NonPublic | BindingFlags.Instance, null, types, null)
-                : invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
+        {
+            BindingFlags flags = IsInternal(invocation.Method) ?
+                BindingFlags.Instance | BindingFlags.NonPublic :
+                BindingFlags.Instance | BindingFlags.Public;
+
+            // Do our own slow "lightweight binding" in situations where we
+            // have generic arguments that aren't factored into the binder for
+            // the regular GetMethod call.  We're taking lots of shortcuts like
+            // only comparing the generic type or count and it's only enough
+            // for the cases we have today.
+            static Type GenericDef(Type t) => t.IsGenericType ? t.GetGenericTypeDefinition() : t;
+            MethodInfo GetMethodSlow() =>
+                invocation.TargetType
+                    // Start with all methods that have the right name
+                    .GetMethods(flags).Where(m => m.Name == nonAsyncMethodName)
+                    // Check if their type parameters have the same generic
+                    // type definitions (i.e., if I invoked
+                    // GetAsync<Model>(Wrapper<Model>) we want that to match
+                    // with Get<T>(Wrapper<T>)
+                    .Where(m =>
+                        m.GetParameters().Select(p => GenericDef(p.ParameterType))
+                        .SequenceEqual(types.Select(GenericDef)))
+                    // Check if they have the same number of type arguments
+                    // (all of our cases today either specialize on 0 or 1 type
+                    // argument for the static or dynamic user schema approach)
+                    .Where(m =>
+                        m.GetGenericArguments().Length ==
+                        invocation.Method.GetGenericArguments().Length)
+                    // Hopefully we're down to 1.  If you arrive here in the
+                    // future because SingleOrDefault threw, we need to make
+                    // the comparison logic more specific.  If you arrive here
+                    // because we're returning null, then we need to search
+                    // a little more broadly.  Either way, congratulations on
+                    // blazing new API patterns and taking us boldly into the
+                    // future.
+                    .SingleOrDefault();
+            try
+            {
+                return invocation.TargetType.GetMethod(
+                    nonAsyncMethodName,
+                    flags,
+                    null,
+                    types,
+                    null) ??
+                    // Search a little more broadly if the regular binder
+                    // couldn't find a match
+                    GetMethodSlow();
+            }
+            catch (AmbiguousMatchException)
+            {
+                // Use our own binder to pick the best method if the regular
+                // binder couldn't decide between multiple choices
+                return GetMethodSlow();
+            }
+        }
 
         private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
 

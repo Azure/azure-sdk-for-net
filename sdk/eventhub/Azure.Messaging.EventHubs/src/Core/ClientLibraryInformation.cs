@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///  user agents when interacting with Azure services.
         /// </summary>
         ///
-        [Description("User-Agent")]
+        [Description("user-agent")]
         public string UserAgent => $"azsdk-net-{ Product }/{ Version } ({ Framework }; { Platform })";
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Core
         private static string GetTelemetryName(PropertyInfo property)
         {
             string name = property.GetCustomAttribute<DescriptionAttribute>(false)?.Description;
-            return (string.IsNullOrEmpty(name)) ? property.Name : name;
+            return ((string.IsNullOrEmpty(name)) ? property.Name : name).ToLowerInvariant();
         }
     }
 }

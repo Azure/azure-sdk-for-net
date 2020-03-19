@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Security;
-using System.Text;
+using Azure.Core;
 
 namespace Azure.Identity.Tests
 {
@@ -38,9 +36,9 @@ namespace Azure.Identity.Tests
             typeof(InteractiveBrowserCredential).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(credential, client);
         }
 
-        public static IExtendedTokenCredential[] _sources(this DefaultAzureCredential credential)
+        public static TokenCredential[] _sources(this DefaultAzureCredential credential)
         {
-            return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as IExtendedTokenCredential[];
+            return typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(credential) as TokenCredential[];
         }
     }
 }

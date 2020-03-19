@@ -15,12 +15,14 @@ using Xunit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiManagementManagement.Tests.Helpers;
 
 namespace ApiManagement.Tests.ResourceProviderTests
 {
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public async Task CreateInVirtualNetworkTests()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -106,7 +108,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceName);
                 Assert.NotNull(serviceNetworkStatus);
                 Assert.Single(serviceNetworkStatus);
-                Assert.Equal(testBase.location, serviceNetworkStatus.First().Location);
+                Assert.Equal(testBase.location.ToLowerAndRemoveWhiteSpaces(), serviceNetworkStatus.First().Location.ToLowerAndRemoveWhiteSpaces());
                 Assert.NotNull(serviceNetworkStatus.First().NetworkStatus.ConnectivityStatus);
                 Assert.NotNull(serviceNetworkStatus.First().NetworkStatus.DnsServers);
                 Assert.Equal("success", serviceNetworkStatus.First().NetworkStatus.ConnectivityStatus.First().Status, true);
@@ -138,7 +140,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName);
 
-                Assert.Throws<CloudException>(() =>
+                Assert.Throws<ErrorResponseException>(() =>
                 {
                     testBase.client.ApiManagementService.Get(
                         resourceGroupName: testBase.rgName,

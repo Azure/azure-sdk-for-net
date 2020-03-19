@@ -51,7 +51,17 @@ namespace Azure.Storage.Files.DataLake
         /// Gets tghe <see cref="HttpPipeline"/> transport pipeline used to
         /// send every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly DataLakeClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
@@ -242,11 +252,13 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
+            _version = options.Version;
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _pipeline,
                 authentication,
+                Version.AsBlobsVersion(),
                 _clientDiagnostics);
         }
 
@@ -256,11 +268,11 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private class BlobServiceClientInternals : BlobServiceClient
         {
-            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics diagnostics)
+            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
             {
                 return BlobServiceClient.CreateClient(
                     uri,
-                    new BlobClientOptions()
+                    new BlobClientOptions(version)
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
                     },
@@ -283,7 +295,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, ClientDiagnostics);
+            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, Version, ClientDiagnostics);
 
         #region Get User Delegation Key
         /// <summary>
@@ -316,7 +328,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
             {
@@ -372,7 +384,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
             try
             {
@@ -422,7 +434,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobContainerItem}"/>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{FileSystemItem}"/>
         /// describing the file systems in the storage account.
         /// </returns>
         /// <remarks>
@@ -437,7 +449,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="GetFileSystemsAsync"/> operation returns an async
-        /// sequence of blob file system in the storage account.  Enumerating the
+        /// sequence of file systems in the storage account.  Enumerating the
         /// files systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
@@ -483,13 +495,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -514,7 +526,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
             try
             {
@@ -548,13 +560,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -579,7 +591,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
 
             try
             {
@@ -604,7 +616,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete File System
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
-        /// specified blob file system for deletion. The file system and any blobs
+        /// specified file system for deletion. The file system and any paths
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -632,7 +644,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
 
             try
             {
@@ -656,7 +668,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
-        /// specified file system for deletion. The file system and any blobs
+        /// specified file system for deletion. The file system and any paths
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -684,7 +696,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
 
             try
             {

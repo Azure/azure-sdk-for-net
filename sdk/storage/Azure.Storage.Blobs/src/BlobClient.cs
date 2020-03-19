@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -161,10 +157,20 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal BlobClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            string encryptionScope)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
         #endregion ctors
@@ -193,11 +199,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(Stream content) =>
             Upload(content, CancellationToken.None);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Upload(string)"/> operation creates a new block blob
@@ -222,11 +225,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(string path) =>
             Upload(path, CancellationToken.None);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream)"/> operation creates a new block blob
@@ -251,11 +251,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
             await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="UploadAsync(string)"/> operation creates a new block blob
@@ -280,11 +277,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(string path) =>
             await UploadAsync(path, CancellationToken.None).ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
@@ -314,8 +308,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -323,7 +315,6 @@ namespace Azure.Storage.Blobs
                 content,
                 overwrite: false,
                 cancellationToken: cancellationToken);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Upload(string, CancellationToken)"/> operation
@@ -353,8 +344,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(
             string path,
             CancellationToken cancellationToken) =>
@@ -362,7 +351,6 @@ namespace Azure.Storage.Blobs
                 path,
                 overwrite: false,
                 cancellationToken: cancellationToken);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, CancellationToken)"/> operation
@@ -392,8 +380,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             CancellationToken cancellationToken) =>
@@ -401,7 +387,6 @@ namespace Azure.Storage.Blobs
                 content,
                 overwrite: false,
                 cancellationToken: cancellationToken);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="UploadAsync(string, CancellationToken)"/> operation
@@ -431,8 +416,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string path,
             CancellationToken cancellationToken) =>
@@ -441,7 +424,6 @@ namespace Azure.Storage.Blobs
                 overwrite: false,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
@@ -475,7 +457,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             bool overwrite = false,
@@ -517,7 +498,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             string path,
             bool overwrite = false,
@@ -559,7 +539,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             bool overwrite = false,
@@ -601,7 +580,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string path,
             bool overwrite = false,
@@ -663,7 +641,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -736,7 +713,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             string path,
             BlobHttpHeaders httpHeaders = default,
@@ -747,7 +723,7 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return StagedUploadAsync(
                     stream,
@@ -897,7 +873,7 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadAsync(
                     stream,
@@ -917,7 +893,7 @@ namespace Azure.Storage.Blobs
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="singleUploadThreshold"/>.
+        /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -940,10 +916,6 @@ namespace Azure.Storage.Blobs
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
-        /// </param>
-        /// <param name="singleUploadThreshold">
-        /// The maximum size stream that we'll upload as a single block.  The
-        /// default value is 256MB.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -970,17 +942,17 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
-            long? singleUploadThreshold = default,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
-            var client = new BlockBlobClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
-            singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
-            Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
+            PartitionedUploader uploader = new PartitionedUploader(
+                client,
+                transferOptions,
+                operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
-            var uploader = new PartitionedUploader(client, transferOptions, singleUploadThreshold);
             if (async)
             {
                 return await uploader.UploadAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
@@ -995,7 +967,7 @@ namespace Azure.Storage.Blobs
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="singleUploadThreshold"/>.
+        /// <paramref name="transferOptions"/>. MaximumTransferLength.
         /// </summary>
         /// <param name="path">
         /// A file path of the file to upload.
@@ -1018,10 +990,6 @@ namespace Azure.Storage.Blobs
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
-        /// </param>
-        /// <param name="singleUploadThreshold">
-        /// The maximum size stream that we'll upload as a single block.  The
-        /// default value is 256MB.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -1048,12 +1016,11 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
-            long? singleUploadThreshold = default,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadAsync(
                     stream,
@@ -1062,7 +1029,6 @@ namespace Azure.Storage.Blobs
                     conditions,
                     progressHandler,
                     accessTier,
-                    singleUploadThreshold: singleUploadThreshold,
                     transferOptions: transferOptions,
                     async: async,
                     cancellationToken: cancellationToken)

@@ -97,7 +97,18 @@ namespace Azure.Storage.Files.DataLake
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
+            set
+            {
+                ResetUri();
+                if (value == "/")
+                {
+                    _directoryOrFilePath = value;
+                }
+                else
+                {
+                    _directoryOrFilePath = value.TrimEnd('/');
+                }
+            }
         }
         private string _directoryOrFilePath;
 
@@ -194,16 +205,28 @@ namespace Azure.Storage.Files.DataLake
                 }
 
                 // Find the next slash (if it exists)
-
                 var shareEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (shareEndIndex == -1)
                 {
-                    FileSystemName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
+                    // Slash not found; path has file system & no directory/file path
+                    FileSystemName = path.Substring(startIndex);
                 }
                 else
                 {
-                    FileSystemName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
-                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
+                    // The file system name is the part between the slashes
+                    FileSystemName = path.Substring(startIndex, shareEndIndex - startIndex);
+                    string directoryOrFilePath = path.Substring(shareEndIndex + 1);
+
+                    // The directory/file path name is after the share slash
+                    if (directoryOrFilePath.Length == 0)
+                    {
+                        DirectoryOrFilePath = "/";
+                    }
+                    else
+                    {
+                        DirectoryOrFilePath = directoryOrFilePath;
+                    }
+
                 }
             }
 
@@ -332,7 +355,14 @@ namespace Azure.Storage.Files.DataLake
                 path.Append("/").Append(FileSystemName);
                 if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
-                    path.Append("/").Append(DirectoryOrFilePath);
+                    if (DirectoryOrFilePath == "/")
+                    {
+                        path.Append(DirectoryOrFilePath);
+                    }
+                    else
+                    {
+                        path.Append("/").Append(DirectoryOrFilePath);
+                    }
                 }
             }
 

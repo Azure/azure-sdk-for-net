@@ -120,6 +120,37 @@ namespace Microsoft.Azure.Management.DataShare
         /// </exception>
         Task<AzureOperationResponse<OperationResponse>> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List of available share subscriptions under an account.
+        /// </summary>
+        /// <remarks>
+        /// List share subscriptions in an account
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the share account.
+        /// </param>
+        /// <param name='skipToken'>
+        /// Continuation Token
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ShareSubscription>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get source share synchronization settings for a shareSubscription.
         /// </summary>
         /// <remarks>
@@ -294,37 +325,6 @@ namespace Microsoft.Azure.Management.DataShare
         /// </exception>
         Task<AzureOperationResponse<ShareSubscriptionSynchronization>> CancelSynchronizationWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List of available share subscriptions under an account.
-        /// </summary>
-        /// <remarks>
-        /// List share subscriptions in an account
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the share account.
-        /// </param>
-        /// <param name='skipToken'>
-        /// Continuation Token
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DataShareErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ShareSubscription>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Delete shareSubscription in an account.
         /// </summary>
         /// <remarks>
@@ -424,6 +424,31 @@ namespace Microsoft.Azure.Management.DataShare
         /// </exception>
         Task<AzureOperationResponse<ShareSubscriptionSynchronization>> BeginCancelSynchronizationWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareSubscriptionName, ShareSubscriptionSynchronization shareSubscriptionSynchronization, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List of available share subscriptions under an account.
+        /// </summary>
+        /// <remarks>
+        /// List share subscriptions in an account
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ShareSubscription>>> ListByAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get source share synchronization settings for a shareSubscription.
         /// </summary>
         /// <remarks>
@@ -499,30 +524,5 @@ namespace Microsoft.Azure.Management.DataShare
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<SynchronizationDetails>>> ListSynchronizationDetailsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List of available share subscriptions under an account.
-        /// </summary>
-        /// <remarks>
-        /// List share subscriptions in an account
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DataShareErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ShareSubscription>>> ListByAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -58,5 +58,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// internet address.
         /// </summary>
         public const string OpenapiLink = "openapi-link";
+        /// <summary>
+        /// The Open Api 3.0 Json document is hosted on a publicly accessible
+        /// internet address.
+        /// </summary>
+        public const string OpenapijsonLink = "openapi+json-link";
     }
 }

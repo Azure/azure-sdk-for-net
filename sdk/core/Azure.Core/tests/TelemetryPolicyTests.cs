@@ -102,7 +102,6 @@ namespace Azure.Core.Tests
 
         private class TestOptions : ClientOptions
         {
-
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -89,7 +89,12 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}");
 
             scope.Start();
 
@@ -99,7 +104,7 @@ namespace Azure.Identity
 
                 if (_account is null)
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync().ConfigureAwait(false);
+                    AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
                     _account = result.Account;
 
@@ -107,7 +112,7 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync().ConfigureAwait(false);
+                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

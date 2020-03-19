@@ -60,7 +60,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="requestInterval">The time to await before sending next
         /// page request. </param>
-        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object paginationRules = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object))
+        /// <param name="additionalColumns">Specifies the additional columns to
+        /// be added to source data. Type: array of objects (or Expression with
+        /// resultType array of objects).</param>
+        public RestSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object requestMethod = default(object), object requestBody = default(object), object additionalHeaders = default(object), object paginationRules = default(object), object httpRequestTimeout = default(object), object requestInterval = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             RequestMethod = requestMethod;
@@ -69,6 +72,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             PaginationRules = paginationRules;
             HttpRequestTimeout = httpRequestTimeout;
             RequestInterval = requestInterval;
+            AdditionalColumns = additionalColumns;
             CustomInit();
         }
 
@@ -122,6 +126,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "requestInterval")]
         public object RequestInterval { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the additional columns to be added to source
+        /// data. Type: array of objects (or Expression with resultType array
+        /// of objects).
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalColumns")]
+        public IList<AdditionalColumns> AdditionalColumns { get; set; }
 
     }
 }

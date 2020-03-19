@@ -500,7 +500,8 @@ namespace DataFactory.Tests.JsonSamples
                         storedProcedureParameters: {
                             ""stringData"": { value: ""test"", type: ""String""},
                             ""id"": { value: ""3"", type: ""Int""}
-                        }
+                        },
+                        isolationLevel: ""ReadCommitted""
                     },
                     sink:
                     {
@@ -4186,7 +4187,13 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
-}
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
           },
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
@@ -4200,6 +4207,18 @@ namespace DataFactory.Tests.JsonSamples
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logStorageSettings"": {
+            ""linkedServiceName"": {
+              ""referenceName"": ""exampleLinkedService"",
+              ""type"": ""LinkedServiceReference""
+            },
+            ""path"": ""test""
           }
         },
         ""inputs"": [
@@ -4757,7 +4776,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreReadSettings"",
               ""recursive"": true,
-              ""enablePartitionDiscovery"": true
+              ""enablePartitionDiscovery"": true,
+              ""fileListPath"": ""test.txt""
             }
           },
           ""sink"": {
@@ -4765,7 +4785,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
-              ""copyBehavior"": ""PreserveHierarchy""
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""expiryDateTime"": ""2018-12-01T05:00:00Z""
             }
           }
         },
@@ -4831,6 +4852,41 @@ namespace DataFactory.Tests.JsonSamples
             ""type"": ""BinarySink"",
             ""storeSettings"": {
               ""type"": ""AzureBlobFSWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""blockSizeInMB"": 8
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true,
+              ""prefix"": ""test""
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
               ""maxConcurrentConnections"": 3,
               ""copyBehavior"": ""PreserveHierarchy"",
               ""blockSizeInMB"": 8
@@ -5683,6 +5739,10 @@ namespace DataFactory.Tests.JsonSamples
                     integrationRuntime: {
                         referenceName: ""dataflowIR10minTTL"",
                         type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
                     }
                 }
             }
@@ -5919,6 +5979,112 @@ namespace DataFactory.Tests.JsonSamples
       }
     ]
   }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapHanaToCsvWithPartition = @"
+{
+    ""name"": ""MyPipelineName"",
+    ""properties"": 
+    {
+        ""description"" : ""Copy from SAP HANA for Customer to Azure Data Lake Store"",
+        ""activities"":
+        [
+            {
+                ""type"": ""Copy"",
+                ""name"": ""TestActivity"",
+                ""description"": ""Test activity description"", 
+                ""typeProperties"":
+                {
+                    ""source"":
+                    {
+                        ""type"": ""SapHanaSource"",
+                        ""query"": ""$select=Column0"",
+                        ""partitionOption"": ""SapHanaDynamicRange"",
+                        ""partitionSettings"": {
+                            ""partitionColumnName"": ""INTEGERTYPE""
+                        }                        
+                    },
+                    ""sink"": {
+                      ""type"": ""DelimitedTextSink"",
+                      ""storeSettings"": {
+                        ""type"": ""AzureDataLakeStoreWriteSettings"",
+                        ""maxConcurrentConnections"": 3,
+                        ""copyBehavior"": ""PreserveHierarchy""
+                      },
+                      ""formatSettings"": {
+                        ""type"": ""DelimitedTextWriteSettings"",
+                        ""quoteAllText"": true,
+                        ""fileExtension"": "".csv""
+                      }
+                    }
+                },
+                ""inputs"": [
+                  {
+                    ""referenceName"": ""exampleDataset"",
+                    ""type"": ""DatasetReference""
+                  }
+                ],
+                ""outputs"": [
+                  {
+                    ""referenceName"": ""exampleDataset"",
+                    ""type"": ""DatasetReference""
+                  }
+                ]
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyBlobToSftp = @"
+{
+    ""name"": ""MyPipelineName"",
+    ""properties"":
+    {
+        ""description"" : ""Copy from SAP HANA for Customer to Azure Data Lake Store"",
+        ""activities"":
+        [
+            {
+                  ""type"": ""Copy"",
+                  ""typeProperties"": {
+                    ""source"": {
+                      ""type"": ""BinarySource"",
+                      ""storeSettings"": {
+                        ""type"": ""FileServerReadSettings"",
+                        ""recursive"": true,
+                        ""enablePartitionDiscovery"": true
+                      }
+                    },
+                    ""sink"": {
+                      ""type"": ""BinarySink"",
+                      ""storeSettings"": {
+                        ""type"": ""SftpWriteSettings"",
+                        ""maxConcurrentConnections"": 3,
+                        ""copyBehavior"": ""PreserveHierarchy"",
+                        ""operationTimeout"": ""01:00:00"",
+                        ""useTempFileRename"": true
+                      }
+                    }
+                  },
+                  ""inputs"": [
+                    {
+                      ""referenceName"": ""exampleDataset"",
+                      ""type"": ""DatasetReference""
+                    }
+                  ],
+                  ""outputs"": [
+                    {
+                      ""referenceName"": ""exampleDataset"",
+                      ""type"": ""DatasetReference""
+                    }
+                  ],
+                  ""name"": ""ExampleCopyActivity""
+                }
+        ]
+    }
 }
 ";
     }

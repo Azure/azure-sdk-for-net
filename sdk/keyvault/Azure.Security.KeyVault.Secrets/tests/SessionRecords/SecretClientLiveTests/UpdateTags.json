@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,7 +9,7 @@
         "traceparent": "00-db525f4f4ed26c4eb33bfbb68bfe6089-bf72d78039d63544-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets/4.0.0-dev.20191023.1\u002B307048a11c075ebf79212b622adee61b8a4615e3",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "9d3bb2c372685f3211f6347ba3e5153b",
         "x-ms-return-client-request-id": "true"
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -52,7 +52,7 @@
         "traceparent": "00-db525f4f4ed26c4eb33bfbb68bfe6089-bf72d78039d63544-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets/4.0.0-dev.20191023.1\u002B307048a11c075ebf79212b622adee61b8a4615e3",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "9d3bb2c372685f3211f6347ba3e5153b",
         "x-ms-return-client-request-id": "true"
@@ -98,7 +98,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959/2e009c9b0ad94bf284e599df7a9f8be4?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959/2e009c9b0ad94bf284e599df7a9f8be4?api-version=7.1-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -108,7 +108,7 @@
         "traceparent": "00-cb8101c2044c774889697a29abc11502-2c87a57006d42d45-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets/4.0.0-dev.20191023.1\u002B307048a11c075ebf79212b622adee61b8a4615e3",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "ce61d5817d90c5022b70609cb08d3ceb",
         "x-ms-return-client-request-id": "true"
@@ -157,7 +157,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959/2e009c9b0ad94bf284e599df7a9f8be4?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959/2e009c9b0ad94bf284e599df7a9f8be4?api-version=7.1-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -167,7 +167,7 @@
         "traceparent": "00-c7567ab400bbcc4ea5a9fdab7c2978f3-3b19c233bc2bc24d-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets/4.0.0-dev.20191023.1\u002B307048a11c075ebf79212b622adee61b8a4615e3",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "4134ba9ec96bc5c622a537a174554f67",
         "x-ms-return-client-request-id": "true"
@@ -212,7 +212,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/secrets/1307989959?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -221,7 +221,7 @@
         "traceparent": "00-e59c0ba1aa9bdd4ea29dc90f60575a4e-1224f93603e4fd4f-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets/4.0.0-dev.20191023.1\u002B307048a11c075ebf79212b622adee61b8a4615e3",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "0a0b2252228e4537b07672f71195af84",
         "x-ms-return-client-request-id": "true"
@@ -262,7 +262,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/deletedsecrets/1307989959?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/deletedsecrets/1307989959?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -271,7 +271,7 @@
         "traceparent": "00-4a46142e052b0c45b54d4111ff8acfcf-f9e0da8bc2b20d4f-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Secrets/4.0.0-dev.20191023.1\u002B307048a11c075ebf79212b622adee61b8a4615e3",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "18d59c25214b8902eb6265c242d9603f",
         "x-ms-return-client-request-id": "true"

@@ -13,9 +13,20 @@ namespace Azure.Core.Testing
 
         protected RecordMatcher Matcher { get; set; }
 
-        protected TestRecording Recording { get; private set; }
+        public TestRecording Recording { get; private set; }
 
-        protected RecordedTestMode Mode { get; }
+        public RecordedTestMode Mode { get; }
+
+#if DEBUG
+        /// <summary>
+        /// Flag you can (temporarily) enable to save failed test recordings
+        /// and debug/re-run at the point of failure without re-running
+        /// potentially lengthy live tests.  This should never be checked in
+        /// and will be compiled out of release builds to help make that easier
+        /// to spot.
+        /// </summary>
+        public bool SaveDebugRecordingsOnFailure { get; set; } = false;
+#endif
 
         protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -39,21 +50,27 @@ namespace Azure.Core.Testing
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
-        public TestRecording StartRecording(string name)
-        {
-            return new TestRecording(Mode, GetSessionFilePath(name), Sanitizer, Matcher);
-        }
-
         [SetUp]
         public virtual void StartTestRecording()
         {
+            // Only create test recordings for the latest version of the service
+            TestContext.TestAdapter test = TestContext.CurrentContext.Test;
+            if (Mode != RecordedTestMode.Live &&
+                test.Properties.ContainsKey("SkipRecordings"))
+            {
+                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+            }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
         }
 
         [TearDown]
         public virtual void StopTestRecording()
         {
-            Recording?.Dispose(TestContext.CurrentContext.Result.FailCount == 0);
+            bool save = TestContext.CurrentContext.Result.FailCount == 0;
+#if DEBUG
+            save |= SaveDebugRecordingsOnFailure;
+#endif
+            Recording?.Dispose(save);
         }
     }
 }

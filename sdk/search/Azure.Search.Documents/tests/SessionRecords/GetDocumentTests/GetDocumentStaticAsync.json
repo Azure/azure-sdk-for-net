@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gyqqmobj.search.windows.net/indexes(\u0027eifefphf\u0027)/docs(\u00273\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "traceparent": "00-a4ab754210381f4ca34e825178caf675-475ef6b5eb40c546-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "a813557250353459f176eb2e3113d05a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "541",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
+        "Date": "Thu, 12 Mar 2020 00:47:08 GMT",
+        "elapsed-time": "4",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "a8135572-5035-3459-f176-eb2e3113d05a",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-gyqqmobj.search.windows.net/indexes(\u0027eifefphf\u0027)/$metadata#docs(*)/$entity",
+        "hotelId": "3",
+        "hotelName": "EconoStay",
+        "description": "Very popular hotel in town",
+        "descriptionFr": "H\u00F4tel le plus populaire en ville",
+        "category": "Budget",
+        "tags": [
+          "wifi",
+          "budget"
+        ],
+        "parkingIncluded": true,
+        "smokingAllowed": false,
+        "lastRenovationDate": "1995-07-01T00:00:00Z",
+        "rating": 4,
+        "location": {
+          "type": "Point",
+          "coordinates": [
+            -122.131577,
+            46.678581
+          ],
+          "crs": {
+            "type": "name",
+            "properties": {
+              "name": "EPSG:4326"
+            }
+          }
+        },
+        "address": null,
+        "rooms": []
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2141683884",
+    "SearchIndexName": "eifefphf",
+    "SearchServiceName": "azs-net-gyqqmobj"
+  }
+}

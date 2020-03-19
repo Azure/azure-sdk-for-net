@@ -80,9 +80,19 @@ namespace Microsoft.Azure.Management.Kusto
         IClustersOperations Clusters { get; }
 
         /// <summary>
+        /// Gets the IClusterPrincipalAssignmentsOperations.
+        /// </summary>
+        IClusterPrincipalAssignmentsOperations ClusterPrincipalAssignments { get; }
+
+        /// <summary>
         /// Gets the IDatabasesOperations.
         /// </summary>
         IDatabasesOperations Databases { get; }
+
+        /// <summary>
+        /// Gets the IDatabasePrincipalAssignmentsOperations.
+        /// </summary>
+        IDatabasePrincipalAssignmentsOperations DatabasePrincipalAssignments { get; }
 
         /// <summary>
         /// Gets the IAttachedDatabaseConfigurationsOperations.

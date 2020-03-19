@@ -135,14 +135,11 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -154,6 +151,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByService", tracingParameters);
             }
@@ -173,9 +171,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -311,9 +309,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance. Non-current revision has ;rev=n as a suffix where n is
         /// the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management service
-        /// instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for API/Tag
+        /// association. Based on API and Tag names.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -333,7 +331,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<ApiTagDescriptionGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<ApiTagDescriptionGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -377,33 +375,30 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (tagId == null)
+            if (tagDescriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "tagId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "tagDescriptionId");
             }
-            if (tagId != null)
+            if (tagDescriptionId != null)
             {
-                if (tagId.Length > 80)
+                if (tagDescriptionId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "tagId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "tagDescriptionId", 80);
                 }
-                if (tagId.Length < 1)
+                if (tagDescriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "tagId", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "tagDescriptionId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(tagId, "^[^*#&+:<>?]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tagDescriptionId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "tagId", "^[^*#&+:<>?]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "tagDescriptionId", "^[^*#&+:<>?]+$");
                 }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -414,22 +409,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
-                tracingParameters.Add("tagId", tagId);
+                tracingParameters.Add("tagDescriptionId", tagDescriptionId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntityTag", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
-            _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(tagId));
+            _url = _url.Replace("{tagDescriptionId}", System.Uri.EscapeDataString(tagDescriptionId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -560,9 +556,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance. Non-current revision has ;rev=n as a suffix where n is
         /// the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management service
-        /// instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for API/Tag
+        /// association. Based on API and Tag names.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -585,7 +581,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -629,33 +625,30 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (tagId == null)
+            if (tagDescriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "tagId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "tagDescriptionId");
             }
-            if (tagId != null)
+            if (tagDescriptionId != null)
             {
-                if (tagId.Length > 80)
+                if (tagDescriptionId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "tagId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "tagDescriptionId", 80);
                 }
-                if (tagId.Length < 1)
+                if (tagDescriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "tagId", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "tagDescriptionId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(tagId, "^[^*#&+:<>?]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tagDescriptionId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "tagId", "^[^*#&+:<>?]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "tagDescriptionId", "^[^*#&+:<>?]+$");
                 }
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -666,22 +659,23 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
-                tracingParameters.Add("tagId", tagId);
+                tracingParameters.Add("tagDescriptionId", tagDescriptionId);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
-            _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(tagId));
+            _url = _url.Replace("{tagDescriptionId}", System.Uri.EscapeDataString(tagDescriptionId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -830,9 +824,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance. Non-current revision has ;rev=n as a suffix where n is
         /// the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management service
-        /// instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for API/Tag
+        /// association. Based on API and Tag names.
         /// </param>
         /// <param name='parameters'>
         /// Create parameters.
@@ -862,7 +856,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, TagDescriptionCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TagDescriptionContract,ApiTagDescriptionCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionCreateParameters parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -906,41 +900,34 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (tagId == null)
+            if (tagDescriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "tagId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "tagDescriptionId");
             }
-            if (tagId != null)
+            if (tagDescriptionId != null)
             {
-                if (tagId.Length > 80)
+                if (tagDescriptionId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "tagId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "tagDescriptionId", 80);
                 }
-                if (tagId.Length < 1)
+                if (tagDescriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "tagId", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "tagDescriptionId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(tagId, "^[^*#&+:<>?]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tagDescriptionId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "tagId", "^[^*#&+:<>?]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "tagDescriptionId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -951,24 +938,25 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
-                tracingParameters.Add("tagId", tagId);
+                tracingParameters.Add("tagDescriptionId", tagDescriptionId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
-            _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(tagId));
+            _url = _url.Replace("{tagDescriptionId}", System.Uri.EscapeDataString(tagDescriptionId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1149,9 +1137,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance. Non-current revision has ;rev=n as a suffix where n is
         /// the revision number.
         /// </param>
-        /// <param name='tagId'>
-        /// Tag identifier. Must be unique in the current API Management service
-        /// instance.
+        /// <param name='tagDescriptionId'>
+        /// Tag description identifier. Used when creating tagDescription for API/Tag
+        /// association. Based on API and Tag names.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from the
@@ -1176,7 +1164,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1220,37 +1208,34 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (tagId == null)
+            if (tagDescriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "tagId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "tagDescriptionId");
             }
-            if (tagId != null)
+            if (tagDescriptionId != null)
             {
-                if (tagId.Length > 80)
+                if (tagDescriptionId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "tagId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "tagDescriptionId", 80);
                 }
-                if (tagId.Length < 1)
+                if (tagDescriptionId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "tagId", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "tagDescriptionId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(tagId, "^[^*#&+:<>?]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tagDescriptionId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "tagId", "^[^*#&+:<>?]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "tagDescriptionId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2019-12-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1261,23 +1246,24 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
-                tracingParameters.Add("tagId", tagId);
+                tracingParameters.Add("tagDescriptionId", tagDescriptionId);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{apiId}", System.Uri.EscapeDataString(apiId));
-            _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(tagId));
+            _url = _url.Replace("{tagDescriptionId}", System.Uri.EscapeDataString(tagDescriptionId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

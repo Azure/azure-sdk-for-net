@@ -1,8 +1,23 @@
 # Release History
 
-## Unreleased
+## 1.2.0-preview.1 (Unreleased)
+
+### Added
+- `AzureKeyCredential` and its respective policy.
+
+## 1.1.0 (2020-03-05)
+
+### Fixes and improvements
+- Add OPTIONS and TRACE HTTP request methods.
+- Add `NetworkTimeout` property to `RetryOptions` and apply it to network operations like sending request or reading from the response stream.
+- Implement serialization for RequestFailedException.
+
+## 1.0.2 (2020-01-10)
 
 - Block bearer token authentication for non TLS protected endpoints.
+- Add support for retrying on request timeouts.
+- Add support for retrying on 408, 500, 502, 504 status codes.
+- Remove commit hash from User-Agent telemetry.
 
 ## 1.0.1
 

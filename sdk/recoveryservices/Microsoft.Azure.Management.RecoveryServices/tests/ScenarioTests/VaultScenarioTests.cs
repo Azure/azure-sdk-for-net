@@ -90,37 +90,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
                 }
             }
         }
-
-        [Fact]
-        public void GetAndUpdateBackupVaultAndStorageConfigTest()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                using (RecoveryServicesTestBase _testFixture = new RecoveryServicesTestBase(context))
-                {
-                    string vaultName = VaultDefinition.TestCrud.VaultName;
-
-                    _testFixture.CreateVault(vaultName);
-                    var vault = _testFixture.GetVault(vaultName);
-                    Assert.NotNull(vault);
-
-                    var vaultConfig = _testFixture.GetVaultConfig(vaultName);
-
-                    vaultConfig.EnhancedSecurityState = EnhancedSecurityState.Disabled;
-                    Assert.Throws<CloudException>(() =>
-                    {
-                        var vaultConfig2 = _testFixture.UpdateVaultConfig(vaultName, vaultConfig);
-                    });
-
-                    var storageConfig = _testFixture.GetStorageConfig(vaultName);
-                    storageConfig.StorageModelType = StorageModelType.LocallyRedundant;
-                    _testFixture.UpdateStorageConfig(vaultName, storageConfig);
-
-                    var storageConfig2 = _testFixture.GetStorageConfig(vaultName);
-                    Assert.Equal(storageConfig2.StorageModelType, StorageModelType.LocallyRedundant);
-                }
-            }
-        }
     }
 }
 

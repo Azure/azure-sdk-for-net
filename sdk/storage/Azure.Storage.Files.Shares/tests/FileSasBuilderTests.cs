@@ -7,14 +7,14 @@ using Azure.Storage.Sas;
 using NUnit.Framework;
 using TestConstants = Azure.Storage.Test.TestConstants;
 
-namespace Azure.Storage.Files.Test
+namespace Azure.Storage.Files.Shares.Test
 {
     public class FileSasBuilderTests : FileTestBase
     {
         private const string Permissions = "rcwd";
 
-        public FileSasBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public FileSasBuilderTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -85,6 +85,32 @@ namespace Azure.Storage.Files.Test
 
             // Act
             Assert.Throws<ArgumentNullException>(() => fileSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
+        }
+
+        [Test]
+        public void FileSasBuilder_IdentifierTest()
+        {
+            // Arrange
+            TestConstants constants = new TestConstants(this);
+            string shareName = GetNewShareName();
+            string resource = "s";
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                Identifier = constants.Sas.Identifier,
+                ShareName = shareName,
+                Resource = resource,
+                Protocol = SasProtocol.Https,
+                Version = constants.Sas.Version
+            };
+
+            // Act
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+
+            // Assert
+            Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
+            Assert.AreEqual(resource, sasQueryParameters.Resource);
+            Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
         }
 
         private ShareSasBuilder BuildFileSasBuilder(bool includeVersion, bool includeFilePath, TestConstants constants, string shareName, string filePath)

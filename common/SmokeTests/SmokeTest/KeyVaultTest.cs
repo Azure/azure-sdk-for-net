@@ -11,6 +11,8 @@ namespace SmokeTest
 {
     class KeyVaultTest
     {
+        private const string defaultAuthorityHost = "https://login.microsoftonline.com";
+
         private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
         private const string SecretValue = "smokeTestValue";
         private static SecretClient client;
@@ -32,7 +34,20 @@ namespace SmokeTest
             string clientID = Environment.GetEnvironmentVariable("APP_CLIENT_ID");
             string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
             string keyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
-            client = new SecretClient(new Uri(keyVaultUri), new ClientSecretCredential(tenantID, clientID, clientSecret));
+            
+            var authorityHost = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST") 
+                ?? defaultAuthorityHost;
+
+            var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions 
+            { 
+                AuthorityHost = new Uri(authorityHost) 
+            };
+
+
+            client = new SecretClient(
+                new Uri(keyVaultUri), 
+                new DefaultAzureCredential(defaultAzureCredentialOptions)
+            );
 
             await SetNewSecret();
             await GetSecret();

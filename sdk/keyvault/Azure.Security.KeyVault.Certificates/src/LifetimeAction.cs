@@ -25,7 +25,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="LifetimeAction"/> class.
         /// </summary>
-        public LifetimeAction()
+        /// <param name="action">The <see cref="CertificatePolicyAction"/> to be performed.</param>
+        public LifetimeAction(CertificatePolicyAction action)
+        {
+            Action = action;
+        }
+
+        private LifetimeAction()
         {
         }
 
@@ -40,9 +46,9 @@ namespace Azure.Security.KeyVault.Certificates
         public int? LifetimePercentage { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="CertificatePolicyAction"/> to be performed.
+        /// Gets the <see cref="CertificatePolicyAction"/> to be performed.
         /// </summary>
-        public CertificatePolicyAction Action { get; set; }
+        public CertificatePolicyAction Action { get; private set; }
 
         internal static LifetimeAction FromJsonObject(JsonElement json)
         {

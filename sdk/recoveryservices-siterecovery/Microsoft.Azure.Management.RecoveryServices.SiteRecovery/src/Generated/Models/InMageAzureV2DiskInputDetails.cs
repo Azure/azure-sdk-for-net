@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="logStorageAccountId">The LogStorageAccountId.</param>
         /// <param name="diskType">The DiskType. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public InMageAzureV2DiskInputDetails(string diskId = default(string), string logStorageAccountId = default(string), string diskType = default(string))
+        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
+        /// ID.</param>
+        public InMageAzureV2DiskInputDetails(string diskId = default(string), string logStorageAccountId = default(string), string diskType = default(string), string diskEncryptionSetId = default(string))
         {
             DiskId = diskId;
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
             CustomInit();
         }
 
@@ -66,6 +69,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskType")]
         public string DiskType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DiskEncryptionSet ARM ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
 
     }
 }

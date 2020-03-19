@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -159,17 +159,22 @@ namespace Azure.Messaging.EventHubs.Amqp
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
 
-            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout =>
-                ConnectionScope.OpenConsumerLinkAsync(
-                    consumerGroup,
-                    partitionId,
-                    CurrentEventPosition,
-                    timeout,
-                    prefetchCount ?? DefaultPrefetchCount,
-                    ownerLevel,
-                    trackLastEnqueuedEventProperties,
-                    CancellationToken.None),
-                link => link.SafeClose());
+            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
+                timeout =>
+                    ConnectionScope.OpenConsumerLinkAsync(
+                        consumerGroup,
+                        partitionId,
+                        CurrentEventPosition,
+                        timeout,
+                        prefetchCount ?? DefaultPrefetchCount,
+                        ownerLevel,
+                        trackLastEnqueuedEventProperties,
+                        CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
+                });
         }
 
         /// <summary>
@@ -180,11 +185,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty set is returned.</returns>
         ///
-        public override async Task<IEnumerable<EventData>> ReceiveAsync(int maximumMessageCount,
-                                                                        TimeSpan? maximumWaitTime,
-                                                                        CancellationToken cancellationToken)
+        public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+                                                                          TimeSpan? maximumWaitTime,
+                                                                          CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
@@ -241,9 +246,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                             {
                                 lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
-                                if (lastReceivedEvent.Offset.HasValue)
+                                if (lastReceivedEvent.Offset > long.MinValue)
                                 {
-                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset.Value);
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
                                 }
 
                                 if (TrackLastEnqueuedEventProperties)
@@ -257,34 +262,36 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         // No events were available.
 
-                        return Enumerable.Empty<EventData>();
+                        return new List<EventData>(0);
                     }
-                    catch (EventHubsTimeoutException)
+                    catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
                         // Because the timeout specified with the request is intended to be the maximum
                         // amount of time to wait for events, a timeout isn't considered an error condition,
                         // rather a sign that no events were available in the requested period.
 
-                        return Enumerable.Empty<EventData>();
-                    }
-                    catch (AmqpException amqpException)
-                    {
-                        throw AmqpError.CreateExceptionForError(amqpException.Error, EventHubName);
+                        return new List<EventData>(0);
                     }
                     catch (Exception ex)
                     {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
-                        retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
+                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {
