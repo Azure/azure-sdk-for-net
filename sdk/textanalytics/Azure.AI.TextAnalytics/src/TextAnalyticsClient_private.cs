@@ -23,6 +23,8 @@ namespace Azure.AI.TextAnalytics
         private const string ShowStatistics = "showStats";
         private const string ModelVersion = "model-version";
 
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+
         #region Detect Language
         private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {

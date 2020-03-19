@@ -19,22 +19,17 @@ namespace Microsoft.Azure.Management.EventGrid
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("EventGrid", "DomainTopics", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Domains", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "EventSubscriptions", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Operations", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "TopicTypes", "2020-04-01-preview"),
-                new Tuple<string, string, string>("EventGrid", "Topics", "2020-04-01-preview"),
+
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\grandhiramesh\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6187";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\jedi2\\net2\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "d6ce3c00997fde83b3c3604b71f816cd1db25bcd";
+      public static readonly String GithubCommidId = "72a64f207b7a0549a698ca1e54a19e611d0bc906";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

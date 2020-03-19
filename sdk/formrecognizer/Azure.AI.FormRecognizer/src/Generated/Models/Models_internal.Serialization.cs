@@ -12,33 +12,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    internal partial class Models_internal : IUtf8JsonSerializable
+    internal partial class Models_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Summary != null)
-            {
-                writer.WritePropertyName("summary");
-                writer.WriteObjectValue(Summary);
-            }
-            if (ModelList != null)
-            {
-                writer.WritePropertyName("modelList");
-                writer.WriteStartArray();
-                foreach (var item in ModelList)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (NextLink != null)
-            {
-                writer.WritePropertyName("nextLink");
-                writer.WriteStringValue(NextLink);
-            }
-            writer.WriteEndObject();
-        }
         internal static Models_internal DeserializeModels_internal(JsonElement element)
         {
             Models_internal result = new Models_internal();

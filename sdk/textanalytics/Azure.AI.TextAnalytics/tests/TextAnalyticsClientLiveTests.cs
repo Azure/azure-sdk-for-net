@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -21,10 +22,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Matcher = new RecordMatcher(Sanitizer);
         }
 
-        public TextAnalyticsClient GetClient(TextAnalyticsApiKeyCredential credential = default, TextAnalyticsClientOptions options = default)
+        public TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default)
         {
             string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
-            credential ??= new TextAnalyticsApiKeyCredential(apiKey);
+            credential ??= new AzureKeyCredential(apiKey);
             options ??= new TextAnalyticsClientOptions();
             return InstrumentClient (
                 new TextAnalyticsClient(
@@ -1072,7 +1073,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             // Instantiate a client that will be used to call the service.
             string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
-            var credential = new TextAnalyticsApiKeyCredential(apiKey);
+            var credential = new AzureKeyCredential(apiKey);
             TextAnalyticsClient client = GetClient(credential);
 
             string input = "Este documento está en español.";
@@ -1081,12 +1082,12 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.DetectLanguageAsync(input);
 
             // Rotate the API key to an invalid value and make sure it fails
-            credential.UpdateCredential("Invalid");
+            credential.Update("Invalid");
             Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.DetectLanguageAsync(input));
 
             // Re-rotate the API key and make sure it succeeds again
-            credential.UpdateCredential(apiKey);
+            credential.Update(apiKey);
             await client.DetectLanguageAsync(input);
         }
 

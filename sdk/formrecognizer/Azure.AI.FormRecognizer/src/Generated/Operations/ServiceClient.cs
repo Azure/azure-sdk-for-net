@@ -33,6 +33,7 @@ namespace Azure.AI.FormRecognizer
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -40,6 +41,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
         /// <param name="trainRequest"> Training request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -47,6 +49,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.TrainCustomModelAsync(trainRequest, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Get detailed information about a custom model. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
@@ -55,6 +58,7 @@ namespace Azure.AI.FormRecognizer
         {
             return await RestClient.GetCustomModelAsync(modelId, includeKeys, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Get detailed information about a custom model. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeKeys"> Include list of extracted keys in model information. </param>
@@ -63,6 +67,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.GetCustomModel(modelId, includeKeys, cancellationToken);
         }
+
         /// <summary> Mark model for deletion. Model artifacts will be permanently removed within a predetermined period. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -70,6 +75,7 @@ namespace Azure.AI.FormRecognizer
         {
             return await RestClient.DeleteCustomModelAsync(modelId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Mark model for deletion. Model artifacts will be permanently removed within a predetermined period. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,6 +83,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.DeleteCustomModel(modelId, cancellationToken);
         }
+
         /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
@@ -87,6 +94,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.AnalyzeWithCustomModelAsync(modelId, includeTextDetails, contentType, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
@@ -97,6 +105,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.AnalyzeWithCustomModel(modelId, includeTextDetails, contentType, fileStream, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
@@ -106,6 +115,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.AnalyzeWithCustomModelAsync(modelId, includeTextDetails, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Extract key-value pairs, tables, and semantic values from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
@@ -115,6 +125,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.AnalyzeWithCustomModel(modelId, includeTextDetails, fileStream, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Obtain current status and the result of the analyze form operation. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
@@ -123,6 +134,7 @@ namespace Azure.AI.FormRecognizer
         {
             return await RestClient.GetAnalyzeFormResultAsync(modelId, resultId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Obtain current status and the result of the analyze form operation. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
@@ -131,6 +143,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.GetAnalyzeFormResult(modelId, resultId, cancellationToken);
         }
+
         /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="contentType"> Upload file type. </param>
@@ -140,6 +153,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails, contentType, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="contentType"> Upload file type. </param>
@@ -149,6 +163,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.AnalyzeReceiptAsync(includeTextDetails, contentType, fileStream, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
@@ -157,6 +172,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Extract field text and semantic values from a given receipt document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
@@ -165,6 +181,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.AnalyzeReceiptAsync(includeTextDetails, fileStream, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,6 +189,7 @@ namespace Azure.AI.FormRecognizer
         {
             return await RestClient.GetAnalyzeReceiptResultAsync(resultId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Track the progress and obtain the result of the analyze receipt operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +197,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.GetAnalyzeReceiptResult(resultId, cancellationToken);
         }
+
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
@@ -187,6 +206,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.AnalyzeLayoutAsyncAsync(contentType, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
@@ -195,6 +215,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.AnalyzeLayoutAsync(contentType, fileStream, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -202,6 +223,7 @@ namespace Azure.AI.FormRecognizer
         {
             return (await RestClient.AnalyzeLayoutAsyncAsync(fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
+
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -209,6 +231,7 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.AnalyzeLayoutAsync(fileStream, cancellationToken).GetRawResponse();
         }
+
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,6 +239,7 @@ namespace Azure.AI.FormRecognizer
         {
             return await RestClient.GetAnalyzeLayoutResultAsync(resultId, cancellationToken).ConfigureAwait(false);
         }
+
         /// <summary> Track the progress and obtain the result of the analyze layout operation. </summary>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,11 +247,13 @@ namespace Azure.AI.FormRecognizer
         {
             return RestClient.GetAnalyzeLayoutResult(resultId, cancellationToken);
         }
+
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ModelInfo_internal> GetCustomModelsAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
+
             async Task<Page<ModelInfo_internal>> FirstPageFunc(int? pageSizeHint)
             {
                 var response = await RestClient.GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
@@ -240,11 +266,13 @@ namespace Azure.AI.FormRecognizer
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
+
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ModelInfo_internal> GetCustomModels(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
+
             Page<ModelInfo_internal> FirstPageFunc(int? pageSizeHint)
             {
                 var response = RestClient.GetCustomModels(op, cancellationToken);

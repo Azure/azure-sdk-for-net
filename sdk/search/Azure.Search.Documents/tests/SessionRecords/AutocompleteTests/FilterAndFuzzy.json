@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "199",
+        "Content-Type": "application/json",
+        "traceparent": "00-640cd9933780b0469a502f9785bf5331-109e6326b8fa9c4f-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200308.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "f8c845e51731603e2e0f7960ce9d9038",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "mod",
+        "autocompleteMode": "oneTerm",
+        "filter": "hotelId ne \u00276\u0027 and (hotelName eq \u0027Modern Stay\u0027 or tags/any(t : t eq \u0027budget\u0027))",
+        "fuzzy": true,
+        "suggesterName": "sg"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "260",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sun, 08 Mar 2020 23:05:17 GMT",
+        "elapsed-time": "58",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "f8c845e5-1731-603e-2e0f-7960ce9d9038",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.AutocompleteItem)",
+        "value": [
+          {
+            "text": "modern",
+            "queryPlusText": "modern"
+          },
+          {
+            "text": "motel",
+            "queryPlusText": "motel"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1645982235",
+    "SearchIndexName": "grurisvf",
+    "SearchServiceName": "azs-net-gjxdhkdl"
+  }
+}

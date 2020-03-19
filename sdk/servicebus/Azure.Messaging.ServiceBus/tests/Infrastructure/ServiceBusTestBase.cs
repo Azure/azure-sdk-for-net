@@ -82,5 +82,21 @@ namespace Azure.Messaging.ServiceBus.Tests
             TestEnvironment.ServiceBusTenant,
             TestEnvironment.ServiceBusClient,
             TestEnvironment.ServiceBusSecret);
+
+        protected ServiceBusClient GetNoRetryClient()
+        {
+            var options =
+                new ServiceBusClientOptions
+                {
+                    RetryOptions = new ServiceBusRetryOptions
+                    {
+                        TryTimeout = TimeSpan.FromSeconds(5),
+                        MaximumRetries = 0
+                    }
+                };
+            return new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                options);
+        }
     }
 }

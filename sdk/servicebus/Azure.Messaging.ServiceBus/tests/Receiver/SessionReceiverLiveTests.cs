@@ -2,16 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace Azure.Messaging.ServiceBus.Tests
+namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
@@ -51,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // verify peeked == send
                 var ct = 0;
                 foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAtAsync(
-                    fromSequenceNumber: (long)sequenceNumber,
+                    sequenceNumber: (long)sequenceNumber,
                     maxMessages: messageCt))
                 {
                     var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
@@ -86,7 +84,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageCt, sessionId);
 
                 await sender.SendBatchAsync(messageBatch);
-                var options = new ServiceBusReceiverOptions
+
+                ServiceBusReceiver receiver1 = await client.GetSessionReceiverAsync(
+                    scope.QueueName,
+                    sessionId: sessionId);
+
+                var options = new ServiceBusClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions
                     {
@@ -94,17 +97,12 @@ namespace Azure.Messaging.ServiceBus.Tests
                         MaximumRetries = 0
                     }
                 };
-                ServiceBusReceiver receiver1 = await client.GetSessionReceiverAsync(
-                    scope.QueueName,
-                    options,
-                    sessionId);
                 Assert.That(
                     async () =>
-                    await client.GetSessionReceiverAsync(
+                    await GetNoRetryClient().GetSessionReceiverAsync(
                         scope.QueueName,
-                        options,
-                        sessionId),
-                    Throws.Exception);
+                        sessionId: sessionId),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionCannotBeLocked));
             }
         }
 
@@ -199,17 +197,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
-
-                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAtAsync(
-                        fromSequenceNumber: 1,
+                    var session = receiver.GetSessionManager();
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAtAsync(
+                        sequenceNumber: 1,
                         maxMessages: 10))
                     {
-                        var sessionId = receiver.SessionManager.SessionId;
+                        var sessionId = session.SessionId;
                         Assert.AreEqual(sessionId, peekedMessage.SessionId);
                     }
 
                     // Close the receiver client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
-                    await receiver.CloseAsync();
+                    await receiver.DisposeAsync();
                 }
             }
         }
@@ -231,18 +229,15 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
 
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
                 foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
                 {
-                    receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                     Assert.AreEqual(item.DeliveryCount, 1);
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
 
                 messageEnum.Reset();
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
@@ -279,17 +274,20 @@ namespace Azure.Messaging.ServiceBus.Tests
                     clientOptions,
                     sessionId);
 
-                var receivedMessageCount = 0;
+                var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (remainingMessages > 0)
                 {
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    receivedMessageCount++;
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        remainingMessages--;
+                    }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var peekedMessage = receiver.PeekAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -316,18 +314,21 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
                     sessionId: sessionId);
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
+                var remainingMessages = messageCount;
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (remainingMessages > 0)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.CompleteAsync(item);
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        await receiver.CompleteAsync(item.LockToken);
+                    }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var peekedMessage = receiver.PeekAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -354,22 +355,33 @@ namespace Azure.Messaging.ServiceBus.Tests
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
                     sessionId: useSpecificSession ? sessionId : null);
-                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
+                var remainingMessages = messageCount;
+                IList<ServiceBusReceivedMessage> receivedMessages = new List<ServiceBusReceivedMessage>();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (remainingMessages > 0)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.AbandonAsync(item);
-                    Assert.AreEqual(item.DeliveryCount, 1);
+                    foreach (var msg in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
+                        receivedMessages.Add(msg);
+                        Assert.AreEqual(msg.DeliveryCount, 1);
+                    }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
+
+                // don't abandon in the receive loop
+                // as this would make the message available to be immediately received again
+                foreach (var msg in receivedMessages)
+                {
+                    await receiver.AbandonAsync(msg);
+                }
 
                 messageEnum.Reset();
-                receivedMessageCount = 0;
+                var receivedMessageCount = 0;
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
                 {
                     receivedMessageCount++;
@@ -400,18 +412,18 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
                     sessionId: useSpecificSession ? sessionId : null);
-                var receivedMessageCount = 0;
+                var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
                 {
-                    receivedMessageCount++;
+                    remainingMessages--;
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.MoveToDeadLetterQueueAsync(item);
+                    await receiver.DeadLetterAsync(item.LockToken);
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
 
                 var peekedMessage = receiver.PeekAsync();
                 Assert.IsNull(peekedMessage.Result);
@@ -458,19 +470,22 @@ namespace Azure.Messaging.ServiceBus.Tests
                 var receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
                     sessionId: useSpecificSession ? sessionId : null);
-                var receivedMessageCount = 0;
+                var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
                 IList<long> sequenceNumbers = new List<long>();
-                foreach (var item in await receiver.ReceiveBatchAsync(messageCount))
+                while (remainingMessages > 0)
                 {
-                    receivedMessageCount++;
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                    Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    sequenceNumbers.Add(item.SequenceNumber);
-                    await receiver.DeferAsync(item);
+                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    {
+                        remainingMessages--;
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
+                        sequenceNumbers.Add(item.SequenceNumber);
+                        await receiver.DeferAsync(item.LockToken);
+                    }
                 }
-                Assert.AreEqual(messageCount, receivedMessageCount);
+                Assert.AreEqual(0, remainingMessages);
                 IList<ServiceBusReceivedMessage> deferedMessages = await receiver.ReceiveDeferredMessageBatchAsync(sequenceNumbers);
 
                 var messageList = messages.ToList();
@@ -500,24 +515,25 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await sender.SendAsync(message);
 
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName, sessionId: isSessionSpecified ? sessionId1 : null);
+                var session = receiver.GetSessionManager();
                 if (isSessionSpecified)
                 {
-                    Assert.AreEqual(sessionId1, receiver.SessionManager.SessionId);
+                    Assert.AreEqual(sessionId1, session.SessionId);
                 }
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveBatchAsync(messageCount)).ToArray();
 
                 var receivedMessage = receivedMessages.First();
-                var firstLockedUntilUtcTime = receiver.SessionManager.LockedUntilUtc;
+                var firstLockedUntilUtcTime = session.LockedUntil;
 
                 // Sleeping for 10 seconds...
                 await Task.Delay(10000);
 
-                await receiver.SessionManager.RenewSessionLockAsync();
+                await session.RenewSessionLockAsync();
 
-                Assert.True(receiver.SessionManager.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+                Assert.True(session.LockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 
                 // Complete Messages
-                await receiver.CompleteAsync(receivedMessage);
+                await receiver.CompleteAsync(receivedMessage.LockToken);
 
                 Assert.AreEqual(messageCount, receivedMessages.Length);
                 if (isSessionSpecified)

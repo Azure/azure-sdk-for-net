@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Support.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,12 +39,14 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <param name="type">Type of the resource
         /// 'Microsoft.Support/services'</param>
         /// <param name="displayName">Localized name of Azure service</param>
-        public Service(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string))
+        /// <param name="resourceTypes">ARM Resource types</param>
+        public Service(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<string> resourceTypes = default(IList<string>))
         {
             Id = id;
             Name = name;
             Type = type;
             DisplayName = displayName;
+            ResourceTypes = resourceTypes;
             CustomInit();
         }
 
@@ -74,6 +78,12 @@ namespace Microsoft.Azure.Management.Support.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets ARM Resource types
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceTypes")]
+        public IList<string> ResourceTypes { get; set; }
 
     }
 }

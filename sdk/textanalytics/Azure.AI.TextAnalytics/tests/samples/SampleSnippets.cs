@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
@@ -23,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:CreateTextAnalyticsClient
             //@@ string endpoint = "<endpoint>";
             //@@ string apiKey = "<apiKey>";
-            var credential = new TextAnalyticsApiKeyCredential(apiKey);
+            var credential = new AzureKeyCredential(apiKey);
             var client = new TextAnalyticsClient(new Uri(endpoint), credential);
             #endregion
         }
@@ -45,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
-            var credentials = new TextAnalyticsApiKeyCredential(apiKey);
+            var credentials = new AzureKeyCredential(apiKey);
             var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
             string input = "Este documento está en español.";
 

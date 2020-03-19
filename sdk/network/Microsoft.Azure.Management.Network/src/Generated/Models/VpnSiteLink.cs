@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="linkProperties">The link provider properties.</param>
         /// <param name="ipAddress">The ip-address for the
         /// vpn-site-link.</param>
+        /// <param name="fqdn">FQDN of vpn-site-link.</param>
         /// <param name="bgpProperties">The set of bgp properties.</param>
         /// <param name="provisioningState">The provisioning state of the VPN
         /// site link resource. Possible values include: 'Succeeded',
@@ -46,11 +47,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="type">Resource type.</param>
-        public VpnSiteLink(string id = default(string), VpnLinkProviderProperties linkProperties = default(VpnLinkProviderProperties), string ipAddress = default(string), VpnLinkBgpSettings bgpProperties = default(VpnLinkBgpSettings), string provisioningState = default(string), string etag = default(string), string name = default(string), string type = default(string))
+        public VpnSiteLink(string id = default(string), VpnLinkProviderProperties linkProperties = default(VpnLinkProviderProperties), string ipAddress = default(string), string fqdn = default(string), VpnLinkBgpSettings bgpProperties = default(VpnLinkBgpSettings), string provisioningState = default(string), string etag = default(string), string name = default(string), string type = default(string))
             : base(id)
         {
             LinkProperties = linkProperties;
             IpAddress = ipAddress;
+            Fqdn = fqdn;
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -75,6 +77,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipAddress")]
         public string IpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets FQDN of vpn-site-link.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fqdn")]
+        public string Fqdn { get; set; }
 
         /// <summary>
         /// Gets or sets the set of bgp properties.

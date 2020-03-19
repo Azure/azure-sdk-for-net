@@ -1,0 +1,65 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "92",
+        "Content-Type": "application/json",
+        "traceparent": "00-18caac2e0510cc4d848fdb066f1172b6-39830236b80eb242-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200309.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "85b7c493e146d7e6cc030dc045845c8d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "secret",
+        "select": "hotelName,rating,address/city,rooms/type",
+        "suggesterName": "sg"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "280",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 09 Mar 2020 09:47:48 GMT",
+        "elapsed-time": "8",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "85b7c493-e146-d7e6-cc03-0dc045845c8d",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/$metadata#docs(*)",
+        "value": [
+          {
+            "@search.text": "Secret Point Motel",
+            "hotelName": "Secret Point Motel",
+            "rating": 4,
+            "address": {
+              "city": "New York"
+            },
+            "rooms": [
+              {
+                "type": "Budget Room"
+              },
+              {
+                "type": "Budget Room"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "83938125",
+    "SearchIndexName": "bapsfvkb",
+    "SearchServiceName": "azs-net-wvqysflr"
+  }
+}

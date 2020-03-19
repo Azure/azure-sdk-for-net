@@ -10,19 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class ModelsSummary_internal : IUtf8JsonSerializable
+    internal partial class ModelsSummary_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("count");
-            writer.WriteNumberValue(Count);
-            writer.WritePropertyName("limit");
-            writer.WriteNumberValue(Limit);
-            writer.WritePropertyName("lastUpdatedDateTime");
-            writer.WriteStringValue(LastUpdatedDateTime, "S");
-            writer.WriteEndObject();
-        }
         internal static ModelsSummary_internal DeserializeModelsSummary_internal(JsonElement element)
         {
             ModelsSummary_internal result = new ModelsSummary_internal();

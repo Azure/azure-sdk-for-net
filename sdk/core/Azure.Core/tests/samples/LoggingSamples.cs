@@ -23,11 +23,19 @@ namespace Azure.Core.Samples
         }
 
         [Test]
+        public void LoggingLevel()
+        {
+            #region Snippet:ConsoleLoggingLevel
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
+            #endregion
+        }
+
+        [Test]
         public void LoggingCallback()
         {
             #region Snippet:LoggingCallback
             using AzureEventSourceListener listener = new AzureEventSourceListener(
-                (e, message) => Console.WriteLine($"{DateTime.Now} {message}"),
+                (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
                 level: EventLevel.Verbose);
             #endregion
         }

@@ -6,13 +6,17 @@ parameters:
     TestApplicationObjectId: not-specified
     ProvisionerApplicationId: not-specified
     ProvisionerApplicationSecret: not-specified
+    AdditionalParameters: ''
+    Location: 'westus2'
+    Environment: 'AzureCloud'
     DeleteAfterHours: 24
-
+    Condition: succeeded()
 
 steps:
     # New-TestResources command requires Az module
-    - pwsh: Install-Module -Name Az -Scope CurrentUser -Force
+    - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
       displayName: Install Azure PowerShell module
+      condition: ${{ parameters.Condition }}
 
     # Command sets an environment variable in the pipeline's context:
     # AZURE_RESOURCEGROUP_NAME
@@ -26,8 +30,12 @@ steps:
         -TestApplicationOid '${{ parameters.TestApplicationObjectId }}'
         -ProvisionerApplicationId '${{ parameters.ProvisionerApplicationId }}'
         -ProvisionerApplicationSecret '${{ parameters.ProvisionerApplicationSecret }}'
+        -AdditionalParameters ${{ parameters.AdditionalParameters }}
         -DeleteAfterHours ${{ parameters.DeleteAfterHours }}
+        -Location '${{ parameters.Location }}'
+        -Environment '${{ parameters.Environment }}'
         -CI
         -Force
         -Verbose
       displayName: Deploy test resources
+      condition: ${{ parameters.Condition }}

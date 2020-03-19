@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not recived from the Event Hubs service, the value is <see cref="long.MinValue"/>.
+        ///   EventData was not received from the Event Hubs service, the value is <see cref="long.MinValue"/>.
         /// </remarks>
         ///
         public long SequenceNumber { get; }
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not recived from the Event Hubs service, the value is <see cref="long.MinValue"/>.
+        ///   EventData was not received from the Event Hubs service, the value is <see cref="long.MinValue"/>.
         /// </remarks>
         ///
         public long Offset { get; }
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   This property is only populated for events received from the Event Hubs service. If this
-        ///   EventData was not recived from the Event Hubs service, the value <c>default(DateTimeOffset)</c>.
+        ///   EventData was not received from the Event Hubs service, the value <c>default(DateTimeOffset)</c>.
         /// </remarks>
         ///
         public DateTimeOffset EnqueuedTime { get; }
@@ -199,7 +199,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
-        /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the serivce.</param>
+        /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         ///
         internal EventData(ReadOnlyMemory<byte> eventBody,
                            IDictionary<string, object> properties = null,
