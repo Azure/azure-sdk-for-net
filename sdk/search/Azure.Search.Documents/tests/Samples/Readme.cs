@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
+using Azure.Search.Documents;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure.Search.Documents.Models;
 using NUnit.Framework;

@@ -39,8 +39,8 @@ namespace Azure.Search.Documents
     public partial class SearchIndexClient
     {
         protected SearchIndexClient() { }
-        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.Core.AzureKeyCredential credential) { }
-        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.Core.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
+        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
@@ -93,8 +93,8 @@ namespace Azure.Search.Documents
     public partial class SearchServiceClient
     {
         protected SearchServiceClient() { }
-        public SearchServiceClient(System.Uri endpoint, Azure.Core.AzureKeyCredential credential) { }
-        public SearchServiceClient(System.Uri endpoint, Azure.Core.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        public SearchServiceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public SearchServiceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
         public virtual Azure.Search.Documents.SearchIndexClient GetSearchIndexClient(string indexName) { throw null; }

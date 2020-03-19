@@ -160,6 +160,7 @@ much more.
 Let's start by importing our namespace.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Namespace
+using Azure.Search.Documents;
 ```
 
 We'll then create a `SearchIndexClient` to access our hotels search index.
