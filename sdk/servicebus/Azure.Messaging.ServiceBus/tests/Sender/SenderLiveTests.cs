@@ -267,5 +267,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             }
         }
+
+        [Test]
+        public async Task CreateBatchThrowsIftheEntityDoesNotExist()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEntity("FakeEntity");
+                await using var client = new ServiceBusClient(connectionString);
+
+                ServiceBusSender sender = client.GetSender("FakeEntity");
+                Assert.That(async () => await sender.CreateBatchAsync(), Throws.InstanceOf<ServiceBusException>());
+            }
+        }
     }
 }
