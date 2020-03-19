@@ -77,9 +77,12 @@ The `AzureEventSourceListener` class can also be used with a custom callback tha
 
 ```C# Snippet:LoggingCallback
 using AzureEventSourceListener listener = new AzureEventSourceListener(
-    (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}] {1}", e.TimeStamp.ToLocalTime(), message),
+    (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
     level: EventLevel.Verbose);
 ```
+
+When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `e.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
+For help diagnosing multi-threading issues, you might also log `e.OSThreadId` which is also available on those same targets.
 
 ## Distributed tracing
 

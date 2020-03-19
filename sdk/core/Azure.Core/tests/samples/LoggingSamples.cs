@@ -35,7 +35,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:LoggingCallback
             using AzureEventSourceListener listener = new AzureEventSourceListener(
-                (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}] {1}", e.TimeStamp.ToLocalTime(), message),
+                (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
                 level: EventLevel.Verbose);
             #endregion
         }
