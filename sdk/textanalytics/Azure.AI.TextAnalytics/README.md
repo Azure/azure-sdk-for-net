@@ -64,10 +64,10 @@ az cognitiveservices account keys list --resource-group <your-resource-group-nam
 ```
 
 #### Create TextAnalyticsClient with API Key Credential
-Once you have the value for the API key, create a `TextAnalyticsApiKeyCredential`. This will allow you to
-update the API key by using the `UpdateCredential` method without creating a new client.
+Once you have the value for the API key, create an `AzureKeyCredential`. This will allow you to
+update the API key without creating a new client.
 
-With the value of the endpoint and a `TextAnalyticsApiKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
+With the value of the endpoint and an `AzureKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
