@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Azure.AI.FormRecognizer.Models;
 
@@ -96,10 +97,8 @@ namespace Azure.AI.FormRecognizer.Custom
             // "#/readResults/3/lines/7/words/12"
             string[] segments = reference.Split('/');
 
-#pragma warning disable CA1305 // Specify IFormatProvider
-            var lineIndex = int.Parse(segments[4]);
-            var wordIndex = int.Parse(segments[6]);
-#pragma warning restore CA1305 // Specify IFormatProvider
+            var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
+            var wordIndex = int.Parse(segments[6], CultureInfo.InvariantCulture);
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364

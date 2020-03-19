@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;

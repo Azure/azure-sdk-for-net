@@ -12,9 +12,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Batch.Tests.InMemoryTests
+namespace Microsoft.Azure.Batch.Tests
 {
-    public class ApplicationPackageTests
+    public class InMemoryTestsApplicationPackageTests
     {
         [Fact]
         public void IfAnAccountIsCreatedWithAutoStorage_ThenTheAutoStorageAccountIdMustNotBeNull()
@@ -24,7 +24,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             // If storageId is not set this will throw an ValidationException
-            var ex = Assert.Throws<ValidationException>(() => client.BatchAccount.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            var ex = Assert.Throws<ValidationException>(() => client.BatchAccount.Create("resourceGroupName", "accountname", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
                 AutoStorage = new AutoStorageBaseProperties()
@@ -52,7 +52,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.ApplicationPackage.CreateWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "appId",
                 "beta")).Unwrap().GetAwaiter().GetResult();
 
@@ -81,7 +81,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.Application.CreateWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "appId",
                 new Application
                 {
@@ -116,7 +116,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.ApplicationPackage.ActivateWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "appId",
                 "version",
                 "zip")).Unwrap().GetAwaiter().GetResult();
@@ -146,7 +146,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.Application.DeleteWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "appId")).Unwrap().GetAwaiter().GetResult();
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -172,7 +172,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.ApplicationPackage.DeleteWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "appId",
                 "version")).Unwrap().GetAwaiter().GetResult();
 
@@ -203,7 +203,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.Application.GetWithHttpMessagesAsync(
                 "applicationId",
-                "acctName",
+                "acctname",
                 "id")).Unwrap().GetAwaiter().GetResult();
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -234,7 +234,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.ApplicationPackage.GetWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "id",
                 "VER")).Unwrap().GetAwaiter().GetResult();
 
@@ -273,7 +273,7 @@ namespace Batch.Tests.InMemoryTests
 
             var result = Task.Factory.StartNew(() => client.Application.ListWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName")).Unwrap().GetAwaiter().GetResult();
+                "acctname")).Unwrap().GetAwaiter().GetResult();
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -303,9 +303,9 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() => client.ApplicationPackage.ListWithHttpMessagesAsync(
-                "appName",
                 "resourceGroupName",
-                "acctName")).Unwrap().GetAwaiter().GetResult();
+                "acctname",
+                "appName")).Unwrap().GetAwaiter().GetResult();
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -333,7 +333,7 @@ namespace Batch.Tests.InMemoryTests
             var result = Task.Factory.StartNew(() =>
                 client.Application.UpdateWithHttpMessagesAsync(
                 "resourceGroupName",
-                "acctName",
+                "acctname",
                 "appId",
                 new Application
                 {
@@ -439,7 +439,7 @@ namespace Batch.Tests.InMemoryTests
                 'id': 'foo',
                 'name' : 'beta',
                 'properties': {
-                    'storageUrl': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                    'storageUrl': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                     'state' : 'Pending',
                     'format':'zip',
                     'storageUrlExpiry':'" + utcNow.ToString("o") + @"',
@@ -451,7 +451,7 @@ namespace Batch.Tests.InMemoryTests
         private void AssertOnApplicationPackageProperties(ApplicationPackage package, DateTime utcNow)
         {
             Assert.Equal("foo", package.Id);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", package.StorageUrl);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname", package.StorageUrl);
             Assert.Equal(PackageState.Pending, package.State);
             Assert.Equal("beta", package.Name);
             Assert.Equal("zip", package.Format);

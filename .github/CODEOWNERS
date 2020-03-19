@@ -37,7 +37,7 @@
 
 /sdk/servicebus/ @nemakam @jsquire
 
-/sdk/storage/ @seanmcc-msft @amnguye @tg-msft @JoshLove-msft
+/sdk/storage/ @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
 
 /sdk/textanalytics/ @annelo-msft @maririos
 
