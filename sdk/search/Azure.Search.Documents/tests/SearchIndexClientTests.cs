@@ -3,9 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Tests
 {

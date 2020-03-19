@@ -3,8 +3,9 @@
 
 using System.ComponentModel;
 using System.Threading;
+using Azure.Core;
 
-namespace Azure.Core
+namespace Azure
 {
     /// <summary>
     /// Key credential used to authenticate to an Azure Service.

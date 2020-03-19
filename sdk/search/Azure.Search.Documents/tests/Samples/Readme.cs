@@ -4,13 +4,10 @@
 using System;
 using System.Threading.Tasks;
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
-using Azure.Search.Documents;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
 using Azure.Search.Documents.Models;
-using Azure.Core.Testing;
 using NUnit.Framework;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
