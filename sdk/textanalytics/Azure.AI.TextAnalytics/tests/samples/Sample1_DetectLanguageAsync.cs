@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Testing;
 using NUnit.Framework;
 

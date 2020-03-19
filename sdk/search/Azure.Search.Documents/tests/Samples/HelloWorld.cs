@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Namespaces
-using Azure.Core.Testing;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
