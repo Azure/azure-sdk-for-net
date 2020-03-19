@@ -271,6 +271,6 @@
     <value>Maximum permitted length is {0}</value>
   </data>
   <data name="InvalidFullyQualifiedNamespace" xml:space="preserve">
-    <value>The value '{0}' is not a well-formed Event Hubs fully qualified The value '{0}' is not a well-formed Event Hubs fully qualified namespace.</value>
+    <value>The value '{0}' is not a well-formed Service Bus fully qualified namespace.</value>
   </data>
 </root>
