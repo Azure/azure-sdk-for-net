@@ -9,6 +9,9 @@ namespace Azure.AI.FormRecognizer.Custom
     [CodeGenSchema("FormFieldsReport")]
     public partial class FieldPredictionAccuracy
     {
+        internal FieldPredictionAccuracy()
+        {
+        }
 
         /// <summary>
         /// </summary>

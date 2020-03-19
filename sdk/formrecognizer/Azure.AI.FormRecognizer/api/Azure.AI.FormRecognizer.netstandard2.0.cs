@@ -136,7 +136,7 @@ namespace Azure.AI.FormRecognizer.Custom
     }
     public partial class FieldPredictionAccuracy
     {
-        public FieldPredictionAccuracy() { }
+        internal FieldPredictionAccuracy() { }
         public float Accuracy { get { throw null; } set { } }
         public string Label { get { throw null; } }
     }
@@ -155,7 +155,7 @@ namespace Azure.AI.FormRecognizer.Custom
     }
     public partial class TrainingDocumentInfo
     {
-        public TrainingDocumentInfo() { }
+        internal TrainingDocumentInfo() { }
         public string DocumentName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } set { } }
         public int PageCount { get { throw null; } set { } }
