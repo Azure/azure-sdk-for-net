@@ -18,6 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -584,7 +585,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string issuerName = WellKnownIssuerNames.Self;
 
-            CertificateIssuer issuer = new CertificateIssuer(issuerName);
+            // Will update the name once get correct provider name.
+            string providerName = "testProvider";
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
             RegisterForCleanupIssuer(issuerName);
 
@@ -592,8 +596,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             string updateIssuerName = "updateIssuer";
             IssuerProperties issuerProperties = new IssuerProperties(updateIssuerName);
-            Assert.NotNull(issuerProperties.Name);
-            Assert.NotNull(issuerProperties.Id);
+            Assert.NotNull(issuerProperties);
 
             issuer = new CertificateIssuer(issuerProperties);
 
@@ -609,25 +612,23 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyGetContacts()
         {
-            var contact1 = new CertificateContact
+            CertificateContact contact1 = new CertificateContact
             {
                 Name = Recording.GenerateId(),
                 Phone = Recording.GenerateId(),
                 Email = "test@microsoft.com"
             };
 
-            var contact2 = new CertificateContact
+            CertificateContact contact2 = new CertificateContact
             {
                 Name = Recording.GenerateId(),
                 Phone = Recording.GenerateId(),
                 Email = "test1@microsoft.com"
             };
 
-            var contacts = new List<CertificateContact>
-            {
-                    contact1,
-                    contact2
-            };
+            List<CertificateContact> contacts = new List<CertificateContact>();
+            contacts.Add(contact1);
+            contacts.Add(contact2);
 
             RegisterForCleanUpContacts(contacts);
 
@@ -638,9 +639,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(getContacts);
             Assert.AreEqual(2, getContacts.Count);
-            Assert.IsTrue(getContacts.Equals(contacts));
-            Assert.IsTrue(getContacts.Contains(contact1));
-            Assert.IsTrue(getContacts.Contains(contact2));
+
+            foreach (CertificateContact contact in contacts)
+            {
+                CertificateContact returnContact = getContacts.Single(s => s.Name == contact.Name);
+                Assert.NotNull(returnContact);
+                Assert.AreEqual(contact.Phone, returnContact.Phone);
+                Assert.AreEqual(contact.Email, returnContact.Email);
+            }
         }
 
         [Test]
@@ -677,7 +683,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             certificatePolicy = new CertificatePolicy
             {
-                Subject = "CN=mydomain",
+                Subject = "CN=CertificateTest",
                 ReuseKey = true,
                 Exportable = false
             };
@@ -688,7 +694,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(updatePolicy);
             Assert.NotNull(updatePolicy.UpdatedOn);
-            Assert.AreEqual(certificatePolicy.Subject, updatePolicy.Subject);
+            StringAssert.Equals(certificatePolicy.Subject, updatePolicy.Subject);
             Assert.AreEqual(certificatePolicy.ReuseKey, updatePolicy.ReuseKey);
             Assert.AreEqual(certificatePolicy.Exportable, updatePolicy.Exportable);
         }
