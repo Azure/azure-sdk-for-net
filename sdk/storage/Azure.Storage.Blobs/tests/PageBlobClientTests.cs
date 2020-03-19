@@ -1461,6 +1461,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Explicit("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1530,6 +1531,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Explicit("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync_AccessConditions()
         {
             foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
