@@ -27,9 +27,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Creates a new server, or will overwrite an existing server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -58,9 +56,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// many of the properties present in the normal server definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -88,9 +84,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Deletes a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -112,9 +106,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets information about a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -139,9 +131,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// List all the servers in a given resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -182,9 +172,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Restarts a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -206,9 +194,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Creates a new server, or will overwrite an existing server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -237,9 +223,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// many of the properties present in the normal server definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -267,9 +251,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Deletes a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.
@@ -291,9 +273,7 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Restarts a server.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serverName'>
         /// The name of the server.

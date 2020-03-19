@@ -34,25 +34,37 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <summary>
         /// Initializes a new instance of the Server class.
         /// </summary>
-        /// <param name="location">The location the resource resides
-        /// in.</param>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="tags">Application-specific metadata in the form of
-        /// key-value pairs.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="identity">The Azure Active Directory identity of the
+        /// server.</param>
         /// <param name="sku">The SKU (pricing tier) of the server.</param>
         /// <param name="administratorLogin">The administrator's login name of
         /// a server. Can only be specified when the server is being created
         /// (and is required for creation).</param>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2', '11'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="minimalTlsVersion">Enforce a minimal Tls version for
+        /// the server. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'</param>
+        /// <param name="byokEnforcement">Status showing whether the server
+        /// data encryption is enabled with customer-managed keys.</param>
+        /// <param name="infrastructureEncryption">Status showing whether the
+        /// server enabled infrastructure encryption. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
         /// <param name="userVisibleState">A state of a server that is visible
-        /// to user. Possible values include: 'Ready', 'Dropping',
-        /// 'Disabled'</param>
+        /// to user. Possible values include: 'Ready', 'Dropping', 'Disabled',
+        /// 'Inaccessible'</param>
         /// <param name="fullyQualifiedDomainName">The fully qualified domain
         /// name of a server.</param>
         /// <param name="earliestRestoreDate">Earliest restore point creation
@@ -64,13 +76,23 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// server.</param>
         /// <param name="replicaCapacity">The maximum number of replicas that a
         /// master server can have.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string administratorLogin = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string userVisibleState = default(string), string fullyQualifiedDomainName = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), StorageProfile storageProfile = default(StorageProfile), string replicationRole = default(string), string masterServerId = default(string), int? replicaCapacity = default(int?))
+        /// <param name="publicNetworkAccess">Whether or not public network
+        /// access is allowed for this server. Value is optional but if passed
+        /// in, must be 'Enabled' or 'Disabled'. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections on a server</param>
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), string administratorLogin = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string minimalTlsVersion = default(string), string byokEnforcement = default(string), string infrastructureEncryption = default(string), string userVisibleState = default(string), string fullyQualifiedDomainName = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), StorageProfile storageProfile = default(StorageProfile), string replicationRole = default(string), string masterServerId = default(string), int? replicaCapacity = default(int?), string publicNetworkAccess = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>))
             : base(location, id, name, type, tags)
         {
+            Identity = identity;
             Sku = sku;
             AdministratorLogin = administratorLogin;
             Version = version;
             SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
+            ByokEnforcement = byokEnforcement;
+            InfrastructureEncryption = infrastructureEncryption;
             UserVisibleState = userVisibleState;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             EarliestRestoreDate = earliestRestoreDate;
@@ -78,6 +100,8 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             ReplicationRole = replicationRole;
             MasterServerId = masterServerId;
             ReplicaCapacity = replicaCapacity;
+            PublicNetworkAccess = publicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -85,6 +109,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory identity of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU (pricing tier) of the server.
@@ -102,7 +132,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets server version. Possible values include: '9.5', '9.6',
-        /// '10', '10.0', '10.2'
+        /// '10', '10.0', '10.2', '11'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
@@ -115,8 +145,31 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public SslEnforcementEnum? SslEnforcement { get; set; }
 
         /// <summary>
+        /// Gets or sets enforce a minimal Tls version for the server. Possible
+        /// values include: 'TLS1_0', 'TLS1_1', 'TLS1_2',
+        /// 'TLSEnforcementDisabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimalTlsVersion")]
+        public string MinimalTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets status showing whether the server data encryption is enabled
+        /// with customer-managed keys.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.byokEnforcement")]
+        public string ByokEnforcement { get; private set; }
+
+        /// <summary>
+        /// Gets or sets status showing whether the server enabled
+        /// infrastructure encryption. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.infrastructureEncryption")]
+        public string InfrastructureEncryption { get; set; }
+
+        /// <summary>
         /// Gets or sets a state of a server that is visible to user. Possible
-        /// values include: 'Ready', 'Dropping', 'Disabled'
+        /// values include: 'Ready', 'Dropping', 'Disabled', 'Inaccessible'
         /// </summary>
         [JsonProperty(PropertyName = "properties.userVisibleState")]
         public string UserVisibleState { get; set; }
@@ -159,6 +212,20 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public int? ReplicaCapacity { get; set; }
 
         /// <summary>
+        /// Gets or sets whether or not public network access is allowed for
+        /// this server. Value is optional but if passed in, must be 'Enabled'
+        /// or 'Disabled'. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets list of private endpoint connections on a server
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<ServerPrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -174,6 +241,16 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             if (ReplicaCapacity < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "ReplicaCapacity", 0);
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
