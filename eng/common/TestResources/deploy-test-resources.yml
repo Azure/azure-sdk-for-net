@@ -18,8 +18,6 @@ steps:
       displayName: Install Azure PowerShell module
       condition: ${{ parameters.Condition }}
 
-    - pwsh: Write-Host ${{ parameters.AdditionalParameters }}
-
     # Command sets an environment variable in the pipeline's context:
     # AZURE_RESOURCEGROUP_NAME
     - pwsh: >
