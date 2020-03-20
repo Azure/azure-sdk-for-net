@@ -17,9 +17,9 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The returned value the collection of `KeyPhrases` that were extracted from the document.
 
 ```C# Snippet:ExtractKeyPhrases
-string input = "My cat might need to see a veterinarian.";
+string document = "My cat might need to see a veterinarian.";
 
-IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
+IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
 
 Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -33,13 +33,13 @@ foreach (string keyPhrase in keyPhrases)
 To extract key phrases from multiple documents, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of strings.  The results are returned as a `ExtractKeyPhrasesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs);
+ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(documents);
 ```
 
 To extract key phrases from a collection of documents in different languages, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
 ```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
-var inputs = new List<TextDocumentInput>
+var documents = new List<TextDocumentInput>
 {
     new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
     {
@@ -55,7 +55,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

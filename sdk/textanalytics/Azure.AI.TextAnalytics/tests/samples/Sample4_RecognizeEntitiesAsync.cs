@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:RecognizeEntitiesAsync
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+            string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(input);
+            Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(document);
 
             Console.WriteLine($"Recognized {entities.Value.Count} entities:");
             foreach (CategorizedEntity entity in entities.Value)
