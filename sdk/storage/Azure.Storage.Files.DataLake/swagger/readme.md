@@ -212,6 +212,19 @@ directive:
     $.patch.responses["200"]["x-az-public"] = false;
 ```
 
+### /{filesystem}/{path}?action=setAccessControlRecursive"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControlRecursive"]
+  transform: >
+    $.patch.responses["200"].schema = {
+        "type": "object",
+        "format": "file"
+    };
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
 ### Hide FileSystemList/FileSystem/PathList/Path/
 ``` yaml
 directive:
@@ -222,6 +235,25 @@ directive:
     $.FileSystemList["x-az-public"] = false;
     $.PathList["x-az-public"] = false;
     $.Path["x-az-public"] = false;
+```
+
+### Hide AclFailedEntryList/SetAccessControlRecursiveResponse
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.AclFailedEntry["x-az-public"] = false;
+    $.SetAccessControlRecursiveResponse["x-az-public"] = false;
+```
+
+### Hide PathSetAccessControlRecursiveMode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PathSetAccessControlRecursiveMode
+  transform: >
+    $["x-az-public"] = false;
 ```
 
 ### Treat the API version as a parameter instead of a constant
