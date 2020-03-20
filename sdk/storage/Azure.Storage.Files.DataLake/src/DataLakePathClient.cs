@@ -2012,9 +2012,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2030,7 +2029,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response<AccessControlRecursiveChangesSummary> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
-            int? batchSize = default,
+            AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}");
@@ -2043,7 +2042,7 @@ namespace Azure.Storage.Files.DataLake
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     progressHandler,
                     PathSetAccessControlRecursiveMode.Set,
-                    batchSize,
+                    options,
                     false, // async
                     cancellationToken)
                     .EnsureCompleted();
@@ -2072,9 +2071,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2090,7 +2088,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response<AccessControlRecursiveChangesSummary>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
-            int? batchSize = default,
+            AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}");
@@ -2103,7 +2101,7 @@ namespace Azure.Storage.Files.DataLake
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     progressHandler,
                     PathSetAccessControlRecursiveMode.Set,
-                    batchSize,
+                    options,
                     true, // async
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2132,9 +2130,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2150,7 +2147,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response<AccessControlRecursiveChangesSummary> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
-            int? batchSize = default,
+            AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}");
@@ -2163,7 +2160,7 @@ namespace Azure.Storage.Files.DataLake
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     progressHandler,
                     PathSetAccessControlRecursiveMode.Modify,
-                    batchSize,
+                    options,
                     false, // async
                     cancellationToken)
                     .EnsureCompleted();
@@ -2192,9 +2189,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2210,7 +2206,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response<AccessControlRecursiveChangesSummary>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
-            int? batchSize = default,
+            AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}");
@@ -2223,7 +2219,7 @@ namespace Azure.Storage.Files.DataLake
                     PathAccessControlExtensions.ToAccessControlListString(accessControlList),
                     progressHandler,
                     PathSetAccessControlRecursiveMode.Modify,
-                    batchSize,
+                    options,
                     true, // async
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2252,9 +2248,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2270,7 +2265,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response<AccessControlRecursiveChangesSummary> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
-            int? batchSize = default,
+            AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}");
@@ -2283,7 +2278,7 @@ namespace Azure.Storage.Files.DataLake
                     RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
                     progressHandler,
                     PathSetAccessControlRecursiveMode.Remove,
-                    batchSize,
+                    options,
                     false, // async
                     cancellationToken)
                     .EnsureCompleted();
@@ -2312,9 +2307,8 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2330,7 +2324,7 @@ namespace Azure.Storage.Files.DataLake
         public virtual async Task<Response<AccessControlRecursiveChangesSummary>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
-            int? batchSize = default,
+            AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}");
@@ -2343,7 +2337,7 @@ namespace Azure.Storage.Files.DataLake
                     RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
                     progressHandler,
                     PathSetAccessControlRecursiveMode.Remove,
-                    batchSize,
+                    options,
                     true, // async
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -2377,9 +2371,8 @@ namespace Azure.Storage.Files.DataLake
         /// \"modify\" modifies one or more POSIX access control rights  that pre-exist on files and directories,
         /// \"remove\" removes one or more POSIX access control rights that were present earlier on files and directories.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2400,7 +2393,7 @@ namespace Azure.Storage.Files.DataLake
             string accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
             PathSetAccessControlRecursiveMode mode,
-            int? batchSize,
+            AccessControlRecursiveChangeOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2412,7 +2405,7 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(accessControlList)}: {accessControlList}\n" +
                     $"{nameof(mode)}: {mode}\n" +
-                    $"{nameof(batchSize)}: {batchSize}");
+                    $"batchSize: {options.BatchSize}");
                 try
                 {
                     Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
@@ -2428,7 +2421,7 @@ namespace Azure.Storage.Files.DataLake
                                 pipeline: Pipeline,
                                 resourceUri: DfsUri,
                                 mode: mode,
-                                maxRecords: batchSize,
+                                maxRecords: options.BatchSize,
                                 version: Version.ToVersionString(),
                                 acl: accessControlList,
                                 async: async,
