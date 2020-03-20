@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Files.DataLake.Sas;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -56,7 +55,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -86,24 +86,51 @@ namespace Azure.Storage.Files.DataLake.Tests
         public DataLakeServiceClient GetServiceClient_OAuth()
             => GetServiceClientFromOauthConfig(TestConfigHierarchicalNamespace);
 
+        public StorageSharedKeyCredential GetStorageSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType publicAccessType = PublicAccessType.None,
+            PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
             fileSystemName ??= GetNewFileSystemName();
             service ??= GetServiceClient_SharedKey();
 
-            if (publicAccessType == PublicAccessType.None)
+            if (publicAccessType == default)
             {
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.FileSystem;
             }
 
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
-            await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+
+            // due to a service issue, if the initial container creation request times out, subsequent requests
+            // can return a ContainerAlreadyExists code even though the container doesn't really exist.
+            // we delay until after the service cache timeout and then attempt to create the container one more time.
+            // If this attempt still fails, we mark the test as inconclusive.
+            // TODO Remove this handling after the service bug is fixed https://github.com/Azure/azure-sdk-for-net/issues/9399
+            try
+            {
+                await RetryAsync(
+                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value),
+                    ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
+                    retryDelay: TestConstants.DataLakeRetryDelay,
+                    retryAttempts: 1);
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists)
+            {
+                // if we still get this error after retrying, mark the test as inconclusive
+                TestContext.Out.WriteLine(
+                    $"{TestContext.CurrentContext.Test.Name} is inconclusive due to hitting " +
+                    $"the DataLake service bug described in https://github.com/Azure/azure-sdk-for-net/issues/9399");
+                Assert.Inconclusive(); // passing the message in Inconclusive call doesn't show up in Console output.
+            }
+
             return new DisposingFileSystem(fileSystem);
         }
 

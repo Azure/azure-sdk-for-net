@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -38,6 +39,16 @@ namespace Azure.Storage.Files.Shares
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly ShareClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual ShareClientOptions.ServiceVersion Version => _version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
@@ -182,6 +193,7 @@ namespace Azure.Storage.Files.Shares
                 };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -248,6 +260,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = directoryUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -263,11 +276,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal ShareDirectoryClient(Uri directoryUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal ShareDirectoryClient(Uri directoryUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             _uri = directoryUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -291,7 +311,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareDirectoryClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareDirectoryClient(p.ToUri(), Pipeline, ClientDiagnostics);
+            return new ShareDirectoryClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -303,7 +323,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         public virtual ShareFileClient GetFileClient(string fileName)
-            => new ShareFileClient(Uri.AppendToPath(fileName), Pipeline, ClientDiagnostics);
+            => new ShareFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="ShareDirectoryClient"/> object by appending
@@ -314,7 +334,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetSubdirectoryClient(string subdirectoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, ClientDiagnostics);
+            => new ShareDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -434,6 +454,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
         /// created directory.
@@ -442,12 +465,13 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<ShareDirectoryInfo>> CreateInternal(
+        internal async Task<Response<ShareDirectoryInfo>> CreateInternal(
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -468,14 +492,15 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.Directory.CreateOperationName,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -493,6 +518,372 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion Create
+
+        #region CreateIfNotExists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryInfo> CreateIfNotExists(
+            Metadata metadata = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                smbProperties,
+                filePermission,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareDirectoryInfo>> CreateIfNotExistsAsync(
+            Metadata metadata = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                metadata,
+                smbProperties,
+                filePermission,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<ShareDirectoryInfo>> CreateIfNotExistsInternal(
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            bool async,
+            CancellationToken cancellationToken,
+            string operationName = default)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message: $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response<ShareDirectoryInfo> response = await CreateInternal(
+                        metadata,
+                        smbProperties,
+                        filePermission,
+                        async,
+                        cancellationToken,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+
+                    return response;
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceAlreadyExists)
+                {
+                    return default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
+        #endregion CreateIfNotExists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareDirectoryClient"/> to see if the associated directory
+        /// exists in the share on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareDirectoryClient"/> to see if the associated directory
+        /// exists in the share on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="ShareDirectoryClient"/> to see if the associated directory
+        /// exists in the share on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<ShareDirectoryProperties> response = await GetPropertiesInternal(
+                        async,
+                        cancellationToken,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(Exists)}")
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
+        #endregion Exists
+
+        #region DeleteIfExists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation removes the specified
+        /// empty directory, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the directory existed.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation removes the specified
+        /// empty directory, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// True if the directory existed.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation removes the specified
+        /// empty directory, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
+        /// <returns>
+        /// True if the directory existed.
+        /// </returns>
+        /// <remarks>
+        /// Note that the directory must be empty before it can be deleted.
+        /// </remarks>
+        internal async Task<Response<bool>> DeleteIfExistsInternal(
+            bool async,
+            CancellationToken cancellationToken,
+            string operationName = default)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareDirectoryClient),
+                    message: $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        async,
+                        cancellationToken,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ResourceNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareDirectoryClient));
+                }
+            }
+        }
+        #endregion DeleteIfExists
 
         #region Delete
         /// <summary>
@@ -552,15 +943,19 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response"/> if successful.
         /// </returns>
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        private async Task<Response> DeleteInternal(
+        internal async Task<Response> DeleteInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -573,8 +968,9 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Directory.DeleteOperationName,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -661,6 +1057,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{StorageDirectoryProperties}"/> describing the
         /// directory and its properties.
@@ -671,7 +1070,8 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareDirectoryProperties>> GetPropertiesInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -685,8 +1085,9 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Directory.GetPropertiesOperationName,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -832,13 +1233,14 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.Directory.SetHttpHeadersOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(SetHttpHeaders)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -855,7 +1257,6 @@ namespace Azure.Storage.Files.Shares
                 }
             }
         }
-
         #endregion SetHttpHeaders
 
         #region SetMetadata
@@ -956,9 +1357,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: Constants.File.Directory.SetMetadataOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1096,11 +1498,12 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,
                         async: async,
-                        operationName: Constants.File.Directory.ListFilesAndDirectoriesSegmentOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1232,11 +1635,12 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         maxresults: maxResults,
                         recursive: recursive,
                         async: async,
-                        operationName: Constants.File.Directory.GetHandlesOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1274,25 +1678,30 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> describing the status of the
+        /// A <see cref="Response{CloseHandlesResult}"/> describing the status of the
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response ForceCloseHandle(
+        public virtual Response<CloseHandlesResult> ForceCloseHandle(
             string handleId,
-            CancellationToken cancellationToken = default) =>
-            ForceCloseHandlesInternal(
+            CancellationToken cancellationToken = default)
+        {
+            Response<StorageClosedHandlesSegment> response = ForceCloseHandlesInternal(
                 handleId,
                 null,
                 null,
                 false, // async
                 cancellationToken,
-                Constants.File.Directory.ForceCloseHandleOperationName)
-                .EnsureCompleted()
-            .GetRawResponse();
+                $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseHandle)}")
+                .EnsureCompleted();
+
+            return Response.FromValue(
+                response.ToCloseHandlesResult(),
+                response.GetRawResponse());
+        }
 
         /// <summary>
         /// The <see cref="ForceCloseHandle"/> operation closes a handle opened on a directory
@@ -1314,25 +1723,30 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> describing the status of the
-        /// <see cref="ForceCloseHandle"/> operation.
+        /// A <see cref="Response{CloseHandlesResult}"/> describing the status of the
+        /// <see cref="ForceCloseHandleAsync"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> ForceCloseHandleAsync(
+        public virtual async Task<Response<CloseHandlesResult>> ForceCloseHandleAsync(
             string handleId,
-            CancellationToken cancellationToken = default) =>
-            (await ForceCloseHandlesInternal(
+            CancellationToken cancellationToken = default)
+        {
+            Response<StorageClosedHandlesSegment> response = await ForceCloseHandlesInternal(
                 handleId,
                 null,
                 null,
                 true, // async
                 cancellationToken,
-                Constants.File.Directory.ForceCloseHandleOperationName)
-                .ConfigureAwait(false))
-            .GetRawResponse();
+                $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseHandle)}")
+                .ConfigureAwait(false);
+
+            return Response.FromValue(
+                response.ToCloseHandlesResult(),
+                response.GetRawResponse());
+        }
 
         /// <summary>
         /// The <see cref="ForceCloseAllHandles"/> operation closes all handles opened on a directory
@@ -1355,13 +1769,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// The number of handles closed.
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
+        /// <see cref="ForceCloseAllHandles"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual int ForceCloseAllHandles(
+        public virtual CloseHandlesResult ForceCloseAllHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             ForceCloseAllHandlesInternal(
@@ -1391,13 +1806,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// The number of handles closed.
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
+        /// <see cref="ForceCloseAllHandlesAsync"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<int> ForceCloseAllHandlesAsync(
+        public virtual async Task<CloseHandlesResult> ForceCloseAllHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             await ForceCloseAllHandlesInternal(
@@ -1430,18 +1846,20 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// The number of handles closed.
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
+        /// <see cref="ForceCloseAllHandlesInternal"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<int> ForceCloseAllHandlesInternal(
+        private async Task<CloseHandlesResult> ForceCloseAllHandlesInternal(
             bool? recursive,
             bool async,
             CancellationToken cancellationToken)
         {
             int handlesClosed = 0;
+            int handlesFailed = 0;
             string marker = null;
             do
             {
@@ -1455,10 +1873,15 @@ namespace Azure.Storage.Files.Shares
                     .ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
+                handlesFailed += response.Value.NumberOfHandlesFailedToClose;
 
             } while (!string.IsNullOrEmpty(marker));
 
-            return handlesClosed;
+            return new CloseHandlesResult()
+            {
+                ClosedHandlesCount = handlesClosed,
+                FailedHandlesCount = handlesFailed
+            };
         }
 
         /// <summary>
@@ -1514,7 +1937,7 @@ namespace Azure.Storage.Files.Shares
             bool? recursive,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.File.Directory.ForceCloseAllHandlesOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -1533,9 +1956,10 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         marker: marker,
                         handleId: handleId,
+                        version: Version.ToVersionString(),
                         recursive: recursive,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseAllHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1703,7 +2127,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRange(HttpRange, System.IO.Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1720,6 +2144,10 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1740,6 +2168,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1749,6 +2178,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                conditions,
                 cancellationToken);
             return Response.FromValue(file, response.GetRawResponse());
         }
@@ -1760,7 +2190,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadAsync(System.IO.Stream, IProgress{long}, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1789,6 +2219,71 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileClient> CreateFile(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            long maxSize,
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken)
+        {
+            ShareFileClient file = GetFileClient(fileName);
+            Response<ShareFileInfo> response = file.Create(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                conditions: default,
+                cancellationToken);
+            return Response.FromValue(file, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(HttpRange, System.IO.Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileClient}"/> referencing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareFileClient>> CreateFileAsync(
             string fileName,
@@ -1797,6 +2292,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1806,6 +2302,68 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                conditions,
+                cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(file, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(HttpRange, System.IO.Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileClient}"/> referencing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileClient>> CreateFileAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            long maxSize,
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken)
+        {
+            ShareFileClient file = GetFileClient(fileName);
+            Response<ShareFileInfo> response = await file.CreateAsync(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                conditions: default,
                 cancellationToken).ConfigureAwait(false);
             return Response.FromValue(file, response.GetRawResponse());
         }
@@ -1813,12 +2371,16 @@ namespace Azure.Storage.Files.Shares
 
         #region DeleteFile
         /// <summary>
-        /// The <see cref="DeleteFile"/> operation immediately removes
-        /// the file from the storage account.
+        /// The <see cref="DeleteFile(string, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1833,12 +2395,15 @@ namespace Azure.Storage.Files.Shares
         [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string fileName,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            GetFileClient(fileName).Delete(cancellationToken);
+            GetFileClient(fileName).Delete(
+                conditions,
+                cancellationToken);
 
         /// <summary>
-        /// The <see cref="DeleteFileAsync"/> operation immediately removes
-        /// the file from the storage account.
+        /// The <see cref="DeleteFile(string, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
@@ -1854,12 +2419,79 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response DeleteFile(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            CancellationToken cancellationToken) =>
+            GetFileClient(fileName).Delete(
+                conditions: default,
+                cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DeleteFile(string, ShareFileRequestConditions, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string fileName,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetFileClient(fileName)
-                .DeleteAsync(cancellationToken)
+                .DeleteAsync(
+                    conditions,
+                    cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteFileAsync(string, CancellationToken)"/>
+        /// operation immediately removesthe file from the storage account.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will bse thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> DeleteFileAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            CancellationToken cancellationToken) =>
+            await GetFileClient(fileName)
+                .DeleteAsync(
+                    conditions: default,
+                    cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteFile
     }

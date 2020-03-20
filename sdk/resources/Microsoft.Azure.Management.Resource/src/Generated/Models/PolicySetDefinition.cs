@@ -38,20 +38,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="policyDefinitions">An array of policy definition
         /// references.</param>
         /// <param name="policyType">The type of policy definition. Possible
-        /// values are NotSpecified, BuiltIn, and Custom. Possible values
-        /// include: 'NotSpecified', 'BuiltIn', 'Custom'</param>
+        /// values are NotSpecified, BuiltIn, Custom, and Static. Possible
+        /// values include: 'NotSpecified', 'BuiltIn', 'Custom',
+        /// 'Static'</param>
         /// <param name="displayName">The display name of the policy set
         /// definition.</param>
         /// <param name="description">The policy set definition
         /// description.</param>
-        /// <param name="metadata">The policy set definition metadata.</param>
+        /// <param name="metadata">The policy set definition metadata.
+        /// Metadata is an open ended object and is typically a collection of
+        /// key value pairs.</param>
         /// <param name="parameters">The policy set definition parameters that
         /// can be used in policy definition references.</param>
+        /// <param name="policyDefinitionGroups">The metadata describing groups
+        /// of policy definition references within the policy set
+        /// definition.</param>
         /// <param name="id">The ID of the policy set definition.</param>
         /// <param name="name">The name of the policy set definition.</param>
         /// <param name="type">The type of the resource
         /// (Microsoft.Authorization/policySetDefinitions).</param>
-        public PolicySetDefinition(IList<PolicyDefinitionReference> policyDefinitions, string policyType = default(string), string displayName = default(string), string description = default(string), object metadata = default(object), object parameters = default(object), string id = default(string), string name = default(string), string type = default(string))
+        public PolicySetDefinition(IList<PolicyDefinitionReference> policyDefinitions, string policyType = default(string), string displayName = default(string), string description = default(string), object metadata = default(object), IDictionary<string, ParameterDefinitionsValue> parameters = default(IDictionary<string, ParameterDefinitionsValue>), IList<PolicyDefinitionGroup> policyDefinitionGroups = default(IList<PolicyDefinitionGroup>), string id = default(string), string name = default(string), string type = default(string))
         {
             PolicyType = policyType;
             DisplayName = displayName;
@@ -59,6 +65,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Metadata = metadata;
             Parameters = parameters;
             PolicyDefinitions = policyDefinitions;
+            PolicyDefinitionGroups = policyDefinitionGroups;
             Id = id;
             Name = name;
             Type = type;
@@ -72,8 +79,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the type of policy definition. Possible values are
-        /// NotSpecified, BuiltIn, and Custom. Possible values include:
-        /// 'NotSpecified', 'BuiltIn', 'Custom'
+        /// NotSpecified, BuiltIn, Custom, and Static. Possible values include:
+        /// 'NotSpecified', 'BuiltIn', 'Custom', 'Static'
         /// </summary>
         [JsonProperty(PropertyName = "properties.policyType")]
         public string PolicyType { get; set; }
@@ -91,7 +98,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy set definition metadata.
+        /// Gets or sets the policy set definition metadata.  Metadata is an
+        /// open ended object and is typically a collection of key value pairs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metadata")]
         public object Metadata { get; set; }
@@ -101,13 +109,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// in policy definition references.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public object Parameters { get; set; }
+        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; set; }
 
         /// <summary>
         /// Gets or sets an array of policy definition references.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policyDefinitions")]
         public IList<PolicyDefinitionReference> PolicyDefinitions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the metadata describing groups of policy definition
+        /// references within the policy set definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policyDefinitionGroups")]
+        public IList<PolicyDefinitionGroup> PolicyDefinitionGroups { get; set; }
 
         /// <summary>
         /// Gets the ID of the policy set definition.
@@ -139,6 +154,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             if (PolicyDefinitions == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PolicyDefinitions");
+            }
+            if (PolicyDefinitions != null)
+            {
+                foreach (var element in PolicyDefinitions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (PolicyDefinitionGroups != null)
+            {
+                foreach (var element1 in PolicyDefinitionGroups)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

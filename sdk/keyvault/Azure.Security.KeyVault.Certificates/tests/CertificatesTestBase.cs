@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -11,29 +12,47 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
+    [ClientTestFixture(
+        CertificateClientOptions.ServiceVersion.V7_0,
+        CertificateClientOptions.ServiceVersion.V7_1_Preview)]
+    [NonParallelizable]
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
-        private readonly HashSet<string> _toCleanup = new HashSet<string>();
-        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
 
         public Uri VaultUri { get; set; }
 
-        public CertificatesTestBase(bool isAsync) : base(isAsync)
+        // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
+        private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
+        private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
+
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         internal CertificateClient GetClient(TestRecording recording = null)
         {
             recording ??= Recording;
 
+            CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached,
+                }
+            };
+
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new CertificateClientOptions())));
+                    recording.InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()
@@ -44,48 +63,70 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [OneTimeTearDown]
-        public async Task CleanupCertificates()
+        [TearDown]
+        public async Task Cleanup()
         {
-            List<Task> cleanupTasks = new List<Task>();
-
-            _lock.EnterReadLock();
-            try
+            // Start deleting resources as soon as possible.
+            while (_certificatesToDelete.TryDequeue(out string name))
             {
-                foreach (string certName in _toCleanup)
-                {
-                    cleanupTasks.Add(CleanupCertificate(certName));
-                }
-            }
-            finally
-            {
-                _lock.ExitReadLock();
-            }
+                await DeleteCertificate(name);
 
-            await Task.WhenAll(cleanupTasks);
+                _certificatesToPurge.Push(name);
+            }
         }
 
-        protected async Task CleanupCertificate(string name)
+        [OneTimeTearDown]
+        public async Task CleanupAll()
+        {
+            // Make sure the delete queue is empty.
+            await Cleanup();
+
+            while (_certificatesToPurge.TryPop(out string name))
+            {
+                await PurgeCertificate(name).ConfigureAwait(false);
+            }
+        }
+
+        protected async Task DeleteCertificate(string name)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await Client.StartDeleteCertificateAsync(name).ConfigureAwait(false);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+        }
+
+        protected async Task PurgeCertificate(string name)
         {
             try
             {
-                await Client.StartDeleteCertificateAsync(name);
+                await WaitForDeletedCertificate(name).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
             }
 
-            try
+            if (Mode == RecordedTestMode.Playback)
             {
-                await WaitForDeletedCertificate(name);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
+                return;
             }
 
             try
             {
-                await Client.PurgeDeletedCertificateAsync(name);
+                using (Recording.DisableRecording())
+                {
+                    await Client.PurgeDeletedCertificateAsync(name).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -101,7 +142,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 if (IsAsync)
                 {
-                    await operation.WaitForCompletionAsync(cts.Token);
+                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
                 }
                 else
                 {
@@ -130,7 +171,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedCertificateAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedCertificateAsync(name), delay: PollingInterval);
             }
         }
 
@@ -154,7 +195,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     {
                         return (Response)null;
                     }
-                });
+                }, delay: PollingInterval);
             }
         }
 
@@ -167,20 +208,32 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name), delay: PollingInterval);
             }
         }
 
         protected void RegisterForCleanup(string certificateName)
         {
-            _lock.EnterWriteLock();
-            try
+            _certificatesToDelete.Enqueue(certificateName);
+        }
+
+        protected IAsyncDisposable EnsureDeleted(CertificateOperation operation) => new CertificateOperationDeleter(operation);
+
+        private class CertificateOperationDeleter : IAsyncDisposable
+        {
+            private readonly CertificateOperation _operation;
+
+            public CertificateOperationDeleter(CertificateOperation operation)
             {
-                _toCleanup.Add(certificateName);
+                _operation = operation;
             }
-            finally
+
+            public async ValueTask DisposeAsync()
             {
-                _lock.ExitWriteLock();
+                if (!_operation.HasCompleted)
+                {
+                    await _operation.DeleteAsync();
+                }
             }
         }
     }

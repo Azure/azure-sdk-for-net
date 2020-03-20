@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
     public static class ShareKind
     {
         public const string CopyBased = "CopyBased";
+        public const string InPlace = "InPlace";
     }
 }

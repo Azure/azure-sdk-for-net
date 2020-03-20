@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the event hub destination for an event subscription
+    /// Information about the event hub destination for an event subscription.
     /// </summary>
     [Newtonsoft.Json.JsonObject("EventHub")]
     [Rest.Serialization.JsonTransformation]

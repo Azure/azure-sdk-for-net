@@ -72,6 +72,56 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update a Shared Image Gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery. The allowed characters are alphabets
+            /// and numbers with dots and periods allowed in the middle. The maximum length
+            /// is 80 characters.
+            /// </param>
+            /// <param name='gallery'>
+            /// Parameters supplied to the update Shared Image Gallery operation.
+            /// </param>
+            public static Gallery Update(this IGalleriesOperations operations, string resourceGroupName, string galleryName, GalleryUpdate gallery)
+            {
+                return operations.UpdateAsync(resourceGroupName, galleryName, gallery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a Shared Image Gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery. The allowed characters are alphabets
+            /// and numbers with dots and periods allowed in the middle. The maximum length
+            /// is 80 characters.
+            /// </param>
+            /// <param name='gallery'>
+            /// Parameters supplied to the update Shared Image Gallery operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Gallery> UpdateAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, GalleryUpdate gallery, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, galleryName, gallery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves information about a Shared Image Gallery.
             /// </summary>
             /// <param name='operations'>
@@ -255,6 +305,56 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<Gallery> BeginCreateOrUpdateAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, Gallery gallery, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, gallery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a Shared Image Gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery. The allowed characters are alphabets
+            /// and numbers with dots and periods allowed in the middle. The maximum length
+            /// is 80 characters.
+            /// </param>
+            /// <param name='gallery'>
+            /// Parameters supplied to the update Shared Image Gallery operation.
+            /// </param>
+            public static Gallery BeginUpdate(this IGalleriesOperations operations, string resourceGroupName, string galleryName, GalleryUpdate gallery)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, galleryName, gallery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a Shared Image Gallery.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery. The allowed characters are alphabets
+            /// and numbers with dots and periods allowed in the middle. The maximum length
+            /// is 80 characters.
+            /// </param>
+            /// <param name='gallery'>
+            /// Parameters supplied to the update Shared Image Gallery operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Gallery> BeginUpdateAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, GalleryUpdate gallery, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, gallery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

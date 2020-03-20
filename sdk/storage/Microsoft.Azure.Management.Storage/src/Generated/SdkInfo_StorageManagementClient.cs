@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.Storage
               {
                 new Tuple<string, string, string>("Storage", "BlobContainers", "2019-06-01"),
                 new Tuple<string, string, string>("Storage", "BlobServices", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "EncryptionScopes", "2019-06-01"),
                 new Tuple<string, string, string>("Storage", "FileServices", "2019-06-01"),
                 new Tuple<string, string, string>("Storage", "FileShares", "2019-06-01"),
                 new Tuple<string, string, string>("Storage", "ManagementPolicies", "2019-06-01"),
@@ -35,11 +36,11 @@ namespace Microsoft.Azure.Management.Storage
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storage/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=C:\\code\\srpsdk\\sdk\\storage\\Microsoft.Azure.Management.Storage\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ef5bff591188a232471a8f81d7bc02c7c9f7d68d";
+      public static readonly String GithubCommidId = "2df17398750388e7a8e51eeedaac8bfe099e612b";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

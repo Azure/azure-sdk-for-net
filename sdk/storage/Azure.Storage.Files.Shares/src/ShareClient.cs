@@ -44,6 +44,16 @@ namespace Azure.Storage.Files.Shares
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly ShareClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual ShareClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -143,6 +153,7 @@ namespace Azure.Storage.Files.Shares
             var builder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -206,6 +217,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = shareUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -220,12 +232,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             _uri = shareUri;
             _pipeline = pipeline;
-
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -249,7 +267,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), Pipeline, ClientDiagnostics);
+            return new ShareClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -261,7 +279,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetDirectoryClient(string directoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, ClientDiagnostics);
+            => new ShareDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Create a <see cref="ShareDirectoryClient"/> object for the root of the
@@ -378,6 +396,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{ShareInfo}"/> describing the newly
         /// created share.
@@ -390,7 +411,8 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             int? quotaInGB,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -405,10 +427,11 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         quotaInGB: quotaInGB,
                         async: async,
-                        operationName: Constants.File.Share.CreateOperationName,
+                        operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -424,6 +447,374 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion Create
+
+        #region Create If Not Exists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.  If the share already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareInfo> CreateIfNotExists(
+            Metadata metadata = default,
+            int? quotaInGB = default,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                quotaInGB,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.  If the share already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareInfo>> CreateIfNotExistsAsync(
+            Metadata metadata = default,
+            int? quotaInGB = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                metadata,
+                quotaInGB,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new share
+        /// under the specified account. If a share with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-share"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this share.
+        /// </param>
+        /// <param name="quotaInGB">
+        /// Optional. Maximum size of the share in bytes.  If unspecified, use the service's default value.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareInfo}"/> describing the newly
+        /// created share.  If the share already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareInfo>> CreateIfNotExistsInternal(
+            Metadata metadata,
+            int? quotaInGB,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(quotaInGB)}: {quotaInGB}");
+                Response<ShareInfo> response;
+                try
+                {
+                    response = await CreateInternal(
+                        metadata,
+                        quotaInGB,
+                        async,
+                        cancellationToken,
+                        $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ShareAlreadyExists)
+                {
+                    response = default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+                return response;
+            }
+        }
+        #endregion Create If Not Exists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="ShareClient"/> to see if the associated share
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the share exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="ShareClient"/> to see if the associated share
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the share exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="ShareClient"/> to see if the associated share
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the share exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<ShareProperties> response = await FileRestClient.Share.GetPropertiesAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: $"{nameof(ShareClient)}.{nameof(Exists)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion Exists
+
+        #region Delete If Exists
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                includeSnapshots,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            bool includeSnapshots = true,
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                includeSnapshots,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Marks the specified share or share snapshot for deletion, if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-share"/>.
+        /// </summary>
+        /// <param name="includeSnapshots">
+        /// A value indicating whether to delete a share's snapshots in addition
+        /// to the share itself.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> DeleteIfExistsInternal(
+            bool includeSnapshots,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        includeSnapshots,
+                        async,
+                        cancellationToken,
+                        $"{nameof(ShareClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion Delete If Exists
 
         #region CreateSnapshot
         /// <summary>
@@ -523,9 +914,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: Constants.File.Share.CreateSnapshotOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(CreateSnapshot)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -620,6 +1012,9 @@ namespace Azure.Storage.Files.Shares
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// A <see cref="Response"/> on successfully deleting.
         /// </returns>
@@ -630,7 +1025,8 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response> DeleteInternal(
             bool includeSnapshots,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareClient)))
             {
@@ -644,9 +1040,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
                         async: async,
-                        operationName: Constants.File.Share.DeleteOperationName,
+                        operationName: operationName ?? $"{nameof(ShareClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -754,8 +1151,9 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Share.GetPropertiesOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -866,9 +1264,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
                         async: async,
-                        operationName: Constants.File.Share.SetQuotaOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -986,9 +1385,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: Constants.File.Share.SetMetadataOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1095,8 +1495,9 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Share.GetAccessPolicyOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(GetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1220,9 +1621,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         async: async,
-                        operationName: Constants.File.Share.SetAccessPolicyOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(SetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1323,8 +1725,9 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Share.GetStatisticsOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(GetStatistics)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1405,8 +1808,9 @@ namespace Azure.Storage.Files.Shares
                             Pipeline,
                             Uri,
                             filePermissionKey: filePermissionKey,
+                            version: Version.ToVersionString(),
                             async: async,
-                            operationName: Constants.File.Share.GetPermissionOperationName,
+                            operationName: $"{nameof(ShareClient)}.{nameof(GetPermission)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1525,9 +1929,10 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         sharePermissionJson: json,
                         async: async,
-                        operationName: Constants.File.Share.CreatePermissionOperationName,
+                        operationName: $"{nameof(ShareClient)}.{nameof(CreatePermission)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1575,7 +1980,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<ShareDirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1584,11 +1988,14 @@ namespace Azure.Storage.Files.Shares
            CancellationToken cancellationToken = default)
         {
             ShareDirectoryClient directory = GetDirectoryClient(directoryName);
-            Response<ShareDirectoryInfo> response = directory.Create(
+            Response<ShareDirectoryInfo> response = directory.CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
-                cancellationToken);
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
+                .EnsureCompleted();
             return Response.FromValue(directory, response.GetRawResponse());
         }
 
@@ -1622,7 +2029,6 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<ShareDirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
@@ -1631,11 +2037,14 @@ namespace Azure.Storage.Files.Shares
            CancellationToken cancellationToken = default)
         {
             ShareDirectoryClient directory = GetDirectoryClient(directoryName);
-            Response<ShareDirectoryInfo> response = await directory.CreateAsync(
+            Response<ShareDirectoryInfo> response = await directory.CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
-                cancellationToken).ConfigureAwait(false);
+                async: true,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
+                .ConfigureAwait(false);
             return Response.FromValue(directory, response.GetRawResponse());
         }
         #endregion CreateDirectory
@@ -1660,11 +2069,14 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
-            GetDirectoryClient(directoryName).Delete(cancellationToken);
+            GetDirectoryClient(directoryName).DeleteInternal(
+                async: false,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(DeleteDirectory)}")
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DeleteDirectoryAsync"/> operation removes the specified empty
@@ -1685,12 +2097,14 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>
             await GetDirectoryClient(directoryName)
-                .DeleteAsync(cancellationToken)
+                .DeleteInternal(
+                async: true,
+                cancellationToken,
+                operationName: $"{nameof(ShareClient)}.{nameof(DeleteDirectory)}")
                 .ConfigureAwait(false);
         #endregion DeleteDirectory
     }

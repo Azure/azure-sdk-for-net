@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Currency { get; private set; }
 
         /// <summary>
-        /// Gets amount value.
+        /// Gets or sets amount value.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public double? Value { get; private set; }
+        public double? Value { get; set; }
 
     }
 }

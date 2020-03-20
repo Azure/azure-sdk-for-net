@@ -48,8 +48,12 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// creating pools in the Batch account.</param>
         /// <param name="keyVaultReference">A reference to the Azure key vault
         /// associated with the Batch account.</param>
+        /// <param name="publicNetworkAccess">The network interface type for
+        /// accessing Azure Batch service and Batch account operations.</param>
         /// <param name="autoStorage">The properties and status of any
         /// auto-storage account associated with the Batch account.</param>
+        /// <param name="encryption">The encryption configuration for the Batch
+        /// account.</param>
         /// <param name="dedicatedCoreQuota">The dedicated core quota for the
         /// Batch account.</param>
         /// <param name="lowPriorityCoreQuota">The low-priority core quota for
@@ -65,14 +69,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
         /// schedule quota for the Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
             ProvisioningState = provisioningState;
             PoolAllocationMode = poolAllocationMode;
             KeyVaultReference = keyVaultReference;
+            PublicNetworkAccess = publicNetworkAccess;
             AutoStorage = autoStorage;
+            Encryption = encryption;
             DedicatedCoreQuota = dedicatedCoreQuota;
             LowPriorityCoreQuota = lowPriorityCoreQuota;
             DedicatedCoreQuotaPerVMFamily = dedicatedCoreQuotaPerVMFamily;
@@ -119,11 +125,28 @@ namespace Microsoft.Azure.Management.Batch.Models
         public KeyVaultReference KeyVaultReference { get; private set; }
 
         /// <summary>
+        /// Gets the network interface type for accessing Azure Batch service
+        /// and Batch account operations.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, the default value is 'enabled'. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public PublicNetworkAccessType? PublicNetworkAccess { get; private set; }
+
+        /// <summary>
         /// Gets the properties and status of any auto-storage account
         /// associated with the Batch account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoStorage")]
         public AutoStorageProperties AutoStorage { get; private set; }
+
+        /// <summary>
+        /// Gets the encryption configuration for the Batch account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperties Encryption { get; private set; }
 
         /// <summary>
         /// Gets the dedicated core quota for the Batch account.

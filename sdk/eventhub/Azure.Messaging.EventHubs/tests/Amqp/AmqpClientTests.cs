@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
@@ -173,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -220,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(RetryOptionTestCases))]
-        public void GetPropertiesAsyncRespectsTheRetryPolicy(EventHubsRetryOptions retryOptions)
+        public void GetPropertiesAsyncAppliesTheRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             var eventHubName = "myName";
             var tokenValue = "123ABC";
@@ -248,6 +249,152 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(async () => await client.GetPropertiesAsync(retryPolicy, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
 
             mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void GetPropertiesAsyncConsidersOperationCanceledExceptionAsRetriable(EventHubsRetryOptions retryOptions)
+        {
+            var eventHubName = "myName";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var retriableException = new OperationCanceledException();
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreateEventHubPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+                .Throws(retriableException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPropertiesAsync(retryPolicy, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void GetPropertiesAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
+        {
+            var eventHubName = "myName";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreateEventHubPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+                .Throws(retriableException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPropertiesAsync(retryPolicy, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetPropertiesAsyncDetectsAnEmbeddedErrorForOperationCanceled()
+        {
+            var eventHubName = "myName";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var embeddedException = new OperationCanceledException("", new ArgumentNullException());
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreateEventHubPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+                .Throws(embeddedException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPropertiesAsync(retryPolicy, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Once());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetPropertiesAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
+        {
+            var eventHubName = "myName";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreateEventHubPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+                .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+                .Throws(embeddedException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPropertiesAsync(retryPolicy, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Once());
         }
 
         /// <summary>
@@ -310,7 +457,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -358,7 +505,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         [Test]
         [TestCaseSource(nameof(RetryOptionTestCases))]
-        public void GetPartitionPropertiesAsyncRespectsTheRetryPolicy(EventHubsRetryOptions retryOptions)
+        public void GetPartitionPropertiesAsyncAppliesTheRetryPolicy(EventHubsRetryOptions retryOptions)
         {
             var eventHubName = "myName";
             var partitionId = "Barney";
@@ -390,6 +537,156 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPartitionPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void GetPartitionPropertiesAsyncConsidersOperationCanceledExceptionAsRetriable(EventHubsRetryOptions retryOptions)
+        {
+            var eventHubName = "myName";
+            var partitionId = "Barney";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var retriableException = new OperationCanceledException();
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreatePartitionPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == partitionId), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+               .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+               .Throws(retriableException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPartitionPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void GetPartitionPropertiesAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
+        {
+            var eventHubName = "myName";
+            var partitionId = "Barney";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreatePartitionPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == partitionId), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+               .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+               .Throws(retriableException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(1 + retryOptions.MaximumRetries));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPartitionPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetPartitionPropertiesAsyncDetectsAnEmbeddedErrorForOperationCanceled()
+        {
+            var eventHubName = "myName";
+            var partitionId = "Barney";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var embeddedException = new OperationCanceledException("", new ArgumentNullException());
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreatePartitionPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == partitionId), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+               .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+               .Throws(embeddedException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Once());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpClient.GetPartitionPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetPartitionPropertiesAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
+        {
+            var eventHubName = "myName";
+            var partitionId = "Barney";
+            var tokenValue = "123ABC";
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
+            var mockConverter = new Mock<AmqpMessageConverter>();
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockScope = new Mock<AmqpConnectionScope>();
+
+            using var cancellationSource = new CancellationTokenSource();
+
+            mockCredential
+                .Setup(credential => credential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.Is<CancellationToken>(value => value == cancellationSource.Token)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken(tokenValue, DateTimeOffset.MaxValue)));
+
+            mockConverter
+                .Setup(converter => converter.CreatePartitionPropertiesRequest(It.Is<string>(value => value == eventHubName), It.Is<string>(value => value == partitionId), It.Is<string>(value => value == tokenValue)))
+                .Returns(default(AmqpMessage));
+
+            mockScope
+               .Setup(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+               .Throws(embeddedException);
+
+            var client = new InjectableMockClient("my.eventhub.com", eventHubName, mockCredential.Object, new EventHubConnectionOptions(), mockScope.Object, mockConverter.Object);
+            Assert.That(async () => await client.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            mockScope.Verify(scope => scope.OpenManagementLinkAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Once());
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpClient.CreateConsumer" />
         ///   method.
         /// </summary>
@@ -403,7 +700,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>(), false, null, null), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(() => client.CreateConsumer("group", "0", EventPosition.Earliest, Mock.Of<EventHubsRetryPolicy>(), false, null, null), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -420,7 +717,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
-            Assert.That(() => client.CreateProducer(null, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(() => client.CreateProducer(null, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>

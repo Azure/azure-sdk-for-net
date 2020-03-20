@@ -12,7 +12,7 @@ namespace Azure.Storage
     /// A <see cref="StorageSharedKeyCredential"/> is a credential backed by
     /// a Storage Account's name and one of its access keys.
     /// </summary>
-    public sealed class StorageSharedKeyCredential
+    public class StorageSharedKeyCredential
     {
         /// <summary>
         /// Gets the name of the Storage Account.
@@ -27,10 +27,10 @@ namespace Azure.Storage
         /// <summary>
         /// Gets the value of a Storage Account access key.
         /// </summary>
-        internal byte[] AccountKeyValue
+        private byte[] AccountKeyValue
         {
             get => Volatile.Read(ref _accountKeyValue);
-            private set => Volatile.Write(ref _accountKeyValue, value);
+            set => Volatile.Write(ref _accountKeyValue, value);
         }
 
         /// <summary>
@@ -57,15 +57,6 @@ namespace Azure.Storage
             AccountKeyValue = Convert.FromBase64String(accountKey);
 
         /// <summary>
-        /// Exports the value of the account's key to a Base64-encoded string.
-        /// </summary>
-        /// <returns>The account's key.</returns>
-        internal string ExportBase64EncodedKey() =>
-            AccountKeyValue == null ?
-                null :
-                Convert.ToBase64String(AccountKeyValue);
-
-        /// <summary>
         /// Generates a base-64 hash signature string for an HTTP request or
         /// for a SAS.
         /// </summary>
@@ -73,5 +64,15 @@ namespace Azure.Storage
         /// <returns>The signed message.</returns>
         internal string ComputeHMACSHA256(string message) =>
             Convert.ToBase64String(new HMACSHA256(AccountKeyValue).ComputeHash(Encoding.UTF8.GetBytes(message)));
+
+        /// <summary>
+        /// Generates a base-64 hash signature string for an HTTP request or
+        /// for a SAS.
+        /// </summary>
+        /// <param name="credential">The credential.</param>
+        /// <param name="message">The message to sign.</param>
+        /// <returns>The signed message.</returns>
+        protected static string ComputeSasSignature(StorageSharedKeyCredential credential, string message) =>
+            credential.ComputeHMACSHA256(message);
     }
 }

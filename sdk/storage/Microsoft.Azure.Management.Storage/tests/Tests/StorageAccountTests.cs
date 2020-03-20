@@ -2148,5 +2148,106 @@ namespace Storage.Tests
                 Assert.True(result.Value.Count > 0);
             }
         }
+
+        [Fact]
+        public void StorageAccountCreateWithTableQueueEcryptionKeyTypeTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Location = "East US 2 EUAP";
+                parameters.Kind = Kind.StorageV2;
+                parameters.Encryption = new Encryption
+                {
+                    Services = new EncryptionServices
+                    {
+                        Queue = new EncryptionService { KeyType = KeyType.Account },
+                        Table = new EncryptionService { KeyType = KeyType.Account },
+                    },
+                    KeySource = KeySource.MicrosoftStorage
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                // Verify encryption settings
+                Assert.NotNull(account.Encryption);
+                Assert.NotNull(account.Encryption.Services.Blob);
+                Assert.True(account.Encryption.Services.Blob.Enabled);
+                Assert.Equal(KeyType.Account, account.Encryption.Services.Blob.KeyType);
+                Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.File);
+                Assert.True(account.Encryption.Services.File.Enabled);
+                Assert.Equal(KeyType.Account, account.Encryption.Services.Blob.KeyType);
+                Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.Queue);
+                Assert.Equal(KeyType.Account, account.Encryption.Services.Queue.KeyType);
+                Assert.True(account.Encryption.Services.Queue.Enabled);
+                Assert.NotNull(account.Encryption.Services.Queue.LastEnabledTime);
+
+                Assert.NotNull(account.Encryption.Services.Table);
+                Assert.Equal(KeyType.Account, account.Encryption.Services.Table.KeyType);
+                Assert.True(account.Encryption.Services.Table.Enabled);
+                Assert.NotNull(account.Encryption.Services.Table.LastEnabledTime);
+            }
+        }
+
+        [Fact]
+        public void EcryptionScopeTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                parameters.Location = "East US 2 EUAP";
+                parameters.Kind = Kind.StorageV2;
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+
+                //Create EcryptionScope
+                EncryptionScope es = storageMgmtClient.EncryptionScopes.Put(rgname, accountName, "testscope", new EncryptionScope(name: "testscope", source: EncryptionScopeSource.MicrosoftStorage, state: EncryptionScopeState.Disabled));
+                Assert.Equal("testscope", es.Name);
+                Assert.Equal(EncryptionScopeState.Disabled, es.State);
+                Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
+
+                // Get EcryptionScope
+                es = storageMgmtClient.EncryptionScopes.Get(rgname, accountName, "testscope");
+                Assert.Equal("testscope", es.Name);
+                Assert.Equal(EncryptionScopeState.Disabled, es.State);
+                Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
+
+                // Patch EcryptionScope
+                es.State = EncryptionScopeState.Enabled;
+                es = storageMgmtClient.EncryptionScopes.Patch(rgname, accountName, "testscope", es);
+                Assert.Equal("testscope", es.Name);
+                Assert.Equal(EncryptionScopeState.Enabled, es.State);
+                Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
+
+                //List EcryptionScope
+                IPage<EncryptionScope> ess = storageMgmtClient.EncryptionScopes.List(rgname, accountName);
+                es = ess.First();
+                Assert.Equal("testscope", es.Name);
+                Assert.Equal(EncryptionScopeState.Enabled, es.State);
+                Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
+            }
+        }
     }
 }

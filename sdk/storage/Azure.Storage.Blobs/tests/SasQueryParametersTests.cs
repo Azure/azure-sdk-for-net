@@ -9,13 +9,8 @@ using NUnit.Framework;
 namespace Azure.Storage.Blobs.Test
 {
     //TODO consider added SASQueryParametersTest for File and Queue
-    public class SasQueryParametersTests : BlobTestBase
+    public class SasQueryParametersTests
     {
-        public SasQueryParametersTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
-        {
-        }
-
         [Test]
         public void SasQueryParameters_RoundTrip()
         {
@@ -36,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
             var contentLanguage = "en-US";
             var contentType = "text/html";
 
-            var sasQueryParameters = new SasQueryParameters(
+            var sasQueryParameters = SasQueryParametersInternals.Create(
                 version,
                 service,
                 resourceType,
@@ -59,7 +54,7 @@ namespace Azure.Storage.Blobs.Test
 
             var sasString = sasQueryParameters.ToString();
 
-            var roundTripSas = new SasQueryParameters(new UriQueryParamsCollection(sasString));
+            var roundTripSas = SasQueryParametersInternals.Create(new UriQueryParamsCollection(sasString));
 
             Assert.AreEqual(sasQueryParameters.ToString(), roundTripSas.ToString());
         }

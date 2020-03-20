@@ -25,16 +25,16 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="MergeCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">The name of the certificate.</param>
-        /// <param name="x509certificates">The certificate or certificate chain to merge.</param>
+        /// <param name="x509Certificates">The certificate or certificate chain to merge.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="x509certificates"/> is null.</exception>
-        public MergeCertificateOptions(string name, IEnumerable<byte[]> x509certificates)
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="x509Certificates"/> is null.</exception>
+        public MergeCertificateOptions(string name, IEnumerable<byte[]> x509Certificates)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(x509certificates, nameof(x509certificates));
+            Argument.AssertNotNull(x509Certificates, nameof(x509Certificates));
 
             Name = name;
-            X509Certificates = x509certificates;
+            X509Certificates = x509Certificates;
         }
 
         /// <summary>
@@ -86,8 +86,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 foreach (byte[] x509certificate in X509Certificates)
                 {
-                    string encoded = Base64Url.Encode(x509certificate);
-                    json.WriteStringValue(encoded);
+                    json.WriteBase64StringValue(x509certificate);
                 }
 
                 json.WriteEndArray();

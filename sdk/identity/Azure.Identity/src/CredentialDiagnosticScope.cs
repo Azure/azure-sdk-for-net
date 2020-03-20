@@ -34,30 +34,26 @@ namespace Azure.Identity
             return token;
         }
 
-        public AuthenticationFailedException Failed(string message)
-        {
-            var exception = new AuthenticationFailedException(message);
-
-            AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, exception);
-
-            _scope.Failed(exception);
-
-            return exception;
-        }
-
-        public AuthenticationFailedException Failed(Exception ex)
+        public AuthenticationFailedException FailAndWrap(Exception ex)
         {
             if (!(ex is AuthenticationFailedException))
             {
-                ex = new AuthenticationFailedException(Constants.AuthenticationUnhandledExceptionMessage, ex);
+                ex = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed.", ex);
             }
 
+            return (AuthenticationFailedException)Failed(ex);
+        }
+
+
+        public Exception Failed(Exception ex)
+        {
             AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, ex);
 
             _scope.Failed(ex);
 
-            return (AuthenticationFailedException)ex;
+            return ex;
         }
+
 
         public void Dispose()
         {

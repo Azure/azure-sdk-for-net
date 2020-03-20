@@ -3,9 +3,9 @@ namespace Azure.Security.KeyVault.Secrets
     public partial class DeletedSecret : Azure.Security.KeyVault.Secrets.KeyVaultSecret
     {
         internal DeletedSecret() : base (default(string), default(string)) { }
-        public System.DateTimeOffset? DeletedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public System.Uri RecoveryId { get { throw null; } }
-        public System.DateTimeOffset? ScheduledPurgeDate { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? ScheduledPurgeDate { get { throw null; } }
     }
     public partial class DeleteSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.DeletedSecret>
     {
@@ -25,8 +25,8 @@ namespace Azure.Security.KeyVault.Secrets
         public KeyVaultSecret(string name, string value) { }
         public System.Uri Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Security.KeyVault.Secrets.SecretProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Secrets.SecretProperties Properties { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class RecoverDeletedSecretOperation : Azure.Operation<Azure.Security.KeyVault.Secrets.SecretProperties>
     {
@@ -76,32 +76,36 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
-        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_0) { }
-        public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V7_1_Preview) { }
+        public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V7_0 = 0,
+            V7_1_Preview = 1,
         }
     }
     public static partial class SecretModelFactory
     {
         public static Azure.Security.KeyVault.Secrets.DeletedSecret DeletedSecret(Azure.Security.KeyVault.Secrets.SecretProperties properties, string value = null, System.Uri recoveryId = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeDate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Security.KeyVault.Secrets.KeyVaultSecret KeyVaultSecret(Azure.Security.KeyVault.Secrets.SecretProperties properties, string value = null) { throw null; }
-        public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.Uri keyId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id, System.Uri vaultUri, string name, string version, bool managed, System.Uri keyId, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string recoveryLevel) { throw null; }
+        public static Azure.Security.KeyVault.Secrets.SecretProperties SecretProperties(System.Uri id = null, System.Uri vaultUri = null, string name = null, string version = null, bool managed = false, System.Uri keyId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string recoveryLevel = null, int? recoverableDays = default(int?)) { throw null; }
     }
     public partial class SecretProperties
     {
         public SecretProperties(string name) { }
         public SecretProperties(System.Uri id) { }
-        public string ContentType { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public System.Uri KeyId { get { throw null; } }
-        public bool Managed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
         public System.DateTimeOffset? NotBefore { get { throw null; } set { } }
+        public int? RecoverableDays { get { throw null; } }
         public string RecoveryLevel { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }

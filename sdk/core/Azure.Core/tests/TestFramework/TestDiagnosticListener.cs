@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 
         public Queue<(string, object, object)> IsEnabledCalls { get; } = new Queue<(string, object, object)>();
 
-        public TestDiagnosticListener(string name): this(source => source.Name == name)
+        public TestDiagnosticListener(string name) : this(source => source.Name == name)
         {
         }
 
@@ -59,20 +59,30 @@ namespace Azure.Core.Tests
 
         public void Dispose()
         {
-            List<IDisposable> subscriptions;
-            lock (_subscriptions)
+            if (_subscriptions != null)
             {
-                subscriptions = _subscriptions;
-                _subscriptions = null;
-            }
+                List<IDisposable> subscriptions = null;
 
-            foreach (IDisposable subscription in subscriptions)
-            {
-                subscription.Dispose();
+                lock (_subscriptions)
+                {
+                    if (_subscriptions != null)
+                    {
+                        subscriptions = _subscriptions;
+                        _subscriptions = null;
+                    }
+                }
+
+                if (subscriptions != null)
+                {
+                    foreach (IDisposable subscription in subscriptions)
+                    {
+                        subscription.Dispose();
+                    }
+                }
             }
         }
 
-        private class InternalListener: IObserver<KeyValuePair<string, object>>
+        private class InternalListener : IObserver<KeyValuePair<string, object>>
         {
             private readonly Queue<(string, object, DiagnosticListener)> _queue;
 

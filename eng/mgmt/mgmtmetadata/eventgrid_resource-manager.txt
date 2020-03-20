@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\SDK2020-0101P\net2\azure-sdk-for-net\sdk
-2019-11-05 20:14:47 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/eventgrid/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\jedi2\net2\azure-sdk-for-net\sdk
+2020-03-09 03:35:46 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      cb742dc4f7afe52a95e1ae79c1aa5a5906e49c08
+Commit:      72a64f207b7a0549a698ca1e54a19e611d0bc906
 AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4407
+Bootstrapper version:    autorest@3.0.6187

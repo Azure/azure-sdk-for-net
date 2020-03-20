@@ -1,0 +1,11 @@
+2020-03-09 18:03:34 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: Azure
+Branch:      master
+Commit:      356dd9079a2e9e6d48839f2e6a90b4910c2c658b
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\vifedo\AppData\Roaming\npm `-- autorest@3.0.6187  
+Latest installed version:    

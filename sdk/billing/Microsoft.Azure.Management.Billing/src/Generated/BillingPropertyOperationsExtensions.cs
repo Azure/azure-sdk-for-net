@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Billing
     {
             /// <summary>
             /// Get billing property by subscription Id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Billing
 
             /// <summary>
             /// Get billing property by subscription Id.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

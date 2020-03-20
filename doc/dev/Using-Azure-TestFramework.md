@@ -1,9 +1,7 @@
 # Using Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
-> `Microsoft.Rest.ClientRuntime.Azure.TestFramework` has been deprecated. Please follow the [guide](./Track2TestFramework.md) to use the new one.
-
 1. Getting Started
-2. Accquring TestFramework
+2. Acquiring TestFramework
 3. Setup prior to Record/Playback tests
 	1. Environment Variables
 	2. Playback Test
@@ -15,7 +13,7 @@
 7. Supported Key=Value pairs in ConnectionString
 8. Environment Variable Reference
 
-## 2. Accquring TestFramework
+## 2. Acquiring TestFramework
 
 TestFramework is available on NuGet at https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure.TestFramework/ .
 
@@ -97,7 +95,7 @@ Changing the above properties at run-time has the potential to hard code few thi
 
 Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` environment variable is consistent with the value in `AZURE_TEST_MODE` environment variable.
 
-##7. Connection string
+## 7. Connection string
 
 #### 7.1 Supported Key=Value pairs in Connectionstring
 	* ManagementCertificate
@@ -107,7 +105,7 @@ Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` enviro
 	* Password
 	* ServicePrincipal
 	* ServicePrincipalSecret
-	* Environment={Prod | DogFood | Next | Current | Custom}
+	* Environment={Prod | Dogfood | Next | Current | Custom}
 	* RawToken
 	* RawGraphToken
 	* HttpRecorderMode={Record | Playback}

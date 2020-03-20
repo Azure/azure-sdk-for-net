@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="format">Format of the Content in which the API is
         /// getting imported. Possible values include: 'wadl-xml',
         /// 'wadl-link-json', 'swagger-json', 'swagger-link-json', 'wsdl',
-        /// 'wsdl-link', 'openapi', 'openapi+json', 'openapi-link'</param>
+        /// 'wsdl-link', 'openapi', 'openapi+json', 'openapi-link',
+        /// 'openapi+json-link'</param>
         /// <param name="wsdlSelector">Criteria to limit import of WSDL to a
         /// subset of the document.</param>
         /// <param name="soapApiType">Type of Api to create.
@@ -243,7 +244,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets format of the Content in which the API is getting
         /// imported. Possible values include: 'wadl-xml', 'wadl-link-json',
         /// 'swagger-json', 'swagger-link-json', 'wsdl', 'wsdl-link',
-        /// 'openapi', 'openapi+json', 'openapi-link'
+        /// 'openapi', 'openapi+json', 'openapi-link', 'openapi+json-link'
         /// </summary>
         [JsonProperty(PropertyName = "properties.format")]
         public string Format { get; set; }
@@ -275,71 +276,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Path == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Path");
-            }
-            if (ApiRevision != null)
-            {
-                if (ApiRevision.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevision", 100);
-                }
-                if (ApiRevision.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ApiRevision", 1);
-                }
-            }
-            if (ApiVersion != null)
-            {
-                if (ApiVersion.Length > 100)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersion", 100);
-                }
-            }
-            if (ApiRevisionDescription != null)
-            {
-                if (ApiRevisionDescription.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ApiRevisionDescription", 256);
-                }
-            }
-            if (ApiVersionDescription != null)
-            {
-                if (ApiVersionDescription.Length > 256)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ApiVersionDescription", 256);
-                }
-            }
-            if (DisplayName != null)
-            {
-                if (DisplayName.Length > 300)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "DisplayName", 300);
-                }
-                if (DisplayName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "DisplayName", 1);
-                }
-            }
-            if (ServiceUrl != null)
-            {
-                if (ServiceUrl.Length > 2000)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "ServiceUrl", 2000);
-                }
-                if (ServiceUrl.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "ServiceUrl", 0);
-                }
-            }
-            if (Path != null)
-            {
-                if (Path.Length > 400)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Path", 400);
-                }
-                if (Path.Length < 0)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Path", 0);
-                }
             }
         }
     }

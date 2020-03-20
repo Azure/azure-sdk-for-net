@@ -66,8 +66,7 @@ namespace Azure.Storage.Files.DataLake
         private int _port;
 
         /// <summary>
-        /// Gets or sets the Azure Storage account name.  This is only
-        /// populated for IP-style <see cref="System.Uri"/>s.
+        /// Gets or sets the Azure Storage account name.
         /// </summary>
         public string AccountName
         {
@@ -98,7 +97,18 @@ namespace Azure.Storage.Files.DataLake
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
+            set
+            {
+                ResetUri();
+                if (value == "/")
+                {
+                    _directoryOrFilePath = value;
+                }
+                else
+                {
+                    _directoryOrFilePath = value.TrimEnd('/');
+                }
+            }
         }
         private string _directoryOrFilePath;
 
@@ -117,12 +127,12 @@ namespace Azure.Storage.Files.DataLake
         /// Gets or sets the Shared Access Signature query parameters, or null
         /// if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas
+        public DataLakeSasQueryParameters Sas
         {
             get => _sas;
             set { ResetUri(); _sas = value; }
         }
-        private SasQueryParameters _sas;
+        private DataLakeSasQueryParameters _sas;
 
         /// <summary>
         /// Get the last directory or file name from the <see cref="DirectoryOrFilePath"/>, or null if
@@ -195,16 +205,28 @@ namespace Azure.Storage.Files.DataLake
                 }
 
                 // Find the next slash (if it exists)
-
                 var shareEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (shareEndIndex == -1)
                 {
-                    FileSystemName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
+                    // Slash not found; path has file system & no directory/file path
+                    FileSystemName = path.Substring(startIndex);
                 }
                 else
                 {
-                    FileSystemName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
-                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
+                    // The file system name is the part between the slashes
+                    FileSystemName = path.Substring(startIndex, shareEndIndex - startIndex);
+                    string directoryOrFilePath = path.Substring(shareEndIndex + 1);
+
+                    // The directory/file path name is after the share slash
+                    if (directoryOrFilePath.Length == 0)
+                    {
+                        DirectoryOrFilePath = "/";
+                    }
+                    else
+                    {
+                        DirectoryOrFilePath = directoryOrFilePath;
+                    }
+
                 }
             }
 
@@ -222,7 +244,7 @@ namespace Azure.Storage.Files.DataLake
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = new DataLakeSasQueryParameters(paramsMap);
             }
 
             Query = paramsMap.ToString();
@@ -333,7 +355,14 @@ namespace Azure.Storage.Files.DataLake
                 path.Append("/").Append(FileSystemName);
                 if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
-                    path.Append("/").Append(DirectoryOrFilePath);
+                    if (DirectoryOrFilePath == "/")
+                    {
+                        path.Append(DirectoryOrFilePath);
+                    }
+                    else
+                    {
+                        path.Append("/").Append(DirectoryOrFilePath);
+                    }
                 }
             }
 

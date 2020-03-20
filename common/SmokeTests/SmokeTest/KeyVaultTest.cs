@@ -11,6 +11,8 @@ namespace SmokeTest
 {
     class KeyVaultTest
     {
+        private const string defaultAuthorityHost = "https://login.microsoftonline.com";
+
         private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
         private const string SecretValue = "smokeTestValue";
         private static SecretClient client;
@@ -32,7 +34,20 @@ namespace SmokeTest
             string clientID = Environment.GetEnvironmentVariable("APP_CLIENT_ID");
             string clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
             string keyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
-            client = new SecretClient(new Uri(keyVaultUri), new ClientSecretCredential(tenantID, clientID, clientSecret));
+            
+            var authorityHost = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST") 
+                ?? defaultAuthorityHost;
+
+            var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions 
+            { 
+                AuthorityHost = new Uri(authorityHost) 
+            };
+
+
+            client = new SecretClient(
+                new Uri(keyVaultUri), 
+                new DefaultAzureCredential(defaultAzureCredentialOptions)
+            );
 
             await SetNewSecret();
             await GetSecret();
@@ -42,7 +57,7 @@ namespace SmokeTest
         private static async Task SetNewSecret()
         {
             Console.Write("Setting a secret...");
-            var newSecret = new Secret(SecretName, SecretValue);
+            var newSecret = new KeyVaultSecret(SecretName, SecretValue);
             await client.SetSecretAsync(newSecret);
             Console.WriteLine("\tdone");
         }
@@ -50,7 +65,7 @@ namespace SmokeTest
         private static async Task GetSecret()
         {
             Console.Write("Getting that secret...");
-            Azure.Response<Secret> secret;
+            Azure.Response<KeyVaultSecret> secret;
             secret = await client.GetSecretAsync(SecretName);
             //Verify that the secret received is the one that was set previously
             if (secret.Value.Value != SecretValue)
@@ -63,7 +78,8 @@ namespace SmokeTest
         private static async Task CleanUp()
         {
             Console.Write("Cleaning up the resource...");
-            await client.DeleteSecretAsync(SecretName);
+            var secretDeletePoller = await client.StartDeleteSecretAsync(SecretName);
+            await secretDeletePoller.WaitForCompletionAsync();
             Console.WriteLine("\tdone");
         }
     }

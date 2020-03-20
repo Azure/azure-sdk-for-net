@@ -15,15 +15,19 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
+    [ClientTestFixture(
+        ShareClientOptions.ServiceVersion.V2019_02_02,
+        ShareClientOptions.ServiceVersion.V2019_07_07)]
     public class FileTestBase : StorageTestBase
     {
+        protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
+
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
-        public FileTestBase(bool async) : this(async, null) { }
-
-        public FileTestBase(bool async, RecordedTestMode? mode = null)
+        public FileTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public string GetNewShareName() => $"test-share-{Recording.Random.NewGuid()}";
@@ -38,10 +42,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -94,6 +99,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_Premium()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigPremiumBlob.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigPremiumBlob.AccountName,
+                        TestConfigPremiumBlob.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
@@ -179,6 +193,29 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             };
 
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
+        {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
+            (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            return new StorageConnectionString(
+                    credentials,
+                    fileStorageUri: fileUri);
+        }
+
         public static void AssertValidStorageFileInfo(ShareFileInfo storageFileInfo)
         {
             Assert.IsNotNull(storageFileInfo.ETag);
@@ -224,7 +261,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata, quotaInGB: 1);
+                await share.CreateAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 

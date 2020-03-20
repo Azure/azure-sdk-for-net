@@ -11,11 +11,5 @@ jobs:
   - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
     parameters:
       ServiceDirectory: storage
-      PreSteps:
-        - pwsh: |
-            $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
-            '$(net-storage-test-configuration)' | Out-File -Encoding Utf8 $TestConfigurationPath
-            Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
-
-      EnvVars:
-        AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)
+      BuildInParallel: false
+      TimeoutInMinutes: 300

@@ -76,7 +76,7 @@ namespace Sql.Tests
             }
         }
 
-        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location)
+        public static void ValidateServer(Server actual, string name, string login, string version, Dictionary<string, string> tags, string location, string publicNetworkAccess = null, string minimalTlsVersion = null)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
@@ -86,6 +86,16 @@ namespace Sql.Tests
 
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
+
+            if (publicNetworkAccess != null)
+            {
+                Assert.Equal(publicNetworkAccess, actual.PublicNetworkAccess);
+            }
+
+            if (minimalTlsVersion != null)
+            {
+                Assert.Equal(minimalTlsVersion, actual.MinimalTlsVersion);
+            }
         }
 
         public static void ValidateInstancePool(
@@ -130,6 +140,16 @@ namespace Sql.Tests
 
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
+        }
+        
+        public static void ValidateManagedInstanceOperation(ManagedInstanceOperation actual, string operationName, string operationFriendlyName, int percentComplete, string state, bool isCancellable)
+        {
+            Assert.NotNull(actual);
+            Assert.Equal(operationName, actual.Name);
+            Assert.Equal(operationFriendlyName, actual.OperationFriendlyName);
+            Assert.Equal(percentComplete, actual.PercentComplete);
+            Assert.Equal(state, actual.State);
+            Assert.Equal(isCancellable, actual.IsCancellable);
         }
 
         public static void ValidateDatabase(dynamic expected, Database actual, string name)

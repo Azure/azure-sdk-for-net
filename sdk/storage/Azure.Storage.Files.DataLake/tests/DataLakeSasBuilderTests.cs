@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Files.DataLake.Sas;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 

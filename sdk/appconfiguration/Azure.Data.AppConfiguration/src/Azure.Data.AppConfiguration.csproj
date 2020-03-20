@@ -3,19 +3,8 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
-    <Version>1.0.0-preview.5</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Microsoft Azure Application Configuration;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      - Added support for AAD. ConfigurationClient can be created using endpoint and any available type of TokenCredential.
-      - Pair of methods SetReadOnly/ClearReadOnly in ConfigurationClient are replaced with single method SetReadOnly with boolean parameter.
-      - Added new overload for the method ConfigurationClient.GetRevisions that accepts key and optional label.
-      - Added new overload for the method ConfigurationClient.GetConfigurationSetting that accepts ConfigurationSetting and its datetime stamp.
-      - SettingSelector.AsOf is renamed into SettingSelector.AcceptDateTime.
-      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Data.AppConfiguration_1.0.0-preview.5/sdk/appconfiguration/Azure.Data.AppConfiguration/CHANGELOG.md
-      ]]>
-    </PackageReleaseNotes>
-
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -31,15 +20,19 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)ConditionalRequestOptionsExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
   </ItemGroup>
 
 </Project>

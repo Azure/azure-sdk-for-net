@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.SqlVirtualMachine.Models
 {
     using Newtonsoft.Json;
-    using System;
     using System.Linq;
 
     /// <summary>

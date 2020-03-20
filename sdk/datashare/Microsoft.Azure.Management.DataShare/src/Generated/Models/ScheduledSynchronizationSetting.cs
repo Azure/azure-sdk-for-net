@@ -43,19 +43,19 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the synchronization setting
         /// was created.</param>
-        /// <param name="createdBy">Name of the user who created the
-        /// synchronization setting.</param>
         /// <param name="provisioningState">Gets or sets the provisioning
         /// state. Possible values include: 'Succeeded', 'Creating',
         /// 'Deleting', 'Moving', 'Failed'</param>
-        public ScheduledSynchronizationSetting(string recurrenceInterval, System.DateTime synchronizationTime, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string provisioningState = default(string))
+        /// <param name="userName">Name of the user who created the
+        /// synchronization setting.</param>
+        public ScheduledSynchronizationSetting(string recurrenceInterval, System.DateTime synchronizationTime, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string provisioningState = default(string), string userName = default(string))
             : base(id, name, type)
         {
             CreatedAt = createdAt;
-            CreatedBy = createdBy;
             ProvisioningState = provisioningState;
             RecurrenceInterval = recurrenceInterval;
             SynchronizationTime = synchronizationTime;
+            UserName = userName;
             CustomInit();
         }
 
@@ -69,12 +69,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public System.DateTime? CreatedAt { get; private set; }
-
-        /// <summary>
-        /// Gets name of the user who created the synchronization setting.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
-        public string CreatedBy { get; private set; }
 
         /// <summary>
         /// Gets or sets the provisioning state. Possible values include:
@@ -95,6 +89,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.synchronizationTime")]
         public System.DateTime SynchronizationTime { get; set; }
+
+        /// <summary>
+        /// Gets name of the user who created the synchronization setting.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userName")]
+        public string UserName { get; private set; }
 
         /// <summary>
         /// Validate the object.

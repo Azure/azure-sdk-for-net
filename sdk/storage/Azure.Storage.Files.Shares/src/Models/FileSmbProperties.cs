@@ -127,22 +127,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
-
-        internal string FileCreationTimeToString()
-            => NullableDateTimeOffsetToString(FileCreatedOn);
-
-        internal string FileLastWriteTimeToString()
-            => NullableDateTimeOffsetToString(FileLastWrittenOn);
-
-        private static string NullableDateTimeOffsetToString(DateTimeOffset? dateTimeOffset)
-            => dateTimeOffset.HasValue ? DateTimeOffSetToString(dateTimeOffset.Value) : null;
-
-        private static string DateTimeOffSetToString(DateTimeOffset dateTimeOffset)
-            => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
     }
-  /// <summary>
-  /// FilesModelFactory provides utilities for mocking.
-  /// </summary>
+
+     /// <summary>
+     /// FilesModelFactory provides utilities for mocking.
+     /// </summary>
     public static partial class SharesModelFactory
     {
         /// <summary>

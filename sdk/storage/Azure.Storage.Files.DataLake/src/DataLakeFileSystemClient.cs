@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.DataLake
         internal readonly BlobContainerClient _containerClient;
 
         /// <summary>
-        /// ContainerClient
+        /// ContainerClient.
         /// </summary>
         internal virtual BlobContainerClient ContainerClient => _containerClient;
 
@@ -62,7 +62,29 @@ namespace Azure.Storage.Files.DataLake
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly DataLakeClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         /// <summary>
         /// The Storage account name corresponding to the share client.
@@ -97,18 +119,6 @@ namespace Azure.Storage.Files.DataLake
                 return _name;
             }
         }
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         #region ctors
         /// <summary>
@@ -250,8 +260,9 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = new BlobContainerClient(_blobUri, _pipeline, _clientDiagnostics, null);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -265,16 +276,41 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-       /// <param name="clientDiagnostics"></param>
-        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             _uri = fileSystemUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _containerClient = new BlobContainerClient(_blobUri, pipeline, clientDiagnostics, null);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of BlobContainerClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class BlobContainerClientInternals : BlobContainerClient
+        {
+            public static BlobContainerClient Create(Uri uri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
+            {
+                return BlobContainerClient.CreateClient(
+                    uri,
+                    new BlobClientOptions(version)
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    },
+                    pipeline);
+            }
         }
         #endregion ctors
 
@@ -287,7 +323,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetDirectoryClient(string directoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline);
+            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
+
+        /// <summary>
+        /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
+        /// root directory of the file system.
+        /// </summary>
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
+        internal virtual DataLakeDirectoryClient GetRootDirectoryClient()
+        {
+            return GetDirectoryClient(string.Empty);
+        }
 
         /// <summary>
         /// Create a new <see cref="DataLakeFileClient"/> object by appending
@@ -298,7 +344,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
+            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -316,21 +362,21 @@ namespace Azure.Storage.Files.DataLake
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a new file system
-        /// under the specified account. If the container with the same name
+        /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
         /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the container may be accessed
+        /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for container and blob data.
-        /// Clients can enumerate blobs within the container via anonymous
-        /// request, but cannot enumerate containers within the storage
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this container can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -343,7 +389,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileSystemInfo}"/> describing the newly
-        /// created container.
+        /// created file system.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -354,7 +400,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
 
             try
             {
@@ -394,13 +440,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file system within the storage
         /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for pathss.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate pathss within the file system via anonymous
         /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -424,7 +470,7 @@ namespace Azure.Storage.Files.DataLake
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Create)}");
 
             try
             {
@@ -456,10 +502,158 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Create
 
+        #region Create If Not Exists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/> operation creates a new file system
+        /// under the specified account. If the file system with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// </summary>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the file system may be accessed
+        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file system within the storage
+        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
+        /// read access for pathss.  Path data within this file system can be
+        /// read via anonymous request, but file system data is not available.
+        /// Clients cannot enumerate pathss within the file system via anonymous
+        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
+        /// file system data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> CreateIfNotExists(
+            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
+            try
+            {
+                scope.Start();
+                Response<BlobContainerInfo> containerResponse = _containerClient.CreateIfNotExists(
+                    (Blobs.Models.PublicAccessType)publicAccessType,
+                    metadata,
+                    cancellationToken);
+
+                if (containerResponse == default)
+                {
+                    return default;
+                }
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new file system
+        /// under the specified account. If the file system with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
+        /// </summary>
+        /// <param name="publicAccessType">
+        /// Optionally specifies whether data in the file system may be accessed
+        /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file system within the storage
+        /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
+        /// read access for pathss.  Path data within this file system can be
+        /// read via anonymous request, but file system data is not available.
+        /// Clients cannot enumerate pathss within the file system via anonymous
+        /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
+        /// file system data is private to the account owner.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ContainerInfo}"/> describing the newly
+        /// created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> CreateIfNotExistsAsync(
+            Models.PublicAccessType publicAccessType = Models.PublicAccessType.None,
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateIfNotExists)}");
+            try
+            {
+                scope.Start();
+                Response<BlobContainerInfo> containerResponse = await _containerClient.CreateIfNotExistsAsync(
+                    (Blobs.Models.PublicAccessType)publicAccessType,
+                    metadata,
+                    cancellationToken).ConfigureAwait(false);
+
+                if (containerResponse == default)
+                {
+                    return default;
+                }
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Create If Not Exists
+
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified
-        /// file system for deletion. The file system and any blobs contained
+        /// file system for deletion. The file system and any paths contained
         /// within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -483,7 +677,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
 
             try
             {
@@ -507,7 +701,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
-        /// file system for deletion. The file system and any blobs contained
+        /// file system for deletion. The file system and any paths contained
         /// within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -531,7 +725,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
 
             try
             {
@@ -554,12 +748,196 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete
 
+        #region Delete If Exists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation marks the specified
+        /// file system for deletion if it exists. The file system and any files
+        /// and directories contained within it are later deleted during garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the deletion of this file system.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
+
+            try
+            {
+                scope.Start();
+
+                return _containerClient.DeleteIfExists(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
+        /// file system for deletion if it exists. The file system and any files
+        /// and directories contained within it are later deleted during garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on the deletion of this cofile systemntainer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
+
+            try
+            {
+                scope.Start();
+
+                return await _containerClient.DeleteIfExistsAsync(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Delete If Exists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="DataLakeFileClient"/> to see if the associated
+        /// file system exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file system exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the file system if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists"/>
+        /// instead.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                return _containerClient.Exists(
+                cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="DataLakeFileSystemClient"/> to see if the associated
+        /// file system exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file system exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the file system if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExistsAsync"/>
+        /// instead.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                return await _containerClient.ExistsAsync(
+                cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Exists
+
         #region GetProperties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// file system. The data returned does not include the file system's
-        /// list of blobs.
+        /// list of paths.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties" />.
         /// </summary>
@@ -583,7 +961,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetProperties)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetProperties)}");
 
             try
             {
@@ -612,7 +990,7 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// file system. The data returned does not include the file system's
-        /// list of blobs.
+        /// list of paths.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties" />.
         /// </summary>
@@ -625,7 +1003,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerItem}"/> describing the
+        /// A <see cref="Response{FileSystemProperties}"/> describing the
         /// file system and its properties.
         /// </returns>
         /// <remarks>
@@ -636,7 +1014,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetProperties)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetProperties)}");
 
             try
             {
@@ -682,7 +1060,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> if successful.
+        /// A <see cref="Response{FileSystemInfo}"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -693,7 +1071,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetMetadata)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetMetadata)}");
 
             try
             {
@@ -752,7 +1130,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetMetadata)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetMetadata)}");
 
             try
             {
@@ -811,7 +1189,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// An <see cref="Pageable{PathItem}"/>
         /// describing the paths in the file system.
         /// </returns>
         /// <remarks>
@@ -880,7 +1258,7 @@ namespace Azure.Storage.Files.DataLake
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
         /// empty to make subsequent calls to <see cref="GetPathsAsync"/>
-        /// to continue enumerating the paths segment by segment. Blobs are
+        /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
@@ -917,8 +1295,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobsFlatSegment}"/> describing a
-        /// segment of the blobs in the container.
+        /// A <see cref="Response{PathSegment}"/> describing a
+        /// segment of the paths in the file system.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -947,6 +1325,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         continuation: continuation,
                         recursive: recursive,
                         maxResults: maxResults,
@@ -990,6 +1369,8 @@ namespace Azure.Storage.Files.DataLake
         #region Create Directory
         /// <summary>
         /// The <see cref="CreateDirectory"/> operation creates a directory in this file system.
+        /// If the directory already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing directory, consider using the <see cref="DataLakeDirectoryClient.CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1001,7 +1382,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -1020,7 +1401,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1028,7 +1409,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1043,7 +1424,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(CreateDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateDirectory)}");
 
             try
             {
@@ -1076,6 +1457,8 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="CreateDirectoryAsync"/> operation creates a directory in this file system.
+        /// If the directory already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing directory, consider using the <see cref="DataLakeDirectoryClient.CreateIfNotExistsAsync"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1087,7 +1470,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -1106,7 +1489,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1114,7 +1497,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1129,7 +1512,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(CreateDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateDirectory)}");
 
             try
             {
@@ -1193,7 +1576,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(DeleteDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteDirectory)}");
 
             try
             {
@@ -1244,7 +1627,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(DeleteDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteDirectory)}");
 
             try
             {
@@ -1270,7 +1653,9 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create File
         /// <summary>
-        /// The <see cref="CreateFile"/> operation creates a file or directory.
+        /// The <see cref="CreateFile"/> operation creates a file in this file system.
+        /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing file, consider using the <see cref="DataLakeFileClient.CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1282,7 +1667,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -1301,7 +1686,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1309,7 +1694,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1324,7 +1709,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(CreateFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateFile)}");
 
             try
             {
@@ -1356,7 +1741,9 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateFileAsync"/> creates a file in this file system
+        /// The <see cref="CreateFileAsync"/> creates a file in this file system.
+        /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing file, consider using the <see cref="DataLakeFileClient.CreateIfNotExistsAsync"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -1368,7 +1755,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -1387,7 +1774,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1395,7 +1782,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1410,7 +1797,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(CreateFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(CreateFile)}");
 
             try
             {
@@ -1472,7 +1859,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(DeleteFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteFile)}");
 
             try
             {
@@ -1521,7 +1908,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(DeleteFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteFile)}");
 
             try
             {
@@ -1543,7 +1930,6 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Delete File
-
 
         #region GetAccessPolicy
         /// <summary>
@@ -1573,7 +1959,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
 
             try
             {
@@ -1625,7 +2011,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
 
             try
             {
@@ -1687,7 +2073,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileSystemInfo}"/> describing the
-        /// updated container.
+        /// updated file system.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1699,7 +2085,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
 
             try
             {
@@ -1776,7 +2162,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
 
             try
             {

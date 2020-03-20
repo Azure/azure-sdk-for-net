@@ -33,9 +33,6 @@ namespace Azure.Security.KeyVault.Certificates
         private const string KeyUsagePropertyName = "key_usage";
         private const string EkusPropertyName = "ekus";
         private const string ValidityMonthsPropertyName = "validity_months";
-        private const string IssuerNamePropertyName = "name";
-        private const string CertificateTypePropertyName = "cty";
-        private const string CertificateTransparencyPropertyName = "cert_transparency";
         private const string EnabledPropertyName = "enabled";
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
@@ -57,10 +54,9 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_keyUsagePropertyNameBytes = JsonEncodedText.Encode(KeyUsagePropertyName);
         private static readonly JsonEncodedText s_ekusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
         private static readonly JsonEncodedText s_validityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
-        private static readonly JsonEncodedText s_issuerNamePropertyNameBytes = JsonEncodedText.Encode(IssuerNamePropertyName);
-        private static readonly JsonEncodedText s_certificateTypePropertyNameBytes = JsonEncodedText.Encode(CertificateTypePropertyName);
-        private static readonly JsonEncodedText s_certificateTransparencyPropertyNameNameBytes = JsonEncodedText.Encode(CertificateTransparencyPropertyName);
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+
+        private IssuerParameters _issuer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
@@ -169,7 +165,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the name of an issuer for a certificate.
         /// </summary>
-        public string IssuerName { get; internal set; }
+        public string IssuerName
+        {
+            get => _issuer.IssuerName;
+            internal set => _issuer.IssuerName = value;
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="CertificateContentType"/> of the certificate when downloaded from GetSecret.
@@ -179,12 +179,20 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets or sets the certificate type of a certificate.
         /// </summary>
-        public string CertificateType { get; set; }
+        public string CertificateType
+        {
+            get => _issuer.CertificateType;
+            set => _issuer.CertificateType = value;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether a certificate should be published to the certificate transparency list when created.
         /// </summary>
-        public bool? CertificateTransparency { get; set; }
+        public bool? CertificateTransparency
+        {
+            get => _issuer.CertificateTransparency;
+            set => _issuer.CertificateTransparency = value;
+        }
 
         /// <summary>
         /// Gets or sets the validity period for a certificate in months.
@@ -240,7 +248,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case IssuerPropertyName:
-                        ReadIssuerProperties(prop.Value);
+                        _issuer.ReadProperties(prop.Value);
                         break;
 
                     case AttributesPropertyName:
@@ -295,7 +303,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 json.WriteStartObject(s_issuerPropertyNameBytes);
 
-                WriteIssuerProperties(json);
+                _issuer.WriteProperties(json);
 
                 json.WriteEndObject();
             }
@@ -477,45 +485,6 @@ namespace Azure.Security.KeyVault.Certificates
             if (ValidityInMonths.HasValue)
             {
                 json.WriteNumber(s_validityMonthsPropertyNameBytes, ValidityInMonths.Value);
-            }
-        }
-
-        private void ReadIssuerProperties(JsonElement json)
-        {
-            foreach (JsonProperty prop in json.EnumerateObject())
-            {
-                switch (prop.Name)
-                {
-                    case IssuerNamePropertyName:
-                        IssuerName = prop.Value.GetString();
-                        break;
-
-                    case CertificateTypePropertyName:
-                        CertificateType = prop.Value.GetString();
-                        break;
-
-                    case CertificateTransparencyPropertyName:
-                        CertificateTransparency = prop.Value.GetBoolean();
-                        break;
-                }
-            }
-        }
-
-        private void WriteIssuerProperties(Utf8JsonWriter json)
-        {
-            if (IssuerName != null)
-            {
-                json.WriteString(s_issuerNamePropertyNameBytes, IssuerName);
-            }
-
-            if (CertificateType != null)
-            {
-                json.WriteString(s_certificateTypePropertyNameBytes, CertificateType);
-            }
-
-            if (CertificateTransparency.HasValue)
-            {
-                json.WriteBoolean(s_certificateTransparencyPropertyNameNameBytes, CertificateTransparency.Value);
             }
         }
 

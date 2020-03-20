@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -14,7 +15,6 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private const string IdPropertyName = "id";
         private const string IssuerProperyName = "issuer";
-        private const string IssuerNamePropertyName = "name";
         private const string CsrPropertyName = "csr";
         private const string CancellationRequestedPropertyName = "cancellation_requested";
         private const string RequestIdPropertyName = "request_id";
@@ -22,9 +22,28 @@ namespace Azure.Security.KeyVault.Certificates
         private const string StatusDetailsPropertyName = "status_details";
         private const string TargetPropertyName = "target";
         private const string ErrorPropertyName = "error";
+        private const string Collection = "certificates/";
+
+        private IssuerParameters _issuer;
 
         internal CertificateOperationProperties()
         {
+        }
+
+        internal CertificateOperationProperties(Uri vaultUri, string name)
+        {
+            VaultUri = vaultUri;
+            Name = name;
+
+            RequestUriBuilder builder = new RequestUriBuilder
+            {
+                Scheme = vaultUri.Scheme,
+                Host = vaultUri.Host,
+                Port = vaultUri.Port,
+                Path = Collection + name,
+            };
+
+            Id = builder.ToUri();
         }
 
         /// <summary>
@@ -43,14 +62,36 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri VaultUri { get; internal set; }
 
         /// <summary>
-        /// Gets the name of the <see cref="CertificateIssuer"/> for the certificate to which the operation applies.
+        /// Gets the name of the <see cref="CertificateIssuer"/> for the certificate to create.
         /// </summary>
-        public string IssuerName { get; internal set; }
+        public string IssuerName
+        {
+            get => _issuer.IssuerName;
+            internal set => _issuer.IssuerName = value;
+        }
 
         /// <summary>
-        /// Gets the certificate signing request (CSR) which is pending signature for the certificate operation.
+        /// Gets the type of the certificate to create.
         /// </summary>
-        public string CertificateSigningRequest { get; internal set; }
+        public string CertificateType
+        {
+            get => _issuer.CertificateType;
+            internal set => _issuer.CertificateType = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the certificate will be published to the certificate transparency list when created.
+        /// </summary>
+        public bool? CertificateTransparency
+        {
+            get => _issuer.CertificateTransparency;
+            internal set => _issuer.CertificateTransparency = value;
+        }
+
+        /// <summary>
+        /// Gets the certificate signing request (CSR) that is being used in the certificate operation.
+        /// </summary>
+        public byte[] Csr { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether a cancellation has been requested for the operation.
@@ -95,11 +136,11 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case IssuerProperyName:
-                        IssuerName = prop.Value.GetProperty(IssuerNamePropertyName).GetString();
+                        _issuer.ReadProperties(prop.Value);
                         break;
 
                     case CsrPropertyName:
-                        CertificateSigningRequest = prop.Value.GetString();
+                        Csr = prop.Value.GetBytesFromBase64();
                         break;
 
                     case CancellationRequestedPropertyName:
@@ -136,8 +177,8 @@ namespace Azure.Security.KeyVault.Certificates
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", idToParse, idToParse.Segments.Length));
 
-            if (!string.Equals(idToParse.Segments[1], "certificates" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", idToParse, idToParse.Segments[1]));
+            if (!string.Equals(idToParse.Segments[1], Collection, StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", idToParse, Collection, idToParse.Segments[1]));
 
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');

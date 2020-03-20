@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -17,7 +17,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void WorkflowTriggers_Get_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -40,7 +40,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void WorkflowTriggers_List_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -61,7 +61,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void WorkflowTriggers_GetJsonSchema_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -84,7 +84,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void WorkflowTriggers_ListCallbackUrl_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -107,7 +107,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void WorkflowTriggers_Run_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -126,7 +126,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void WorkflowTriggers_Reset_Exception()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -136,7 +136,7 @@ namespace Test.Azure.Management.Logic
                     workflowName,
                     workflow);
 
-                Assert.Throws<CloudException>(() => client.WorkflowTriggers.Reset(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName));
+                Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggers.Reset(Constants.DefaultResourceGroup, workflowName, Constants.DefaultTriggerName));
 
                 client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
@@ -152,4 +152,3 @@ namespace Test.Azure.Management.Logic
         }
     }
 }
-

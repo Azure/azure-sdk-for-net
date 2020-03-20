@@ -993,7 +993,7 @@ namespace DataFactory.Tests.JsonSamples
 	""type"": ""Avro"",
 	""typeProperties"": {
 	  ""location"": {
-		""type"": ""AzureBlobLocation"",
+		""type"": ""AzureBlobStorageLocation"",
 		""folderPath"": ""fakedContainerName"",
 		""fileName"": ""*.avro""
 	  },

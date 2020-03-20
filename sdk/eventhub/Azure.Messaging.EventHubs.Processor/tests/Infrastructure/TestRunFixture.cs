@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Messaging.EventHubs.Processor.Tests.Infrastructure;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
@@ -34,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             try
             {
-                if (TestEnvironment.WasEventHubsNamespaceCreated)
+                if (TestEnvironment.ShouldRemoveNamespaceAfterTestRunCompletion)
                 {
                     EventHubScope.DeleteNamespaceAsync(TestEnvironment.EventHubsNamespace).GetAwaiter().GetResult();
                 }
@@ -45,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             try
             {
-                if (StorageTestEnvironment.WasStorageAccountCreated)
+                if (StorageTestEnvironment.ShouldRemoveStorageAccountAfterTestRunCompletion)
                 {
                     StorageScope.DeleteStorageAccountAsync(StorageTestEnvironment.StorageAccountName).GetAwaiter().GetResult();
                 }

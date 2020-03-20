@@ -31,6 +31,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal static void VerifyCpkAndEncryptionScopeNotBothSet(CustomerProvidedKey? customerProvidedKey, string encryptionScope)
+        {
+            if (customerProvidedKey.HasValue && encryptionScope != null)
+            {
+                throw new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set");
+            }
+        }
+
         public static ArgumentException ParsingFullHttpRangeFailed(string range)
             => new ArgumentException("Could not obtain the total length from HTTP range " + range);
     }

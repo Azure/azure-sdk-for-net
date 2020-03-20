@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_02_02;
+        internal const ServiceVersion LatestVersion = StorageVersionExtensions.LatestVersion;
 
         /// <summary>
         /// The versions of Azure Queue Storage supported by this client
@@ -30,7 +30,12 @@ namespace Azure.Storage.Queues
             /// The 2019-02-02 service version described at
             /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The 2019-07-07 service version.
+            /// </summary>
+            V2019_07_07 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -51,7 +56,16 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            if (version == ServiceVersion.V2019_07_07
+                || version == ServiceVersion.V2019_02_02)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.VersionNotSupported(nameof(version));
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

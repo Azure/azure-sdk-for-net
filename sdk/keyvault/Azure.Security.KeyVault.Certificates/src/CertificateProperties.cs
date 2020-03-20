@@ -109,6 +109,11 @@ namespace Azure.Security.KeyVault.Certificates
         public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
+        /// Gets the number of days a certificate is retained before being deleted for a soft delete-enabled Key Vault.
+        /// </summary>
+        public int? RecoverableDays { get => _attributes.RecoverableDays; internal set => _attributes.RecoverableDays = value; }
+
+        /// <summary>
         /// Gets the recovery level currently in effect for certificates in the Key Vault.
         /// If <c>Purgeable</c>, the certificates can be permanently deleted by an authorized user;
         /// otherwise, only the service can purge the certificates at the end of the retention interval.
