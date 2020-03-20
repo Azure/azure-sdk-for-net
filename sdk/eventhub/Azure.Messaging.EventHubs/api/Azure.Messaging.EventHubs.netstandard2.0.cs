@@ -71,6 +71,7 @@ namespace Azure.Messaging.EventHubs
         public bool IsTransient { get { throw null; } }
         public override string Message { get { throw null; } }
         public Azure.Messaging.EventHubs.EventHubsException.FailureReason Reason { get { throw null; } }
+        public override string ToString() { throw null; }
         public enum FailureReason
         {
             GeneralError = 0,
