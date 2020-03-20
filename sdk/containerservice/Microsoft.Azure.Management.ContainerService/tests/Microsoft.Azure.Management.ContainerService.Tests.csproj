@@ -1,18 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.ContainerService.Tests</PackageId>
+    <PackageId>ContainerService.Tests</PackageId>
     <Version>1.0.0</Version>
     <Description>ContainerService.Tests Class Library</Description>
     <Authors>Microsoft Corporation</Authors>
-    <AssemblyName>Microsoft.Azure.Management.ContainerService.Tests</AssemblyName>
+    <AssemblyName>ContainerService.Tests</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.ContainerService.csproj" />
   </ItemGroup>
   <PropertyGroup>
-    <ExcludeFromTest>true</ExcludeFromTest>
+    <ExcludeFromTest>false</ExcludeFromTest>
   </PropertyGroup>
 
   <ItemGroup>

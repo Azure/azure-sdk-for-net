@@ -6,12 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
+    /// Indicate that this is one connection.
     ///
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
@@ -39,33 +40,16 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
-        ///   Closes the connection to the Service Bus namespace and associated Service Bus entity.
+        ///   A unique name used to identify this client.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
-        {
-            //cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), "", FullyQualifiedNamespace);
+        internal string Identifier { get; }
 
-            try
-            {
-                await Connection.CloseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusConnection), "", FullyQualifiedNamespace, ex.Message);
-                throw;
-            }
-            finally
-            {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), "", FullyQualifiedNamespace);
-            }
-        }
-
+        /// <summary>
+        ///   The set of client options used for creation of client.
+        /// </summary>
+        ///
+        private ServiceBusClientOptions Options { get; set; }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -75,10 +59,27 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
+        public virtual async ValueTask DisposeAsync()
+        {
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), Identifier);
+
+            try
+            {
+                await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.ClientCloseException(typeof(ServiceBusConnection), Identifier, ex);
+                throw;
+            }
+            finally
+            {
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), Identifier);
+            }
+        }
 
         /// <summary>
-        ///
+        /// Can be used for mocking.
         /// </summary>
         protected ServiceBusClient()
         {
@@ -93,9 +94,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="connectionString"></param>
-        public ServiceBusClient(string connectionString) // this should contain namespace and credentials, if it contains entity information we would throw
+        public ServiceBusClient(string connectionString) :
+            this(connectionString, new ServiceBusClientOptions())
         {
-            Connection = new ServiceBusConnection(connectionString, new ServiceBusClientOptions());
         }
 
         /// <summary>
@@ -106,6 +107,8 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             Connection = new ServiceBusConnection(connectionString, options);
+            Options = Connection.Options;
+            Identifier = DiagnosticUtilities.GenerateIdentifier(Connection.FullyQualifiedNamespace);
         }
 
         /// <summary>
@@ -113,9 +116,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="fullyQualifiedNamespace"></param>
         /// <param name="credential"></param>
-        public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential)
+        public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
+            this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
         {
-            Connection = new ServiceBusConnection(fullyQualifiedNamespace, credential);
         }
 
         /// <summary>
@@ -126,47 +129,27 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options"></param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential, ServiceBusClientOptions options)
         {
+            Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = new ServiceBusConnection(
                 fullyQualifiedNamespace,
                 credential,
                 options);
+            Options = Connection.Options;
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="queueOrTopicName"></param>
         /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName)
+        public ServiceBusSender GetSender(string queueOrTopicName)
         {
+            ValidateEntityName(queueOrTopicName);
+
             return new ServiceBusSender(
-                Connection,
-                new ServiceBusSenderOptions(),
-                entityName: entityName);
+                entityPath: queueOrTopicName,
+                connection: Connection);
         }
-
-        private void ValidateEntityName(string entityName)
-        {
-            if (Connection.EntityName != null && entityName != Connection.EntityName)
-            {
-                throw new ArgumentException();
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="entityName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public ServiceBusSender GetSender(string entityName, ServiceBusSenderOptions options)
-        {
-            return new ServiceBusSender(
-                Connection,
-                options,
-                entityName: entityName);
-        }
-
 
         /// <summary>
         ///
@@ -175,9 +158,13 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetReceiver(string queueName)
         {
-            return ServiceBusReceiver.CreateReceiver(
-                queueName,
-                Connection);
+            ValidateEntityName(queueName);
+
+            return new ServiceBusReceiver(
+                connection: Connection,
+                entityPath: queueName,
+                isSessionEntity: false,
+                options: new ServiceBusReceiverOptions());
         }
 
         /// <summary>
@@ -186,14 +173,18 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string queueName, ServiceBusReceiverOptions options)
+        public ServiceBusReceiver GetReceiver(
+            string queueName,
+            ServiceBusReceiverOptions options)
         {
-            return ServiceBusReceiver.CreateReceiver(
-                queueName,
-                Connection,
-                options);
-        }
+            ValidateEntityName(queueName);
 
+            return new ServiceBusReceiver(
+                connection: Connection,
+                entityPath: queueName,
+                isSessionEntity: false,
+                options: options);
+        }
 
         /// <summary>
         ///
@@ -201,11 +192,17 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusReceiver GetReceiver(string topicName, string subscriptionName)
+        public ServiceBusReceiver GetReceiver(
+            string topicName,
+            string subscriptionName)
         {
-            return ServiceBusReceiver.CreateReceiver(
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
-                Connection);
+            ValidateEntityName(topicName);
+
+            return new ServiceBusReceiver(
+                connection: Connection,
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                isSessionEntity: false,
+                options: new ServiceBusReceiverOptions());
         }
 
         /// <summary>
@@ -220,12 +217,54 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionName,
             ServiceBusReceiverOptions options)
         {
-            return ServiceBusReceiver.CreateReceiver(
-                EntityNameFormatter.FormatSubscriptionPath(
-                    topicName,
-                    subscriptionName),
-                Connection,
-                options);
+            ValidateEntityName(topicName);
+
+            return new ServiceBusReceiver(
+                connection: Connection,
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                isSessionEntity: false,
+                options: options);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
+            string queueName,
+            ServiceBusReceiverOptions options = default,
+            string sessionId = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(queueName);
+
+            return await ServiceBusReceiver.CreateSessionReceiverAsync(
+                entityPath: queueName,
+                connection: Connection,
+                sessionId: sessionId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
+            string topicName,
+            string subscriptionName,
+            ServiceBusReceiverOptions options = default,
+            string sessionId = default,
+            CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(topicName);
+
+            return await ServiceBusReceiver.CreateSessionReceiverAsync(
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                connection: Connection,
+                sessionId: sessionId,
+                options: options,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +274,13 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusProcessor GetProcessor(string queueName)
         {
-            return new ServiceBusProcessor(Connection, queueName);
+            ValidateEntityName(queueName);
+
+            return new ServiceBusProcessor(
+                entityPath: queueName,
+                connection: Connection,
+                isSessionEntity: false,
+                options: new ServiceBusProcessorOptions());
         }
 
         /// <summary>
@@ -244,9 +289,17 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName, ServiceBusProcessorOptions options)
+        public ServiceBusProcessor GetProcessor(
+            string queueName,
+            ServiceBusProcessorOptions options)
         {
-            return new ServiceBusProcessor(Connection, queueName, options);
+            ValidateEntityName(queueName);
+
+            return new ServiceBusProcessor(
+                entityPath: queueName,
+                connection: Connection,
+                isSessionEntity: false,
+                options: options);
         }
 
         /// <summary>
@@ -255,11 +308,17 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="topicName"></param>
         /// <param name="subscriptionName"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string topicName, string subscriptionName)
+        public ServiceBusProcessor GetProcessor(
+            string topicName,
+            string subscriptionName)
         {
+            ValidateEntityName(topicName);
+
             return new ServiceBusProcessor(
-                Connection,
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                connection: Connection,
+                isSessionEntity: false,
+                options: new ServiceBusProcessorOptions());
         }
 
         /// <summary>
@@ -269,47 +328,77 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string topicName, string subscriptionName, ServiceBusProcessorOptions options)
+        public ServiceBusProcessor GetProcessor(
+            string topicName,
+            string subscriptionName,
+            ServiceBusProcessorOptions options)
         {
+            ValidateEntityName(topicName);
+
             return new ServiceBusProcessor(
-                Connection,
-                EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
-                options);
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                connection: Connection,
+                isSessionEntity: false,
+                options: options);
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
+        public ServiceBusProcessor GetSessionProcessor(
             string queueName,
+            ServiceBusProcessorOptions options = default,
             string sessionId = default,
-            ServiceBusReceiverOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await ServiceBusReceiver.CreateSessionReceiverAsync(
-                queueName,
-                Connection,
-                sessionId,
-                options,
-                cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(queueName);
+
+            return new ServiceBusProcessor(
+                entityPath: queueName,
+                connection: Connection,
+                isSessionEntity: true,
+                sessionId: sessionId,
+                options: options ?? new ServiceBusProcessorOptions());
+        }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceiver> GetSubscriptionSessionReceiverAsync(
-            string subscriptionName,
+        public ServiceBusProcessor GetSessionProcessor(
             string topicName,
+            string subscriptionName,
+            ServiceBusProcessorOptions options = default,
             string sessionId = default,
-            ServiceBusReceiverOptions options = default,
-            CancellationToken cancellationToken = default) =>
-            await ServiceBusReceiver.CreateSessionReceiverAsync(
-                EntityNameFormatter.FormatSubscriptionPath(
-                    topicName,
-                    subscriptionName),
-                Connection,
-                sessionId,
-                options,
-                cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusProcessor(
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
+                connection: Connection,
+                isSessionEntity: true,
+                sessionId: sessionId,
+                options: options ?? new ServiceBusProcessorOptions());
+        }
+
+        private void ValidateEntityName(string entityName)
+        {
+            // The entity name may only be specified in one of the possible forms, either as part of the
+            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
+            // value, then do not consider this a failure.
+
+            if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
+            }
+        }
+
+        /// <summary>
+        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
+        /// </summary>
+        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName) =>
+            new ServiceBusRuleManager(topicName, subscriptionName);
     }
 }

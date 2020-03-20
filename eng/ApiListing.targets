@@ -17,6 +17,7 @@
     
     <PropertyGroup>
       <_RefSourceOutputPath>$([System.IO.Directory]::GetParent('$(MSBuildProjectDirectory)'))/api/</_RefSourceOutputPath>
+      <GenAPIAdditionalParameters>--exclude-attributes-list "$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt" $(GenAPIAdditionalParameters)</GenAPIAdditionalParameters>
       <GenAPITargetPath>$(_RefSourceOutputPath)$(AssemblyName).$(TargetFramework).cs</GenAPITargetPath>
     </PropertyGroup>
     <Delete Files="$(GenAPITargetPath)" />

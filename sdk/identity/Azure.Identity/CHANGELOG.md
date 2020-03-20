@@ -1,10 +1,18 @@
 # Release History
 
-## 1.2.0-preview.1 (Unreleased)
+## 1.2.0-preview.2 (Unreleased)
 
-### Fixes and improvements
+
+## 1.2.0-preview.1
+
+### New Features
+- Updating `DefaultAzureCredential` to enable authenticating through the Azure CLI
 - `ClientCertificateCredential` now supports being constructed with a path to an unencrypted certificate (in either PFX or PEM format)
 - `EnvironmentCredential` now supports reading a certificate path from `AZURE_CLIENT_CERTIFICATE_PATH`
+
+### Fixes and improvements
+- Fix an issue where `EnvironmentCredential` did not behave correctly when `AZURE_USERNAME` and `AZURE_PASSWORD` where set
+- Added `KnownAuthorityHosts` class to aid in sovereign cloud configuration.
 
 ## 1.1.1
 

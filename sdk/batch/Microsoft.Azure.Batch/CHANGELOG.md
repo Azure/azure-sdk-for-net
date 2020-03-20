@@ -1,6 +1,22 @@
 # Release History
 
-## 12.1.0-preview.1 (Unreleased)
+## 13.1.0-preview.1 (Unreleased)
+
+
+## 13.0.0 (2020-03-05)
+### Features
+- Added ability to encrypt `ComputeNode` disk drives using the new `DiskEncryptionConfiguration` property of `VirtualMachineConfiguration`.
+- **[Breaking]** The `VirtualMachineImageId` property of `ImageReference` can now only refer to a Shared Image Gallery image.
+- **[Breaking]** The `CreateCertificate` functions on `CertificateOperations` have been renamed to `CreateCertificateFromCer` and `CreateCertificateFromPfx` and had their parameters updated to more clearly reflect that `password` is optional for PFX formatted certificates.
+- **[Breaking]** Pools can now be provisioned without a public IP using the new `PublicIPAddressConfiguration` property of `NetworkConfiguration`.
+  - The `PublicIPs` property of `NetworkConfiguration` has moved in to `PublicIPAddressConfiguration` as well. This property can only be specified if `IPAddressProvisioningType` is `UserManaged`.
+
+### Bug fixes
+ - Add missing error codes to `TaskFailureInformationCodes`.
+
+### REST API version
+This version of the Batch .NET client library targets version 2020-03-01.11.0 of the Azure Batch REST API.
+**Note**: This REST API version may not be available in all regions prior to 2020-03-13. Attempts to use the SDK will fail if the region has not had support for the REST API version enabled yet.
 
 ## 12.0.0
 ### Features

@@ -10,14 +10,17 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Properties of the Domain update
+    /// Properties of the Domain update.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DomainUpdateParameters
     {
         /// <summary>
@@ -31,18 +34,25 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the DomainUpdateParameters class.
         /// </summary>
-        /// <param name="tags">Tags of the domains resource</param>
-        /// <param name="allowTrafficFromAllIPs">This determines if IP
-        /// filtering rules ought to be evaluated or not. By default it will
-        /// not evaluate and will allow traffic from all IPs.</param>
-        /// <param name="inboundIpRules">This determines the IP filtering rules
-        /// that ought be applied when events are received on this
-        /// domain.</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? allowTrafficFromAllIPs = default(bool?), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
+        /// <param name="tags">Tags of the domains resource.</param>
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring &lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules"
+        /// /&gt;. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="inboundIpRules">This can be used to restrict traffic
+        /// from specific IPs instead of all IPs. Note: These are considered
+        /// only if PublicNetworkAccess is enabled.</param>
+        /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="sku">The Sku pricing tier for the domain.</param>
+        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), IdentityInfo identity = default(IdentityInfo), ResourceSku sku = default(ResourceSku))
         {
             Tags = tags;
-            AllowTrafficFromAllIPs = allowTrafficFromAllIPs;
+            PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
+            Identity = identity;
+            Sku = sku;
             CustomInit();
         }
 
@@ -52,25 +62,41 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the domains resource
+        /// Gets or sets tags of the domains resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets this determines if IP filtering rules ought to be
-        /// evaluated or not. By default it will not evaluate and will allow
-        /// traffic from all IPs.
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled.
+        /// You can further restrict to specific IPs by configuring
+        /// &amp;lt;seealso
+        /// cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules"
+        /// /&amp;gt;. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "allowTrafficFromAllIPs")]
-        public bool? AllowTrafficFromAllIPs { get; set; }
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets this determines the IP filtering rules that ought be
-        /// applied when events are received on this domain.
+        /// Gets or sets this can be used to restrict traffic from specific IPs
+        /// instead of all IPs. Note: These are considered only if
+        /// PublicNetworkAccess is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "inboundIpRules")]
+        [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku pricing tier for the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ResourceSku Sku { get; set; }
 
     }
 }

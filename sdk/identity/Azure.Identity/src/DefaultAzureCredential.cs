@@ -169,7 +169,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[4];
+            TokenCredential[] chain = new TokenCredential[5];
 
             if (!options.ExcludeEnvironmentCredential)
             {
@@ -184,6 +184,11 @@ namespace Azure.Identity
             if (!options.ExcludeSharedTokenCacheCredential)
             {
                 chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheTenantId, options.SharedTokenCacheUsername);
+            }
+
+            if (!options.ExcludeAzureCliCredential)
+            {
+                chain[i++] = factory.CreateAzureCliCredential();
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

@@ -1,0 +1,214 @@
+parameters:
+  Artifacts: []
+  ArtifactName: 'not-specified'
+
+stages:
+  - stage: Signing
+    dependsOn: ${{parameters.DependsOn}}
+    jobs:
+      - deployment: SignPackage
+        environment: esrp
+        timeoutInMinutes: 20
+        pool:
+          vmImage: windows-2019
+
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+
+                - download: current
+                  artifact: ${{parameters.ArtifactName}}
+                  timeoutInMinutes: 5
+
+                - ${{ each artifact in parameters.Artifacts }}:
+                  - pwsh: |
+                      New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace) -Force
+                      Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
+                      Get-ChildItem $(Pipeline.Workspace)/staging
+                    displayName: Copying ${{artifact.name}} to staging directory
+
+                - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+
+                - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
+                  parameters:
+                    PackagesPath: $(Pipeline.Workspace)/staging
+                    BuildToolsPath: $(AzureSDKBuildToolsPath)
+
+                - publish: $(Pipeline.Workspace)/staging
+                  artifact: ${{parameters.ArtifactName}}-signed
+                  displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
+
+  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+    - ${{ each artifact in parameters.Artifacts }}:
+      - stage: Release_${{artifact.safeName}}
+        displayName: 'Release: ${{artifact.name}}'
+        dependsOn: Signing
+        condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
+        jobs:
+          - deployment: TagRepository
+            displayName: "Create release tag"
+            condition: ne(variables['Skip.TagRepository'], 'true')
+            environment: github
+
+            pool:
+              vmImage: windows-2019
+
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: self
+                    - pwsh: |
+                        Get-ChildItem $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
+                        New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
+                        Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/${{artifact.safeName}}
+                        Get-ChildItem $(Pipeline.Workspace)/${{artifact.safeName}}
+                      displayName: Stage artifacts
+                      timeoutInMinutes: 5
+                    - template: eng/pipelines/templates/steps/create-tags-and-git-release.yml@azure-sdk-tools
+                      parameters:
+                        ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
+                        PackageRepository: Nuget
+                        ReleaseSha: $(Build.SourceVersion)
+                        RepoId: Azure/azure-sdk-for-net
+
+          - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
+            - deployment: PublishPackage
+              displayName: Publish package to Nuget.org
+              condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
+              environment: nuget
+              dependsOn: TagRepository
+
+              pool:
+                vmImage: ubuntu-16.04
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: none
+                      - pwsh: |
+                          New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace)
+                          Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
+                          Get-ChildItem $(Pipeline.Workspace)/staging
+                        displayName: Copying ${{artifact.name}} to staging directory
+                      - task: NuGetCommand@2
+                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          nuGetFeedType: external
+                          publishFeedCredentials: Nuget.org
+
+          - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
+            - deployment: UploadSymbols
+              displayName: Upload Symbols to Symbols Server
+              condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
+              environment: nuget
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: none
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                      - pwsh: |
+                          New-Item -Type Directory -Name staging -Path $(Pipeline.Workspace)
+                          Copy-Item $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/staging
+                          Get-ChildItem $(Pipeline.Workspace)/staging
+                        displayName: Copying ${{artifact.name}} to staging directory
+                      - task: MSBuild@1
+                        displayName: 'Upload Symbols for ${{artifact.name}}'
+                        inputs:
+                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+                          msbuildArguments: '/p:PackagesPath=$(Pipeline.Workspace)/staging /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat) /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat) /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)'
+
+          - ${{if ne(artifact.options.skipPublishDocs, 'true')}}:
+            - deployment: PublishDocs
+              displayName: Publish Docs to GitHub pages
+              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+              environment: githubio
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: azure-sdk-tools
+                      - pwsh: |
+                          New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
+                          New-Item -Type Directory -Name packages -Path $(Pipeline.Workspace)/${{artifact.safeName}}
+                          New-Item -Type Directory -Name Docs.${{artifact.name}} -Path $(Pipeline.Workspace)/${{artifact.safeName}}
+
+                          Copy-Item -Recurse $(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}.[0-9]*.[0-9]*.[0-9]* $(Pipeline.Workspace)/${{artifact.safeName}}/packages
+                          Copy-Item -Recurse $(Pipeline.Workspace)/Docs.${{artifact.name}}/* $(Pipeline.Workspace)/${{artifact.safeName}}/Docs.${{artifact.name}}
+                        displayName: Stage artifacts
+                      - pwsh: |
+                          Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
+                        workingDirectory: $(Pipeline.Workspace)
+                        displayName: Output Visible Artifacts
+                      - template: eng/pipelines/templates/steps/publish-blobs.yml@azure-sdk-tools
+                        parameters:
+                          FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
+                          BlobSASKey: '$(azure-sdk-docs-prod-sas)'
+                          BlobName: '$(azure-sdk-docs-prod-blob-name)'
+                          TargetLanguage: 'dotnet'
+                          # we override the regular script path because we have cloned the build tools repo as a separate artifact.
+                          ScriptPath: 'scripts/powershell/copy-docs-to-blobstorage.ps1'
+
+          - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
+            - deployment: UpdatePackageVersion
+              displayName: "Update Package Version"
+              condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
+              environment: github
+              dependsOn: PublishPackage
+
+              pool:
+                vmImage: windows-2019
+
+              strategy:
+                runOnce:
+                  deploy:
+                    steps:
+                      - checkout: self
+                      - pwsh: |
+                          eng/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
+                        displayName: Increment package version
+                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                      - template: eng/pipelines/templates/steps/create-pull-request.yml@azure-sdk-tools
+                        parameters:
+                          RepoName: azure-sdk-for-net
+                          PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
+                          CommitMsg: "Increment package version after release of ${{ artifact.name }}"
+                          PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
+                          BuildToolsPath: $(AzureSDKBuildToolsPath)
+
+  - stage: Integration
+    dependsOn: Signing
+    jobs:
+    - job: PublishPackages
+      condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
+      displayName: Publish package to daily feed
+      variables:
+        BlobFeedUrl: 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
+      pool:
+        vmImage: windows-2019
+      steps:
+      - checkout: none
+      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+      - download: current
+        artifact: ${{parameters.ArtifactName}}-signed
+      - task: MSBuild@1
+        displayName: 'Publish to blobfeed'
+        inputs:
+          solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
+          msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'

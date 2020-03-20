@@ -11,9 +11,9 @@ namespace Azure.Messaging.ServiceBus.Primitives
 
     internal sealed class ConcurrentExpiringSet<TKey>
     {
-        public readonly ConcurrentDictionary<TKey, DateTime> dictionary;
+        public readonly ConcurrentDictionary<TKey, DateTimeOffset> dictionary;
 
-        public readonly ICollection<KeyValuePair<TKey, DateTime>> dictionaryAsCollection;
+        public readonly ICollection<KeyValuePair<TKey, DateTimeOffset>> dictionaryAsCollection;
 
         public readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
 
@@ -27,12 +27,12 @@ namespace Azure.Messaging.ServiceBus.Primitives
 
         public ConcurrentExpiringSet()
         {
-            this.dictionary = new ConcurrentDictionary<TKey, DateTime>();
+            this.dictionary = new ConcurrentDictionary<TKey, DateTimeOffset>();
             this.dictionaryAsCollection = dictionary;
             _ = CollectExpiredEntriesAsync(tokenSource.Token);
         }
 
-        public void AddOrUpdate(TKey key, DateTime expiration)
+        public void AddOrUpdate(TKey key, DateTimeOffset expiration)
         {
             this.ThrowIfClosed();
 
@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
         {
             this.ThrowIfClosed();
 
-            return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
+            return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTimeOffset.UtcNow;
         }
 
         public void Close()
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
                 }
 
                 var isEmpty = true;
-                var utcNow = DateTime.UtcNow;
+                var utcNow = DateTimeOffset.UtcNow;
                 foreach (var kvp in this.dictionary)
                 {
                     isEmpty = false;

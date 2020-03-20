@@ -24,15 +24,5 @@ namespace Azure.Messaging.ServiceBus.Core
                 TransportType = instance.TransportType,
                 Proxy = instance.Proxy
             };
-
-        internal static ServiceBusReceiverOptions ToServiceBusReceiverClientOptions(this ServiceBusProcessorOptions options)
-        {
-            return new ServiceBusReceiverOptions
-            {
-                ConnectionOptions = options.ConnectionOptions.Clone(),
-                RetryOptions = options.RetryOptions.Clone(),
-                ReceiveMode = options.ReceiveMode
-            };
-        }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 // If the consumer instance was not available, treat it as a closed instance for
                 // messaging consistency.
 
-                Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformation);
+                Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformationNotAvailable);
             }
 
             return new LastEnqueuedEventProperties(consumer.LastReceivedEvent);

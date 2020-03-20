@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Primitives;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -36,509 +40,343 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
         }
 
-        /// <summary>
-        ///   Indicates that an <see cref="ServiceBusConnection" /> is being created.
-        /// </summary>
-        ///
-        /// <param name="serviceBusNamespace">The Entitys namespace associated with the client.</param>
-        /// <param name="entityName">The name of the Entity associated with the client.</param>
-        ///
-        [Event(1, Level = EventLevel.Verbose, Message = "Creating EventHubClient (Namespace '{0}'; EventHub '{1}').")]
-        public void ServiceBusClientCreateStart(string serviceBusNamespace,
-                                                string entityName)
+        [Event(1, Level = EventLevel.Informational, Message = "{0}: SendAsync start. MessageCount = {1}")]
+        public void SendMessageStart(string identifier, int messageCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(1, serviceBusNamespace ?? string.Empty, entityName ?? string.Empty);
+                WriteEvent(1, identifier, messageCount);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an <see cref="ServiceBusConnection" /> was created.
-        /// </summary>
-        ///
-        /// <param name="eventHubsNamespace">The Entitys namespace associated with the client.</param>
-        /// <param name="entityName">The name of the Entity associated with the client.</param>
-        ///
-        [Event(2, Level = EventLevel.Verbose, Message = "EventHubClient created (Namespace '{0}'; EventHub '{1}').")]
-        public void ServiceBusClientCreateComplete(string eventHubsNamespace,
-                                                 string entityName)
+        [Event(2, Level = EventLevel.Informational, Message = "{0}: SendAsync done.")]
+        public void SendMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(2, eventHubsNamespace ?? string.Empty, entityName ?? string.Empty);
+                WriteEvent(2, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that the publishing of events has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity being published to.</param>
-        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
-        /// <param name="eventHash">The hash of the event or set of events being published.</param>
-        ///
-        [Event(3, Level = EventLevel.Informational, Message = "Publishing events for Entity: {0} (Partition Id/Key: '{1}', Event Hash: '{2}').")]
-        public void MessageSendStart(string entityName,
-                                      string partitionIdOrKey,
-                                      string eventHash)
+        [Event(3, Level = EventLevel.Error, Message = "{0}: SendAsync Exception: {1}.")]
+        public void SendMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(3, entityName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
+                WriteEvent(3, identifier, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that the publishing of events has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity being published to.</param>
-        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
-        /// <param name="eventHash">The hash of the event or set of events being published.</param>
-        ///
-        [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Entity: {0} (Partition Id/Key: '{1}', Event Hash: '{2}').")]
-        public void MessageSendComplete(string entityName,
-                                         string partitionIdOrKey,
-                                         string eventHash)
+        [Event(4, Level = EventLevel.Informational, Message = "{0}: CreateBatchAsync start.")]
+        public void CreateMessageBatchStart(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(4, entityName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty);
+                WriteEvent(4, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while publishing events.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity being published to.</param>
-        /// <param name="partitionIdOrKey">The identifier of a partition or the partition hash key used for publishing; identifier or key.</param>
-        /// <param name="eventHash">The hash of the event or set of events being published.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(5, Level = EventLevel.Error, Message = "An exception occurred while publishing events for Entity: {0} (Partition Id/Key: '{1}', Event Hash: '{2}'). Error Message: '{3}'")]
-        public void MessageSendError(string entityName,
-                                      string partitionIdOrKey,
-                                      string eventHash,
-                                      string errorMessage)
+        [Event(5, Level = EventLevel.Informational, Message = "{0}: CreateBatchAsync done.")]
+        public void CreateMessageBatchComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(5, entityName ?? string.Empty, partitionIdOrKey ?? string.Empty, eventHash ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(5, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that the receiving of events has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity being received from.</param>
-        ///
-        [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Entity: {0} (Consumer Group: '{1}', Partition Id: '{2}').")]
-        public void MessageReceiveStart(string entityName)
+        [Event(6, Level = EventLevel.Error, Message = "{0}: CreateBatchAsync Exception: {1}.")]
+        public void CreateMessageBatchException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, entityName ?? string.Empty);
+                WriteEvent(6, identifier, exception.ToString());
+            }
+        }
+        [Event(7, Level = EventLevel.Informational, Message = "{0}: ReceiveBatchAsync start. MessageCount = {1}")]
+        public void ReceiveMessageStart(string identifier, int messageCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(7, identifier, messageCount);
             }
         }
 
-        /// <summary>
-        ///   Indicates that the receiving of events has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity being received from.</param>
-        /// <param name="eventCount">The number of events that were received in the batch.</param>
-        ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Entity: {0} (Consumer Group: '{1}', Partition Id: '{2}').  Event Count: '{3}'")]
-        public void MessageReceiveComplete(
-            string entityName,
-            int eventCount)
+        [Event(8, Level = EventLevel.Informational, Message = "{0}: ReceiveBatchAsync done. Received '{1}' messages")]
+        public void ReceiveMessageComplete(string identifier, int messageCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, entityName ?? string.Empty, eventCount);
+                WriteEvent(8, identifier, messageCount);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while receiving events.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity being received from.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Entity: {0} (Consumer Group: '{1}', Partition Id: '{2}'). Error Message: '{3}'")]
-        public void MessageReceiveError(
-            string entityName,
-            string errorMessage)
+        [Event(9, Level = EventLevel.Error, Message = "{0}: ReceiveBatchAsync Exception: {1}.")]
+        public void ReceiveMessageException(string clientId, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(8, entityName ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(9, clientId, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that a client is closing, which may correspond to an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
-        /// </summary>
-        ///
-        /// <param name="clientType">The type of client being closed.</param>
-        /// <param name="entityName">The name of the Entity associated with the client.</param>
-        /// <param name="clientId">An identifier to associate with the client.</param>
-        ///
-        [Event(9, Level = EventLevel.Verbose, Message = "Closing an {0} (EventHub '{1}'; Identifier '{2}').")]
-        public void ClientCloseStart(Type clientType,
-                                     string entityName,
-                                     string clientId)
+        [Event(10, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync start. ScheduleTimeUtc = {1}")]
+        public void ScheduleMessageStart(string identifier, DateTimeOffset scheduledEnqueueTime)
         {
             if (IsEnabled())
             {
-                WriteEvent(9, clientType.Name, entityName ?? string.Empty, clientId ?? string.Empty);
+                WriteEvent(10, identifier, scheduledEnqueueTime.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that a client has been closed, which may correspond to an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
-        /// </summary>
-        ///
-        /// <param name="clientType">The type of client being closed.</param>
-        /// <param name="entityName">The name of the Entity associated with the client.</param>
-        /// <param name="clientId">An identifier to associate with the client.</param>
-        ///
-        [Event(10, Level = EventLevel.Verbose, Message = "An {0} has been closed (EventHub '{1}'; Identifier '{2}').")]
-        public void ClientCloseComplete(Type clientType,
-                                        string entityName,
-                                        string clientId)
+        [Event(11, Level = EventLevel.Informational, Message = "{0}: ScheduleMessageAsync done.")]
+        public void ScheduleMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(10, clientType.Name, entityName ?? string.Empty, clientId ?? string.Empty);
+                WriteEvent(11, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while closing an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
-        /// </summary>
-        ///
-        /// <param name="clientType">The type of client being closed.</param>
-        /// <param name="entityName">The name of the Entity associated with the client.</param>
-        /// <param name="clientId">An identifier to associate with the client.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(11, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (EventHub '{1}'; Identifier '{2}'). Error Message: '{3}'")]
-        public void ClientCloseError(Type clientType,
-                                     string entityName,
-                                     string clientId,
-                                     string errorMessage)
+        [Event(12, Level = EventLevel.Error, Message = "{0}: ScheduleMessageAsync Exception: {1}.")]
+        public void ScheduleMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(11, clientType.Name, entityName ?? string.Empty, clientId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(12, identifier, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that retrieval of the Entity properties has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        ///
-        [Event(12, Level = EventLevel.Informational, Message = "Retrieving properties for Entity: {0} (Partition Id: '{1}').")]
-        public void GetPropertiesStart(string entityName)
+        [Event(13, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync start. SequenceNumber = {1}")]
+        public void CancelScheduledMessageStart(string identifier, long sequenceNumber)
         {
             if (IsEnabled())
             {
-                WriteEvent(12, entityName ?? string.Empty);
+                WriteEvent(13, identifier, sequenceNumber);
             }
         }
 
-        /// <summary>
-        ///   Indicates that retrieval of the Entity properties has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        ///
-        [Event(13, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0}.")]
-        public void ScheduleMessageComplete(string entityName)
+        [Event(14, Level = EventLevel.Informational, Message = "{0}: CancelScheduledMessageAsync done.")]
+        public void CancelScheduledMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(13, entityName ?? string.Empty);
+                WriteEvent(14, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that retrieval of the Entity properties has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        ///
-        [Event(13, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0}.")]
-        public void PeekMessagesComplete(string entityName)
+        [Event(15, Level = EventLevel.Error, Message = "{0}: CancelScheduledMessageAsync Exception: {1}.")]
+        public void CancelScheduledMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(13, entityName ?? string.Empty);
+                WriteEvent(15, identifier, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that retrieval of the Entity properties has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        ///
-        [Event(13, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0}.")]
-        public void CancelScheduledMessageComplete(string entityName)
+        [Event(16, Level = EventLevel.Informational, Message = "{0}: CompleteAsync start. MessageCount = {1}, LockTokens = {2}")]
+        public void CompleteMessageStart(string identifier, int messageCount, IList<string> lockTokens)
         {
             if (IsEnabled())
             {
-                WriteEvent(13, entityName ?? string.Empty);
+                var formattedLockTokens = StringUtility.GetFormattedLockTokens(lockTokens);
+                WriteEvent(16, identifier, messageCount, formattedLockTokens);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while retrieving Entity properties.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Entity: {0}. Error Message: '{2}'")]
-        public void ScheduleMessageError(string entityName,
-                                       string errorMessage)
+        [Event(17, Level = EventLevel.Informational, Message = "{0}: CompleteAsync done.")]
+        public void CompleteMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(14, entityName ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(17, identifier);
             }
         }
 
-
-        /// <summary>
-        ///   Indicates that an exception was encountered while retrieving Entity properties.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Entity: {0}. Error Message: '{2}'")]
-        public void CancelScheduledMessageError(string entityName,
-                                       string errorMessage)
+        [Event(18, Level = EventLevel.Error, Message = "{0}: CompleteAsync Exception: {1}.")]
+        public void CompleteMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(14, entityName ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(18, identifier, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that retrieval of the Entity partition properties has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being retrieved for.</param>
-        ///
-        [Event(15, Level = EventLevel.Informational, Message = "Retrieving properties for Entity: {0} (Partition Id: '{1}').")]
-        public void GetPartitionPropertiesStart(string entityName,
-                                                string partitionId)
+        [Event(19, Level = EventLevel.Informational, Message = "{0}: DeferAsync start. MessageCount = {1}, LockToken = {2}")]
+        public void DeferMessageStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
-                WriteEvent(15, entityName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(19, identifier, messageCount, lockToken);
             }
         }
 
-        /// <summary>
-        ///   Indicates that retrieval of the Entity partition properties has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being retrieved for.</param>
-        ///
-        [Event(16, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0} (Partition Id: '{1}').")]
-        public void GetPartitionPropertiesComplete(string entityName,
-                                                   string partitionId)
+        [Event(20, Level = EventLevel.Informational, Message = "{0}: DeferAsync done.")]
+        public void DeferMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(16, entityName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(20, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while retrieving Entity partition properties.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being retrieved for.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(17, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Entity: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
-        public void GetPartitionPropertiesError(string entityName,
-                                                string partitionId,
-                                                string errorMessage)
+        [Event(21, Level = EventLevel.Error, Message = "{0}: DeferAsync Exception: {1}.")]
+        public void DeferMessageException(string identifier, Exception exception)
+        {
+            WriteEvent(21, identifier, exception.ToString());
+        }
+
+        [Event(22, Level = EventLevel.Informational, Message = "{0}: AbandonAsync start. MessageCount = {1}, LockToken = {2}")]
+        public void AbandonMessageStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
-                WriteEvent(17, entityName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(22, identifier, messageCount, lockToken);
             }
         }
 
-        /// <summary>
-        ///   Indicates that reading events from an Entity partition has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
-        ///
-        [Event(18, Level = EventLevel.Informational, Message = "Beginning to publish events to a background channel for Entity: {0} (Partition Id: '{1}').")]
-        public void PublishPartitionEventsToChannelStart(string entityName,
-                                                         string partitionId)
+        [Event(23, Level = EventLevel.Informational, Message = "{0}: AbandonAsync done.")]
+        public void AbandonMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(18, entityName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(17, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that reading events from an Entity partition has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
-        ///
-        [Event(19, Level = EventLevel.Informational, Message = "Completed publishing events to a background channel for Entity: {0} (Partition Id: '{1}').")]
-        public void PublishPartitionEventsToChannelComplete(string entityName,
-                                                            string partitionId)
+        [Event(24, Level = EventLevel.Error, Message = "{0}: AbandonAsync Exception: {1}.")]
+        public void AbandonMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(19, entityName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(24, identifier, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while reading events from an Entity partition.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(20, Level = EventLevel.Error, Message = "An exception occurred while publishing events to a background channel for Entity: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
-        public void PublishPartitionEventsToChannelError(string entityName,
-                                                         string partitionId,
-                                                         string errorMessage)
+        [Event(25, Level = EventLevel.Informational, Message = "{0}: DeadLetterAsync start. MessageCount = {1}, LockToken = {2}")]
+        public void DeadLetterMessageStart(string identifier, int messageCount, string lockToken)
         {
             if (IsEnabled())
             {
-                WriteEvent(20, entityName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
-            }
-        }
-        /// <summary>
-        ///   Indicates that reading events from an Entity partition has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
-        ///
-        [Event(21, Level = EventLevel.Informational, Message = "Beginning to read events for Entity: {0} (Partition Id: '{1}').")]
-        public void ReadEventsFromPartitionStart(string entityName,
-                                                 string partitionId)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(21, entityName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(25, identifier, messageCount, lockToken);
             }
         }
 
-        /// <summary>
-        ///   Indicates that reading events from an Entity partition has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
-        ///
-        [Event(22, Level = EventLevel.Informational, Message = "Completed reading events for Entity: {0} (Partition Id: '{1}').")]
-        public void ReadEventsFromPartitionComplete(string entityName,
-                                                    string partitionId)
+        [Event(26, Level = EventLevel.Informational, Message = "{0}: DeadLetterAsync done.")]
+        public void DeadLetterMessageComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(22, entityName ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(26, identifier);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while reading events from an Entity partition.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="partitionId">The identifier of the partition that properties are being read from.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(23, Level = EventLevel.Error, Message = "An exception occurred while reading events for Entity: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
-        public void ReadEventsFromPartitionError(string entityName,
-                                                 string partitionId,
-                                                 string errorMessage)
+        [Event(27, Level = EventLevel.Error, Message = "{0}: DeadLetterAsync Exception: {1}.")]
+        public void DeadLetterMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(23, entityName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(27, identifier, exception.ToString());
             }
         }
 
-        /// <summary>
-        ///   Indicates that reading events from all partitions of the Entity has started.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        ///
-        [Event(24, Level = EventLevel.Informational, Message = "Beginning to read events for all partitions of Entity: {0}.")]
-        public void ReadAllEventsStart(string entityName)
+        [Event(28, Level = EventLevel.Informational, Message = "{0}: MessagePeekAsync start. SequenceNumber = {1}, MessageCount = {2}")]
+        public void PeekMessageStart(string identifier, long? sequenceNumber, int messageCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(24, entityName ?? string.Empty);
+                WriteEvent(28, identifier, sequenceNumber, messageCount);
             }
         }
 
-        /// <summary>
-        ///   Indicates that reading events from all partitions of the Entity has completed.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        ///
-        [Event(25, Level = EventLevel.Informational, Message = "Completed reading events for all partitions of Entity: {0}.")]
-        public void ReadAllEventsComplete(string entityName)
+        [Event(29, Level = EventLevel.Informational, Message = "{0}: MessagePeekAsync done. Peeked '{1}' messages")]
+        public void PeekMessageComplete(string identifier, int messageCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(25, entityName ?? string.Empty);
+                WriteEvent(29, identifier, messageCount);
             }
         }
 
-        /// <summary>
-        ///   Indicates that an exception was encountered while reading events from all partitions of the Entity.
-        /// </summary>
-        ///
-        /// <param name="entityName">The name of the Entity that events are being read from.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(26, Level = EventLevel.Error, Message = "An exception occurred while reading events for all partitions of Entity: {0}. Error Message: '{1}'")]
-        public void ReadAllEventsError(string entityName,
-                                       string errorMessage)
+        [Event(30, Level = EventLevel.Error, Message = "{0}: MessagePeekAsync Exception: {1}.")]
+        public void PeekMessageException(string identifier, Exception exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(26, entityName ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(30, identifier, exception.ToString());
+            }
+        }
+
+        [Event(31, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync start. MessageCount = {1}, LockToken = {2}")]
+        public void RenewMessageLockStart(string identifier, int messageCount, string lockToken)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(31, identifier, messageCount, lockToken);
+            }
+        }
+
+        [Event(32, Level = EventLevel.Informational, Message = "{0}: RenewLockAsync done.")]
+        public void RenewMessageLockComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(32, identifier);
+            }
+        }
+
+        [Event(33, Level = EventLevel.Error, Message = "{0}: RenewLockAsync Exception: {1}.")]
+        public void RenewMessageLockException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(33, identifier, exception.ToString());
+            }
+        }
+
+        [Event(34, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync start. MessageCount = {1}, LockTokens = {2}")]
+        public void ReceiveDeferredMessageStart(string identifier, int messageCount, IEnumerable<long> sequenceNumbers)
+        {
+            if (IsEnabled())
+            {
+                var formattedSequenceNumbers = StringUtility.GetFormattedSequenceNumbers(sequenceNumbers);
+                WriteEvent(34, identifier, messageCount, formattedSequenceNumbers);
+            }
+        }
+
+        [Event(35, Level = EventLevel.Informational, Message = "{0}: ReceiveDeferredMessageAsync done. Received '{1}' messages")]
+        public void ReceiveDeferredMessageStop(string identifier, int messageCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(35, identifier, messageCount);
+            }
+        }
+
+        [Event(36, Level = EventLevel.Error, Message = "{0}: ReceiveDeferredMessageAsync Exception: {1}.")]
+        public void ReceiveDeferredMessageException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(36, identifier, exception, ToString());
+            }
+        }
+
+        [Event(37, Level = EventLevel.Error, Message = "Link state lost. Throwing LockLostException for identifier: {0}, receiveLinkName: {1}, receiveLinkState: {2}, isSessionReceiver: {3}, exception: {4}.")]
+        public void LinkStateLost(string identifier, string receiveLinkName, AmqpObjectState receiveLinkState, bool isSessionReceiver, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(37, identifier, receiveLinkName, receiveLinkState.ToString(), isSessionReceiver, exception.ToString());
+            }
+        }
+
+        [Event(38, Level = EventLevel.Error, Message = "SessionReceiver Link Closed. identifier: {0}, SessionId: {1}, linkException: {2}.")]
+        public void SessionReceiverLinkClosed(string identifier, string sessionId, Exception linkException)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(38, identifier, sessionId, linkException.ToString());
             }
         }
 
@@ -546,16 +384,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Indicates that refreshing authorization for an AMQP link has started.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the Entity that the link is associated with.</param>
+        /// <param name="identifier">The name of the Entity that the link is associated with.</param>
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         ///
-        [Event(27, Level = EventLevel.Informational, Message = "Beginning refresh of AMQP link authorization for Entity: {0} (Service Endpoint: '{1}').")]
-        public void AmqpLinkAuthorizationRefreshStart(string entityName,
+        [Event(39, Level = EventLevel.Informational, Message = "Beginning refresh of AMQP link authorization for Identifier: {0} (Service Endpoint: '{1}').")]
+        public void AmqpLinkAuthorizationRefreshStart(string identifier,
                                                       string endpoint)
         {
             if (IsEnabled())
             {
-                WriteEvent(27, entityName ?? string.Empty, endpoint ?? string.Empty);
+                WriteEvent(39, identifier ?? string.Empty, endpoint ?? string.Empty);
             }
         }
 
@@ -563,16 +401,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Indicates that refreshing authorization for an AMQP link has completed.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the Entity that the link is associated with.</param>
+        /// <param name="identifier">The name of the Entity that the link is associated with.</param>
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         ///
-        [Event(28, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Entity: {0} (Service Endpoint: '{1}').")]
-        public void AmqpLinkAuthorizationRefreshComplete(string entityName,
+        [Event(40, Level = EventLevel.Informational, Message = "Completed refresh of AMQP link authorization for Identifier: {0} (Service Endpoint: '{1}').")]
+        public void AmqpLinkAuthorizationRefreshComplete(string identifier,
                                                          string endpoint)
         {
             if (IsEnabled())
             {
-                WriteEvent(28, entityName ?? string.Empty, endpoint ?? string.Empty);
+                WriteEvent(40, identifier ?? string.Empty, endpoint ?? string.Empty);
             }
         }
 
@@ -580,18 +418,18 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Indicates that an exception was encountered while refreshing authorization for an AMQP link has started.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the Entity that the link is associated with.</param>
+        /// <param name="identifier">The name of the Entity that the link is associated with.</param>
         /// <param name="endpoint">The service endpoint that the link is bound to for communication.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(29, Level = EventLevel.Error, Message = "An exception occurred while refreshing AMQP link authorization for Entity: {0} (Service Endpoint: '{1}'). Error Message: '{2}'")]
-        public void AmqpLinkAuthorizationRefreshError(string entityName,
+        [Event(41, Level = EventLevel.Error, Message = "An exception occurred while refreshing AMQP link authorization for Identifier: {0} (Service Endpoint: '{1}'). Error Message: '{2}'")]
+        public void AmqpLinkAuthorizationRefreshError(string identifier,
                                                       string endpoint,
                                                       string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(29, entityName ?? string.Empty, endpoint ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(41, identifier ?? string.Empty, endpoint ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -602,13 +440,160 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(100, Level = EventLevel.Error, Message = "An unexpected exception was encountered. Error Message: '{0}'")]
+        [Event(42, Level = EventLevel.Error, Message = "An unexpected exception was encountered. Error Message: '{0}'")]
         public void UnexpectedException(string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(100, errorMessage);
+                WriteEvent(42, errorMessage);
             }
         }
+
+        [Event(43, Level = EventLevel.Warning, Message = "RunOperation encountered an exception and will retry. Exception: {0}")]
+        public void RunOperationExceptionEncountered(Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(43, exception.ToString());
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that a client is closing, which may correspond to an <see cref="ServiceBusConnection" />,
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <see cref="ServiceBusReceiver"/>.
+        /// </summary>
+        ///
+        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="identifier">An identifier to associate with the client.</param>
+        ///
+        [Event(44, Level = EventLevel.Verbose, Message = "Closing an {0} (Identifier '{1}').")]
+        public void ClientCloseStart(Type clientType,
+                                     string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(44, clientType.Name, identifier ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that a client has been closed, which may correspond to an <see cref="ServiceBusConnection" />,
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
+        /// </summary>
+        ///
+        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="identifier">An identifier to associate with the client.</param>
+        ///
+        [Event(45, Level = EventLevel.Verbose, Message = "An {0} has been closed (Identifier '{1}').")]
+        public void ClientCloseComplete(Type clientType,
+                                        string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(45, clientType.Name, identifier ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while closing an <see cref="ServiceBusConnection" />,
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusProcessor" />, or <c>EventProcessorClient</c>.
+        /// </summary>
+        ///
+        /// <param name="clientType">The type of client being closed.</param>
+        /// <param name="identifier">An identifier to associate with the client.</param>
+        /// <param name="exception">The message for the exception that occurred.</param>
+        ///
+        [Event(46, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (Identifier '{2}'). Error Message: '{3}'")]
+        public void ClientCloseException(Type clientType,
+                                     string identifier,
+                                     Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(46, clientType.Name, identifier, exception.ToString());
+            }
+        }
+
+        [Event(47, Level = EventLevel.Informational, Message = "{0}: RenewSessionLockAsync start. SessionId = {1}")]
+        public void RenewSessionLockStart(string identifier, string sessionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(47, identifier, sessionId);
+            }
+        }
+
+        [Event(48, Level = EventLevel.Informational, Message = "{0}: RenewSessionLockAsync done.")]
+        public void RenewSessionLockComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(48, identifier);
+            }
+        }
+
+        [Event(49, Level = EventLevel.Error, Message = "{0}: RenewSessionLockAsync Exception: {1}.")]
+        public void RenewSessionLockException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(49, identifier, exception.ToString());
+            }
+        }
+
+        [Event(50, Level = EventLevel.Informational, Message = "{0}: StartProcessingAsync start.")]
+        public void StartProcessingStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(50, identifier);
+            }
+        }
+
+        [Event(51, Level = EventLevel.Informational, Message = "{0}: StartProcessingAsync done.")]
+        public void StartProcessingComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(51, identifier);
+            }
+        }
+
+        [Event(52, Level = EventLevel.Error, Message = "{0}: StartProcessingAsync Exception: {1}.")]
+        public void StartProcessingException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(52, identifier, exception.ToString());
+            }
+        }
+
+        [Event(53, Level = EventLevel.Informational, Message = "{0}: StopProcessingAsync start.")]
+        public void StopProcessingStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(53, identifier);
+            }
+        }
+
+        [Event(54, Level = EventLevel.Informational, Message = "{0}: StopProcessingAsync done.")]
+        public void StopProcessingComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(54, identifier);
+            }
+        }
+
+        [Event(55, Level = EventLevel.Error, Message = "{0}: StopProcessingAsync Exception: {1}.")]
+        public void StopProcessingException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(55, identifier, exception.ToString());
+            }
+        }
+
     }
 }

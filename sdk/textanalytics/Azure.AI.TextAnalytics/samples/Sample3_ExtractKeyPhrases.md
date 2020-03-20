@@ -4,12 +4,12 @@ This sample demonstrates how to extract key phrases from one or more documents. 
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating a `TextAnalyticsApiKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample3CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Extracting key phrases from a single document
@@ -19,10 +19,9 @@ To extract key phrases from a document, use the `ExtractKeyPhrases` method.  The
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
 
-Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
-IEnumerable<string> keyPhrases = response.Value;
+IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
 
-Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
+Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
 {
     Console.WriteLine(keyPhrase);

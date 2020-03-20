@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,15 +43,21 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// token-based authentication.</param>
         /// <param name="networkAcls">A collection of rules governing the
         /// accessibility from specific network locations.</param>
+        /// <param name="encryption">The encryption properties for this
+        /// resource.</param>
+        /// <param name="userOwnedStorage">The storage accounts for this
+        /// resource.</param>
         /// <param name="apiProperties">The api properties for special
         /// APIs.</param>
-        public CognitiveServicesAccountProperties(string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), CognitiveServicesAccountApiProperties apiProperties = default(CognitiveServicesAccountApiProperties))
+        public CognitiveServicesAccountProperties(string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Encryption encryption = default(Encryption), IList<UserOwnedStorage> userOwnedStorage = default(IList<UserOwnedStorage>), CognitiveServicesAccountApiProperties apiProperties = default(CognitiveServicesAccountApiProperties))
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
             InternalId = internalId;
             CustomSubDomainName = customSubDomainName;
             NetworkAcls = networkAcls;
+            Encryption = encryption;
+            UserOwnedStorage = userOwnedStorage;
             ApiProperties = apiProperties;
             CustomInit();
         }
@@ -94,23 +102,22 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public NetworkRuleSet NetworkAcls { get; set; }
 
         /// <summary>
+        /// Gets or sets the encryption properties for this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public Encryption Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage accounts for this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "userOwnedStorage")]
+        public IList<UserOwnedStorage> UserOwnedStorage { get; set; }
+
+        /// <summary>
         /// Gets or sets the api properties for special APIs.
         /// </summary>
         [JsonProperty(PropertyName = "apiProperties")]
         public CognitiveServicesAccountApiProperties ApiProperties { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ApiProperties != null)
-            {
-                ApiProperties.Validate();
-            }
-        }
     }
 }

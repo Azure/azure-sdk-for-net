@@ -42,6 +42,13 @@ namespace Microsoft.Azure.EventGrid
             // Event Hub events
             { EventTypes.EventHubCaptureFileCreatedEvent, typeof(EventHubCaptureFileCreatedEventData) },
 
+            // MachineLearningServices events
+            { EventTypes.MachineLearningServicesDatasetDriftDetectedEvent, typeof(MachineLearningServicesDatasetDriftDetectedEventData) },
+            { EventTypes.MachineLearningServicesModelDeployedEvent, typeof(MachineLearningServicesModelDeployedEventData) },
+            { EventTypes.MachineLearningServicesModelRegisteredEvent, typeof(MachineLearningServicesModelRegisteredEventData) },
+            { EventTypes.MachineLearningServicesRunCompletedEvent, typeof(MachineLearningServicesRunCompletedEventData) },
+            { EventTypes.MachineLearningServicesRunStatusChangedEvent, typeof(MachineLearningServicesRunStatusChangedEventData) },
+
             // Maps events
             { EventTypes.MapsGeofenceEnteredEvent, typeof(MapsGeofenceEnteredEventData) },
             { EventTypes.MapsGeofenceExitedEvent, typeof(MapsGeofenceExitedEventData) },

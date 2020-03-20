@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <Version>12.1.0-preview.1</Version>
+    <Version>13.1.0-preview.1</Version>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft Azure Batch</AssemblyTitle>

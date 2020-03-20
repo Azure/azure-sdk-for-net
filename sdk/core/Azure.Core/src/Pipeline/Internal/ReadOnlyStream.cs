@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
 
         public override void Flush()
         {
-            throw new NotSupportedException();
+            // Flush is allowed on read-only stream
         }
     }
 }

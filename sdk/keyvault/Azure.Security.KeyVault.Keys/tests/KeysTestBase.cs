@@ -12,6 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
+    [ClientTestFixture(
+        KeyClientOptions.ServiceVersion.V7_0,
+        KeyClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase
     {
@@ -26,9 +29,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
+        private readonly KeyClientOptions.ServiceVersion _serviceVersion;
 
-        protected KeysTestBase(bool isAsync) : base(isAsync)
+        protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         internal KeyClient GetClient(TestRecording recording = null)
@@ -44,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 new KeyClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new KeyClientOptions())),
+                    recording.InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
                 interceptors);
         }
 

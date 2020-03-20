@@ -8,7 +8,7 @@ using Azure.Messaging.EventHubs.Core;
 namespace Azure.Messaging.EventHubs.Consumer
 {
     /// <summary>
-    ///   The set of options that can be specified when creating a <see cref="EventHubConsumerClient" />
+    ///   The set of options that can be specified when creating an <see cref="EventHubConsumerClient" />
     ///   to configure its behavior.
     /// </summary>
     ///

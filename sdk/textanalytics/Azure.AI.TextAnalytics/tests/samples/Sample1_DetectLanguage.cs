@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample1CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
             #region Snippet:DetectLanguage
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             DetectedLanguage language = client.DetectLanguage(input);
 
-            Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
+            Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
             #endregion
         }
     }

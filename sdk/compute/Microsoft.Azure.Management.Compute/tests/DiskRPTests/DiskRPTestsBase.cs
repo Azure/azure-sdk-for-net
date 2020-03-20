@@ -595,7 +595,7 @@ namespace Compute.Tests.DiskRPTests
 
             Disk disk = GenerateBaseDisk(diskCreateOption);
             disk.CreationData.SourceUri = uri;
-            disk.CreationData.StorageAccountId = "subscriptions/" + subscription + "/resourceGroups/" + rgName + "/providers/Microsoft.Storage/storageAccounts/" + storageAccountName;
+            disk.CreationData.StorageAccountId = "/subscriptions/" + subscription + "/resourceGroups/" + rgName + "/providers/Microsoft.Storage/storageAccounts/" + storageAccountName;
             return disk;
         }
 
@@ -642,7 +642,7 @@ namespace Compute.Tests.DiskRPTests
             return des;
         }
 
-        protected Disk GenerateBaseDisk(string diskCreateOption)
+        public Disk GenerateBaseDisk(string diskCreateOption)
         {
             var disk = new Disk
             {
@@ -734,8 +734,8 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(creationDataExp.StorageAccountId, creationDataAct.StorageAccountId);
 
             // Image reference
-            ImageDiskReference imgRefExp = creationDataExp.ImageReference;
-            ImageDiskReference imgRefAct = creationDataAct.ImageReference;
+            ImageDiskReference imgRefExp = creationDataExp.GalleryImageReference ?? creationDataExp.ImageReference;
+            ImageDiskReference imgRefAct = creationDataAct.GalleryImageReference ?? creationDataAct.ImageReference;
             if (imgRefExp != null)
             {
                 Assert.Equal(imgRefExp.Id, imgRefAct.Id);
@@ -778,6 +778,18 @@ namespace Compute.Tests.DiskRPTests
                 {
                     Assert.Equal(diskExpected.DiskMBpsReadWrite, diskActual.DiskMBpsReadWrite);
                 }
+                if (diskExpected.DiskIOPSReadOnly != null)
+                {
+                    Assert.Equal(diskExpected.DiskIOPSReadOnly, diskActual.DiskIOPSReadOnly);
+                }
+                if (diskExpected.DiskMBpsReadOnly != null)
+                {
+                    Assert.Equal(diskExpected.DiskMBpsReadOnly, diskActual.DiskMBpsReadOnly);
+                }
+                if (diskExpected.MaxShares != null)
+                {
+                    Assert.Equal(diskExpected.MaxShares, diskActual.MaxShares);
+                }
             }
 
             // Creation data
@@ -790,8 +802,8 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(creationDataExp.StorageAccountId, creationDataAct.StorageAccountId);
 
             // Image reference
-            ImageDiskReference imgRefExp = creationDataExp.ImageReference;
-            ImageDiskReference imgRefAct = creationDataAct.ImageReference;
+            ImageDiskReference imgRefExp = creationDataExp.GalleryImageReference ?? creationDataExp.ImageReference;
+            ImageDiskReference imgRefAct = creationDataAct.GalleryImageReference ?? creationDataAct.ImageReference;
             if (imgRefExp != null)
             {
                 Assert.Equal(imgRefExp.Id, imgRefAct.Id);

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
@@ -11,8 +10,6 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -44,7 +41,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         public bool IsClosed => _innerClient.IsClosed;
 
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   The endpoint for the Service Bus service to which the connection is associated.
@@ -59,14 +56,30 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ServiceBusTransportType TransportType { get; }
 
+        /// <summary>
+        /// The retry options associated with this connection.
+        /// </summary>
+        public virtual ServiceBusRetryOptions RetryOptions { get; }
+
         private readonly TransportClient _innerClient;
+
+        /// <summary>
+        ///   The set of client options used for creation of client.
+        /// </summary>
+        ///
+        internal ServiceBusClientOptions Options { get; set; }
+
+        /// <summary>
+        /// Parameterless constructor to allow mocking.
+        /// </summary>
+        internal ServiceBusConnection() { }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
-        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
@@ -76,28 +89,40 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal ServiceBusConnection(
             string connectionString,
-            ServiceBusClientOptions connectionOptions = default)
+            ServiceBusClientOptions options)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusClientOptions();
+            options = options?.Clone() ?? new ServiceBusClientOptions();
 
-            ValidateConnectionOptions(connectionOptions);
-            var builder = new ServiceBusConnectionStringBuilder(connectionString);
+            ValidateConnectionOptions(options);
+            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
-            FullyQualifiedNamespace = builder.FullyQualifiedNamespace;
-            TransportType = connectionOptions.TransportType;
-            EntityName = builder.EntityName;
+            if (string.IsNullOrEmpty(connectionStringProperties.Endpoint?.Host)
+                || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)
+                || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKey))
+            {
+                throw new ArgumentException(Resources1.MissingConnectionInformation, nameof(connectionString));
+            }
+
+            FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
+            TransportType = options.TransportType;
+            EntityPath = connectionStringProperties.EntityPath;
+            Options = options;
+            RetryOptions = options.RetryOptions;
+
             var sharedAccessSignature = new SharedAccessSignature
             (
-                 BuildAudienceResource(connectionOptions.TransportType, FullyQualifiedNamespace, EntityName),
-                 builder.SasKeyName,
-                 builder.SasKey
+                 BuildAudienceResource(options.TransportType, FullyQualifiedNamespace, EntityPath),
+                 connectionStringProperties.SharedAccessKeyName,
+                 connectionStringProperties.SharedAccessKey
             );
 
-            var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
-            var tokenCredentials = new ServiceBusTokenCredential(sharedCredentials, BuildAudienceResource(connectionOptions.TransportType, FullyQualifiedNamespace, EntityName));
-            _innerClient = CreateTransportClient(tokenCredentials, connectionOptions);
+            var sharedCredential = new SharedAccessSignatureCredential(sharedAccessSignature);
+            var tokenCredential = new ServiceBusTokenCredential(
+                sharedCredential,
+                BuildAudienceResource(TransportType, FullyQualifiedNamespace, EntityPath));
+            _innerClient = CreateTransportClient(tokenCredential, options);
         }
 
 
@@ -107,34 +132,36 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
+        /// <param name="options">A set of options to apply when configuring the connection.</param>
         ///
         internal ServiceBusConnection(
-                    string fullyQualifiedNamespace,
-                    TokenCredential credential,
-                    ServiceBusClientOptions connectionOptions = default)
+            string fullyQualifiedNamespace,
+            TokenCredential credential,
+            ServiceBusClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            connectionOptions = connectionOptions?.Clone() ?? new ServiceBusClientOptions();
-            ValidateConnectionOptions(connectionOptions);
+            options = options?.Clone() ?? new ServiceBusClientOptions();
+            ValidateConnectionOptions(options);
             switch (credential)
             {
                 case SharedAccessSignatureCredential _:
                     break;
 
                 case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, EntityName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
                     break;
             }
 
-            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, EntityName));
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(options.TransportType, fullyQualifiedNamespace, EntityPath));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
-            TransportType = connectionOptions.TransportType;
+            TransportType = options.TransportType;
+            Options = options;
+            RetryOptions = options.RetryOptions;
 
-            _innerClient = CreateTransportClient(tokenCredential, connectionOptions);
+            _innerClient = CreateTransportClient(tokenCredential, options);
         }
 
         /// <summary>
@@ -145,25 +172,8 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), "", FullyQualifiedNamespace);
-
-            try
-            {
-                await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusConnection), "", FullyQualifiedNamespace, ex.Message);
-                throw;
-            }
-            finally
-            {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), "", FullyQualifiedNamespace);
-            }
-        }
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default) =>
+            await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
 
 
         /// <summary>
@@ -207,66 +217,22 @@ namespace Azure.Messaging.ServiceBus
         internal TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
             _innerClient.CreateSender(entityName, retryPolicy);
 
-        internal TransportReceiver CreateTransportReceiver(
-            string entityName,
+        internal virtual TransportReceiver CreateTransportReceiver(
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
             uint prefetchCount,
+            string identifier,
             string sessionId = default,
             bool isSessionReceiver = default) =>
                 _innerClient.CreateReceiver(
-                    entityName,
+                    entityPath,
                     retryPolicy,
                     receiveMode,
                     prefetchCount,
+                    identifier,
                     sessionId,
                     isSessionReceiver);
-
-        ///// <summary>
-        /////   Creates a producer strongly aligned with the active protocol and transport,
-        /////   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
-        ///// </summary>
-        ///// <param name="entityName"></param>
-        ///// <param name="entityConnectionString"></param>
-        /////
-        ///// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /////
-        ///// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
-        /////
-        //internal virtual TransportSender CreateTransportProducer(
-        //    ServiceBusRetryPolicy retryPolicy,
-        //    string entityName = default,
-        //    string entityConnectionString = default)
-        //{
-        //    CreateTransportClient(entityName, entityConnectionString, _connectionOptions);
-        //    Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
-        //    return InnerClient.CreateSender(retryPolicy);
-        //}
-
-        ///// <summary>
-        /////   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        /////   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
-        ///// </summary>
-        /////
-        ///// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        ///// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
-        ///// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
-        ///// <param name="sessionId"></param>
-        ///// <param name="isSessionReceiver"></param>
-        /////
-        ///// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
-        /////
-        //internal virtual TransportConsumer CreateTransportConsumer(
-        //    ServiceBusRetryPolicy retryPolicy,
-        //    ReceiveMode receiveMode = default,
-        //    int? prefetchCount = default,
-        //    string sessionId = default,
-        //    bool isSessionReceiver = default)
-        //{
-        //    Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-        //    return InnerClient.CreateConsumer(retryPolicy, receiveMode, prefetchCount, sessionId, isSessionReceiver);
-        //}
 
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the
@@ -286,7 +252,9 @@ namespace Azure.Messaging.ServiceBus
         ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the caller.
         /// </remarks>
         ///
-        internal virtual TransportClient CreateTransportClient(ServiceBusTokenCredential credential, ServiceBusClientOptions options)
+        internal virtual TransportClient CreateTransportClient(
+            ServiceBusTokenCredential credential,
+            ServiceBusClientOptions options)
         {
             switch (TransportType)
             {
@@ -331,43 +299,6 @@ namespace Azure.Messaging.ServiceBus
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
 
-        ///// <summary>
-        /////   Performs the actions needed to validate the set of properties for connecting to the
-        /////   Service Bus service, as passed to this client during creation.
-        ///// </summary>
-        /////
-        ///// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        ///// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
-        /////
-        ///// <remarks>
-        /////   In the case that the properties violate an invariant or otherwise represent a combination that
-        /////   is not permissible, an appropriate exception will be thrown.
-        ///// </remarks>
-        /////
-        //private static void ValidateConnectionProperties(ConnectionStringProperties properties,
-        //                                                 string connectionStringArgumentName)
-        //{
-        //    // The Service Bus entity name may only be specified in one of the possible forms, either as part of the
-        //    // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
-        //    // value, then do not consider this a failure.
-
-        //    if ((!string.IsNullOrEmpty(properties.EntityName))
-        //        && (!string.Equals(properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
-        //    {
-        //        throw new ArgumentException(Resources1.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
-        //    }
-
-        //    // Ensure that each of the needed components are present for connecting.
-
-        //    if (
-        //          (string.IsNullOrEmpty(properties.Endpoint?.Host))
-        //        || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
-        //        || (string.IsNullOrEmpty(properties.SharedAccessKey)))
-        //    {
-        //        throw new ArgumentException(Resources1.MissingConnectionInformation, connectionStringArgumentName);
-        //    }
-        //}
-
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="ServiceBusClientOptions" /> associated
         ///   with this client.
@@ -394,6 +325,17 @@ namespace Azure.Messaging.ServiceBus
             if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.Proxy != null))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources1.ProxyMustUseWebSockets), nameof(connectionOptions));
+            }
+        }
+
+        /// <summary>
+        /// Throw an ObjectDisposedException if the object is Closing.
+        /// </summary>
+        internal virtual void ThrowIfClosed()
+        {
+            if (IsClosed)
+            {
+                throw new ObjectDisposedException($"{nameof(ServiceBusConnection)} has already been closed. Please create a new instance");
             }
         }
     }

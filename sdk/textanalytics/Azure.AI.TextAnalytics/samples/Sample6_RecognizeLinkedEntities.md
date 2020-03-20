@@ -3,12 +3,12 @@ This sample demonstrates how to recognize linked entities in one or more documen
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize linked entities in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development. In the sample below, however, you'll use a Text Analytics API key credential by creating a `TextAnalyticsApiKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to recognize linked entities in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development. In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample6CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing linked entities in a single document
@@ -18,16 +18,15 @@ To recognize linked entities in a document, use the `RecognizeLinkedEntities` me
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<LinkedEntity>> response = client.RecognizeLinkedEntities(input);
-IEnumerable<LinkedEntity> linkedEntities = response.Value;
+IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(input).Value;
 
-Console.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
+Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
 {
     Console.WriteLine($"Name: {linkedEntity.Name}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
-        Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score:0.00}, Offset: {match.GraphemeOffset}, Length: {match.GraphemeLength}.");
+        Console.WriteLine($"    Match Text: {match.Text}, Confidence score: {match.ConfidenceScore}");
     }
 }
 ```

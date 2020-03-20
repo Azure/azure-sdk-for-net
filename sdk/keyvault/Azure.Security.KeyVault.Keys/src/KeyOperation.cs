@@ -54,6 +54,11 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyOperation UnwrapKey { get; } = new KeyOperation("unwrapKey");
 
         /// <summary>
+        /// Gets a value that indicates the key can be imported during creation using the <see cref="KeyClient.ImportKeyAsync(ImportKeyOptions, System.Threading.CancellationToken)"/> or <see cref="KeyClient.ImportKey(ImportKeyOptions, System.Threading.CancellationToken)"/> methods.
+        /// </summary>
+        public static KeyOperation Import { get; } = new KeyOperation("import");
+
+        /// <summary>
         /// Determines if two <see cref="KeyOperation"/> values are the same.
         /// </summary>
         /// <param name="left">The first <see cref="KeyOperation"/> to compare.</param>
