@@ -11,33 +11,51 @@ jobs:
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
           CloudType: public
+          AdditionalParameters: $(publicAdditionalParameters)
+          Location:$(publicLocation)
         Windows_NetCoreApp (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           CloudType: public
+          AdditionalParameters: $(publicAdditionalParameters)
+          Location: $(publicLocation)
         Windows_NetFramework (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           CloudType: public
+          AdditionalParameters: $(publicAdditionalParameters)
+          Location: $(publicLocation)
         MacOs (Public):
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
           CloudType: public
+          AdditionalParameters: $(publicAdditionalParameters)
+          Location: $(publicLocation)
         Windows_NetCoreApp (Gov):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           CloudType: gov
+          AdditionalParameters: $(govAdditionalParameters)
+          Location: $(govLocation)
         Windows_NetFramework (Gov):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           CloudType: gov
+          AdditionalParameters: $(govAdditionalParameters)
+          Location: $(govLocation)
     pool:
       vmImage: $(OSVmImage)
+
+    variables:
+      publicAdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com' }"
+      publicLocation: westus2
+      govAdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com' }"
+      govLocation: usgovvirginia
 
     steps:
       - task: DotNetCoreInstaller@2
@@ -67,46 +85,13 @@ jobs:
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
-      - template: ../common/TestResources/deploy-test-resources.yml
+      - template: templates/steps/deploy-soverign-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-          TenantId: $(aad-azure-sdk-test-tenant-id)
-          TestApplicationId: $(aad-azure-sdk-test-client-id)
-          TestApplicationSecret: $(aad-azure-sdk-test-client-secret)
-          TestApplicationObjectId: $(aad-azure-sdk-test-client-oid)
-          ProvisionerApplicationId: $(provisioner-aad-id)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret)
-          AdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com' }"
-          Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
-
-      - template: ../common/TestResources/deploy-test-resources.yml
-        parameters:
-          ServiceDirectory: $(Build.SourcesDirectory)/common/SmokeTests/
-          TenantId: $(aad-azure-sdk-test-tenant-id-gov)
-          TestApplicationId: $(aad-azure-sdk-test-client-id-gov)
-          TestApplicationSecret: $(aad-azure-sdk-test-client-secret-gov)
-          TestApplicationObjectId: $(aad-azure-sdk-test-client-oid-gov)
-          ProvisionerApplicationId: $(provisioner-aad-id-gov)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
-          AdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/' }"
-          Location: usgovvirginia
-          Environment: AzureUSGovernment
-          Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+          AdditionalParameters: $(AdditionalParameters)
+          Location: $(Location)
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
 
-      - template: ../common/TestResources/remove-test-resources.yml
-        parameters:
-          TenantId: $(aad-azure-sdk-test-tenant-id)
-          ProvisionerApplicationId: $(provisioner-aad-id)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret)
-          Condition: eq(variables['CloudType'], 'public')
-
-      - template: ../common/TestResources/remove-test-resources.yml
-        parameters:
-          TenantId: $(aad-azure-sdk-test-tenant-id-gov)
-          ProvisionerApplicationId: $(provisioner-aad-id-gov)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
-          Environment: AzureUSGovernment
-          Condition: eq(variables['CloudType'], 'gov')
+      - template: templates/steps/remove-soverign-resources.yml

@@ -1,0 +1,33 @@
+parameters:
+  ServiceDirectory: not-set
+  AdditionalParameters: ''
+  Location: 'westus2'
+
+steps:
+  - template: ../../../common/TestResources/deploy-test-resources.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      TenantId: $(aad-azure-sdk-test-tenant-id)
+      TestApplicationId: $(aad-azure-sdk-test-client-id)
+      TestApplicationSecret: $(aad-azure-sdk-test-client-secret)
+      TestApplicationObjectId: $(aad-azure-sdk-test-client-oid)
+      ProvisionerApplicationId: $(provisioner-aad-id)
+      ProvisionerApplicationSecret: $(provisioner-aad-secret)
+      AdditionalParameters: ${{ parameters.AdditionalParameters }}
+      Location: ${{ parameters.Location }}
+      Environment:
+      Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
+
+  - template: ../../../common/TestResources/deploy-test-resources.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      TenantId: $(aad-azure-sdk-test-tenant-id-gov)
+      TestApplicationId: $(aad-azure-sdk-test-client-id-gov)
+      TestApplicationSecret: $(aad-azure-sdk-test-client-secret-gov)
+      TestApplicationObjectId: $(aad-azure-sdk-test-client-oid-gov)
+      ProvisionerApplicationId: $(provisioner-aad-id-gov)
+      ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
+      AdditionalParameters: ${{ parameters.AdditionalParameters }}
+      Location: ${{ parameters.Location }}
+      Environment: AzureUSGovernment
+      Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
