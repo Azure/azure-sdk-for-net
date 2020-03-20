@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:RecognizeEntities
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+            string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input).Value;
+            IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
 
             Console.WriteLine($"Recognized {entities.Count} entities:");
             foreach (CategorizedEntity entity in entities)

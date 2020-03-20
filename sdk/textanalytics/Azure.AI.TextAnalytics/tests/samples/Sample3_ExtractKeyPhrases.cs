@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:ExtractKeyPhrases
-            string input = "My cat might need to see a veterinarian.";
+            string document = "My cat might need to see a veterinarian.";
 
-            IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
+            IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
 
             Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
             foreach (string keyPhrase in keyPhrases)

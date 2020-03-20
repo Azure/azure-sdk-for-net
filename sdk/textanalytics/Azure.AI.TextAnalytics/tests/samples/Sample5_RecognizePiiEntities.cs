@@ -23,9 +23,9 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:RecognizePiiEntities
-            string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
+            string document = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-            IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Value;
+            IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(document).Value;
 
             Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
             foreach (PiiEntity entity in entities)

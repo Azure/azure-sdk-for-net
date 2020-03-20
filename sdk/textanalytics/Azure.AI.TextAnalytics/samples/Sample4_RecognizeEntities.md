@@ -16,9 +16,9 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To recognize entities in a document, use the `RecognizeEntities` method.  The returned type is the collection of `CategorizedEntity` that were recognized in the document.
 
 ```C# Snippet:RecognizeEntities
-string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input).Value;
+IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
 
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
@@ -32,13 +32,13 @@ foreach (CategorizedEntity entity in entities)
 To recognize entities in multiple documents, call `RecognizeEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
+RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(documents);
 ```
 
 To recognize entities in a collection of documents in different languages, call `RecognizeEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
-var inputs = new List<TextDocumentInput>
+var documents = new List<TextDocumentInput>
 {
     new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
     {
@@ -54,7 +54,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:
