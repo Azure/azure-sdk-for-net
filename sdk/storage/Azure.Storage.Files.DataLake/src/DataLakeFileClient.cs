@@ -861,9 +861,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override Response<PathAccessControl> GetAccessControl(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -920,9 +918,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override async Task<Response<PathAccessControl>> GetAccessControlAsync(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -983,9 +979,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override Response<PathInfo> SetAccessControlList(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
             string group = default,
@@ -1047,9 +1041,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override async Task<Response<PathInfo>> SetAccessControlListAsync(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
             string group = default,
@@ -1114,9 +1106,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override Response<PathInfo> SetPermissions(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             PathPermissions permissions,
             string owner = default,
             string group = default,
@@ -1179,9 +1169,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             PathPermissions permissions,
             string owner = default,
             string group = default,
@@ -1291,9 +1279,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override async Task<Response<PathProperties>> GetPropertiesAsync(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -1346,9 +1332,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override Response<PathInfo> SetHttpHeaders(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1400,9 +1384,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override async Task<Response<PathInfo>> SetHttpHeadersAsync(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1457,9 +1439,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override Response<PathInfo> SetMetadata(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1511,9 +1491,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0003 // DO make service methods virtual.
         public override async Task<Response<PathInfo>> SetMetadataAsync(
-#pragma warning restore AZC0003 // DO make service methods virtual.
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -2084,7 +2062,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<FileDownloadInfo> Read()
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
@@ -2109,7 +2086,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="ReadAsync()"/> operation downloads a file from
@@ -2126,7 +2102,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<FileDownloadInfo>> ReadAsync()
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Read)}");
@@ -2152,7 +2127,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The <see cref="Read(CancellationToken)"/> operation downloads a file from

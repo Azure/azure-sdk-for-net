@@ -3465,6 +3465,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
@@ -3488,6 +3489,7 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
@@ -3515,6 +3517,7 @@ namespace Azure.Storage.Blobs
                         resourceUri,
                         version,
                         snapshot,
+                        versionId,
                         timeout,
                         range,
                         leaseId,
@@ -3565,6 +3568,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
@@ -3584,6 +3588,7 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 string range = default,
                 string leaseId = default,
@@ -3616,6 +3621,7 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.RequestMethod.Get;
                 _request.Uri.Reset(resourceUri);
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
+                if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -3756,6 +3762,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
                         {
                             _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
                         }
                         if (response.Headers.TryGetValue("Accept-Ranges", out _header))
                         {
@@ -3942,6 +3952,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
@@ -3962,6 +3973,7 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 string leaseId = default,
                 string encryptionKey = default,
@@ -3986,6 +3998,7 @@ namespace Azure.Storage.Blobs
                         resourceUri,
                         version,
                         snapshot,
+                        versionId,
                         timeout,
                         leaseId,
                         encryptionKey,
@@ -4031,6 +4044,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
@@ -4047,6 +4061,7 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 string leaseId = default,
                 string encryptionKey = default,
@@ -4076,6 +4091,7 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.RequestMethod.Head;
                 _request.Uri.Reset(resourceUri);
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
+                if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -4249,6 +4265,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.AccessTierChangedOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-is-current-version", out _header))
+                        {
+                            _value.IsCurrentVersion = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -4284,6 +4308,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="deleteSnapshots">Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob and all of its snapshots. only: Delete only the blob's snapshots and not the blob itself</param>
@@ -4302,6 +4327,7 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 string leaseId = default,
                 Azure.Storage.Blobs.Models.DeleteSnapshotsOption? deleteSnapshots = default,
@@ -4324,6 +4350,7 @@ namespace Azure.Storage.Blobs
                         resourceUri,
                         version,
                         snapshot,
+                        versionId,
                         timeout,
                         leaseId,
                         deleteSnapshots,
@@ -4367,6 +4394,7 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="deleteSnapshots">Required if the blob has associated snapshots. Specify one of the following two options: include: Delete the base blob and all of its snapshots. only: Delete only the blob's snapshots and not the blob itself</param>
@@ -4381,6 +4409,7 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 string leaseId = default,
                 Azure.Storage.Blobs.Models.DeleteSnapshotsOption? deleteSnapshots = default,
@@ -4408,6 +4437,7 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.RequestMethod.Delete;
                 _request.Uri.Reset(resourceUri);
                 if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
+                if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -5703,6 +5733,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
@@ -6889,6 +6923,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
                             _value.IsServerEncrypted = bool.Parse(_header);
@@ -7129,6 +7167,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-id", out _header))
                         {
@@ -7375,6 +7417,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Last-Modified", out _header))
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-copy-id", out _header))
                         {
@@ -8443,6 +8489,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
@@ -10611,6 +10661,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
@@ -11515,6 +11569,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
@@ -12316,6 +12374,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("Content-MD5", out _header))
                         {
                             _value.ContentHash = System.Convert.FromBase64String(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-version-id", out _header))
+                        {
+                            _value.VersionId = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
@@ -15220,6 +15282,11 @@ namespace Azure.Storage.Blobs.Models
         #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
         /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
@@ -15253,6 +15320,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
             byte[] contentHash,
+            string versionId,
             string encryptionKeySha256,
             string encryptionScope,
             long blobSequenceNumber)
@@ -15262,6 +15330,7 @@ namespace Azure.Storage.Blobs.Models
                 ETag = eTag,
                 LastModified = lastModified,
                 ContentHash = contentHash,
+                VersionId = versionId,
                 EncryptionKeySha256 = encryptionKeySha256,
                 EncryptionScope = encryptionScope,
                 BlobSequenceNumber = blobSequenceNumber,
@@ -15288,6 +15357,11 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
 
         /// <summary>
         /// String identifier for this copy operation. Use with Get Blob Properties to check the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy.
@@ -15317,6 +15391,7 @@ namespace Azure.Storage.Blobs.Models
         public static BlobCopyInfo BlobCopyInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
+            string versionId,
             string copyId,
             Azure.Storage.Blobs.Models.CopyStatus copyStatus)
         {
@@ -15324,6 +15399,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 ETag = eTag,
                 LastModified = lastModified,
+                VersionId = versionId,
                 CopyId = copyId,
                 CopyStatus = copyStatus,
             };
@@ -16274,6 +16350,16 @@ namespace Azure.Storage.Blobs.Models
         public string Snapshot { get; internal set; }
 
         /// <summary>
+        /// VersionId
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
+        /// IsCurrentVersion
+        /// </summary>
+        public bool? IsCurrentVersion { get; internal set; }
+
+        /// <summary>
         /// Properties of a blob
         /// </summary>
         public Azure.Storage.Blobs.Models.BlobItemProperties Properties { get; internal set; }
@@ -16329,6 +16415,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Snapshot = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("VersionId", ""));
+            if (_child != null)
+            {
+                _value.VersionId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IsCurrentVersion", ""));
+            if (_child != null)
+            {
+                _value.IsCurrentVersion = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
             {
@@ -16363,6 +16459,8 @@ namespace Azure.Storage.Blobs.Models
             bool deleted,
             Azure.Storage.Blobs.Models.BlobItemProperties properties,
             string snapshot = default,
+            string versionId = default,
+            bool? isCurrentVersion = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default)
         {
             return new BlobItem()
@@ -16371,6 +16469,8 @@ namespace Azure.Storage.Blobs.Models
                 Deleted = deleted,
                 Properties = properties,
                 Snapshot = snapshot,
+                VersionId = versionId,
+                IsCurrentVersion = isCurrentVersion,
                 Metadata = metadata,
             };
         }
@@ -17210,6 +17310,16 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset AccessTierChangedOn { get; internal set; }
 
         /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
+        /// The value of this header indicates whether version of this blob is a current version, see also x-ms-version-id header.
+        /// </summary>
+        public bool IsCurrentVersion { get; internal set; }
+
+        /// <summary>
         /// Creates a new BlobProperties instance
         /// </summary>
         public BlobProperties()
@@ -17228,74 +17338,78 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobProperties BlobProperties(
             System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
-            Azure.ETag eTag,
+            string contentType,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
             byte[] contentHash,
             string contentEncoding,
             string contentDisposition,
             string contentLanguage,
-            string destinationSnapshot,
             string cacheControl,
-            bool isIncrementalCopy,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            string destinationSnapshot,
             string acceptRanges,
-            System.Uri copySource,
+            bool isIncrementalCopy,
             int blobCommittedBlockCount,
-            string copyProgress,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             bool isServerEncrypted,
-            string copyId,
+            System.Uri copySource,
             string encryptionKeySha256,
-            string copyStatusDescription,
+            string copyProgress,
             string encryptionScope,
-            System.DateTimeOffset copyCompletedOn,
+            string copyId,
             string accessTier,
-            Azure.Storage.Blobs.Models.BlobType blobType,
+            string copyStatusDescription,
             bool accessTierInferred,
-            System.Collections.Generic.IDictionary<string, string> metadata,
+            System.DateTimeOffset copyCompletedOn,
             string archiveStatus,
-            System.DateTimeOffset createdOn,
+            Azure.Storage.Blobs.Models.BlobType blobType,
             System.DateTimeOffset accessTierChangedOn,
-            string contentType)
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            string versionId,
+            System.DateTimeOffset createdOn,
+            bool isCurrentVersion,
+            Azure.ETag eTag)
         {
             return new BlobProperties()
             {
                 LastModified = lastModified,
-                LeaseState = leaseState,
                 LeaseStatus = leaseStatus,
                 ContentLength = contentLength,
-                LeaseDuration = leaseDuration,
-                ETag = eTag,
+                ContentType = contentType,
+                LeaseState = leaseState,
                 ContentHash = contentHash,
                 ContentEncoding = contentEncoding,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
-                DestinationSnapshot = destinationSnapshot,
                 CacheControl = cacheControl,
-                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
                 BlobSequenceNumber = blobSequenceNumber,
-                CopyStatus = copyStatus,
+                DestinationSnapshot = destinationSnapshot,
                 AcceptRanges = acceptRanges,
-                CopySource = copySource,
+                IsIncrementalCopy = isIncrementalCopy,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
-                CopyProgress = copyProgress,
+                CopyStatus = copyStatus,
                 IsServerEncrypted = isServerEncrypted,
-                CopyId = copyId,
+                CopySource = copySource,
                 EncryptionKeySha256 = encryptionKeySha256,
-                CopyStatusDescription = copyStatusDescription,
+                CopyProgress = copyProgress,
                 EncryptionScope = encryptionScope,
-                CopyCompletedOn = copyCompletedOn,
+                CopyId = copyId,
                 AccessTier = accessTier,
-                BlobType = blobType,
+                CopyStatusDescription = copyStatusDescription,
                 AccessTierInferred = accessTierInferred,
-                Metadata = metadata,
+                CopyCompletedOn = copyCompletedOn,
                 ArchiveStatus = archiveStatus,
-                CreatedOn = createdOn,
+                BlobType = blobType,
                 AccessTierChangedOn = accessTierChangedOn,
-                ContentType = contentType,
+                Metadata = metadata,
+                VersionId = versionId,
+                CreatedOn = createdOn,
+                IsCurrentVersion = isCurrentVersion,
+                ETag = eTag,
             };
         }
     }
@@ -17740,6 +17854,11 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
         /// True if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. For a snapshot request, this header is set to true when metadata was provided in the request and encrypted with a customer-provided key.
         /// </summary>
         public bool IsServerEncrypted { get; internal set; }
@@ -17763,6 +17882,7 @@ namespace Azure.Storage.Blobs.Models
             string snapshot,
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
+            string versionId,
             bool isServerEncrypted)
         {
             return new BlobSnapshotInfo()
@@ -17770,6 +17890,7 @@ namespace Azure.Storage.Blobs.Models
                 Snapshot = snapshot,
                 ETag = eTag,
                 LastModified = lastModified,
+                VersionId = versionId,
                 IsServerEncrypted = isServerEncrypted,
             };
         }
@@ -18882,7 +19003,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// has headers
         /// </summary>
-        public string HasHeaders { get; set; }
+        public bool HeadersPresent { get; set; }
 
         /// <summary>
         /// Creates a new DelimitedTextConfiguration instance
@@ -18914,7 +19035,9 @@ namespace Azure.Storage.Blobs.Models
                 value.EscapeChar));
             _element.Add(new System.Xml.Linq.XElement(
                 System.Xml.Linq.XName.Get("HasHeaders", ""),
-                value.HasHeaders));
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                value.HeadersPresent.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant()));
+                #pragma warning restore CA1308 // Normalize strings to uppercase
             return _element;
         }
     }
@@ -19361,6 +19484,11 @@ namespace Azure.Storage.Blobs.Models
         #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] BlobContentHash { get; internal set; }
         #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
 
         /// <summary>
         /// Content
@@ -19877,7 +20005,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// uncommittedblobs
         /// </summary>
-        Uncommittedblobs
+        Uncommittedblobs,
+
+        /// <summary>
+        /// versions
+        /// </summary>
+        Versions
     }
 }
 
@@ -19896,6 +20029,7 @@ namespace Azure.Storage.Blobs
                     Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Metadata => "metadata",
                     Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Snapshots => "snapshots",
                     Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Uncommittedblobs => "uncommittedblobs",
+                    Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Versions => "versions",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobsIncludeItem value.")
                 };
             }
@@ -19909,6 +20043,7 @@ namespace Azure.Storage.Blobs
                     "metadata" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Metadata,
                     "snapshots" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Snapshots,
                     "uncommittedblobs" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Uncommittedblobs,
+                    "versions" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Versions,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobsIncludeItem value.")
                 };
             }
@@ -20447,9 +20582,9 @@ namespace Azure.Storage.Blobs.Models
     public partial class QuickQueryFormat
     {
         /// <summary>
-        /// the quick query type
+        /// The quick query format type.
         /// </summary>
-        public Azure.Storage.Blobs.Models.QuickQueryType QuickQueryType { get; set; }
+        public Azure.Storage.Blobs.Models.QuickQueryFormatType? Type { get; set; }
 
         /// <summary>
         /// delimited text configuration
@@ -20481,9 +20616,12 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(new System.Xml.Linq.XElement(
-                System.Xml.Linq.XName.Get("QuickQueryType", ""),
-                Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(value.QuickQueryType)));
+            if (value.Type != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Type", ""),
+                    Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(value.Type.Value)));
+            }
             if (value.DelimitedTextConfiguration != null)
             {
                 _element.Add(Azure.Storage.Blobs.Models.DelimitedTextConfiguration.ToXml(value.DelimitedTextConfiguration, "DelimitedTextConfiguration", ""));
@@ -20497,6 +20635,56 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class QuickQueryFormat
+
+#region enum QuickQueryFormatType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// The quick query format type.
+    /// </summary>
+    public enum QuickQueryFormatType
+    {
+        /// <summary>
+        /// delimited
+        /// </summary>
+        Delimited,
+
+        /// <summary>
+        /// json
+        /// </summary>
+        Json
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.QuickQueryFormatType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.QuickQueryFormatType.Delimited => "delimited",
+                    Azure.Storage.Blobs.Models.QuickQueryFormatType.Json => "json",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QuickQueryFormatType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.QuickQueryFormatType ParseQuickQueryFormatType(string value)
+            {
+                return value switch
+                {
+                    "delimited" => Azure.Storage.Blobs.Models.QuickQueryFormatType.Delimited,
+                    "json" => Azure.Storage.Blobs.Models.QuickQueryFormatType.Json,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QuickQueryFormatType value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum QuickQueryFormatType
 
 #region class QuickQuerySerialization
 namespace Azure.Storage.Blobs.Models
@@ -20536,56 +20724,6 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class QuickQuerySerialization
-
-#region enum QuickQueryType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// the quick query type
-    /// </summary>
-    public enum QuickQueryType
-    {
-        /// <summary>
-        /// delimited
-        /// </summary>
-        Delimited,
-
-        /// <summary>
-        /// json
-        /// </summary>
-        Json
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.QuickQueryType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.QuickQueryType.Delimited => "delimited",
-                    Azure.Storage.Blobs.Models.QuickQueryType.Json => "json",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QuickQueryType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.QuickQueryType ParseQuickQueryType(string value)
-            {
-                return value switch
-                {
-                    "delimited" => Azure.Storage.Blobs.Models.QuickQueryType.Delimited,
-                    "json" => Azure.Storage.Blobs.Models.QuickQueryType.Json,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.QuickQueryType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum QuickQueryType
 
 #region enum RehydratePriority
 namespace Azure.Storage.Blobs.Models
@@ -20714,6 +20852,11 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId { get; internal set; }
 
         /// <summary>
         /// The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise.

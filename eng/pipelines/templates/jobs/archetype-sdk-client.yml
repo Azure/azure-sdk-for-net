@@ -100,6 +100,7 @@ jobs:
           DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
           filePath: "eng/CodeChecks.ps1"
+          arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false
   - job: "Test"

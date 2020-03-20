@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample2CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
             #region Snippet:AnalyzeSentiment
@@ -26,9 +26,9 @@ namespace Azure.AI.TextAnalytics.Samples
             DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
 
             Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
-            Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive:0.00}.");
-            Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral:0.00}.");
-            Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative:0.00}.");
+            Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
+            Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
+            Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
             #endregion
         }
     }

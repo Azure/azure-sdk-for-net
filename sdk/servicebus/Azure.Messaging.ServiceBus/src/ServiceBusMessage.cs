@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
             Body = body;
-            UserProperties = new Dictionary<string, object>();
+            Properties = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidatePartitionKey(nameof(PartitionKey), value);
+                ValidatePartitionKey(value);
                 _partitionKey = value;
             }
         }
@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidatePartitionKey(nameof(ViaPartitionKey), value);
+                ValidatePartitionKey(value);
                 _viaPartitionKey = value;
             }
         }
@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateSessionId(nameof(SessionId), value);
+                ValidateSessionId(value);
                 _sessionId = value;
             }
         }
@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                ValidateSessionId(nameof(ReplyToSessionId), value);
+                ValidateSessionId(value);
                 _replyToSessionId = value;
             }
         }
@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
         /// It is utilized to delay messages sending to a specific time in the future.</value>
         /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
         /// depends on the queue's workload and its state.</remarks>
-        public DateTime ScheduledEnqueueTimeUtc { get; set; }
+        public DateTimeOffset ScheduledEnqueueTime { get; set; }
 
         // TODO: Calculate the size of the properties and body
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.Messaging.ServiceBus
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
-        public IDictionary<string, object> UserProperties { get; internal set; }
+        public IDictionary<string, object> Properties { get; internal set; }
 
         /////// <summary>
         ///// Gets the <see cref="SystemPropertiesCollection"/>, which is used to store properties that are set by the system.
@@ -257,23 +257,40 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The string representation of the current message.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", this.MessageId);
+            return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
         }
 
-        /// <summary>Clones the body of a message, so that it is possible to send a clone of an already received
-        /// message as a new message.</summary>
-        /// <returns>A cloned <see cref="ServiceBusMessage" />.</returns>
-        public ServiceBusMessage Clone()
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static ServiceBusMessage CreateFrom(ServiceBusReceivedMessage message)
         {
-            var clone = (ServiceBusMessage)MemberwiseClone();
-
-            if (!Body.IsEmpty)
+            var copiedMessage = new ServiceBusMessage()
             {
-                var clonedBody = new byte[Body.Length];
-                Array.Copy(Body.ToArray(), clonedBody, Body.Length);
-                clone.Body = clonedBody;
+                ContentType = message.ContentType,
+                CorrelationId = message.CorrelationId,
+                Label = message.Label,
+                MessageId = message.MessageId,
+                PartitionKey = message.PartitionKey,
+                ReplyTo = message.ReplyTo,
+                ReplyToSessionId = message.ReplyToSessionId,
+                SessionId = message.SessionId,
+                ScheduledEnqueueTime = message.ScheduledEnqueueTime,
+                TimeToLive = message.TimeToLive,
+                To = message.To,
+                ViaPartitionKey = message.ViaPartitionKey,
+            };
+            var originalBody = message.Body;
+            if (!originalBody.IsEmpty)
+            {
+                var clonedBody = new byte[originalBody.Length];
+                Array.Copy(originalBody.ToArray(), clonedBody, originalBody.Length);
+                copiedMessage.Body = clonedBody;
             }
-            return clone;
+            copiedMessage.Properties = new Dictionary<string, object>(message.Properties);
+            return copiedMessage;
         }
 
         private static void ValidateMessageId(string messageId)
@@ -281,25 +298,22 @@ namespace Azure.Messaging.ServiceBus
             if (string.IsNullOrEmpty(messageId) ||
                 messageId.Length > Constants.MaxMessageIdLength)
             {
-                // TODO: throw FxTrace.Exception.Argument("messageId", SRClient.MessageIdIsNullOrEmptyOrOverMaxValue(Constants.MaxMessageIdLength));
                 throw new ArgumentException("MessageIdIsNullOrEmptyOrOverMaxValue");
             }
         }
 
-        private static void ValidateSessionId(string sessionIdPropertyName, string sessionId)
+        private static void ValidateSessionId(string sessionId)
         {
             if (sessionId != null && sessionId.Length > Constants.MaxSessionIdLength)
             {
-                // TODO: throw FxTrace.Exception.Argument("sessionId", SRClient.SessionIdIsOverMaxValue(Constants.MaxSessionIdLength));
                 throw new ArgumentException("SessionIdIsOverMaxValue");
             }
         }
 
-        private static void ValidatePartitionKey(string partitionKeyPropertyName, string partitionKey)
+        private static void ValidatePartitionKey(string partitionKey)
         {
             if (partitionKey != null && partitionKey.Length > Constants.MaxPartitionKeyLength)
             {
-                // TODO: throw FxTrace.Exception.Argument(partitionKeyPropertyName, SRClient.PropertyOverMaxValue(partitionKeyPropertyName, Constants.MaxPartitionKeyLength));
                 throw new ArgumentException("PropertyValueOverMaxValue");
             }
         }

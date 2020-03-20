@@ -2,124 +2,95 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A set of <see cref="ServiceBusMessageBatch" /> with size constraints known up-front,
-    ///   intended to be sent to the Event Hubs service as a single batch.
+    ///   intended to be sent to the Queue/Topic as a single batch.
     /// </summary>
     ///
-    public sealed class ServiceBusMessageBatch : IDisposable, IEnumerable
+    public sealed class ServiceBusMessageBatch : IDisposable
     {
         /// <summary>
-        ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
-        ///   well as any overhead for the batch itself when sent to the Event Hubs service.
+        ///   The maximum size allowed for the batch, in bytes.  This includes the messages in the batch as
+        ///   well as any overhead for the batch itself when sent to the Queue/Topic.
         /// </summary>
         ///
-        public long MaximumSizeInBytes { get; }
+        public long MaximumSizeInBytes => InnerBatch.MaximumSizeInBytes;
 
         /// <summary>
-        ///   The size of the batch, in bytes, as it will be sent to the Event Hubs
-        ///   service.
+        ///   The size of the batch, in bytes, as it will be sent to the Queue/Topic.
         /// </summary>
         ///
-        public long SizeInBytes { get; }
+        public long SizeInBytes => InnerBatch.SizeInBytes;
 
         /// <summary>
-        ///   The count of events contained in the batch.
+        ///   The count of messages contained in the batch.
         /// </summary>
         ///
-        public int Count { get; }
-
-        ///// <summary>
-        /////   The set of options that should be used when publishing the batch.
-        ///// </summary>
-        /////
-        //internal SendEventOptions SendOptions { get; }
-
-        ///// <summary>
-        /////   The transport-specific batch responsible for performing the batch operations
-        /////   in a manner compatible with the associated <see cref="TransportProducer" />.
-        ///// </summary>
-        /////
-        //private TransportEventBatch InnerBatch { get; }
-
-        ///// <summary>
-        /////   Initializes a new instance of the <see cref="ServiceBusMessageBatch"/> class.
-        ///// </summary>
-        /////
-        ///// <param name="transportBatch">The  transport-specific batch responsible for performing the batch operations.</param>
-        ///// <param name="sendOptions">The set of options that should be used when publishing the batch.</param>
-        /////
-        ///// <remarks>
-        /////   As an internal type, this class performs only basic sanity checks against its arguments.  It
-        /////   is assumed that callers are trusted and have performed deep validation.
-        /////
-        /////   Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
-        /////   creation of clones or otherwise protecting the parameters is assumed to be the purview of the
-        /////   caller.
-        ///// </remarks>
-        /////
-        //internal EventDataBatch(TransportEventBatch transportBatch,
-        //                        SendEventOptions sendOptions)
-        //{
-        //    Argument.AssertNotNull(transportBatch, nameof(transportBatch));
-        //    Argument.AssertNotNull(sendOptions, nameof(sendOptions));
-
-        //    InnerBatch = transportBatch;
-        //    SendOptions = sendOptions;
-        //}
+        public int Count => InnerBatch.Count;
 
         /// <summary>
-        ///   Attempts to add an event to the batch, ensuring that the size
+        ///   The transport-specific batch responsible for performing the batch operations
+        ///   in a manner compatible with the associated <see cref="TransportSender" />.
+        /// </summary>
+        ///
+        private TransportMessageBatch InnerBatch { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusMessageBatch"/> class.
+        /// </summary>
+        ///
+        /// <param name="transportBatch">The  transport-specific batch responsible for performing the batch operations.</param>
+        ///
+        /// <remarks>
+        ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
+        ///   is assumed that callers are trusted and have performed deep validation.
+        ///
+        ///   Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
+        ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the
+        ///   caller.
+        /// </remarks>
+        ///
+        internal ServiceBusMessageBatch(TransportMessageBatch transportBatch)
+        {
+            Argument.AssertNotNull(transportBatch, nameof(transportBatch));
+
+            InnerBatch = transportBatch;
+        }
+
+        /// <summary>
+        ///   Attempts to add a message to the batch, ensuring that the size
         ///   of the batch does not exceed its maximum.
         /// </summary>
         ///
-        /// <param name="message">The event to attempt to add to the batch.</param>
+        /// <param name="message">Message to attempt to add to the batch.</param>
         ///
-        /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the message was added; otherwise, <c>false</c>.</returns>
         ///
         public bool TryAdd(ServiceBusMessage message)
         {
-            return true;
-            //bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
-            //bool added = InnerBatch.TryAdd(eventData);
-
-            //if (!added && instrumented)
-            //{
-            //    EventDataInstrumentation.ResetEvent(eventData);
-            //}
-
-            //return added;
+            return InnerBatch.TryAdd(message);
         }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusMessageBatch" />.
         /// </summary>
         ///
-        public void Dispose() { }
+        public void Dispose() => InnerBatch.Dispose();
 
         /// <summary>
-        ///
+        ///   Represents the batch as an enumerable set of specific representations of a message.
         /// </summary>
-        /// <returns></returns>
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        ///// <summary>
-        /////   Represents the batch as an enumerable set of specific representations of an event.
-        ///// </summary>
-        /////
-        ///// <typeparam name="T">The specific event representation being requested.</typeparam>
-        /////
-        ///// <returns>The set of events as an enumerable of the requested type.</returns>
-        /////
-        //internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+        ///
+        /// <typeparam name="T">The specific message representation being requested.</typeparam>
+        ///
+        /// <returns>The set of messages as an enumerable of the requested type.</returns>
+        ///
+        internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
     }
 }

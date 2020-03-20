@@ -38,22 +38,20 @@ namespace Microsoft.Azure.Management.Support.Models
         /// Possible values include: 'email', 'phone'</param>
         /// <param name="primaryEmailAddress">Primary email address.</param>
         /// <param name="preferredTimeZone">Time zone of the user. This is the
-        /// name of the time zone from &lt;a  target='_blank'
-        /// href='https://support.microsoft.com/en-us/help/973627/microsoft-time-zone-index-values'&gt;Microsoft
-        /// Time Zone Index Values&lt;/a&gt;.</param>
+        /// name of the time zone from [Microsoft Time Zone Index
+        /// Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values).</param>
         /// <param name="country">Country of the user. This is the ISO 3166-1
         /// alpha-3 code.</param>
         /// <param name="preferredSupportLanguage">Preferred language of
         /// support from Azure. Support languages vary based on the severity
-        /// you choose for your support ticket. Learn more at &lt;a
-        /// target='_blank'
-        /// href='https://azure.microsoft.com/support/plans/response/'&gt;Azure
-        /// Severity and responsiveness&lt;/a&gt;. Use the standard
-        /// language-country code. Valid values are 'en-us' for English,
-        /// 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French,
-        /// 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian,
-        /// 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese
-        /// and 'de-de' for German.</param>
+        /// you choose for your support ticket. Learn more at [Azure Severity
+        /// and
+        /// responsiveness](https://azure.microsoft.com/support/plans/response).
+        /// Use the standard language-country code. Valid values are 'en-us'
+        /// for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr'
+        /// for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for
+        /// Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for
+        /// Chinese and 'de-de' for German.</param>
         /// <param name="additionalEmailAddresses">Additional email addresses
         /// listed will be copied on any correspondence about the support
         /// ticket.</param>
@@ -119,9 +117,8 @@ namespace Microsoft.Azure.Management.Support.Models
 
         /// <summary>
         /// Gets or sets time zone of the user. This is the name of the time
-        /// zone from &amp;lt;a  target='_blank'
-        /// href='https://support.microsoft.com/en-us/help/973627/microsoft-time-zone-index-values'&amp;gt;Microsoft
-        /// Time Zone Index Values&amp;lt;/a&amp;gt;.
+        /// zone from [Microsoft Time Zone Index
+        /// Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values).
         /// </summary>
         [JsonProperty(PropertyName = "preferredTimeZone")]
         public string PreferredTimeZone { get; set; }
@@ -136,14 +133,13 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Gets or sets preferred language of support from Azure. Support
         /// languages vary based on the severity you choose for your support
-        /// ticket. Learn more at &amp;lt;a  target='_blank'
-        /// href='https://azure.microsoft.com/support/plans/response/'&amp;gt;Azure
-        /// Severity and responsiveness&amp;lt;/a&amp;gt;. Use the standard
-        /// language-country code. Valid values are 'en-us' for English,
-        /// 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French,
-        /// 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian,
-        /// 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese
-        /// and 'de-de' for German.
+        /// ticket. Learn more at [Azure Severity and
+        /// responsiveness](https://azure.microsoft.com/support/plans/response).
+        /// Use the standard language-country code. Valid values are 'en-us'
+        /// for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr'
+        /// for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for
+        /// Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for
+        /// Chinese and 'de-de' for German.
         /// </summary>
         [JsonProperty(PropertyName = "preferredSupportLanguage")]
         public string PreferredSupportLanguage { get; set; }

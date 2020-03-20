@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides developers with a library to create and manage all Azure EventGrid resources.")]
 
 [assembly: AssemblyVersion("5.0.0.0")]
-[assembly: AssemblyFileVersion("5.2.0.0")]
+[assembly: AssemblyFileVersion("5.3.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

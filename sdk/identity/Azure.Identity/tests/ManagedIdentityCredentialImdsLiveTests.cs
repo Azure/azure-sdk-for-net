@@ -34,7 +34,8 @@ namespace Azure.Identity.Tests
 
             var cred = CreateManagedIdentityCredential();
 
-            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
+            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
             var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
@@ -59,7 +60,8 @@ namespace Azure.Identity.Tests
 
             var cred = CreateManagedIdentityCredential(clientId);
 
-            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
+            // Hard code service version or recorded tests will fail: https://github.com/Azure/azure-sdk-for-net/issues/10432
+            var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions(SecretClientOptions.ServiceVersion.V7_0));
 
             var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 

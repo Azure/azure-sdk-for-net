@@ -115,7 +115,8 @@ namespace Azure.Messaging.ServiceBus.Core
                     {
                         parsedValues.EndpointToken = new UriBuilder(value)
                         {
-                            Scheme = ServiceBusEndpointScheme
+                            Scheme = ServiceBusEndpointScheme,
+                            Port = -1
                         };
                     }
                     else if (string.Compare(EntityName, token, StringComparison.OrdinalIgnoreCase) == 0)

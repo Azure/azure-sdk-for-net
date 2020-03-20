@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Support
     {
         /// <summary>
         /// Lists all the problem classifications (categories) available for a
-        /// specific Azure service.&lt;br/&gt;&lt;br/&gt; Always use the
-        /// service and problem classifications obtained programmatically. This
-        /// practice ensures that you always have the most recent set of
-        /// service and problem classification Ids.
+        /// specific Azure service. Always use the service and problem
+        /// classifications obtained programmatically. This practice ensures
+        /// that you always have the most recent set of service and problem
+        /// classification Ids.
         /// </summary>
         /// <param name='serviceName'>
         /// Name of Azure service for which the problem classifications need to
@@ -51,8 +51,7 @@ namespace Microsoft.Azure.Management.Support
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<ProblemClassification>>> ListWithHttpMessagesAsync(string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the details of a specific problem classification for a
-        /// specific Azure service.
+        /// Get problem classification details for a specific Azure service.
         /// </summary>
         /// <param name='serviceName'>
         /// Name of Azure service available for support.

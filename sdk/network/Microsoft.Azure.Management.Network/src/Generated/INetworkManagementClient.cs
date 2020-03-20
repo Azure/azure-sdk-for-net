@@ -296,6 +296,11 @@ namespace Microsoft.Azure.Management.Network
         IDefaultSecurityRulesOperations DefaultSecurityRules { get; }
 
         /// <summary>
+        /// Gets the INetworkVirtualAppliancesOperations.
+        /// </summary>
+        INetworkVirtualAppliancesOperations NetworkVirtualAppliances { get; }
+
+        /// <summary>
         /// Gets the INetworkWatchersOperations.
         /// </summary>
         INetworkWatchersOperations NetworkWatchers { get; }

@@ -1,5 +1,8 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.9.0
+###  Feature Additions
+- Added support for copying data to and from Snowflake using copy activity
 ## Version 4.8.0
 ###  Feature Additions
 - Added new API to query on triggers with filters like type and parentTrigger

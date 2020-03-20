@@ -60,14 +60,13 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Lists all the support tickets for an Azure subscription.
-            /// &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by
-            /// &lt;i&gt;Status&lt;/i&gt; or &lt;i&gt;CreatedDate&lt;/i&gt; using the
-            /// $filter parameter. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for
-            /// 12 months after ticket creation. If a ticket was created more than 12
-            /// months ago, a request for data might cause an error.
+            /// Lists all the support tickets for an Azure subscription. You can also
+            /// filter the support tickets by _Status_ or _CreatedDate_ using the $filter
+            /// parameter. Output will be a paged result with _nextLink_, using which you
+            /// can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support
+            /// ticket data is available for 12 months after ticket creation. If a ticket
+            /// was created more than 12 months ago, a request for data might cause an
+            /// error.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,12 +77,11 @@ namespace Microsoft.Azure.Management.Support
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation. We support 'odata v4.0' filter
-            /// semantics. &lt;a target='_blank'
-            /// href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn
-            /// more&lt;/a&gt; &lt;br/&gt;&lt;i&gt;Status&lt;/i&gt; filter can only be used
-            /// with 'eq' operator. For &lt;i&gt;CreatedDate&lt;/i&gt; filter, the
-            /// supported operators are 'gt' and 'ge'. When using both filters, combine
-            /// them using the logical 'AND'.
+            /// semantics. [Learn
+            /// more](https://docs.microsoft.com/odata/concepts/queryoptions-overview).
+            /// _Status_ filter can only be used with 'eq' operator. For _CreatedDate_
+            /// filter, the supported operators are 'gt' and 'ge'. When using both filters,
+            /// combine them using the logical 'AND'.
             /// </param>
             public static IPage<SupportTicketDetails> List(this ISupportTicketsOperations operations, int? top = default(int?), string filter = default(string))
             {
@@ -91,14 +89,13 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Lists all the support tickets for an Azure subscription.
-            /// &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by
-            /// &lt;i&gt;Status&lt;/i&gt; or &lt;i&gt;CreatedDate&lt;/i&gt; using the
-            /// $filter parameter. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for
-            /// 12 months after ticket creation. If a ticket was created more than 12
-            /// months ago, a request for data might cause an error.
+            /// Lists all the support tickets for an Azure subscription. You can also
+            /// filter the support tickets by _Status_ or _CreatedDate_ using the $filter
+            /// parameter. Output will be a paged result with _nextLink_, using which you
+            /// can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support
+            /// ticket data is available for 12 months after ticket creation. If a ticket
+            /// was created more than 12 months ago, a request for data might cause an
+            /// error.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -109,12 +106,11 @@ namespace Microsoft.Azure.Management.Support
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation. We support 'odata v4.0' filter
-            /// semantics. &lt;a target='_blank'
-            /// href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn
-            /// more&lt;/a&gt; &lt;br/&gt;&lt;i&gt;Status&lt;/i&gt; filter can only be used
-            /// with 'eq' operator. For &lt;i&gt;CreatedDate&lt;/i&gt; filter, the
-            /// supported operators are 'gt' and 'ge'. When using both filters, combine
-            /// them using the logical 'AND'.
+            /// semantics. [Learn
+            /// more](https://docs.microsoft.com/odata/concepts/queryoptions-overview).
+            /// _Status_ filter can only be used with 'eq' operator. For _CreatedDate_
+            /// filter, the supported operators are 'gt' and 'ge'. When using both filters,
+            /// combine them using the logical 'AND'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -128,10 +124,9 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Gets details for a specific support ticket in an Azure subscription.
-            /// &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 12 months after
-            /// ticket creation. If a ticket was created more than 12 months ago, a request
-            /// for data might cause an error.
+            /// Get ticket details for an Azure subscription. Support ticket data is
+            /// available for 12 months after ticket creation. If a ticket was created more
+            /// than 12 months ago, a request for data might cause an error.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,10 +140,9 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Gets details for a specific support ticket in an Azure subscription.
-            /// &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 12 months after
-            /// ticket creation. If a ticket was created more than 12 months ago, a request
-            /// for data might cause an error.
+            /// Get ticket details for an Azure subscription. Support ticket data is
+            /// available for 12 months after ticket creation. If a ticket was created more
+            /// than 12 months ago, a request for data might cause an error.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,12 +162,15 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// This API allows you to update the severity level or your contact
-            /// information in the support ticket. &lt;br/&gt;&lt;br/&gt; Note: The
+            /// This API allows you to update the severity level, ticket status, and your
+            /// contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The
             /// severity levels cannot be changed if a support ticket is actively being
             /// worked upon by an Azure support engineer. In such a case, contact your
             /// support engineer to request severity update by adding a new communication
-            /// using the Communications API.
+            /// using the Communications API.&lt;br/&gt;&lt;br/&gt;Changing the ticket
+            /// status to _closed_ is allowed only on an unassigned case. When an engineer
+            /// is actively working on the ticket, send your ticket closure request by
+            /// sending a note to your engineer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,12 +187,15 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// This API allows you to update the severity level or your contact
-            /// information in the support ticket. &lt;br/&gt;&lt;br/&gt; Note: The
+            /// This API allows you to update the severity level, ticket status, and your
+            /// contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The
             /// severity levels cannot be changed if a support ticket is actively being
             /// worked upon by an Azure support engineer. In such a case, contact your
             /// support engineer to request severity update by adding a new communication
-            /// using the Communications API.
+            /// using the Communications API.&lt;br/&gt;&lt;br/&gt;Changing the ticket
+            /// status to _closed_ is allowed only on an unassigned case. When an engineer
+            /// is actively working on the ticket, send your ticket closure request by
+            /// sending a note to your engineer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -218,19 +218,29 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Creates a new support ticket for Quota increase, Technical, Billing, and
-            /// Subscription Management issues for the specified subscription.
-            /// &lt;br/&gt;&lt;br/&gt;A paid technical support plan is required to create a
-            /// support ticket using this API. &lt;a
-            /// href='https://aka.ms/supportticketAPI'&gt;Learn more&lt;/a&gt;
-            /// &lt;br/&gt;&lt;br/&gt; Use the Services API to map the right Service Id to
-            /// the issue type. For example: For billing tickets set *serviceId* to
-            /// *'/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc'*.
-            /// &lt;br/&gt; For Technical issues, the Service id will map to the Azure
-            /// service you want to raise a support ticket for.
-            /// &lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications
-            /// API to get the most recent set of services and problem categories required
-            /// for support ticket creation.
+            /// Creates a new support ticket for Subscription and Service limits (Quota),
+            /// Technical, Billing, and Subscription Management issues for the specified
+            /// subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required
+            /// to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services
+            /// and ProblemClassifications API to get the most recent set of services and
+            /// problem categories required for support ticket
+            /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments are not currently
+            /// supported via the API. To add a file to an existing support ticket, visit
+            /// the [Manage support
+            /// ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest)
+            /// page in the Azure portal, select the support ticket, and use the file
+            /// upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to
+            /// share diagnostic information with Azure support is currently not supported
+            /// via the API. Azure support engineer, working on your ticket, will reach out
+            /// to you for consent if your issue requires gathering diagnostic information
+            /// from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket
+            /// for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to
+            /// provide an auxiliary token as per
+            /// [this](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
+            /// The primary token will be from the tenant for whom a support ticket is
+            /// being raised against the subscription, i.e. Cloud solution provider (CSP)
+            /// customer tenant. The auxiliary token will be from the Cloud solution
+            /// provider (CSP) partner tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -247,19 +257,29 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Creates a new support ticket for Quota increase, Technical, Billing, and
-            /// Subscription Management issues for the specified subscription.
-            /// &lt;br/&gt;&lt;br/&gt;A paid technical support plan is required to create a
-            /// support ticket using this API. &lt;a
-            /// href='https://aka.ms/supportticketAPI'&gt;Learn more&lt;/a&gt;
-            /// &lt;br/&gt;&lt;br/&gt; Use the Services API to map the right Service Id to
-            /// the issue type. For example: For billing tickets set *serviceId* to
-            /// *'/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc'*.
-            /// &lt;br/&gt; For Technical issues, the Service id will map to the Azure
-            /// service you want to raise a support ticket for.
-            /// &lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications
-            /// API to get the most recent set of services and problem categories required
-            /// for support ticket creation.
+            /// Creates a new support ticket for Subscription and Service limits (Quota),
+            /// Technical, Billing, and Subscription Management issues for the specified
+            /// subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required
+            /// to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services
+            /// and ProblemClassifications API to get the most recent set of services and
+            /// problem categories required for support ticket
+            /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments are not currently
+            /// supported via the API. To add a file to an existing support ticket, visit
+            /// the [Manage support
+            /// ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest)
+            /// page in the Azure portal, select the support ticket, and use the file
+            /// upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to
+            /// share diagnostic information with Azure support is currently not supported
+            /// via the API. Azure support engineer, working on your ticket, will reach out
+            /// to you for consent if your issue requires gathering diagnostic information
+            /// from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket
+            /// for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to
+            /// provide an auxiliary token as per
+            /// [this](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
+            /// The primary token will be from the tenant for whom a support ticket is
+            /// being raised against the subscription, i.e. Cloud solution provider (CSP)
+            /// customer tenant. The auxiliary token will be from the Cloud solution
+            /// provider (CSP) partner tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -282,19 +302,29 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Creates a new support ticket for Quota increase, Technical, Billing, and
-            /// Subscription Management issues for the specified subscription.
-            /// &lt;br/&gt;&lt;br/&gt;A paid technical support plan is required to create a
-            /// support ticket using this API. &lt;a
-            /// href='https://aka.ms/supportticketAPI'&gt;Learn more&lt;/a&gt;
-            /// &lt;br/&gt;&lt;br/&gt; Use the Services API to map the right Service Id to
-            /// the issue type. For example: For billing tickets set *serviceId* to
-            /// *'/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc'*.
-            /// &lt;br/&gt; For Technical issues, the Service id will map to the Azure
-            /// service you want to raise a support ticket for.
-            /// &lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications
-            /// API to get the most recent set of services and problem categories required
-            /// for support ticket creation.
+            /// Creates a new support ticket for Subscription and Service limits (Quota),
+            /// Technical, Billing, and Subscription Management issues for the specified
+            /// subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required
+            /// to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services
+            /// and ProblemClassifications API to get the most recent set of services and
+            /// problem categories required for support ticket
+            /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments are not currently
+            /// supported via the API. To add a file to an existing support ticket, visit
+            /// the [Manage support
+            /// ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest)
+            /// page in the Azure portal, select the support ticket, and use the file
+            /// upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to
+            /// share diagnostic information with Azure support is currently not supported
+            /// via the API. Azure support engineer, working on your ticket, will reach out
+            /// to you for consent if your issue requires gathering diagnostic information
+            /// from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket
+            /// for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to
+            /// provide an auxiliary token as per
+            /// [this](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
+            /// The primary token will be from the tenant for whom a support ticket is
+            /// being raised against the subscription, i.e. Cloud solution provider (CSP)
+            /// customer tenant. The auxiliary token will be from the Cloud solution
+            /// provider (CSP) partner tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,19 +341,29 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Creates a new support ticket for Quota increase, Technical, Billing, and
-            /// Subscription Management issues for the specified subscription.
-            /// &lt;br/&gt;&lt;br/&gt;A paid technical support plan is required to create a
-            /// support ticket using this API. &lt;a
-            /// href='https://aka.ms/supportticketAPI'&gt;Learn more&lt;/a&gt;
-            /// &lt;br/&gt;&lt;br/&gt; Use the Services API to map the right Service Id to
-            /// the issue type. For example: For billing tickets set *serviceId* to
-            /// *'/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc'*.
-            /// &lt;br/&gt; For Technical issues, the Service id will map to the Azure
-            /// service you want to raise a support ticket for.
-            /// &lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications
-            /// API to get the most recent set of services and problem categories required
-            /// for support ticket creation.
+            /// Creates a new support ticket for Subscription and Service limits (Quota),
+            /// Technical, Billing, and Subscription Management issues for the specified
+            /// subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required
+            /// to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services
+            /// and ProblemClassifications API to get the most recent set of services and
+            /// problem categories required for support ticket
+            /// creation.&lt;br/&gt;&lt;br/&gt;Adding attachments are not currently
+            /// supported via the API. To add a file to an existing support ticket, visit
+            /// the [Manage support
+            /// ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest)
+            /// page in the Azure portal, select the support ticket, and use the file
+            /// upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to
+            /// share diagnostic information with Azure support is currently not supported
+            /// via the API. Azure support engineer, working on your ticket, will reach out
+            /// to you for consent if your issue requires gathering diagnostic information
+            /// from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket
+            /// for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to
+            /// provide an auxiliary token as per
+            /// [this](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant).
+            /// The primary token will be from the tenant for whom a support ticket is
+            /// being raised against the subscription, i.e. Cloud solution provider (CSP)
+            /// customer tenant. The auxiliary token will be from the Cloud solution
+            /// provider (CSP) partner tenant.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,14 +386,13 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Lists all the support tickets for an Azure subscription.
-            /// &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by
-            /// &lt;i&gt;Status&lt;/i&gt; or &lt;i&gt;CreatedDate&lt;/i&gt; using the
-            /// $filter parameter. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for
-            /// 12 months after ticket creation. If a ticket was created more than 12
-            /// months ago, a request for data might cause an error.
+            /// Lists all the support tickets for an Azure subscription. You can also
+            /// filter the support tickets by _Status_ or _CreatedDate_ using the $filter
+            /// parameter. Output will be a paged result with _nextLink_, using which you
+            /// can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support
+            /// ticket data is available for 12 months after ticket creation. If a ticket
+            /// was created more than 12 months ago, a request for data might cause an
+            /// error.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -367,14 +406,13 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Lists all the support tickets for an Azure subscription.
-            /// &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by
-            /// &lt;i&gt;Status&lt;/i&gt; or &lt;i&gt;CreatedDate&lt;/i&gt; using the
-            /// $filter parameter. Output will be a paged result with
-            /// &lt;i&gt;nextLink&lt;/i&gt;, using which you can retrieve the next set of
-            /// support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for
-            /// 12 months after ticket creation. If a ticket was created more than 12
-            /// months ago, a request for data might cause an error.
+            /// Lists all the support tickets for an Azure subscription. You can also
+            /// filter the support tickets by _Status_ or _CreatedDate_ using the $filter
+            /// parameter. Output will be a paged result with _nextLink_, using which you
+            /// can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support
+            /// ticket data is available for 12 months after ticket creation. If a ticket
+            /// was created more than 12 months ago, a request for data might cause an
+            /// error.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

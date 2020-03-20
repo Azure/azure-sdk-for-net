@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// Priorities within a pool must be unique and are evaluated in order of priority. The lower the number the higher 
         /// the priority. For example, rules could be specified with order numbers of 150, 250, and 350. The rule with the 
-        /// order number of 150 takes precedence over the rule that has an order of 250. Allowed priorities are 150 to 3500.
+        /// order number of 150 takes precedence over the rule that has an order of 250. Allowed priorities are 150 to 4096.
         /// </remarks>
         public int Priority { get; }
 

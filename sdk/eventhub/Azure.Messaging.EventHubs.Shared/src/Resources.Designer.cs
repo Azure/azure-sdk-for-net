@@ -100,9 +100,9 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The Event Hub client responsible for this information.
+        ///   Looks up a localized string similar to The Event Hub client responsible for this information is not available.
         /// </summary>
-        internal static string ClientNeededForThisInformation
+        internal static string ClientNeededForThisInformationNotAvailable
         {
             get
             {
@@ -166,6 +166,28 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to An error was encountered while executing custom code, such as in an event handler..
+        /// </summary>
+        internal static string DeveloperCodeError
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeError", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to [Developer Code Exception] : {0}..
+        /// </summary>
+        internal static string DeveloperCodeExceptionMessageMask
+        {
+            get
+            {
+                return ResourceManager.GetString("DeveloperCodeExceptionMessageMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Could not create a reader of events for Event Hub: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
         /// </summary>
         internal static string FailedToCreateReader
@@ -217,6 +239,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("InvalidEventPositionForFilter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The value '{0}' is not a well-formed Event Hubs fully qualified namespace..
+        /// </summary>
+        internal static string InvalidFullyQualifiedNamespace
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidFullyQualifiedNamespace", resourceCulture);
             }
         }
 

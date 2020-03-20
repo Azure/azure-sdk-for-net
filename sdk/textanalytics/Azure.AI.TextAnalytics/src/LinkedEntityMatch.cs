@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
         internal LinkedEntityMatch(string text, double score, int offset, int length)
         {
             Text = text;
-            Score = score;
+            ConfidenceScore = score;
             GraphemeOffset = offset;
             GraphemeLength = length;
         }
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets a score between 0 and 1, indicating the confidence that this
         /// substring matches the corresponding linked entity.
         /// </summary>
-        public double Score { get; }
+        public double ConfidenceScore { get; }
 
         /// <summary>
         /// Gets the starting position (in Unicode graphemes) for the matching text in the document.

@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.Support.Models
         public const string Minimal = "minimal";
         public const string Moderate = "moderate";
         public const string Critical = "critical";
+        public const string Highestcriticalimpact = "highestcriticalimpact";
     }
 }

@@ -11,6 +11,9 @@
 # Core
 /sdk/core/ @pakrym @KrzysztofCwalina
 
+# Extensions
+/sdk/extensions/ @parkym
+
 # Service teams
 /sdk/appconfiguration/ @annelo-msft @AlexanderSher
 
@@ -25,13 +28,16 @@
 /sdk/eventhub/ @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
 
-/sdk/identity/azure.identity/ @schaabs
+/sdk/identity/ @schaabs
 
 /sdk/keyvault/ @schaabs @heaths
 
-/sdk/search/ @brjohnstmsft @arv100kri @bleroy
+/sdk/search/ @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/Microsoft.*/ @brjohnstmsft @arv100kri @bleroy
+
 /sdk/servicebus/ @nemakam @jsquire
-/sdk/storage/ @seanmcc-msft @amnguye @tg-msft @JoshLove-msft
+
+/sdk/storage/ @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
 
 /sdk/textanalytics/ @annelo-msft @maririos
 

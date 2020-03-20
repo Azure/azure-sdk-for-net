@@ -7,12 +7,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -330,6 +333,103 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(links.Count, Is.EqualTo(expectedLinks.Count), "The amount of links should be the same as the amount of events that were sent.");
             Assert.That(links, Is.EquivalentTo(expectedLinks), "The links should be identical to the diagnostic ids in the events that were sent.");
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcesorCreatesScopeForEventProcessing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+
+            var enqueuedTime = DateTimeOffset.UtcNow;
+            var diagnosticId = 12;
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            var eventBatch = new List<EventData>
+            {
+                new EventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime),
+                new EventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime)
+            };
+
+            eventBatch.ForEach(evt => evt.Properties.Add(DiagnosticProperty.DiagnosticIdAttribute, (++diagnosticId).ToString()));
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            // Validate the diagnostics.
+
+            diagnosticId -= eventBatch.Count;
+
+            var expectedTags = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind),
+                new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
+                new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace)
+            };
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(listener.Scopes.Select(scope => scope.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
+
+            for (var index = 0; index < eventBatch.Count; ++index)
+            {
+                var targetId = (++diagnosticId).ToString();
+                Assert.That(listener.Scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
+            }
+
+            foreach (var scope in listener.Scopes)
+            {
+                Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
+            }
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcesorAddsAttributesToLinkedActivitiesForEventProcessing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+
+            var enqueuedTime = DateTimeOffset.UtcNow;
+            var diagnosticId = "OMGHAI2U!";
+            var eventBatch = new List<EventData> { new EventData(Array.Empty<byte>(), enqueuedTime: enqueuedTime) };
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            eventBatch.ForEach(evt => evt.Properties.Add(DiagnosticProperty.DiagnosticIdAttribute, diagnosticId));
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            // Validate the diagnostics.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            var processingScope = listener.Scopes.SingleOrDefault(scope => scope.Name == DiagnosticProperty.EventProcessorProcessingActivityName);
+            Assert.That(processingScope, Is.Not.Null, "There should have been a single scope present for the processing activity.");
+
+            var linkedActivity = processingScope.LinkedActivities.SingleOrDefault(a => a.ParentId == diagnosticId);
+            Assert.That(linkedActivity, Is.Not.Null, "There should have been a single activity linked to the diagnostic identifier.");
+
+            var expectedTags = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds().ToString())
+            };
+
+            Assert.That(linkedActivity.Tags, Is.EquivalentTo(expectedTags), "The activity should have been tagged appropriately.");
         }
 
         /// <summary>

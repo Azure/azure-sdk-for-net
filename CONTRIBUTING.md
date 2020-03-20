@@ -32,7 +32,7 @@
 
 ### Single Service from Command Line
 
-1. Open VS 2019 command Prompt
+1. Open Developer Command Prompt
 2. From the root directory
 3. Invoke `msbuild eng\mgmt.proj /p:scope=Compute`
 
@@ -77,7 +77,7 @@ If for any reason there is an update to the build tools, you will then need to f
 
 ### Single Service from Command Line
 
-1. Open VS 2019 Command Prompt
+1. Open Developer Command Prompt
 2. Navigate to service directory e.g. _"sdk\eventhub"_
 3. Invoke `dotnet build`
 4. or Build the **service.proj** in the repo root, passing the directory name of the specific service as a property. e.g. `dotnet build eng\service.proj /p:ServiceDirectory=eventhub`
@@ -89,7 +89,7 @@ If for any reason there is an update to the build tools, you will then need to f
 
 ### All Client Services from Command Line
 
-1. Open VS 2019 Command Prompt
+1. Open Developer Command Prompt
 2. Navigate to repository root directory
 3. Invoke `dotnet build eng\service.proj`
 
@@ -97,7 +97,7 @@ If for any reason there is an update to the build tools, you will then need to f
 
 ### Single Service from Command Line
 
-1. Open VS 2019 Command Prompt
+1. Open Developer Command Prompt
 2. Navigate to service directory e.g. _"sdk\eventhub"_
 3. Invoke `dotnet test --filter TestCategory!=Live` _(Skips live tests)_
 4. or run test against **service.proj** in the repo root, passing the directory name of the specific service as a property. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live`
@@ -113,6 +113,30 @@ If for any reason there is an update to the build tools, you will then need to f
 2. Navigate to repository root directory
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
+
+### Live testing
+
+Live tests assume a live resource has been created and appropriate environment
+variables have been set for the test process. To automate setting up live
+resources we use created a script called `New-TestResources.ps1` that deploys
+resources for a given service.
+
+To see what resources will be deployed for a live service, check the
+`test-resources.json` ARM template files in the service you wish to deploy for
+testing, for example `sdk\keyvault\test-resources.json`.
+
+To deploy live resources for testing use the steps documented in [`Example 1 of New-TestResources.ps1`](eng/common/TestResources/New-TestResources.ps1.md#example-1)
+to set up a service principal and deploy live testing resources.
+
+To run live tests after deploying live resources:
+
+1. Open Developer Command Prompt
+2. Navigate to service directory e.g. _"sdk\keyvault"_
+3. Invoke `dotnet test`
+
+Some live tests may have additional steps for setting up live testing resources.
+See the CONTRIBUTING.md file for the service you wish to test for additional
+information or instructions.
 
 ### Testing Against Latest Versions of Client Libraries
 In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
