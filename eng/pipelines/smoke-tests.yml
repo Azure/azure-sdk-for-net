@@ -6,38 +6,62 @@ jobs:
 
     strategy:
       matrix:
-        Linux (Public):
+        Linux (AzureCloud):
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
-          CloudType: public
-        Windows_NetCoreApp (Public):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureCloud):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: public
-        Windows_NetFramework (Public):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetFramework (AzureCloud):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: public
-        MacOs (Public):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        MacOs (AzureCloud):
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CloudType: public
-        Windows_NetCoreApp (Gov):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureUSGovernment):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: gov
-        Windows_NetFramework (Gov):
+          CloudType: AzureUSGovernment
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetFramework (AzureUSGovernment):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: gov
+          CloudType: AzureUSGovernment
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetCoreApp (AzureChinaCloud):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: AzureChinaCloud
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+        Windows_NetFramework (AzureChinaCloud):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: AzureChinaCloud
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+
     pool:
       vmImage: $(OSVmImage)
+
+    variables:
+      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com'; }"
+      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/'; }"
+      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; authorityHost = 'https://login.chinacloudapi.cn'; }"
 
     steps:
       - task: DotNetCoreInstaller@2
@@ -70,43 +94,10 @@ jobs:
       - template: ../common/TestResources/deploy-test-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-          TenantId: $(aad-azure-sdk-test-tenant-id)
-          TestApplicationId: $(aad-azure-sdk-test-client-id)
-          TestApplicationSecret: $(aad-azure-sdk-test-client-secret)
-          TestApplicationObjectId: $(aad-azure-sdk-test-client-oid)
-          ProvisionerApplicationId: $(provisioner-aad-id)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret)
-          AdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com' }"
-          Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
-
-      - template: ../common/TestResources/deploy-test-resources.yml
-        parameters:
-          ServiceDirectory: $(Build.SourcesDirectory)/common/SmokeTests/
-          TenantId: $(aad-azure-sdk-test-tenant-id-gov)
-          TestApplicationId: $(aad-azure-sdk-test-client-id-gov)
-          TestApplicationSecret: $(aad-azure-sdk-test-client-secret-gov)
-          TestApplicationObjectId: $(aad-azure-sdk-test-client-oid-gov)
-          ProvisionerApplicationId: $(provisioner-aad-id-gov)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
-          AdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/' }"
-          Location: usgovvirginia
-          Environment: AzureUSGovernment
-          Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+          CloudType: $(CloudType)
+          ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
 
       - template: ../common/TestResources/remove-test-resources.yml
-        parameters:
-          TenantId: $(aad-azure-sdk-test-tenant-id)
-          ProvisionerApplicationId: $(provisioner-aad-id)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret)
-          Condition: eq(variables['CloudType'], 'public')
-
-      - template: ../common/TestResources/remove-test-resources.yml
-        parameters:
-          TenantId: $(aad-azure-sdk-test-tenant-id-gov)
-          ProvisionerApplicationId: $(provisioner-aad-id-gov)
-          ProvisionerApplicationSecret: $(provisioner-aad-secret-gov)
-          Environment: AzureUSGovernment
-          Condition: eq(variables['CloudType'], 'gov')
