@@ -630,7 +630,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await fileClient.CreateAsync();
 
                 // Create progress handler to observe operation and collect paths that failed to change Access Controls.
-                // Customer is expected to provide own implementation.
+                // Customer is expected to provide own implementation. 
                 IProgress<Response<AccessControlRecursiveChanges>> progress = null;
 
                 // Set Access Control List Recursively
