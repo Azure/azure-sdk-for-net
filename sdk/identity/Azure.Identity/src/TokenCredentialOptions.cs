@@ -21,7 +21,6 @@ namespace Azure.Identity
         /// </summary>
         public TokenCredentialOptions()
         {
-
             string environmentAuthorityHost = EnvironmentVariables.AuthorityHost;
 
             Uri authorityHostUri = string.IsNullOrEmpty(environmentAuthorityHost) ? KnownAuthorityHosts.AzureCloud : new Uri(environmentAuthorityHost);
