@@ -21,7 +21,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "glfeokti")]
         public async Task CreateListUpdateDelete()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -181,6 +181,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                         apiDiagnosticId,
                         "*");
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");
+
+                    // clean up all properties
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var property in listOfProperties)
+                    {
+                        testBase.client.NamedValue.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            property.Name,
+                            "*");
+                    }
                 }
             }
         }

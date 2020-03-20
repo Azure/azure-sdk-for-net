@@ -23,7 +23,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "sasolank")]
         public async Task CreateListUpdateDeleteEventHub()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -185,7 +185,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "sasolank")]
         public async Task CreateListUpdateDeleteApplicationInsights()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);

@@ -20,7 +20,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "kjoshi")]
         public void CreateListDelete()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {

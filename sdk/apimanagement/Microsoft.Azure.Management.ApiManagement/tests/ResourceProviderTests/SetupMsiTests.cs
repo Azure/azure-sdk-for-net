@@ -21,7 +21,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public void SetupSystemAssignedMsiTests()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -69,7 +69,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public void SetupUserAssignedMsiTests()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -95,9 +95,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 testBase.serviceProperties.Sku = new ApiManagementServiceSkuProperties(SkuType.Consumption, capacity: 0);
                 testBase.serviceProperties.Identity = new ApiManagementServiceIdentity("UserAssigned")
                 {
-                    UserAssignedIdentities = new Dictionary<string, Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties>()
+                    UserAssignedIdentities = new Dictionary<string, UserIdentityProperties>()
                     {
-                        { userAssignedResponse.Body.Id, new Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties(userAssigned.PrincipalId.ToString(), userAssigned.ClientId.ToString()) }
+                        { userAssignedResponse.Body.Id, new UserIdentityProperties(userAssigned.PrincipalId.ToString(), userAssigned.ClientId.ToString()) }
                     }
                 };
                 var createdService = testBase.client.ApiManagementService.CreateOrUpdate(

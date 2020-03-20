@@ -13,28 +13,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties
+    public partial class UserIdentityProperties
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties
-        /// class.
+        /// Initializes a new instance of the UserIdentityProperties class.
         /// </summary>
-        public Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties()
+        public UserIdentityProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties
-        /// class.
+        /// Initializes a new instance of the UserIdentityProperties class.
         /// </summary>
         /// <param name="principalId">The principal id of user assigned
         /// identity.</param>
         /// <param name="clientId">The client id of user assigned
         /// identity.</param>
-        public Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties(string principalId = default(string), string clientId = default(string))
+        public UserIdentityProperties(string principalId = default(string), string clientId = default(string))
         {
             PrincipalId = principalId;
             ClientId = clientId;
@@ -47,16 +43,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the principal id of user assigned identity.
+        /// Gets or sets the principal id of user assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
-        public string PrincipalId { get; private set; }
+        public string PrincipalId { get; set; }
 
         /// <summary>
-        /// Gets the client id of user assigned identity.
+        /// Gets or sets the client id of user assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
-        public string ClientId { get; private set; }
+        public string ClientId { get; set; }
 
     }
 }

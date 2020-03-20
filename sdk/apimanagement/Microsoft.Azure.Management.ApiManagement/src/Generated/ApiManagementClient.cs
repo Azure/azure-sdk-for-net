@@ -207,6 +207,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IEmailTemplateOperations EmailTemplate { get; private set; }
 
         /// <summary>
+        /// Gets the IGatewayOperations.
+        /// </summary>
+        public virtual IGatewayOperations Gateway { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayHostnameConfigurationOperations.
+        /// </summary>
+        public virtual IGatewayHostnameConfigurationOperations GatewayHostnameConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets the IGatewayApiOperations.
+        /// </summary>
+        public virtual IGatewayApiOperations GatewayApi { get; private set; }
+
+        /// <summary>
         /// Gets the IGroupOperations.
         /// </summary>
         public virtual IGroupOperations Group { get; private set; }
@@ -648,6 +663,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             ApiManagementService = new ApiManagementServiceOperations(this);
             Diagnostic = new DiagnosticOperations(this);
             EmailTemplate = new EmailTemplateOperations(this);
+            Gateway = new GatewayOperations(this);
+            GatewayHostnameConfiguration = new GatewayHostnameConfigurationOperations(this);
+            GatewayApi = new GatewayApiOperations(this);
             Group = new GroupOperations(this);
             GroupUser = new GroupUserOperations(this);
             IdentityProvider = new IdentityProviderOperations(this);

@@ -22,7 +22,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public void CreateMultiHostNameService()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);

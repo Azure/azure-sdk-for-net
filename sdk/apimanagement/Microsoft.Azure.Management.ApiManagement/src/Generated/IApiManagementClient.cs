@@ -202,6 +202,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         IEmailTemplateOperations EmailTemplate { get; }
 
         /// <summary>
+        /// Gets the IGatewayOperations.
+        /// </summary>
+        IGatewayOperations Gateway { get; }
+
+        /// <summary>
+        /// Gets the IGatewayHostnameConfigurationOperations.
+        /// </summary>
+        IGatewayHostnameConfigurationOperations GatewayHostnameConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IGatewayApiOperations.
+        /// </summary>
+        IGatewayApiOperations GatewayApi { get; }
+
+        /// <summary>
         /// Gets the IGroupOperations.
         /// </summary>
         IGroupOperations Group { get; }
