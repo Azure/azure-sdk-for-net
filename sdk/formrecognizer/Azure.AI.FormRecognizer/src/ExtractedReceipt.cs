@@ -13,16 +13,16 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class ExtractedReceipt
     {
-        internal ExtractedReceipt(DocumentResult_internal documentResult, ReadResult_internal readResult)
+        internal ExtractedReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
         {
             StartPageNumber = documentResult.PageRange.First();
             EndPageNumber = documentResult.PageRange.Last();
 
             SetReceiptValues(documentResult.Fields);
 
-            if (readResult != null)
+            if (readResults != null)
             {
-                RawExtractedPage = new RawExtractedPage(readResult);
+                RawExtractedPage = ConvertRawPages(StartPageNumber, EndPageNumber, readResults);
             }
         }
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public RawExtractedPage RawExtractedPage { get; }
+        public IReadOnlyList<RawExtractedPage> RawExtractedPage { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
@@ -257,6 +257,16 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return items;
+        }
+
+        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
+        {
+            List<RawExtractedPage> rawPages = new List<RawExtractedPage>();
+            for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)
+            {
+                rawPages.Add(new RawExtractedPage(readResults[i]));
+            }
+            return rawPages;
         }
     }
 }

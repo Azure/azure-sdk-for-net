@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<ExtractedReceipt> receipts = new List<ExtractedReceipt>();
             for (int i = 0; i < documentResults.Count; i++)
             {
-                receipts.Add(new ExtractedReceipt(documentResults[i], readResults[i]));
+                receipts.Add(new ExtractedReceipt(documentResults[i], readResults));
             }
             return receipts;
         }
