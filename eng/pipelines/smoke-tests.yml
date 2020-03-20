@@ -12,7 +12,7 @@ jobs:
           TestTargetFramework: netcoreapp2.1
           CloudType: public
           AdditionalParameters: $(publicAdditionalParameters)
-          Location:$(publicLocation)
+          Location: $(publicLocation)
         Windows_NetCoreApp (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
