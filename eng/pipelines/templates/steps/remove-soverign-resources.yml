@@ -1,12 +1,12 @@
 steps:
-  - template: ../../../common/TestResources/deploy-test-resources.yml
+  - template: ../../../common/TestResources/remove-test-resources.yml
     parameters:
       TenantId: $(aad-azure-sdk-test-tenant-id)
       ProvisionerApplicationId: $(provisioner-aad-id)
       ProvisionerApplicationSecret: $(provisioner-aad-secret)
       Condition: eq(variables['CloudType'], 'public')
 
-  - template: ../../../common/TestResources/deploy-test-resources.yml
+  - template: ../../../common/TestResources/remove-test-resources.yml
     parameters:
       TenantId: $(aad-azure-sdk-test-tenant-id-gov)
       ProvisionerApplicationId: $(provisioner-aad-id-gov)
