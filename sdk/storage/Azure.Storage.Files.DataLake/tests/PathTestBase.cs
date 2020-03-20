@@ -104,5 +104,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FailedEntries.AddRange(response.Value.FailedEntries);
             }
         }
+
+        public class ActionableAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlRecursiveChanges>>
+        {
+            private Action<AccessControlRecursiveChanges> action;
+
+            public ActionableAccessControlRecursiveChangeProgress(Action<AccessControlRecursiveChanges> action)
+            {
+                this.action = action;
+            }
+
+            public void Report(Response<AccessControlRecursiveChanges> response)
+            {
+                action(response);
+            }
+        }
     }
 }

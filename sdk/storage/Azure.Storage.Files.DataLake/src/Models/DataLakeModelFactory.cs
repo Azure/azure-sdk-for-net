@@ -23,9 +23,9 @@ namespace Azure.Storage.Files.DataLake.Models
             int failureCount
             ) => new AccessControlRecursiveChangesSummary()
             {
-                DirectoriesSuccessfulCount = directoriesSuccessfulCount,
-                FilesSuccessfulCount = filesSuccessfulCount,
-                FailureCount = failureCount,
+                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                ChangedFilesCount = filesSuccessfulCount,
+                FailedChangesCount = failureCount,
             };
         #endregion AccessControlRecursiveChangesSummary
 
@@ -41,9 +41,9 @@ namespace Azure.Storage.Files.DataLake.Models
             IEnumerable<AccessControlRecursiveChangeFailure> failedEntries
             ) => new AccessControlRecursiveChanges()
             {
-                DirectoriesSuccessfulCount = directoriesSuccessfulCount,
-                FilesSuccessfulCount = filesSuccessfulCount,
-                FailureCount = failureCount,
+                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                ChangedFilesCount = filesSuccessfulCount,
+                FailedChangesCount = failureCount,
                 FailedEntries = failedEntries,
             };
         #endregion AccessControlRecursiveChanges

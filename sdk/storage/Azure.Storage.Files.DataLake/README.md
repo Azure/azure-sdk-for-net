@@ -191,23 +191,27 @@ subDirectoryClient.Create();
 DataLakeFileClient fileClient = subDirectoryClient.GetFileClient(Randomize("sample-file"));
 fileClient.Create();
 
+// Create progress handler to observe operation and collect paths that failed to change Access Controls.
+// Customer is expected to provide own implementation.
+IProgress<Response<AccessControlRecursiveChanges>> progress = null;
+
 // Set Access Control List Recursively
 IList<PathAccessControlItem> accessControlList
     = PathAccessControlExtensions.ParseAccessControlList("user::rwx,user:ec3595d6-2c17-4696-8caa-7e139758d24a:rw-,group::rw-,mask::rwx,other::---");
-rootDirectoryClient.SetAccessControlRecursive(accessControlList);
+rootDirectoryClient.SetAccessControlRecursive(accessControlList, progress);
 ```
 
 ```C# Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
 // Modify Access Control List Recursively
 IList<PathAccessControlItem> deltaAccessControlList
     = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
-subDirectoryClient.UpdateAccessControlRecursive(deltaAccessControlList);
+subDirectoryClient.UpdateAccessControlRecursive(deltaAccessControlList, progress);
 ```
 ```C# Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
 // Remove Access Control List Recursively
 IList<RemovePathAccessControlItem> removeAccessControlList
     = RemovePathAccessControlItem.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
-subDirectoryClient.RemoveAccessControlRecursive(removeAccessControlList);
+subDirectoryClient.RemoveAccessControlRecursive(removeAccessControlList, progress);
 ```
 
 ### Rename a DataLake File

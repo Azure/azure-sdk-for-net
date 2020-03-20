@@ -10,17 +10,22 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Returns number of directories where Access Control List has been updated successfully.
         /// </summary>
-        public long DirectoriesSuccessfulCount { get; internal set; }
+        public long ChangedDirectoriesCount { get; internal set; }
 
         /// <summary>
         /// Returns number of files where Access Control List has been updated successfully.
         /// </summary>
-        public long FilesSuccessfulCount { get; internal set; }
+        public long ChangedFilesCount { get; internal set; }
 
         /// <summary>
         /// Returns number of paths where Access Control List update has failed.
         /// </summary>
-        public long FailureCount { get; internal set; }
+        public long FailedChangesCount { get; internal set; }
+
+        /// <summary>
+        /// Optional continuation token. Value is present when operation is split into multiple batches and can be used to resume progress.
+        /// </summary>
+        public string ContinuationToken { get; internal set; }
 
         internal AccessControlRecursiveChangesSummary() { }
     }

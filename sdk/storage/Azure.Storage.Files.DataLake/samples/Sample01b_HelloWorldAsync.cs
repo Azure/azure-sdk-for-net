@@ -629,20 +629,24 @@ namespace Azure.Storage.Files.DataLake.Samples
                 DataLakeFileClient fileClient = subDirectoryClient.GetFileClient(Randomize("sample-file"));
                 await fileClient.CreateAsync();
 
+                // Create progress handler to observe operation and collect paths that failed to change Access Controls.
+                // Customer is expected to provide own implementation.
+                IProgress<Response<AccessControlRecursiveChanges>> progress = null;
+
                 // Set Access Control List Recursively
                 IList<PathAccessControlItem> accessControlList
                     = PathAccessControlExtensions.ParseAccessControlList("user::rwx,user:ec3595d6-2c17-4696-8caa-7e139758d24a:rw-,group::rw-,mask::rwx,other::---");
-                await rootDirectoryClient.SetAccessControlRecursiveAsync(accessControlList, null);
+                await rootDirectoryClient.SetAccessControlRecursiveAsync(accessControlList, progress);
 
                 // Modify Access Control List Recursively
                 IList<PathAccessControlItem> deltaAccessControlList
                     = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
-                await subDirectoryClient.UpdateAccessControlRecursiveAsync(deltaAccessControlList, null);
+                await subDirectoryClient.UpdateAccessControlRecursiveAsync(deltaAccessControlList, progress);
 
                 // Remove Access Control List Recursively
                 IList<RemovePathAccessControlItem> removeAccessControlList
                     = RemovePathAccessControlItem.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
-                await subDirectoryClient.RemoveAccessControlRecursiveAsync(removeAccessControlList, null);
+                await subDirectoryClient.RemoveAccessControlRecursiveAsync(removeAccessControlList, progress);
 
                 PathAccessControl rootFileAccessControlResponse = await rootFileClient.GetAccessControlAsync();
                 PathAccessControl fileAccessControlResponse = await fileClient.GetAccessControlAsync();
