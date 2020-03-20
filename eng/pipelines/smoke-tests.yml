@@ -54,7 +54,7 @@ jobs:
     variables:
       publicAdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com'; location = '$(publicLocation)' }"
       publicLocation: westus2
-      govAdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/' }"
+      govAdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/' location = '$(govLocation)' }"
       govLocation: usgovvirginia
 
     steps:
