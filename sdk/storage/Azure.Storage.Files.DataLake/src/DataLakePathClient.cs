@@ -2008,61 +2008,44 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
+        /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="stopOnFailure">
-        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
-        /// Default is false.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual ChangeAccessControlResult SetAccessControlRecursive(
+        public virtual Response<AccessControlRecursiveChangesSummary> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
-            int? batchSize = default,
-            IProgress<ChangeAccessControlPartialResult> progressHandler = default,
-            bool stopOnFailure = false,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            AccessControlRecursiveChangeOptions options = default,
+            string continuationToken = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    PathSetAccessControlRecursiveMode.Set,
-                    batchSize,
-                    progressHandler,
-                    stopOnFailure,
-                    false, // async
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Set,
+                options,
+                false, // async
+                continuationToken,
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2074,61 +2057,44 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
+        /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="stopOnFailure">
-        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
-        /// Default is false.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<ChangeAccessControlResult> SetAccessControlRecursiveAsync(
+        public virtual async Task<Response<AccessControlRecursiveChangesSummary>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
-            int? batchSize = default,
-            IProgress<ChangeAccessControlPartialResult> progressHandler = default,
-            bool stopOnFailure = false,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            AccessControlRecursiveChangeOptions options = default,
+            string continuationToken = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return await SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    PathSetAccessControlRecursiveMode.Set,
-                    batchSize,
-                    progressHandler,
-                    stopOnFailure,
-                    true, // async
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Set,
+                options,
+                true, // async
+                continuationToken,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2140,61 +2106,44 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
+        /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="stopOnFailure">
-        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
-        /// Default is false.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual ChangeAccessControlResult UpdateAccessControlRecursive(
+        public virtual Response<AccessControlRecursiveChangesSummary> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
-            int? batchSize = default,
-            IProgress<ChangeAccessControlPartialResult> progressHandler = default,
-            bool stopOnFailure = false,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            AccessControlRecursiveChangeOptions options = default,
+            string continuationToken = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    PathSetAccessControlRecursiveMode.Modify,
-                    batchSize,
-                    progressHandler,
-                    stopOnFailure,
-                    false, // async
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Modify,
+                options,
+                false, // async
+                continuationToken,
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2206,61 +2155,44 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
+        /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <param name="stopOnFailure">
-        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
-        /// Default is false.
-        /// </param>
         /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<ChangeAccessControlResult> UpdateAccessControlRecursiveAsync(
+        public virtual async Task<Response<AccessControlRecursiveChangesSummary>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
-            int? batchSize = default,
-            IProgress<ChangeAccessControlPartialResult> progressHandler = default,
-            bool stopOnFailure = false,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            AccessControlRecursiveChangeOptions options = default,
+            string continuationToken = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return await SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    PathSetAccessControlRecursiveMode.Modify,
-                    batchSize,
-                    progressHandler,
-                    stopOnFailure,
-                    true, // async
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Modify,
+                options,
+                true, // async
+                continuationToken,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2272,61 +2204,44 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
+        /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
         /// </param>
-        /// <param name="stopOnFailure">
-        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
-        /// Default is false.
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual ChangeAccessControlResult RemoveAccessControlRecursive(
+        public virtual Response<AccessControlRecursiveChangesSummary> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
-            int? batchSize = default,
-            IProgress<ChangeAccessControlPartialResult> progressHandler = default,
-            bool stopOnFailure = false,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            AccessControlRecursiveChangeOptions options = default,
+            string continuationToken = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return SetAccessControlRecursiveInternal(
-                    RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
-                    PathSetAccessControlRecursiveMode.Remove,
-                    batchSize,
-                    progressHandler,
-                    stopOnFailure,
-                    false, // async
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Remove,
+                options,
+                false, // async
+                continuationToken,
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2338,51 +2253,190 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
         /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
+        /// <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
         /// as well as collect paths that failed to change Access Control.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <param name="stopOnFailure">
-        /// Optional. If set to true the transaction will stop at first batch that has any path that failed to change Access Control.
-        /// Default is false.
-        /// </param>
         /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<ChangeAccessControlResult> RemoveAccessControlRecursiveAsync(
+        public virtual async Task<Response<AccessControlRecursiveChangesSummary>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
-            int? batchSize = default,
-            IProgress<ChangeAccessControlPartialResult> progressHandler = default,
-            bool stopOnFailure = false,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            AccessControlRecursiveChangeOptions options = default,
+            string continuationToken = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}");
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Remove,
+                options,
+                true, // async
+                continuationToken,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlRecursiveInternal"/> operation sets the
+        /// Access Control on a path and subpaths
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="operationName">
+        /// The operation name for diagnostic purpose.
+        /// </param>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="Progress{AccessControlRecursiveChanges}"/> callback where caller can track progress of the operation
+        /// as well as collect paths that failed to change Access Control.
+        /// </param>
+        /// <param name="mode">
+        /// Mode \"set\" sets POSIX access control rights on files and directories,
+        /// \"modify\" modifies one or more POSIX access control rights  that pre-exist on files and directories,
+        /// \"remove\" removes one or more POSIX access control rights that were present earlier on files and directories.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="AccessControlRecursiveChangeOptions"/> with additional controls.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="continuationToken">
+        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccessControlRecursiveChangesSummary}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<AccessControlRecursiveChangesSummary>> SetAccessControlRecursiveInternal(
+            string operationName,
+            string accessControlList,
+            IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
+            PathSetAccessControlRecursiveMode mode,
+            AccessControlRecursiveChangeOptions options,
+            bool async,
+            string continuationToken,
+            CancellationToken cancellationToken)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
 
             try
             {
                 scope.Start();
+                using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+                {
+                    Pipeline.LogMethodEnter(
+                        nameof(DataLakePathClient),
+                        message:
+                        $"{nameof(Uri)}: {Uri}\n" +
+                        $"{nameof(accessControlList)}: {accessControlList}\n" +
+                        $"{nameof(mode)}: {mode}\n" +
+                        $"batchSize: {options.BatchSize}");
+                    try
+                    {
+                        Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
+                        string lastContinuationToken = null;
+                        int directoriesSuccessfulCount = 0;
+                        int filesSuccessfulCount = 0;
+                        int failureCount = 0;
+                        do
+                        {
+                            jsonResponse =
+                                await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                    clientDiagnostics: ClientDiagnostics,
+                                    pipeline: Pipeline,
+                                    resourceUri: DfsUri,
+                                    mode: mode,
+                                    maxRecords: options.BatchSize,
+                                    version: Version.ToVersionString(),
+                                    acl: accessControlList,
+                                    async: async,
+                                    continuation: continuationToken,
+                                    cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
 
-                return await SetAccessControlRecursiveInternal(
-                    RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
-                    PathSetAccessControlRecursiveMode.Remove,
-                    batchSize,
-                    progressHandler,
-                    stopOnFailure,
-                    true, // async
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                            continuationToken = jsonResponse.Value.Continuation;
+                            if (!string.IsNullOrEmpty(continuationToken))
+                            {
+                                lastContinuationToken = continuationToken;
+                            }
+                            using (var document = JsonDocument.Parse(jsonResponse.Value.Body))
+                            {
+                                var response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+                                int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
+                                int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
+                                int currentFailureCount = response.FailureCount ?? 0;
+                                if (progressHandler != null)
+                                {
+                                    var failedEntries = response.FailedEntries
+                                        .Select(failedEntry => new AccessControlRecursiveChangeFailure()
+                                        {
+                                            Name = failedEntry.Name,
+                                            IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                            ErrorMessage = failedEntry.ErrorMessage,
+                                        }).ToList();
+                                    progressHandler.Report(Response.FromValue(new AccessControlRecursiveChanges()
+                                    {
+                                        ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                        ChangedFilesCount = currentFilesSuccessfulCount,
+                                        FailedChangesCount = failureCount,
+                                        FailedEntries = failedEntries,
+                                        ContinuationToken = lastContinuationToken,
+                                    },
+                                        jsonResponse.GetRawResponse()));
+                                }
+                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                                filesSuccessfulCount += currentFilesSuccessfulCount;
+                                failureCount += currentFailureCount;
+                            }
+                        } while (!string.IsNullOrEmpty(continuationToken));
+
+                        return Response.FromValue(new AccessControlRecursiveChangesSummary()
+                        {
+                            ChangedDirectoriesCount = directoriesSuccessfulCount,
+                            ChangedFilesCount = filesSuccessfulCount,
+                            FailedChangesCount = failureCount,
+                            ContinuationToken = lastContinuationToken,
+                        },
+                            jsonResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        Pipeline.LogException(ex);
+                        throw;
+                    }
+                    finally
+                    {
+                        Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -2392,140 +2446,6 @@ namespace Azure.Storage.Files.DataLake
             finally
             {
                 scope.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="SetAccessControlRecursiveInternal"/> operation sets the
-        /// Access Control on a path and subpaths
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
-        /// </summary>
-        /// <param name="accessControlList">
-        /// The POSIX access control list for the file or directory.
-        /// </param>
-        /// <param name="mode">
-        /// Mode \"set\" sets POSIX access control rights on files and directories,
-        /// \"modify\" modifies one or more POSIX access control rights  that pre-exist on files and directories,
-        /// \"remove\" removes one or more POSIX access control rights that were present earlier on files and directories.
-        /// </param>
-        /// <param name="batchSize">
-        /// Optional. If data set size exceeds batch size then operation will be split into multiple requests so that progress can be tracked.
-        /// Batch size should be between 1 and 2000. Default is 2000.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="Progress{ChangeAccessControlPartialResult}"/> callback where caller can track progress of the operation
-        /// as well as collect paths that failed to change Access Control.
-        /// </param>
-        /// <param name="stopOnFailure">
-        /// Whether progress should be stopped on first batch that contain failed paths.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="ChangeAccessControlResult"/> describing the updated
-        /// path.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        private async Task<ChangeAccessControlResult> SetAccessControlRecursiveInternal(
-            string accessControlList,
-            PathSetAccessControlRecursiveMode mode,
-            int? batchSize,
-            IProgress<ChangeAccessControlPartialResult> progressHandler,
-            bool stopOnFailure,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
-            {
-                Pipeline.LogMethodEnter(
-                    nameof(DataLakePathClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessControlList)}: {accessControlList}\n" +
-                    $"{nameof(mode)}: {mode}\n" +
-                    $"{nameof(batchSize)}: {batchSize}");
-                try
-                {
-                    string continuationToken = null;
-                    int directoriesSuccessfulCount = 0;
-                    int filesSuccessfulCount = 0;
-                    int failureCount = 0;
-                    bool shouldStop = false;
-                    do
-                    {
-                        Response<PathSetAccessControlRecursiveResult> jsonResponse =
-                            await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
-                                clientDiagnostics: ClientDiagnostics,
-                                pipeline: Pipeline,
-                                resourceUri: DfsUri,
-                                mode: mode,
-                                maxRecords: batchSize,
-                                version: Version.ToVersionString(),
-                                acl: accessControlList,
-                                async: async,
-                                continuation: continuationToken,
-                                cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-
-                        continuationToken = jsonResponse.Value.Continuation;
-                        using (var document = JsonDocument.Parse(jsonResponse.Value.Body))
-                        {
-                            var response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
-                            int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
-                            int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
-                            int currentFailureCount = response.FailureCount ?? 0;
-                            if (progressHandler != null)
-                            {
-                                var failedEntries = response.FailedEntries
-                                    .Select(failedEntry => new ChangeAccessControlResultFailedEntry()
-                                    {
-                                        Name = failedEntry.Name,
-                                        Type = failedEntry.Type,
-                                        ErrorMessage = failedEntry.ErrorMessage,
-                                    }).ToList();
-                                progressHandler.Report(new ChangeAccessControlPartialResult()
-                                {
-                                    DirectoriesSuccessfulCount = currentDirectoriesSuccessfulCount,
-                                    FilesSuccessfulCount = currentFilesSuccessfulCount,
-                                    FailureCount = failureCount,
-                                    FailedEntries = failedEntries,
-                                });
-                            }
-                            directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
-                            filesSuccessfulCount += currentFilesSuccessfulCount;
-                            failureCount += currentFailureCount;
-                        }
-
-                        shouldStop = (stopOnFailure && failureCount > 0) || string.IsNullOrEmpty(continuationToken);
-
-                        cancellationToken.ThrowIfCancellationRequested();
-                    } while (!shouldStop);
-
-                    return new ChangeAccessControlResult()
-                        {
-                            DirectoriesSuccessfulCount = directoriesSuccessfulCount,
-                            FilesSuccessfulCount = filesSuccessfulCount,
-                            FailureCount = failureCount,
-                        };
-                }
-                catch (Exception ex)
-                {
-                    Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
-                }
             }
         }
         #endregion Set Access Control Recursive

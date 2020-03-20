@@ -1373,10 +1373,10 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="action">The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.</param>
+            /// <param name="mode">Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
             /// <param name="body">Initial data</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="mode">Optional. Valid and Required for "SetAccessControlRecursive" operation.  Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
             /// <param name="maxRecords">Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
             /// <param name="continuation">Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation.</param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
@@ -1409,10 +1409,10 @@ namespace Azure.Storage.Files.DataLake
                 System.Uri resourceUri,
                 string version,
                 Azure.Storage.Files.DataLake.Models.PathUpdateAction action,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
                 System.IO.Stream body,
                 string requestId = default,
                 int? timeout = default,
-                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode? mode = default,
                 int? maxRecords = default,
                 string continuation = default,
                 long? position = default,
@@ -1449,10 +1449,10 @@ namespace Azure.Storage.Files.DataLake
                         resourceUri,
                         version,
                         action,
+                        mode,
                         body,
                         requestId,
                         timeout,
-                        mode,
                         maxRecords,
                         continuation,
                         position,
@@ -1510,10 +1510,10 @@ namespace Azure.Storage.Files.DataLake
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="action">The action must be "append" to upload data to be appended to a file, "flush" to flush previously uploaded data to a file, "setProperties" to set the properties of a file or directory, "setAccessControl" to set the owner, group, permissions, or access control list for a file or directory, or  "setAccessControlRecursive" to set the access control list for a directory recursively. Note that Hierarchical Namespace must be enabled for the account in order to use access control.  Also note that the Access Control List (ACL) includes permissions for the owner, owning group, and others, so the x-ms-permissions and x-ms-acl request headers are mutually exclusive.</param>
+            /// <param name="mode">Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
             /// <param name="body">Initial data</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="mode">Optional. Valid and Required for "SetAccessControlRecursive" operation.  Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories</param>
             /// <param name="maxRecords">Optional. Valid for "SetAccessControlRecursive" operation. It specifies the maximum number of files or directories on which the acl change will be applied. If omitted or greater than 2,000, the request will process up to 2,000 items</param>
             /// <param name="continuation">Optional. The number of paths processed with each invocation is limited. If the number of paths to be processed exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is  returned in the response, it must be percent-encoded and specified in a subsequent invocation of setAcessControlRecursive operation.</param>
             /// <param name="position">This parameter allows the caller to upload data in parallel and control the order in which it is appended to the file.  It is required when uploading data to be appended to the file and when flushing previously uploaded data to the file.  The value must be the position where the data is to be appended.  Uploaded data is not immediately flushed, or written, to the file.  To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length of the file after all data has been written, and there must not be a request entity body included with the request.</param>
@@ -1542,10 +1542,10 @@ namespace Azure.Storage.Files.DataLake
                 System.Uri resourceUri,
                 string version,
                 Azure.Storage.Files.DataLake.Models.PathUpdateAction action,
+                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode mode,
                 System.IO.Stream body,
                 string requestId = default,
                 int? timeout = default,
-                Azure.Storage.Files.DataLake.Models.PathSetAccessControlRecursiveMode? mode = default,
                 int? maxRecords = default,
                 string continuation = default,
                 long? position = default,
@@ -1591,8 +1591,8 @@ namespace Azure.Storage.Files.DataLake
                 _request.Method = Azure.Core.RequestMethod.Patch;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("action", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(action));
+                _request.Uri.AppendQuery("mode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(mode));
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (mode != null) { _request.Uri.AppendQuery("mode", Azure.Storage.Files.DataLake.DataLakeRestClient.Serialization.ToString(mode.Value)); }
                 if (maxRecords != null) { _request.Uri.AppendQuery("maxRecords", maxRecords.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (continuation != null) { _request.Uri.AppendQuery("continuation", continuation); }
                 if (position != null) { _request.Uri.AppendQuery("position", position.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -4804,9 +4804,9 @@ namespace Azure.Storage.Files.DataLake
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Optional. Valid and Required for "SetAccessControlRecursive" operation.  Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories
+    /// Mode "set" sets POSIX access control rights on files and directories, "modify" modifies one or more POSIX access control rights  that pre-exist on files and directories, "remove" removes one or more POSIX access control rights  that were present earlier on files and directories
     /// </summary>
-    public enum PathSetAccessControlRecursiveMode
+    internal enum PathSetAccessControlRecursiveMode
     {
         /// <summary>
         /// set

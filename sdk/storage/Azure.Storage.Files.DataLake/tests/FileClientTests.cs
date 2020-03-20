@@ -991,12 +991,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlResult result = await file.SetAccessControlRecursiveAsync(AccessControlList);
+            AccessControlRecursiveChangesSummary result = await file.SetAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
-            Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
-            Assert.AreEqual(1, result.FilesSuccessfulCount);
-            Assert.AreEqual(0, result.FailureCount);
+            Assert.AreEqual(0, result.ChangedDirectoriesCount);
+            Assert.AreEqual(1, result.ChangedFilesCount);
+            Assert.AreEqual(0, result.FailedChangesCount);
         }
 
         [Test]
@@ -1008,12 +1008,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlResult result = await file.UpdateAccessControlRecursiveAsync(AccessControlList);
+            AccessControlRecursiveChangesSummary result = await file.UpdateAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
-            Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
-            Assert.AreEqual(1, result.FilesSuccessfulCount);
-            Assert.AreEqual(0, result.FailureCount);
+            Assert.AreEqual(0, result.ChangedDirectoriesCount);
+            Assert.AreEqual(1, result.ChangedFilesCount);
+            Assert.AreEqual(0, result.FailedChangesCount);
         }
 
         [Test]
@@ -1025,12 +1025,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            ChangeAccessControlResult result = await file.RemoveAccessControlRecursiveAsync(RemoveAccessControlList);
+            AccessControlRecursiveChangesSummary result = await file.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
 
             // Assert
-            Assert.AreEqual(0, result.DirectoriesSuccessfulCount);
-            Assert.AreEqual(1, result.FilesSuccessfulCount);
-            Assert.AreEqual(0, result.FailureCount);
+            Assert.AreEqual(0, result.ChangedDirectoriesCount);
+            Assert.AreEqual(1, result.ChangedFilesCount);
+            Assert.AreEqual(0, result.FailedChangesCount);
         }
 
         [Test]

@@ -12,58 +12,58 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public static partial class DataLakeModelFactory
     {
-        #region ChangeAccessControlResult
+        #region AccessControlRecursiveChangesSummary
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlResult"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlRecursiveChangesSummary"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlResult ChangeAccessControlResult(
+        public static AccessControlRecursiveChangesSummary AccessControlRecursiveChangesSummary(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount
-            ) => new ChangeAccessControlResult()
+            ) => new AccessControlRecursiveChangesSummary()
             {
-                DirectoriesSuccessfulCount = directoriesSuccessfulCount,
-                FilesSuccessfulCount = filesSuccessfulCount,
-                FailureCount = failureCount,
+                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                ChangedFilesCount = filesSuccessfulCount,
+                FailedChangesCount = failureCount,
             };
-        #endregion ChangeAccessControlResult
+        #endregion AccessControlRecursiveChangesSummary
 
-        #region ChangeAccessControlPartialResult
+        #region AccessControlRecursiveChanges
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlPartialResult"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlRecursiveChanges"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlPartialResult ChangeAccessControlPartialResult(
+        public static AccessControlRecursiveChanges AccessControlRecursiveChanges(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount,
-            IEnumerable<ChangeAccessControlResultFailedEntry> failedEntries
-            ) => new ChangeAccessControlPartialResult()
+            IEnumerable<AccessControlRecursiveChangeFailure> failedEntries
+            ) => new AccessControlRecursiveChanges()
             {
-                DirectoriesSuccessfulCount = directoriesSuccessfulCount,
-                FilesSuccessfulCount = filesSuccessfulCount,
-                FailureCount = failureCount,
+                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                ChangedFilesCount = filesSuccessfulCount,
+                FailedChangesCount = failureCount,
                 FailedEntries = failedEntries,
             };
-        #endregion ChangeAccessControlResult
+        #endregion AccessControlRecursiveChanges
 
-        #region ChangeAccessControlResultFailedEntry
+        #region AccessControlRecursiveChangeFailure
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlResultFailedEntry"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlRecursiveChangeFailure"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlResultFailedEntry ChangeAccessControlResultFailedEntry(
+        public static AccessControlRecursiveChangeFailure AccessControlRecursiveChangeFailure(
             string name,
-            string type,
+            bool isDirectory,
             string errorMessage
-            ) => new ChangeAccessControlResultFailedEntry()
+            ) => new AccessControlRecursiveChangeFailure()
             {
                 Name = name,
-                Type = type,
+                IsDirectory = isDirectory,
                 ErrorMessage = errorMessage,
             };
-        #endregion ChangeAccessControlResultFailedEntry
+        #endregion AccessControlRecursiveChangeFailure
 
         #region FileDownloadDetails
         /// <summary>
