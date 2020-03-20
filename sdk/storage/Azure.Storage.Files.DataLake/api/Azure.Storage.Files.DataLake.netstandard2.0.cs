@@ -208,16 +208,22 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary> RemoveAccessControlRecursive(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem> accessControlList, System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges>> progressHandler, Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions options = default(Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary>> RemoveAccessControlRecursiveAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem> accessControlList, System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges>> progressHandler, Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions options = default(Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient> Rename(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient>> RenameAsync(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary> SetAccessControlRecursive(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges>> progressHandler, Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions options = default(Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary>> SetAccessControlRecursiveAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges>> progressHandler, Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions options = default(Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary> UpdateAccessControlRecursive(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges>> progressHandler, Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions options = default(Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary>> UpdateAccessControlRecursiveAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges>> progressHandler, Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions options = default(Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeOptions), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataLakeServiceClient
     {
@@ -258,6 +264,33 @@ namespace Azure.Storage.Files.DataLake
 }
 namespace Azure.Storage.Files.DataLake.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct AccessControlRecursiveChangeFailure
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public string ErrorMessage { get { throw null; } }
+        public bool IsDirectory { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct AccessControlRecursiveChangeOptions
+    {
+        public int? BatchSize { get { throw null; } set { } }
+    }
+    public partial class AccessControlRecursiveChanges : Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary
+    {
+        internal AccessControlRecursiveChanges() { }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeFailure> FailedEntries { get { throw null; } }
+    }
+    public partial class AccessControlRecursiveChangesSummary
+    {
+        internal AccessControlRecursiveChangesSummary() { }
+        public long ChangedDirectoriesCount { get { throw null; } }
+        public long ChangedFilesCount { get { throw null; } }
+        public string ContinuationToken { get { throw null; } }
+        public long FailedChangesCount { get { throw null; } }
+    }
     public enum AccessControlType
     {
         Other = 0,
@@ -307,6 +340,9 @@ namespace Azure.Storage.Files.DataLake.Models
     }
     public static partial class DataLakeModelFactory
     {
+        public static Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeFailure AccessControlRecursiveChangeFailure(string name, bool isDirectory, string errorMessage) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChanges AccessControlRecursiveChanges(int directoriesSuccessfulCount, int filesSuccessfulCount, int failureCount, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangeFailure> failedEntries) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.AccessControlRecursiveChangesSummary AccessControlRecursiveChangesSummary(int directoriesSuccessfulCount, int filesSuccessfulCount, int failureCount) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadInfo FileDownloadInfo(long contentLength, System.IO.Stream content, byte[] contentHash, Azure.Storage.Files.DataLake.Models.FileDownloadDetails properties) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemInfo FileSystemInfo(Azure.ETag etag, System.DateTimeOffset lastModified) { throw null; }
@@ -563,6 +599,7 @@ namespace Azure.Storage.Files.DataLake.Models
         Flush = 1,
         SetProperties = 2,
         SetAccessControl = 3,
+        SetAccessControlRecursive = 4,
     }
     public enum PublicAccessType
     {
@@ -586,6 +623,17 @@ namespace Azure.Storage.Files.DataLake.Models
         public static bool operator ==(Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo left, Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo right) { throw null; }
         public static bool operator !=(Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo left, Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo right) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    public partial class RemovePathAccessControlItem
+    {
+        public RemovePathAccessControlItem(Azure.Storage.Files.DataLake.Models.AccessControlType accessControlType, bool defaultScope = false, string entityId = null) { }
+        public Azure.Storage.Files.DataLake.Models.AccessControlType AccessControlType { get { throw null; } }
+        public bool DefaultScope { get { throw null; } }
+        public string EntityId { get { throw null; } }
+        public static Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem Parse(string serializedAccessControl) { throw null; }
+        public static System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem> ParseAccessControlList(string s) { throw null; }
+        public static string ToAccessControlListString(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem> accessControlList) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.FlagsAttribute]
