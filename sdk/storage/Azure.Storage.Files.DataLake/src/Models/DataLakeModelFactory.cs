@@ -12,12 +12,12 @@ namespace Azure.Storage.Files.DataLake.Models
     /// </summary>
     public static partial class DataLakeModelFactory
     {
-        #region ChangeAccessControlResult
+        #region AccessControlRecursiveChangesSummary
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlResult"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlRecursiveChangesSummary"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static AccessControlRecursiveChangesSummary ChangeAccessControlResult(
+        public static AccessControlRecursiveChangesSummary AccessControlRecursiveChangesSummary(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount
@@ -27,14 +27,14 @@ namespace Azure.Storage.Files.DataLake.Models
                 FilesSuccessfulCount = filesSuccessfulCount,
                 FailureCount = failureCount,
             };
-        #endregion ChangeAccessControlResult
+        #endregion AccessControlRecursiveChangesSummary
 
-        #region ChangeAccessControlPartialResult
+        #region AccessControlRecursiveChanges
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlPartialResult"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlRecursiveChanges"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static AccessControlRecursiveChanges ChangeAccessControlPartialResult(
+        public static AccessControlRecursiveChanges AccessControlRecursiveChanges(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount,
@@ -46,14 +46,14 @@ namespace Azure.Storage.Files.DataLake.Models
                 FailureCount = failureCount,
                 FailedEntries = failedEntries,
             };
-        #endregion ChangeAccessControlResult
+        #endregion AccessControlRecursiveChanges
 
-        #region ChangeAccessControlResultFailedEntry
+        #region AccessControlChangeFailure
         /// <summary>
-        /// Creates a new <see cref="ChangeAccessControlResultFailedEntry"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlChangeFailure"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static AccessControlChangeFailure ChangeAccessControlResultFailedEntry(
+        public static AccessControlChangeFailure AccessControlChangeFailure(
             string name,
             bool isDirectory,
             string errorMessage
@@ -63,7 +63,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 IsDirectory = isDirectory,
                 ErrorMessage = errorMessage,
             };
-        #endregion ChangeAccessControlResultFailedEntry
+        #endregion AccessControlChangeFailure
 
         #region FileDownloadDetails
         /// <summary>

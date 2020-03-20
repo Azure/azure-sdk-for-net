@@ -95,7 +95,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             public string LeaseId { get; set; }
         }
 
-        public class InMemoryChangeChangeAccessControlPartialResultProgress : IProgress<Response<AccessControlRecursiveChanges>>
+        public class InMemoryAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlRecursiveChanges>>
         {
             public List<AccessControlChangeFailure> FailedEntries { get; } = new List<AccessControlChangeFailure>();
 

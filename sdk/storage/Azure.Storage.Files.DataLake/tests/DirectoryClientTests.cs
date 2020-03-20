@@ -1052,7 +1052,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
 
-            InMemoryChangeChangeAccessControlPartialResultProgress progress = new InMemoryChangeChangeAccessControlPartialResultProgress();
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
 
             // Act
             AccessControlRecursiveChangesSummary result = await directory.SetAccessControlRecursiveAsync(
@@ -1183,7 +1183,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
 
-            InMemoryChangeChangeAccessControlPartialResultProgress progress = new InMemoryChangeChangeAccessControlPartialResultProgress();
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
 
             // Act
             AccessControlRecursiveChangesSummary result = await directory.UpdateAccessControlRecursiveAsync(
@@ -1314,7 +1314,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetSubDirectoryClient(subdirectory2.Name)
                 .CreateFileAsync(GetNewFileName());
 
-            InMemoryChangeChangeAccessControlPartialResultProgress progress = new InMemoryChangeChangeAccessControlPartialResultProgress();
+            InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
 
             // Act
             AccessControlRecursiveChangesSummary result = await directory.RemoveAccessControlRecursiveAsync(
