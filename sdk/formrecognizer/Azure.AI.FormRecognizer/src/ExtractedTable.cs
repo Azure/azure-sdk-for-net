@@ -6,17 +6,27 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedTable
     {
-        internal ExtractedTable(DataTable_internal result, ReadResult_internal readResult)
+        internal ExtractedTable(DataTable_internal table, ReadResult_internal readResult)
         {
-            ColumnCount = result.Columns;
-            RowCount = result.Rows;
-            Cells = ConvertCells(result.Cells, readResult);
+            ColumnCount = table.Columns;
+            RowCount = table.Rows;
+            Cells = ConvertCells(table.Cells, readResult);
         }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<ExtractedTableCell> Cells { get; }
+
+        /// <summary>
+        /// </summary>
         public int ColumnCount { get; }
+
+        /// <summary>
+        /// </summary>
         public int RowCount { get; }
 
         // TODO: implement table indexer
@@ -24,6 +34,8 @@ namespace Azure.AI.FormRecognizer.Models
         // https://github.com/Azure/azure-sdk-for-net/issues/9975
 
 
+        /// <summary>
+        /// </summary>
 #pragma warning disable CA1822 // Mark as static
         public ExtractedTableCell this[int row, int column]
 #pragma warning restore CA1822 // Mark as static

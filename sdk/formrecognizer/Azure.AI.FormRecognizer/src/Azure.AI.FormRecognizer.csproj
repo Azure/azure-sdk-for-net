@@ -6,7 +6,6 @@
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     
     <NoWarn>
       $(NoWarn);

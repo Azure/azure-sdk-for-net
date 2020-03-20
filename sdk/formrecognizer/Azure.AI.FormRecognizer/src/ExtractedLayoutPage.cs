@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedLayoutPage
     {
         internal ExtractedLayoutPage(PageResult_internal pageResult, ReadResult_internal readResult)
@@ -18,10 +20,16 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
+        /// <summary>
+        /// </summary>
         public int PageNumber { get; }
 
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<ExtractedTable> Tables { get; }
 
+        /// <summary>
+        /// </summary>
         public RawExtractedPage RawExtractedPage { get; }
 
         internal static IReadOnlyList<ExtractedTable> ConvertTables(ICollection<DataTable_internal> tablesResult, ReadResult_internal readResult)

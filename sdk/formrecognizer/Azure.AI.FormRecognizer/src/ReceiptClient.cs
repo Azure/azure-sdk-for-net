@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer
 {
+    /// <summary>
+    /// The client to use to with the Form Recognizer Azure Cognitive Service, to extract values from receipts.
+    /// </summary>
     public class ReceiptClient
     {
         private readonly ClientDiagnostics _diagnostics;
@@ -19,6 +23,8 @@ namespace Azure.AI.FormRecognizer
 
         internal const string ReceiptsRoute = "/prebuilt/receipt";
 
+        /// <summary>
+        /// </summary>
         protected ReceiptClient()
         {
         }
@@ -44,86 +50,69 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="stream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync();
-
-            // TODO: this feels very bad.  Better way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            task.AsTask().Wait();
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: this is also a mess. Reconcile these together.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual Response<ExtractedReceipt> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartExtractReceipts(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            ValueTask<Response<ExtractedReceipt>> task = operation.WaitForCompletionAsync();
-
-            // TODO: this feels very bad.  Better way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            task.AsTask().Wait();
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: this is also a mess. Reconcile these together.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="stream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Stream stream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            var operationResponse = await operation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: Is this the best way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken).ConfigureAwait(false);
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
 
-        public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="uri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartExtractReceiptsAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
-            var operation = new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
-
-            var operationResponse = await operation.WaitForCompletionAsync().ConfigureAwait(false);
-
-            if (!operation.HasValue)
-            {
-                throw new RequestFailedException("Failed to retrieve response from ExtractReceipt Long-Running Operation");
-            }
-
-            // TODO: Is this the best way?
-            // https://github.com/Azure/azure-sdk-for-net/issues/10391
-            return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new ExtractReceiptOperation(_operations, response.Headers.OperationLocation);
         }
     }
 }

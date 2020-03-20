@@ -23,8 +23,5 @@ namespace Azure.AI.FormRecognizer.Models
             Code = code;
             Message = message;
         }
-
-        public string Code { get; internal set; }
-        public string Message { get; internal set; }
     }
 }

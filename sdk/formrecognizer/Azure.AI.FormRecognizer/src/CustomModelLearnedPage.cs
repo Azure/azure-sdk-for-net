@@ -5,8 +5,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    public class CustomModelLearnedForm
+    /// <summary>
+    /// </summary>
+    public class CustomModelLearnedPage
     {
+        internal CustomModelLearnedPage()
+        {
+        }
+
         /// <summary>
         /// </summary>
         public string FormTypeId { get; internal set; }

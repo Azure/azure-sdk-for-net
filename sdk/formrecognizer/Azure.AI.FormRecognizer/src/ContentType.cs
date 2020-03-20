@@ -1,23 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// Form content type for local files.
     /// </summary>
-    public enum FormContentType
+    [CodeGenSchema("ContentType")]
+    public enum ContentType
     {
         /// <summary>application/pdf</summary>
-        Pdf = 1,
+        [CodeGenSchemaMember("ApplicationPdf")]
+        Pdf,
 
         /// <summary>image/png</summary>
-        Png = 2,
+        [CodeGenSchemaMember("ImagePng")]
+        Png,
 
         /// <summary>image/jpeg</summary>
-        Jpeg = 3,
+        [CodeGenSchemaMember("ImageJpeg")]
+        Jpeg,
 
         /// <summary>image/tiff</summary>
-        Tiff = 4,
+        [CodeGenSchemaMember("ImageTiff")]
+        Tiff,
     }
 }
