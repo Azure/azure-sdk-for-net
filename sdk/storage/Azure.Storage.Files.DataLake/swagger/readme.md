@@ -247,6 +247,15 @@ directive:
     $.SetAccessControlRecursiveResponse["x-az-public"] = false;
 ```
 
+### Hide PathSetAccessControlRecursiveMode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.PathSetAccessControlRecursiveMode
+  transform: >
+    $["x-az-public"] = false;
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
