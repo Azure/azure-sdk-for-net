@@ -15,7 +15,7 @@ steps:
       ProvisionerApplicationSecret: $(provisioner-aad-secret)
       AdditionalParameters: ${{ parameters.AdditionalParameters }}
       Location: ${{ parameters.Location }}
-      Environment:
+      Environment: AzureCloud
       Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
 
   - template: ../../../common/TestResources/deploy-test-resources.yml
