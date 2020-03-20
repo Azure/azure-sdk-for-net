@@ -9,8 +9,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
-    public class RemovePathAccessControlItemTests : RemovePathAccessControlTestBase
+    public class RemovePathAccessControlItemTests
     {
+        public readonly string _entityId = "entityId";
+
         [Test]
         public void Constructor_Invalid()
         {
@@ -45,25 +47,25 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.Mask),
-                new RemovePathAccessControlItem("mask"));
+                RemovePathAccessControlItem.Parse("mask"));
 
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.Mask),
-                new RemovePathAccessControlItem("mask:"));
+                RemovePathAccessControlItem.Parse("mask:"));
 
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.Mask,
                     true),
-                new RemovePathAccessControlItem("default:mask"));
+                RemovePathAccessControlItem.Parse("default:mask"));
 
             AssertRemovePathAccessControlEntryEquality(
                 new RemovePathAccessControlItem(
                     AccessControlType.User,
                     true,
                     _entityId),
-                new RemovePathAccessControlItem("default:user:entityId"));
+                RemovePathAccessControlItem.Parse("default:user:entityId"));
         }
 
         [Test]
@@ -72,15 +74,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(null, PathAccessControlItem.Parse(null));
 
             TestHelper.AssertExpectedException(
-                () => new RemovePathAccessControlItem(""),
+                () => RemovePathAccessControlItem.Parse(""),
                 new ArgumentException("s must have 1 to 3 parts delimited by colons.  Value is \"\""));
 
             TestHelper.AssertExpectedException(
-                () => new RemovePathAccessControlItem("a:b:c:d"),
+                () => RemovePathAccessControlItem.Parse("a:b:c:d"),
                 new ArgumentException("s must have 1 to 3 parts delimited by colons.  Value is \"a:b:c:d\""));
 
             TestHelper.AssertExpectedException(
-                () => new RemovePathAccessControlItem("a:b:c"),
+                () => RemovePathAccessControlItem.Parse("a:b:c"),
                 new ArgumentException("If s is 3 parts, the first must be \"default\".  Value is \"a:b:c\""));
         }
 
@@ -153,6 +155,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void DeserializeRemoveAccessControlList_Invalid()
         {
             Assert.AreEqual(null, RemovePathAccessControlItem.ParseAccessControlList(null));
+        }
+
+        private void AssertRemovePathAccessControlEntryEquality(RemovePathAccessControlItem expected, RemovePathAccessControlItem actual)
+        {
+            Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
+            Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);
+            Assert.AreEqual(expected.EntityId, actual.EntityId);
         }
     }
 }

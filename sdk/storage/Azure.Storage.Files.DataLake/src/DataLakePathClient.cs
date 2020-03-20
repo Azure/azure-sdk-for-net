@@ -2032,30 +2032,15 @@ namespace Azure.Storage.Files.DataLake
             AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    progressHandler,
-                    PathSetAccessControlRecursiveMode.Set,
-                    options,
-                    false, // async
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Set,
+                options,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2091,30 +2076,15 @@ namespace Azure.Storage.Files.DataLake
             AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return await SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    progressHandler,
-                    PathSetAccessControlRecursiveMode.Set,
-                    options,
-                    true, // async
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(SetAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Set,
+                options,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2150,30 +2120,15 @@ namespace Azure.Storage.Files.DataLake
             AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    progressHandler,
-                    PathSetAccessControlRecursiveMode.Modify,
-                    options,
-                    false, // async
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Modify,
+                options,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2209,30 +2164,15 @@ namespace Azure.Storage.Files.DataLake
             AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return await SetAccessControlRecursiveInternal(
-                    PathAccessControlExtensions.ToAccessControlListString(accessControlList),
-                    progressHandler,
-                    PathSetAccessControlRecursiveMode.Modify,
-                    options,
-                    true, // async
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(UpdateAccessControlRecursive)}",
+                PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Modify,
+                options,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2268,30 +2208,15 @@ namespace Azure.Storage.Files.DataLake
             AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return SetAccessControlRecursiveInternal(
-                    RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
-                    progressHandler,
-                    PathSetAccessControlRecursiveMode.Remove,
-                    options,
-                    false, // async
-                    cancellationToken)
-                    .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Remove,
+                options,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -2327,30 +2252,15 @@ namespace Azure.Storage.Files.DataLake
             AccessControlRecursiveChangeOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}");
-
-            try
-            {
-                scope.Start();
-
-                return await SetAccessControlRecursiveInternal(
-                    RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
-                    progressHandler,
-                    PathSetAccessControlRecursiveMode.Remove,
-                    options,
-                    true, // async
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
+            return await SetAccessControlRecursiveInternal(
+                $"{nameof(DataLakePathClient)}.{nameof(RemoveAccessControlRecursive)}",
+                RemovePathAccessControlItem.ToAccessControlListString(accessControlList),
+                progressHandler,
+                PathSetAccessControlRecursiveMode.Remove,
+                options,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2359,6 +2269,9 @@ namespace Azure.Storage.Files.DataLake
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
+        /// <param name="operationName">
+        /// The operation name for diagnostic purpose.
+        /// </param>
         /// <param name="accessControlList">
         /// The POSIX access control list for the file or directory.
         /// </param>
@@ -2390,6 +2303,7 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<AccessControlRecursiveChangesSummary>> SetAccessControlRecursiveInternal(
+            string operationName,
             string accessControlList,
             IProgress<Response<AccessControlRecursiveChanges>> progressHandler,
             PathSetAccessControlRecursiveMode mode,
@@ -2397,88 +2311,101 @@ namespace Azure.Storage.Files.DataLake
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
-            {
-                Pipeline.LogMethodEnter(
-                    nameof(DataLakePathClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(accessControlList)}: {accessControlList}\n" +
-                    $"{nameof(mode)}: {mode}\n" +
-                    $"batchSize: {options.BatchSize}");
-                try
-                {
-                    Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
-                    string continuationToken = null;
-                    int directoriesSuccessfulCount = 0;
-                    int filesSuccessfulCount = 0;
-                    int failureCount = 0;
-                    do
-                    {
-                        jsonResponse =
-                            await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
-                                clientDiagnostics: ClientDiagnostics,
-                                pipeline: Pipeline,
-                                resourceUri: DfsUri,
-                                mode: mode,
-                                maxRecords: options.BatchSize,
-                                version: Version.ToVersionString(),
-                                acl: accessControlList,
-                                async: async,
-                                continuation: continuationToken,
-                                cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
 
-                        continuationToken = jsonResponse.Value.Continuation;
-                        using (var document = JsonDocument.Parse(jsonResponse.Value.Body))
+            try
+            {
+                scope.Start();
+                using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+                {
+                    Pipeline.LogMethodEnter(
+                        nameof(DataLakePathClient),
+                        message:
+                        $"{nameof(Uri)}: {Uri}\n" +
+                        $"{nameof(accessControlList)}: {accessControlList}\n" +
+                        $"{nameof(mode)}: {mode}\n" +
+                        $"batchSize: {options.BatchSize}");
+                    try
+                    {
+                        Response<PathSetAccessControlRecursiveResult> jsonResponse = null;
+                        string continuationToken = null;
+                        int directoriesSuccessfulCount = 0;
+                        int filesSuccessfulCount = 0;
+                        int failureCount = 0;
+                        do
                         {
-                            var response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
-                            int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
-                            int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
-                            int currentFailureCount = response.FailureCount ?? 0;
-                            if (progressHandler != null)
+                            jsonResponse =
+                                await DataLakeRestClient.Path.SetAccessControlRecursiveAsync(
+                                    clientDiagnostics: ClientDiagnostics,
+                                    pipeline: Pipeline,
+                                    resourceUri: DfsUri,
+                                    mode: mode,
+                                    maxRecords: options.BatchSize,
+                                    version: Version.ToVersionString(),
+                                    acl: accessControlList,
+                                    async: async,
+                                    continuation: continuationToken,
+                                    cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+
+                            continuationToken = jsonResponse.Value.Continuation;
+                            using (var document = JsonDocument.Parse(jsonResponse.Value.Body))
                             {
-                                var failedEntries = response.FailedEntries
-                                    .Select(failedEntry => new AccessControlChangeFailure()
-                                    {
-                                        Name = failedEntry.Name,
-                                        IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
-                                        ErrorMessage = failedEntry.ErrorMessage,
-                                    }).ToList();
-                                progressHandler.Report(Response.FromValue(new AccessControlRecursiveChanges()
+                                var response = document.RootElement.DeserializeSetAccessControlRecursiveResponse();
+                                int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
+                                int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
+                                int currentFailureCount = response.FailureCount ?? 0;
+                                if (progressHandler != null)
+                                {
+                                    var failedEntries = response.FailedEntries
+                                        .Select(failedEntry => new AccessControlChangeFailure()
+                                        {
+                                            Name = failedEntry.Name,
+                                            IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
+                                            ErrorMessage = failedEntry.ErrorMessage,
+                                        }).ToList();
+                                    progressHandler.Report(Response.FromValue(new AccessControlRecursiveChanges()
                                     {
                                         DirectoriesSuccessfulCount = currentDirectoriesSuccessfulCount,
                                         FilesSuccessfulCount = currentFilesSuccessfulCount,
                                         FailureCount = failureCount,
                                         FailedEntries = failedEntries,
                                     },
-                                    jsonResponse.GetRawResponse()));
+                                        jsonResponse.GetRawResponse()));
+                                }
+                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                                filesSuccessfulCount += currentFilesSuccessfulCount;
+                                failureCount += currentFailureCount;
                             }
-                            directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
-                            filesSuccessfulCount += currentFilesSuccessfulCount;
-                            failureCount += currentFailureCount;
-                        }
+                        } while (!string.IsNullOrEmpty(continuationToken));
 
-                        cancellationToken.ThrowIfCancellationRequested();
-                    } while (!string.IsNullOrEmpty(continuationToken));
-
-                    return Response.FromValue(new AccessControlRecursiveChangesSummary()
+                        return Response.FromValue(new AccessControlRecursiveChangesSummary()
                         {
                             DirectoriesSuccessfulCount = directoriesSuccessfulCount,
                             FilesSuccessfulCount = filesSuccessfulCount,
                             FailureCount = failureCount,
                         },
-                        jsonResponse.GetRawResponse());
+                            jsonResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        Pipeline.LogException(ex);
+                        throw;
+                    }
+                    finally
+                    {
+                        Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Pipeline.LogException(ex);
-                    throw;
-                }
-                finally
-                {
-                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
-                }
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
             }
         }
         #endregion Set Access Control Recursive
