@@ -651,19 +651,19 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Set Access Control List Recursively
                 IList<PathAccessControlItem> accessControlList
                     = PathAccessControlExtensions.ParseAccessControlList("user::rwx,user:ec3595d6-2c17-4696-8caa-7e139758d24a:rw-,group::rw-,mask::rwx,other::---");
-                rootDirectoryClient.SetAccessControlRecursive(accessControlList);
+                rootDirectoryClient.SetAccessControlRecursive(accessControlList, null);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_SetAclsRecursively
                 #region Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
                 // Modify Access Control List Recursively
                 IList<PathAccessControlItem> deltaAccessControlList
                     = PathAccessControlExtensions.ParseAccessControlList("user::r--,other::-w-");
-                subDirectoryClient.UpdateAccessControlRecursive(deltaAccessControlList);
+                subDirectoryClient.UpdateAccessControlRecursive(deltaAccessControlList, null);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_ModifyAclsRecursively
                 #region Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
                 // Remove Access Control List Recursively
                 IList<RemovePathAccessControlItem> removeAccessControlList
                     = RemovePathAccessControlItem.ParseAccessControlList("user:ec3595d6-2c17-4696-8caa-7e139758d24a");
-                subDirectoryClient.RemoveAccessControlRecursive(removeAccessControlList);
+                subDirectoryClient.RemoveAccessControlRecursive(removeAccessControlList, null);
                 #endregion Snippet:SampleSnippetDataLakeFileClient_RemoveAclsRecursively
 
                 PathAccessControl rootFileAccessControlResponse = rootFileClient.GetAccessControl();

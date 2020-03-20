@@ -17,11 +17,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="ChangeAccessControlResult"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlResult ChangeAccessControlResult(
+        public static AccessControlRecursiveChangesSummary ChangeAccessControlResult(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount
-            ) => new ChangeAccessControlResult()
+            ) => new AccessControlRecursiveChangesSummary()
             {
                 DirectoriesSuccessfulCount = directoriesSuccessfulCount,
                 FilesSuccessfulCount = filesSuccessfulCount,
@@ -34,12 +34,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="ChangeAccessControlPartialResult"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlPartialResult ChangeAccessControlPartialResult(
+        public static AccessControlRecursiveChanges ChangeAccessControlPartialResult(
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount,
-            IEnumerable<ChangeAccessControlResultFailedEntry> failedEntries
-            ) => new ChangeAccessControlPartialResult()
+            IEnumerable<AccessControlChangeFailure> failedEntries
+            ) => new AccessControlRecursiveChanges()
             {
                 DirectoriesSuccessfulCount = directoriesSuccessfulCount,
                 FilesSuccessfulCount = filesSuccessfulCount,
@@ -53,14 +53,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="ChangeAccessControlResultFailedEntry"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static ChangeAccessControlResultFailedEntry ChangeAccessControlResultFailedEntry(
+        public static AccessControlChangeFailure ChangeAccessControlResultFailedEntry(
             string name,
-            string type,
+            bool isDirectory,
             string errorMessage
-            ) => new ChangeAccessControlResultFailedEntry()
+            ) => new AccessControlChangeFailure()
             {
                 Name = name,
-                Type = type,
+                IsDirectory = isDirectory,
                 ErrorMessage = errorMessage,
             };
         #endregion ChangeAccessControlResultFailedEntry

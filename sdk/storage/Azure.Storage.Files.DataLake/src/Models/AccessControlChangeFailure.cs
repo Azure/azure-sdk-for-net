@@ -5,7 +5,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Represents an entry that failed to update Access Control List.
     /// </summary>
-    public struct ChangeAccessControlResultFailedEntry
+    public struct AccessControlChangeFailure
     {
         /// <summary>
         /// Returns name of an entry.
@@ -13,9 +13,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Name { get; internal set; }
 
         /// <summary>
-        /// Returns type of an entry.
+        /// Returns whether entry is a directory.
         /// </summary>
-        public string Type { get; internal set; }
+        public bool IsDirectory { get; internal set; }
 
         /// <summary>
         /// Returns error message that is the reason why entry failed to update.
