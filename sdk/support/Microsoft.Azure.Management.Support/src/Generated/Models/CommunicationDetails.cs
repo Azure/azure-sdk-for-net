@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// Object that represents Communication resource
+    /// Object that represents a Communication resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class CommunicationDetails : IResource
@@ -33,18 +33,18 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the CommunicationDetails class.
         /// </summary>
-        /// <param name="subject">Subject of the communication</param>
-        /// <param name="body">Body of the communication</param>
-        /// <param name="id">Id of the resource</param>
-        /// <param name="name">Name of the resource</param>
+        /// <param name="subject">Subject of the communication.</param>
+        /// <param name="body">Body of the communication.</param>
+        /// <param name="id">Id of the resource.</param>
+        /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of the resource
-        /// 'Microsoft.Support/communications'</param>
+        /// 'Microsoft.Support/communications'.</param>
         /// <param name="communicationType">Communication type. Possible values
         /// include: 'web', 'phone'</param>
         /// <param name="communicationDirection">Direction of communication.
         /// Possible values include: 'inbound', 'outbound'</param>
         /// <param name="sender">Email address of the sender. This property is
-        /// required if called by a service principal</param>
+        /// required if called by a service principal.</param>
         /// <param name="createdDate">Time in UTC (ISO 8601 format) when the
         /// communication was created.</param>
         public CommunicationDetails(string subject, string body, string id = default(string), string name = default(string), string type = default(string), string communicationType = default(string), string communicationDirection = default(string), string sender = default(string), System.DateTime? createdDate = default(System.DateTime?))
@@ -67,19 +67,19 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of the resource
+        /// Gets id of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource
+        /// Gets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets type of the resource 'Microsoft.Support/communications'
+        /// Gets type of the resource 'Microsoft.Support/communications'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
@@ -99,19 +99,19 @@ namespace Microsoft.Azure.Management.Support.Models
 
         /// <summary>
         /// Gets or sets email address of the sender. This property is required
-        /// if called by a service principal
+        /// if called by a service principal.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sender")]
         public string Sender { get; set; }
 
         /// <summary>
-        /// Gets or sets subject of the communication
+        /// Gets or sets subject of the communication.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subject")]
         public string Subject { get; set; }
 
         /// <summary>
-        /// Gets or sets body of the communication
+        /// Gets or sets body of the communication.
         /// </summary>
         [JsonProperty(PropertyName = "properties.body")]
         public string Body { get; set; }
