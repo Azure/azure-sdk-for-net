@@ -246,7 +246,7 @@ namespace Management.Blueprint.Tests.ScenarioTests
         }
 
         [Fact]
-        public async Task AssignBlueprint()
+        public async Task SubscriptionAssignmentCRUD()
         {
             string managementGroupName = "AzBlueprint",
                 blueprintName = "AssignBlueprint",
