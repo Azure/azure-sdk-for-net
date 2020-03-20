@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// An enumerable of path entries that failed to update Access Control List.
         /// </summary>
-        public IEnumerable<AccessControlChangeFailure> FailedEntries { get; internal set; }
+        public IEnumerable<AccessControlRecursiveChangeFailure> FailedEntries { get; internal set; }
 
         internal AccessControlRecursiveChanges() { }
     }

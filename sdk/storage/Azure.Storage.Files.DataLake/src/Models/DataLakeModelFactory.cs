@@ -38,7 +38,7 @@ namespace Azure.Storage.Files.DataLake.Models
             int directoriesSuccessfulCount,
             int filesSuccessfulCount,
             int failureCount,
-            IEnumerable<AccessControlChangeFailure> failedEntries
+            IEnumerable<AccessControlRecursiveChangeFailure> failedEntries
             ) => new AccessControlRecursiveChanges()
             {
                 DirectoriesSuccessfulCount = directoriesSuccessfulCount,
@@ -48,22 +48,22 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion AccessControlRecursiveChanges
 
-        #region AccessControlChangeFailure
+        #region AccessControlRecursiveChangeFailure
         /// <summary>
-        /// Creates a new <see cref="AccessControlChangeFailure"/> instance for mocking.
+        /// Creates a new <see cref="AccessControlRecursiveChangeFailure"/> instance for mocking.
         /// </summary>
         /// <returns></returns>
-        public static AccessControlChangeFailure AccessControlChangeFailure(
+        public static AccessControlRecursiveChangeFailure AccessControlRecursiveChangeFailure(
             string name,
             bool isDirectory,
             string errorMessage
-            ) => new AccessControlChangeFailure()
+            ) => new AccessControlRecursiveChangeFailure()
             {
                 Name = name,
                 IsDirectory = isDirectory,
                 ErrorMessage = errorMessage,
             };
-        #endregion AccessControlChangeFailure
+        #endregion AccessControlRecursiveChangeFailure
 
         #region FileDownloadDetails
         /// <summary>

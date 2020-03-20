@@ -2358,7 +2358,7 @@ namespace Azure.Storage.Files.DataLake
                                 if (progressHandler != null)
                                 {
                                     var failedEntries = response.FailedEntries
-                                        .Select(failedEntry => new AccessControlChangeFailure()
+                                        .Select(failedEntry => new AccessControlRecursiveChangeFailure()
                                         {
                                             Name = failedEntry.Name,
                                             IsDirectory = failedEntry.Type.Equals("DIRECTORY", StringComparison.InvariantCultureIgnoreCase),
