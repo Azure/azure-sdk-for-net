@@ -5,9 +5,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ReceiptField
+    public class UnitedStatesReceiptField
     {
-        internal ReceiptField(FieldValue_internal field)
+        internal UnitedStatesReceiptField(FieldValue_internal field)
         {
             Text = field.Text;
             Confidence = field.Confidence;

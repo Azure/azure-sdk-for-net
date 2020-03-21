@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Training
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
-                if (update.Value.ModelInfo.Status != ModelStatus.Training)
+                if (update.Value.ModelInfo.Status != CustomModelStatus.Training)
                 {
                     _hasCompleted = true;
                     _value = new CustomLabeledModel(update.Value);

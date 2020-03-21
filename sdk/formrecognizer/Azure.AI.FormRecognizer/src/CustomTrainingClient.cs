@@ -26,7 +26,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         protected CustomTrainingClient()
         {
-
         }
 
         /// <summary>
@@ -55,14 +54,14 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;CustomModel&gt; to wait on this long-running operation.  Its Operation &lt; CustomModel &gt; .Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
-        public virtual Operation<CustomModel> StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual Operation<CustomModel> StartTraining(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/autorest.csharp/issues/467
@@ -81,14 +80,14 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;CustomModel&gt; to wait on this long-running operation.  Its Operation &lt; CustomModel &gt; .Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
-        public virtual async Task<Operation<CustomModel>> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<CustomModel>> StartTrainingAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -104,13 +103,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms and a label file in a blob storage container.
         /// </summary>
-        /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
-        public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -126,13 +125,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms and a label file in a blob storage container.
         /// </summary>
-        /// <param name="source">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
-        public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -214,7 +213,6 @@ namespace Azure.AI.FormRecognizer.Training
             return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
         }
 
-        #endregion CRUD Ops
-
+        #endregion
     }
 }

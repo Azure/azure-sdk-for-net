@@ -53,12 +53,12 @@ namespace Azure.AI.FormRecognizer.Samples
             Console.ReadLine();
         }
 
-        private static async Task TrainCustomLabeledModel(string sasUrl)
+        private static async Task TrainCustomLabeledModel(Uri sasUrl)
         {
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var trainingOperation = client.StartTrainingWithLabels(sasUrl);
             var operation = client.StartTrainingWithLabels(sasUrl);
@@ -74,12 +74,12 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static async Task TrainCustomModel(string sasUrl)
+        private static async Task TrainCustomModel(Uri sasUrl)
         {
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var trainingOperation = client.StartTraining(sasUrl);
 
@@ -102,11 +102,11 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             using (FileStream stream = new FileStream(multiPageFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartExtractFormPages(modelId, stream, contentType: ContentType.Pdf);
+                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -156,9 +156,9 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractFormOperation = client.StartExtractFormPages(modelId, testFormPath);
+            var extractFormOperation = client.StartRecognizeForms(modelId, testFormPath);
 
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
@@ -181,11 +181,11 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartExtractFormPages(modelId, stream, contentType: ContentType.Pdf, includeRawPageExtractions: true);
+                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf, includeRawPageExtractions: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -237,11 +237,11 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartExtractLabeledForms(modelId, stream, contentType: ContentType.Pdf);
+                var extractFormOperation = client.StartRecognizeLabeledForms(modelId, stream, contentType: ContentType.Pdf);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -271,9 +271,9 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractFormOperation = client.StartExtractLabeledForms(modelId, testFormPath);
+            var extractFormOperation = client.StartRecognizeLabeledForms(modelId, testFormPath);
 
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
@@ -299,11 +299,11 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartExtractLabeledForms(modelId, stream, contentType: ContentType.Pdf, includeRawPageExtractions: true);
+                var extractFormOperation = client.StartRecognizeLabeledForms(modelId, stream, contentType: ContentType.Pdf, includeRawPageExtractions: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -345,16 +345,16 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new ReceiptClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartExtractReceiptsAsync(stream, contentType: ContentType.Jpeg, includeRawPageExtractions: false);
+                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, contentType: ContentType.Jpeg, includeRawPageExtractions: false);
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractReceiptOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedReceipt> result = extractReceiptOperation.Value;
+                    IReadOnlyList<UnitedStatesReceipt> result = extractReceiptOperation.Value;
                 }
             }
         }
@@ -366,8 +366,8 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new ReceiptClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
-            var extractedReceipt = client.StartExtractReceipts(receiptUri);
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var extractedReceipt = client.StartRecognizeUSReceipts(receiptUri);
         }
 
         private static async Task ExtractLayout()
@@ -377,11 +377,11 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new FormLayoutClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractLayoutOperation = client.StartExtractLayouts(stream, contentType: ContentType.Pdf);
+                var extractLayoutOperation = client.StartRecognizeContent(stream, contentType: ContentType.Pdf);
 
                 await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractLayoutOperation.HasValue)
@@ -405,9 +405,9 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new FormLayoutClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractLayoutOperation = client.StartExtractLayouts(testFormPath);
+            var extractLayoutOperation = client.StartRecognizeContent(testFormPath);
 
             await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractLayoutOperation.HasValue)
@@ -428,10 +428,10 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var modelCount = client.GetSubscriptionProperties();
-            Console.WriteLine($"CustomModelCount: {modelCount.Value.Count}");
+            Console.WriteLine($"CustomModelCount: {modelCount.Value.CustomModelCount}");
         }
 
         private static void GetCustomModels()
@@ -439,7 +439,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomFormClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var models = client.GetModelInfos();
             foreach (var model in models)

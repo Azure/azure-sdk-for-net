@@ -11,17 +11,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class RecognizeReceiptOperation : Operation<IReadOnlyList<RecognizedReceipt>>
+    internal class RecognizeReceiptOperation : Operation<IReadOnlyList<UnitedStatesReceipt>>
     {
         private Response _response;
-        private IReadOnlyList<RecognizedReceipt> _value;
+        private IReadOnlyList<UnitedStatesReceipt> _value;
         private bool _hasCompleted;
 
         private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
-        public override IReadOnlyList<RecognizedReceipt> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<UnitedStatesReceipt> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -31,11 +31,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<UnitedStatesReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<UnitedStatesReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal RecognizeReceiptOperation(ServiceClient operations, string operationLocation)
@@ -82,12 +82,12 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<RecognizedReceipt> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<UnitedStatesReceipt> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
         {
-            List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
+            List<UnitedStatesReceipt> receipts = new List<UnitedStatesReceipt>();
             for (int i = 0; i < documentResults.Count; i++)
             {
-                receipts.Add(new RecognizedReceipt(documentResults[i], readResults));
+                receipts.Add(new UnitedStatesReceipt(documentResults[i], readResults));
             }
             return receipts;
         }

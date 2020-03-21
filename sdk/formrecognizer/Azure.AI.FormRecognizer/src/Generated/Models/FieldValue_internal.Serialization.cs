@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (property.NameEquals("type"))
                 {
-                    result.Type = property.Value.GetString().ToFieldValueType();
+                    result.Type = property.Value.GetString().ToLabeledFieldType();
                     continue;
                 }
                 if (property.NameEquals("valueString"))

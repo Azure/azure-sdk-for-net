@@ -5,7 +5,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public enum ReceiptType
+    public enum UnitedStatesReceiptType
     {
         /// <summary>
         /// </summary>

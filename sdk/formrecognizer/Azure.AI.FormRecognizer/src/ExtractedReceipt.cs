@@ -11,9 +11,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizedReceipt
+    public class UnitedStatesReceipt
     {
-        internal RecognizedReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
+        internal UnitedStatesReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
         {
             StartPageNumber = documentResult.PageRange.First();
             EndPageNumber = documentResult.PageRange.Last();
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
         // https://github.com/Azure/azure-sdk-for-net/issues/10361
-        public IReadOnlyList<ReceiptItem> Items { get; internal set; }
+        public IReadOnlyList<UnitedStatesReceiptItem> Items { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public ReceiptType ReceiptType { get; internal set; }
+        public UnitedStatesReceiptType ReceiptType { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
-        public IReadOnlyDictionary<string, ReceiptField> ExtractedFields { get; internal set; }
+        public IReadOnlyDictionary<string, UnitedStatesReceiptField> ExtractedFields { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -110,28 +110,28 @@ namespace Azure.AI.FormRecognizer.Models
             ExtractedFields = ConvertExtractedFields(fields);
         }
 
-        private static IReadOnlyDictionary<string, ReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyDictionary<string, UnitedStatesReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
         {
-            Dictionary<string, ReceiptField> extractedFields = new Dictionary<string, ReceiptField>();
+            Dictionary<string, UnitedStatesReceiptField> extractedFields = new Dictionary<string, UnitedStatesReceiptField>();
             foreach (var field in fields)
             {
-                ReceiptField extractedField = new ReceiptField(field.Value);
+                UnitedStatesReceiptField extractedField = new UnitedStatesReceiptField(field.Value);
                 extractedFields[field.Key] = extractedField;
             }
             return extractedFields;
         }
 
-        private static ReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
+        private static UnitedStatesReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
         {
-            ReceiptType receiptType = ReceiptType.Unrecognized;
+            UnitedStatesReceiptType receiptType = UnitedStatesReceiptType.Unrecognized;
 
             FieldValue_internal value;
             if (fields.TryGetValue("ReceiptType", out value))
             {
                 receiptType = value.ValueString switch
                 {
-                    "Itemized" => ReceiptType.Itemized,
-                    _ => ReceiptType.Unrecognized,
+                    "Itemized" => UnitedStatesReceiptType.Itemized,
+                    _ => UnitedStatesReceiptType.Unrecognized,
                 };
             }
 
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 // TODO: How should we handle Phone Numbers?
                 // https://github.com/Azure/azure-sdk-for-net/issues/10333
-                Debug.Assert(value.Type == FieldValueType.String || value.Type == FieldValueType.PhoneNumber);
+                Debug.Assert(value.Type == LabeledFieldType.StringValue || value.Type == LabeledFieldType.PhoneNumberValue);
 
                 // TODO: When should we use text and when should we use string?
                 // For now, use text if the value is null.
@@ -165,7 +165,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Number);
+                Debug.Assert(value.Type == LabeledFieldType.FloatValue);
 
                 // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -191,7 +191,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Number);
+                Debug.Assert(value.Type == LabeledFieldType.IntegerValue);
 
                 // TODO: Sometimes ValueInteger isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -221,8 +221,8 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10361
                 dateTimeOffsetValue = value.Type switch
                 {
-                    FieldValueType.Date => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
-                    FieldValueType.Time => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
+                    LabeledFieldType.DateValue => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
+                    LabeledFieldType.TimeValue => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };
             }
@@ -230,19 +230,19 @@ namespace Azure.AI.FormRecognizer.Models
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<ReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyList<UnitedStatesReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
         {
-            List<ReceiptItem> items = new List<ReceiptItem>();
+            List<UnitedStatesReceiptItem> items = new List<UnitedStatesReceiptItem>();
 
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Array);
+                Debug.Assert(value.Type == LabeledFieldType.ArrayValue);
 
                 ICollection<FieldValue_internal> arrayValue = value.ValueArray;
                 foreach (var receiptItemValue in arrayValue)
                 {
-                    Debug.Assert(receiptItemValue.Type == FieldValueType.Object);
+                    Debug.Assert(receiptItemValue.Type == LabeledFieldType.ObjectValue);
 
                     IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer.Models
                     float? price = ConvertFloatValue("Price", objectValue);
                     float? totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
-                    ReceiptItem item = new ReceiptItem(name, quantity, price, totalPrice);
+                    UnitedStatesReceiptItem item = new UnitedStatesReceiptItem(name, quantity, price, totalPrice);
                     items.Add(item);
                 }
             }
