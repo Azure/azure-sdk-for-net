@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
                         Console.WriteLine(page.GetFieldValue("Invoice Number:"));
 
-                        if (page.RawExtractedPage != null)
+                        if (page.PageTextElements != null)
                         {
                             //foreach (var field in page.Fields)
                             //{
@@ -198,15 +198,15 @@ namespace Azure.AI.FormRecognizer.Samples
                             table.WriteAscii(Console.Out);
                         }
 
-                        if (page.RawExtractedPage != null)
+                        if (page.PageTextElements != null)
                         {
                             foreach (var field in page.Fields)
                             {
                                 Console.WriteLine($"Field \"{field.Name}\" is made of the following Raw Extracted Words:");
 
-                                if (field.NameRawExtractedItems != null)
+                                if (field.NameTextElements != null)
                                 {
-                                    foreach (var extractedItem in field.NameRawExtractedItems)
+                                    foreach (var extractedItem in field.NameTextElements)
                                     {
                                         Console.WriteLine(extractedItem.Text);
                                     }
@@ -216,7 +216,7 @@ namespace Azure.AI.FormRecognizer.Samples
                                     Console.WriteLine("<Unlabeled>");
                                 }
 
-                                foreach (var extractedItem in field.ValueRawExtractedItems)
+                                foreach (var extractedItem in field.ValueTextElements)
                                 {
                                     Console.WriteLine(extractedItem.Text);
                                 }
@@ -316,15 +316,15 @@ namespace Azure.AI.FormRecognizer.Samples
                             table.WriteAscii(Console.Out);
                         }
 
-                        if (form.RawExtractedPages?.Count > 0)
+                        if (form.PageTextElements?.Count > 0)
                         {
                             foreach (var field in form.Fields)
                             {
                                 Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
 
-                                if (field.RawExtractedItems != null)
+                                if (field.TextElements != null)
                                 {
-                                    foreach (var extractedItem in field.RawExtractedItems)
+                                    foreach (var extractedItem in field.TextElements)
                                     {
                                         Console.WriteLine(extractedItem.Text);
                                     }
@@ -386,7 +386,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractLayoutOperation.HasValue)
                 {
-                    IReadOnlyList<FormContentPage> result = extractLayoutOperation.Value;
+                    IReadOnlyList<FormPageContent> result = extractLayoutOperation.Value;
                     foreach (var page in result)
                     {
                         foreach (var table in page.Tables)
@@ -412,7 +412,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractLayoutOperation.HasValue)
             {
-                IReadOnlyList<FormContentPage> result = extractLayoutOperation.Value;
+                IReadOnlyList<FormPageContent> result = extractLayoutOperation.Value;
                 foreach (var page in result)
                 {
                     foreach (var table in page.Tables)

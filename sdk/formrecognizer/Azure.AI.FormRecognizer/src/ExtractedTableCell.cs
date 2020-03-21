@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (references != null)
             {
-                RawExtractedItems = FormField.ConvertTextReferences(readResult, references);
+                TextElements = FormField.ConvertTextReferences(readResult, references);
             }
         }
 
@@ -65,6 +65,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> RawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormTextElement> TextElements { get; internal set; }
     }
 }

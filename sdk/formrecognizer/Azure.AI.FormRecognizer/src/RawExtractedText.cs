@@ -6,9 +6,9 @@ namespace Azure.AI.FormRecognizer.Models
 
     /// <summary>
     /// </summary>
-    public class RawExtractedItem
+    public class FormTextElement
     {
-        internal RawExtractedItem() { }
+        internal FormTextElement() { }
 
         /// <summary>
         /// </summary>

@@ -7,22 +7,26 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormContentPage
+    public class FormPageContent
     {
-        internal FormContentPage(PageResult_internal pageResult, ReadResult_internal readResult)
+        internal FormPageContent(PageResult_internal pageResult, ReadResult_internal readResult)
         {
-            PageNumber = pageResult.Page;
             Tables = ConvertTables(pageResult.Tables, readResult);
 
             if (readResult != null)
             {
-                RawExtractedPage = new RawExtractedPage(readResult);
+                PageInfo = new FormPageInfo(readResult);
+
+                if (readResult.Lines != null)
+                {
+                    TextElements = new FormPageText(readResult.Lines);
+                }
             }
         }
 
         /// <summary>
         /// </summary>
-        public int PageNumber { get; }
+        public FormPageInfo PageInfo { get; }
 
         /// <summary>
         /// </summary>
@@ -30,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public RawExtractedPage RawExtractedPage { get; }
+        public FormPageText TextElements { get; }
 
         internal static IReadOnlyList<FormTable> ConvertTables(ICollection<DataTable_internal> tablesResult, ReadResult_internal readResult)
         {

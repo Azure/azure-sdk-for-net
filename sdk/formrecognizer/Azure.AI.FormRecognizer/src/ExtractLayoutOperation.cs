@@ -12,17 +12,17 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class RecognizeContentOperation : Operation<IReadOnlyList<FormContentPage>>
+    internal class RecognizeContentOperation : Operation<IReadOnlyList<FormPageContent>>
     {
         private Response _response;
-        private IReadOnlyList<FormContentPage> _value;
+        private IReadOnlyList<FormPageContent> _value;
         private bool _hasCompleted;
 
         private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
-        public override IReadOnlyList<FormContentPage> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<FormPageContent> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -32,11 +32,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormContentPage>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<FormPageContent>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormContentPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<FormPageContent>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal RecognizeContentOperation(ServiceClient operations, string operationLocation)
@@ -79,16 +79,16 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<FormContentPage> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
+        private static IReadOnlyList<FormPageContent> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 
-            List<FormContentPage> pages = new List<FormContentPage>();
+            List<FormPageContent> pages = new List<FormPageContent>();
             List<ReadResult_internal> rawPages = readResults.ToList();
 
             foreach (var page in pageResults)
             {
-                pages.Add(new FormContentPage(page, rawPages[page.Page - 1]));
+                pages.Add(new FormPageContent(page, rawPages[page.Page - 1]));
             }
 
             return pages;

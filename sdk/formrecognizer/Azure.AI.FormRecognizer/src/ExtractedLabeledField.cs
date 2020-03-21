@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (field.Value.Elements != null)
             {
-                RawExtractedItems = FormField.ConvertTextReferences(readResults, field.Value.Elements);
+                TextElements = FormField.ConvertTextReferences(readResults, field.Value.Elements);
             }
 
             // TODO: Add strongly-typed value
@@ -53,6 +53,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> RawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormTextElement> TextElements { get; internal set; }
     }
 }

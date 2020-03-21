@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (field.Key.Elements != null)
             {
-                NameRawExtractedItems = ConvertTextReferences(readResult, field.Key.Elements);
+                NameTextElements = ConvertTextReferences(readResult, field.Key.Elements);
             }
 
             Value = field.Value.Text;
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (field.Value.Elements != null)
             {
-                ValueRawExtractedItems = ConvertTextReferences(readResult, field.Value.Elements);
+                ValueTextElements = ConvertTextReferences(readResult, field.Value.Elements);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> NameRawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormTextElement> NameTextElements { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -60,12 +60,12 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormTextElement> ValueTextElements { get; internal set; }
 
         // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)
+        internal static IReadOnlyList<FormTextElement> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)
         {
-            List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
+            List<FormTextElement> extractedTexts = new List<FormTextElement>();
             foreach (var reference in references)
             {
                 extractedTexts.Add(ResolveTextReference(readResult, reference));
@@ -73,9 +73,9 @@ namespace Azure.AI.FormRecognizer.Models
             return extractedTexts;
         }
 
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(IList<ReadResult_internal> readResults, ICollection<string> references)
+        internal static IReadOnlyList<FormTextElement> ConvertTextReferences(IList<ReadResult_internal> readResults, ICollection<string> references)
         {
-            List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
+            List<FormTextElement> extractedTexts = new List<FormTextElement>();
             foreach (var reference in references)
             {
                 extractedTexts.Add(ResolveTextReference(readResults, reference));
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Models
         //private const string SegmentLines = "lines";
         //private const string SegmentWords = "words";
 
-        private static RawExtractedItem ResolveTextReference(ReadResult_internal readResult, string reference)
+        private static FormTextElement ResolveTextReference(ReadResult_internal readResult, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
-            return new RawExtractedWord(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex]);
+            return new WordTextElement(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex]);
 
             // Code from Chris Stone below
             //if (!string.IsNullOrEmpty(reference) && reference.Length > 2 && reference[0] == '#')
@@ -145,7 +145,7 @@ namespace Azure.AI.FormRecognizer.Models
             //}
         }
 
-        private static RawExtractedItem ResolveTextReference(IList<ReadResult_internal> readResults, string reference)
+        private static FormTextElement ResolveTextReference(IList<ReadResult_internal> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363
@@ -162,7 +162,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
-            return new RawExtractedWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex]);
+            return new WordTextElement(readResults[pageIndex].Lines[lineIndex].Words[wordIndex]);
         }
     }
 }

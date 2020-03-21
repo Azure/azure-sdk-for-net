@@ -5,9 +5,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RawExtractedWord : RawExtractedItem
+    public class WordTextElement : FormTextElement
     {
-        internal RawExtractedWord(TextWord_internal textWord)
+        internal WordTextElement(TextWord_internal textWord)
         {
             BoundingBox = new BoundingBox(textWord.BoundingBox);
             Confidence = textWord.Confidence;
@@ -21,6 +21,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
 
-        public static implicit operator string(RawExtractedWord word) => word.Text;
+        public static implicit operator string(WordTextElement word) => word.Text;
     }
 }

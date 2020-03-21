@@ -27,7 +27,8 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResults != null)
             {
-                RawExtractedPages = ConvertRawPages(readResults);
+                PageInfos = ConvertPageInfo(readResults);
+                TextElements = ConvertPageText(readResults);
             }
         }
 
@@ -53,7 +54,11 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedPage> RawExtractedPages { get; }
+        public IReadOnlyList<FormPageInfo> PageInfos { get; }
+
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<FormPageText> TextElements { get; }
 
         /// <summary>
         /// Return the field value text for a given label.
@@ -81,14 +86,27 @@ namespace Azure.AI.FormRecognizer.Models
             return list;
         }
 
-        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(IList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<FormPageInfo> ConvertPageInfo(IList<ReadResult_internal> readResults)
         {
-            List<RawExtractedPage> rawPages = new List<RawExtractedPage>();
+            List<FormPageInfo> pageInfos = new List<FormPageInfo>();
             foreach (var readResult in readResults)
             {
-                rawPages.Add(new RawExtractedPage(readResult));
+                pageInfos.Add(new FormPageInfo(readResult));
             }
-            return rawPages;
+            return pageInfos;
+        }
+
+        internal static IReadOnlyList<FormPageText> ConvertPageText(IList<ReadResult_internal> readResults)
+        {
+            List<FormPageText> pageTexts = new List<FormPageText>();
+            foreach (var readResult in readResults)
+            {
+                if (readResult.Lines != null)
+                {
+                    pageTexts.Add(new FormPageText(readResult.Lines));
+                }
+            }
+            return pageTexts;
         }
 
         internal static IReadOnlyList<LabeledFormTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)

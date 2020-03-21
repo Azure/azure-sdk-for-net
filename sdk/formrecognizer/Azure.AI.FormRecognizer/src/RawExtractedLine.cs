@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RawExtractedLine : RawExtractedItem
+    public class LineTextElement : FormTextElement
     {
-        internal RawExtractedLine(TextLine_internal textLine)
+        internal LineTextElement(TextLine_internal textLine)
         {
             Text = textLine.Text;
             BoundingBox = new BoundingBox(textLine.BoundingBox);
@@ -17,19 +17,19 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> List of words in the text line. </summary>
-        public IReadOnlyList<RawExtractedWord> Words { get; internal set; }
+        public IReadOnlyList<WordTextElement> Words { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public static implicit operator string(RawExtractedLine line) => line.Text;
+        public static implicit operator string(LineTextElement line) => line.Text;
 
-        private static IReadOnlyList<RawExtractedWord> ConvertWords(ICollection<TextWord_internal> textWords)
+        private static IReadOnlyList<WordTextElement> ConvertWords(ICollection<TextWord_internal> textWords)
         {
-            List<RawExtractedWord> rawWords = new List<RawExtractedWord>();
+            List<WordTextElement> rawWords = new List<WordTextElement>();
 
             foreach (TextWord_internal textWord in textWords)
             {
-                rawWords.Add(new RawExtractedWord(textWord));
+                rawWords.Add(new WordTextElement(textWord));
             }
 
             return rawWords;

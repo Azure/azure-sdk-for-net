@@ -17,11 +17,16 @@ namespace Azure.AI.FormRecognizer.Models
             PageNumber = pageResult.Page;
             FormTypeId = pageResult.ClusterId;
             Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
-            Tables = FormContentPage.ConvertTables(pageResult.Tables, readResult);
+            Tables = FormPageContent.ConvertTables(pageResult.Tables, readResult);
 
             if (readResult != null)
             {
-                RawExtractedPage = new RawExtractedPage(readResult);
+                PageInfo = new FormPageInfo(readResult);
+
+                if (readResult.Lines != null)
+                {
+                    TextElements = new FormPageText(readResult.Lines);
+                }
             }
         }
 
@@ -45,7 +50,11 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public RawExtractedPage RawExtractedPage { get; }
+        public FormPageInfo PageInfo { get; }
+
+        /// <summary>
+        /// </summary>
+        public FormPageText TextElements { get; }
 
         /// <summary>
         /// Return the field value text for a given fieldName.
