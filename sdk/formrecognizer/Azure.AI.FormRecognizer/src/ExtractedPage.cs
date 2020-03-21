@@ -14,8 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
         // Unsupervised
         internal CustomFormPage(PageResult_internal pageResult, ReadResult_internal readResult)
         {
-            PageNumber = pageResult.Page;
-            FormTypeId = pageResult.ClusterId;
+            PageTypeId = pageResult.ClusterId;
             Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
             Tables = FormPageContent.ConvertTables(pageResult.Tables, readResult);
 
@@ -32,11 +31,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public int PageNumber { get; }
-
-        /// <summary>
-        /// </summary>
-        public int? FormTypeId { get; }
+        public int? PageTypeId { get; }
 
         /// <summary>
         /// </summary>

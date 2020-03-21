@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Training
             // TODO: Q3 Can we get a List instead of a Collection?
             // https://github.com/Azure/autorest.csharp/issues/471
             this.DocumentInfo = new List<TrainingDocumentInfo>(trainResult.TrainingDocuments);
-            this.TrainingErrors = new List<FormRecognizerError>(trainResult.Errors);
+            this.Errors = new List<FormRecognizerError>(trainResult.Errors);
         }
 
         /// <summary>
@@ -30,6 +30,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Errors returned during the training operation.
         /// </summary>
-        public IReadOnlyList<FormRecognizerError> TrainingErrors { get; internal set; }
+        public IReadOnlyList<FormRecognizerError> Errors { get; internal set; }
     }
 }

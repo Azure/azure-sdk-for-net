@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -15,14 +14,9 @@ namespace Azure.AI.FormRecognizer.Models
         {
             // Supervised
             FormType = documentResult.DocType;
-
-            // TODO: validate that PageRange.Length == 2.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10547
-            StartPageNumber = documentResult.PageRange.First();
-            EndPageNumber = documentResult.PageRange.Last();
+            PageRange = new FormPageRange(documentResult.PageRange);
 
             Fields = ConvertFields(documentResult.Fields, readResults);
-
             Tables = ConvertLabeledTables(pageResults, readResults);
 
             if (readResults != null)
@@ -34,15 +28,11 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public string FormType { get; internal set; }
+        public string FormType { get; }
 
         /// <summary>
         /// </summary>
-        public int StartPageNumber { get; internal set; }
-
-        /// <summary>
-        /// </summary>
-        public int EndPageNumber { get; internal set; }
+        public FormPageRange PageRange { get; }
 
         /// <summary>
         /// </summary>

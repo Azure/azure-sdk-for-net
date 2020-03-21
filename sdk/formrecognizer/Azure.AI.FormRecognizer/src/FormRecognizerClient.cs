@@ -184,17 +184,17 @@ namespace Azure.AI.FormRecognizer
         /// Extract pages from one or more forms, using a model trained without labels.
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="receiptFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual Operation<IReadOnlyList<CustomFormPage>> StartRecognizeForms(string modelId, Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<CustomFormPage>> StartRecognizeForms(string modelId, Stream formFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
             return new RecognizeFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -218,17 +218,17 @@ namespace Azure.AI.FormRecognizer
         /// Extract pages from one or more forms, using a model trained without labels.
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="receiptFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual async Task<Operation<IReadOnlyList<CustomFormPage>>> StartRecognizeFormsAsync(string modelId, Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<CustomFormPage>>> StartRecognizeFormsAsync(string modelId, Stream formFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
             return new RecognizeFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -256,17 +256,17 @@ namespace Azure.AI.FormRecognizer
         /// Extract form content from one or more forms, using a model trained with labels.
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="receiptFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted forms from the input document.</returns>
-        public virtual Operation<IReadOnlyList<CustomLabeledForm>> StartRecognizeLabeledForms(string modelId, Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<CustomLabeledForm>> StartRecognizeLabeledForms(string modelId, Stream formFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
             return new RecognizeLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -290,17 +290,17 @@ namespace Azure.AI.FormRecognizer
         /// Extract form content from one or more forms, using a model trained with labels.
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="receiptFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedPage&gt;&gt;.Value upon successful
         /// completion will contain extracted forms from the input document.</returns>
-        public virtual async Task<Operation<IReadOnlyList<CustomLabeledForm>>> StartRecognizeLabeledFormsAsync(string modelId, Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<CustomLabeledForm>>> StartRecognizeLabeledFormsAsync(string modelId, Stream formFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
             return new RecognizeLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 

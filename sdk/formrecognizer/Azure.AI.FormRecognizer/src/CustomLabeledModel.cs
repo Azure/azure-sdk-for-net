@@ -14,17 +14,11 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal CustomLabeledModel(Model_internal model)
         {
-            ModelId = model.ModelInfo.ModelId.ToString();
             AveragePredictionAccuracy = model.TrainResult.AverageModelAccuracy.Value;
             PredictionAccuracies = (IReadOnlyList<FieldPredictionAccuracy>)model.TrainResult.Fields;
             ModelInfo = new CustomModelInfo(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
-
-        /// <summary>
-        /// The unique identifier of the model.
-        /// </summary>
-        public string ModelId { get; }
 
         /// <summary>
         /// The mean of the prediction accuracies for each field.

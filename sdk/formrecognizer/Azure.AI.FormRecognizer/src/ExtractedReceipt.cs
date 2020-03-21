@@ -15,25 +15,20 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal UnitedStatesReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
         {
-            StartPageNumber = documentResult.PageRange.First();
-            EndPageNumber = documentResult.PageRange.Last();
+            PageRange = new FormPageRange(documentResult.PageRange);
 
             SetReceiptValues(documentResult.Fields);
 
             if (readResults != null)
             {
-                PageInfos = ConvertPageInfos(StartPageNumber, EndPageNumber, readResults);
-                TextElements = ConvertPageText(StartPageNumber, EndPageNumber, readResults);
+                PageInfos = ConvertPageInfos(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
+                TextElements = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
             }
         }
 
         /// <summary>
         /// </summary>
-        public int StartPageNumber { get; internal set; }
-
-        /// <summary>
-        /// </summary>
-        public int EndPageNumber { get; internal set; }
+        public FormPageRange PageRange { get; }
 
         /// <summary>
         /// </summary>

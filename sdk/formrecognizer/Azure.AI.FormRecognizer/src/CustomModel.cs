@@ -14,16 +14,10 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal CustomModel(Model_internal model)
         {
-            ModelId = model.ModelInfo.ModelId.ToString();
             LearnedPages = ConvertLearnedForms(model.Keys);
             ModelInfo = new CustomModelInfo(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
-
-        /// <summary>
-        /// The unique identifier of the model.
-        /// </summary>
-        public string ModelId { get; internal set; }
 
         /// <summary>
         /// List of forms the model learned to recognize, including form fields found in each form.
