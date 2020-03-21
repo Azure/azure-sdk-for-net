@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 using System.Linq;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
@@ -37,12 +36,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// </summary>
 
-        public IReadOnlyList<ExtractedField> Fields { get; }
+        public IReadOnlyList<FormField> Fields { get; }
 
         /// <summary>
         /// </summary>
 
-        public IReadOnlyList<ExtractedTable> Tables { get; }
+        public IReadOnlyList<FormTable> Tables { get; }
 
         /// <summary>
         /// </summary>
@@ -64,12 +63,12 @@ namespace Azure.AI.FormRecognizer.Training
             return field.Value;
         }
 
-        private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
+        private static IReadOnlyList<FormField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
         {
-            List<ExtractedField> fields = new List<ExtractedField>();
+            List<FormField> fields = new List<FormField>();
             foreach (var kvp in keyValuePairs)
             {
-                ExtractedField field = new ExtractedField(kvp, readResult);
+                FormField field = new FormField(kvp, readResult);
                 fields.Add(field);
             }
             return fields;

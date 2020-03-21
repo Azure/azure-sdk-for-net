@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
         // https://github.com/Azure/azure-sdk-for-net/issues/10361
-        public IReadOnlyList<ExtractedReceiptItem> Items { get; internal set; }
+        public IReadOnlyList<ReceiptItem> Items { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public ExtractedReceiptType ReceiptType { get; internal set; }
+        public ReceiptType ReceiptType { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
-        public IReadOnlyDictionary<string, ExtractedReceiptField> ExtractedFields { get; internal set; }
+        public IReadOnlyDictionary<string, ReceiptField> ExtractedFields { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -110,28 +110,28 @@ namespace Azure.AI.FormRecognizer.Models
             ExtractedFields = ConvertExtractedFields(fields);
         }
 
-        private static IReadOnlyDictionary<string, ExtractedReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyDictionary<string, ReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
         {
-            Dictionary<string, ExtractedReceiptField> extractedFields = new Dictionary<string, ExtractedReceiptField>();
+            Dictionary<string, ReceiptField> extractedFields = new Dictionary<string, ReceiptField>();
             foreach (var field in fields)
             {
-                ExtractedReceiptField extractedField = new ExtractedReceiptField(field.Value);
+                ReceiptField extractedField = new ReceiptField(field.Value);
                 extractedFields[field.Key] = extractedField;
             }
             return extractedFields;
         }
 
-        private static ExtractedReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
+        private static ReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
         {
-            ExtractedReceiptType receiptType = ExtractedReceiptType.Unrecognized;
+            ReceiptType receiptType = ReceiptType.Unrecognized;
 
             FieldValue_internal value;
             if (fields.TryGetValue("ReceiptType", out value))
             {
                 receiptType = value.ValueString switch
                 {
-                    "Itemized" => ExtractedReceiptType.Itemized,
-                    _ => ExtractedReceiptType.Unrecognized,
+                    "Itemized" => ReceiptType.Itemized,
+                    _ => ReceiptType.Unrecognized,
                 };
             }
 
@@ -230,9 +230,9 @@ namespace Azure.AI.FormRecognizer.Models
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<ExtractedReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyList<ReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
         {
-            List<ExtractedReceiptItem> items = new List<ExtractedReceiptItem>();
+            List<ReceiptItem> items = new List<ReceiptItem>();
 
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer.Models
                     float? price = ConvertFloatValue("Price", objectValue);
                     float? totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
-                    ExtractedReceiptItem item = new ExtractedReceiptItem(name, quantity, price, totalPrice);
+                    ReceiptItem item = new ReceiptItem(name, quantity, price, totalPrice);
                     items.Add(item);
                 }
             }

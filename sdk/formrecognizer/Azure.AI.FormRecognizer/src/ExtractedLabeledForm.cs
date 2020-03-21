@@ -45,11 +45,11 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<ExtractedLabeledField> Fields { get; }
+        public IReadOnlyList<LabeledFormField> Fields { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<ExtractedLabeledTable> Tables { get; }
+        public IReadOnlyList<LabeledFormTable> Tables { get; }
 
         /// <summary>
         /// </summary>
@@ -71,12 +71,12 @@ namespace Azure.AI.FormRecognizer.Models
             return field.Value;
         }
 
-        private static IReadOnlyList<ExtractedLabeledField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<LabeledFormField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
         {
-            List<ExtractedLabeledField> list = new List<ExtractedLabeledField>();
+            List<LabeledFormField> list = new List<LabeledFormField>();
             foreach (var field in fields)
             {
-                list.Add(new ExtractedLabeledField(field, readResults));
+                list.Add(new LabeledFormField(field, readResults));
             }
             return list;
         }
@@ -91,15 +91,15 @@ namespace Azure.AI.FormRecognizer.Models
             return rawPages;
         }
 
-        internal static IReadOnlyList<ExtractedLabeledTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<LabeledFormTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
         {
-            List<ExtractedLabeledTable> tables = new List<ExtractedLabeledTable>();
+            List<LabeledFormTable> tables = new List<LabeledFormTable>();
 
             foreach (var pageResult in pageResults)
             {
                 foreach (var table in pageResult.Tables)
                 {
-                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page - 1], pageResult.Page));
+                    tables.Add(new LabeledFormTable(table, readResults[pageResult.Page - 1], pageResult.Page));
                 }
             }
 

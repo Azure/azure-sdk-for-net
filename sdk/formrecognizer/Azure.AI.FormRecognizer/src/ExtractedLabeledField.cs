@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
 
     /// <summary>
     /// </summary>
     // Maps to FieldValue in swagger.
-    public class ExtractedLabeledField
+    public class LabeledFormField
     {
-        internal ExtractedLabeledField(KeyValuePair<string, FieldValue_internal> field, IList<ReadResult_internal> readResults)
+        internal LabeledFormField(KeyValuePair<string, FieldValue_internal> field, IList<ReadResult_internal> readResults)
         {
             // Supervised
             Confidence = field.Value.Confidence;
@@ -23,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             if (field.Value.Elements != null)
             {
-                RawExtractedItems = ExtractedField.ConvertTextReferences(readResults, field.Value.Elements);
+                RawExtractedItems = FormField.ConvertTextReferences(readResults, field.Value.Elements);
             }
 
             // TODO: Add strongly-typed value

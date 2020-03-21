@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractedTableCell
+    public class FormTableCell
     {
-        internal ExtractedTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, ICollection<string> references)
+        internal FormTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, ICollection<string> references)
         {
             BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
             ColumnIndex = dataTableCell.ColumnIndex;
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (references != null)
             {
-                RawExtractedItems = ExtractedField.ConvertTextReferences(readResult, references);
+                RawExtractedItems = FormField.ConvertTextReferences(readResult, references);
             }
         }
 

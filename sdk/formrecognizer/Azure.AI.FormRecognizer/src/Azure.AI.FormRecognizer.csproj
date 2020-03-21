@@ -12,6 +12,8 @@
       SA1649;
       CA1812;
     </NoWarn>
+    
+    <AssemblyName>Azure.AI.FormRecognizer-preview2</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

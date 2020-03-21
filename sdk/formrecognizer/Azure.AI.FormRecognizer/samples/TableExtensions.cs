@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Samples
 {
     internal static class TableExtensions
     {
-        public static void WriteAscii(this ExtractedTable table, TextWriter writer, bool unicode = true, int cellWidth = 15)
+        public static void WriteAscii(this FormTable table, TextWriter writer, bool unicode = true, int cellWidth = 15)
         {
             var topLeft = unicode ? '┌' : '|';
             var topRight = unicode ? '┐' : '|';
@@ -53,9 +53,9 @@ namespace Azure.AI.FormRecognizer.Samples
                 {
                     var firstCol = colIndex == 0;
                     var lastCol = colIndex == table.ColumnCount - 1;
-                    if (index.TryGetValue(rowIndex, out IDictionary<int, ExtractedTableCell> row))
+                    if (index.TryGetValue(rowIndex, out IDictionary<int, FormTableCell> row))
                     {
-                        if (row.TryGetValue(colIndex, out ExtractedTableCell cell))
+                        if (row.TryGetValue(colIndex, out FormTableCell cell))
                         {
                             var colSpan = cell.ColumnSpan;
                             var maxWidth = cellWidth * colSpan;
@@ -114,18 +114,18 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        private static Dictionary<int, IDictionary<int, ExtractedTableCell>> IndexCells(this ExtractedTable table)
+        private static Dictionary<int, IDictionary<int, FormTableCell>> IndexCells(this FormTable table)
         {
-            var index = new Dictionary<int, IDictionary<int, ExtractedTableCell>>();
+            var index = new Dictionary<int, IDictionary<int, FormTableCell>>();
             foreach (var cell in table.Cells)
             {
                 var RowCountpan = cell.RowSpan;
                 var colSpan = cell.ColumnSpan;
                 for (var rowIndex = cell.RowIndex; rowIndex < cell.RowIndex + RowCountpan; rowIndex += 1)
                 {
-                    if (!index.TryGetValue(rowIndex, out IDictionary<int, ExtractedTableCell> row))
+                    if (!index.TryGetValue(rowIndex, out IDictionary<int, FormTableCell> row))
                     {
-                        index[rowIndex] = row = new Dictionary<int, ExtractedTableCell>();
+                        index[rowIndex] = row = new Dictionary<int, FormTableCell>();
                     }
                     for (var i = cell.ColumnIndex; i < cell.ColumnIndex + colSpan; i += 1)
                     {

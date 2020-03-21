@@ -10,7 +10,7 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer
 {
     /// <summary>
     /// </summary>

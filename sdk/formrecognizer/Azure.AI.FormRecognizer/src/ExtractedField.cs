@@ -4,17 +4,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     // Maps to KeyValuePair
 
     /// <summary>
     /// </summary>
-    public class ExtractedField
+    public class FormField
     {
-        internal ExtractedField(KeyValuePair_internal field, ReadResult_internal readResult)
+        internal FormField(KeyValuePair_internal field, ReadResult_internal readResult)
         {
             Confidence = field.Confidence;
 

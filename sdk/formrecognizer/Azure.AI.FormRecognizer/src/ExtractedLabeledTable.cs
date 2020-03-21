@@ -9,9 +9,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractedLabeledTable : ExtractedTable
+    public class LabeledFormTable : FormTable
     {
-        internal ExtractedLabeledTable(DataTable_internal table, ReadResult_internal readResult, int pageNumber)
+        internal LabeledFormTable(DataTable_internal table, ReadResult_internal readResult, int pageNumber)
             :  base(table, readResult)
         {
             PageNumber = pageNumber;
