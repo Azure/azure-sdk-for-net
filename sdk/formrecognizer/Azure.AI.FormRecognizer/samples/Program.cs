@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
                         Console.WriteLine(page.GetFieldValue("Invoice Number:"));
 
-                        if (page.PageTextElements != null)
+                        if (page.TextElements != null)
                         {
                             //foreach (var field in page.Fields)
                             //{
@@ -185,7 +185,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf, includeRawPageExtractions: true);
+                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf, includeTextElements: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -198,7 +198,7 @@ namespace Azure.AI.FormRecognizer.Samples
                             table.WriteAscii(Console.Out);
                         }
 
-                        if (page.PageTextElements != null)
+                        if (page.TextElements != null)
                         {
                             foreach (var field in page.Fields)
                             {
@@ -303,7 +303,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeLabeledForms(modelId, stream, contentType: ContentType.Pdf, includeRawPageExtractions: true);
+                var extractFormOperation = client.StartRecognizeLabeledForms(modelId, stream, contentType: ContentType.Pdf, includeTextElements: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -316,7 +316,7 @@ namespace Azure.AI.FormRecognizer.Samples
                             table.WriteAscii(Console.Out);
                         }
 
-                        if (form.PageTextElements?.Count > 0)
+                        if (form.TextElements?.Count > 0)
                         {
                             foreach (var field in form.Fields)
                             {
@@ -349,7 +349,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, contentType: ContentType.Jpeg, includeRawPageExtractions: false);
+                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, contentType: ContentType.Jpeg, includeTextElements: false);
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractReceiptOperation.HasValue)
