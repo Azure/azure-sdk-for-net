@@ -6,7 +6,6 @@ using Microsoft.Azure.Management.FrontDoor;
 using Microsoft.Azure.Management.FrontDoor.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -56,7 +55,7 @@ namespace FrontDoor.Tests.ScenarioTests
                         path: "/",
                         protocol: "Http",
                         intervalInSeconds: 120,
-                        //healthProbeMethod: "GET",
+                        healthProbeMethod: "Get",
                         enabledState: "Enabled"
                     );
 
@@ -187,7 +186,7 @@ namespace FrontDoor.Tests.ScenarioTests
                         path: "/",
                         protocol: "Http",
                         intervalInSeconds: 120,
-                        //healthProbeMethod: "GET",
+                        healthProbeMethod: "Get",
                         enabledState: "Enabled"
                     );
 
@@ -255,7 +254,7 @@ namespace FrontDoor.Tests.ScenarioTests
                             customForwardingPath: null,
                             forwardingProtocol: "HttpsOnly",
                             cacheConfiguration: new CacheConfiguration(queryParameterStripDirective: "StripNone", dynamicCompression: "Disabled"),
-                            backendPool: backendPool1
+                            backendPool: new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/backendPools/backendPool1")
                             )
                     );
 
@@ -263,7 +262,9 @@ namespace FrontDoor.Tests.ScenarioTests
                     rulesEngineMatchVariable: "RequestHeader",
                     selector: "Rules-engine-action",
                     rulesEngineOperator: "Equal",
-                    rulesEngineMatchValue: new List<string> { "Route-override-forwarding" }
+                    rulesEngineMatchValue: new List<string> { "Route-override-forwarding" },
+                    negateCondition: false,
+                    transforms: new List<string> { }
                     );
 
                 RulesEngineRule rule1 = new RulesEngineRule(
@@ -275,12 +276,13 @@ namespace FrontDoor.Tests.ScenarioTests
                     );
 
                 RulesEngine rulesEngine1 = new RulesEngine(
-                    rules: new List<RulesEngineRule> { rule1 }
+                    rules: new List<RulesEngineRule> { rule1 },
+                    name: "RulesEngine1"
                     );
 
                 var rulesEngineParameters = new List<RulesEngine> { rulesEngine1 };
 
-                var createdRulesEngine = frontDoorMgmtClient.RulesEngines.CreateOrUpdate(resourceGroupName, frontDoorName, rule1.Name, rulesEngineParameters[0]);
+                var createdRulesEngine = frontDoorMgmtClient.RulesEngines.CreateOrUpdate(resourceGroupName, frontDoorName, rulesEngine1.Name, rulesEngineParameters[0]);
 
                 // Validate correct rules engine created 
                 VerifyRulesEngine(createdRulesEngine, rulesEngineParameters[0]);
@@ -299,7 +301,7 @@ namespace FrontDoor.Tests.ScenarioTests
 
                 // Link rules engine to routing rule
                 // why did sdk not autogenerate into subresource?
-                retrievedFrontDoor.RoutingRules[0].RulesEngine = new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/rulesEngine/" + rulesEngine1.Name);
+                retrievedFrontDoor.RoutingRules[0].RulesEngine = new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/rulesEngines/" + rulesEngine1.Name);
 
                 var updatedFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, retrievedFrontDoor);
 
@@ -575,7 +577,7 @@ namespace FrontDoor.Tests.ScenarioTests
                 Assert.Equal(healthProbeSettings[i].Path, parameters[i].Path);
                 Assert.Equal(healthProbeSettings[i].Protocol, parameters[i].Protocol);
                 Assert.Equal(healthProbeSettings[i].IntervalInSeconds, parameters[i].IntervalInSeconds);
-                //Assert.Equal(healthProbeSettings[i].HealthProbeMethod, parameters[i].HealthProbeMethod);
+                Assert.Equal(healthProbeSettings[i].HealthProbeMethod, parameters[i].HealthProbeMethod);
                 Assert.Equal(healthProbeSettings[i].EnabledState, parameters[i].EnabledState);
             }
         }
@@ -602,17 +604,71 @@ namespace FrontDoor.Tests.ScenarioTests
             }
         }
 
-        private static void VerifyRulesEngine(RulesEngine rulesEngine, RulesEngine Parameters)
-        {
-            throw new NotImplementedException();
-        }
         private static void VerifyRulesEngines(IList<RulesEngine> rulesEngines, IList<RulesEngine> parameters)
         {
             Assert.Equal(rulesEngines.Count, parameters.Count);
             for (int i = 0; i < parameters.Count; i++)
             {
+                Assert.Equal(rulesEngines[i].Name, parameters[i].Name);
                 VerifyRulesEngine(rulesEngines[i], parameters[i]);
             }
+        }
+
+        private static void VerifyRulesEngine(RulesEngine rulesEngine, RulesEngine parameters)
+        {
+            Assert.Equal(parameters.Rules.Count, rulesEngine.Rules.Count);
+            for (int i = 0; i < parameters.Rules.Count; i++)
+            {
+                Assert.Equal(parameters.Rules[i].Name, rulesEngine.Rules[i].Name);
+                Assert.Equal(parameters.Rules[i].Priority, rulesEngine.Rules[i].Priority);
+                Assert.Equal(parameters.Rules[i].MatchProcessingBehavior, rulesEngine.Rules[i].MatchProcessingBehavior);
+                VerifyRulesEngineMatchCondition(parameters.Rules[i].MatchConditions, rulesEngine.Rules[i].MatchConditions);
+                VerifyRulesEngineActions(parameters.Rules[i].Action, rulesEngine.Rules[i].Action);
+
+            }
+        }
+
+        private static void VerifyRulesEngineMatchCondition(IList<RulesEngineMatchCondition> matchConditions, IList<RulesEngineMatchCondition> parameters)
+        {
+            Assert.Equal(parameters.Count, matchConditions.Count);
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                Assert.Equal(parameters[i].NegateCondition, matchConditions[i].NegateCondition);
+                Assert.Equal(parameters[i].Selector, matchConditions[i].Selector);
+                Assert.Equal(parameters[i].RulesEngineOperator, matchConditions[i].RulesEngineOperator);
+                Assert.Equal(parameters[i].RulesEngineMatchVariable, matchConditions[i].RulesEngineMatchVariable);
+                Assert.Equal(parameters[i].RulesEngineMatchValue, matchConditions[i].RulesEngineMatchValue);
+                Assert.Equal(parameters[i].Transforms, matchConditions[i].Transforms);
+            }
+        }
+
+        private static void VerifyRulesEngineActions(RulesEngineAction action, RulesEngineAction parameters)
+        {
+            VerifyHeaderActions(parameters.RequestHeaderActions, action.RequestHeaderActions);
+            VerifyHeaderActions(parameters.ResponseHeaderActions, action.ResponseHeaderActions);
+            VerifyForwardingRouteConfigurationOverride((ForwardingConfiguration)parameters.RouteConfigurationOverride, (ForwardingConfiguration)action.RouteConfigurationOverride);
+        }
+
+        private static void VerifyHeaderActions(IList<HeaderAction> actions, IList<HeaderAction> parameters)
+        {
+            Assert.Equal(parameters.Count, actions.Count);
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                Assert.Equal(parameters[i].HeaderActionType, actions[i].HeaderActionType);
+                Assert.Equal(parameters[i].HeaderName, actions[i].HeaderName);
+                Assert.Equal(parameters[i].Value, actions[i].Value);
+            }
+        }
+
+        private static void VerifyForwardingRouteConfigurationOverride(ForwardingConfiguration config, ForwardingConfiguration parameters)
+        {
+            Assert.Equal(parameters.ForwardingProtocol, config.ForwardingProtocol);
+            Assert.Equal(parameters.CustomForwardingPath, config.CustomForwardingPath);
+            Assert.Equal(parameters.BackendPool.Id, config.BackendPool.Id);
+            Assert.Equal(parameters.CacheConfiguration.DynamicCompression, config.CacheConfiguration.DynamicCompression);
+            Assert.Equal(parameters.CacheConfiguration.QueryParameterStripDirective, config.CacheConfiguration.QueryParameterStripDirective);
+            Assert.Equal(parameters.CacheConfiguration.QueryParameters, config.CacheConfiguration.QueryParameters);
+            Assert.Equal(parameters.CacheConfiguration.CacheDuration, config.CacheConfiguration.CacheDuration);
         }
     }
 }
