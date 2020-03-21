@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
-            try { await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token); }  catch {}
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
-            try { await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token); }  catch {}
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
             cancellationSource.Cancel();
         }
 
@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
-            try { await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token); }  catch {}
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
-            try { await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token); }  catch {}
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
-            try { await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token); }  catch {}
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
         }
 
         /// <summary>
