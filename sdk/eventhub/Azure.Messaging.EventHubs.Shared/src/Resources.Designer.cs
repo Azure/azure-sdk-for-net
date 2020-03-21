@@ -606,6 +606,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Executing a load balancing cycle..
+        /// </summary>
+        internal static string OperationLoadBalancing
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationLoadBalancing", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Attempting to claim a new ownership in the storage service..
         /// </summary>
         internal static string OperationClaimOwnership
@@ -635,6 +646,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("OperationReadEvents", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Performing the main Event Processor loop..
+        /// </summary>
+        internal static string OperationEventProcessingLoop
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationEventProcessingLoop", resourceCulture);
             }
         }
 
