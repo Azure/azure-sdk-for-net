@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Tests
             SearchServiceClient client = resources.GetServiceClient();
             Guid id = Recording.Random.NewGuid();
             Response<SearchServiceStatistics> response =
-                await client.GetStatisticsAsync(
+                await client.GetServiceStatisticsAsync(
                     new SearchRequestOptions { ClientRequestId = id });
 
             // TODO: #10604 - C# generator doesn't properly support ClientRequestId yet
@@ -135,7 +135,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchServiceClient client = resources.GetServiceClient();
-            Response < SearchServiceStatistics > response = await client.GetStatisticsAsync();
+            Response < SearchServiceStatistics > response = await client.GetServiceStatisticsAsync();
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Counters);
@@ -150,5 +150,17 @@ namespace Azure.Search.Documents.Tests
             Assert.NotZero(response.Value.Counters.IndexCounter.Quota ?? 0L);
             Assert.AreEqual(1, response.Value.Counters.IndexCounter.Usage);
         }
+
+        //[Test]
+        //public async Task CreateIndexRequiresIndex()
+        //{
+        //    await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+        //    // TODO
+        //    SearchIndex index = new SearchIndex();
+
+        //    SearchServiceClient client = resources.GetServiceClient();
+        //    Response<SearchIndex> response = await client.CreateIndexAsync(index);
+        //}
     }
 }

@@ -25,10 +25,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("key");
                 writer.WriteBooleanValue(Key.Value);
             }
-            if (Retrievable != null)
+            if (IsHidden != null)
             {
                 writer.WritePropertyName("retrievable");
-                writer.WriteBooleanValue(Retrievable.Value);
+                writer.WriteBooleanValue(IsHidden.Value);
             }
             if (Searchable != null)
             {

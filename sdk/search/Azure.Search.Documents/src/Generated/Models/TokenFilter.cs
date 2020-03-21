@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for token filters. </summary>
+    /// <summary> Base type for token filters. </summary>
     public partial class TokenFilter
     {
         /// <summary> Initializes a new instance of TokenFilter. </summary>

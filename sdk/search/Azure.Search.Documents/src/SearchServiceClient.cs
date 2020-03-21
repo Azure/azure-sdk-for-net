@@ -17,27 +17,30 @@ namespace Azure.Search.Documents
     /// </summary>
     public class SearchServiceClient
     {
+        private ServiceRestClient _serviceClient;
+        private IndexesRestClient _indexesClient;
+
         /// <summary>
-        /// Gets the URI endpoint of the Search Service.  This is likely
+        /// Gets the URI endpoint of the Search service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
         /// </summary>
         public virtual Uri Endpoint { get; }
 
         /// <summary>
-        /// The name of the Search Service, lazily obtained from the
+        /// The name of the Search service, lazily obtained from the
         /// <see cref="Endpoint"/>.
         /// </summary>
         private string _serviceName = null;
 
         /// <summary>
-        /// Gets the name of the Search Service.
+        /// Gets the name of the Search service.
         /// </summary>
         public virtual string ServiceName =>
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
-        /// requests to the Search Service.
+        /// requests to the Search service.
         /// </summary>
         private HttpPipeline Pipeline { get; }
 
@@ -48,15 +51,30 @@ namespace Azure.Search.Documents
         private ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// Gets the REST API version of the Search Service to use when making
+        /// Gets the REST API version of the Search service to use when making
         /// requests.
         /// </summary>
         private SearchClientOptions.ServiceVersion Version { get; }
 
         /// <summary>
-        /// Gets the generated service level operations to make requests.
+        /// Gets the generated <see cref="ServiceRestClient"/> to make requests.
         /// </summary>
-        private ServiceRestClient Protocol { get; }
+        private ServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new ServiceRestClient(
+            ClientDiagnostics,
+            Pipeline,
+            Endpoint.ToString(),
+            Version.ToVersionString())
+        );
+
+        /// <summary>
+        /// Gets the generated <see cref="IndexesRestClient"/> to make requests.
+        /// </summary>
+        private IndexesRestClient IndexesClient => LazyInitializer.EnsureInitialized(ref _indexesClient, () => new IndexesRestClient(
+            ClientDiagnostics,
+            Pipeline,
+            Endpoint.ToString(),
+            Version.ToVersionString())
+        );
 
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class for
@@ -68,13 +86,13 @@ namespace Azure.Search.Documents
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
         /// <param name="endpoint">
-        /// Required.  The URI endpoint of the Search Service.  This is likely
+        /// Required.  The URI endpoint of the Search service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
         /// The URI must use HTTPS.
         /// </param>
         /// <param name="credential">
         /// Required.  The API key credential used to authenticate requests
-        /// against the search service.  You need to use an admin key to
+        /// against the Search service.  You need to use an admin key to
         /// perform any operations on the SearchServiceClient.  See
         /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
         /// for more information about API keys in Azure Cognitive Search.
@@ -95,13 +113,13 @@ namespace Azure.Search.Documents
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
         /// <param name="endpoint">
-        /// Required.  The URI endpoint of the Search Service.  This is likely
+        /// Required.  The URI endpoint of the Search service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
         /// The URI must use HTTPS.
         /// </param>
         /// <param name="credential">
         /// Required.  The API key credential used to authenticate requests
-        /// against the search service.  You need to use an admin key to
+        /// against the Search service.  You need to use an admin key to
         /// perform any operations on the SearchServiceClient.  See
         /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
         /// for more information about API keys in Azure Cognitive Search.
@@ -131,12 +149,6 @@ namespace Azure.Search.Documents
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
             Version = options.Version;
-
-            Protocol = new ServiceRestClient(
-                ClientDiagnostics,
-                Pipeline,
-                Endpoint.ToString(),
-                Version.ToVersionString());
         }
 
         /// <summary>
@@ -172,22 +184,27 @@ namespace Azure.Search.Documents
                 Version);
         }
 
+        #region Service operations
         /// <summary>
-        /// Gets service level statistics for a Search Service.
-        ///
+        /// <para>
+        /// Gets service level statistics for a Search service.
+        /// </para>
+        /// <para>
         /// This operation returns the number and type of objects in your
         /// service, the maximum allowed for each object type given the service
         /// tier, actual and maximum storage, and other limits that vary by
         /// tier.  This request pulls information from the service so that you
         /// don't have to look up or calculate service limits.
-        ///
+        /// </para>
+        /// <para>
         /// Statistics on document count and storage size are collected every
         /// few minutes, not in real time.  Therefore, the statistics returned
         /// by this API may not reflect changes caused by recent indexing
         /// operations.
+        /// </para>
         /// </summary>
         /// <param name="options">
-        /// Options to customize the operation's behavior.
+        /// Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -195,32 +212,36 @@ namespace Azure.Search.Documents
         /// </param>
         /// <returns>The service level statistics.</returns>
         /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
+        /// Thrown when a failure is returned by the Search service.
         /// </exception>
         [ForwardsClientCalls]
-        public virtual Response<SearchServiceStatistics> GetStatistics(
+        public virtual Response<SearchServiceStatistics> GetServiceStatistics(
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
-            Protocol.GetServiceStatistics(
+            ServiceClient.GetServiceStatistics(
                 options?.ClientRequestId,
                 cancellationToken);
 
         /// <summary>
-        /// Gets service level statistics for a Search Service.
-        ///
+        /// <para>
+        /// Gets service level statistics for a Search service.
+        /// </para>
+        /// <para>
         /// This operation returns the number and type of objects in your
         /// service, the maximum allowed for each object type given the service
         /// tier, actual and maximum storage, and other limits that vary by
         /// tier.  This request pulls information from the service so that you
         /// don't have to look up or calculate service limits.
-        ///
+        /// </para>
+        /// <para>
         /// Statistics on document count and storage size are collected every
         /// few minutes, not in real time.  Therefore, the statistics returned
         /// by this API may not reflect changes caused by recent indexing
         /// operations.
+        /// </para>
         /// </summary>
         /// <param name="options">
-        /// Options to customize the operation's behavior.
+        /// Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
@@ -228,15 +249,83 @@ namespace Azure.Search.Documents
         /// </param>
         /// <returns>The service level statistics.</returns>
         /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
+        /// Thrown when a failure is returned by the Search service.
         /// </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SearchServiceStatistics>> GetStatisticsAsync(
+        public virtual async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
-            await Protocol.GetServiceStatisticsAsync(
+            await ServiceClient.GetServiceStatisticsAsync(
                 options?.ClientRequestId,
                 cancellationToken)
                 .ConfigureAwait(false);
+        #endregion
+
+        /// <summary>
+        /// Creates a new search index in the Search service.
+        /// </summary>
+        /// <param name="index">
+        /// The <see cref="SearchIndex"/> to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SearchIndex"/> that was created.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="index"/> is null.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search service.
+        /// </exception>
+        #region Index operations
+        [ForwardsClientCalls]
+        public virtual Response<SearchIndex> CreateIndex(
+            SearchIndex index,
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            IndexesClient.Create(
+                options?.ClientRequestId,
+                index,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new search index in the Search service.
+        /// </summary>
+        /// <param name="index">
+        /// The <see cref="SearchIndex"/> to create.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SearchIndex"/> that was created.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="index"/> is null.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search service.
+        /// </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SearchIndex>> CreateIndexAsync(
+            SearchIndex index,
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await IndexesClient.CreateAsync(
+                options?.ClientRequestId,
+                index,
+                cancellationToken)
+                .ConfigureAwait(false);
+        #endregion
     }
 }

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for tokenizers. </summary>
+    /// <summary> Base type for tokenizers. </summary>
     public partial class Tokenizer
     {
         /// <summary> Initializes a new instance of Tokenizer. </summary>

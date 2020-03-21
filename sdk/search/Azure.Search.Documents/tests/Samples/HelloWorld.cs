@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Perform an operation
             //@@ Response<SearchServiceStatistics> stats = search.GetStatistics();
-            /*@@*/ Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+            /*@@*/ Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
-            Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+            Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClientAsync
 
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
 
             // Get and report the Search Service statistics
-            Response<SearchServiceStatistics> stats = await search.GetStatisticsAsync();
+            Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {stats.Value.Counters.IndexCounter.Quota} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_GetStatisticsAsync
         }

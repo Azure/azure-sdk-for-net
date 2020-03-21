@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for character filters. </summary>
+    /// <summary> Base type for character filters. </summary>
     public partial class CharFilter
     {
         /// <summary> Initializes a new instance of CharFilter. </summary>

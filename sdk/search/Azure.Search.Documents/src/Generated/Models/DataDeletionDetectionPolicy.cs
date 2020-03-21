@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for data deletion detection policies. </summary>
+    /// <summary> Base type for data deletion detection policies. </summary>
     public partial class DataDeletionDetectionPolicy
     {
         /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>

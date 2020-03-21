@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for analyzers. </summary>
+    /// <summary> Base type for analyzers. </summary>
     public partial class Analyzer
     {
         /// <summary> Initializes a new instance of Analyzer. </summary>

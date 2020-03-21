@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for skills. </summary>
+    /// <summary> Base type for skills. </summary>
     public partial class Skill
     {
         /// <summary> Initializes a new instance of Skill. </summary>

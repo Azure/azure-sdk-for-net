@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for data change detection policies. </summary>
+    /// <summary> Base type for data change detection policies. </summary>
     public partial class DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>

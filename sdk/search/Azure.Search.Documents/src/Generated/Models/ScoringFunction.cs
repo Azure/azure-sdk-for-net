@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for functions that can modify document scores during ranking. </summary>
+    /// <summary> Base type for functions that can modify document scores during ranking. </summary>
     public partial class ScoringFunction
     {
         /// <summary> Initializes a new instance of ScoringFunction. </summary>

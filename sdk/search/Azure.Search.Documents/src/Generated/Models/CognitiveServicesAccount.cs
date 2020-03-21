@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for describing any cognitive service resource attached to the skillset. </summary>
+    /// <summary> Base type for describing any cognitive service resource attached to a skillset. </summary>
     public partial class CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
