@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
 
     /// <summary>

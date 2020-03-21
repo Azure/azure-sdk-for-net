@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.AI.FormRecognizer.Custom;
 
 namespace Azure.AI.FormRecognizer
 {

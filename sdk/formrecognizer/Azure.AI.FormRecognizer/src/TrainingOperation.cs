@@ -9,7 +9,7 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// Represents a long-running training operation.

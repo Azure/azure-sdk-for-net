@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     internal class CustomModels
     {

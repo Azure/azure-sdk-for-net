@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Azure.AI.FormRecognizer.Models;
 using System.Linq;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// Description of a custom model that was trained without labels.

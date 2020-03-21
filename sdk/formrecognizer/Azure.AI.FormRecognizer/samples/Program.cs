@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Training;
 using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Samples

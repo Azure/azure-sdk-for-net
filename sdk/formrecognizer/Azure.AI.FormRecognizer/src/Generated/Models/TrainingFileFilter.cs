@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Filter to apply to the documents in the source path for training. </summary>
     public partial class TrainingFileFilter

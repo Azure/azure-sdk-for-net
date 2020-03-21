@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.AI.FormRecognizer;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Response to the list custom models operation. </summary>
     internal partial class Models_internal

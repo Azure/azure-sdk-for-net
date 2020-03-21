@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>

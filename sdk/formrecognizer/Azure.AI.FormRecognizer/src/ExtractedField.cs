@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     // Maps to KeyValuePair
 

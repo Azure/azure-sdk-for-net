@@ -10,14 +10,14 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// The client to use to with the Form Recognizer Azure Cognitive Service to train custom models from forms,
     /// and to extract values from forms using those custom models.  It also supports listing and deleting trained
     /// models.
     /// </summary>
-    public class CustomFormClient
+    internal class CustomFormClient
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;

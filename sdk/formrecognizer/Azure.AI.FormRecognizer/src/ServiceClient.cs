@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Training;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
