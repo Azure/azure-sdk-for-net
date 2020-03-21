@@ -9,9 +9,9 @@ namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary>
     /// </summary>
-    public class ExtractedLabeledForm
+    public class CustomLabeledForm
     {
-        internal ExtractedLabeledForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        internal CustomLabeledForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
         {
             // Supervised
             FormType = documentResult.DocType;

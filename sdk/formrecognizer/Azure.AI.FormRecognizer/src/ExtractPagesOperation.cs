@@ -14,10 +14,10 @@ namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary>
     /// </summary>
-    internal class ExtractPagesOperation : Operation<IReadOnlyList<ExtractedPage>>
+    internal class RecognizeFormOperation : Operation<IReadOnlyList<CustomFormPage>>
     {
         private Response _response;
-        private IReadOnlyList<ExtractedPage> _value;
+        private IReadOnlyList<CustomFormPage> _value;
         private bool _hasCompleted;
 
         private readonly string _modelId;
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         public override string Id { get; }
 
-        public override IReadOnlyList<ExtractedPage> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<CustomFormPage> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -35,11 +35,11 @@ namespace Azure.AI.FormRecognizer.Custom
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedPage>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<CustomFormPage>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<CustomFormPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal ExtractPagesOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeFormOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _operations = operations;
             _modelId = modelId;
@@ -89,12 +89,12 @@ namespace Azure.AI.FormRecognizer.Custom
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedPage> ConvertToExtractedPages(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<CustomFormPage> ConvertToExtractedPages(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
         {
-            List<ExtractedPage> pages = new List<ExtractedPage>();
+            List<CustomFormPage> pages = new List<CustomFormPage>();
             for (int i = 0; i < pageResults.Count; i++)
             {
-                pages.Add(new ExtractedPage(pageResults[i], readResults[i]));
+                pages.Add(new CustomFormPage(pageResults[i], readResults[i]));
             }
             return pages;
         }

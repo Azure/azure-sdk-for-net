@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer
     /// <summary>
     /// The client to use to with the Form Recognizer Azure Cognitive Service, to extract layout elements like tables from forms.
     /// </summary>
-    public class FormLayoutClient
+    internal class FormLayoutClient
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
@@ -59,12 +59,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<FormContentPage>> StartExtractLayouts(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.AnalyzeLayoutAsync(stream, contentType, cancellationToken);
-            return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -75,12 +75,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<FormContentPage>>> StartExtractLayoutsAsync(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.AnalyzeLayoutAsyncAsync(stream, contentType, cancellationToken).ConfigureAwait(false);
-            return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"></param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Uri uri, CancellationToken cancellationToken = default)
+        public virtual Operation<IReadOnlyList<FormContentPage>> StartExtractLayouts(Uri uri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-            return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -104,11 +104,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"></param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Uri uri, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<IReadOnlyList<FormContentPage>>> StartExtractLayoutsAsync(Uri uri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
         }
     }
 }

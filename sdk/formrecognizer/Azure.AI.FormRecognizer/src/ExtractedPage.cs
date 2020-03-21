@@ -10,15 +10,15 @@ namespace Azure.AI.FormRecognizer.Custom
     /// <summary>
     /// </summary>
     // Maps to PageResult
-    public class ExtractedPage
+    public class CustomFormPage
     {
         // Unsupervised
-        internal ExtractedPage(PageResult_internal pageResult, ReadResult_internal readResult)
+        internal CustomFormPage(PageResult_internal pageResult, ReadResult_internal readResult)
         {
             PageNumber = pageResult.Page;
             FormTypeId = pageResult.ClusterId;
             Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
-            Tables = ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult);
+            Tables = FormContentPage.ConvertTables(pageResult.Tables, readResult);
 
             if (readResult != null)
             {

@@ -14,10 +14,10 @@ namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary>
     /// </summary>
-    internal class ExtractLabeledFormOperation : Operation<IReadOnlyList<ExtractedLabeledForm>>
+    internal class RecognizeLabeledFormOperation : Operation<IReadOnlyList<CustomLabeledForm>>
     {
         private Response _response;
-        private IReadOnlyList<ExtractedLabeledForm> _value;
+        private IReadOnlyList<CustomLabeledForm> _value;
         private bool _hasCompleted;
 
         private readonly string _modelId;
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         public override string Id { get; }
 
-        public override IReadOnlyList<ExtractedLabeledForm> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<CustomLabeledForm> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -35,11 +35,11 @@ namespace Azure.AI.FormRecognizer.Custom
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedLabeledForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<CustomLabeledForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedLabeledForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<CustomLabeledForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal ExtractLabeledFormOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeLabeledFormOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _operations = operations;
             _modelId = modelId;
@@ -93,12 +93,12 @@ namespace Azure.AI.FormRecognizer.Custom
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedLabeledForm> ConvertToExtractedLabeledForms(IList<DocumentResult_internal> documentResults, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<CustomLabeledForm> ConvertToExtractedLabeledForms(IList<DocumentResult_internal> documentResults, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
         {
-            List<ExtractedLabeledForm> forms = new List<ExtractedLabeledForm>();
+            List<CustomLabeledForm> forms = new List<CustomLabeledForm>();
             for (int i = 0; i < documentResults.Count; i++)
             {
-                forms.Add(new ExtractedLabeledForm(documentResults[i], pageResults, readResults));
+                forms.Add(new CustomLabeledForm(documentResults[i], pageResults, readResults));
             }
             return forms;
         }

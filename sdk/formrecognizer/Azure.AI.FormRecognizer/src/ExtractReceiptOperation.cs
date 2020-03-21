@@ -11,17 +11,17 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class ExtractReceiptOperation : Operation<IReadOnlyList<ExtractedReceipt>>
+    internal class RecognizeReceiptOperation : Operation<IReadOnlyList<RecognizedReceipt>>
     {
         private Response _response;
-        private IReadOnlyList<ExtractedReceipt> _value;
+        private IReadOnlyList<RecognizedReceipt> _value;
         private bool _hasCompleted;
 
         private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
-        public override IReadOnlyList<ExtractedReceipt> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedReceipt> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -31,14 +31,14 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal ExtractReceiptOperation(ServiceClient operations, string operationLocation)
+        internal RecognizeReceiptOperation(ServiceClient operations, string operationLocation)
         {
             _operations = operations;
 
@@ -82,12 +82,12 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedReceipt> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RecognizedReceipt> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
         {
-            List<ExtractedReceipt> receipts = new List<ExtractedReceipt>();
+            List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
             for (int i = 0; i < documentResults.Count; i++)
             {
-                receipts.Add(new ExtractedReceipt(documentResults[i], readResults));
+                receipts.Add(new RecognizedReceipt(documentResults[i], readResults));
             }
             return receipts;
         }

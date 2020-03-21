@@ -11,9 +11,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractedReceipt
+    public class RecognizedReceipt
     {
-        internal ExtractedReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
+        internal RecognizedReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
         {
             StartPageNumber = documentResult.PageRange.First();
             EndPageNumber = documentResult.PageRange.Last();
