@@ -97,7 +97,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 {
                     UserAssignedIdentities = new Dictionary<string, UserIdentityProperties>()
                     {
-                        { userAssignedResponse.Body.Id, new UserIdentityProperties(userAssigned.PrincipalId.ToString(), userAssigned.ClientId.ToString()) }
+                        { userAssignedResponse.Body.Id, new UserIdentityProperties() }
                     }
                 };
                 var createdService = testBase.client.ApiManagementService.CreateOrUpdate(
