@@ -130,7 +130,7 @@
       "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg3765/providers/Microsoft.Kusto/clusters/testcluster9625?api-version=2019-11-09",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzM3NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3Rlcjk2MjU/YXBpLXZlcnNpb249MjAxOS0xMS0wOQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"D13_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": true\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": true\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "dc10c9a0-5f15-428f-b269-161af11a02f6"
@@ -201,14 +201,14 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg3765/providers/Microsoft.Kusto/Clusters/testcluster9625\",\r\n  \"name\": \"testcluster9625\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": true,\r\n    \"state\": \"Creating\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg3765/providers/Microsoft.Kusto/Clusters/testcluster9625\",\r\n  \"name\": \"testcluster9625\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": true,\r\n    \"state\": \"Creating\",\r\n    \"provisioningState\": \"Creating\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg3765/providers/Microsoft.Kusto/clusters/testcluster9625?api-version=2019-11-09",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFkNWYxNTktYTIxZC00YTZjLTgwNTMtYzNhYWUzMDA1N2NmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzM3NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3Rlcjk2MjU/YXBpLXZlcnNpb249MjAxOS0xMS0wOQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"D13_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": false\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"capacity\": 2,\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": false\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "7a5c586d-07cf-46f6-b69d-d8ea010edb21"
@@ -282,7 +282,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg3765/providers/Microsoft.Kusto/Clusters/testcluster9625\",\r\n  \"name\": \"testcluster9625\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": false,\r\n    \"provisioningState\": \"Accepted\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/sdktestrg3765/providers/Microsoft.Kusto/Clusters/testcluster9625\",\r\n  \"name\": \"testcluster9625\",\r\n  \"type\": \"Microsoft.Kusto/Clusters\",\r\n  \"etag\": \"\\\"\\\"\",\r\n  \"location\": \"Central US\",\r\n  \"sku\": {\r\n    \"name\": \"Standard_D13_v2\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 2\r\n  },\r\n  \"properties\": {\r\n    \"trustedExternalTenants\": [\r\n      {\r\n        \"value\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\r\n      }\r\n    ],\r\n    \"enableDiskEncryption\": false,\r\n    \"provisioningState\": \"Accepted\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
