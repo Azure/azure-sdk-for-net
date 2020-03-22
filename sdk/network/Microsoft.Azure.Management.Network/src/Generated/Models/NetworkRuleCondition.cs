@@ -41,13 +41,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="destinationAddresses">List of destination IP addresses
         /// or Service Tags.</param>
         /// <param name="destinationPorts">List of destination ports.</param>
-        public NetworkRuleCondition(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>))
+        /// <param name="sourceIpGroups">List of source IpGroups for this
+        /// rule.</param>
+        /// <param name="destinationIpGroups">List of destination IpGroups for
+        /// this rule.</param>
+        public NetworkRuleCondition(string name = default(string), string description = default(string), IList<string> ipProtocols = default(IList<string>), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<string> destinationPorts = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>), IList<string> destinationIpGroups = default(IList<string>))
             : base(name, description)
         {
             IpProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
+            SourceIpGroups = sourceIpGroups;
+            DestinationIpGroups = destinationIpGroups;
             CustomInit();
         }
 
@@ -79,6 +85,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "destinationPorts")]
         public IList<string> DestinationPorts { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of source IpGroups for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceIpGroups")]
+        public IList<string> SourceIpGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of destination IpGroups for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "destinationIpGroups")]
+        public IList<string> DestinationIpGroups { get; set; }
 
     }
 }

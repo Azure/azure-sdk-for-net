@@ -4,7 +4,7 @@
   "parameters": {
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "tagsa1"
+      "defaultValue": "tagsa021920"
     }
   },
   "variables": {
@@ -46,7 +46,7 @@
       "name": "sdktest-subnested",
       "apiVersion": "2018-05-01",
       "location": "West US",
-      "subscriptionId": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d",
+      "subscriptionId": "afe8f803-7190-48e3-b41a-bc454e8aad1a",
       "properties": {
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",

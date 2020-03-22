@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -116,6 +117,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString) : this(consumerGroup, connectionString, null, null)
         {
@@ -138,6 +141,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
                                       EventHubConsumerClientOptions clientOptions) : this(consumerGroup, connectionString, null, clientOptions)
@@ -157,6 +162,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
+        ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -178,6 +185,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
+        ///
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -212,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                                       EventHubConsumerClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -264,10 +273,10 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
-        public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
-            return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
+            return await Connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,11 +293,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   No new or extended information is presented.
         /// </remarks>
         ///
-        public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
 
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
-            return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
+            return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -301,11 +310,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
-        public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
+        public virtual async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                              CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
-            return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
+            return await Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -584,6 +593,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            if (IsClosed)
+            {
+                return;
+            }
+
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
@@ -638,7 +653,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             if (transportConsumerException != default)
             {
-                throw transportConsumerException;
+                ExceptionDispatchInfo.Capture(transportConsumerException).Throw();
             }
         }
 
@@ -753,7 +768,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                     if (observedException != default)
                     {
                         EventHubsEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, observedException.Message);
-                        throw observedException;
+                        ExceptionDispatchInfo.Capture(observedException).Throw();
                     }
                 }
                 finally
@@ -830,7 +845,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             {
                 var failedAttemptCount = 0;
                 var writtenItems = 0;
-                var receivedItems = default(IEnumerable<EventData>);
+                var receivedItems = default(IReadOnlyList<EventData>);
                 var retryDelay = default(TimeSpan?);
                 var activeException = default(Exception);
 
@@ -844,7 +859,6 @@ namespace Azure.Messaging.EventHubs.Consumer
                         if (receivedItems == default)
                         {
                             receivedItems = await transportConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
-                            receivedItems = (receivedItems as IList<EventData>) ?? receivedItems.ToList();
                         }
 
                         foreach (EventData item in receivedItems)
@@ -881,10 +895,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                         activeException = ex;
                         break;
                     }
-                    catch (Exception ex) when
-                        (ex is OutOfMemoryException
-                        || ex is StackOverflowException
-                        || ex is ThreadAbortException)
+                    catch (Exception ex) when (ex.IsFatalException())
                     {
                         channel.Writer.TryComplete(ex);
                         throw;
@@ -905,10 +916,10 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                             if ((receivedItems != default) && (writtenItems > 0))
                             {
-                                receivedItems = receivedItems.Skip(writtenItems);
+                                receivedItems = receivedItems.Skip(writtenItems).ToList();
                             }
 
-                            await Task.Delay(retryDelay.Value).ConfigureAwait(false);
+                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
                             activeException = null;
                         }
                         else

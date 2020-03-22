@@ -145,7 +145,7 @@
     <value>The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue, or was received by a different receiver instance.</value>
   </data>
   <data name="SessionLockExpiredOnMessageSession" xml:space="preserve">
-    <value>The session lock has expired on the MessageSession. Accept a new MessageSession.</value>
+    <value>The session lock was lost. Request a new session receiver.</value>
   </data>
   <data name="TimeoutMustBeNonNegative" xml:space="preserve">
     <value>Argument {0} must be a non-negative timeout value. The provided value was {1}.</value>
@@ -224,5 +224,8 @@
   </data>
   <data name="CannotRegisterSessionEventHandlerWhenNotUsingSessions" xml:space="preserve">
     <value>When not using a sessionful entity, the non-session event handler must be used.</value>
+  </data>
+  <data name="CannotLockMessageOnSessionEntity" xml:space="preserve">
+    <value>Messages cannot be locked when working with session-enabled entities. Locks are handled at the session level.</value>
   </data>
 </root>

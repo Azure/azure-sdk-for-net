@@ -408,6 +408,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
+            /// Exports a project.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id of the project to export.
+            /// </param>
+            public static ProjectExport ExportProject(this ICustomVisionTrainingClient operations, System.Guid projectId)
+            {
+                return operations.ExportProjectAsync(projectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Exports a project.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id of the project to export.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProjectExport> ExportProjectAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ExportProjectWithHttpMessagesAsync(projectId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Exports a project.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id of the project to export.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ProjectExport> ExportProjectWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ExportProjectWithHttpMessagesAsync(projectId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Add the provided images to the set of training images.
             /// </summary>
             /// <remarks>
@@ -3347,9 +3398,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The email address to send notification to when training finishes (default:
             /// null).
             /// </param>
-            public static Iteration TrainProject(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string))
+            /// <param name='trainingParameters'>
+            /// Additional training parameters passed in to control how the project is
+            /// trained.
+            /// </param>
+            public static Iteration TrainProject(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), TrainingParameters trainingParameters = default(TrainingParameters))
             {
-                return operations.TrainProjectAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress).GetAwaiter().GetResult();
+                return operations.TrainProjectAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, trainingParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -3376,12 +3431,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The email address to send notification to when training finishes (default:
             /// null).
             /// </param>
+            /// <param name='trainingParameters'>
+            /// Additional training parameters passed in to control how the project is
+            /// trained.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Iteration> TrainProjectAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Iteration> TrainProjectAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), TrainingParameters trainingParameters = default(TrainingParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TrainProjectWithHttpMessagesAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TrainProjectWithHttpMessagesAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, trainingParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -3411,12 +3470,67 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The email address to send notification to when training finishes (default:
             /// null).
             /// </param>
+            /// <param name='trainingParameters'>
+            /// Additional training parameters passed in to control how the project is
+            /// trained.
+            /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<Iteration> TrainProjectWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<Iteration> TrainProjectWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), TrainingParameters trainingParameters = default(TrainingParameters), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.TrainProjectWithHttpMessagesAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.TrainProjectWithHttpMessagesAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, trainingParameters, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Imports a project.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='token'>
+            /// Token generated from the export project call.
+            /// </param>
+            public static Project ImportProject(this ICustomVisionTrainingClient operations, string token)
+            {
+                return operations.ImportProjectAsync(token).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Imports a project.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='token'>
+            /// Token generated from the export project call.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Project> ImportProjectAsync(this ICustomVisionTrainingClient operations, string token, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportProjectWithHttpMessagesAsync(token, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Imports a project.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='token'>
+            /// Token generated from the export project call.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Project> ImportProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string token, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.ImportProjectWithHttpMessagesAsync(token, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

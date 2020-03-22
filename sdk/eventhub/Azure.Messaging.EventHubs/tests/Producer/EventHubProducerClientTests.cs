@@ -45,6 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
+        [TestCase("sb://test.place.com")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
@@ -192,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ProducerDelegatesForTheFullyQualifiedNamespaceName()
+        public void ProducerDelegatesForTheFullyQualifiedNamespace()
         {
             var expected = "SomeNamespace";
             var mockConnection = new MockConnection(expected);
@@ -480,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendInvokesTheTransportProducerWithABatch()
+        public async Task SendManageLockingTheBatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
             var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions.ToSendOptions());
@@ -492,7 +493,46 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync" />
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendInvokesTheTransportProducerWithABatch()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockTransportBatch = new Mock<TransportEventBatch>();
+            var mockTransportProducer = new Mock<TransportProducer>();
+            var batch = new EventDataBatch(mockTransportBatch.Object, "ns", "eh", batchOptions.ToSendOptions());
+            var producer = new EventHubProducerClient(new MockConnection(() => mockTransportProducer.Object));
+
+            mockTransportBatch
+                .Setup(transport => transport.TryAdd(It.IsAny<EventData>()))
+                .Returns(true);
+
+            mockTransportProducer
+                .Setup(transport => transport.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
+
+            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            var sendTask = producer.SendAsync(batch);
+
+            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            completionSource.TrySetResult(true);
+
+            await sendTask;
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync"/>
         ///   method.
         /// </summary>
         ///
@@ -1308,7 +1348,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
             }
 
-            internal async override Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
+            internal override async Task<string[]> GetPartitionIdsAsync(EventHubsRetryPolicy retryPolicy,
                                                                         CancellationToken cancellationToken = default)
             {
                 GetPartitionIdsInvokedWith = retryPolicy;

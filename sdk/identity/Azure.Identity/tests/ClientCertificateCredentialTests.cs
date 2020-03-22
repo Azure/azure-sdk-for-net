@@ -33,12 +33,39 @@ namespace Azure.Identity.Tests
             var mockCert = new X509Certificate2(certificatePath, "password");
 
             Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, mockCert));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(null, clientId, certificatePath));
             Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, null, mockCert));
-            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, clientId, null));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, null, certificatePath));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, clientId, (X509Certificate2)null));
+            Assert.Throws<ArgumentNullException>(() => new ClientCertificateCredential(tenantId, clientId, (string)null));
         }
 
         [Test]
-        public async Task VerifyClientCertificateRequestAsync()
+        public void VerifyBadCertificateFileBehavior()
+        {
+            var tenantId = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+
+            TokenRequestContext tokenContext = new TokenRequestContext(MockScopes.Default);
+
+            ClientCertificateCredential missingFileCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "notfound.pem"));
+            ClientCertificateCredential invalidPemCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem"));
+            ClientCertificateCredential unknownFormatCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.unknown"));
+            ClientCertificateCredential encryptedCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx"));
+
+            Assert.Throws<CredentialUnavailableException>(() => missingFileCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => invalidPemCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => unknownFormatCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => encryptedCredential.GetToken(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await missingFileCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await invalidPemCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unknownFormatCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await encryptedCredential.GetTokenAsync(tokenContext));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task VerifyClientCertificateRequestAsync(bool usePemFile)
         {
             var response = new MockResponse(200);
 
@@ -55,9 +82,12 @@ namespace Azure.Identity.Tests
             var expectedClientId = Guid.NewGuid().ToString();
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath, "password");
 
-            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, options) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options)
+            );
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -89,8 +119,9 @@ namespace Azure.Identity.Tests
             VerifyClientAssertion(clientAssertion, expectedTenantId, expectedClientId, mockCert);
         }
 
-        [Test]
-        public async Task VerifyClientCertificateRequestFailedAsync()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task VerifyClientCertificateRequestFailedAsync(bool usePemFile)
         {
             var response = new MockResponse(400);
 
@@ -105,17 +136,21 @@ namespace Azure.Identity.Tests
             var expectedClientId = Guid.NewGuid().ToString();
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath, "password");
 
-            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options));
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, options) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, options)
+            );
 
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             await Task.CompletedTask;
         }
 
-        [Test]
-        public async Task VerifyClientCertificateCredentialExceptionAsync()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task VerifyClientCertificateCredentialExceptionAsync(bool usePemFile)
         {
             string expectedInnerExMessage = Guid.NewGuid().ToString();
 
@@ -126,9 +161,12 @@ namespace Azure.Identity.Tests
             var expectedClientId = Guid.NewGuid().ToString();
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath, "password");
 
-            ClientCertificateCredential credential = InstrumentClient(new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, CredentialPipeline.GetInstance(null), mockAadClient));
+            ClientCertificateCredential credential = InstrumentClient(
+                usePemFile ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, CredentialPipeline.GetInstance(null), mockAadClient) : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, CredentialPipeline.GetInstance(null), mockAadClient)
+            );
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 

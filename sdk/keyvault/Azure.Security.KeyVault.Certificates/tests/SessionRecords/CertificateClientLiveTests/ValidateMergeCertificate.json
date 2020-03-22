@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/create?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/create?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -9,7 +9,7 @@
         "traceparent": "00-a06a42d00fd0bd4daa420a37b71d1727-c628a146bf1d4f4a-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200218.1",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bb01ea541c3d1b1726a2317516cfa0a0",
         "x-ms-return-client-request-id": "true"
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/create?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/create?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -52,7 +52,7 @@
         "traceparent": "00-a06a42d00fd0bd4daa420a37b71d1727-c628a146bf1d4f4a-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200218.1",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bb01ea541c3d1b1726a2317516cfa0a0",
         "x-ms-return-client-request-id": "true"
@@ -78,7 +78,7 @@
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 19 Feb 2020 03:16:24 GMT",
         "Expires": "-1",
-        "Location": "https://heathskv.vault.azure.net/certificates/1755648198/pending?api-version=7.0\u0026request_id=efd3fa65d2874eb7a279d27de2736999",
+        "Location": "https://heathskv.vault.azure.net/certificates/1755648198/pending?api-version=7.1-preview\u0026request_id=efd3fa65d2874eb7a279d27de2736999",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "Microsoft-IIS/10.0",
@@ -104,7 +104,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/pending/merge?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/pending/merge?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -114,7 +114,7 @@
         "traceparent": "00-8fd89708dda32c47bd15607c7d08c653-ee474f10f98c4d41-00",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200218.1",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "6270a5535742ce4019e64ad177fb8ac0",
         "x-ms-return-client-request-id": "true"
@@ -132,7 +132,7 @@
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Wed, 19 Feb 2020 03:16:25 GMT",
         "Expires": "-1",
-        "Location": "https://heathskv.vault.azure.net/certificates/1755648198?api-version=7.0",
+        "Location": "https://heathskv.vault.azure.net/certificates/1755648198?api-version=7.1-preview",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
@@ -211,7 +211,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/pending?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198/pending?api-version=7.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -219,7 +219,7 @@
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200218.1",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "140e76164706f267014add0b346546bc",
         "x-ms-return-client-request-id": "true"
@@ -256,7 +256,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/1755648198?api-version=7.1-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -264,7 +264,7 @@
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200218.1",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "2bc743e55e00fc84aa33a157d146a32b",
         "x-ms-return-client-request-id": "true"

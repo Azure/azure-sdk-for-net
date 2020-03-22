@@ -16,6 +16,9 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     public sealed class EventDataBatch : IDisposable
     {
+        /// <summary>A flag indicating that the batch is locked, such as when in use during a publish operation.</summary>
+        private volatile bool _locked = false;
+
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
         ///   well as any overhead for the batch itself when sent to the Event Hubs service.
@@ -64,6 +67,13 @@ namespace Azure.Messaging.EventHubs.Producer
         private string EventHubName { get; }
 
         /// <summary>
+        ///   The list of diagnostic identifiers of events added to this batch.  To be used during
+        ///   instrumentation.
+        /// </summary>
+        ///
+        private List<string> EventDiagnosticIdentifiers { get; } = new List<string>();
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch"/> class.
         /// </summary>
         ///
@@ -108,10 +118,22 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool TryAdd(EventData eventData)
         {
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
+            if (_locked)
+            {
+                throw new InvalidOperationException(Resources.EventBatchIsLocked);
+            }
+
+            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
             bool added = InnerBatch.TryAdd(eventData);
 
-            if (!added && instrumented)
+            if (added)
+            {
+                if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                {
+                    EventDiagnosticIdentifiers.Add(diagnosticId);
+                }
+            }
+            else if (instrumented)
             {
                 EventDataInstrumentation.ResetEvent(eventData);
             }
@@ -134,5 +156,26 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
         internal IEnumerable<T> AsEnumerable<T>() => InnerBatch.AsEnumerable<T>();
+
+        /// <summary>
+        ///   Gets the list of diagnostic identifiers of events added to this batch.
+        /// </summary>
+        ///
+        /// <returns>A read-only list of diagnostic identifiers.</returns>
+        ///
+        internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
+
+        /// <summary>
+        ///   Locks the batch to prevent new events from being added while a service
+        ///   operation is active.
+        /// </summary>
+        ///
+        internal void Lock() => _locked = true;
+
+        /// <summary>
+        ///   Unlocks the batch, allowing new events to be added.
+        /// </summary>
+        ///
+        internal void Unlock() => _locked = false;
     }
 }

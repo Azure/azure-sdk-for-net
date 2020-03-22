@@ -21,6 +21,9 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <summary>The attribute which represents the fully-qualified endpoint address of the Event Hubs namespace to associate with diagnostics information.</summary>
         public const string EndpointAttribute = "peer.address";
 
+        /// <summary>The attribute which represents the UNIX Epoch enqueued time of an event to associate with diagnostics information.</summary>
+        public const string EnqueuedTimeAttribute = "enqueuedTime";
+
         /// <summary>The value which identifies the Event Hubs diagnostics context.</summary>
         public const string EventHubsServiceContext = "eventhubs";
 

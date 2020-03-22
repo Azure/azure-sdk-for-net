@@ -49,4 +49,3 @@ namespace Microsoft.Azure.Management.DataFactory
       // END: Code Generation Metadata Section
   }
 }
-

@@ -45,6 +45,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="addressPrefix">/29 IP address space to carve out
         /// Customer addresses for tunnels.</param>
         /// <param name="authorizationKey">The authorization key.</param>
+        /// <param name="ipv6CircuitConnectionConfig">IPv6 Address
+        /// PrefixProperties of the express route circuit connection.</param>
         /// <param name="circuitConnectionStatus">Express Route Circuit
         /// connection state. Possible values include: 'Connected',
         /// 'Connecting', 'Disconnected'</param>
@@ -57,13 +59,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ExpressRouteCircuitConnection(string id = default(string), SubResource expressRouteCircuitPeering = default(SubResource), SubResource peerExpressRouteCircuitPeering = default(SubResource), string addressPrefix = default(string), string authorizationKey = default(string), string circuitConnectionStatus = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ExpressRouteCircuitConnection(string id = default(string), SubResource expressRouteCircuitPeering = default(SubResource), SubResource peerExpressRouteCircuitPeering = default(SubResource), string addressPrefix = default(string), string authorizationKey = default(string), Ipv6CircuitConnectionConfig ipv6CircuitConnectionConfig = default(Ipv6CircuitConnectionConfig), string circuitConnectionStatus = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
             PeerExpressRouteCircuitPeering = peerExpressRouteCircuitPeering;
             AddressPrefix = addressPrefix;
             AuthorizationKey = authorizationKey;
+            Ipv6CircuitConnectionConfig = ipv6CircuitConnectionConfig;
             CircuitConnectionStatus = circuitConnectionStatus;
             ProvisioningState = provisioningState;
             Name = name;
@@ -103,6 +106,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.authorizationKey")]
         public string AuthorizationKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets iPv6 Address PrefixProperties of the express route
+        /// circuit connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ipv6CircuitConnectionConfig")]
+        public Ipv6CircuitConnectionConfig Ipv6CircuitConnectionConfig { get; set; }
 
         /// <summary>
         /// Gets or sets express Route Circuit connection state. Possible

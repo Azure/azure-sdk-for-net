@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-437d78286a3cbb4d8b309372b215f4bc-5dc8ff81cf96154e-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200309.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "63dd7aed7b5561be2080a9c3bb921533",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "minimumCoverage": 50,
+        "search": "luxury",
+        "suggesterName": "sg"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "404",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 09 Mar 2020 09:47:47 GMT",
+        "elapsed-time": "10",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "63dd7aed-7b55-61be-2080-a9c3bb921533",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/$metadata#docs(*)",
+        "@search.coverage": 100.0,
+        "value": [
+          {
+            "@search.text": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
+            "hotelId": "1"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "58034553",
+    "SearchIndexName": "bapsfvkb",
+    "SearchServiceName": "azs-net-wvqysflr"
+  }
+}

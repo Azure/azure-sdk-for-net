@@ -19,10 +19,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
-            var inputs = new List<TextDocumentInput>
+            var documents = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "That was the best day of my life!")
                 {
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             foreach (AnalyzeSentimentResult result in results)
             {
-                TextDocumentInput document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
@@ -63,24 +63,22 @@ namespace Azure.AI.TextAnalytics.Samples
                 else
                 {
                     Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                    Debug.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive:0.00}.");
-                    Debug.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral:0.00}.");
-                    Debug.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative:0.00}.");
+                    Debug.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
+                    Debug.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
+                    Debug.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
                     foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
-                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
-
                         Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
-                        Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive:0.00}.");
-                        Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral:0.00}.");
-                        Debug.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative:0.00}.");
+                        Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
+                        Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
+                        Debug.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative}.");
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
                     Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }

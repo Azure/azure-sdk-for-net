@@ -7,7 +7,6 @@ using System.Reflection;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -40,8 +39,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
-            var expectedType = fullyQualifiedNamespace is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), Throws.TypeOf(expectedType));
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -54,8 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheEventHubName(string eventHubName)
         {
-            var expectedType = eventHubName is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), Throws.TypeOf(expectedType));
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -145,6 +142,27 @@ namespace Azure.Messaging.EventHubs.Tests
 
             batch.Dispose();
             Assert.That(mockBatch.DisposeInvoked, Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var eventData = new EventData(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept events when locked.");
+
+            batch.Unlock();
+            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The event should have been accepted after unlocking.");
         }
 
         /// <summary>

@@ -3,8 +3,15 @@
 
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,9 +35,9 @@ namespace Azure.Identity
         internal string ClientId { get; }
 
         /// <summary>
-        /// Gets the authentication X509 Certificate of the service principal
+        /// Gets an object which can provide the X509 Certificate of the service principal.
         /// </summary>
-        internal X509Certificate2 ClientCertificate { get; }
+        internal IX509Certificate2Provider ClientCertificateProvider { get; }
 
         private readonly AadIdentityClient _client;
         private readonly CredentialPipeline _pipeline;
@@ -39,6 +46,30 @@ namespace Azure.Identity
         /// Protected constructor for mocking.
         /// </summary>
         protected ClientCertificateCredential()
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
+        public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath)
+            : this(tenantId, clientId, clientCertificatePath, (TokenCredentialOptions)null)
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// </summary>
+        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, TokenCredentialOptions options)
+            : this(tenantId, clientId, clientCertificatePath, CredentialPipeline.GetInstance(options))
+
         {
         }
 
@@ -71,13 +102,28 @@ namespace Azure.Identity
         {
         }
 
+        internal ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, CredentialPipeline pipeline)
+            : this(tenantId, clientId, clientCertificatePath, pipeline, new AadIdentityClient(pipeline))
+        {
+        }
+
         internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline, AadIdentityClient client)
+            : this(tenantId, clientId, new X509Certificate2FromObjectProvider(clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate))), pipeline, client)
+        {
+        }
+
+        internal ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, CredentialPipeline pipeline, AadIdentityClient client)
+            : this(tenantId, clientId, new X509Certificate2FromFileProvider(clientCertificatePath ?? throw new ArgumentNullException(nameof(clientCertificatePath))), pipeline, client)
+        {
+        }
+
+        internal ClientCertificateCredential(string tenantId, string clientId, IX509Certificate2Provider clientCertificateProvider, CredentialPipeline pipeline, AadIdentityClient client)
         {
             TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
 
-            ClientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
+            ClientCertificateProvider = clientCertificateProvider;
 
             _pipeline = pipeline;
 
@@ -96,7 +142,8 @@ namespace Azure.Identity
 
             try
             {
-                return scope.Succeeded(_client.Authenticate(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken));
+                X509Certificate2 cert = ClientCertificateProvider.GetCertificateAsync(false, cancellationToken).EnsureCompleted();
+                return scope.Succeeded(_client.Authenticate(TenantId, ClientId, cert, requestContext.Scopes, cancellationToken));
             }
             catch (OperationCanceledException e)
             {
@@ -122,7 +169,8 @@ namespace Azure.Identity
 
             try
             {
-                return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
+                X509Certificate2 cert = await ClientCertificateProvider.GetCertificateAsync(true, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, cert, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
             }
             catch (OperationCanceledException e)
             {
@@ -134,6 +182,198 @@ namespace Azure.Identity
             {
                 throw scope.FailAndWrap(e);
             }
+        }
+
+        /// <summary>
+        /// IX509Certificate2Provider provides a way to control how the X509Certificate2 object is fetched.
+        /// </summary>
+        internal interface IX509Certificate2Provider
+        {
+            ValueTask<X509Certificate2> GetCertificateAsync(bool async, CancellationToken cancellationToken);
+        }
+
+        /// <summary>
+        /// X509Certificate2FromObjectProvider provides an X509Certificate2 from an existing instance.
+        /// </summary>
+        private class X509Certificate2FromObjectProvider : IX509Certificate2Provider
+        {
+            private X509Certificate2 Certificate { get; }
+
+            public X509Certificate2FromObjectProvider(X509Certificate2 clientCertificate)
+            {
+                Certificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
+            }
+
+            public ValueTask<X509Certificate2> GetCertificateAsync(bool async, CancellationToken cancellationToken)
+            {
+                return new ValueTask<X509Certificate2>(Certificate);
+            }
+        }
+
+        /// <summary>
+        /// X509Certificate2FromFileProvider provides an X509Certificate2 from a file on disk.  It supports both
+        /// "pfx" and "pem" encoded certificates.
+        /// </summary>
+        internal class X509Certificate2FromFileProvider : IX509Certificate2Provider
+        {
+            // Lazy initialized on the first call to GetCertificateAsync, based on CertificatePath.
+            private X509Certificate2 Certificate { get; set; }
+            internal string CertificatePath { get; }
+
+            public X509Certificate2FromFileProvider(string clientCertificatePath)
+            {
+                CertificatePath = clientCertificatePath ?? throw new ArgumentNullException(nameof(clientCertificatePath));
+            }
+
+            public ValueTask<X509Certificate2> GetCertificateAsync(bool async, CancellationToken cancellationToken)
+            {
+                if (!(Certificate is null))
+                {
+                    return new ValueTask<X509Certificate2>(Certificate);
+                }
+
+                string fileType = Path.GetExtension(CertificatePath);
+
+                switch (fileType.ToLowerInvariant())
+                {
+                    case ".pfx":
+                        return LoadCertificateFromPfxFileAsync(async, CertificatePath, cancellationToken);
+                    case ".pem":
+                        return LoadCertificateFromPemFileAsync(async, CertificatePath, cancellationToken);
+                    default:
+                        throw new CredentialUnavailableException("Only .pfx and .pem files are supported.");
+                }
+            }
+
+            private async ValueTask<X509Certificate2> LoadCertificateFromPfxFileAsync(bool async, string clientCertificatePath, CancellationToken cancellationToken)
+            {
+                const int BufferSize = 4 * 1024;
+
+                if (!(Certificate is null))
+                {
+                    return Certificate;
+                }
+
+                try
+                {
+                    if (!async)
+                    {
+                        Certificate = new X509Certificate2(clientCertificatePath);
+                    }
+                    else
+                    {
+                        List<byte> certContents = new List<byte>();
+                        byte[] buf = new byte[BufferSize];
+                        int offset = 0;
+                        using (Stream s = File.OpenRead(clientCertificatePath))
+                        {
+                            while (true)
+                            {
+                                int read = await s.ReadAsync(buf, offset, buf.Length, cancellationToken).ConfigureAwait(false);
+                                for (int i = 0; i < read; i++)
+                                {
+                                    certContents.Add(buf[i]);
+                                }
+
+                                if (read == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        Certificate = new X509Certificate2(certContents.ToArray());
+                    }
+
+                    return Certificate;
+                }
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
+                    throw new CredentialUnavailableException("Could not load certificate file", e);
+                }
+            }
+
+            private async ValueTask<X509Certificate2> LoadCertificateFromPemFileAsync(bool async, string clientCertificatePath, CancellationToken cancellationToken)
+            {
+                if (!(Certificate is null))
+                {
+                    return Certificate;
+                }
+
+                string certficateText;
+
+                try
+                {
+                    if (!async)
+                    {
+                        certficateText = File.ReadAllText(clientCertificatePath);
+                    }
+                    else
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        using (StreamReader sr = new StreamReader(clientCertificatePath))
+                        {
+                            certficateText = await sr.ReadToEndAsync().ConfigureAwait(false);
+                        }
+                    }
+
+                    Regex certificateRegex = new Regex("(-+BEGIN CERTIFICATE-+)(\n\r?|\r\n?)([A-Za-z0-9+/\n\r]+=*)(\n\r?|\r\n?)(-+END CERTIFICATE-+)", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(5));
+                    Regex privateKeyRegex = new Regex("(-+BEGIN PRIVATE KEY-+)(\n\r?|\r\n?)([A-Za-z0-9+/\n\r]+=*)(\n\r?|\r\n?)(-+END PRIVATE KEY-+)", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(5));
+
+                    Match certificateMatch = certificateRegex.Match(certficateText);
+                    Match privateKeyMatch = privateKeyRegex.Match(certficateText);
+
+                    if (!certificateMatch.Success)
+                    {
+                        throw new InvalidDataException("Could not find certificate in PEM file");
+                    }
+
+                    if (!privateKeyMatch.Success)
+                    {
+                        throw new InvalidDataException("Could not find private key in PEM file");
+                    }
+
+                    // ImportPkcs8PrivateKey was added in .NET Core 3.0, it is only present on Core.  If we can't find this method, we have a lightweight decoder we can use.
+                    MethodInfo importPkcs8PrivateKeyMethodInfo = typeof(RSA).GetMethod("ImportPkcs8PrivateKey", BindingFlags.Instance | BindingFlags.Public, null, new Type[] { typeof(ReadOnlySpan<byte>), typeof(int).MakeByRefType() }, null);
+
+                    // CopyWithPrivateKey is present in .NET Core 2.0+ and .NET 4.7.2+.
+                    MethodInfo copyWithPrivateKeyMethodInfo = typeof(RSACertificateExtensions).GetMethod("CopyWithPrivateKey", BindingFlags.Static | BindingFlags.Public, null, new Type[] { typeof(X509Certificate2), typeof(RSA) }, null);
+
+                    if (copyWithPrivateKeyMethodInfo == null)
+                    {
+                        throw new PlatformNotSupportedException("The current platform does not support reading a private key from a PEM file");
+                    }
+
+                    RSA privateKey;
+
+                    if (importPkcs8PrivateKeyMethodInfo != null)
+                    {
+                        privateKey = RSA.Create();
+
+                        // Because ImportPkcs8PrivateKey takes a ReadOnlySpan<byte> as an argument, we can not call it directly via MethodInfo.Invoke (since all the arguments to the function
+                        // have to be passed to MethodInfo.Invoke in an object array, and you can't put a byref type like ReadOnlySpan<T> in an array. So we create a delegate with the
+                        // correct signature bound to the privateKey we want to import into and invoke that.
+                        ImportPkcs8PrivateKeyDelegate importPrivateKey = (ImportPkcs8PrivateKeyDelegate)importPkcs8PrivateKeyMethodInfo.CreateDelegate(typeof(ImportPkcs8PrivateKeyDelegate), privateKey);
+                        importPrivateKey(Convert.FromBase64String(privateKeyMatch.Groups[3].Value), out int _);
+                    }
+                    else
+                    {
+                        privateKey = LightweightPkcs8Decoder.DecodeRSAPkcs8(Convert.FromBase64String(privateKeyMatch.Groups[3].Value));
+                    }
+
+                    X509Certificate2 certWithoutPrivateKey = new X509Certificate2(Convert.FromBase64String(certificateMatch.Groups[3].Value));
+                    Certificate = (X509Certificate2)copyWithPrivateKeyMethodInfo.Invoke(null, new object[] { certWithoutPrivateKey, privateKey });
+
+                    return Certificate;
+                }
+                catch (Exception e) when (!(e is OperationCanceledException))
+                {
+                    throw new CredentialUnavailableException("Could not load certificate file", e);
+                }
+            }
+
+            private delegate void ImportPkcs8PrivateKeyDelegate(ReadOnlySpan<byte> blob, out int bytesRead);
         }
     }
 }

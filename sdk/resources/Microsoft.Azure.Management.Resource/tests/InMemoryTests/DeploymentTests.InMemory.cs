@@ -778,6 +778,9 @@ namespace ResourceGroups.Tests
                                 'value':'user'
                             }
                         }        
+                    },
+                    'tags': {
+                        'tagsTestKey': 'tagsTestValue'
                     }
                 }")
             };
@@ -801,6 +804,9 @@ namespace ResourceGroups.Tests
             Assert.Equal("1.0.0.0", result.Properties.TemplateLink.ContentVersion);
             Assert.Contains("\"type\": \"string\"", result.Properties.Parameters.ToString());
             Assert.Contains("\"type\": \"string\"", result.Properties.Outputs.ToString());
+            Assert.NotNull(result.Tags);
+            Assert.True(result.Tags.ContainsKey("tagsTestKey"));
+            Assert.Equal("tagsTestValue", result.Tags["tagsTestKey"]);
         }
 
         [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]
@@ -1073,7 +1079,10 @@ namespace ResourceGroups.Tests
                                     'value':'user'
                                 }
                             }     
-                          }   
+                          },
+                        'tags': {
+                            'tagsTestKey': 'tagsTestValue'
+                        }
                         },
                         {
                         'resourceGroup': 'bar',
@@ -1110,6 +1119,9 @@ namespace ResourceGroups.Tests
                                     'value':'user'
                                 }
                             }        
+                        },
+                        'tags': {
+                            'tagsTestKey': 'tagsTestValue'
                         }
                       }
                     ],
@@ -1138,6 +1150,9 @@ namespace ResourceGroups.Tests
             Assert.Equal("1.0.0.0", result.First().Properties.TemplateLink.ContentVersion);
             Assert.Contains("\"type\": \"string\"", result.First().Properties.Parameters.ToString());
             Assert.Contains("\"type\": \"string\"", result.First().Properties.Outputs.ToString());
+            Assert.NotNull(result.First().Tags);
+            Assert.True(result.First().Tags.ContainsKey("tagsTestKey"));
+            Assert.Equal("tagsTestValue", result.First().Tags["tagsTestKey"]);
             Assert.Equal("https://wa/subscriptions/subId/templateDeployments?$skiptoken=983fknw", result.NextPageLink);
         }
 

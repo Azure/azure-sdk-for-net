@@ -478,7 +478,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        protected virtual Response<PathInfo> Create(
+        public virtual Response<PathInfo> Create(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
@@ -760,7 +760,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        protected virtual Response<PathInfo> CreateIfNotExists(
+        public virtual Response<PathInfo> CreateIfNotExists(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
@@ -948,6 +948,12 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="CreateIfNotExists"/>
         /// instead.
         /// </remarks>
+        /// <remarks>
+        /// Note that if you call FileClient.Exists on a path that does not
+        /// represent a file, Exists will return true. Similarly, if you
+        /// call DirectoryClient.Exists on a path that is not a directory,
+        /// Exists will return true.
+        /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default)
         {
@@ -988,6 +994,12 @@ namespace Azure.Storage.Files.DataLake
         /// it doesn't exist, use
         /// <see cref="CreateIfNotExistsAsync"/>
         /// instead.
+        /// </remarks>
+        /// <remarks>
+        /// Note that if you call FileClient.Exists on a path that does not
+        /// represent a file, Exists will return true. Similarly, if you
+        /// call DirectoryClient.Exists on a path that is not a directory,
+        /// Exists will return true.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default)

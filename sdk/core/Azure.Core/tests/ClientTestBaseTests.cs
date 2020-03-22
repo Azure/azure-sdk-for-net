@@ -73,6 +73,28 @@ namespace Azure.Core.Tests
             }
         }
 
+        /// <summary>
+        /// Ensure we can resolve sync/async variants of a method that only
+        /// varies based on generic type parameters.
+        /// </summary>
+        [Test]
+        public async Task ResolvesCustomUserSchemaPattern()
+        {
+            TestClient client = InstrumentClient(new TestClient());
+            Response<string> staticData = await client.GetDataAsync<string>();
+            Response<object> dynamicData = await client.GetDataAsync();
+            if (IsAsync)
+            {
+                StringAssert.StartsWith("async", staticData.GetRawResponse().ReasonPhrase);
+                StringAssert.StartsWith("async", dynamicData.GetRawResponse().ReasonPhrase);
+            }
+            else
+            {
+                StringAssert.StartsWith("sync", staticData.GetRawResponse().ReasonPhrase);
+                StringAssert.StartsWith("sync", dynamicData.GetRawResponse().ReasonPhrase);
+            }
+        }
+
         public class TestClient
         {
             public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
@@ -94,6 +116,16 @@ namespace Azure.Core.Tests
             {
                 return "Hello";
             }
+
+            // These four follow the new pattern for custom users schemas
+            public virtual Task<Response<T>> GetDataAsync<T>() =>
+                Task.FromResult(Response.FromValue(default(T), new MockResponse(200, "async - static")));
+            public virtual Response<T> GetData<T>() =>
+                Response.FromValue(default(T), new MockResponse(200, "sync - static"));
+            public virtual Task<Response<object>> GetDataAsync() =>
+                Task.FromResult(Response.FromValue((object)null, new MockResponse(200, "async - dynamic")));
+            public virtual Response<object> GetData() =>
+                Response.FromValue((object)null, new MockResponse(200, "sync - dynamic"));
         }
 
         public class InvalidTestClient

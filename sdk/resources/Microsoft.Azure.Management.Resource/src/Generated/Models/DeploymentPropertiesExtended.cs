@@ -47,14 +47,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// the deployment.</param>
         /// <param name="dependencies">The list of deployment
         /// dependencies.</param>
-        /// <param name="template">The template content. Use only one of
-        /// Template or TemplateLink.</param>
-        /// <param name="templateLink">The URI referencing the template. Use
-        /// only one of Template or TemplateLink.</param>
-        /// <param name="parameters">Deployment parameters. Use only one of
-        /// Parameters or ParametersLink.</param>
+        /// <param name="templateLink">The URI referencing the
+        /// template.</param>
+        /// <param name="parameters">Deployment parameters. </param>
         /// <param name="parametersLink">The URI referencing the parameters.
-        /// Use only one of Parameters or ParametersLink.</param>
+        /// </param>
         /// <param name="mode">The deployment mode. Possible values are
         /// Incremental and Complete. Possible values include: 'Incremental',
         /// 'Complete'</param>
@@ -62,7 +59,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// deployment.</param>
         /// <param name="onErrorDeployment">The deployment on error
         /// behavior.</param>
-        public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), System.DateTime? timestamp = default(System.DateTime?), string duration = default(string), object outputs = default(object), IList<Provider> providers = default(IList<Provider>), IList<Dependency> dependencies = default(IList<Dependency>), object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting), OnErrorDeploymentExtended onErrorDeployment = default(OnErrorDeploymentExtended))
+        /// <param name="templateHash">The hash produced for the
+        /// template.</param>
+        /// <param name="outputResources">Array of provisioned
+        /// resources.</param>
+        /// <param name="validatedResources">Array of validated
+        /// resources.</param>
+        /// <param name="error">The deployment error.</param>
+        public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), System.DateTime? timestamp = default(System.DateTime?), string duration = default(string), object outputs = default(object), IList<Provider> providers = default(IList<Provider>), IList<Dependency> dependencies = default(IList<Dependency>), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting), OnErrorDeploymentExtended onErrorDeployment = default(OnErrorDeploymentExtended), string templateHash = default(string), IList<ResourceReference> outputResources = default(IList<ResourceReference>), IList<ResourceReference> validatedResources = default(IList<ResourceReference>), ErrorResponse error = default(ErrorResponse))
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -71,13 +75,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Outputs = outputs;
             Providers = providers;
             Dependencies = dependencies;
-            Template = template;
             TemplateLink = templateLink;
             Parameters = parameters;
             ParametersLink = parametersLink;
             Mode = mode;
             DebugSetting = debugSetting;
             OnErrorDeployment = onErrorDeployment;
+            TemplateHash = templateHash;
+            OutputResources = outputResources;
+            ValidatedResources = validatedResources;
+            Error = error;
             CustomInit();
         }
 
@@ -111,70 +118,83 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Duration { get; private set; }
 
         /// <summary>
-        /// Gets or sets key/value pairs that represent deployment output.
+        /// Gets key/value pairs that represent deployment output.
         /// </summary>
         [JsonProperty(PropertyName = "outputs")]
-        public object Outputs { get; set; }
+        public object Outputs { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of resource providers needed for the
-        /// deployment.
+        /// Gets the list of resource providers needed for the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "providers")]
-        public IList<Provider> Providers { get; set; }
+        public IList<Provider> Providers { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of deployment dependencies.
+        /// Gets the list of deployment dependencies.
         /// </summary>
         [JsonProperty(PropertyName = "dependencies")]
-        public IList<Dependency> Dependencies { get; set; }
+        public IList<Dependency> Dependencies { get; private set; }
 
         /// <summary>
-        /// Gets or sets the template content. Use only one of Template or
-        /// TemplateLink.
-        /// </summary>
-        [JsonProperty(PropertyName = "template")]
-        public object Template { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URI referencing the template. Use only one of
-        /// Template or TemplateLink.
+        /// Gets the URI referencing the template.
         /// </summary>
         [JsonProperty(PropertyName = "templateLink")]
-        public TemplateLink TemplateLink { get; set; }
+        public TemplateLink TemplateLink { get; private set; }
 
         /// <summary>
-        /// Gets or sets deployment parameters. Use only one of Parameters or
-        /// ParametersLink.
+        /// Gets deployment parameters.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public object Parameters { get; set; }
+        public object Parameters { get; private set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the parameters. Use only one of
-        /// Parameters or ParametersLink.
+        /// Gets the URI referencing the parameters.
         /// </summary>
         [JsonProperty(PropertyName = "parametersLink")]
-        public ParametersLink ParametersLink { get; set; }
+        public ParametersLink ParametersLink { get; private set; }
 
         /// <summary>
-        /// Gets or sets the deployment mode. Possible values are Incremental
-        /// and Complete. Possible values include: 'Incremental', 'Complete'
+        /// Gets the deployment mode. Possible values are Incremental and
+        /// Complete. Possible values include: 'Incremental', 'Complete'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
-        public DeploymentMode? Mode { get; set; }
+        public DeploymentMode? Mode { get; private set; }
 
         /// <summary>
-        /// Gets or sets the debug setting of the deployment.
+        /// Gets the debug setting of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "debugSetting")]
-        public DebugSetting DebugSetting { get; set; }
+        public DebugSetting DebugSetting { get; private set; }
 
         /// <summary>
-        /// Gets or sets the deployment on error behavior.
+        /// Gets the deployment on error behavior.
         /// </summary>
         [JsonProperty(PropertyName = "onErrorDeployment")]
-        public OnErrorDeploymentExtended OnErrorDeployment { get; set; }
+        public OnErrorDeploymentExtended OnErrorDeployment { get; private set; }
+
+        /// <summary>
+        /// Gets the hash produced for the template.
+        /// </summary>
+        [JsonProperty(PropertyName = "templateHash")]
+        public string TemplateHash { get; private set; }
+
+        /// <summary>
+        /// Gets array of provisioned resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "outputResources")]
+        public IList<ResourceReference> OutputResources { get; private set; }
+
+        /// <summary>
+        /// Gets array of validated resources.
+        /// </summary>
+        [JsonProperty(PropertyName = "validatedResources")]
+        public IList<ResourceReference> ValidatedResources { get; private set; }
+
+        /// <summary>
+        /// Gets the deployment error.
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public ErrorResponse Error { get; private set; }
 
         /// <summary>
         /// Validate the object.

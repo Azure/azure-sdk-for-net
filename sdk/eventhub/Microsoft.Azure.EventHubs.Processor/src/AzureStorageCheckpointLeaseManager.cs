@@ -9,9 +9,9 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Blob;
     using Newtonsoft.Json;
-    using Microsoft.Azure.Storage;
-    using Microsoft.Azure.Storage.Blob;
 
     class AzureStorageCheckpointLeaseManager : ICheckpointManager, ILeaseManager
     {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 #endif
 
             // Create storage client and configure max execution time.
-            // Max execution time will apply to any storage calls except renew.
+            // Max execution time will apply to any storage call unless otherwise specified by custom request options.
             var storageClient = this.cloudStorageAccount.CreateCloudBlobClient();
             storageClient.DefaultRequestOptions = new BlobRequestOptions
             {
@@ -304,11 +304,13 @@ namespace Microsoft.Azure.EventHubs.Processor
                     "CreateLeaseIfNotExist - leaseContainerName: " + this.leaseContainerName +
                     " consumerGroupName: " + this.host.ConsumerGroupName + " storageBlobPrefix: " + this.storageBlobPrefix);
 
+                // Don't provide default request options for upload call.
+                // This request will respect client's default options.
                 await leaseBlob.UploadTextAsync(
                     jsonLease,
                     null,
                     AccessCondition.GenerateIfNoneMatchCondition("*"),
-                    this.defaultRequestOptions,
+                    null,
                     this.operationContext).ConfigureAwait(false);
             }
             catch (StorageException se)
@@ -525,11 +527,13 @@ namespace Microsoft.Azure.EventHubs.Processor
                 string jsonToUpload = JsonConvert.SerializeObject(lease);
                 ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, lease.PartitionId, $"Raw JSON uploading: {jsonToUpload}");
 
+                // This is on the code path of checkpoint call thus don't provide default request options for upload call.
+                // This request will respect client's default options.
                 await leaseBlob.UploadTextAsync(
                     jsonToUpload,
                     null,
                     AccessCondition.GenerateLeaseCondition(token),
-                    this.defaultRequestOptions,
+                    null,
                     this.operationContext).ConfigureAwait(false);
             }
             catch (StorageException se)

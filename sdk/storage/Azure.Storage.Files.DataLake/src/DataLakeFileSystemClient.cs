@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
         /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        protected virtual HttpPipeline Pipeline => _pipeline;
+        internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The version of the service to use when sending requests.
@@ -330,7 +330,7 @@ namespace Azure.Storage.Files.DataLake
         /// root directory of the file system.
         /// </summary>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
-        public virtual DataLakeDirectoryClient GetRootDirectoryClient()
+        internal virtual DataLakeDirectoryClient GetRootDirectoryClient()
         {
             return GetDirectoryClient(string.Empty);
         }

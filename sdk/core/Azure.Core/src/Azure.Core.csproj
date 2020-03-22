@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.1.0-preview.1</Version>
+    <Version>1.2.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />

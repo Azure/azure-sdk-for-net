@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Messaging.ServiceBus.Management;
+
 namespace Azure.Messaging.ServiceBus
 {
-    using System;
-    using Azure.Messaging.ServiceBus.Management;
-
     /// <summary>
     /// This class can be used to format the path for different Service Bus entity types.
     /// </summary>

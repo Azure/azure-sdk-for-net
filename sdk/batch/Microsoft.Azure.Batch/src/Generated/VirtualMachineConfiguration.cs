@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<ContainerConfiguration> ContainerConfigurationProperty;
             public readonly PropertyAccessor<IList<DataDisk>> DataDisksProperty;
+            public readonly PropertyAccessor<DiskEncryptionConfiguration> DiskEncryptionConfigurationProperty;
             public readonly PropertyAccessor<ImageReference> ImageReferenceProperty;
             public readonly PropertyAccessor<string> LicenseTypeProperty;
             public readonly PropertyAccessor<string> NodeAgentSkuIdProperty;
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.Batch
             {
                 this.ContainerConfigurationProperty = this.CreatePropertyAccessor<ContainerConfiguration>(nameof(ContainerConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.DataDisksProperty = this.CreatePropertyAccessor<IList<DataDisk>>(nameof(DataDisks), BindingAccess.Read | BindingAccess.Write);
+                this.DiskEncryptionConfigurationProperty = this.CreatePropertyAccessor<DiskEncryptionConfiguration>(nameof(DiskEncryptionConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>(nameof(ImageReference), BindingAccess.Read | BindingAccess.Write);
                 this.LicenseTypeProperty = this.CreatePropertyAccessor<string>(nameof(LicenseType), BindingAccess.Read | BindingAccess.Write);
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>(nameof(NodeAgentSkuId), BindingAccess.Read | BindingAccess.Write);
@@ -50,6 +52,10 @@ namespace Microsoft.Azure.Batch
                 this.DataDisksProperty = this.CreatePropertyAccessor(
                     DataDisk.ConvertFromProtocolCollection(protocolObject.DataDisks),
                     nameof(DataDisks),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.DiskEncryptionConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.DiskEncryptionConfiguration, o => new DiskEncryptionConfiguration(o)),
+                    nameof(DiskEncryptionConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ImageReferenceProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ImageReference, o => new ImageReference(o)),
@@ -125,6 +131,18 @@ namespace Microsoft.Azure.Batch
             {
                 this.propertyContainer.DataDisksProperty.Value = ConcurrentChangeTrackedModifiableList<DataDisk>.TransformEnumerableToConcurrentModifiableList(value);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the disk encryption configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, encryption is performed on each node in the pool during node provisioning.
+        /// </remarks>
+        public DiskEncryptionConfiguration DiskEncryptionConfiguration
+        {
+            get { return this.propertyContainer.DiskEncryptionConfigurationProperty.Value; }
+            set { this.propertyContainer.DiskEncryptionConfigurationProperty.Value = value; }
         }
 
         /// <summary>
@@ -204,6 +222,7 @@ namespace Microsoft.Azure.Batch
             {
                 ContainerConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerConfiguration, (o) => o.GetTransportObject()),
                 DataDisks = UtilitiesInternal.ConvertToProtocolCollection(this.DataDisks),
+                DiskEncryptionConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.DiskEncryptionConfiguration, (o) => o.GetTransportObject()),
                 ImageReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageReference, (o) => o.GetTransportObject()),
                 LicenseType = this.LicenseType,
                 NodeAgentSKUId = this.NodeAgentSkuId,
