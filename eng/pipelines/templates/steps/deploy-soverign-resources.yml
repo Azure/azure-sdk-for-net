@@ -8,6 +8,10 @@ parameters:
   Location: 'westus2'
 
 steps:
+  # New-TestResources command requires Az module
+  - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
+    displayName: Install Azure PowerShell module
+
   - template: ../../../common/TestResources/deploy-test-resources.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -21,6 +25,7 @@ steps:
       Location: ${{ parameters.Location }}
       Environment: AzureCloud
       Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
+      BoostrapAzModule: false
 
   - template: ../../../common/TestResources/deploy-test-resources.yml
     parameters:
@@ -35,6 +40,7 @@ steps:
       Location: ${{ parameters.Location }}
       Environment: AzureUSGovernment
       Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+      BoostrapAzModule: false
 
   - template: ../../../common/TestResources/deploy-test-resources.yml
     parameters:
@@ -49,3 +55,4 @@ steps:
       Location: ${{ parameters.Location }}
       Environment: AzureChinaCloud
       Condition: and(succeeded(), eq(variables['CloudType'], 'cn'))
+      BoostrapAzModule: false
