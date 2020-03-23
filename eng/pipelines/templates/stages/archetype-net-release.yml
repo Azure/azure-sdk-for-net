@@ -67,7 +67,7 @@ stages:
                         Get-ChildItem $(Pipeline.Workspace)/${{artifact.safeName}}
                       displayName: Stage artifacts
                       timeoutInMinutes: 5
-                    - template: eng/pipelines/templates/steps/create-tags-and-git-release.yml@azure-sdk-tools
+                    - template: ../../../common/pipelines/templates/steps/create-tags-and-git-release.yml
                       parameters:
                         ArtifactLocation: $(Pipeline.Workspace)/${{artifact.safeName}}
                         PackageRepository: Nuget
@@ -143,7 +143,7 @@ stages:
                 runOnce:
                   deploy:
                     steps:
-                      - checkout: azure-sdk-tools
+                      - checkout: self
                       - pwsh: |
                           New-Item -Type Directory -Name ${{artifact.safeName}} -Path $(Pipeline.Workspace)
                           New-Item -Type Directory -Name packages -Path $(Pipeline.Workspace)/${{artifact.safeName}}
@@ -156,14 +156,14 @@ stages:
                           Get-ChildItem -Recurse $(Pipeline.Workspace)/${{artifact.safeName}}
                         workingDirectory: $(Pipeline.Workspace)
                         displayName: Output Visible Artifacts
-                      - template: eng/pipelines/templates/steps/publish-blobs.yml@azure-sdk-tools
+                      - template: ../../../common/pipelines/templates/steps/publish-blobs.yml
                         parameters:
                           FolderForUpload: '$(Pipeline.Workspace)/${{artifact.safeName}}'
                           BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                           BlobName: '$(azure-sdk-docs-prod-blob-name)'
                           TargetLanguage: 'dotnet'
                           # we override the regular script path because we have cloned the build tools repo as a separate artifact.
-                          ScriptPath: 'scripts/powershell/copy-docs-to-blobstorage.ps1'
+                          ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 
           - ${{if ne(artifact.options.skipUpdatePackageVersion, 'true')}}:
             - deployment: UpdatePackageVersion
@@ -183,14 +183,12 @@ stages:
                       - pwsh: |
                           eng/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
                         displayName: Increment package version
-                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-                      - template: eng/pipelines/templates/steps/create-pull-request.yml@azure-sdk-tools
+                      - template: ../../../common/pipelines/templates/steps/create-pull-request.yml
                         parameters:
                           RepoName: azure-sdk-for-net
                           PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                           CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                           PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
-                          BuildToolsPath: $(AzureSDKBuildToolsPath)
 
   - stage: Integration
     dependsOn: Signing
