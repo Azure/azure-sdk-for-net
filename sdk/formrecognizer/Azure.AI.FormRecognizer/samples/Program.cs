@@ -31,6 +31,9 @@ namespace Azure.AI.FormRecognizer.Samples
             //string supervisedModelId = "436a33e3-9c49-448e-94f8-3cf50dfca85f";
             //string supervisedMultipageModelId = "90cf67f6-4bbe-434e-b8e1-8982f392ecd0";
 
+            string ccauth1 = "https://uxstudystorage.blob.core.windows.net/mixeddata/CCAuth-1.pdf?sp=rl&st=2020-03-23T16:30:33Z&se=2020-03-24T16:30:33Z&sv=2019-02-02&sr=b&sig=6e53cC2i4qoVNq5qC2laUJZLrECAE8H4YUg1YbhOxxI%3D";
+            string uxstudymodelId = "1c511fa3-8ca9-40b5-8c0f-e3b371bccfde";
+
             //await TrainCustomModel(sasMultiPage);
             //await ExtractCustomModelStream(multiPageUnsupervisedModelId);
             //await ExtractCustomModelUri(unsupervisedModelId);
@@ -38,10 +41,10 @@ namespace Azure.AI.FormRecognizer.Samples
 
             //await TrainCustomLabeledModel(kristasMultipageContainer);
             //await ExtractCustomLabeledModel(supervisedMultipageModelId);
-            //await ExtractCustomLabeledModelUri(supervisedMultipageModelId);
+            await ExtractCustomLabeledModelUri(uxstudymodelId, ccauth1);
             //await ExtractCustomLabeledModelPlusOcrData(supervisedModelId);
 
-            await ExtractReceipts();
+            //await ExtractReceipts();
             //await ExtractReceiptUri();
 
             //await ExtractLayout();
@@ -261,19 +264,19 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
 
-        private static async Task ExtractCustomLabeledModelUri(string modelId)
+        private static async Task ExtractCustomLabeledModelUri(string modelId, string formPath)
         {
             Console.WriteLine("Supervised Model - URI Input: ");
 
             //Uri testFormPath = new Uri("https://krpraticstorageacc.blob.core.windows.net/form-recognizer-multipage/Document1.pdf");
-            Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
+            //Uri testFormPath = new Uri("https://annelostorage01.blob.core.windows.net/formreco-training-test/Invoice_6.pdf");
 
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
             var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractFormOperation = client.StartRecognizeLabeledForms(modelId, testFormPath);
+            var extractFormOperation = client.StartRecognizeLabeledForms(modelId, new Uri(formPath));
 
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)

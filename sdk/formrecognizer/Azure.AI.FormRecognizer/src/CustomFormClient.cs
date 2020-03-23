@@ -321,7 +321,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this subscription
+        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained in this cognitive services account
         /// and their training status.
         /// </summary>
         /// <param name="cancellationToken"></param>
@@ -332,7 +332,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this subscription
+        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this cognitive services account
         /// and their training status.
         /// </summary>
         /// <param name="cancellationToken"></param>
@@ -343,25 +343,25 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get the number of models trained on this subscription and the subscription limits.
+        /// Get the number of models trained on this cognitive services account and the account limits.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<SubscriptionProperties> GetSubscriptionProperties(CancellationToken cancellationToken = default)
+        public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = _operations.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
-            return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
+            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         /// <summary>
-        /// Get the number of models trained on this subscription and the subscription limits.
+        /// Get the number of models trained on this cognitive services account and the account limits.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SubscriptionProperties>> GetSubscriptionPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = await _operations.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
+            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         #endregion CRUD Ops

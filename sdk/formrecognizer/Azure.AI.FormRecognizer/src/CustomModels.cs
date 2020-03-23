@@ -11,13 +11,13 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal CustomModels(Models_internal models)
         {
-            SubscriptionProperties = new SubscriptionProperties(models.Summary);
+            AccountProperties = new AccountProperties(models.Summary);
             ModelInfos = ConvertModelList(models.ModelList);
             NextLink = models.NextLink;
         }
 
         /// <summary> Summary of all trained custom models. </summary>
-        public SubscriptionProperties SubscriptionProperties { get; }
+        public AccountProperties AccountProperties { get; }
 
         /// <summary> Collection of trained custom models. </summary>
         public IReadOnlyList<CustomModelInfo> ModelInfos { get; }

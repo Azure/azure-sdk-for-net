@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class SubscriptionProperties
+    public class AccountProperties
     {
-        internal SubscriptionProperties(ModelsSummary_internal summary)
+        internal AccountProperties(ModelsSummary_internal summary)
         {
             CustomModelCount = summary.Count;
             CustomModelLimit = summary.Limit;
@@ -23,6 +23,6 @@ namespace Azure.AI.FormRecognizer.Training
         public int CustomModelLimit { get; set; }
 
         /// <summary> Date and time (UTC) when the summary was last updated. </summary>
-        public DateTimeOffset LastUpdatedOn { get; set; }
+        internal DateTimeOffset LastUpdatedOn { get; set; }
     }
 }

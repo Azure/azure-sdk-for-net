@@ -144,6 +144,48 @@ namespace Azure.AI.FormRecognizer.Training
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CustomModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CustomModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual CustomLabeledModel GetCustomLabeledModel(string modelId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CustomLabeledModel>> GetCustomLabeledModelAsync(string modelId, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Management Ops
@@ -170,7 +212,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this subscription
+        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
         /// <param name="cancellationToken"></param>
@@ -181,7 +223,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this subscription
+        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
         /// <param name="cancellationToken"></param>
@@ -192,25 +234,25 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get the number of models trained on this subscription and the subscription limits.
+        /// Get the number of models trained on this Cognitive Services Account and the account limits.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<SubscriptionProperties> GetSubscriptionProperties(CancellationToken cancellationToken = default)
+        public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = _operations.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
-            return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
+            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         /// <summary>
-        /// Get the number of models trained on this subscription and the subscription limits.
+        /// Get the number of models trained on this Cognitive Services Account and the account limits.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SubscriptionProperties>> GetSubscriptionPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = await _operations.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(new SubscriptionProperties(response.Value.Summary), response.GetRawResponse());
+            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         #endregion

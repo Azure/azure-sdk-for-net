@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public enum FormCheckBoxState
+    internal enum FormCheckBoxState
     {
         /// <summary>
         /// </summary>
