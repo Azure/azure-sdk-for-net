@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     public partial class EventProcessorTests
     {
-         /// <summary>
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.ToString" />
         ///   method.
         /// </summary>

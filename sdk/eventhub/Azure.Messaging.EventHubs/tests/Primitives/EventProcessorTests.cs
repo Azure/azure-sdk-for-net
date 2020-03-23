@@ -96,6 +96,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(processor);
 
         /// <summary>
+        ///   A basic custom partition type, allowing for testing or processor functionality.
+        /// </summary>
+        ///
+        public class CustomPartition : EventProcessorPartition
+        {
+            public string Description { get; set; }
+        }
+
+        /// <summary>
         ///   A basic mock of the event processor, allowing for testing of specific base class
         ///   functionality.
         /// </summary>
