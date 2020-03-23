@@ -1,22 +1,45 @@
+# Removes resources from a cloud type specified by the variable (not parameter)
+# 'CloudType'. Use this as part of a matrix to remove resources from a
+# particular cloud instance.
 # Assumes steps in deploy-test-resources.yml was run previously. Requires
 # environment variable: AZURE_RESOURCEGROUP_NAME and Az PowerShell module
-parameters:
-  TenantId: not-specified
-  ProvisionerApplicationId: not-specified
-  ProvisionerApplicationSecret: not-specified
-  Environment: 'AzureCloud'
-  Condition: true
 
 steps:
   - pwsh: >
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
-      -TenantId '${{ parameters.TenantId }}'
-      -ProvisionerApplicationId '${{ parameters.ProvisionerApplicationId }}'
-      -ProvisionerApplicationSecret '${{ parameters.ProvisionerApplicationSecret }}'
-      -Environment '${{ parameters.Environment }}'
+      -TenantId '$(aad-azure-sdk-test-tenant-id)'
+      -ProvisionerApplicationId '$(provisioner-aad-id)'
+      -ProvisionerApplicationSecret '$(provisioner-aad-secret)'
+      -Environment 'AzureCloud'
       -Force
       -Verbose
     displayName: Remove test resources
-    condition: and(ne(variables['AZURE_RESOURCEGROUP_NAME'], ''), ${{ parameters.Condition }})
+    condition: and(ne(variables['AZURE_RESOURCEGROUP_NAME'], ''), eq(variables['CloudType'], 'public'))
+    continueOnError: true
+
+  - pwsh: >
+      eng/common/TestResources/Remove-TestResources.ps1
+      -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
+      -TenantId '$(aad-azure-sdk-test-tenant-id-gov)'
+      -ProvisionerApplicationId '$(provisioner-aad-id-gov)'
+      -ProvisionerApplicationSecret '$(provisioner-aad-secret-gov)'
+      -Environment 'AzureUSGovernment'
+      -Force
+      -Verbose
+    displayName: Remove test resources
+    condition: and(ne(variables['AZURE_RESOURCEGROUP_NAME'], ''), eq(variables['CloudType'], 'gov'))
+    continueOnError: true
+
+  - pwsh: >
+      eng/common/TestResources/Remove-TestResources.ps1
+      -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
+      -TenantId '$(aad-azure-sdk-test-tenant-id-cn)'
+      -ProvisionerApplicationId '$(provisioner-aad-id-cn)'
+      -ProvisionerApplicationSecret '$(provisioner-aad-secret-cn)'
+      -Environment 'AzureChinaCloud'
+      -Force
+      -Verbose
+    displayName: Remove test resources
+    condition: and(ne(variables['AZURE_RESOURCEGROUP_NAME'], ''), eq(variables['CloudType'], 'cn'))
     continueOnError: true
