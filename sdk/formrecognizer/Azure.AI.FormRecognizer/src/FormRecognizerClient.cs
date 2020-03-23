@@ -48,72 +48,6 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
-        #region Receipts
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
-        public virtual Operation<IReadOnlyList<UnitedStatesReceipt>> StartRecognizeUSReceipts(Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
-        {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
-            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
-        }
-
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
-        public virtual Operation<IReadOnlyList<UnitedStatesReceipt>> StartRecognizeUSReceipts(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
-        {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
-        }
-
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<Operation<IReadOnlyList<UnitedStatesReceipt>>> StartRecognizeUSReceiptsAsync(Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
-        {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, contentType, receiptFileStream, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
-        }
-
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<Operation<IReadOnlyList<UnitedStatesReceipt>>> StartRecognizeUSReceiptsAsync(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
-        {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
-        }
-        #endregion
-
         #region Content
 
         /// <summary>
@@ -321,5 +255,130 @@ namespace Azure.AI.FormRecognizer
         }
 
         #endregion
+
+        #region Receipts
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual Operation<IReadOnlyList<UnitedStatesReceipt>> StartRecognizeUSReceipts(Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
+            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual Operation<IReadOnlyList<UnitedStatesReceipt>> StartRecognizeUSReceipts(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual async Task<Operation<IReadOnlyList<UnitedStatesReceipt>>> StartRecognizeUSReceiptsAsync(Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, contentType, receiptFileStream, cancellationToken).ConfigureAwait(false);
+            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual async Task<Operation<IReadOnlyList<UnitedStatesReceipt>>> StartRecognizeUSReceiptsAsync(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new RecognizeReceiptOperation(_operations, response.Headers.OperationLocation);
+        }
+        #endregion
+
+        #region Business Cards
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual Operation<IReadOnlyList<BusinessCard>> StartRecognizeBusinessCards(Stream businessCardFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="businessCardFileStream">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual Operation<IReadOnlyList<BusinessCard>> StartRecognizeBusinessCards(Uri businessCardFileStream, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual async Task<Operation<IReadOnlyList<BusinessCard>>> StartRecognizeBusinessCardsAsync(Stream businessCardFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Extracts values from one or more receipts.
+        /// </summary>
+        /// <param name="businessCardFileStream">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
+        /// completion will contain the extracted receipt.</returns>
+        public virtual async Task<Operation<IReadOnlyList<BusinessCard>>> StartRecognizeBusinessCardsAsync(Uri businessCardFileStream, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+        #endregion
+
     }
 }
