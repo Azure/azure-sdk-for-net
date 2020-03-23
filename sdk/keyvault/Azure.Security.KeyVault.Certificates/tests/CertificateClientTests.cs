@@ -79,10 +79,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(null));
             Assert.AreEqual("contacts", ex.ParamName);
 
-            // Below test failed since SetContactsAsync() method doesn't assert empty.
-            // Consider assert contacts empty scenario ?
             List<CertificateContact> contacts = new List<CertificateContact>();
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(contacts));
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.SetContactsAsync(contacts));
             Assert.AreEqual("contacts", ex.ParamName);
         }
 
@@ -109,8 +107,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual("certificateName", ex.ParamName);
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
 
-            // Below test failed since UpdateCertificatePolicyAsync() method doesn't assert policy.
-            // Consider assert policy scenario ?
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync("test", null));
             Assert.AreEqual("policy", ex.ParamName);
 

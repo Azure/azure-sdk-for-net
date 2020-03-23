@@ -563,21 +563,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string issuerName = WellKnownIssuerNames.Self;
 
-            // Will update the name once get correct provider name.
-            string providerName = "testProvider";
+            string providerName = "SslAdmin";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
             RegisterForCleanupIssuer(issuerName);
 
             await Client.CreateIssuerAsync(issuer);
-            Response<CertificateIssuer> getIssuerResponse = await Client.GetIssuerAsync(issuerName);
+
+            Response<CertificateIssuer> getIssuerResponse = await Client.GetIssuerAsync(WellKnownIssuerNames.Self);
 
             CertificateIssuer getIssuer = getIssuerResponse.Value;
 
             Assert.NotNull(getIssuer);
             Assert.NotNull(getIssuer.Id);
-            StringAssert.Equals(issuerName, getIssuer.Name);
+            Assert.AreEqual(WellKnownIssuerNames.Self, getIssuer.Name);
         }
 
         [Test]
@@ -585,8 +585,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string issuerName = WellKnownIssuerNames.Self;
 
-            // Will update the name once get correct provider name.
-            string providerName = "testProvider";
+            string providerName = "SslAdmin";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
@@ -606,7 +605,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(updateIssuer);
             Assert.NotNull(updateIssuer.UpdatedOn);
-            StringAssert.Equals(updateIssuerName, updateIssuer.Name);
+            Assert.AreEqual(updateIssuerName, updateIssuer.Name);
         }
 
         [Test]
@@ -615,15 +614,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             List<CertificateContact> contacts = new List<CertificateContact>();
             contacts.Add(new CertificateContact
             {
-                Name = Recording.GenerateId(),
-                Phone = Recording.GenerateId(),
-                Email = "test@microsoft.com"
+                Email = "admin@contoso.com",
+                Name = "Johnathan Doeman",
+                Phone = "2222222222"
             });
             contacts.Add(new CertificateContact
             {
-                Name = Recording.GenerateId(),
-                Phone = Recording.GenerateId(),
-                Email = "test1@microsoft.com"
+                Email = "admin@contoso2.com",
+                Name = "John Doe",
+                Phone = "1111111111"
             });
 
             RegisterForCleanUpContacts(contacts);
@@ -662,7 +661,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(policy);
             Assert.AreEqual(DefaultPolicy.KeyType, policy.KeyType);
-            StringAssert.Equals(DefaultPolicy.IssuerName, policy.IssuerName);
+            Assert.AreEqual(DefaultPolicy.IssuerName, policy.IssuerName);
             Assert.AreEqual(DefaultPolicy.ReuseKey, policy.ReuseKey);
         }
 
@@ -673,15 +672,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificatePolicy certificatePolicy = DefaultPolicy;
 
-            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+
+            Assert.NotNull(original);
 
             RegisterForCleanup(certName);
 
             certificatePolicy = new CertificatePolicy
             {
-                Subject = "CN=certificateTest",
-                ReuseKey = true,
-                Exportable = false
+                Subject = "CN=Azure SDK",
+                ContentType = CertificateContentType.Pem,
+                KeySize = 3072
             };
 
             Response<CertificatePolicy> updatePolicyResponse = await Client.UpdateCertificatePolicyAsync(certName, certificatePolicy);
@@ -690,9 +693,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             Assert.NotNull(updatePolicy);
             Assert.NotNull(updatePolicy.UpdatedOn);
-            StringAssert.Equals(certificatePolicy.Subject, updatePolicy.Subject);
-            Assert.AreEqual(certificatePolicy.ReuseKey, updatePolicy.ReuseKey);
-            Assert.AreEqual(certificatePolicy.Exportable, updatePolicy.Exportable);
+            Assert.AreEqual(certificatePolicy.Subject, updatePolicy.Subject);
+            Assert.AreEqual(certificatePolicy.ContentType, updatePolicy.ContentType);
+            Assert.AreEqual(certificatePolicy.KeySize, updatePolicy.KeySize);
         }
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
