@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class ProcessSessionMessageEventArgs
+    public class ProcessSessionMessageEventArgs : EventArgs
     {
         /// <summary>
         /// The received message to be processed.
@@ -177,20 +177,6 @@ namespace Azure.Messaging.ServiceBus
             await _sessionReceiver.DeferAsync(
                 message,
                 propertiesToModify,
-                cancellationToken)
-            .ConfigureAwait(false);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task RenewMessageLock(
-            ServiceBusReceivedMessage message,
-            CancellationToken cancellationToken = default) =>
-            await _sessionReceiver.RenewMessageLockAsync(
-                message,
                 cancellationToken)
             .ConfigureAwait(false);
     }
