@@ -23,8 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResults != null)
             {
-                PageInfos = ConvertPageInfo(readResults);
-                TextElements = ConvertPageText(readResults);
+                PageTextElements = ConvertPageText(readResults);
             }
         }
 
@@ -54,11 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPageInfo> PageInfos { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<FormPageText> TextElements { get; }
+        public IReadOnlyList<FormPageElements> PageTextElements { get; }
 
         /// <summary>
         /// Return the field value text for a given label.
@@ -86,24 +81,15 @@ namespace Azure.AI.FormRecognizer.Models
             return list;
         }
 
-        internal static IReadOnlyList<FormPageInfo> ConvertPageInfo(IList<ReadResult_internal> readResults)
-        {
-            List<FormPageInfo> pageInfos = new List<FormPageInfo>();
-            foreach (var readResult in readResults)
-            {
-                pageInfos.Add(new FormPageInfo(readResult));
-            }
-            return pageInfos;
-        }
 
-        internal static IReadOnlyList<FormPageText> ConvertPageText(IList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<FormPageElements> ConvertPageText(IList<ReadResult_internal> readResults)
         {
-            List<FormPageText> pageTexts = new List<FormPageText>();
+            List<FormPageElements> pageTexts = new List<FormPageElements>();
             foreach (var readResult in readResults)
             {
                 if (readResult.Lines != null)
                 {
-                    pageTexts.Add(new FormPageText(readResult.Lines));
+                    pageTexts.Add(new FormPageElements(readResult));
                 }
             }
             return pageTexts;

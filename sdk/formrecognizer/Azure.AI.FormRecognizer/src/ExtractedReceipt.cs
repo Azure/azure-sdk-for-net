@@ -21,8 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResults != null)
             {
-                PageInfos = ConvertPageInfos(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
-                TextElements = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
+                PageTextElements = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
             }
         }
 
@@ -85,11 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPageInfo> PageInfos { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<FormPageText> TextElements { get; }
+        public IReadOnlyList<FormPageElements> PageTextElements { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
@@ -260,24 +255,14 @@ namespace Azure.AI.FormRecognizer.Models
             return items;
         }
 
-        private static IReadOnlyList<FormPageInfo> ConvertPageInfos(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<FormPageElements> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
         {
-            List<FormPageInfo> pageInfos = new List<FormPageInfo>();
-            for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)
-            {
-                pageInfos.Add(new FormPageInfo(readResults[i]));
-            }
-            return pageInfos;
-        }
-
-        private static IReadOnlyList<FormPageText> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
-        {
-            List<FormPageText> pageTexts = new List<FormPageText>();
+            List<FormPageElements> pageTexts = new List<FormPageElements>();
             for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)
             {
                 if (readResults[i].Lines != null)
                 {
-                    pageTexts.Add(new FormPageText(readResults[i].Lines));
+                    pageTexts.Add(new FormPageElements(readResults[i]));
                 }
             }
             return pageTexts;

@@ -17,18 +17,9 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult != null)
             {
-                PageInfo = new FormPageInfo(readResult);
-
-                if (readResult.Lines != null)
-                {
-                    TextElements = new FormPageText(readResult.Lines);
-                }
+                TextElements = new FormPageElements(readResult);
             }
         }
-
-        /// <summary>
-        /// </summary>
-        public FormPageInfo PageInfo { get; }
 
         /// <summary>
         /// </summary>
@@ -40,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public FormPageText TextElements { get; }
+        public FormPageElements TextElements { get; }
 
         internal static IReadOnlyList<FormTable> ConvertTables(ICollection<DataTable_internal> tablesResult, ReadResult_internal readResult)
         {

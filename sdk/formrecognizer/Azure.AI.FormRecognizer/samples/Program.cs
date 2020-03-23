@@ -319,18 +319,15 @@ namespace Azure.AI.FormRecognizer.Samples
                             table.WriteAscii(Console.Out);
                         }
 
-                        if (form.TextElements?.Count > 0)
+                        foreach (var field in form.Fields)
                         {
-                            foreach (var field in form.Fields)
-                            {
-                                Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+                            Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
 
-                                if (field.TextElements != null)
+                            if (field.TextElements != null)
+                            {
+                                foreach (var extractedItem in field.TextElements)
                                 {
-                                    foreach (var extractedItem in field.TextElements)
-                                    {
-                                        Console.WriteLine(extractedItem.Text);
-                                    }
+                                    Console.WriteLine(extractedItem.Text);
                                 }
                             }
                         }
@@ -433,7 +430,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var modelCount = client.GetSubscriptionProperties();
+            var modelCount = client.GetAccountProperties();
             Console.WriteLine($"CustomModelCount: {modelCount.Value.CustomModelCount}");
         }
 

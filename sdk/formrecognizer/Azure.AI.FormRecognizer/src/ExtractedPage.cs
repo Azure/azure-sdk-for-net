@@ -22,12 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult != null)
             {
-                PageInfo = new FormPageInfo(readResult);
-
-                if (readResult.Lines != null)
-                {
-                    TextElements = new FormPageText(readResult.Lines);
-                }
+                TextElements = new FormPageElements(readResult);
             }
         }
 
@@ -49,11 +44,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public FormPageInfo PageInfo { get; }
-
-        /// <summary>
-        /// </summary>
-        public FormPageText TextElements { get; }
+        public FormPageElements TextElements { get; }
 
         /// <summary>
         /// Return the field value text for a given fieldName.
