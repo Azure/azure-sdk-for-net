@@ -71,7 +71,7 @@ jobs:
       publicLocation: westus2
       govAdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/'; location = '$(govLocation)' }"
       govLocation: usgovvirginia
-      cnAdditionalParameters: "@{ storageEndpointSuffix = '"core.chinacloudapi.cn'; authorityHost = 'https://login.chinacloudapi.cn'; location = '$(cnLocation)' }"
+      cnAdditionalParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; authorityHost = 'https://login.chinacloudapi.cn'; location = '$(cnLocation)' }"
       cnLocation: chinaeast2
 
     steps:
