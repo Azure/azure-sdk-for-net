@@ -12,7 +12,7 @@ steps:
   - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
     displayName: Install Azure PowerShell module
 
-  - template: ../../../common/TestResources/deploy-test-resources.yml
+  - template: /eng/common/TestResources/deploy-test-resources.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
       TenantId: $(aad-azure-sdk-test-tenant-id)
@@ -27,7 +27,7 @@ steps:
       Condition: and(succeeded(), eq(variables['CloudType'], 'public'))
       BoostrapAzModule: false
 
-  - template: ../../../common/TestResources/deploy-test-resources.yml
+  - template: /eng/common/TestResources/deploy-test-resources.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
       TenantId: $(aad-azure-sdk-test-tenant-id-gov)
@@ -42,7 +42,7 @@ steps:
       Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
       BoostrapAzModule: false
 
-  - template: ../../../common/TestResources/deploy-test-resources.yml
+  - template: /eng/common/TestResources/deploy-test-resources.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
       TenantId: $(aad-azure-sdk-test-tenant-id-cn)
