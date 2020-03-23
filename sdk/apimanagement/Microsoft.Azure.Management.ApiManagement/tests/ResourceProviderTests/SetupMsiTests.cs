@@ -21,7 +21,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public void SetupSystemAssignedMsiTests()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -69,7 +69,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public void SetupUserAssignedMsiTests()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);

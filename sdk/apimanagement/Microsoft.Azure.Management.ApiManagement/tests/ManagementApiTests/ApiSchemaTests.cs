@@ -154,7 +154,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "vifedo")]
         public async Task CreateListUpdateDeleteSwaggerSchema()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -297,7 +297,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Fact]
         public async Task CreateListUpdateDeleteOpenApiSchema()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -459,7 +459,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Fact]
         public async Task CreateListUpdateDeleteWsdlSchema()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);

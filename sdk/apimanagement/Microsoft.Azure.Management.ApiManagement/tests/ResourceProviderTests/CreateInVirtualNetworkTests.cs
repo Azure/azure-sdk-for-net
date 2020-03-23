@@ -25,7 +25,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public async Task CreateInVirtualNetworkTests()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");//vifedotodo
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
