@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 CustomModelLearnedPage form = new CustomModelLearnedPage()
                 {
-                    FormTypeId = key.Key,
+                    PageTypeId = key.Key,
                     // TODO: Q3
                     // https://github.com/Azure/azure-sdk-for-net/issues/10360
                     LearnedFields = new List<string>(key.Value)

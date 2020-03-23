@@ -21,6 +21,10 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        /// </summary>
+        public string FormType { get; }
+
+        /// <summary>
         /// The mean of the prediction accuracies for each field.
         /// </summary>
         public float AveragePredictionAccuracy { get; }

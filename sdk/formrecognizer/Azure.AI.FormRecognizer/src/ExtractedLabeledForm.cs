@@ -19,6 +19,8 @@ namespace Azure.AI.FormRecognizer.Models
             Fields = ConvertFields(documentResult.Fields, readResults);
             Tables = ConvertLabeledTables(pageResults, readResults);
 
+            // TODO: Populate CheckBoxes
+
             if (readResults != null)
             {
                 PageInfos = ConvertPageInfo(readResults);
@@ -32,6 +34,10 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
+        public float FormTypeConfidence { get; }
+
+        /// <summary>
+        /// </summary>
         public FormPageRange PageRange { get; }
 
         /// <summary>
@@ -41,6 +47,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public IReadOnlyList<LabeledFormTable> Tables { get; }
+
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<LabeledFormCheckBox> CheckBoxes { get; }
 
         /// <summary>
         /// </summary>

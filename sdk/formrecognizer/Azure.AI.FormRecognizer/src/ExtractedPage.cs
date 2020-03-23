@@ -18,6 +18,8 @@ namespace Azure.AI.FormRecognizer.Models
             Fields = ConvertFields(pageResult.KeyValuePairs, readResult);
             Tables = FormPageContent.ConvertTables(pageResult.Tables, readResult);
 
+            // TODO: Set CheckBoxes
+
             if (readResult != null)
             {
                 PageInfo = new FormPageInfo(readResult);
@@ -35,13 +37,15 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-
         public IReadOnlyList<FormField> Fields { get; }
 
         /// <summary>
         /// </summary>
-
         public IReadOnlyList<FormTable> Tables { get; }
+
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<FormCheckBox> CheckBoxes { get; }
 
         /// <summary>
         /// </summary>

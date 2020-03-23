@@ -214,5 +214,30 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         #endregion
+
+        #region Compose Model
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelIds"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Operation<CustomComposedModel> StartComposeModel(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelIds"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Operation<CustomComposedModel>> StartComposeModelAsync(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
