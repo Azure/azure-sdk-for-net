@@ -20,7 +20,6 @@ steps:
       -TenantId '$(aad-azure-sdk-test-tenant-id)'
       -TestApplicationId '$(aad-azure-sdk-test-client-id)'
       -TestApplicationSecret '$(aad-azure-sdk-test-client-secret)'
-      -TestApplicationOid '${{ parameters.TestApplicationObjectId }}'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
       -AdditionalParameters ${{ parameters.AdditionalParameters }}
@@ -40,7 +39,6 @@ steps:
       -TenantId '$(aad-azure-sdk-test-tenant-id-gov)'
       -TestApplicationId '$(aad-azure-sdk-test-client-id-gov)'
       -TestApplicationSecret '$(aad-azure-sdk-test-client-secret-gov)'
-      -TestApplicationOid '${{ parameters.TestApplicationObjectId }}'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id-gov)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret-gov)'
       -AdditionalParameters ${{ parameters.AdditionalParameters }}
@@ -60,7 +58,6 @@ steps:
       -TenantId '$(aad-azure-sdk-test-tenant-id-cn)'
       -TestApplicationId '$(aad-azure-sdk-test-client-id-cn)'
       -TestApplicationSecret '$(aad-azure-sdk-test-client-secret-cn)'
-      -TestApplicationOid '${{ parameters.TestApplicationObjectId }}'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id-cn)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret-cn)'
       -AdditionalParameters ${{ parameters.AdditionalParameters }}
