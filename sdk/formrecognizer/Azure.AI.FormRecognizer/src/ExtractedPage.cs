@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return field.Value;
         }
 
-        private static IReadOnlyList<ExtractedField> ConvertFields(ICollection<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
+        private static IReadOnlyList<ExtractedField> ConvertFields(IReadOnlyList<KeyValuePair_internal> keyValuePairs, ReadResult_internal readResult)
         {
             List<ExtractedField> fields = new List<ExtractedField>();
             foreach (var kvp in keyValuePairs)

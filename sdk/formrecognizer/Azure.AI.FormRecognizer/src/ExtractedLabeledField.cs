@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Custom
     // Maps to FieldValue in swagger.
     public class ExtractedLabeledField
     {
-        internal ExtractedLabeledField(KeyValuePair<string, FieldValue_internal> field, IList<ReadResult_internal> readResults)
+        internal ExtractedLabeledField(KeyValuePair<string, FieldValue_internal> field, IReadOnlyList<ReadResult_internal> readResults)
         {
             // Supervised
             Confidence = field.Value.Confidence;

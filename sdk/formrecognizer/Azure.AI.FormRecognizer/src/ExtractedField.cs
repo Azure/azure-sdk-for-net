@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
 
         // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)
+        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, IReadOnlyList<string> references)
         {
             List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
             foreach (var reference in references)
@@ -74,7 +74,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return extractedTexts;
         }
 
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(IList<ReadResult_internal> readResults, ICollection<string> references)
+        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<string> references)
         {
             List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
             foreach (var reference in references)
@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer.Custom
             //}
         }
 
-        private static RawExtractedItem ResolveTextReference(IList<ReadResult_internal> readResults, string reference)
+        private static RawExtractedItem ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363

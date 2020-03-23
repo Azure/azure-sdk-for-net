@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedReceipt> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<ExtractedReceipt> ConvertToExtractedReceipts(IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<ExtractedReceipt> receipts = new List<ExtractedReceipt>();
             for (int i = 0; i < documentResults.Count; i++)

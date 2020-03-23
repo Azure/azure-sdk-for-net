@@ -1178,9 +1178,7 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            options ??= new SuggestOptions();
-            options.SearchText = searchText;
-            options.SuggesterName = suggesterName;
+            options ??= new SuggestOptions(searchText, suggesterName);
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(Suggest)}");
             scope.Start();
@@ -1302,9 +1300,7 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            options ??= new AutocompleteOptions();
-            options.SearchText = searchText;
-            options.SuggesterName = suggesterName;
+            options ??= new AutocompleteOptions(searchText, suggesterName);
 
             return async ?
                 await Protocol.AutocompletePostAsync(options.ClientRequestId, options, cancellationToken).ConfigureAwait(false) :
