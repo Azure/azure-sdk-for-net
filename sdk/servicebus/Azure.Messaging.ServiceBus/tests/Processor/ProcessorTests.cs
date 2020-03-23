@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -87,49 +88,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
         }
 
-        //[Test]
-        //public async Task CannotAddHandlerWhileProcessorIsRunning()
-        //{
-        //    var mockReceiver = new Mock<ServiceBusReceiver>(
-        //        GetMockedConnection(),
-        //        "entityPath",
-        //        false,
-        //        Mock.Of<ServiceBusReceiverOptions>(),
-        //        default);
-
-        //    var mockProcessor = new Mock<ServiceBusProcessor>(
-        //        GetMockedConnection(),
-        //        "entityPath",
-        //        false,
-        //        Mock.Of<ServiceBusProcessorOptions>(),
-        //        default) { CallBase = true };
-
-        //    mockReceiver
-        //        .Setup(receiver => receiver.ReceiveAsync(It.IsAny<CancellationToken>()))
-        //        .Returns(Task.FromResult<ServiceBusReceivedMessage>(null));
-
-        //    mockProcessor
-        //        .Setup(processor => processor.Receiver)
-        //        .Returns(mockReceiver.Object);
-
-        //    mockProcessor.Object.ProcessMessageAsync += eventArgs => Task.CompletedTask;
-        //    mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-        //    using var cancellationSource = new CancellationTokenSource();
-        //    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-        //    await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-
-        //    Assert.That(() => mockProcessor.Object.ProcessMessageAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-        //    Assert.That(() => mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-
-        //    await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
-
-        //    // Once stopped, the processor should allow handlers to be added again.
-
-        //    Assert.That(() => mockProcessor.Object.ProcessMessageAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-        //    Assert.That(() => mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-        //}
-
+        [Test]
+        public void ProcessorOptionsSetOnClient()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var options = new ServiceBusProcessorOptions
+            {
+                AutoComplete = false,
+                MaxConcurrentCalls = 10,
+                PrefetchCount = 5,
+                ReceiveMode = ReceiveMode.ReceiveAndDelete,
+                MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
+            };
+            var processor = client.GetProcessor("queueName", options);
+            Assert.AreEqual(options.AutoComplete, processor.AutoComplete);
+            Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
+            Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
+            Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
+            Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+        }
     }
 }

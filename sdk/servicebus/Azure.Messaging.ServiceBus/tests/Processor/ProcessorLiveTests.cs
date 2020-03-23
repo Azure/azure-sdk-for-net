@@ -92,12 +92,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [TestCase(20)]
         public async Task AutoLockRenewalWorks(int numThreads)
         {
+            var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false,
-                lockDuration: TimeSpan.FromSeconds(5)))
+                lockDuration: lockDuration))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
@@ -130,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         var message = args.Message;
                         var lockedUntil = message.LockedUntil;
-                        await Task.Delay(5000);
+                        await Task.Delay(lockDuration);
                         Assert.That(message.LockedUntil > lockedUntil, $"{lockedUntil},{DateTime.UtcNow}");
                         await args.CompleteAsync(message, args.CancellationToken);
                         Interlocked.Increment(ref messageCt);
@@ -157,12 +158,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(int numThreads, int autoLockRenewalDuration)
         {
+            var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: false,
-                lockDuration: TimeSpan.FromSeconds(5)))
+                lockDuration: lockDuration))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
@@ -196,7 +198,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         var message = args.Message;
                         var lockedUntil = message.LockedUntil;
-                        await Task.Delay(5000);
+                        await Task.Delay(lockDuration);
                         if (!args.CancellationToken.IsCancellationRequested)
                         {
                             // only do the assertion if cancellation wasn't requested as otherwise
@@ -346,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
 
                 var processor = client.GetProcessor(scope.QueueName);
 

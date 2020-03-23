@@ -467,8 +467,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
         [Event(44, Level = EventLevel.Verbose, Message = "Closing an {0} (Identifier '{1}').")]
-        public void ClientCloseStart(Type clientType,
-                                     string identifier)
+        public void ClientDisposeStart(
+            Type clientType,
+            string identifier)
         {
             if (IsEnabled())
             {
@@ -485,7 +486,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
         [Event(45, Level = EventLevel.Verbose, Message = "An {0} has been closed (Identifier '{1}').")]
-        public void ClientCloseComplete(
+        public void ClientDisposeComplete(
             Type clientType,
             string identifier)
         {
@@ -505,7 +506,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
         [Event(46, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (Identifier '{2}'). Error Message: '{3}'")]
-        public void ClientCloseException(
+        public void ClientDisposeException(
             Type clientType,
             string identifier,
             Exception exception)

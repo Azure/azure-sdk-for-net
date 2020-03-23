@@ -12,7 +12,10 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Indicate that this is one connection.
+    /// The ServiceBusClient is the top-level client through which all Service Bus entities can
+    /// be interacted with. Any lower level types retrieved from here, such as <see cref="ServiceBusSender"/> and
+    /// <see cref="ServiceBusReceiver"/> will share the same AMQP connection. Disposing the ServiceBusClient will
+    /// cause the AMQP connection to close.
     ///
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
@@ -25,22 +28,22 @@ namespace Azure.Messaging.ServiceBus
         public string FullyQualifiedNamespace { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusConnection"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusClient"/> has been disposed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the connection is closed; otherwise, <c>false</c>.
+        ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public bool IsClosed { get; }
+        public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
-        /// The transport type used for this connection.
+        /// The transport type used for this <see cref="ServiceBusClient"/>.
         /// </summary>
         public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
-        ///   A unique name used to identify this client.
+        ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
         ///
         internal string Identifier { get; }
@@ -61,20 +64,20 @@ namespace Azure.Messaging.ServiceBus
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), Identifier);
-
+            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusConnection), Identifier);
+            IsDisposed = true;
             try
             {
                 await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseException(typeof(ServiceBusConnection), Identifier, ex);
+                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusConnection), Identifier, ex);
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), Identifier);
+                ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusConnection), Identifier);
             }
         }
 

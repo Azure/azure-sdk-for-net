@@ -23,11 +23,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
 
                 var processor = client.GetSessionProcessor(scope.QueueName);
 
-                Func<ProcessMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+                Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
                 Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
                 processor.ProcessMessageAsync += eventHandler;
                 processor.ProcessErrorAsync += errorHandler;
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(10));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -133,7 +133,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
 
-                Task MessageHandler(ProcessMessageEventArgs args)
+                Task MessageHandler(ProcessSessionMessageEventArgs args)
                 {
                     return Task.CompletedTask;
                 }
@@ -261,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 processor.ProcessMessageAsync += MessageHandler;
                 processor.ProcessErrorAsync += ErrorHandler;
 
-                Task MessageHandler(ProcessMessageEventArgs args)
+                Task MessageHandler(ProcessSessionMessageEventArgs args)
                 {
                     return Task.CompletedTask;
                 }
@@ -303,7 +303,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enablePartitioning: false,
                 enableSession: true))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(10));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
@@ -371,12 +371,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(20)]
         public async Task AutoLockRenewalWorks(int numThreads)
         {
+            var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: true,
-                lockDuration: TimeSpan.FromSeconds(5)))
+                lockDuration: lockDuration))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
@@ -412,7 +413,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         var message = args.Message;
                         var lockedUntil = args.SessionLockedUntil;
-                        await Task.Delay(5000);
+                        await Task.Delay(lockDuration);
                         Assert.That(args.SessionLockedUntil > lockedUntil, $"{lockedUntil},{DateTime.UtcNow}");
                         await args.CompleteAsync(message, args.CancellationToken);
                         Interlocked.Increment(ref messageCt);
@@ -439,12 +440,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(20, 1)]
         public async Task MaxAutoLockRenewalDurationRespected(int numThreads, int autoLockRenewalDuration)
         {
+            var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: true,
-                lockDuration: TimeSpan.FromSeconds(5)))
+                lockDuration: lockDuration))
             {
-                await using var client = GetClient(TimeSpan.FromSeconds(5));
+                await using var client = GetClient();
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
@@ -481,7 +483,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         var message = args.Message;
                         var lockedUntil = args.SessionLockedUntil;
-                        await Task.Delay(5000);
+                        await Task.Delay(lockDuration);
                         if (!args.CancellationToken.IsCancellationRequested)
                         {
                             // only do the assertion if cancellation wasn't requested as otherwise

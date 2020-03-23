@@ -12,8 +12,18 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class ProcessSessionMessageEventArgs : ProcessMessageEventArgs
+    public class ProcessSessionMessageEventArgs
     {
+        /// <summary>
+        /// The received message to be processed.
+        /// </summary>
+        public ServiceBusReceivedMessage Message { get; }
+
+        /// <summary>
+        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        public CancellationToken CancellationToken { get; }
+
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
         /// <summary>
@@ -26,13 +36,11 @@ namespace Azure.Messaging.ServiceBus
         internal ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken) :
-            base(
-                message,
-                receiver,
-                cancellationToken)
+            CancellationToken cancellationToken)
         {
+            Message = message;
             _sessionReceiver = receiver;
+            CancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -89,5 +97,101 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default) =>
             await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task AbandonAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify = default,
+            CancellationToken cancellationToken = default) =>
+            await _sessionReceiver.AbandonAsync(message, propertiesToModify, cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task CompleteAsync(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default) =>
+            await _sessionReceiver.CompleteAsync(
+                message,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterErrorDescription"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeadLetterAsync(
+            ServiceBusReceivedMessage message,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default) =>
+            await _sessionReceiver.DeadLetterAsync(
+                message,
+                deadLetterReason,
+                deadLetterErrorDescription,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeadLetterAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify = default,
+            CancellationToken cancellationToken = default) =>
+            await _sessionReceiver.DeadLetterAsync(
+                message,
+                propertiesToModify,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeferAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify = default,
+            CancellationToken cancellationToken = default) =>
+            await _sessionReceiver.DeferAsync(
+                message,
+                propertiesToModify,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task RenewMessageLock(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default) =>
+            await _sessionReceiver.RenewMessageLockAsync(
+                message,
+                cancellationToken)
+            .ConfigureAwait(false);
     }
 }

@@ -10,7 +10,9 @@ using Azure.Messaging.ServiceBus.Core;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
+    ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
+    ///  <see cref="ServiceBusClient.GetSessionReceiverAsync(string, ServiceBusReceiverOptions, string, CancellationToken)"/>.
     /// </summary>
     public class ServiceBusSessionReceiver : ServiceBusReceiver
     {
@@ -20,7 +22,7 @@ namespace Azure.Messaging.ServiceBus
         public string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
-        /// Gets the DateTime that the current receiver is locked until.
+        /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
         public DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 

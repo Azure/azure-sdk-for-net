@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -110,12 +111,12 @@ namespace Azure.Messaging.ServiceBus.Tests
             return mockConnection.Object;
         }
 
-        protected ServiceBusClient GetClient(TimeSpan tryTimeout = default)
+        protected ServiceBusClient GetClient(int tryTimeout = 10)
         {
             var retryOptions = new ServiceBusRetryOptions();
             if (tryTimeout != default)
             {
-                retryOptions.TryTimeout = tryTimeout;
+                retryOptions.TryTimeout = TimeSpan.FromSeconds(tryTimeout);
             }
             return new ServiceBusClient(
                 TestEnvironment.ServiceBusConnectionString,

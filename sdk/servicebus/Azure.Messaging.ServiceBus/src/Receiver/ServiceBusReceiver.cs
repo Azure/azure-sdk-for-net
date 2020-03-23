@@ -15,8 +15,8 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// <see cref="ServiceBusReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
-    /// from Queues and Subscriptions and acknowledge them.
+    /// The <see cref="ServiceBusReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
+    ///  and settling messages from Queues and Subscriptions.
     /// </summary>
     public class ServiceBusReceiver : IAsyncDisposable
     {
@@ -53,16 +53,16 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
-        public string Identifier { get; private set; }
+        internal string Identifier { get; private set; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been disposed.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is disposed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed { get; protected set; } = false;
+        public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
@@ -82,8 +82,6 @@ namespace Azure.Messaging.ServiceBus
         /// Service Bus entity gateway; intended to perform delegated operations.
         /// </summary>
         internal readonly TransportReceiver InnerReceiver;
-
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
@@ -126,7 +124,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for mocking.
         /// </summary>
         ///
         protected ServiceBusReceiver() { }
@@ -138,13 +136,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
            int maxMessages,
            CancellationToken cancellationToken = default)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.ReceiveMessageStart(Identifier, maxMessages);
             IList<ServiceBusReceivedMessage> messages = null;
@@ -171,8 +169,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The message received. Returns null if no message is found.</returns>
-        public virtual async Task<ServiceBusReceivedMessage> ReceiveAsync(
-            CancellationToken cancellationToken = default)
+        public virtual async Task<ServiceBusReceivedMessage> ReceiveAsync(CancellationToken cancellationToken = default)
         {
             IEnumerable<ServiceBusReceivedMessage> result = await ReceiveBatchAsync(maxMessages: 1).ConfigureAwait(false);
             foreach (ServiceBusReceivedMessage message in result)
@@ -189,15 +186,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// The first call to <see cref="PeekAsync(CancellationToken)"/> fetches the first active message for this receiver. Each subsequent call
-        /// fetches the subsequent message in the entity.
-        /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveAsync(CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
+        /// The first call to <see cref="PeekAsync(CancellationToken)"/> fetches the first active message for this receiver. Each subsequent call fetches the subsequent message in the entity.
+        /// Unlike a received message, peeked message will not have a lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
+        /// Also, unlike <see cref="ReceiveAsync(CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message).
         /// </remarks>
         ///
         /// <returns>The <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
-        public virtual async Task<ServiceBusReceivedMessage> PeekAsync(
-            CancellationToken cancellationToken = default)
+        public virtual async Task<ServiceBusReceivedMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
             IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchAtInternalAsync(
                 sequenceNumber: null,
@@ -216,7 +211,7 @@ namespace Azure.Messaging.ServiceBus
         /// Fetch the next message without changing the state of the receiver or the message source.
         /// </summary>
         ///
-        /// <param name="sequenceNumber">The sequence number from where to read the message.</param>
+        /// <param name="sequenceNumber">The sequence number from where to peek the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns></returns>
@@ -250,7 +245,7 @@ namespace Azure.Messaging.ServiceBus
         /// Also, unlike <see cref="ReceiveAsync(CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         ///
-        /// <returns>List of <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
+        /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
         public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchAsync(
             int maxMessages,
             CancellationToken cancellationToken = default) =>
@@ -259,14 +254,13 @@ namespace Azure.Messaging.ServiceBus
                 maxMessages: maxMessages,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
-
         /// <summary>
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
-        /// <param name="sequenceNumber"></param>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="sequenceNumber">The sequence number from where to peek the message.</param>
+        /// <param name="maxMessages">The maximum number of messages that will be fetched.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
         public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
             long sequenceNumber,
             int maxMessages = 1,
@@ -280,16 +274,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Fetches the next batch of active messages without changing the state of the receiver or the message source.
         /// </summary>
-        /// <param name="sequenceNumber"></param>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="sequenceNumber">The sequence number from where to peek the message.</param>
+        /// <param name="maxMessages">The maximum number of messages that will be fetched.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
         private async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtInternalAsync(
             long? sequenceNumber,
             int maxMessages,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
             IList<ServiceBusReceivedMessage> messages = null;
@@ -326,7 +320,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
         /// </summary>
-        /// <param name="message">The message to complete</param>
+        /// <param name="message">The message to complete.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -401,7 +395,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<string> lockTokens,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(lockTokens, nameof(lockTokens));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -472,7 +466,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(lockToken, nameof(lockToken));
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.AbandonMessageStart(Identifier, 1, lockToken);
@@ -564,7 +558,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
-            string deadLetterErrorDescription = null,
+            string deadLetterErrorDescription = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
@@ -627,7 +621,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(lockToken, nameof(lockToken));
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
             ServiceBusEventSource.Log.DeadLetterMessageStart(Identifier, 1, lockToken);
@@ -701,7 +695,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(lockToken, nameof(lockToken));
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.DeferMessageStart(Identifier, 1, lockToken);
@@ -723,6 +717,9 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusEventSource.Log.DeferMessageComplete(Identifier);
         }
 
+        /// <summary>
+        /// Throws an InvalidOperationException when not in PeekLock mode.
+        /// </summary>
         private void ThrowIfNotPeekLockMode()
         {
             if (ReceiveMode != ReceiveMode.PeekLock)
@@ -746,7 +743,6 @@ namespace Azure.Messaging.ServiceBus
             long sequenceNumber,
             CancellationToken cancellationToken = default)
         {
-
             IEnumerable<ServiceBusReceivedMessage> result = await ReceiveDeferredMessageBatchAsync(sequenceNumbers: new long[] { sequenceNumber }).ConfigureAwait(false);
             foreach (ServiceBusReceivedMessage message in result)
             {
@@ -770,7 +766,7 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             Argument.AssertNotNullOrEmpty(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var sequenceNumbersList = sequenceNumbers.ToList();
@@ -816,7 +812,6 @@ namespace Azure.Messaging.ServiceBus
                 message.LockToken,
                 cancellationToken).ConfigureAwait(false);
             message.LockedUntil = lockedUntil;
-
         }
 
         /// <summary>
@@ -837,7 +832,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(lockToken, nameof(lockToken));
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewMessageLockStart(Identifier, 1, lockToken);
@@ -860,40 +855,29 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Closes the receiver.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            IsClosed = true;
-
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiver), Identifier);
-            try
-            {
-                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.ClientCloseException(typeof(ServiceBusReceiver), Identifier, ex);
-                throw;
-            }
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusSender), Identifier);
-        }
-
-        /// <summary>
         /// Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />,
         /// including ensuring that the client itself has been closed.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
+        public virtual async ValueTask DisposeAsync()
+        {
+            IsDisposed = true;
+
+            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusReceiver), Identifier);
+            try
+            {
+                await InnerReceiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusReceiver), Identifier, ex);
+                throw;
+            }
+
+            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusSender), Identifier);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

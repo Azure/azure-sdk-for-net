@@ -31,9 +31,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// The received message to be processed. Expected to be <c>null</c> if the receive call has timed out.
+        /// The received message to be processed.
         /// </summary>
         public ServiceBusReceivedMessage Message { get; }
+
+        /// <summary>
+        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        public CancellationToken CancellationToken { get; }
 
         private readonly ServiceBusReceiver _receiver;
 
@@ -46,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public async Task AbandonAsync(
             ServiceBusReceivedMessage message,
-            IDictionary<string, object> propertiesToModify,
+            IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default) =>
             await _receiver.AbandonAsync(message, propertiesToModify, cancellationToken)
             .ConfigureAwait(false);
@@ -76,7 +81,7 @@ namespace Azure.Messaging.ServiceBus
         public async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
-            string deadLetterErrorDescription,
+            string deadLetterErrorDescription = default,
             CancellationToken cancellationToken = default) =>
             await _receiver.DeadLetterAsync(
                 message,
@@ -94,7 +99,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
-            IDictionary<string, object> propertiesToModify,
+            IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default) =>
             await _receiver.DeadLetterAsync(
                 message,
@@ -111,7 +116,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public async Task DeferAsync(
             ServiceBusReceivedMessage message,
-            IDictionary<string, object> propertiesToModify,
+            IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default) =>
             await _receiver.DeferAsync(
                 message,
@@ -132,10 +137,5 @@ namespace Azure.Messaging.ServiceBus
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
-
-        /// <summary>
-        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
-        /// </summary>
-        public CancellationToken CancellationToken { get; }
     }
 }
