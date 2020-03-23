@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
-        public IReadOnlyDictionary<string, UnitedStatesReceiptField> ExtractedFields { get; internal set; }
+        public IReadOnlyDictionary<string, UnitedStatesReceiptField> Fields { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.Models
             TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
 
             Items = ConvertReceiptItems(fields);
-            ExtractedFields = ConvertExtractedFields(fields);
+            Fields = ConvertExtractedFields(fields);
         }
 
         private static IReadOnlyDictionary<string, UnitedStatesReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)

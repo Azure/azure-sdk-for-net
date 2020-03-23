@@ -22,9 +22,13 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult != null)
             {
+                PageNumber = readResult.Page;
                 TextElements = new FormPageElements(readResult);
             }
         }
+
+        /// <summary> The 1-based page number in the input document. </summary>
+        public int PageNumber { get; set; }
 
         /// <summary>
         /// </summary>
