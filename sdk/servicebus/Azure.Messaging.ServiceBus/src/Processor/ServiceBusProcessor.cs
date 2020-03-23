@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus
 {
