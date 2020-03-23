@@ -237,7 +237,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (outcome.DescriptorCode != Accepted.Code)
                 {
-                    (outcome as Rejected)?.Error.ToMessagingContractException();
+                    throw (outcome as Rejected)?.Error.ToMessagingContractException();
                 }
 
                 //ServiceBusEventSource.Log.SendStop(Entityname, messageHash);

@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -22,7 +26,7 @@ namespace Azure.Messaging.ServiceBus
         internal ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
         {
             Message = message;
-            Receiver = receiver;
+            _receiver = receiver;
             CancellationToken = cancellationToken;
         }
 
@@ -31,10 +35,103 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public ServiceBusReceivedMessage Message { get; }
 
+        private readonly ServiceBusReceiver _receiver;
+
         /// <summary>
-        /// Gets a <see cref="ServiceBusReceiver"/>
+        ///
         /// </summary>
-        public ServiceBusReceiver Receiver { get; }
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task AbandonAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify,
+            CancellationToken cancellationToken = default) =>
+            await _receiver.AbandonAsync(message, propertiesToModify, cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task CompleteAsync(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default) =>
+            await _receiver.CompleteAsync(
+                message,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="deadLetterReason"></param>
+        /// <param name="deadLetterErrorDescription"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeadLetterAsync(
+            ServiceBusReceivedMessage message,
+            string deadLetterReason,
+            string deadLetterErrorDescription,
+            CancellationToken cancellationToken = default) =>
+            await _receiver.DeadLetterAsync(
+                message,
+                deadLetterReason,
+                deadLetterErrorDescription,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeadLetterAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify,
+            CancellationToken cancellationToken = default) =>
+            await _receiver.DeadLetterAsync(
+                message,
+                propertiesToModify,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="propertiesToModify"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task DeferAsync(
+            ServiceBusReceivedMessage message,
+            IDictionary<string, object> propertiesToModify,
+            CancellationToken cancellationToken = default) =>
+            await _receiver.DeferAsync(
+                message,
+                propertiesToModify,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task RenewMessageLock(
+            ServiceBusReceivedMessage message,
+            CancellationToken cancellationToken = default) =>
+            await _receiver.RenewMessageLockAsync(
+                message,
+                cancellationToken)
+            .ConfigureAwait(false);
 
         /// <summary>
         /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.

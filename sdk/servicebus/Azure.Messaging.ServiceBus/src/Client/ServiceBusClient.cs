@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
+        public virtual async Task<ServiceBusSessionReceiver> GetSessionReceiverAsync(
             string queueName,
             ServiceBusReceiverOptions options = default,
             string sessionId = default,
@@ -250,7 +250,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<ServiceBusReceiver> GetSessionReceiverAsync(
+        public virtual async Task<ServiceBusSessionReceiver> GetSessionReceiverAsync(
             string topicName,
             string subscriptionName,
             ServiceBusReceiverOptions options = default,
@@ -271,12 +271,44 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="queueName"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName)
-        {
-            ValidateEntityName(queueName);
+        public ServiceBusReceiver GetDeadLetterReceiver(
+            string queueName,
+            ServiceBusReceiverOptions options = default) =>
+            new ServiceBusReceiver(
+                connection: Connection,
+                entityPath: EntityNameFormatter.FormatDeadLetterPath(queueName),
+                isSessionEntity: false,
+                options: options);
 
-            return new ServiceBusProcessor(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="topicName"></param>
+        /// <param name="subscriptionName"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public ServiceBusReceiver GetDeadLetterReceiver(
+            string topicName,
+            string subscriptionName,
+            ServiceBusReceiverOptions options = default) =>
+            new ServiceBusReceiver(
+                connection: Connection,
+                entityPath: EntityNameFormatter.FormatDeadLetterPath(
+                    EntityNameFormatter.FormatSubscriptionPath(
+                        topicName,
+                        subscriptionName)),
+                isSessionEntity: false,
+                options: options);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="queueName"></param>
+        /// <returns></returns>
+        public ServiceBusProcessor GetProcessor(string queueName) =>
+            new ServiceBusProcessor(
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
@@ -346,7 +378,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <returns></returns>
-        public ServiceBusProcessor GetSessionProcessor(
+        public ServiceBusSessionProcessor GetSessionProcessor(
             string queueName,
             ServiceBusProcessorOptions options = default,
             string sessionId = default,
@@ -357,7 +389,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusProcessor(
                 entityPath: queueName,
                 connection: Connection,
-                isSessionEntity: true,
                 sessionId: sessionId,
                 options: options ?? new ServiceBusProcessorOptions());
         }
@@ -366,7 +397,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <returns></returns>
-        public ServiceBusProcessor GetSessionProcessor(
+        public ServiceBusSessionProcessor GetSessionProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusProcessorOptions options = default,
@@ -378,7 +409,6 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
-                isSessionEntity: true,
                 sessionId: sessionId,
                 options: options ?? new ServiceBusProcessorOptions());
         }

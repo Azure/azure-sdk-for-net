@@ -135,17 +135,25 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        /// Creates a new copy of the current <see cref="ServiceBusReceiverOptions" />, cloning its attributes into a new instance.
+        /// Creates a new copy of the current <see cref="ServiceBusProcessorOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ServiceBusReceiverOptions" />.</returns>
-        internal ServiceBusProcessorOptions Clone() =>
-            new ServiceBusProcessorOptions
+        /// <returns>A new copy of <see cref="ServiceBusProcessorOptions" />.</returns>
+        internal ServiceBusProcessorOptions Clone()
+        {
+            var clone = new ServiceBusProcessorOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 ReceiveMode = ReceiveMode,
+                PrefetchCount = PrefetchCount,
                 AutoComplete = AutoComplete,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration
+                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
             };
+            if (MaxConcurrentCalls > 0)
+            {
+                clone.MaxConcurrentCalls = MaxConcurrentCalls;
+            }
+            return clone;
+        }
     }
 }
