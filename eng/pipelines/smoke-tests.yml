@@ -102,7 +102,7 @@ jobs:
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
-      - template: templates/steps/deploy-soverign-resources.yml
+      - template: common/TestResources/deploy-soverign-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
           AdditionalParameters: $(AdditionalParameters)
@@ -111,4 +111,4 @@ jobs:
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
 
-      - template: templates/steps/remove-soverign-resources.yml
+      - template: common/TestResources/remove-soverign-resources.yml
