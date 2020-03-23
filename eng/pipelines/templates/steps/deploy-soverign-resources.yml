@@ -1,3 +1,7 @@
+# Deploys resources to a cloud type specified by the variable (not parameter)
+# 'CloudType'. Use this as part of a matrix to deploy resources to a particular
+# cloud instance.
+
 parameters:
   ServiceDirectory: not-set
   AdditionalParameters: ''
@@ -31,3 +35,17 @@ steps:
       Location: ${{ parameters.Location }}
       Environment: AzureUSGovernment
       Condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+
+  - template: ../../../common/TestResources/deploy-test-resources.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      TenantId: $(aad-azure-sdk-test-tenant-id-cn)
+      TestApplicationId: $(aad-azure-sdk-test-client-id-cn)
+      TestApplicationSecret: $(aad-azure-sdk-test-client-secret-cn)
+      TestApplicationObjectId: $(aad-azure-sdk-test-client-oid-cn)
+      ProvisionerApplicationId: $(provisioner-aad-id-cn)
+      ProvisionerApplicationSecret: $(provisioner-aad-secret-cn)
+      AdditionalParameters: ${{ parameters.AdditionalParameters }}
+      Location: ${{ parameters.Location }}
+      Environment: AzureChinaCloud
+      Condition: and(succeeded(), eq(variables['CloudType'], 'cn'))

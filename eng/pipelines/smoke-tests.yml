@@ -48,6 +48,21 @@ jobs:
           CloudType: gov
           AdditionalParameters: $(govAdditionalParameters)
           Location: $(govLocation)
+        Windows_NetCoreApp (China):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: cn
+          AdditionalParameters: $(cnAdditionalParameters)
+          Location: $(cnLocation)
+        Windows_NetFramework (China):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: cn
+          AdditionalParameters: $(cnAdditionalParameters)
+          Location: $(cnLocation)
+
     pool:
       vmImage: $(OSVmImage)
 
@@ -56,6 +71,8 @@ jobs:
       publicLocation: westus2
       govAdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/'; location = '$(govLocation)' }"
       govLocation: usgovvirginia
+      cnAdditionalParameters: "@{ storageEndpointSuffix = '"core.chinacloudapi.cn'; authorityHost = 'https://login.chinacloudapi.cn'; location = '$(cnLocation)' }"
+      cnLocation: chinaeast2
 
     steps:
       - task: DotNetCoreInstaller@2
