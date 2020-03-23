@@ -14,15 +14,6 @@ namespace Azure.Search.Documents
     {
         /// <summary> Initializes a new instance of AutocompleteOptions. </summary>
         /// <param name="searchText"> The search text on which to base autocomplete results. </param>
-        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that&apos;s part of the index definition. </param>
-        public AutocompleteOptions(string searchText, string suggesterName)
-        {
-            SearchText = searchText;
-            SuggesterName = suggesterName;
-        }
-
-        /// <summary> Initializes a new instance of AutocompleteOptions. </summary>
-        /// <param name="searchText"> The search text on which to base autocomplete results. </param>
         /// <param name="mode"> Specifies the mode for Autocomplete. The default is &apos;oneTerm&apos;. Use &apos;twoTerms&apos; to get shingles and &apos;oneTermWithContext&apos; to use the current context while producing auto-completed terms. </param>
         /// <param name="filter"> An OData expression that filters the documents used to produce completed terms for the Autocomplete result. </param>
         /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the autocomplete query. Default is false. When set to true, the query will autocomplete terms even if there&apos;s a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy autocomplete queries are slower and consume more resources. </param>

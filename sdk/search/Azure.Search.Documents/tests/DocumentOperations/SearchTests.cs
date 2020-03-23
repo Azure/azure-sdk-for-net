@@ -49,19 +49,17 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult()
+            new FacetResult(count, new Dictionary<string, object>()
             {
-                Count = count,
                 ["from"] = from,
                 ["to"] = to
-            };
+            });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult()
+            new FacetResult(count, new Dictionary<string, object>()
             {
-                Count = count,
                 ["value"] = value
-            };
+            });
 
         private void AssertFacetsEqual(
             ICollection<FacetResult> actualFacets,

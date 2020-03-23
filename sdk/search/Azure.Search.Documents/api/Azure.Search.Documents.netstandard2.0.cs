@@ -2,7 +2,7 @@ namespace Azure.Search.Documents
 {
     public partial class AutocompleteOptions : Azure.Search.Documents.SearchRequestOptions
     {
-        public AutocompleteOptions(string searchText, string suggesterName) { }
+        public AutocompleteOptions() { }
         public string Filter { get { throw null; } set { } }
         public string HighlightPostTag { get { throw null; } set { } }
         public string HighlightPreTag { get { throw null; } set { } }
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents
     }
     public partial class SuggestOptions : Azure.Search.Documents.SearchRequestOptions
     {
-        public SuggestOptions(string searchText, string suggesterName) { }
+        public SuggestOptions() { }
         public string Filter { get { throw null; } set { } }
         public string HighlightPostTag { get { throw null; } set { } }
         public string HighlightPreTag { get { throw null; } set { } }
