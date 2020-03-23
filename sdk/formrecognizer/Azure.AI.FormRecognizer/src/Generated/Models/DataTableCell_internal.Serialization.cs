@@ -15,17 +15,26 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static DataTableCell_internal DeserializeDataTableCell_internal(JsonElement element)
         {
-            DataTableCell_internal result = new DataTableCell_internal();
+            int rowIndex = default;
+            int columnIndex = default;
+            int? rowSpan = default;
+            int? columnSpan = default;
+            string text = default;
+            IReadOnlyList<float> boundingBox = new List<float>();
+            float confidence = default;
+            IReadOnlyList<string> elements = default;
+            bool? isHeader = default;
+            bool? isFooter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rowIndex"))
                 {
-                    result.RowIndex = property.Value.GetInt32();
+                    rowIndex = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("columnIndex"))
                 {
-                    result.ColumnIndex = property.Value.GetInt32();
+                    columnIndex = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rowSpan"))
@@ -34,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.RowSpan = property.Value.GetInt32();
+                    rowSpan = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("columnSpan"))
@@ -43,25 +52,27 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.ColumnSpan = property.Value.GetInt32();
+                    columnSpan = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("text"))
                 {
-                    result.Text = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boundingBox"))
                 {
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.BoundingBox.Add(item.GetSingle());
+                        array.Add(item.GetSingle());
                     }
+                    boundingBox = array;
                     continue;
                 }
                 if (property.NameEquals("confidence"))
                 {
-                    result.Confidence = property.Value.GetSingle();
+                    confidence = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("elements"))
@@ -70,11 +81,12 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Elements = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Elements.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    elements = array;
                     continue;
                 }
                 if (property.NameEquals("isHeader"))
@@ -83,7 +95,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.IsHeader = property.Value.GetBoolean();
+                    isHeader = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isFooter"))
@@ -92,11 +104,11 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.IsFooter = property.Value.GetBoolean();
+                    isFooter = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return result;
+            return new DataTableCell_internal(rowIndex, columnIndex, rowSpan, columnSpan, text, boundingBox, confidence, elements, isHeader, isFooter);
         }
     }
 }

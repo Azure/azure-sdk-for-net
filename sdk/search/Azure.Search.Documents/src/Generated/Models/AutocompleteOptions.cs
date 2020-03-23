@@ -13,8 +13,12 @@ namespace Azure.Search.Documents
     public partial class AutocompleteOptions
     {
         /// <summary> Initializes a new instance of AutocompleteOptions. </summary>
-        public AutocompleteOptions()
+        /// <param name="searchText"> The search text on which to base autocomplete results. </param>
+        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that&apos;s part of the index definition. </param>
+        public AutocompleteOptions(string searchText, string suggesterName)
         {
+            SearchText = searchText;
+            SuggesterName = suggesterName;
         }
 
         /// <summary> Initializes a new instance of AutocompleteOptions. </summary>

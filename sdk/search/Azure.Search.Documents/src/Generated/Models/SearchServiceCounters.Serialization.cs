@@ -14,46 +14,52 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchServiceCounters DeserializeSearchServiceCounters(JsonElement element)
         {
-            SearchServiceCounters result = new SearchServiceCounters();
+            SearchResourceCounter documentCount = default;
+            SearchResourceCounter indexesCount = default;
+            SearchResourceCounter indexersCount = default;
+            SearchResourceCounter dataSourcesCount = default;
+            SearchResourceCounter storageSize = default;
+            SearchResourceCounter synonymMaps = default;
+            SearchResourceCounter skillsetCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentCount"))
                 {
-                    result.DocumentCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    documentCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("indexesCount"))
                 {
-                    result.IndexCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    indexesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("indexersCount"))
                 {
-                    result.IndexerCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    indexersCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataSourcesCount"))
                 {
-                    result.DataSourceCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    dataSourcesCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("storageSize"))
                 {
-                    result.StorageSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    storageSize = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))
                 {
-                    result.SynonymMapCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    synonymMaps = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skillsetCount"))
                 {
-                    result.SkillsetCounter = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
+                    skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new SearchServiceCounters(documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount);
         }
     }
 }

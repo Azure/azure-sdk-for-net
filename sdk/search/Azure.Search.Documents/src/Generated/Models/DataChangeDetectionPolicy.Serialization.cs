@@ -30,16 +30,16 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy": return SqlIntegratedChangeTrackingPolicy.DeserializeSqlIntegratedChangeTrackingPolicy(element);
                 }
             }
-            DataChangeDetectionPolicy result = new DataChangeDetectionPolicy();
+            string odatatype = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DataChangeDetectionPolicy(odatatype);
         }
     }
 }

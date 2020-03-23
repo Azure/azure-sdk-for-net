@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     public partial class TextWeights
     {
         /// <summary> Initializes a new instance of TextWeights. </summary>
-        public TextWeights()
-        {
-        }
-
-        /// <summary> Initializes a new instance of TextWeights. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
-        internal TextWeights(IDictionary<string, double> weights)
+        public TextWeights(IDictionary<string, double> weights)
         {
             Weights = weights;
         }
 
         /// <summary> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </summary>
-        public IDictionary<string, double> Weights { get; set; } = new Dictionary<string, double>();
+        public IDictionary<string, double> Weights { get; } = new Dictionary<string, double>();
     }
 }

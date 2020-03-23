@@ -11,8 +11,12 @@ namespace Azure.Search.Documents
     public partial class SuggestOptions
     {
         /// <summary> Initializes a new instance of SuggestOptions. </summary>
-        public SuggestOptions()
+        /// <param name="searchText"> The search text to use to suggest documents. Must be at least 1 character, and no more than 100 characters. </param>
+        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that&apos;s part of the index definition. </param>
+        public SuggestOptions(string searchText, string suggesterName)
         {
+            SearchText = searchText;
+            SuggesterName = suggesterName;
         }
 
         /// <summary> Initializes a new instance of SuggestOptions. </summary>

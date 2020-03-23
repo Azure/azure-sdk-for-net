@@ -29,7 +29,9 @@ namespace Azure.Search.Documents.Models
 
         internal static KeywordTokenizerV2 DeserializeKeywordTokenizerV2(JsonElement element)
         {
-            KeywordTokenizerV2 result = new KeywordTokenizerV2();
+            int? maxTokenLength = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenLength"))
@@ -38,21 +40,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxTokenLength = property.Value.GetInt32();
+                    maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new KeywordTokenizerV2(maxTokenLength, odatatype, name);
         }
     }
 }

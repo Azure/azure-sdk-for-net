@@ -13,22 +13,24 @@ namespace Azure.Search.Documents.Models
     public partial class AutocompleteResults
     {
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
-        internal AutocompleteResults()
+        /// <param name="results"> The list of returned Autocompleted items. </param>
+        internal AutocompleteResults(IReadOnlyList<Autocompletion> results)
         {
+            Results = results;
         }
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="results"> The list of returned Autocompleted items. </param>
-        internal AutocompleteResults(double? coverage, IList<Autocompletion> results)
+        internal AutocompleteResults(double? coverage, IReadOnlyList<Autocompletion> results)
         {
             Coverage = coverage;
             Results = results;
         }
 
         /// <summary> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </summary>
-        public double? Coverage { get; internal set; }
+        public double? Coverage { get; }
         /// <summary> The list of returned Autocompleted items. </summary>
-        public IList<Autocompletion> Results { get; internal set; } = new List<Autocompletion>();
+        public IReadOnlyList<Autocompletion> Results { get; } = new List<Autocompletion>();
     }
 }

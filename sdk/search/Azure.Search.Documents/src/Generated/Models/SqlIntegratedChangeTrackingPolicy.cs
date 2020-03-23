@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="oDataType"> The model type. </param>
         internal SqlIntegratedChangeTrackingPolicy(string oDataType) : base(oDataType)
         {
-            ODataType = "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
         }
     }
 }

@@ -14,8 +14,12 @@ namespace Azure.Search.Documents.Models
     public partial class WebApiSkill : Skill
     {
         /// <summary> Initializes a new instance of WebApiSkill. </summary>
-        public WebApiSkill()
+        /// <param name="uri"> The url for the Web API. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        public WebApiSkill(string uri, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
+            Uri = uri;
             ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
@@ -40,11 +44,11 @@ namespace Azure.Search.Documents.Models
             Timeout = timeout;
             BatchSize = batchSize;
             DegreeOfParallelism = degreeOfParallelism;
-            ODataType = "#Microsoft.Skills.Custom.WebApiSkill";
+            ODataType = oDataType ?? "#Microsoft.Skills.Custom.WebApiSkill";
         }
 
         /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
+        public string Uri { get; }
         /// <summary> The headers required to make the http request. </summary>
         public IDictionary<string, string> HttpHeaders { get; set; }
         /// <summary> The method for the http request. </summary>

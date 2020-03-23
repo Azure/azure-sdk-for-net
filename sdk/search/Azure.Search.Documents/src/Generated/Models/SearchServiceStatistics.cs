@@ -11,11 +11,6 @@ namespace Azure.Search.Documents.Models
     public partial class SearchServiceStatistics
     {
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
-        internal SearchServiceStatistics()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
         internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits)
@@ -25,8 +20,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Service level resource counters. </summary>
-        public SearchServiceCounters Counters { get; internal set; } = new SearchServiceCounters();
+        public SearchServiceCounters Counters { get; }
         /// <summary> Service level general limits. </summary>
-        public SearchServiceLimits Limits { get; internal set; } = new SearchServiceLimits();
+        public SearchServiceLimits Limits { get; }
     }
 }

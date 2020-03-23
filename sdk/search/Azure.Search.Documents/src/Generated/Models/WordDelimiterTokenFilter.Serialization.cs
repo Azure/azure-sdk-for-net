@@ -80,7 +80,18 @@ namespace Azure.Search.Documents.Models
 
         internal static WordDelimiterTokenFilter DeserializeWordDelimiterTokenFilter(JsonElement element)
         {
-            WordDelimiterTokenFilter result = new WordDelimiterTokenFilter();
+            bool? generateWordParts = default;
+            bool? generateNumberParts = default;
+            bool? catenateWords = default;
+            bool? catenateNumbers = default;
+            bool? catenateAll = default;
+            bool? splitOnCaseChange = default;
+            bool? preserveOriginal = default;
+            bool? splitOnNumerics = default;
+            bool? stemEnglishPossessive = default;
+            IList<string> protectedWords = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generateWordParts"))
@@ -89,7 +100,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.GenerateWordParts = property.Value.GetBoolean();
+                    generateWordParts = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("generateNumberParts"))
@@ -98,7 +109,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.GenerateNumberParts = property.Value.GetBoolean();
+                    generateNumberParts = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("catenateWords"))
@@ -107,7 +118,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.CatenateWords = property.Value.GetBoolean();
+                    catenateWords = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("catenateNumbers"))
@@ -116,7 +127,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.CatenateNumbers = property.Value.GetBoolean();
+                    catenateNumbers = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("catenateAll"))
@@ -125,7 +136,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.CatenateAll = property.Value.GetBoolean();
+                    catenateAll = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("splitOnCaseChange"))
@@ -134,7 +145,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.SplitOnCaseChange = property.Value.GetBoolean();
+                    splitOnCaseChange = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("preserveOriginal"))
@@ -143,7 +154,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.PreserveOriginal = property.Value.GetBoolean();
+                    preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("splitOnNumerics"))
@@ -152,7 +163,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.SplitOnNumerics = property.Value.GetBoolean();
+                    splitOnNumerics = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("stemEnglishPossessive"))
@@ -161,7 +172,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.StemEnglishPossessive = property.Value.GetBoolean();
+                    stemEnglishPossessive = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("protectedWords"))
@@ -170,25 +181,26 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ProtectedWords = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ProtectedWords.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    protectedWords = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new WordDelimiterTokenFilter(generateWordParts, generateNumberParts, catenateWords, catenateNumbers, catenateAll, splitOnCaseChange, preserveOriginal, splitOnNumerics, stemEnglishPossessive, protectedWords, odatatype, name);
         }
     }
 }

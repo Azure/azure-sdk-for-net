@@ -13,8 +13,12 @@ namespace Azure.Search.Documents.Models
     public partial class SearchField
     {
         /// <summary> Initializes a new instance of SearchField. </summary>
-        public SearchField()
+        /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
+        /// <param name="type"> The data type of the field. </param>
+        public SearchField(string name, DataType type)
         {
+            Name = name;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of SearchField. </summary>
@@ -49,9 +53,9 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the field, which must be unique within the fields collection of the index or parent field. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The data type of the field. </summary>
-        public DataType Type { get; set; }
+        public DataType Type { get; }
         /// <summary> A value indicating whether the field uniquely identifies documents in the index. Exactly one top-level field in each index must be chosen as the key field and it must be of type Edm.String. Key fields can be used to look up documents directly and update or delete specific documents. Default is false for simple fields and null for complex fields. </summary>
         public bool? Key { get; set; }
         /// <summary> A value indicating whether the field can be returned in a search result. You can disable this option if you want to use a field (for example, margin) as a filter, sorting, or scoring mechanism but do not want the field to be visible to the end user. This property must be true for key fields, and it must be null for complex fields. This property can be changed on existing fields. Enabling this property does not cause any increase in index storage requirements. Default is true for simple fields and null for complex fields. </summary>

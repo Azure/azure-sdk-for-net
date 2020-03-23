@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -41,25 +42,31 @@ namespace Azure.Search.Documents.Models
 
         internal static Skillset DeserializeSkillset(JsonElement element)
         {
-            Skillset result = new Skillset();
+            string name = default;
+            string description = default;
+            IList<Skill> skills = new List<Skill>();
+            CognitiveServicesAccount cognitiveServices = default;
+            string odataetag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
                 {
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skills"))
                 {
+                    List<Skill> array = new List<Skill>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Skills.Add(Skill.DeserializeSkill(item));
+                        array.Add(Skill.DeserializeSkill(item));
                     }
+                    skills = array;
                     continue;
                 }
                 if (property.NameEquals("cognitiveServices"))
@@ -68,7 +75,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.CognitiveServicesAccount = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
+                    cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"))
@@ -77,11 +84,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ETag = property.Value.GetString();
+                    odataetag = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new Skillset(name, description, skills, cognitiveServices, odataetag);
         }
     }
 }

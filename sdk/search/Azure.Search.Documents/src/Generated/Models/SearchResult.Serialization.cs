@@ -15,12 +15,14 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchResult DeserializeSearchResult(JsonElement element)
         {
-            SearchResult result = new SearchResult();
+            double searchscore = default;
+            IReadOnlyDictionary<string, IReadOnlyList<string>> searchhighlights = default;
+            IDictionary<string, object> additionalProperties = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.score"))
                 {
-                    result.Score = property.Value.GetDouble();
+                    searchscore = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.highlights"))
@@ -29,21 +31,22 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Highlights = new Dictionary<string, IList<string>>();
+                    Dictionary<string, IReadOnlyList<string>> dictionary = new Dictionary<string, IReadOnlyList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        IList<string> value = new List<string>();
+                        List<string> array = new List<string>();
                         foreach (var item in property0.Value.EnumerateArray())
                         {
-                            value.Add(item.GetString());
+                            array.Add(item.GetString());
                         }
-                        result.Highlights.Add(property0.Name, value);
+                        dictionary.Add(property0.Name, array);
                     }
+                    searchhighlights = dictionary;
                     continue;
                 }
-                result.Add(property.Name, property.Value.GetObject());
+                additionalProperties.Add(property.Name, property.Value.GetObject());
             }
-            return result;
+            return new SearchResult(searchscore, searchhighlights, additionalProperties);
         }
     }
 }

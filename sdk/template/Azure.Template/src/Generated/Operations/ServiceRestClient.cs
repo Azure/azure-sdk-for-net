@@ -66,8 +66,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -96,8 +97,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

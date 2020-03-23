@@ -47,7 +47,10 @@ namespace Azure.Search.Documents.Models
 
         internal static IndexingParameters DeserializeIndexingParameters(JsonElement element)
         {
-            IndexingParameters result = new IndexingParameters();
+            int? batchSize = default;
+            int? maxFailedItems = default;
+            int? maxFailedItemsPerBatch = default;
+            IDictionary<string, object> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"))
@@ -56,7 +59,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.BatchSize = property.Value.GetInt32();
+                    batchSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxFailedItems"))
@@ -65,7 +68,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxFailedItems = property.Value.GetInt32();
+                    maxFailedItems = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxFailedItemsPerBatch"))
@@ -74,7 +77,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxFailedItemsPerBatch = property.Value.GetInt32();
+                    maxFailedItemsPerBatch = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("configuration"))
@@ -83,15 +86,16 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Configuration = new Dictionary<string, object>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        result.Configuration.Add(property0.Name, property0.Value.GetObject());
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
                     }
+                    configuration = dictionary;
                     continue;
                 }
             }
-            return result;
+            return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration);
         }
     }
 }

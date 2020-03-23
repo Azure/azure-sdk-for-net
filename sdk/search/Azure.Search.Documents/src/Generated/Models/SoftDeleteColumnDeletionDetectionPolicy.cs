@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Models
         {
             SoftDeleteColumnName = softDeleteColumnName;
             SoftDeleteMarkerValue = softDeleteMarkerValue;
-            ODataType = "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy";
         }
 
         /// <summary> The name of the column to use for soft-deletion detection. </summary>

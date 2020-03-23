@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -36,15 +37,20 @@ namespace Azure.Search.Documents.Models
 
         internal static KeywordMarkerTokenFilter DeserializeKeywordMarkerTokenFilter(JsonElement element)
         {
-            KeywordMarkerTokenFilter result = new KeywordMarkerTokenFilter();
+            IList<string> keywords = new List<string>();
+            bool? ignoreCase = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keywords"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Keywords.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    keywords = array;
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
@@ -53,21 +59,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IgnoreCase = property.Value.GetBoolean();
+                    ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new KeywordMarkerTokenFilter(keywords, ignoreCase, odatatype, name);
         }
     }
 }

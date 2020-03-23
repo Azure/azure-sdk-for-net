@@ -24,9 +24,9 @@ namespace Azure.Search.Documents
         {
         }
         /// <summary> Initializes a new instance of SkillsetsClient. </summary>
-        internal SkillsetsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        internal SkillsetsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
-            RestClient = new SkillsetsRestClient(clientDiagnostics, pipeline, endpoint, ApiVersion);
+            RestClient = new SkillsetsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }

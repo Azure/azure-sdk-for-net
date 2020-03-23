@@ -43,12 +43,15 @@ namespace Azure.Search.Documents.Models
 
         internal static ScoringProfile DeserializeScoringProfile(JsonElement element)
         {
-            ScoringProfile result = new ScoringProfile();
+            string name = default;
+            TextWeights text = default;
+            IList<ScoringFunction> functions = default;
+            ScoringFunctionAggregation? functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("text"))
@@ -57,7 +60,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TextWeights = TextWeights.DeserializeTextWeights(property.Value);
+                    text = TextWeights.DeserializeTextWeights(property.Value);
                     continue;
                 }
                 if (property.NameEquals("functions"))
@@ -66,11 +69,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Functions = new List<ScoringFunction>();
+                    List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Functions.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        array.Add(ScoringFunction.DeserializeScoringFunction(item));
                     }
+                    functions = array;
                     continue;
                 }
                 if (property.NameEquals("functionAggregation"))
@@ -79,11 +83,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.FunctionAggregation = property.Value.GetString().ToScoringFunctionAggregation();
+                    functionAggregation = property.Value.GetString().ToScoringFunctionAggregation();
                     continue;
                 }
             }
-            return result;
+            return new ScoringProfile(name, text, functions, functionAggregation);
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Azure.Search.Documents.Models
     public partial class EdgeNGramTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of EdgeNGramTokenizer. </summary>
-        public EdgeNGramTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public EdgeNGramTokenizer(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
@@ -29,7 +30,7 @@ namespace Azure.Search.Documents.Models
             MinGram = minGram;
             MaxGram = maxGram;
             TokenChars = tokenChars;
-            ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </summary>

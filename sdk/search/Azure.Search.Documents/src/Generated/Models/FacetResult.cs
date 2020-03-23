@@ -20,49 +20,51 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        internal FacetResult(long? count)
+        /// <param name="additionalProperties"> . </param>
+        internal FacetResult(long? count, IDictionary<string, object> additionalProperties)
         {
             Count = count;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The approximate count of documents falling within the bucket described by this facet. </summary>
-        public long? Count { get; internal set; }
-        private readonly IDictionary<string, object> _additionalProperties = new Dictionary<string, object>();
+        public long? Count { get; }
+        internal IDictionary<string, object> AdditionalProperties { get; } = new Dictionary<string, object>();
         /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _additionalProperties.GetEnumerator();
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => _additionalProperties.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
-        public ICollection<string> Keys => _additionalProperties.Keys;
+        public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
-        public ICollection<object> Values => _additionalProperties.Values;
+        public ICollection<object> Values => AdditionalProperties.Values;
         /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => _additionalProperties.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
         /// <inheritdoc />
-        public void Add(string key, object value) => _additionalProperties.Add(key, value);
+        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
-        public bool ContainsKey(string key) => _additionalProperties.ContainsKey(key);
+        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
         /// <inheritdoc />
-        public bool Remove(string key) => _additionalProperties.Remove(key);
+        public bool Remove(string key) => AdditionalProperties.Remove(key);
         /// <inheritdoc />
-        int ICollection<KeyValuePair<string, object>>.Count => _additionalProperties.Count;
+        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => _additionalProperties.IsReadOnly;
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
         /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => _additionalProperties.Add(value);
+        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
         /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => _additionalProperties.Remove(value);
+        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
         /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => _additionalProperties.Contains(value);
+        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
         /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => _additionalProperties.CopyTo(destination, offset);
+        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
         /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Clear() => _additionalProperties.Clear();
+        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]
         {
-            get => _additionalProperties[key];
-            set => _additionalProperties[key] = value;
+            get => AdditionalProperties[key];
+            set => AdditionalProperties[key] = value;
         }
     }
 }

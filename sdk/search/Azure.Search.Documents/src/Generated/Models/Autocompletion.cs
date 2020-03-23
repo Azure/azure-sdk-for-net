@@ -11,11 +11,6 @@ namespace Azure.Search.Documents.Models
     public partial class Autocompletion
     {
         /// <summary> Initializes a new instance of Autocompletion. </summary>
-        internal Autocompletion()
-        {
-        }
-
-        /// <summary> Initializes a new instance of Autocompletion. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
         internal Autocompletion(string text, string queryPlusText)
@@ -25,8 +20,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The completed term. </summary>
-        public string Text { get; internal set; }
+        public string Text { get; }
         /// <summary> The query along with the completed term. </summary>
-        public string QueryPlusText { get; internal set; }
+        public string QueryPlusText { get; }
     }
 }

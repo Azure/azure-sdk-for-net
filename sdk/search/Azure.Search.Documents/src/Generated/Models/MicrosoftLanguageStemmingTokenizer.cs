@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class MicrosoftLanguageStemmingTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of MicrosoftLanguageStemmingTokenizer. </summary>
-        public MicrosoftLanguageStemmingTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public MicrosoftLanguageStemmingTokenizer(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer";
         }
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.Models
             MaxTokenLength = maxTokenLength;
             IsSearchTokenizer = isSearchTokenizer;
             Language = language;
-            ODataType = "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer";
         }
 
         /// <summary> The maximum token length. Tokens longer than the maximum length are split. Maximum token length that can be used is 300 characters. Tokens longer than 300 characters are first split into tokens of length 300 and then each of those tokens is split based on the max token length set. Default is 255. </summary>

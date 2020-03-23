@@ -13,18 +13,13 @@ namespace Azure.AI.FormRecognizer
     internal partial class KeysResult_internal
     {
         /// <summary> Initializes a new instance of KeysResult_internal. </summary>
-        internal KeysResult_internal()
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeysResult_internal. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
-        internal KeysResult_internal(IDictionary<string, IList<string>> clusters)
+        internal KeysResult_internal(IReadOnlyDictionary<string, IReadOnlyList<string>> clusters)
         {
             Clusters = clusters;
         }
 
         /// <summary> Object mapping clusterIds to a list of keys. </summary>
-        public IDictionary<string, IList<string>> Clusters { get; internal set; } = new Dictionary<string, IList<string>>();
+        public IReadOnlyDictionary<string, IReadOnlyList<string>> Clusters { get; } = new Dictionary<string, IReadOnlyList<string>>();
     }
 }

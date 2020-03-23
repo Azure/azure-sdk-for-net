@@ -13,7 +13,8 @@ namespace Azure.Search.Documents.Models
     public partial class StopwordsTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of StopwordsTokenFilter. </summary>
-        public StopwordsTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public StopwordsTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Models
             StopwordsList = stopwordsList;
             IgnoreCase = ignoreCase;
             RemoveTrailingStopWords = removeTrailingStopWords;
-            ODataType = "#Microsoft.Azure.Search.StopwordsTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.StopwordsTokenFilter";
         }
 
         /// <summary> The list of stopwords. This property and the stopwords list property cannot both be set. </summary>

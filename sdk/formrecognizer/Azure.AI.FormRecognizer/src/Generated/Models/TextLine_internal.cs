@@ -13,8 +13,14 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class TextLine_internal
     {
         /// <summary> Initializes a new instance of TextLine_internal. </summary>
-        internal TextLine_internal()
+        /// <param name="text"> The text content of the line. </param>
+        /// <param name="boundingBox"> Bounding box of an extracted line. </param>
+        /// <param name="words"> List of words in the text line. </param>
+        internal TextLine_internal(string text, IReadOnlyList<float> boundingBox, IReadOnlyList<TextWord_internal> words)
         {
+            Text = text;
+            BoundingBox = boundingBox;
+            Words = words;
         }
 
         /// <summary> Initializes a new instance of TextLine_internal. </summary>
@@ -22,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="language"> The detected language of this line, if different from the overall page language. </param>
         /// <param name="words"> List of words in the text line. </param>
-        internal TextLine_internal(string text, IList<float> boundingBox, Language_internal? language, IList<TextWord_internal> words)
+        internal TextLine_internal(string text, IReadOnlyList<float> boundingBox, Language_internal? language, IReadOnlyList<TextWord_internal> words)
         {
             Text = text;
             BoundingBox = boundingBox;
@@ -31,12 +37,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> The text content of the line. </summary>
-        public string Text { get; internal set; }
+        public string Text { get; }
         /// <summary> Bounding box of an extracted line. </summary>
-        public IList<float> BoundingBox { get; internal set; } = new List<float>();
+        public IReadOnlyList<float> BoundingBox { get; } = new List<float>();
         /// <summary> The detected language of this line, if different from the overall page language. </summary>
-        public Language_internal? Language { get; internal set; }
+        public Language_internal? Language { get; }
         /// <summary> List of words in the text line. </summary>
-        public IList<TextWord_internal> Words { get; internal set; } = new List<TextWord_internal>();
+        public IReadOnlyList<TextWord_internal> Words { get; } = new List<TextWord_internal>();
     }
 }

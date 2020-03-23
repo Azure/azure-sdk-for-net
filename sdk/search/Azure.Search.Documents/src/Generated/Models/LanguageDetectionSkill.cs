@@ -13,7 +13,9 @@ namespace Azure.Search.Documents.Models
     public partial class LanguageDetectionSkill : Skill
     {
         /// <summary> Initializes a new instance of LanguageDetectionSkill. </summary>
-        public LanguageDetectionSkill()
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        public LanguageDetectionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
             ODataType = "#Microsoft.Skills.Text.LanguageDetectionSkill";
         }
@@ -27,7 +29,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         internal LanguageDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs) : base(oDataType, name, description, context, inputs, outputs)
         {
-            ODataType = "#Microsoft.Skills.Text.LanguageDetectionSkill";
+            ODataType = oDataType ?? "#Microsoft.Skills.Text.LanguageDetectionSkill";
         }
     }
 }
