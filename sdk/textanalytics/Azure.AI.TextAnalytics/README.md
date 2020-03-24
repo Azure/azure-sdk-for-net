@@ -64,15 +64,15 @@ az cognitiveservices account keys list --resource-group <your-resource-group-nam
 ```
 
 #### Create TextAnalyticsClient with API Key Credential
-Once you have the value for the API key, create a `TextAnalyticsApiKeyCredential`. This will allow you to
-update the API key by using the `UpdateCredential` method without creating a new client.
+Once you have the value for the API key, create an `AzureKeyCredential`. This will allow you to
+update the API key without creating a new client.
 
-With the value of the endpoint and a `TextAnalyticsApiKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
+With the value of the endpoint and an `AzureKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var credential = new TextAnalyticsApiKeyCredential(apiKey);
+var credential = new AzureKeyCredential(apiKey);
 var client = new TextAnalyticsClient(new Uri(endpoint), credential);
 ```
 
@@ -114,7 +114,7 @@ For each supported operation, `TextAnalyticsClient` provides a method that accep
 Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single document.  An operation's return value also may optionally include information about the document and how it was processed.
 
 ### Return value Collection
-A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given document. It may optionally include information about the input batch and how it was processed.
+A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the documents provided in the input batch.  A document and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given document. It may optionally include information about the document batch and how it was processed.
 
 ## Examples
 The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
@@ -135,9 +135,9 @@ The following section provides several code snippets using the `client` [created
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
 
 ```C# Snippet:DetectLanguage
-string input = "Este documento está en español.";
+string document = "Este documento está en español.";
 
-DetectedLanguage language = client.DetectLanguage(input);
+DetectedLanguage language = client.DetectLanguage(document);
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
 ```
@@ -149,9 +149,9 @@ Please refer to the service documentation for a conceptual discussion of [langua
 Run a Text Analytics predictive model to identify the positive, negative, neutral or mixed sentiment contained in the passed-in document or batch of documents.
 
 ```C# Snippet:AnalyzeSentiment
-string input = "That was the best day of my life!";
+string document = "That was the best day of my life!";
 
-DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
+DocumentSentiment docSentiment = client.AnalyzeSentiment(document);
 
 Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
 Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
@@ -166,9 +166,9 @@ Please refer to the service documentation for a conceptual discussion of [sentim
 Run a model to identify a collection of significant phrases found in the passed-in document or batch of documents.
 
 ```C# Snippet:ExtractKeyPhrases
-string input = "My cat might need to see a veterinarian.";
+string document = "My cat might need to see a veterinarian.";
 
-IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
+IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
 
 Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -184,9 +184,9 @@ Please refer to the service documentation for a conceptual discussion of [key ph
 Run a predictive model to identify a collection of named entities in the passed-in document or batch of documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
 
 ```C# Snippet:RecognizeEntities
-string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input).Value;
+IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(document).Value;
 
 Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
@@ -202,9 +202,9 @@ Please refer to the service documentation for a conceptual discussion of [named 
 Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in document or batch of documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
 
 ```C# Snippet:RecognizePiiEntities
-string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
+string document = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Value;
+IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(document).Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
@@ -219,9 +219,9 @@ For samples on using the production recommended option `RecognizePiiEntitiesBatc
 Run a predictive model to identify a collection of entities found in the passed-in document or batch of documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
 
 ```C# Snippet:RecognizeLinkedEntities
-string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(input).Value;
+IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
 
 Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
@@ -241,9 +241,9 @@ Please refer to the service documentation for a conceptual discussion of [entity
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
 
 ```C# Snippet:DetectLanguageAsync
-string input = "Este documento está en español.";
+string document = "Este documento está en español.";
 
-DetectedLanguage language = await client.DetectLanguageAsync(input);
+DetectedLanguage language = await client.DetectLanguageAsync(document);
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
 ```
@@ -252,9 +252,9 @@ Console.WriteLine($"Detected language {language.Name} with confidence {language.
 Run a predictive model to identify a collection of named entities in the passed-in document or batch of documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
 
 ```C# Snippet:RecognizeEntitiesAsync
-string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(input);
+Response<IReadOnlyCollection<CategorizedEntity>> entities = await client.RecognizeEntitiesAsync(document);
 
 Console.WriteLine($"Recognized {entities.Value.Count} entities:");
 foreach (CategorizedEntity entity in entities.Value)
@@ -273,7 +273,7 @@ For example, if you submit a batch of text document inputs containing duplicate 
 ```C# Snippet:BadRequest
 try
 {
-    DetectedLanguage result = client.DetectLanguage(input);
+    DetectedLanguage result = client.DetectLanguage(document);
 }
 catch (RequestFailedException e)
 {

@@ -13,8 +13,18 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class ReadResult_internal
     {
         /// <summary> Initializes a new instance of ReadResult_internal. </summary>
-        internal ReadResult_internal()
+        /// <param name="page"> The 1-based page number in the input document. </param>
+        /// <param name="angle"> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </param>
+        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        internal ReadResult_internal(int page, float angle, float width, float height, LengthUnit unit)
         {
+            Page = page;
+            Angle = angle;
+            Width = width;
+            Height = height;
+            Unit = unit;
         }
 
         /// <summary> Initializes a new instance of ReadResult_internal. </summary>
@@ -25,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
         /// <param name="language"> The detected language on the page overall. </param>
         /// <param name="lines"> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </param>
-        internal ReadResult_internal(int page, float angle, float width, float height, LengthUnit unit, Language_internal? language, IList<TextLine_internal> lines)
+        internal ReadResult_internal(int page, float angle, float width, float height, LengthUnit unit, Language_internal? language, IReadOnlyList<TextLine_internal> lines)
         {
             Page = page;
             Angle = angle;
@@ -37,18 +47,18 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> The 1-based page number in the input document. </summary>
-        public int Page { get; internal set; }
+        public int Page { get; }
         /// <summary> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </summary>
-        public float Angle { get; internal set; }
+        public float Angle { get; }
         /// <summary> The width of the image/PDF in pixels/inches, respectively. </summary>
-        public float Width { get; internal set; }
+        public float Width { get; }
         /// <summary> The height of the image/PDF in pixels/inches, respectively. </summary>
-        public float Height { get; internal set; }
+        public float Height { get; }
         /// <summary> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
-        public LengthUnit Unit { get; internal set; }
+        public LengthUnit Unit { get; }
         /// <summary> The detected language on the page overall. </summary>
-        public Language_internal? Language { get; internal set; }
+        public Language_internal? Language { get; }
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
-        public IList<TextLine_internal> Lines { get; internal set; }
+        public IReadOnlyList<TextLine_internal> Lines { get; }
     }
 }

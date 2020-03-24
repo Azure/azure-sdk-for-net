@@ -13,8 +13,18 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class DataTableCell_internal
     {
         /// <summary> Initializes a new instance of DataTableCell_internal. </summary>
-        internal DataTableCell_internal()
+        /// <param name="rowIndex"> Row index of the cell. </param>
+        /// <param name="columnIndex"> Column index of the cell. </param>
+        /// <param name="text"> Text content of the cell. </param>
+        /// <param name="boundingBox"> Bounding box of the cell. </param>
+        /// <param name="confidence"> Confidence value. </param>
+        internal DataTableCell_internal(int rowIndex, int columnIndex, string text, IReadOnlyList<float> boundingBox, float confidence)
         {
+            RowIndex = rowIndex;
+            ColumnIndex = columnIndex;
+            Text = text;
+            BoundingBox = boundingBox;
+            Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of DataTableCell_internal. </summary>
@@ -28,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this table cell. </param>
         /// <param name="isHeader"> Is the current cell a header cell?. </param>
         /// <param name="isFooter"> Is the current cell a footer cell?. </param>
-        internal DataTableCell_internal(int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string text, IList<float> boundingBox, float confidence, IList<string> elements, bool? isHeader, bool? isFooter)
+        internal DataTableCell_internal(int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string text, IReadOnlyList<float> boundingBox, float confidence, IReadOnlyList<string> elements, bool? isHeader, bool? isFooter)
         {
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
@@ -43,24 +53,24 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Row index of the cell. </summary>
-        public int RowIndex { get; internal set; }
+        public int RowIndex { get; }
         /// <summary> Column index of the cell. </summary>
-        public int ColumnIndex { get; internal set; }
+        public int ColumnIndex { get; }
         /// <summary> Number of rows spanned by this cell. </summary>
-        public int? RowSpan { get; internal set; }
+        public int? RowSpan { get; }
         /// <summary> Number of columns spanned by this cell. </summary>
-        public int? ColumnSpan { get; internal set; }
+        public int? ColumnSpan { get; }
         /// <summary> Text content of the cell. </summary>
-        public string Text { get; internal set; }
+        public string Text { get; }
         /// <summary> Bounding box of the cell. </summary>
-        public IList<float> BoundingBox { get; internal set; } = new List<float>();
+        public IReadOnlyList<float> BoundingBox { get; } = new List<float>();
         /// <summary> Confidence value. </summary>
-        public float Confidence { get; internal set; }
+        public float Confidence { get; }
         /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this table cell. </summary>
-        public IList<string> Elements { get; internal set; }
+        public IReadOnlyList<string> Elements { get; }
         /// <summary> Is the current cell a header cell?. </summary>
-        public bool? IsHeader { get; internal set; }
+        public bool? IsHeader { get; }
         /// <summary> Is the current cell a footer cell?. </summary>
-        public bool? IsFooter { get; internal set; }
+        public bool? IsFooter { get; }
     }
 }

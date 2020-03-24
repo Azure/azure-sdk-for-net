@@ -7,13 +7,13 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
     internal static class ModelStatusExtensions
     {
         public static string ToSerialString(this ModelStatus value) => value switch
         {
-            ModelStatus.Creating => "creating",
+            ModelStatus.Training => "creating",
             ModelStatus.Ready => "ready",
             ModelStatus.Invalid => "invalid",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModelStatus value.")
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         public static ModelStatus ToModelStatus(this string value)
         {
-            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Creating;
+            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Training;
             if (string.Equals(value, "ready", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Ready;
             if (string.Equals(value, "invalid", StringComparison.InvariantCultureIgnoreCase)) return ModelStatus.Invalid;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ModelStatus value.");

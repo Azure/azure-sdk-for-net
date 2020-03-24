@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -13,8 +14,14 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class AnalyzeOperationResult_internal
     {
         /// <summary> Initializes a new instance of AnalyzeOperationResult_internal. </summary>
-        internal AnalyzeOperationResult_internal()
+        /// <param name="status"> Operation status. </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        internal AnalyzeOperationResult_internal(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime)
         {
+            Status = status;
+            CreatedDateTime = createdDateTime;
+            LastUpdatedDateTime = lastUpdatedDateTime;
         }
 
         /// <summary> Initializes a new instance of AnalyzeOperationResult_internal. </summary>
@@ -31,12 +38,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Operation status. </summary>
-        public OperationStatus Status { get; internal set; }
+        public OperationStatus Status { get; }
         /// <summary> Date and time (UTC) when the analyze operation was submitted. </summary>
-        public DateTimeOffset CreatedDateTime { get; internal set; }
+        public DateTimeOffset CreatedDateTime { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; internal set; }
+        public DateTimeOffset LastUpdatedDateTime { get; }
         /// <summary> Results of the analyze operation. </summary>
-        public AnalyzeResult_internal AnalyzeResult { get; internal set; }
+        public AnalyzeResult_internal AnalyzeResult { get; }
     }
 }

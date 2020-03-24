@@ -2,26 +2,32 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Custom
 {
+    // Maps to KeyValuePair
+
+    /// <summary>
+    /// </summary>
     public class ExtractedField
     {
         internal ExtractedField(KeyValuePair_internal field, ReadResult_internal readResult)
         {
-            // Unsupervised
             Confidence = field.Confidence;
-            Label = field.Key.Text;
 
-            LabelBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
+            Name = field.Key.Text;
+            NameBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
+
             if (field.Key.Elements != null)
             {
-                LabelRawExtractedItems = ConvertTextReferences(readResult, field.Key.Elements);
+                NameRawExtractedItems = ConvertTextReferences(readResult, field.Key.Elements);
             }
 
             Value = field.Value.Text;
-            ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
+            ValueBoundingBox = field.Value.BoundingBox == null ? null : new BoundingBox(field.Value.BoundingBox);
 
             if (field.Value.Elements != null)
             {
@@ -29,38 +35,51 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        internal ExtractedField(KeyValuePair<string, FieldValue_internal> field)
-        {
-            // Supervised
-            Confidence = field.Value.Confidence;
-            Label = field.Key;
-            Value = field.Value.Text;
-            ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
-        }
+        /// <summary>
+        /// </summary>
+        public float Confidence { get; internal set; }
 
-        // TODO: Why can this be nullable on FieldValue.Confidence?
-        // https://github.com/Azure/azure-sdk-for-net/issues/10378
-        public float? Confidence { get; internal set; }
-        public string Label { get; internal set; }
+        /// <summary>
+        /// </summary>
+        public string Name { get; internal set; }
 
-        // TODO: Make this nullable to indicate that this is an optional field.
-        // https://github.com/Azure/azure-sdk-for-net/issues/10361
-        // Not currently supported for Track2 libraries.
-        public BoundingBox LabelBoundingBox { get; internal set; }
+        /// <summary>
+        /// </summary>
+        public BoundingBox NameBoundingBox { get; internal set; }
 
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<RawExtractedItem> NameRawExtractedItems { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string Value { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public BoundingBox ValueBoundingBox { get; internal set; }
 
-        public IReadOnlyList<RawExtractedItem> LabelRawExtractedItems { get; internal set; }
+        /// <summary>
+        /// </summary>
         public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
 
         // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)
+        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, IReadOnlyList<string> references)
         {
             List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
             foreach (var reference in references)
             {
                 extractedTexts.Add(ResolveTextReference(readResult, reference));
+            }
+            return extractedTexts;
+        }
+
+        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<string> references)
+        {
+            List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
+            foreach (var reference in references)
+            {
+                extractedTexts.Add(ResolveTextReference(readResults, reference));
             }
             return extractedTexts;
         }
@@ -78,10 +97,8 @@ namespace Azure.AI.FormRecognizer.Models
             // "#/readResults/3/lines/7/words/12"
             string[] segments = reference.Split('/');
 
-#pragma warning disable CA1305 // Specify IFormatProvider
-            var lineIndex = int.Parse(segments[4]);
-            var wordIndex = int.Parse(segments[6]);
-#pragma warning restore CA1305 // Specify IFormatProvider
+            var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
+            var wordIndex = int.Parse(segments[6], CultureInfo.InvariantCulture);
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
@@ -127,6 +144,26 @@ namespace Azure.AI.FormRecognizer.Models
             //        }
             //    }
             //}
+        }
+
+        private static RawExtractedItem ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
+        {
+            // TODO: Add additional validations here.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10363
+
+            // Example: the following should result in LineIndex = 7, WordIndex = 12
+            // "#/readResults/3/lines/7/words/12"
+            string[] segments = reference.Split('/');
+
+#pragma warning disable CA1305 // Specify IFormatProvider
+            var pageIndex = int.Parse(segments[2]);
+            var lineIndex = int.Parse(segments[4]);
+            var wordIndex = int.Parse(segments[6]);
+#pragma warning restore CA1305 // Specify IFormatProvider
+
+            // TODO: Support case where text reference is lines only, without word segment
+            // https://github.com/Azure/azure-sdk-for-net/issues/10364
+            return new RawExtractedWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex]);
         }
     }
 }

@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />

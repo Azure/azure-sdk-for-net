@@ -11,11 +11,6 @@ namespace Azure.AI.FormRecognizer.Models
     public partial class FormRecognizerError
     {
         /// <summary> Initializes a new instance of FormRecognizerError. </summary>
-        internal FormRecognizerError()
-        {
-        }
-
-        /// <summary> Initializes a new instance of FormRecognizerError. </summary>
         /// <param name="code"> . </param>
         /// <param name="message"> . </param>
         internal FormRecognizerError(string code, string message)
@@ -23,8 +18,5 @@ namespace Azure.AI.FormRecognizer.Models
             Code = code;
             Message = message;
         }
-
-        public string Code { get; internal set; }
-        public string Message { get; internal set; }
     }
 }

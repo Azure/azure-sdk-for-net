@@ -84,7 +84,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageCt, sessionId);
 
                 await sender.SendBatchAsync(messageBatch);
-                var options = new ServiceBusReceiverOptions
+
+                ServiceBusReceiver receiver1 = await client.GetSessionReceiverAsync(
+                    scope.QueueName,
+                    sessionId: sessionId);
+
+                var options = new ServiceBusClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions
                     {
@@ -92,17 +97,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         MaximumRetries = 0
                     }
                 };
-                ServiceBusReceiver receiver1 = await client.GetSessionReceiverAsync(
-                    scope.QueueName,
-                    options,
-                    sessionId);
                 Assert.That(
                     async () =>
-                    await client.GetSessionReceiverAsync(
+                    await GetNoRetryClient().GetSessionReceiverAsync(
                         scope.QueueName,
-                        options,
-                        sessionId),
-                    Throws.Exception);
+                        sessionId: sessionId),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.SessionCannotBeLocked));
             }
         }
 
@@ -197,12 +197,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 for (int i = 0; i < 10; i++)
                 {
                     ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName);
-
-                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAtAsync(
+                    var session = receiver.GetSessionManager();
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAtAsync(
                         sequenceNumber: 1,
                         maxMessages: 10))
                     {
-                        var sessionId = receiver.SessionManager.SessionId;
+                        var sessionId = session.SessionId;
                         Assert.AreEqual(sessionId, peekedMessage.SessionId);
                     }
 
@@ -357,19 +357,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sessionId: useSpecificSession ? sessionId : null);
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
+                IList<ServiceBusReceivedMessage> receivedMessages = new List<ServiceBusReceivedMessage>();
+
                 while (remainingMessages > 0)
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    foreach (var msg in await receiver.ReceiveBatchAsync(remainingMessages))
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                        await receiver.AbandonAsync(item.LockToken);
-                        Assert.AreEqual(item.DeliveryCount, 1);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
+                        receivedMessages.Add(msg);
+                        Assert.AreEqual(msg.DeliveryCount, 1);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
+
+                // don't abandon in the receive loop
+                // as this would make the message available to be immediately received again
+                foreach (var msg in receivedMessages)
+                {
+                    await receiver.AbandonAsync(msg);
+                }
 
                 messageEnum.Reset();
                 var receivedMessageCount = 0;
@@ -412,7 +421,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     messageEnum.MoveNext();
                     Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                     Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                    await receiver.MoveToDeadLetterQueueAsync(item.LockToken);
+                    await receiver.DeadLetterAsync(item.LockToken);
                 }
                 Assert.AreEqual(0, remainingMessages);
 
@@ -506,21 +515,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendAsync(message);
 
                 ServiceBusReceiver receiver = await client.GetSessionReceiverAsync(scope.QueueName, sessionId: isSessionSpecified ? sessionId1 : null);
+                var session = receiver.GetSessionManager();
                 if (isSessionSpecified)
                 {
-                    Assert.AreEqual(sessionId1, receiver.SessionManager.SessionId);
+                    Assert.AreEqual(sessionId1, session.SessionId);
                 }
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveBatchAsync(messageCount)).ToArray();
 
                 var receivedMessage = receivedMessages.First();
-                var firstLockedUntilUtcTime = receiver.SessionManager.LockedUntil;
+                var firstLockedUntilUtcTime = session.LockedUntil;
 
                 // Sleeping for 10 seconds...
                 await Task.Delay(10000);
 
-                await receiver.SessionManager.RenewSessionLockAsync();
+                await session.RenewSessionLockAsync();
 
-                Assert.True(receiver.SessionManager.LockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+                Assert.True(session.LockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
 
                 // Complete Messages
                 await receiver.CompleteAsync(receivedMessage.LockToken);

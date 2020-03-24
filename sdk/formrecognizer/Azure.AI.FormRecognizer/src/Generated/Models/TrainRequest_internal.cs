@@ -13,8 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class TrainRequest_internal
     {
         /// <summary> Initializes a new instance of TrainRequest_internal. </summary>
-        public TrainRequest_internal()
+        /// <param name="source"> Source path containing the training documents. </param>
+        public TrainRequest_internal(string source)
         {
+            Source = source;
         }
 
         /// <summary> Initializes a new instance of TrainRequest_internal. </summary>
@@ -29,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Source path containing the training documents. </summary>
-        public string Source { get; set; }
+        public string Source { get; }
         /// <summary> Filter to apply to the documents in the source path for training. </summary>
         public TrainingFileFilter SourceFilter { get; set; }
         /// <summary> Use label file for training a model. </summary>

@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
-  	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+    <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
   <!-- Please do not move/edit code below this line -->
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.PolicyInsights</PackageId>
     <Description>Provides policy insights operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.PolicyInsights</AssemblyName>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;</PackageTags>
-    <PackageReleaseNotes>Added support for policyMetadata resource type, updated API versions for remediations and policy states queries.</PackageReleaseNotes>
+    <PackageReleaseNotes><![CDATA[
+      - Added support for triggering compliance evaluations
+      - Added policyDefinitionVersion, policySetDefinitionVersion, and policyAssignmentVersion columns to policy states query results
+    ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

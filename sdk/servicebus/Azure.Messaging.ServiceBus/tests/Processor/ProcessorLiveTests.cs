@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
@@ -124,7 +123,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     var currentCt = Interlocked.Increment(ref messageProcessedCt);
-                    TestContext.Progress.WriteLine(currentCt);
                     if (currentCt == stopAfterMessagesCt)
                     {
                         // awaiting here would cause a deadlock
@@ -134,14 +132,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     return Task.CompletedTask;
                 }
                 await tcs.Task;
-                var receiver = client.GetReceiver(scope.QueueName, new ServiceBusReceiverOptions
-                {
-                    RetryOptions = new ServiceBusRetryOptions()
-                    {
-                        TryTimeout = TimeSpan.FromSeconds(5),
-                    }
-                });
 
+                var receiver = GetNoRetryClient().GetReceiver(scope.QueueName);
                 var receivedMessages = await receiver.ReceiveBatchAsync(numMessages);
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync, but we can at least verify that there are remaining messages
@@ -263,8 +255,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         }
                         Interlocked.Increment(ref messageCt);
                         sessions.TryRemove(message.SessionId, out bool _);
-                        Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(receiver.SessionManager.LockedUntil);
+                        var session = receiver.GetSessionManager();
+                        Assert.AreEqual(message.SessionId, session.SessionId);
+                        Assert.IsNotNull(session.LockedUntil);
                     }
                     finally
                     {
@@ -313,16 +306,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 var options = new ServiceBusProcessorOptions
                 {
-                    RetryOptions = new ServiceBusRetryOptions
-                    {
-                        MaximumRetries = 0,
-                        TryTimeout = TimeSpan.FromSeconds(5)
-                    },
                     MaxConcurrentCalls = numThreads,
                     AutoComplete = autoComplete
                 };
 
-                ServiceBusProcessor processor = client.GetSessionProcessor(scope.QueueName, options);
+                ServiceBusProcessor processor = GetNoRetryClient().GetSessionProcessor(scope.QueueName, options);
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -339,8 +327,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                             await receiver.CompleteAsync(message.LockToken);
                         }
                         sessions.TryRemove(message.SessionId, out bool _);
-                        Assert.AreEqual(message.SessionId, receiver.SessionManager.SessionId);
-                        Assert.IsNotNull(receiver.SessionManager.LockedUntil);
+                        var session = receiver.GetSessionManager();
+                        Assert.AreEqual(message.SessionId, session.SessionId);
+                        Assert.IsNotNull(session.LockedUntil);
                     }
                     finally
                     {
@@ -365,18 +354,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // only do this assertion when we complete the message ourselves,
                 // otherwise the message completion may have been cancelled if it didn't finish
                 // before calling StopProcessingAsync.
+
+
                 if (!autoComplete)
                 {
-                    Assert.That(async () => await client.GetSessionReceiverAsync(
-                        scope.QueueName,
-                        options: new ServiceBusReceiverOptions
-                        {
-                            RetryOptions = new ServiceBusRetryOptions
-                            {
-                                TryTimeout = TimeSpan.FromSeconds(5),
-                                MaximumRetries = 0
-                            }
-                        }), Throws.Exception);
+                    Assert.That(async () =>
+                        await GetNoRetryClient().GetSessionReceiverAsync(scope.QueueName),
+                        Throws.Exception);
                 }
             }
         }
@@ -463,6 +447,82 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
 
                 Assert.True(exceptionReceivedHandlerCalled);
+            }
+        }
+
+        [Test]
+        [TestCase(1, true)]
+        [TestCase(5, false)]
+        [TestCase(10, true)]
+        [TestCase(20, false)]
+        public async Task Process_Event_SessionId(int numThreads, bool autoComplete)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                string sessionId = null;
+                for (int i = 0; i < numThreads; i++)
+                {
+                    sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                int messageCt = 0;
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete,
+                };
+
+                var processor = client.GetSessionProcessor(
+                    scope.QueueName,
+                    options,
+                    sessionId); // using the last sessionId from the loop
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    try
+                    {
+                        var receiver = args.Receiver;
+                        var message = args.Message;
+                        if (!autoComplete)
+                        {
+                            await receiver.CompleteAsync(message);
+                        }
+                        sessions.TryRemove(message.SessionId, out bool _);
+                        Assert.AreEqual(sessionId, message.SessionId);
+                        var session = receiver.GetSessionManager();
+                        Assert.AreEqual(sessionId, session.SessionId);
+                        Assert.IsNotNull(session.LockedUntil);
+                    }
+                    finally
+                    {
+                        var ct = Interlocked.Increment(ref messageCt);
+                        tcs.SetResult(true);
+                    }
+                }
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+
+                // only one message has the session id that we
+                // configured the processor with
+                Assert.AreEqual(1, messageCt);
+
+                // we should have received messages from only the specified session
+                Assert.AreEqual(numThreads - 1, sessions.Count);
             }
         }
     }

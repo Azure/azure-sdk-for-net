@@ -620,41 +620,27 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
+        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
         [TestCase(33 * Constants.MB, 16)]
         [TestCase(33 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 1)]
+        [TestCase(257 * Constants.MB, 4)]
+        [TestCase(257 * Constants.MB, 8)]
+        [TestCase(257 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 16)]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, 8)]
+        [TestCase(1 * Constants.GB, null)]
+        [TestCase(1 * Constants.GB, 16)]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadStreamAndVerify(
                 size,
-                new StorageTransferOptions {
-                    MaximumConcurrency = maximumThreadCount,
-                    MaximumTransferLength = 16 * Constants.MB,
-                    InitialTransferLength = 16 * Constants.MB
-                });
-        }
-
-        [Test]
-        [LiveOnly]
-        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
-        [TestCase(257 * Constants.MB, 1)]
-        [TestCase(257 * Constants.MB, 4)]
-        [TestCase(257 * Constants.MB, 8)]
-        [TestCase(257 * Constants.MB, null)]
-        [TestCase(257 * Constants.MB, 16)]
-        [TestCase(1 * Constants.GB, 1)]
-        [TestCase(1 * Constants.GB, 4)]
-        [TestCase(1 * Constants.GB, 8)]
-        [TestCase(1 * Constants.GB, null)]
-        [TestCase(1 * Constants.GB, 16)]
-        public async Task UploadStreamAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
-        {
-            // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadStreamAndVerify(
-                size,
                 new StorageTransferOptions
                 {
                     MaximumConcurrency = maximumThreadCount,
@@ -665,27 +651,12 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
+        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
         [TestCase(33 * Constants.MB, 16)]
         [TestCase(33 * Constants.MB, null)]
-        public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
-        {
-            // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadFileAndVerify(
-                size,
-                new StorageTransferOptions
-                {
-                    MaximumConcurrency = maximumThreadCount,
-                    MaximumTransferLength = 16 * Constants.MB,
-                    InitialTransferLength = 16 * Constants.MB
-                });
-        }
-
-        [Test]
-        [LiveOnly]
-        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(257 * Constants.MB, 1)]
         [TestCase(257 * Constants.MB, 4)]
         [TestCase(257 * Constants.MB, 8)]
@@ -696,7 +667,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, null)]
         [TestCase(1 * Constants.GB, 16)]
-        public async Task UploadFileAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
+        public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadFileAndVerify(
@@ -837,6 +808,7 @@ namespace Azure.Storage.Blobs.Test
 
         [LiveOnly]
         [Test]
+        [Explicit("#10716 - Disabled failing UploadAsync_ProgressReporting live test")]
         public async Task UploadAsync_ProgressReporting()
         {
             // Arrange
@@ -925,6 +897,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly] // Don't want a 100MB recording
+        [Explicit("#10717 - Disabled failing ChecksForCancelation live test")]
         public async Task ChecksForCancelation()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

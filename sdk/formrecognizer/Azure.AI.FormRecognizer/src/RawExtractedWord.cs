@@ -3,6 +3,8 @@
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class RawExtractedWord : RawExtractedItem
     {
         internal RawExtractedWord(TextWord_internal textWord)
@@ -11,8 +13,13 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = textWord.Confidence;
             Text = textWord.Text;
         }
+        /// <summary>
+        /// </summary>
 
         public float? Confidence { get; }
+
+        /// <summary>
+        /// </summary>
 
         public static implicit operator string(RawExtractedWord word) => word.Text;
     }

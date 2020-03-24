@@ -62,9 +62,9 @@ namespace Azure.Template.Models
     }
     public partial class Model
     {
-        public Model() { }
-        public Azure.Template.Models.DaysOfWeek DaysOfWeek { get { throw null; } set { } }
-        public Azure.Template.Models.Fruit Fruit { get { throw null; } set { } }
+        public Model(Azure.Template.Models.Fruit fruit, Azure.Template.Models.DaysOfWeek daysOfWeek) { }
+        public Azure.Template.Models.DaysOfWeek DaysOfWeek { get { throw null; } }
+        public Azure.Template.Models.Fruit Fruit { get { throw null; } }
         public string ModelProperty { get { throw null; } set { } }
     }
 }

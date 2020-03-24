@@ -268,9 +268,18 @@
     <value>An error was encountered while executing custom code, such as in an event handler.</value>
   </data>
   <data name="DeveloperCodeExceptionMessageMask" xml:space="preserve">
-    <value>[Developer Code Exception] : {0}.</value>
+    <value>[Developer Code Exception]: {0}.</value>
   </data>
   <data name="InvalidFullyQualifiedNamespace" xml:space="preserve">
     <value>The value '{0}' is not a well-formed Event Hubs fully qualified namespace.</value>
+  </data>
+  <data name="EventBatchIsLocked" xml:space="preserve">
+    <value>The event batch is currently being used in communication with the Event Hubs service; events may not be added until the active operation is complete.</value>
+  </data>
+  <data name="OperationEventProcessingLoop" xml:space="preserve">
+    <value>Performing the main Event Processor loop.</value>
+  </data>
+  <data name="OperationLoadBalancing" xml:space="preserve">
+    <value>Executing a load balancing cycle.</value>
   </data>
 </root>

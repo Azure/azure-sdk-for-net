@@ -68,11 +68,9 @@ namespace Compute.Tests
 
         protected ImageReference FindVMImage(string publisher, string offer, string sku)
         {
-            var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResource>();
-            query.Top = 1;
             var images = m_CrpClient.VirtualMachineImages.List(
                 location: m_location, publisherName: publisher, offer: offer, skus: sku,
-                odataQuery: query);
+                top: 1);
             var image = images.First();
             return new ImageReference
             {

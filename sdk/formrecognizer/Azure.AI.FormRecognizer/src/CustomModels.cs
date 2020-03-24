@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary> Link to the next page of custom models. </summary>
         internal string NextLink { get; }
 
-        private static IReadOnlyList<CustomModelInfo> ConvertModelList(ICollection<ModelInfo_internal> modelInfos)
+        private static IReadOnlyList<CustomModelInfo> ConvertModelList(IReadOnlyList<ModelInfo_internal> modelInfos)
         {
             return modelInfos.Select(mi => new CustomModelInfo(mi)).ToList();
         }

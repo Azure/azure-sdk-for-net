@@ -232,6 +232,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a well-formed Event Hubs fully qualified The value &apos;{0}&apos; is not a well-formed Event Hubs fully qualified namespace..
+        /// </summary>
+        internal static string InvalidFullyQualifiedNamespace {
+            get {
+                return ResourceManager.GetString("InvalidFullyQualifiedNamespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}.
         /// </summary>
         internal static string InvalidMessageBody {
@@ -297,9 +306,9 @@ namespace Azure.Messaging.ServiceBus {
         /// <summary>
         ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
         /// </summary>
-        internal static string OnlyOneEventHubNameMayBeSpecified {
+        internal static string OnlyOneEntityNameMayBeSpecified {
             get {
-                return ResourceManager.GetString("OnlyOneEventHubNameMayBeSpecified", resourceCulture);
+                return ResourceManager.GetString("OnlyOneEntityNameMayBeSpecified", resourceCulture);
             }
         }
         
@@ -394,12 +403,10 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The event processor is already running and needs to be stopped in order to perform this operation..
+        ///   Looks up a localized string similar to The message processor is already running and needs to be stopped in order to perform this operation..
         /// </summary>
-        internal static string RunningMessageProcessorCannotPerformOperation
-        {
-            get
-            {
+        internal static string RunningMessageProcessorCannotPerformOperation {
+            get {
                 return ResourceManager.GetString("RunningMessageProcessorCannotPerformOperation", resourceCulture);
             }
         }

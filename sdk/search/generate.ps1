@@ -1,7 +1,7 @@
 #
-# Generate Azure.Search
+# Generate Azure.Search.Documents
 #
-Push-Location $PSScriptRoot/Azure.Search/src/
+Push-Location $PSScriptRoot/Azure.Search.Documents/src/
 
 # We're doing a copy instead of a reference until we can merge them together
 # because AutoRest doesn't play well with two remote swagger files.  (We only
@@ -15,7 +15,7 @@ Invoke-WebRequest https://raw.githubusercontent.com/Azure/azure-rest-api-specs/m
     -OutFile ./swagger/searchservice.json `
     -ErrorAction Continue
 
-Write-Output "Generating Azure.Search..."
+Write-Output "Generating Azure.Search.Documents..."
 dotnet msbuild /t:GenerateCode
 
 Pop-Location

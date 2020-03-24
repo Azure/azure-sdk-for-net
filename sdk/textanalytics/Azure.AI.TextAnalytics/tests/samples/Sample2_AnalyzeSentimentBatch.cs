@@ -19,10 +19,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
-            var inputs = new List<TextDocumentInput>
+            var documents = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "That was the best day of my life!")
                 {
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             foreach (AnalyzeSentimentResult result in results)
             {
-                TextDocumentInput document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
