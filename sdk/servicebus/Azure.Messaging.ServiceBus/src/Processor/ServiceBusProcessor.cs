@@ -701,9 +701,12 @@ namespace Azure.Messaging.ServiceBus
                 if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete)
                 {
                     action = ExceptionReceivedEventArgsAction.Complete;
+                    // don't pass the processor cancellation token
+                    // as we want in flight autocompletion to be able
+                    // to finish
                     await receiver.CompleteAsync(
                         message.LockToken,
-                        processorCancellationToken)
+                        CancellationToken.None)
                         .ConfigureAwait(false);
                 }
 

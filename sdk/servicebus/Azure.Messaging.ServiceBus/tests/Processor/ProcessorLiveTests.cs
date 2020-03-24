@@ -372,5 +372,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
             }
         }
+
+        [Test]
+        public async Task StopProcessingDoesNotCancelAutoCompletion()
+        {
+            var lockDuration = TimeSpan.FromSeconds(5);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+                var processor = client.GetProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    AutoComplete = true
+                });
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var message = args.Message;
+                    tcs.SetResult(true);
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                var receiver = client.GetReceiver(scope.QueueName);
+                var msg = await receiver.ReceiveAsync();
+                Assert.IsNull(msg);
+            }
+        }
     }
 }
