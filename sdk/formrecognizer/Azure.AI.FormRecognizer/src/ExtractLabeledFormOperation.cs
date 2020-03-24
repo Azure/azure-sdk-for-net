@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer
 {
     /// <summary>
     /// </summary>
-    internal class RecognizeLabeledFormOperation : Operation<IReadOnlyList<CustomLabeledForm>>
+    public class RecognizeLabeledFormOperation : Operation<IReadOnlyList<CustomLabeledForm>>
     {
         private Response _response;
         private IReadOnlyList<CustomLabeledForm> _value;
@@ -23,12 +23,16 @@ namespace Azure.AI.FormRecognizer
         private readonly string _modelId;
         private readonly ServiceClient _operations;
 
+        /// <inheritdoc/>
         public override string Id { get; }
 
+        /// <inheritdoc/>
         public override IReadOnlyList<CustomLabeledForm> Value => OperationHelpers.GetValue(ref _value);
 
+        /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
 
+        /// <inheritdoc/>
         public override bool HasValue => _value != null;
 
         /// <inheritdoc/>

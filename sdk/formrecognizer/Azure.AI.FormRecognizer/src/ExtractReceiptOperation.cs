@@ -2,16 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class RecognizeReceiptOperation : Operation<IReadOnlyList<UnitedStatesReceipt>>
+    /// <summary>
+    /// </summary>
+    public class RecognizeUSReceiptOperation : Operation<IReadOnlyList<UnitedStatesReceipt>>
     {
         private Response _response;
         private IReadOnlyList<UnitedStatesReceipt> _value;
@@ -19,12 +21,16 @@ namespace Azure.AI.FormRecognizer.Models
 
         private readonly ServiceClient _operations;
 
+        /// <inheritdoc/>
         public override string Id { get; }
 
+        /// <inheritdoc/>
         public override IReadOnlyList<UnitedStatesReceipt> Value => OperationHelpers.GetValue(ref _value);
 
+        /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
 
+        /// <inheritdoc/>
         public override bool HasValue => _value != null;
 
         /// <inheritdoc/>
@@ -38,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override ValueTask<Response<IReadOnlyList<UnitedStatesReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal RecognizeReceiptOperation(ServiceClient operations, string operationLocation)
+        internal RecognizeUSReceiptOperation(ServiceClient operations, string operationLocation)
         {
             _operations = operations;
 

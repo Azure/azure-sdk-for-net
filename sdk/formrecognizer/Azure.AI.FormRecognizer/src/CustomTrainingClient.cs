@@ -57,9 +57,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A Operation&lt;CustomModel&gt; to wait on this long-running operation.  Its Operation &lt; CustomModel &gt; .Value upon successful
+        /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
-        public virtual Operation<CustomModel> StartTraining(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
 
@@ -83,9 +83,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A Operation&lt;CustomModel&gt; to wait on this long-running operation.  Its Operation &lt; CustomModel &gt; .Value upon successful
+        /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
-        public virtual async Task<Operation<CustomModel>> StartTrainingAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
 
@@ -106,8 +106,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
-        public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
+        /// completion will contain meta-data about the trained model.</returns>
+        public virtual TrainingWithLabelsOperation StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
 
@@ -128,8 +129,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
-        public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
+        /// completion will contain meta-data about the trained model.</returns>
+        public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
 

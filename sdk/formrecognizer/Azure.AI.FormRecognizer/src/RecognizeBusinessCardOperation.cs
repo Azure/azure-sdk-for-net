@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeContentOperation : Operation<IReadOnlyList<FormPageContent>>
+    public class RecognizeBusinessCardOperation : Operation<IReadOnlyList<BusinessCard>>
     {
         private Response _response;
-        private IReadOnlyList<FormPageContent> _value;
+        private IReadOnlyList<BusinessCard> _value;
         private bool _hasCompleted;
 
         private readonly ServiceClient _operations;
@@ -26,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<FormPageContent> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<BusinessCard> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -38,14 +37,14 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormPageContent>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<BusinessCard>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormPageContent>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<BusinessCard>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal RecognizeContentOperation(ServiceClient operations, string operationLocation)
+        internal RecognizeBusinessCardOperation(ServiceClient operations, string operationLocation)
         {
             _operations = operations;
 
@@ -64,40 +63,45 @@ namespace Azure.AI.FormRecognizer.Models
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
+            // TODO: Implement once Business Cards are supported by service.
+            //if (async)
+            //{
+            //    await Task.Run(() => { }).ConfigureAwait(false);
+            //}
+
+            //throw new NotImplementedException();
+
             if (!_hasCompleted)
             {
                 Response<AnalyzeOperationResult_internal> update = async
-                    ? await _operations.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _operations.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+                    ? await _operations.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                    : _operations.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
+
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-
-                    _value = ConvertValue(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
+                    _value = ConvertToExtractedReceipts(update.Value.AnalyzeResult.DocumentResults);
                 }
 
                 _response = update.GetRawResponse();
             }
 
             return GetRawResponse();
+
         }
 
-        private static IReadOnlyList<FormPageContent> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
+
+        private static IReadOnlyList<BusinessCard> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults)
         {
-            Debug.Assert(pageResults.Count == readResults.Count);
-
-            List<FormPageContent> pages = new List<FormPageContent>();
-            List<ReadResult_internal> rawPages = readResults.ToList();
-
-            foreach (var page in pageResults)
+            List<BusinessCard> receipts = new List<BusinessCard>();
+            for (int i = 0; i < documentResults.Count; i++)
             {
-                pages.Add(new FormPageContent(page, rawPages[page.Page - 1]));
+                receipts.Add(new BusinessCard());
             }
-
-            return pages;
+            return receipts;
         }
     }
 }

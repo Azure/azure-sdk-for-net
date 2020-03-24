@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary>
     /// Represents a long-running training operation.
     /// </summary>
-    internal class TrainingOperation : Operation<CustomModel>
+    public class TrainingOperation : Operation<CustomModel>
     {
         private Response _response;
         private CustomModel _value;
