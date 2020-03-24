@@ -5,7 +5,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// AccessControlChangeCounters contains counts of operations that change Access Control Lists recursively.
     /// </summary>
-    public class AccessControlChangeCounters
+    public struct AccessControlChangeCounters
     {
         /// <summary>
         /// Returns number of directories where Access Control List has been updated successfully.
@@ -21,12 +21,5 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Returns number of paths where Access Control List update has failed.
         /// </summary>
         public long FailedChangesCount { get; internal set; }
-
-        /// <summary>
-        /// Optional continuation token. Value is present when operation is split into multiple batches and can be used to resume progress.
-        /// </summary>
-        public string ContinuationToken { get; internal set; }
-
-        internal AccessControlChangeCounters() { }
     }
 }

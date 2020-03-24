@@ -2035,13 +2035,13 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<AccessControlChangeCounters> SetAccessControlRecursive(
+        public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
             AccessControlChangeOptions options = default,
@@ -2084,13 +2084,13 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<AccessControlChangeCounters>> SetAccessControlRecursiveAsync(
+        public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
             AccessControlChangeOptions options = default,
@@ -2133,13 +2133,13 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<AccessControlChangeCounters> UpdateAccessControlRecursive(
+        public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
             AccessControlChangeOptions options = default,
@@ -2182,13 +2182,13 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<AccessControlChangeCounters>> UpdateAccessControlRecursiveAsync(
+        public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
             AccessControlChangeOptions options = default,
@@ -2231,13 +2231,13 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<AccessControlChangeCounters> RemoveAccessControlRecursive(
+        public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
             AccessControlChangeOptions options = default,
@@ -2280,13 +2280,13 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> that contains summary stats of the operation.
+        /// A <see cref="Response{AccessControlChangeResult}"/> that contains summary stats of the operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<AccessControlChangeCounters>> RemoveAccessControlRecursiveAsync(
+        public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
             AccessControlChangeOptions options = default,
@@ -2340,14 +2340,14 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{AccessControlChangeCounters}"/> describing the updated
+        /// A <see cref="Response{AccessControlChangeResult}"/> describing the updated
         /// path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<AccessControlChangeCounters>> SetAccessControlRecursiveInternal(
+        private async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveInternal(
             string operationName,
             string accessControlList,
             IProgress<Response<AccessControlChanges>> progressHandler,
@@ -2405,6 +2405,9 @@ namespace Azure.Storage.Files.DataLake
                                 int currentDirectoriesSuccessfulCount = response.DirectoriesSuccessful ?? 0;
                                 int currentFilesSuccessfulCount = response.FilesSuccessful ?? 0;
                                 int currentFailureCount = response.FailureCount ?? 0;
+                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
+                                filesSuccessfulCount += currentFilesSuccessfulCount;
+                                failureCount += currentFailureCount;
                                 if (progressHandler != null)
                                 {
                                     var failedEntries = response.FailedEntries
@@ -2416,25 +2419,34 @@ namespace Azure.Storage.Files.DataLake
                                         }).ToList();
                                     progressHandler.Report(Response.FromValue(new AccessControlChanges()
                                     {
-                                        ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
-                                        ChangedFilesCount = currentFilesSuccessfulCount,
-                                        FailedChangesCount = failureCount,
-                                        FailedEntries = failedEntries,
+                                        BatchCounters = new AccessControlChangeCounters()
+                                        {
+                                            ChangedDirectoriesCount = currentDirectoriesSuccessfulCount,
+                                            ChangedFilesCount = currentFilesSuccessfulCount,
+                                            FailedChangesCount = currentFailureCount,
+                                        },
+                                        CumulativeCounters = new AccessControlChangeCounters()
+                                        {
+                                            ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                            ChangedFilesCount = filesSuccessfulCount,
+                                            FailedChangesCount = failureCount,
+                                        },
+                                        BatchFailures = failedEntries,
                                         ContinuationToken = lastContinuationToken,
                                     },
                                         jsonResponse.GetRawResponse()));
                                 }
-                                directoriesSuccessfulCount += currentDirectoriesSuccessfulCount;
-                                filesSuccessfulCount += currentFilesSuccessfulCount;
-                                failureCount += currentFailureCount;
                             }
                         } while (!string.IsNullOrEmpty(continuationToken));
 
-                        return Response.FromValue(new AccessControlChangeCounters()
+                        return Response.FromValue(new AccessControlChangeResult()
                         {
-                            ChangedDirectoriesCount = directoriesSuccessfulCount,
-                            ChangedFilesCount = filesSuccessfulCount,
-                            FailedChangesCount = failureCount,
+                            Counters = new AccessControlChangeCounters()
+                            {
+                                ChangedDirectoriesCount = directoriesSuccessfulCount,
+                                ChangedFilesCount = filesSuccessfulCount,
+                                FailedChangesCount = failureCount,
+                            },
                             ContinuationToken = lastContinuationToken,
                         },
                             jsonResponse.GetRawResponse());

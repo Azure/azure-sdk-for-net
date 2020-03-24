@@ -953,12 +953,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            AccessControlChangeCounters result = await directory.SetAccessControlRecursiveAsync(AccessControlList, null);
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -981,15 +981,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            AccessControlChangeCounters result = await directory.SetAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 AccessControlList,
                 null,
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
         }
 
@@ -1013,7 +1013,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            AccessControlChanges intermediateResult = null;
+            AccessControlChanges intermediateResult = default;
 
             // Act
             try
@@ -1033,16 +1033,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip
             }
 
-            AccessControlChangeCounters result = await directory.SetAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 AccessControlList,
                 null,
                 options,
                 intermediateResult.ContinuationToken);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount + intermediateResult.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount + intermediateResult.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount + intermediateResult.ChangedFilesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
         }
 
@@ -1067,19 +1067,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            AccessControlChangeCounters result = await directory.SetAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 AccessControlList,
                 progresMonitorMock.Object,
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
 
             progresMonitorMock.Verify(
-                x => x.Report(It.Is<Response<AccessControlChanges>>(arg => arg.Value.ChangedDirectoriesCount + arg.Value.ChangedFilesCount <= options.BatchSize)),
+                x => x.Report(It.Is<Response<AccessControlChanges>>(
+                    arg => arg.Value.BatchCounters.ChangedDirectoriesCount + arg.Value.BatchCounters.ChangedFilesCount <= options.BatchSize)),
                 Times.Exactly(4));
         }
 
@@ -1113,12 +1114,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
 
             // Act
-            AccessControlChangeCounters result = await directory.SetAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.SetAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 progressHandler: progress);
 
             // Assert
-            Assert.AreEqual(1, result.FailedChangesCount);
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.AreEqual(1, progress.FailedEntries.Count);
             AccessControlChangeFailure failedEntry = progress.FailedEntries[0];
             StringAssert.Contains(file4.Name, failedEntry.Name);
@@ -1140,12 +1141,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            AccessControlChangeCounters result = await directory.UpdateAccessControlRecursiveAsync(AccessControlList, null);
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1168,15 +1169,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            AccessControlChangeCounters result = await directory.UpdateAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 null,
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
         }
 
@@ -1200,7 +1201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            AccessControlChanges intermediateResult = null;
+            AccessControlChanges intermediateResult = default;
 
             // Act
             try
@@ -1220,16 +1221,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip
             }
 
-            AccessControlChangeCounters result = await directory.UpdateAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 AccessControlList,
                 null,
                 options,
                 intermediateResult.ContinuationToken);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount + intermediateResult.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount + intermediateResult.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount + intermediateResult.ChangedFilesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
         }
 
@@ -1254,19 +1255,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            AccessControlChangeCounters result = await directory.UpdateAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 AccessControlList,
                 progresMonitorMock.Object,
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
 
             progresMonitorMock.Verify(
-                x => x.Report(It.Is<Response<AccessControlChanges>>(arg => arg.Value.ChangedDirectoriesCount + arg.Value.ChangedFilesCount <= options.BatchSize)),
+                x => x.Report(It.Is<Response<AccessControlChanges>>(
+                    arg => arg.Value.BatchCounters.ChangedDirectoriesCount + arg.Value.BatchCounters.ChangedFilesCount <= options.BatchSize)),
                 Times.Exactly(4));
         }
 
@@ -1300,12 +1302,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
 
             // Act
-            AccessControlChangeCounters result = await directory.UpdateAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.UpdateAccessControlRecursiveAsync(
                 accessControlList: AccessControlList,
                 progressHandler: progress);
 
             // Assert
-            Assert.AreEqual(1, result.FailedChangesCount);
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.AreEqual(1, progress.FailedEntries.Count);
             AccessControlChangeFailure failedEntry = progress.FailedEntries[0];
             StringAssert.Contains(file4.Name, failedEntry.Name);
@@ -1327,12 +1329,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file4 = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            AccessControlChangeCounters result = await directory.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.IsNull(result.ContinuationToken);
         }
 
@@ -1355,15 +1357,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            AccessControlChangeCounters result = await directory.RemoveAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 RemoveAccessControlList,
                 null,
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
         }
 
@@ -1387,7 +1389,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            AccessControlChanges intermediateResult = null;
+            AccessControlChanges intermediateResult = default;
 
             // Act
             try
@@ -1407,16 +1409,16 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // skip
             }
 
-            AccessControlChangeCounters result = await directory.RemoveAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 RemoveAccessControlList,
                 null,
                 options,
                 intermediateResult.ContinuationToken);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount + intermediateResult.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount + intermediateResult.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount + intermediateResult.ChangedFilesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount + intermediateResult.BatchCounters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount + intermediateResult.BatchCounters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount + intermediateResult.BatchCounters.ChangedFilesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
         }
 
@@ -1441,19 +1443,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             // Act
-            AccessControlChangeCounters result = await directory.RemoveAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 RemoveAccessControlList,
                 progresMonitorMock.Object,
                 options);
 
             // Assert
-            Assert.AreEqual(3, result.ChangedDirectoriesCount);
-            Assert.AreEqual(4, result.ChangedFilesCount);
-            Assert.AreEqual(0, result.FailedChangesCount);
+            Assert.AreEqual(3, result.Counters.ChangedDirectoriesCount);
+            Assert.AreEqual(4, result.Counters.ChangedFilesCount);
+            Assert.AreEqual(0, result.Counters.FailedChangesCount);
             Assert.That(result.ContinuationToken, Is.Not.Null.Or.Empty);
 
             progresMonitorMock.Verify(
-                x => x.Report(It.Is<Response<AccessControlChanges>>(arg => arg.Value.ChangedDirectoriesCount + arg.Value.ChangedFilesCount <= options.BatchSize)),
+                x => x.Report(It.Is<Response<AccessControlChanges>>(
+                    arg => arg.Value.BatchCounters.ChangedDirectoriesCount + arg.Value.BatchCounters.ChangedFilesCount <= options.BatchSize)),
                 Times.Exactly(4));
         }
 
@@ -1487,12 +1490,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             InMemoryAccessControlRecursiveChangeProgress progress = new InMemoryAccessControlRecursiveChangeProgress();
 
             // Act
-            AccessControlChangeCounters result = await directory.RemoveAccessControlRecursiveAsync(
+            AccessControlChangeResult result = await directory.RemoveAccessControlRecursiveAsync(
                 accessControlList: RemoveAccessControlList,
                 progressHandler: progress);
 
             // Assert
-            Assert.AreEqual(1, result.FailedChangesCount);
+            Assert.AreEqual(1, result.Counters.FailedChangesCount);
             Assert.AreEqual(1, progress.FailedEntries.Count);
             AccessControlChangeFailure failedEntry = progress.FailedEntries[0];
             StringAssert.Contains(file4.Name, failedEntry.Name);

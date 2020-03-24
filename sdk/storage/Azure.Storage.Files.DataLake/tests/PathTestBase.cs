@@ -101,7 +101,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             public void Report(Response<AccessControlChanges> response)
             {
-                FailedEntries.AddRange(response.Value.FailedEntries);
+                FailedEntries.AddRange(response.Value.BatchFailures);
             }
         }
 

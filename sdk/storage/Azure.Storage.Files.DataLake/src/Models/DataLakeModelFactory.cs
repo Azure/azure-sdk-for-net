@@ -35,16 +35,16 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         /// <returns></returns>
         public static AccessControlChanges AccessControlChanges(
-            int directoriesSuccessfulCount,
-            int filesSuccessfulCount,
-            int failureCount,
-            IEnumerable<AccessControlChangeFailure> failedEntries
+            AccessControlChangeCounters cumulativeCounters,
+            AccessControlChangeCounters batchCounters,
+            IEnumerable<AccessControlChangeFailure> batchFailures,
+            string continuationToken
             ) => new AccessControlChanges()
             {
-                ChangedDirectoriesCount = directoriesSuccessfulCount,
-                ChangedFilesCount = filesSuccessfulCount,
-                FailedChangesCount = failureCount,
-                FailedEntries = failedEntries,
+                CumulativeCounters = cumulativeCounters,
+                BatchCounters= batchCounters,
+                BatchFailures = batchFailures,
+                ContinuationToken = continuationToken,
             };
         #endregion AccessControlChanges
 
@@ -64,6 +64,22 @@ namespace Azure.Storage.Files.DataLake.Models
                 ErrorMessage = errorMessage,
             };
         #endregion AccessControlChangeFailure
+
+
+        #region AccessControlChangeResult
+        /// <summary>
+        /// Creates a new <see cref="AccessControlChangeResult"/> instance for mocking.
+        /// </summary>
+        /// <returns></returns>
+        public static AccessControlChangeResult AccessControlChangeResult(
+            AccessControlChangeCounters counters,
+            string continuationToken
+            ) => new AccessControlChangeResult()
+            {
+                Counters = counters,
+                ContinuationToken = continuationToken,
+            };
+        #endregion AccessControlChangeResult
 
         #region FileDownloadDetails
         /// <summary>
