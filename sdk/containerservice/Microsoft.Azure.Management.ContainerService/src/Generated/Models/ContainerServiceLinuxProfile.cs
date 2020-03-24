@@ -77,6 +77,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Ssh");
             }
+            if (AdminUsername != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(AdminUsername, "^[A-Za-z][-A-Za-z0-9_]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "AdminUsername", "^[A-Za-z][-A-Za-z0-9_]*$");
+                }
+            }
             if (Ssh != null)
             {
                 Ssh.Validate();

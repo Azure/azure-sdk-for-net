@@ -34,14 +34,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the AgentPool class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">The name of the resource that is unique within a
-        /// resource group. This name can be used to access the
-        /// resource.</param>
-        /// <param name="type">Resource type</param>
         /// <param name="count">Number of agents (VMs) to host docker
-        /// containers. Allowed values must be in the range of 1 to 100
-        /// (inclusive). The default value is 1.</param>
+        /// containers. Allowed values must be in the range of 0 to 100
+        /// (inclusive). The default value is 1. </param>
         /// <param name="vmSize">Size of agent VMs. Possible values include:
         /// 'Standard_A1', 'Standard_A10', 'Standard_A11', 'Standard_A1_v2',
         /// 'Standard_A2', 'Standard_A2_v2', 'Standard_A2m_v2', 'Standard_A3',
@@ -97,6 +92,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// 'Standard_NC6s_v2', 'Standard_NC6s_v3', 'Standard_ND12s',
         /// 'Standard_ND24rs', 'Standard_ND24s', 'Standard_ND6s',
         /// 'Standard_NV12', 'Standard_NV24', 'Standard_NV6'</param>
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">The name of the resource that is unique within a
+        /// resource group. This name can be used to access the
+        /// resource.</param>
+        /// <param name="type">Resource type</param>
         /// <param name="osDiskSizeGB">OS Disk Size in GB to be used to specify
         /// the disk size for every machine in this master/agent pool. If you
         /// specify 0, it will apply the default osDisk size according to the
@@ -117,23 +117,33 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="agentPoolType">AgentPoolType represents types of an
         /// agent pool. Possible values include: 'VirtualMachineScaleSets',
         /// 'AvailabilitySet'</param>
+        /// <param name="mode">AgentPoolMode represents mode of an agent pool.
+        /// Possible values include: 'System', 'User'</param>
         /// <param name="orchestratorVersion">Version of orchestrator specified
         /// when creating the managed cluster.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
-        /// <param name="availabilityZones">(PREVIEW) Availability zones for
-        /// nodes. Must use VirtualMachineScaleSets AgentPoolType.</param>
+        /// <param name="availabilityZones">Availability zones for nodes. Must
+        /// use VirtualMachineScaleSets AgentPoolType.</param>
         /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
         /// <param name="scaleSetPriority">ScaleSetPriority to be used to
         /// specify virtual machine scale set priority. Default to regular.
-        /// Possible values include: 'Low', 'Regular'</param>
+        /// Possible values include: 'Spot', 'Low', 'Regular'</param>
         /// <param name="scaleSetEvictionPolicy">ScaleSetEvictionPolicy to be
-        /// used to specify eviction policy for low priority virtual machine
-        /// scale set. Default to Delete. Possible values include: 'Delete',
-        /// 'Deallocate'</param>
+        /// used to specify eviction policy for Spot or low priority virtual
+        /// machine scale set. Default to Delete. Possible values include:
+        /// 'Delete', 'Deallocate'</param>
+        /// <param name="spotMaxPrice">SpotMaxPrice to be used to specify the
+        /// maximum price you are willing to pay in US Dollars. Possible values
+        /// are any decimal value greater than zero or -1 which indicates
+        /// default price to be up-to on-demand.</param>
+        /// <param name="tags">Agent pool tags to be persisted on the agent
+        /// pool virtual machine scale set.</param>
+        /// <param name="nodeLabels">Agent pool node labels to be persisted
+        /// across all nodes in agent pool.</param>
         /// <param name="nodeTaints">Taints added to new nodes during node pool
         /// create and scale. For example, key=value:NoSchedule.</param>
-        public AgentPool(string id = default(string), string name = default(string), string type = default(string), int? count = default(int?), string vmSize = default(string), int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string agentPoolType = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), IList<string> nodeTaints = default(IList<string>))
+        public AgentPool(int count, string vmSize, string id = default(string), string name = default(string), string type = default(string), int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string agentPoolType = default(string), string mode = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), double? spotMaxPrice = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>))
             : base(id, name, type)
         {
             Count = count;
@@ -146,12 +156,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             MinCount = minCount;
             EnableAutoScaling = enableAutoScaling;
             AgentPoolType = agentPoolType;
+            Mode = mode;
             OrchestratorVersion = orchestratorVersion;
             ProvisioningState = provisioningState;
             AvailabilityZones = availabilityZones;
             EnableNodePublicIP = enableNodePublicIP;
             ScaleSetPriority = scaleSetPriority;
             ScaleSetEvictionPolicy = scaleSetEvictionPolicy;
+            SpotMaxPrice = spotMaxPrice;
+            Tags = tags;
+            NodeLabels = nodeLabels;
             NodeTaints = nodeTaints;
             CustomInit();
         }
@@ -163,11 +177,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets number of agents (VMs) to host docker containers.
-        /// Allowed values must be in the range of 1 to 100 (inclusive). The
+        /// Allowed values must be in the range of 0 to 100 (inclusive). The
         /// default value is 1.
         /// </summary>
         [JsonProperty(PropertyName = "properties.count")]
-        public int? Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// Gets or sets size of agent VMs. Possible values include:
@@ -285,6 +299,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string AgentPoolType { get; set; }
 
         /// <summary>
+        /// Gets or sets agentPoolMode represents mode of an agent pool.
+        /// Possible values include: 'System', 'User'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.mode")]
+        public string Mode { get; set; }
+
+        /// <summary>
         /// Gets or sets version of orchestrator specified when creating the
         /// managed cluster.
         /// </summary>
@@ -299,7 +320,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets (PREVIEW) Availability zones for nodes. Must use
+        /// Gets or sets availability zones for nodes. Must use
         /// VirtualMachineScaleSets AgentPoolType.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilityZones")]
@@ -314,18 +335,41 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Gets or sets scaleSetPriority to be used to specify virtual machine
         /// scale set priority. Default to regular. Possible values include:
-        /// 'Low', 'Regular'
+        /// 'Spot', 'Low', 'Regular'
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleSetPriority")]
         public string ScaleSetPriority { get; set; }
 
         /// <summary>
         /// Gets or sets scaleSetEvictionPolicy to be used to specify eviction
-        /// policy for low priority virtual machine scale set. Default to
-        /// Delete. Possible values include: 'Delete', 'Deallocate'
+        /// policy for Spot or low priority virtual machine scale set. Default
+        /// to Delete. Possible values include: 'Delete', 'Deallocate'
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleSetEvictionPolicy")]
         public string ScaleSetEvictionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets spotMaxPrice to be used to specify the maximum price
+        /// you are willing to pay in US Dollars. Possible values are any
+        /// decimal value greater than zero or -1 which indicates default price
+        /// to be up-to on-demand.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.spotMaxPrice")]
+        public double? SpotMaxPrice { get; set; }
+
+        /// <summary>
+        /// Gets or sets agent pool tags to be persisted on the agent pool
+        /// virtual machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets agent pool node labels to be persisted across all
+        /// nodes in agent pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nodeLabels")]
+        public IDictionary<string, string> NodeLabels { get; set; }
 
         /// <summary>
         /// Gets or sets taints added to new nodes during node pool create and
@@ -334,5 +378,26 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         [JsonProperty(PropertyName = "properties.nodeTaints")]
         public IList<string> NodeTaints { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (VmSize == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");
+            }
+            if (Count > 100)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Count", 100);
+            }
+            if (Count < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Count", 0);
+            }
+        }
     }
 }

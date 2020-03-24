@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ContainerService.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -37,6 +38,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="networkPolicy">Network policy used for building
         /// Kubernetes network. Possible values include: 'calico',
         /// 'azure'</param>
+        /// <param name="networkMode">Network mode used for building Kubernetes
+        /// network. Possible values include: 'transparent', 'bridge'</param>
         /// <param name="podCidr">A CIDR notation IP range from which to assign
         /// pod IPs when kubenet is used.</param>
         /// <param name="serviceCidr">A CIDR notation IP range from which to
@@ -48,18 +51,23 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="dockerBridgeCidr">A CIDR notation IP range assigned to
         /// the Docker bridge network. It must not overlap with any Subnet IP
         /// ranges or the Kubernetes service address range.</param>
+        /// <param name="outboundType">The outbound (egress) routing method.
+        /// Possible values include: 'loadBalancer',
+        /// 'userDefinedRouting'</param>
         /// <param name="loadBalancerSku">The load balancer sku for the managed
         /// cluster. Possible values include: 'standard', 'basic'</param>
         /// <param name="loadBalancerProfile">Profile of the cluster load
         /// balancer.</param>
-        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile))
+        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string networkMode = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string outboundType = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile))
         {
             NetworkPlugin = networkPlugin;
             NetworkPolicy = networkPolicy;
+            NetworkMode = networkMode;
             PodCidr = podCidr;
             ServiceCidr = serviceCidr;
             DnsServiceIP = dnsServiceIP;
             DockerBridgeCidr = dockerBridgeCidr;
+            OutboundType = outboundType;
             LoadBalancerSku = loadBalancerSku;
             LoadBalancerProfile = loadBalancerProfile;
             CustomInit();
@@ -83,6 +91,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkPolicy")]
         public string NetworkPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets network mode used for building Kubernetes network.
+        /// Possible values include: 'transparent', 'bridge'
+        /// </summary>
+        [JsonProperty(PropertyName = "networkMode")]
+        public string NetworkMode { get; set; }
 
         /// <summary>
         /// Gets or sets a CIDR notation IP range from which to assign pod IPs
@@ -115,6 +130,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string DockerBridgeCidr { get; set; }
 
         /// <summary>
+        /// Gets or sets the outbound (egress) routing method. Possible values
+        /// include: 'loadBalancer', 'userDefinedRouting'
+        /// </summary>
+        [JsonProperty(PropertyName = "outboundType")]
+        public string OutboundType { get; set; }
+
+        /// <summary>
         /// Gets or sets the load balancer sku for the managed cluster.
         /// Possible values include: 'standard', 'basic'
         /// </summary>
@@ -130,11 +152,39 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (PodCidr != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(PodCidr, "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "PodCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
+                }
+            }
+            if (ServiceCidr != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(ServiceCidr, "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "ServiceCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
+                }
+            }
+            if (DnsServiceIP != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DnsServiceIP, "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DnsServiceIP", "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+                }
+            }
+            if (DockerBridgeCidr != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(DockerBridgeCidr, "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "DockerBridgeCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
+                }
+            }
             if (LoadBalancerProfile != null)
             {
                 LoadBalancerProfile.Validate();
