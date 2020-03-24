@@ -147,11 +147,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOperationOperations Operation { get; }
 
         /// <summary>
-        /// Gets the IApiExportOperations.
-        /// </summary>
-        IApiExportOperations ApiExport { get; }
-
-        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         IApiVersionSetOperations ApiVersionSet { get; }
@@ -202,6 +197,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         IEmailTemplateOperations EmailTemplate { get; }
 
         /// <summary>
+        /// Gets the IGatewayOperations.
+        /// </summary>
+        IGatewayOperations Gateway { get; }
+
+        /// <summary>
+        /// Gets the IGatewayHostnameConfigurationOperations.
+        /// </summary>
+        IGatewayHostnameConfigurationOperations GatewayHostnameConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IGatewayApiOperations.
+        /// </summary>
+        IGatewayApiOperations GatewayApi { get; }
+
+        /// <summary>
         /// Gets the IGroupOperations.
         /// </summary>
         IGroupOperations Group { get; }
@@ -225,6 +235,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ILoggerOperations.
         /// </summary>
         ILoggerOperations Logger { get; }
+
+        /// <summary>
+        /// Gets the INamedValueOperations.
+        /// </summary>
+        INamedValueOperations NamedValue { get; }
 
         /// <summary>
         /// Gets the INetworkStatusOperations.
@@ -302,11 +317,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         IProductPolicyOperations ProductPolicy { get; }
 
         /// <summary>
-        /// Gets the INamedValueOperations.
-        /// </summary>
-        INamedValueOperations NamedValue { get; }
-
-        /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
         /// </summary>
         IQuotaByCounterKeysOperations QuotaByCounterKeys { get; }
@@ -375,6 +385,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
+
+        /// <summary>
+        /// Gets the IApiExportOperations.
+        /// </summary>
+        IApiExportOperations ApiExport { get; }
 
     }
 }

@@ -137,6 +137,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 Sku.Validate();
             }
+            if (VirtualNetworkConfiguration != null)
+            {
+                VirtualNetworkConfiguration.Validate();
+            }
         }
     }
 }
