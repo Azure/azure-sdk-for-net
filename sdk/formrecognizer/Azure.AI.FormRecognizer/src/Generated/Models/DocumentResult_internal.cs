@@ -12,11 +12,22 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
     internal partial class DocumentResult_internal
     {
+        /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
+        /// <param name="docType"> Document type. </param>
+        /// <param name="pageRange"> First and last page number where the document is found. </param>
+        /// <param name="fields"> Dictionary of named field values. </param>
+        internal DocumentResult_internal(string docType, IReadOnlyList<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
+        {
+            DocType = docType;
+            PageRange = pageRange;
+            Fields = fields;
+        }
+
         /// <summary> Document type. </summary>
-        public string DocType { get; set; }
+        public string DocType { get; }
         /// <summary> First and last page number where the document is found. </summary>
-        public IList<int> PageRange { get; set; } = new List<int>();
+        public IReadOnlyList<int> PageRange { get; } = new List<int>();
         /// <summary> Dictionary of named field values. </summary>
-        public IDictionary<string, FieldValue_internal> Fields { get; set; } = new Dictionary<string, FieldValue_internal>();
+        public IReadOnlyDictionary<string, FieldValue_internal> Fields { get; } = new Dictionary<string, FieldValue_internal>();
     }
 }

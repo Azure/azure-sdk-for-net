@@ -5,6 +5,8 @@ using System;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class SubscriptionProperties
     {
         internal SubscriptionProperties(ModelsSummary_internal summary)

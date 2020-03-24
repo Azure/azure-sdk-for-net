@@ -20,21 +20,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = client.GetReceiver("fakeQueue");
 
             Assert.IsFalse(receiver.IsSessionReceiver);
-            Assert.That(() => receiver.SessionManager, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => receiver.GetSessionManager(), Throws.InstanceOf<NotSupportedException>());
         }
 
         [Test]
         public void SessionReceiverCanAccessSessionProperties()
         {
-            var receiver = new ServiceBusReceiver(
-                Mock.Of<ServiceBusConnection>(),
-                "fakeQueue",
-                true,
-                options: new ServiceBusReceiverOptions());
+            var receiver = GetReceiverWithMockedConnection(useSessions: true);
 
             // should not throw
-            var sessionManager = receiver.SessionManager;
+            var sessionManager = receiver.GetSessionManager();
             Assert.IsTrue(receiver.IsSessionReceiver);
+        }
+
+        [Test]
+        public void SessionReceiverCannotPerformMessageLock()
+        {
+            var receiver = GetReceiverWithMockedConnection(useSessions: true);
+
+            Assert.That(async () => await receiver.RenewMessageLockAsync(
+                new ServiceBusReceivedMessage()),
+                Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        private ServiceBusReceiver GetReceiverWithMockedConnection(bool useSessions)
+        {
+            var mockConnection = new Mock<ServiceBusConnection>();
+
+            mockConnection
+                .Setup(connection => connection.RetryOptions)
+                .Returns(new ServiceBusRetryOptions());
+
+            return new ServiceBusReceiver(
+                mockConnection.Object,
+                "fakeQueue",
+                useSessions,
+                options: new ServiceBusReceiverOptions());
         }
 
         //[Test]
@@ -69,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
             var receiver = new ServiceBusClient(connString).GetReceiver(queueName);
-            Assert.AreEqual(queueName, receiver.EntityName);
+            Assert.AreEqual(queueName, receiver.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
             Assert.IsNotNull(receiver.Identifier);
             Assert.IsFalse(receiver.IsSessionReceiver);

@@ -74,6 +74,8 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("Succeeded", getDomainResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(location, getDomainResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(getDomainResponse.Tags, tag => tag.Key == "originalTag1");
+                Assert.Null(getDomainResponse.Identity);
+                Assert.Null(getDomainResponse.InboundIpRules);
 
                 // Get all domains created within a resourceGroup
                 IPage<Domain> domainsInResourceGroupPage = this.EventGridManagementClient.Domains.ListByResourceGroupAsync(resourceGroup).Result;
@@ -161,20 +163,20 @@ namespace EventGrid.Tests.ScenarioTests
                     { "updatedTag1", "updatedValue1" },
                     { "updatedTag2", "updatedValue2" }
                 };
-                domain.AllowTrafficFromAllIPs = true;
+                domain.PublicNetworkAccess = PublicNetworkAccess.Enabled;
                 var updateDomainResponse = this.EventGridManagementClient.Domains.UpdateAsync(resourceGroup, domainName, domainUpdateParameters).Result;
                 Assert.Contains(updateDomainResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateDomainResponse.Tags, tag => tag.Key == "replacedTag1");
-                Assert.True(updateDomainResponse.AllowTrafficFromAllIPs);
+                Assert.True(updateDomainResponse.PublicNetworkAccess == PublicNetworkAccess.Enabled);
                 Assert.Null(updateDomainResponse.InboundIpRules);
 
                 // Update the Topic with IP filtering feature
-                domain.AllowTrafficFromAllIPs = false;
+                domain.PublicNetworkAccess = PublicNetworkAccess.Disabled;
                 domain.InboundIpRules = new List<InboundIpRule>();
                 domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.67.98" });
                 domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.90.100" });
                 var updateDomainResponseWithIpFilteringFeature = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;
-                Assert.False(updateDomainResponseWithIpFilteringFeature.AllowTrafficFromAllIPs);
+                Assert.False(updateDomainResponseWithIpFilteringFeature.PublicNetworkAccess == PublicNetworkAccess.Enabled);
                 Assert.True(updateDomainResponseWithIpFilteringFeature.InboundIpRules.Count() == 2);
 
                 // Create domain topic manually.

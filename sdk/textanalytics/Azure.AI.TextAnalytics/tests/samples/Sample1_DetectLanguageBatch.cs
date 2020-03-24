@@ -19,10 +19,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample1DetectLanguageBatch
-            var inputs = new List<DetectLanguageInput>
+            var documents = new List<DetectLanguageInput>
             {
                 new DetectLanguageInput("1", "Hello world")
                 {
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            DetectLanguageResultCollection results = client.DetectLanguageBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             foreach (DetectLanguageResult result in results)
             {
-                DetectLanguageInput document = inputs[i++];
+                DetectLanguageInput document = documents[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 

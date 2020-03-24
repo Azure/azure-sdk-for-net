@@ -12,56 +12,24 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TrainResult_internal : IUtf8JsonSerializable
+    internal partial class TrainResult_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("trainingDocuments");
-            writer.WriteStartArray();
-            foreach (var item in TrainingDocuments)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (Fields != null)
-            {
-                writer.WritePropertyName("fields");
-                writer.WriteStartArray();
-                foreach (var item0 in Fields)
-                {
-                    writer.WriteObjectValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            if (AverageModelAccuracy != null)
-            {
-                writer.WritePropertyName("averageModelAccuracy");
-                writer.WriteNumberValue(AverageModelAccuracy.Value);
-            }
-            if (Errors != null)
-            {
-                writer.WritePropertyName("errors");
-                writer.WriteStartArray();
-                foreach (var item0 in Errors)
-                {
-                    writer.WriteObjectValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static TrainResult_internal DeserializeTrainResult_internal(JsonElement element)
         {
-            TrainResult_internal result = new TrainResult_internal();
+            IReadOnlyList<TrainingDocumentInfo> trainingDocuments = new List<TrainingDocumentInfo>();
+            IReadOnlyList<FieldPredictionAccuracy> fields = default;
+            float? averageModelAccuracy = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingDocuments"))
                 {
+                    List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.TrainingDocuments.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
+                        array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
                     }
+                    trainingDocuments = array;
                     continue;
                 }
                 if (property.NameEquals("fields"))
@@ -70,11 +38,12 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Fields = new List<FieldPredictionAccuracy>();
+                    List<FieldPredictionAccuracy> array = new List<FieldPredictionAccuracy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Fields.Add(FieldPredictionAccuracy.DeserializeFieldPredictionAccuracy(item));
+                        array.Add(FieldPredictionAccuracy.DeserializeFieldPredictionAccuracy(item));
                     }
+                    fields = array;
                     continue;
                 }
                 if (property.NameEquals("averageModelAccuracy"))
@@ -83,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.AverageModelAccuracy = property.Value.GetSingle();
+                    averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("errors"))
@@ -92,15 +61,16 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Errors = new List<FormRecognizerError>();
+                    List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Errors.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
                     }
+                    errors = array;
                     continue;
                 }
             }
-            return result;
+            return new TrainResult_internal(trainingDocuments, fields, averageModelAccuracy, errors);
         }
     }
 }

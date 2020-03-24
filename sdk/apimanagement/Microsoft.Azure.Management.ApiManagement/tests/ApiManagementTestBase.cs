@@ -16,6 +16,7 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Network;
 using Xunit;
 using Microsoft.Azure.Management.EventHub;
+using Microsoft.Azure.Management.ManagedServiceIdentity;
 
 namespace ApiManagement.Tests
 {
@@ -35,6 +36,7 @@ namespace ApiManagement.Tests
         public StorageManagementClient storageClient { get; set; }
         public NetworkManagementClient networkClient { get; set; }
         public EventHubManagementClient eventHubClient { get; set; }
+        public ManagedServiceIdentityClient managedIdentityClient { get; set; }
         public string rgName { get; internal set; }
         public Dictionary<string, string> tags { get; internal set; }
         public string serviceName { get; internal set; }
@@ -49,6 +51,7 @@ namespace ApiManagement.Tests
             this.storageClient = context.GetServiceClient<StorageManagementClient>();
             this.networkClient = context.GetServiceClient<NetworkManagementClient>();
             this.eventHubClient = context.GetServiceClient<EventHubManagementClient>();
+            this.managedIdentityClient = context.GetServiceClient<ManagedServiceIdentityClient>();
 
             Initialize();
         }

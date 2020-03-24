@@ -11,68 +11,30 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class AnalyzeResult_internal : IUtf8JsonSerializable
+    internal partial class AnalyzeResult_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("version");
-            writer.WriteStringValue(Version);
-            writer.WritePropertyName("readResults");
-            writer.WriteStartArray();
-            foreach (var item in ReadResults)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            if (PageResults != null)
-            {
-                writer.WritePropertyName("pageResults");
-                writer.WriteStartArray();
-                foreach (var item0 in PageResults)
-                {
-                    writer.WriteObjectValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            if (DocumentResults != null)
-            {
-                writer.WritePropertyName("documentResults");
-                writer.WriteStartArray();
-                foreach (var item0 in DocumentResults)
-                {
-                    writer.WriteObjectValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            if (Errors != null)
-            {
-                writer.WritePropertyName("errors");
-                writer.WriteStartArray();
-                foreach (var item0 in Errors)
-                {
-                    writer.WriteObjectValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static AnalyzeResult_internal DeserializeAnalyzeResult_internal(JsonElement element)
         {
-            AnalyzeResult_internal result = new AnalyzeResult_internal();
+            string version = default;
+            IReadOnlyList<ReadResult_internal> readResults = new List<ReadResult_internal>();
+            IReadOnlyList<PageResult_internal> pageResults = default;
+            IReadOnlyList<DocumentResult_internal> documentResults = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"))
                 {
-                    result.Version = property.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("readResults"))
                 {
+                    List<ReadResult_internal> array = new List<ReadResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ReadResults.Add(ReadResult_internal.DeserializeReadResult_internal(item));
+                        array.Add(ReadResult_internal.DeserializeReadResult_internal(item));
                     }
+                    readResults = array;
                     continue;
                 }
                 if (property.NameEquals("pageResults"))
@@ -81,11 +43,12 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.PageResults = new List<PageResult_internal>();
+                    List<PageResult_internal> array = new List<PageResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.PageResults.Add(PageResult_internal.DeserializePageResult_internal(item));
+                        array.Add(PageResult_internal.DeserializePageResult_internal(item));
                     }
+                    pageResults = array;
                     continue;
                 }
                 if (property.NameEquals("documentResults"))
@@ -94,11 +57,12 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.DocumentResults = new List<DocumentResult_internal>();
+                    List<DocumentResult_internal> array = new List<DocumentResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.DocumentResults.Add(DocumentResult_internal.DeserializeDocumentResult_internal(item));
+                        array.Add(DocumentResult_internal.DeserializeDocumentResult_internal(item));
                     }
+                    documentResults = array;
                     continue;
                 }
                 if (property.NameEquals("errors"))
@@ -107,15 +71,16 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Errors = new List<FormRecognizerError>();
+                    List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Errors.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
                     }
+                    errors = array;
                     continue;
                 }
             }
-            return result;
+            return new AnalyzeResult_internal(version, readResults, pageResults, documentResults, errors);
         }
     }
 }

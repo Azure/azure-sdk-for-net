@@ -10,6 +10,13 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> The ErrorResponse. </summary>
     internal partial class ErrorResponse_internal
     {
-        public FormRecognizerError Error { get; set; } = new FormRecognizerError();
+        /// <summary> Initializes a new instance of ErrorResponse_internal. </summary>
+        /// <param name="error"> . </param>
+        internal ErrorResponse_internal(FormRecognizerError error)
+        {
+            Error = error;
+        }
+
+        public FormRecognizerError Error { get; }
     }
 }

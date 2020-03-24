@@ -13,20 +13,20 @@ namespace Azure.AI.FormRecognizer.Models
     {
         public static string ToSerialString(this ContentType value) => value switch
         {
-            ContentType.ApplicationPdf => "application/pdf",
-            ContentType.ImageJpeg => "image/jpeg",
-            ContentType.ImagePng => "image/png",
-            ContentType.ImageTiff => "image/tiff",
+            ContentType.Pdf => "application/pdf",
+            ContentType.Jpeg => "image/jpeg",
+            ContentType.Png => "image/png",
+            ContentType.Tiff => "image/tiff",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContentType value.")
         };
 
-        public static ContentType ToContentType(this string value) => value switch
+        public static ContentType ToContentType(this string value)
         {
-            "application/pdf" => ContentType.ApplicationPdf,
-            "image/jpeg" => ContentType.ImageJpeg,
-            "image/png" => ContentType.ImagePng,
-            "image/tiff" => ContentType.ImageTiff,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContentType value.")
-        };
+            if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Pdf;
+            if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Jpeg;
+            if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Png;
+            if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Tiff;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContentType value.");
+        }
     }
 }

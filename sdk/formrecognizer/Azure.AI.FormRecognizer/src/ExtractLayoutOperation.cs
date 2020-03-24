@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
             {
@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
+        private static IReadOnlyList<ExtractedLayoutPage> ConvertValue(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 

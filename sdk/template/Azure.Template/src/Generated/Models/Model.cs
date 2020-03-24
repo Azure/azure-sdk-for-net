@@ -10,11 +10,31 @@ namespace Azure.Template.Models
     /// <summary> The Model. </summary>
     public partial class Model
     {
+        /// <summary> Initializes a new instance of Model. </summary>
+        /// <param name="fruit"> Fruit. </param>
+        /// <param name="daysOfWeek"> Day of week. </param>
+        public Model(Fruit fruit, DaysOfWeek daysOfWeek)
+        {
+            Fruit = fruit;
+            DaysOfWeek = daysOfWeek;
+        }
+
+        /// <summary> Initializes a new instance of Model. </summary>
+        /// <param name="modelProperty"> A description about the set of tags. </param>
+        /// <param name="fruit"> Fruit. </param>
+        /// <param name="daysOfWeek"> Day of week. </param>
+        internal Model(string modelProperty, Fruit fruit, DaysOfWeek daysOfWeek)
+        {
+            ModelProperty = modelProperty;
+            Fruit = fruit;
+            DaysOfWeek = daysOfWeek;
+        }
+
         /// <summary> A description about the set of tags. </summary>
         public string ModelProperty { get; set; }
         /// <summary> Fruit. </summary>
-        public Fruit Fruit { get; set; }
+        public Fruit Fruit { get; }
         /// <summary> Day of week. </summary>
-        public DaysOfWeek DaysOfWeek { get; set; }
+        public DaysOfWeek DaysOfWeek { get; }
     }
 }

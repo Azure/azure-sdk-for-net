@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new data set to an existing share or updates it if existing.
+            /// Adds a new data set to an existing share.
             /// </summary>
             /// <remarks>
             /// Create a DataSet
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new data set to an existing share or updates it if existing.
+            /// Adds a new data set to an existing share.
             /// </summary>
             /// <remarks>
             /// Create a DataSet

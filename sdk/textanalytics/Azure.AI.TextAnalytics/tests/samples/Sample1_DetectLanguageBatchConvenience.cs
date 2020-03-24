@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "Hello world",
                 "Bonjour tout le monde",
@@ -29,20 +29,20 @@ namespace Azure.AI.TextAnalytics.Samples
                 ":) :( :D",
             };
 
-            Debug.WriteLine($"Detecting language for inputs:");
-            foreach (string input in inputs)
+            Debug.WriteLine($"Detecting language for documents:");
+            foreach (string document in documents)
             {
-                Debug.WriteLine($"    {input}");
+                Debug.WriteLine($"    {document}");
             }
 
             #region Snippet:TextAnalyticsSample1DetectLanguagesConvenience
-            DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs);
+            DetectLanguageResultCollection results = client.DetectLanguageBatch(documents);
             #endregion
 
             int i = 0;
             foreach (DetectLanguageResult result in results)
             {
-                Debug.WriteLine($"On document {inputs[i++]}:");
+                Debug.WriteLine($"On document {documents[i++]}:");
                 Debug.WriteLine($"Detected language: {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score}.");
             }
         }

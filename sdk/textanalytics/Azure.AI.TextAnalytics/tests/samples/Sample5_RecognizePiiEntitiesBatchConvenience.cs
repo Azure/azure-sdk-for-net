@@ -20,23 +20,23 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
                 "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
             };
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs);
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(documents);
             #endregion
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
             int i = 0;
             foreach (RecognizePiiEntitiesResult result in results)
             {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
+                Debug.WriteLine($"For document: \"{documents[i++]}\",");
                 Debug.WriteLine($"the following {result.Entities.Count()} PII entit{(result.Entities.Count() > 1 ? "ies were" : "y was")} found:");
 
                 foreach (PiiEntity entity in result.Entities)

@@ -5,55 +5,35 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextLine_internal : IUtf8JsonSerializable
+    internal partial class TextLine_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("boundingBox");
-            writer.WriteStartArray();
-            foreach (var item in BoundingBox)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            if (Language != null)
-            {
-                writer.WritePropertyName("language");
-                writer.WriteStringValue(Language.Value.ToString());
-            }
-            writer.WritePropertyName("words");
-            writer.WriteStartArray();
-            foreach (var item0 in Words)
-            {
-                writer.WriteObjectValue(item0);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
         internal static TextLine_internal DeserializeTextLine_internal(JsonElement element)
         {
-            TextLine_internal result = new TextLine_internal();
+            string text = default;
+            IReadOnlyList<float> boundingBox = new List<float>();
+            Language_internal? language = default;
+            IReadOnlyList<TextWord_internal> words = new List<TextWord_internal>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
                 {
-                    result.Text = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boundingBox"))
                 {
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.BoundingBox.Add(item.GetSingle());
+                        array.Add(item.GetSingle());
                     }
+                    boundingBox = array;
                     continue;
                 }
                 if (property.NameEquals("language"))
@@ -62,19 +42,21 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Language = new Language_internal(property.Value.GetString());
+                    language = new Language_internal(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("words"))
                 {
+                    List<TextWord_internal> array = new List<TextWord_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Words.Add(TextWord_internal.DeserializeTextWord_internal(item));
+                        array.Add(TextWord_internal.DeserializeTextWord_internal(item));
                     }
+                    words = array;
                     continue;
                 }
             }
-            return result;
+            return new TextLine_internal(text, boundingBox, language, words);
         }
     }
 }

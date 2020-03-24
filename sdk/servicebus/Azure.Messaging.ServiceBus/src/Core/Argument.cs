@@ -134,5 +134,26 @@ namespace Azure.Core
                     targetName);
             }
         }
+
+        /// <summary>
+        ///   Ensures that an argument's value is a well-formed Event Hubs fully qualified namespace value,
+        ///   throwing a <see cref="ArgumentException" /> if that invariant is not met.
+        /// </summary>
+        ///
+        /// <param name="argumentValue">The argument value.</param>
+        /// <param name="argumentName">Name of the argument.</param>
+        ///
+        ///
+        /// <exception cref="ArgumentException"><paramref name="argumentValue"/> is not a well-formed Service Bus fully qualified namespace.</exception>
+        ///
+        public static void AssertWellFormedServiceBusNamespace(string argumentValue, string argumentName)
+        {
+            argumentValue ??= string.Empty;
+
+            if (Uri.CheckHostName(argumentValue) == UriHostNameType.Unknown)
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources1.InvalidFullyQualifiedNamespace, argumentValue), argumentName);
+            }
+        }
     }
 }

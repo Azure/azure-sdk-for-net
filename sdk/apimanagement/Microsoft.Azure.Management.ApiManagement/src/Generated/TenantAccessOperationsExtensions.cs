@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Get tenant access information details
+            /// Get tenant access information details without secrets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Get tenant access information details
+            /// Get tenant access information details without secrets.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -226,6 +226,46 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task RegenerateSecondaryKeyAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get tenant access information details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static AccessInformationContract ListSecrets(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get tenant access information details.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessInformationContract> ListSecretsAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

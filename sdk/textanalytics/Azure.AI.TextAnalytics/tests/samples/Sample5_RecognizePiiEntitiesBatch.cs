@@ -20,10 +20,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
-            var inputs = new List<TextDocumentInput>
+            var documents = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
                 {
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             foreach (RecognizePiiEntitiesResult result in results)
             {
-                TextDocumentInput document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 

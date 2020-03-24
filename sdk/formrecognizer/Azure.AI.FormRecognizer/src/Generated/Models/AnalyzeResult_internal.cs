@@ -12,15 +12,39 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Analyze operation result. </summary>
     internal partial class AnalyzeResult_internal
     {
+        /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
+        /// <param name="version"> Version of schema used for this result. </param>
+        /// <param name="readResults"> Text extracted from the input. </param>
+        internal AnalyzeResult_internal(string version, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            Version = version;
+            ReadResults = readResults;
+        }
+
+        /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
+        /// <param name="version"> Version of schema used for this result. </param>
+        /// <param name="readResults"> Text extracted from the input. </param>
+        /// <param name="pageResults"> Page-level information extracted from the input. </param>
+        /// <param name="documentResults"> Document-level information extracted from the input. </param>
+        /// <param name="errors"> List of errors reported during the analyze operation. </param>
+        internal AnalyzeResult_internal(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<FormRecognizerError> errors)
+        {
+            Version = version;
+            ReadResults = readResults;
+            PageResults = pageResults;
+            DocumentResults = documentResults;
+            Errors = errors;
+        }
+
         /// <summary> Version of schema used for this result. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
         /// <summary> Text extracted from the input. </summary>
-        public IList<ReadResult_internal> ReadResults { get; set; } = new List<ReadResult_internal>();
+        public IReadOnlyList<ReadResult_internal> ReadResults { get; } = new List<ReadResult_internal>();
         /// <summary> Page-level information extracted from the input. </summary>
-        public IList<PageResult_internal> PageResults { get; set; }
+        public IReadOnlyList<PageResult_internal> PageResults { get; }
         /// <summary> Document-level information extracted from the input. </summary>
-        public IList<DocumentResult_internal> DocumentResults { get; set; }
+        public IReadOnlyList<DocumentResult_internal> DocumentResults { get; }
         /// <summary> List of errors reported during the analyze operation. </summary>
-        public IList<FormRecognizerError> Errors { get; set; }
+        public IReadOnlyList<FormRecognizerError> Errors { get; }
     }
 }

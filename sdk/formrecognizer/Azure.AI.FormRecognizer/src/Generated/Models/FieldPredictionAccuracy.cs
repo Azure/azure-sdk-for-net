@@ -10,7 +10,16 @@ namespace Azure.AI.FormRecognizer.Custom
     /// <summary> Report for a custom model training field. </summary>
     public partial class FieldPredictionAccuracy
     {
+        /// <summary> Initializes a new instance of FieldPredictionAccuracy. </summary>
+        /// <param name="label"> Training field name. </param>
+        /// <param name="accuracy"> Estimated extraction accuracy for this field. </param>
+        internal FieldPredictionAccuracy(string label, float accuracy)
+        {
+            Label = label;
+            Accuracy = accuracy;
+        }
+
         /// <summary> Estimated extraction accuracy for this field. </summary>
-        public float Accuracy { get; set; }
+        public float Accuracy { get; }
     }
 }

@@ -976,7 +976,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2020-03-02T18:13:00.2614824-08:00\",\r\n  \"endTime\": \"2020-03-02T18:13:00.4646017-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-hwn25jk2vgkn.z50.blob.storage.azure.net/j0jqn02rgpfw/abcd?snapshot=2020-03-03T02%3A12%3A58.0138744Z&sv=2018-11-09&sr=bs&si=2c1c22b8058847f5b9228c3c7c90c2b397fe87cb680044479ea54ac139a18f16&sig=N18RDz6fvs%2Frt25ZpigYwXMfS7H73fKpGZmp5dtwA30%3D\"\r\n    }\r\n  },\r\n  \"name\": \"ceb0e2fa-0298-4be2-ae28-d861ea7d7f3c\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2020-03-02T18:13:00.2614824-08:00\",\r\n  \"endTime\": \"2020-03-02T18:13:00.4646017-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-hwn25jk2vgkn.z50.blob.storage.azure.net/j0jqn02rgpfw/abcd?fakesas\"\r\n    }\r\n  },\r\n  \"name\": \"ceb0e2fa-0298-4be2-ae28-d861ea7d7f3c\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -1040,7 +1040,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"accessSAS\": \"https://md-hwn25jk2vgkn.z50.blob.storage.azure.net/j0jqn02rgpfw/abcd?snapshot=2020-03-03T02%3A12%3A58.0138744Z&sv=2018-11-09&sr=bs&si=2c1c22b8058847f5b9228c3c7c90c2b397fe87cb680044479ea54ac139a18f16&sig=N18RDz6fvs%2Frt25ZpigYwXMfS7H73fKpGZmp5dtwA30%3D\"\r\n}",
+      "ResponseBody": "{\r\n  \"accessSAS\": \"https://md-hwn25jk2vgkn.z50.blob.storage.azure.net/j0jqn02rgpfw/abcd?fakesas\"\r\n}",
       "StatusCode": 200
     },
     {

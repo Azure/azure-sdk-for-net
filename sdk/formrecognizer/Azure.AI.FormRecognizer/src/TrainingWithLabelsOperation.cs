@@ -76,7 +76,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
             {
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
-                if (update.Value.ModelInfo.Status != ModelStatus.Creating)
+                if (update.Value.ModelInfo.Status != ModelStatus.Training)
                 {
                     _hasCompleted = true;
                     _value = new CustomLabeledModel(update.Value);

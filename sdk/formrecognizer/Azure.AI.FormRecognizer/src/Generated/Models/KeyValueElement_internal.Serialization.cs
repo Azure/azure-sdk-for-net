@@ -11,43 +11,18 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class KeyValueElement_internal : IUtf8JsonSerializable
+    internal partial class KeyValueElement_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            if (BoundingBox != null)
-            {
-                writer.WritePropertyName("boundingBox");
-                writer.WriteStartArray();
-                foreach (var item in BoundingBox)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Elements != null)
-            {
-                writer.WritePropertyName("elements");
-                writer.WriteStartArray();
-                foreach (var item in Elements)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static KeyValueElement_internal DeserializeKeyValueElement_internal(JsonElement element)
         {
-            KeyValueElement_internal result = new KeyValueElement_internal();
+            string text = default;
+            IReadOnlyList<float> boundingBox = default;
+            IReadOnlyList<string> elements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
                 {
-                    result.Text = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boundingBox"))
@@ -56,11 +31,12 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.BoundingBox = new List<float>();
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.BoundingBox.Add(item.GetSingle());
+                        array.Add(item.GetSingle());
                     }
+                    boundingBox = array;
                     continue;
                 }
                 if (property.NameEquals("elements"))
@@ -69,15 +45,16 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Elements = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Elements.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    elements = array;
                     continue;
                 }
             }
-            return result;
+            return new KeyValueElement_internal(text, boundingBox, elements);
         }
     }
 }

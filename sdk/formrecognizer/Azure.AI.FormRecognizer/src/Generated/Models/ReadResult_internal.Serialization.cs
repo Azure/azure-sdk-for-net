@@ -11,66 +11,42 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class ReadResult_internal : IUtf8JsonSerializable
+    internal partial class ReadResult_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("page");
-            writer.WriteNumberValue(Page);
-            writer.WritePropertyName("angle");
-            writer.WriteNumberValue(Angle);
-            writer.WritePropertyName("width");
-            writer.WriteNumberValue(Width);
-            writer.WritePropertyName("height");
-            writer.WriteNumberValue(Height);
-            writer.WritePropertyName("unit");
-            writer.WriteStringValue(Unit.ToSerialString());
-            if (Language != null)
-            {
-                writer.WritePropertyName("language");
-                writer.WriteStringValue(Language.Value.ToString());
-            }
-            if (Lines != null)
-            {
-                writer.WritePropertyName("lines");
-                writer.WriteStartArray();
-                foreach (var item in Lines)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
         internal static ReadResult_internal DeserializeReadResult_internal(JsonElement element)
         {
-            ReadResult_internal result = new ReadResult_internal();
+            int page = default;
+            float angle = default;
+            float width = default;
+            float height = default;
+            LengthUnit unit = default;
+            Language_internal? language = default;
+            IReadOnlyList<TextLine_internal> lines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"))
                 {
-                    result.Page = property.Value.GetInt32();
+                    page = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("angle"))
                 {
-                    result.Angle = property.Value.GetSingle();
+                    angle = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("width"))
                 {
-                    result.Width = property.Value.GetSingle();
+                    width = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("height"))
                 {
-                    result.Height = property.Value.GetSingle();
+                    height = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
-                    result.Unit = property.Value.GetString().ToLengthUnit();
+                    unit = property.Value.GetString().ToLengthUnit();
                     continue;
                 }
                 if (property.NameEquals("language"))
@@ -79,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Language = new Language_internal(property.Value.GetString());
+                    language = new Language_internal(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lines"))
@@ -88,15 +64,16 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Lines = new List<TextLine_internal>();
+                    List<TextLine_internal> array = new List<TextLine_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Lines.Add(TextLine_internal.DeserializeTextLine_internal(item));
+                        array.Add(TextLine_internal.DeserializeTextLine_internal(item));
                     }
+                    lines = array;
                     continue;
                 }
             }
-            return result;
+            return new ReadResult_internal(page, angle, width, height, unit, language, lines);
         }
     }
 }

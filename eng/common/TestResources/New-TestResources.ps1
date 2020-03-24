@@ -50,6 +50,10 @@ param (
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
+    [string] $Environment = 'AzureCloud',
+
+    [Parameter()]
+    [ValidateNotNullOrEmpty()]
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
@@ -128,7 +132,7 @@ if ($ProvisionerApplicationId) {
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment
     }
 
     $exitActions += {
@@ -153,7 +157,15 @@ $resourceGroupName = if ($CI) {
     $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
     Write-Verbose "Generated base name '$BaseName' for CI build"
 
-    "rg-{0}-$BaseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+    # If the ServiceDirectory is an absolute path use the last directory name
+    # (e.g. D:\foo\bar\ -> bar)
+    $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
+        Split-Path -Leaf $ServiceDirectory
+    } else {
+        $ServiceDirectory
+    }
+
+    "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
 } else {
     "rg-$BaseName"
 }
@@ -390,6 +402,10 @@ Optional location where resources should be created. By default this is
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
+
+.PARAMETER Environment
+Name of the cloud environment. The default is the Azure Public Cloud
+('PublicCloud')
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous

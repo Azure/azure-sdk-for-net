@@ -5,63 +5,48 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class DocumentResult_internal : IUtf8JsonSerializable
+    internal partial class DocumentResult_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("docType");
-            writer.WriteStringValue(DocType);
-            writer.WritePropertyName("pageRange");
-            writer.WriteStartArray();
-            foreach (var item in PageRange)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("fields");
-            writer.WriteStartObject();
-            foreach (var item0 in Fields)
-            {
-                writer.WritePropertyName(item0.Key);
-                writer.WriteObjectValue(item0.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
         internal static DocumentResult_internal DeserializeDocumentResult_internal(JsonElement element)
         {
-            DocumentResult_internal result = new DocumentResult_internal();
+            string docType = default;
+            IReadOnlyList<int> pageRange = new List<int>();
+            IReadOnlyDictionary<string, FieldValue_internal> fields = new Dictionary<string, FieldValue_internal>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("docType"))
                 {
-                    result.DocType = property.Value.GetString();
+                    docType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("pageRange"))
                 {
+                    List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.PageRange.Add(item.GetInt32());
+                        array.Add(item.GetInt32());
                     }
+                    pageRange = array;
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
+                    Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        result.Fields.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
+                        dictionary.Add(property0.Name, FieldValue_internal.DeserializeFieldValue_internal(property0.Value));
                     }
+                    fields = dictionary;
                     continue;
                 }
             }
-            return result;
+            return new DocumentResult_internal(docType, pageRange, fields);
         }
     }
 }

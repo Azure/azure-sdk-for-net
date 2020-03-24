@@ -43,18 +43,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until.
         /// </summary>
-        public DateTime LockedUntilUtc => _receiver.SessionLockedUntilUtc;
-
-        /// <summary>
-        /// The policy to use for determining retry behavior for when an operation fails.
-        /// </summary>
-        ///
-        internal ServiceBusRetryPolicy RetryPolicy { get; }
-
-        /// <summary>
-        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
-        /// </summary>
-        internal ReceiveMode ReceiveMode { get; }
+        public DateTimeOffset LockedUntil => _receiver.SessionLockedUntil;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusSessionManager"/> class.

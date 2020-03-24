@@ -371,6 +371,12 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsTrue(response.Value);
+
+            // Act
+            response = await directory.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
         }
 
         [Test]

@@ -21,6 +21,7 @@ namespace Azure.Template
         private string host;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
+
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "http://localhost:3000")
         {
@@ -33,6 +34,7 @@ namespace Azure.Template
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
+
         internal HttpMessage CreateOperationRequest(Model body)
         {
             var message = pipeline.CreateMessage();
@@ -48,10 +50,12 @@ namespace Azure.Template
             request.Content = content;
             return message;
         }
+
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -62,8 +66,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -76,10 +81,12 @@ namespace Azure.Template
                 throw;
             }
         }
+
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Model> Operation(Model body, CancellationToken cancellationToken = default)
         {
+
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -90,8 +97,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

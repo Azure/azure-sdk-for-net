@@ -5,48 +5,34 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextWord_internal : IUtf8JsonSerializable
+    internal partial class TextWord_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("boundingBox");
-            writer.WriteStartArray();
-            foreach (var item in BoundingBox)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            if (Confidence != null)
-            {
-                writer.WritePropertyName("confidence");
-                writer.WriteNumberValue(Confidence.Value);
-            }
-            writer.WriteEndObject();
-        }
         internal static TextWord_internal DeserializeTextWord_internal(JsonElement element)
         {
-            TextWord_internal result = new TextWord_internal();
+            string text = default;
+            IReadOnlyList<float> boundingBox = new List<float>();
+            float? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
                 {
-                    result.Text = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boundingBox"))
                 {
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.BoundingBox.Add(item.GetSingle());
+                        array.Add(item.GetSingle());
                     }
+                    boundingBox = array;
                     continue;
                 }
                 if (property.NameEquals("confidence"))
@@ -55,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Confidence = property.Value.GetSingle();
+                    confidence = property.Value.GetSingle();
                     continue;
                 }
             }
-            return result;
+            return new TextWord_internal(text, boundingBox, confidence);
         }
     }
 }

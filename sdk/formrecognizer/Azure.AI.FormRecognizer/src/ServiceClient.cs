@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer
     {
         #region Custom
 
-        internal ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        internal ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeWithCustomModel");
             scope.Start();
@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        internal async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeWithCustomModel");
             scope.Start();
@@ -107,32 +107,7 @@ namespace Azure.AI.FormRecognizer
 
         #region Receipt
 
-        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
-        {
-
-            using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeReceiptAsync");
-            scope.Start();
-            try
-            {
-                using var message = RestClient.CreateAnalyzeReceiptAsyncRequest(includeTextDetails, stream, contentType);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
-                    default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
 
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeReceiptAsync");
@@ -163,7 +138,7 @@ namespace Azure.AI.FormRecognizer
 
         // TODO: Is it ok that includeTextDetails is missing here?  Or is it an issue with the Swagger?
         // This is missing from the swagger -- following up with service team.
-        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeLayoutAsync");
             scope.Start();
@@ -187,7 +162,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(Stream stream, FormContentType contentType, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("AllOperations.AnalyzeLayoutAsync");
             scope.Start();

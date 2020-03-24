@@ -3,9 +3,16 @@
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public enum ExtractedReceiptType
     {
-        Unrecognized = 1,
-        Itemized = 2,
+        /// <summary>
+        /// </summary>
+        Unrecognized = 0,
+
+        /// <summary>
+        /// </summary>
+        Itemized = 1,
     }
 }

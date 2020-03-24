@@ -26,9 +26,12 @@ namespace Azure.Template.Models
             writer.WriteStringValue(DaysOfWeek.ToString());
             writer.WriteEndObject();
         }
+
         internal static Model DeserializeModel(JsonElement element)
         {
-            Model result = new Model();
+            string modelProperty = default;
+            Fruit fruit = default;
+            DaysOfWeek daysOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ModelProperty"))
@@ -37,21 +40,21 @@ namespace Azure.Template.Models
                     {
                         continue;
                     }
-                    result.ModelProperty = property.Value.GetString();
+                    modelProperty = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("Fruit"))
                 {
-                    result.Fruit = new Fruit(property.Value.GetString());
+                    fruit = new Fruit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("DaysOfWeek"))
                 {
-                    result.DaysOfWeek = new DaysOfWeek(property.Value.GetString());
+                    daysOfWeek = new DaysOfWeek(property.Value.GetString());
                     continue;
                 }
             }
-            return result;
+            return new Model(modelProperty, fruit, daysOfWeek);
         }
     }
 }

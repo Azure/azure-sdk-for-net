@@ -6,19 +6,44 @@
 #nullable disable
 
 using System;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status and result of the queued analyze operation. </summary>
     internal partial class AnalyzeOperationResult_internal
     {
+        /// <summary> Initializes a new instance of AnalyzeOperationResult_internal. </summary>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        internal AnalyzeOperationResult_internal(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime)
+        {
+            Status = status;
+            CreatedDateTime = createdDateTime;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+        }
+
+        /// <summary> Initializes a new instance of AnalyzeOperationResult_internal. </summary>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
+        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="analyzeResult"> Results of the analyze operation. </param>
+        internal AnalyzeOperationResult_internal(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, AnalyzeResult_internal analyzeResult)
+        {
+            Status = status;
+            CreatedDateTime = createdDateTime;
+            LastUpdatedDateTime = lastUpdatedDateTime;
+            AnalyzeResult = analyzeResult;
+        }
+
         /// <summary> Operation status. </summary>
-        public OperationStatus Status { get; set; }
+        public OperationStatus Status { get; }
         /// <summary> Date and time (UTC) when the analyze operation was submitted. </summary>
-        public DateTimeOffset CreatedDateTime { get; set; }
+        public DateTimeOffset CreatedDateTime { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; set; }
+        public DateTimeOffset LastUpdatedDateTime { get; }
         /// <summary> Results of the analyze operation. </summary>
-        public AnalyzeResult_internal AnalyzeResult { get; set; }
+        public AnalyzeResult_internal AnalyzeResult { get; }
     }
 }

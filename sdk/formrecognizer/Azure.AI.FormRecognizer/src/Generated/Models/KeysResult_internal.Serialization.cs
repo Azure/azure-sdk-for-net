@@ -11,46 +11,30 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal partial class KeysResult_internal : IUtf8JsonSerializable
+    internal partial class KeysResult_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("clusters");
-            writer.WriteStartObject();
-            foreach (var item in Clusters)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStartArray();
-                foreach (var item0 in item.Value)
-                {
-                    writer.WriteStringValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
         internal static KeysResult_internal DeserializeKeysResult_internal(JsonElement element)
         {
-            KeysResult_internal result = new KeysResult_internal();
+            IReadOnlyDictionary<string, IReadOnlyList<string>> clusters = new Dictionary<string, IReadOnlyList<string>>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusters"))
                 {
+                    Dictionary<string, IReadOnlyList<string>> dictionary = new Dictionary<string, IReadOnlyList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        IList<string> value = new List<string>();
+                        List<string> array = new List<string>();
                         foreach (var item in property0.Value.EnumerateArray())
                         {
-                            value.Add(item.GetString());
+                            array.Add(item.GetString());
                         }
-                        result.Clusters.Add(property0.Name, value);
+                        dictionary.Add(property0.Name, array);
                     }
+                    clusters = dictionary;
                     continue;
                 }
             }
-            return result;
+            return new KeysResult_internal(clusters);
         }
     }
 }

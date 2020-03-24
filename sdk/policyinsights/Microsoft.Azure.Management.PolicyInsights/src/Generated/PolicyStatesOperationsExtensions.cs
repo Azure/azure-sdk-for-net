@@ -402,6 +402,78 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
 
             /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the
+            /// subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            public static void TriggerSubscriptionEvaluation(this IPolicyStatesOperations operations, string subscriptionId)
+            {
+                operations.TriggerSubscriptionEvaluationAsync(subscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the
+            /// subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task TriggerSubscriptionEvaluationAsync(this IPolicyStatesOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.TriggerSubscriptionEvaluationWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name.
+            /// </param>
+            public static void TriggerResourceGroupEvaluation(this IPolicyStatesOperations operations, string subscriptionId, string resourceGroupName)
+            {
+                operations.TriggerResourceGroupEvaluationAsync(subscriptionId, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task TriggerResourceGroupEvaluationAsync(this IPolicyStatesOperations operations, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.TriggerResourceGroupEvaluationWithHttpMessagesAsync(subscriptionId, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Queries policy states for the subscription level policy set definition.
             /// </summary>
             /// <param name='operations'>
@@ -827,6 +899,78 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the
+            /// subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            public static void BeginTriggerSubscriptionEvaluation(this IPolicyStatesOperations operations, string subscriptionId)
+            {
+                operations.BeginTriggerSubscriptionEvaluationAsync(subscriptionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the
+            /// subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginTriggerSubscriptionEvaluationAsync(this IPolicyStatesOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginTriggerSubscriptionEvaluationWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name.
+            /// </param>
+            public static void BeginTriggerResourceGroupEvaluation(this IPolicyStatesOperations operations, string subscriptionId, string resourceGroupName)
+            {
+                operations.BeginTriggerResourceGroupEvaluationAsync(subscriptionId, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Triggers a policy evaluation scan for all the resources under the resource
+            /// group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='subscriptionId'>
+            /// Microsoft Azure subscription ID.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Resource group name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginTriggerResourceGroupEvaluationAsync(this IPolicyStatesOperations operations, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginTriggerResourceGroupEvaluationWithHttpMessagesAsync(subscriptionId, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

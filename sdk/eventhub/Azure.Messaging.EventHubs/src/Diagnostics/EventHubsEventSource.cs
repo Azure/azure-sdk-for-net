@@ -691,14 +691,211 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(36, Level = EventLevel.Error, Message = "An exception occurred during partition processing or load balancing for processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  Error Message: '{3}'")]
-        public virtual void EventProcessingTaskError(string identifier,
-                                                     string eventHubName,
-                                                     string consumerGroup,
-                                                     string errorMessage)
+        public virtual void EventProcessorTaskError(string identifier,
+                                                    string eventHubName,
+                                                    string consumerGroup,
+                                                    string errorMessage)
         {
             if (IsEnabled())
             {
                 WriteEvent(36, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken ownership of a partition and is beginning to process it.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(37, Level = EventLevel.Verbose, Message = "Starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        public virtual void EventProcessorPartitionProcessingStart(string partitionId,
+                                                                   string identifier,
+                                                                   string eventHubName,
+                                                                   string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(37, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while starting processing for a partition.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(38, Level = EventLevel.Error, Message = "An exception occurred while starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        public virtual void EventProcessorPartitionProcessingStartError(string partitionId,
+                                                                        string identifier,
+                                                                        string eventHubName,
+                                                                        string consumerGroup,
+                                                                        string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(38, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken ownership of a partition and is actively processing it.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        public virtual void EventProcessorPartitionProcessingStartComplete(string partitionId,
+                                                                           string identifier,
+                                                                           string eventHubName,
+                                                                           string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has lost ownership of a partition and is beginning to stop processing it.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is stopping.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(40, Level = EventLevel.Verbose, Message = "Stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        public virtual void EventProcessorPartitionProcessingStop(string partitionId,
+                                                                  string identifier,
+                                                                  string eventHubName,
+                                                                  string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(40, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while stopping processing for a partition.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is stopping.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(41, Level = EventLevel.Error, Message = "An exception occurred while stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        public virtual void EventProcessorPartitionProcessingStopError(string partitionId,
+                                                                       string identifier,
+                                                                       string eventHubName,
+                                                                       string consumerGroup,
+                                                                       string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(41, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has finished stopping processing for a partition, and it is now no longer running.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is stopping.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(42, Level = EventLevel.Verbose, Message = "Completed stopping processing for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        public virtual void EventProcessorPartitionProcessingStopComplete(string partitionId,
+                                                                          string identifier,
+                                                                          string eventHubName,
+                                                                          string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(42, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while processing events for a partition.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(43, Level = EventLevel.Error, Message = "An exception occurred while processing events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        public virtual void EventProcessorPartitionProcessingError(string partitionId,
+                                                                   string identifier,
+                                                                   string eventHubName,
+                                                                   string consumerGroup,
+                                                                   string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(43, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while performing load balancing.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(44, Level = EventLevel.Error, Message = "An exception occurred while performing load balancing for the processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  Error Message: '{3}'")]
+        public virtual void EventProcessorLoadBalancingError(string identifier,
+                                                             string eventHubName,
+                                                             string consumerGroup,
+                                                             string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(44, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while attempting to claim ownership of a partition.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition for which the attempt to claim ownership failed.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(45, Level = EventLevel.Error, Message = "An exception occurred while attempting to claim partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}, Consumer Group: {2}, and partition: {3}.  Error Message: '{4}'")]
+        public virtual void EventProcessorClaimOwnershipError(string identifier,
+                                                              string eventHubName,
+                                                              string consumerGroup,
+                                                              string partitionId,
+                                                              string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(45, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 

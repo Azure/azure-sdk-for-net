@@ -3,12 +3,12 @@ This sample demonstrates how to recognize Personally Identifiable Information (P
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize Personally Identifiable Information in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating a `TextAnalyticsApiKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to recognize Personally Identifiable Information in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample5CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing Personally Identifiable Information in a single document
@@ -16,9 +16,9 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyC
 To recognize Personally Identifiable Information in a document, use the `RecognizePiiEntities` method.  The returned value is the collection of `CategorizedEntity` containing Personally Identifiable Information that were recognized in the document.
 
 ```C# Snippet:RecognizePiiEntities
-string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
+string document = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(input).Value;
+IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(document).Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
@@ -32,13 +32,13 @@ foreach (PiiEntity entity in entities)
 To recognize Personally Identifiable Information in multiple documents, call `RecognizePiiEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizePiiEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
-RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs);
+RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(documents);
 ```
 
 To recognize Personally Identifiable Information in a collection of documents in different languages, call `RecognizePiiEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
 ```C# Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
-var inputs = new List<TextDocumentInput>
+var documents = new List<TextDocumentInput>
 {
     new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
     {
@@ -50,7 +50,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

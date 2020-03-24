@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = transport
             };
 
-            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new TextAnalyticsApiKeyCredential(s_apiKey), options));
+            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new AzureKeyCredential(s_apiKey), options));
 
             return client;
         }
@@ -59,13 +59,13 @@ namespace Azure.AI.TextAnalytics.Tests
             var mockTransport = new MockTransport(mockResponse);
             TextAnalyticsClient client = CreateTestClient(mockTransport);
 
-            var inputs = new List<TextDocumentInput>()
+            var documents = new List<TextDocumentInput>()
             {
                 new TextDocumentInput("1", "TextDocument1"),
                 new TextDocumentInput("2", "TextDocument2"),
             };
 
-            var response = await client.RecognizeEntitiesBatchAsync(inputs, new TextAnalyticsRequestOptions());
+            var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
             Assert.AreEqual("1", resultCollection[0].Id);
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var mockTransport = new MockTransport(mockResponse);
             TextAnalyticsClient client = CreateTestClient(mockTransport);
 
-            var inputs = new List<TextDocumentInput>()
+            var documents = new List<TextDocumentInput>()
             {
                 new TextDocumentInput("4", "TextDocument1"),
                 new TextDocumentInput("5", "TextDocument2"),
@@ -108,7 +108,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("3", "TextDocument4"),
             };
 
-            var response = await client.RecognizeEntitiesBatchAsync(inputs, new TextAnalyticsRequestOptions());
+            var response = await client.RecognizeEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
             Assert.AreEqual("4", resultCollection[0].Id);

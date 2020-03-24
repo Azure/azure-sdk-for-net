@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Opens an AMQP link for use with management operations.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -188,7 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </remarks>
         ///
         public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
-            string entityName,
+            string entityPath,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var link = await CreateManagementLinkAsync(
-                entityName,
+                entityPath,
                 connection,
                 timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Opens an AMQP link for use with consumer operations.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A link for use with consumer operations.</returns>
         ///
         public virtual async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
-            string entityName,
+            string entityPath,
             TimeSpan timeout,
             uint prefetchCount,
             ReceiveMode receiveMode,
@@ -238,13 +238,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var consumerEndpoint = new Uri(ServiceEndpoint, entityName);
+            var consumerEndpoint = new Uri(ServiceEndpoint, entityPath);
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             ReceivingAmqpLink link = await CreateReceivingLinkAsync(
-                entityName,
+                entityPath,
                 connection,
                 consumerEndpoint,
                 timeout.CalculateRemaining(stopWatch.Elapsed),
@@ -267,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Opens an AMQP link for use with producer operations.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -275,20 +275,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A link for use with producer operations.</returns>
         ///
         public virtual async Task<SendingAmqpLink> OpenSenderLinkAsync(
-            string entityName,
+            string entityPath,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var producerEndpoint = new Uri(ServiceEndpoint, entityName);
+            var producerEndpoint = new Uri(ServiceEndpoint, entityPath);
 
             AmqpConnection connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             SendingAmqpLink link = await CreateSendingLinkAsync(
-                entityName,
+                entityPath,
                 connection,
                 producerEndpoint,
                 timeout.CalculateRemaining(stopWatch.Elapsed), cancellationToken).ConfigureAwait(false);
@@ -388,7 +388,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Creates an AMQP link for use with management operations.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -397,7 +397,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A link for use with management operations.</returns>
         ///
         protected virtual async Task<RequestResponseAmqpLink> CreateManagementLinkAsync(
-            string entityName,
+            string entityPath,
             AmqpConnection connection,
             TimeSpan timeout,
             CancellationToken cancellationToken)
@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var linkSettings = new AmqpLinkSettings();
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
-                var entityPath = entityName + '/' + AmqpClientConstants.ManagementAddress;
+                entityPath += '/' + AmqpClientConstants.ManagementAddress;
                 string[] claims = { ClaimConstants.Manage, ClaimConstants.Listen };
                 var endpointUri = new Uri(ServiceEndpoint, entityPath);
 
@@ -442,7 +442,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
-                    entityName,
+                    entityPath,
                     connection,
                     link,
                     TokenProvider,
@@ -458,7 +458,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityName, link, refreshTimer);
+                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch
@@ -474,7 +474,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Creates an AMQP link for use with receiving operations.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
@@ -488,7 +488,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A link for use for operations related to receiving events.</returns>
         ///
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(
-            string entityName,
+            string entityPath,
             AmqpConnection connection,
             Uri endpoint,
             TimeSpan timeout,
@@ -551,7 +551,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
-                    entityName,
+                    entityPath,
                     connection,
                     link,
                     TokenProvider,
@@ -567,7 +567,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityName, link, refreshTimer);
+                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch
@@ -583,7 +583,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///   Creates an AMQP link for use with publishing operations.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
@@ -593,7 +593,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A link for use for operations related to receiving events.</returns>
         ///
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(
-            string entityName,
+            string entityPath,
             AmqpConnection connection,
             Uri endpoint,
             TimeSpan timeout,
@@ -645,7 +645,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 TimerCallback refreshHandler = CreateAuthorizationRefreshHandler
                 (
-                    entityName,
+                    entityPath,
                     connection,
                     link,
                     TokenProvider,
@@ -661,7 +661,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Track the link before returning it, so that it can be managed with the scope.
 
-                BeginTrackingLinkAsActive(entityName, link, refreshTimer);
+                BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
             catch
@@ -678,7 +678,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Performs the actions needed to configure and begin tracking the specified AMQP
         ///   link as an active link bound to this scope.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="link">The link to begin tracking.</param>
         /// <param name="authorizationRefreshTimer">The timer used to manage refreshing authorization, if the link requires it.</param>
@@ -690,7 +690,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </remarks>
         ///
         protected virtual void BeginTrackingLinkAsActive(
-            string entityName,
+            string entityPath,
             AmqpObject link,
             Timer authorizationRefreshTimer = null)
         {
@@ -699,7 +699,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (!ActiveLinks.TryAdd(link, authorizationRefreshTimer))
             {
-                throw new ServiceBusException(true, entityName, Resources1.CouldNotCreateLink);
+                throw new ServiceBusException(true, entityPath, Resources1.CouldNotCreateLink);
             }
 
             // When the link is closed, stop refreshing authorization and remove it from the
@@ -747,7 +747,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Creates the timer event handler to support refreshing AMQP link authorization
         ///   on a recurring basis.
         /// </summary>
-        /// <param name="entityName"></param>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="connection">The AMQP connection to which the link being refreshed is bound to.</param>
         /// <param name="amqpLink">The AMQO link to refresh authorization for.</param>
@@ -762,7 +762,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A <see cref="TimerCallback"/> delegate to perform the refresh when a timer is due.</returns>
         ///
         protected virtual TimerCallback CreateAuthorizationRefreshHandler(
-            string entityName,
+            string entityPath,
             AmqpConnection connection,
             AmqpObject amqpLink,
             CbsTokenProvider tokenProvider,
@@ -775,7 +775,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             return async _ =>
             {
-                ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshStart(entityName, endpoint.AbsoluteUri);
+                ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshStart(entityPath, endpoint.AbsoluteUri);
                 Timer refreshTimer = refreshTimerFactory();
 
                 try
@@ -802,7 +802,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 catch (Exception ex)
                 {
-                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshError(entityName, endpoint.AbsoluteUri, ex.Message);
+                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshError(entityPath, endpoint.AbsoluteUri, ex.Message);
 
                     // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
                     // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
@@ -812,7 +812,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 finally
                 {
-                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshComplete(entityName, endpoint.AbsoluteUri);
+                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshComplete(entityPath, endpoint.AbsoluteUri);
                 }
             };
         }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class RawExtractedPage
     {
         internal RawExtractedPage(ReadResult_internal readResult)
@@ -14,7 +16,6 @@ namespace Azure.AI.FormRecognizer.Models
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
-            Language = readResult.Language.ToString();
 
             if (readResult.Lines != null)
             {
@@ -33,15 +34,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
         public LengthUnit Unit { get; set; }
 
-        // TODO: Make language nullable?
-        // https://github.com/Azure/azure-sdk-for-net/issues/10361
-
-        /// <summary> Language code. </summary>
-        public string Language { get; set; }
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
         public ICollection<RawExtractedLine> Lines { get; set; }
 
-        private static ICollection<RawExtractedLine> ConvertLines(ICollection<TextLine_internal> textLines)
+        private static ICollection<RawExtractedLine> ConvertLines(IReadOnlyList<TextLine_internal> textLines)
         {
             List<RawExtractedLine> rawLines = new List<RawExtractedLine>();
 

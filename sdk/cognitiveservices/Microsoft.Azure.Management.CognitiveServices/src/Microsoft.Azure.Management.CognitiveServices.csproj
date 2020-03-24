@@ -6,13 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>7.0.0</Version>
+		<Version>7.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
 		<PackageReleaseNotes>
 <![CDATA[    
-1) Unify Account create/update parameters.
-2) Support HTTP code 202 for Account create/update/delete operations.
+1) Support Identity, Encryption, UserOwnedStorage.
 ]]>
 	    </PackageReleaseNotes>
 	</PropertyGroup>

@@ -2112,9 +2112,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                       EventPosition startingPosition,
                                                                       ReadEventOptions readOptions = default,
                                                                       int expectedEventCount = int.MaxValue,
-                                                                      int consecutiveEmptyLimit = 15,
-                                                                      int consecutiveEmptyDelayThreshold = 5,
-                                                                      int consecutiveEmptyDelayMilliseconds = 250,
+                                                                      int consecutiveEmptyLimit = 20,
+                                                                      int consecutiveEmptyDelayThreshold = 8,
+                                                                      int consecutiveEmptyDelayMilliseconds = 350,
                                                                       Func<Task<bool>> iterationCallback = default,
                                                                       CancellationToken cancellationToken = default)
         {
@@ -2178,9 +2178,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                       ReadEventOptions readOptions = default,
                                                                       bool startReadingAtFirst = true,
                                                                       int expectedEventCount = int.MaxValue,
-                                                                      int consecutiveEmptyLimit = 15,
-                                                                      int consecutiveEmptyDelayThreshold = 5,
-                                                                      int consecutiveEmptyDelayMilliseconds = 250,
+                                                                      int consecutiveEmptyLimit = 20,
+                                                                      int consecutiveEmptyDelayThreshold = 8,
+                                                                      int consecutiveEmptyDelayMilliseconds = 350,
                                                                       Func<Task<bool>> iterationCallback = default,
                                                                       CancellationToken cancellationToken = default)
         {

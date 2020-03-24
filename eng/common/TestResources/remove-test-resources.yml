@@ -4,6 +4,8 @@ parameters:
   TenantId: not-specified
   ProvisionerApplicationId: not-specified
   ProvisionerApplicationSecret: not-specified
+  Environment: 'AzureCloud'
+  Condition: true
 
 steps:
   - pwsh: >
@@ -12,8 +14,9 @@ steps:
       -TenantId '${{ parameters.TenantId }}'
       -ProvisionerApplicationId '${{ parameters.ProvisionerApplicationId }}'
       -ProvisionerApplicationSecret '${{ parameters.ProvisionerApplicationSecret }}'
+      -Environment '${{ parameters.Environment }}'
       -Force
       -Verbose
     displayName: Remove test resources
-    condition: ne(variables['AZURE_RESOURCEGROUP_NAME'], '')
+    condition: and(ne(variables['AZURE_RESOURCEGROUP_NAME'], ''), ${{ parameters.Condition }})
     continueOnError: true

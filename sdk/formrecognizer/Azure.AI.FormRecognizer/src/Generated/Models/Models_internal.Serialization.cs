@@ -8,41 +8,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    internal partial class Models_internal : IUtf8JsonSerializable
+    internal partial class Models_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Summary != null)
-            {
-                writer.WritePropertyName("summary");
-                writer.WriteObjectValue(Summary);
-            }
-            if (ModelList != null)
-            {
-                writer.WritePropertyName("modelList");
-                writer.WriteStartArray();
-                foreach (var item in ModelList)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (NextLink != null)
-            {
-                writer.WritePropertyName("nextLink");
-                writer.WriteStringValue(NextLink);
-            }
-            writer.WriteEndObject();
-        }
         internal static Models_internal DeserializeModels_internal(JsonElement element)
         {
-            Models_internal result = new Models_internal();
+            ModelsSummary_internal summary = default;
+            IReadOnlyList<ModelInfo_internal> modelList = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"))
@@ -51,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Custom
                     {
                         continue;
                     }
-                    result.Summary = ModelsSummary_internal.DeserializeModelsSummary_internal(property.Value);
+                    summary = ModelsSummary_internal.DeserializeModelsSummary_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelList"))
@@ -60,11 +36,12 @@ namespace Azure.AI.FormRecognizer.Custom
                     {
                         continue;
                     }
-                    result.ModelList = new List<ModelInfo_internal>();
+                    List<ModelInfo_internal> array = new List<ModelInfo_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ModelList.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
+                        array.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
                     }
+                    modelList = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"))
@@ -73,11 +50,11 @@ namespace Azure.AI.FormRecognizer.Custom
                     {
                         continue;
                     }
-                    result.NextLink = property.Value.GetString();
+                    nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new Models_internal(summary, modelList, nextLink);
         }
     }
 }
