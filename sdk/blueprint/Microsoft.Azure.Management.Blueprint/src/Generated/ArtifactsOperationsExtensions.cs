@@ -27,11 +27,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -42,9 +41,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='artifact'>
             /// Blueprint artifact to create or update.
             /// </param>
-            public static Artifact CreateOrUpdate(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName, Artifact artifact)
+            public static Artifact CreateOrUpdate(this IArtifactsOperations operations, string resourceScope, string blueprintName, string artifactName, Artifact artifact)
             {
-                return operations.CreateOrUpdateAsync(scope, blueprintName, artifactName, artifact).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceScope, blueprintName, artifactName, artifact).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,11 +52,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -71,9 +69,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Artifact> CreateOrUpdateAsync(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName, Artifact artifact, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Artifact> CreateOrUpdateAsync(this IArtifactsOperations operations, string resourceScope, string blueprintName, string artifactName, Artifact artifact, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, blueprintName, artifactName, artifact, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceScope, blueprintName, artifactName, artifact, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,11 +83,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -97,9 +94,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='artifactName'>
             /// Name of the blueprint artifact.
             /// </param>
-            public static Artifact Get(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName)
+            public static Artifact Get(this IArtifactsOperations operations, string resourceScope, string blueprintName, string artifactName)
             {
-                return operations.GetAsync(scope, blueprintName, artifactName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceScope, blueprintName, artifactName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -108,11 +105,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -123,9 +119,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Artifact> GetAsync(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Artifact> GetAsync(this IArtifactsOperations operations, string resourceScope, string blueprintName, string artifactName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, blueprintName, artifactName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceScope, blueprintName, artifactName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -137,11 +133,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -149,9 +144,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='artifactName'>
             /// Name of the blueprint artifact.
             /// </param>
-            public static Artifact Delete(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName)
+            public static Artifact Delete(this IArtifactsOperations operations, string resourceScope, string blueprintName, string artifactName)
             {
-                return operations.DeleteAsync(scope, blueprintName, artifactName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceScope, blueprintName, artifactName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -160,11 +155,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -175,9 +169,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Artifact> DeleteAsync(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Artifact> DeleteAsync(this IArtifactsOperations operations, string resourceScope, string blueprintName, string artifactName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, blueprintName, artifactName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceScope, blueprintName, artifactName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -189,18 +183,17 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
             /// </param>
-            public static IPage<Artifact> List(this IArtifactsOperations operations, string scope, string blueprintName)
+            public static IPage<Artifact> List(this IArtifactsOperations operations, string resourceScope, string blueprintName)
             {
-                return operations.ListAsync(scope, blueprintName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceScope, blueprintName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,11 +202,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
+            /// <param name='resourceScope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
-            /// assignments management group scope is reserved for future use.
+            /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
             /// Name of the blueprint definition.
@@ -221,9 +213,9 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Artifact>> ListAsync(this IArtifactsOperations operations, string scope, string blueprintName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Artifact>> ListAsync(this IArtifactsOperations operations, string resourceScope, string blueprintName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, blueprintName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceScope, blueprintName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
