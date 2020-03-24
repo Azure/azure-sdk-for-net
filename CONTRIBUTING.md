@@ -245,6 +245,19 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
    During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
 
+# On-boarding New generated code library
+
+1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*`. (e.g.  `Microsoft.Azure.Management.Storage`)
+2. Modify `autorest.md` to point to you Swagger file. E.g.
+
+``` yaml
+input-file:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+```
+3. Run `dotnet msbuild /t:GeneratedCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13)
+
 ### Code Review Process
 
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
