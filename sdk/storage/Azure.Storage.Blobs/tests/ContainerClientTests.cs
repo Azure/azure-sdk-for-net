@@ -677,9 +677,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             response = await container.DeleteIfExistsAsync();
-
-            // Assert
-            Assert.IsFalse(response.Value);
         }
 
         [Test]
