@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,24 +31,27 @@ namespace Azure.Management.Storage.Models
 
         internal static BlobRestoreParameters DeserializeBlobRestoreParameters(JsonElement element)
         {
-            BlobRestoreParameters result = new BlobRestoreParameters();
+            DateTimeOffset timeToRestore = default;
+            IList<BlobRestoreRange> blobRanges = new List<BlobRestoreRange>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeToRestore"))
                 {
-                    result.TimeToRestore = property.Value.GetDateTimeOffset("S");
+                    timeToRestore = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("blobRanges"))
                 {
+                    List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.BlobRanges.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
                     }
+                    blobRanges = array;
                     continue;
                 }
             }
-            return result;
+            return new BlobRestoreParameters(timeToRestore, blobRanges);
         }
     }
 }

@@ -11,8 +11,13 @@ namespace Azure.Management.Storage.Models
     public partial class ManagementPolicyRule
     {
         /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
-        public ManagementPolicyRule()
+        /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
+        /// <param name="definition"> An object that defines the Lifecycle rule. </param>
+        public ManagementPolicyRule(string name, ManagementPolicyDefinition definition)
         {
+            Name = name;
+            Type = "Lifecycle";
+            Definition = definition;
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
@@ -31,10 +36,10 @@ namespace Azure.Management.Storage.Models
         /// <summary> Rule is enabled if set to true. </summary>
         public bool? Enabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The valid value is Lifecycle. </summary>
-        public string Type { get; set; } = "Lifecycle";
+        public string Type { get; }
         /// <summary> An object that defines the Lifecycle rule. </summary>
-        public ManagementPolicyDefinition Definition { get; set; } = new ManagementPolicyDefinition();
+        public ManagementPolicyDefinition Definition { get; }
     }
 }

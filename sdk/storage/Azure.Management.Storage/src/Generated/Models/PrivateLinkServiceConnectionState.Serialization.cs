@@ -35,7 +35,9 @@ namespace Azure.Management.Storage.Models
 
         internal static PrivateLinkServiceConnectionState DeserializePrivateLinkServiceConnectionState(JsonElement element)
         {
-            PrivateLinkServiceConnectionState result = new PrivateLinkServiceConnectionState();
+            PrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -44,7 +46,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Status = new PrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new PrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -53,7 +55,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("actionRequired"))
@@ -62,11 +64,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.ActionRequired = property.Value.GetString();
+                    actionRequired = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PrivateLinkServiceConnectionState(status, description, actionRequired);
         }
     }
 }

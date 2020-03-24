@@ -53,7 +53,12 @@ namespace Azure.Management.Storage.Models
 
         internal static PrivateEndpointConnection DeserializePrivateEndpointConnection(JsonElement element)
         {
-            PrivateEndpointConnection result = new PrivateEndpointConnection();
+            string id = default;
+            string name = default;
+            string type = default;
+            PrivateEndpoint privateEndpoint = default;
+            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            PrivateEndpointConnectionProvisioningState? provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -62,7 +67,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -71,7 +76,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -80,7 +85,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -93,7 +98,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.PrivateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -102,7 +107,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.PrivateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -111,14 +116,14 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ProvisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new PrivateEndpointConnection(privateEndpoint, privateLinkServiceConnectionState, provisioningState, id, name, type);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +21,12 @@ namespace Azure.Management.Storage
     {
         private string subscriptionId;
         private string host;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of FileSharesRestClient. </summary>
-        public FileSharesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        public FileSharesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
             {
@@ -35,14 +36,14 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(host));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.subscriptionId = subscriptionId;
             this.host = host;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -61,7 +62,7 @@ namespace Azure.Management.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/default/shares", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("$maxpagesize", maxpagesize, true);
@@ -101,8 +102,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileShareItems value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileShareItems.DeserializeFileShareItems(document.RootElement);
+                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -143,8 +145,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileShareItems value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileShareItems.DeserializeFileShareItems(document.RootElement);
+                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -158,7 +161,7 @@ namespace Azure.Management.Storage
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string shareName, FileShare fileShare)
+        internal HttpMessage CreateCreateRequest(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata, int? shareQuota)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -173,11 +176,16 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            var model = new FileShare()
+            {
+                Metadata = metadata,
+                ShareQuota = shareQuota
+            };
             using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileShare);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -186,9 +194,10 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="fileShare"> Properties of the file share to create. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FileShare>> CreateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<FileShare>> CreateAsync(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata, int? shareQuota, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -202,23 +211,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
-            if (fileShare == null)
-            {
-                throw new ArgumentNullException(nameof(fileShare));
-            }
 
             using var scope = clientDiagnostics.CreateScope("FileSharesClient.Create");
             scope.Start();
             try
             {
-                using var message = CreateCreateRequest(resourceGroupName, accountName, shareName, fileShare);
+                using var message = CreateCreateRequest(resourceGroupName, accountName, shareName, metadata, shareQuota);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            FileShare value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileShare.DeserializeFileShare(document.RootElement);
+                            value = FileShare.DeserializeFileShare(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -236,9 +242,10 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="fileShare"> Properties of the file share to create. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FileShare> Create(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
+        public Response<FileShare> Create(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata, int? shareQuota, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -252,23 +259,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
-            if (fileShare == null)
-            {
-                throw new ArgumentNullException(nameof(fileShare));
-            }
 
             using var scope = clientDiagnostics.CreateScope("FileSharesClient.Create");
             scope.Start();
             try
             {
-                using var message = CreateCreateRequest(resourceGroupName, accountName, shareName, fileShare);
+                using var message = CreateCreateRequest(resourceGroupName, accountName, shareName, metadata, shareQuota);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            FileShare value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileShare.DeserializeFileShare(document.RootElement);
+                            value = FileShare.DeserializeFileShare(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -282,7 +286,7 @@ namespace Azure.Management.Storage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string shareName, FileShare fileShare)
+        internal HttpMessage CreateUpdateRequest(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata, int? shareQuota)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -297,11 +301,16 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            var model = new FileShare()
+            {
+                Metadata = metadata,
+                ShareQuota = shareQuota
+            };
             using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileShare);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -310,9 +319,10 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="fileShare"> Properties of the file share to create. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FileShare>> UpdateAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<FileShare>> UpdateAsync(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata, int? shareQuota, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -326,23 +336,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
-            if (fileShare == null)
-            {
-                throw new ArgumentNullException(nameof(fileShare));
-            }
 
             using var scope = clientDiagnostics.CreateScope("FileSharesClient.Update");
             scope.Start();
             try
             {
-                using var message = CreateUpdateRequest(resourceGroupName, accountName, shareName, fileShare);
+                using var message = CreateUpdateRequest(resourceGroupName, accountName, shareName, metadata, shareQuota);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            FileShare value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileShare.DeserializeFileShare(document.RootElement);
+                            value = FileShare.DeserializeFileShare(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -360,9 +367,10 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="fileShare"> Properties of the file share to create. </param>
+        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
+        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FileShare> Update(string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default)
+        public Response<FileShare> Update(string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata, int? shareQuota, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -376,23 +384,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(shareName));
             }
-            if (fileShare == null)
-            {
-                throw new ArgumentNullException(nameof(fileShare));
-            }
 
             using var scope = clientDiagnostics.CreateScope("FileSharesClient.Update");
             scope.Start();
             try
             {
-                using var message = CreateUpdateRequest(resourceGroupName, accountName, shareName, fileShare);
+                using var message = CreateUpdateRequest(resourceGroupName, accountName, shareName, metadata, shareQuota);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            FileShare value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileShare.DeserializeFileShare(document.RootElement);
+                            value = FileShare.DeserializeFileShare(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -421,7 +426,7 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -456,8 +461,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileShare value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileShare.DeserializeFileShare(document.RootElement);
+                            value = FileShare.DeserializeFileShare(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -501,8 +507,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileShare value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileShare.DeserializeFileShare(document.RootElement);
+                            value = FileShare.DeserializeFileShare(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -531,7 +538,7 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/default/shares/", false);
             uri.AppendPath(shareName, true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -649,8 +656,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileShareItems value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileShareItems.DeserializeFileShareItems(document.RootElement);
+                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -684,8 +692,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileShareItems value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileShareItems.DeserializeFileShareItems(document.RootElement);
+                            value = FileShareItems.DeserializeFileShareItems(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

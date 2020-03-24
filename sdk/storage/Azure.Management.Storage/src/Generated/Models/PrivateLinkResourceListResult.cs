@@ -19,12 +19,12 @@ namespace Azure.Management.Storage.Models
 
         /// <summary> Initializes a new instance of PrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal PrivateLinkResourceListResult(IList<PrivateLinkResource> value)
+        internal PrivateLinkResourceListResult(IReadOnlyList<PrivateLinkResource> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IList<PrivateLinkResource> Value { get; internal set; }
+        public IReadOnlyList<PrivateLinkResource> Value { get; }
     }
 }

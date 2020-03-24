@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -100,7 +101,20 @@ namespace Azure.Management.Storage.Models
 
         internal static BlobContainer DeserializeBlobContainer(JsonElement element)
         {
-            BlobContainer result = new BlobContainer();
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            PublicAccess? publicAccess = default;
+            DateTimeOffset? lastModifiedTime = default;
+            LeaseStatus? leaseStatus = default;
+            LeaseState? leaseState = default;
+            LeaseDuration? leaseDuration = default;
+            IDictionary<string, string> metadata = default;
+            ImmutabilityPolicyProperties immutabilityPolicy = default;
+            LegalHoldProperties legalHold = default;
+            bool? hasLegalHold = default;
+            bool? hasImmutabilityPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -109,7 +123,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Etag = property.Value.GetString();
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -118,7 +132,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -127,7 +141,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -136,7 +150,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -149,7 +163,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.PublicAccess = property0.Value.GetString().ToPublicAccess();
+                            publicAccess = property0.Value.GetString().ToPublicAccess();
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedTime"))
@@ -158,7 +172,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.LastModifiedTime = property0.Value.GetDateTimeOffset("S");
+                            lastModifiedTime = property0.Value.GetDateTimeOffset("S");
                             continue;
                         }
                         if (property0.NameEquals("leaseStatus"))
@@ -167,7 +181,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.LeaseStatus = new LeaseStatus(property0.Value.GetString());
+                            leaseStatus = new LeaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseState"))
@@ -176,7 +190,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.LeaseState = new LeaseState(property0.Value.GetString());
+                            leaseState = new LeaseState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseDuration"))
@@ -185,7 +199,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.LeaseDuration = new LeaseDuration(property0.Value.GetString());
+                            leaseDuration = new LeaseDuration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("metadata"))
@@ -194,11 +208,12 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.Metadata = new Dictionary<string, string>();
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                result.Metadata.Add(property1.Name, property1.Value.GetString());
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
+                            metadata = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("immutabilityPolicy"))
@@ -207,7 +222,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ImmutabilityPolicy = ImmutabilityPolicyProperties.DeserializeImmutabilityPolicyProperties(property0.Value);
+                            immutabilityPolicy = ImmutabilityPolicyProperties.DeserializeImmutabilityPolicyProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("legalHold"))
@@ -216,7 +231,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.LegalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value);
+                            legalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hasLegalHold"))
@@ -225,7 +240,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.HasLegalHold = property0.Value.GetBoolean();
+                            hasLegalHold = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("hasImmutabilityPolicy"))
@@ -234,14 +249,14 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.HasImmutabilityPolicy = property0.Value.GetBoolean();
+                            hasImmutabilityPolicy = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new BlobContainer(publicAccess, lastModifiedTime, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, etag, id, name, type);
         }
     }
 }

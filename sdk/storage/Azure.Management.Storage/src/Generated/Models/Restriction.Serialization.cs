@@ -15,7 +15,9 @@ namespace Azure.Management.Storage.Models
     {
         internal static Restriction DeserializeRestriction(JsonElement element)
         {
-            Restriction result = new Restriction();
+            string type = default;
+            IReadOnlyList<string> values = default;
+            ReasonCode? reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -24,7 +26,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("values"))
@@ -33,11 +35,12 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Values = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Values.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    values = array;
                     continue;
                 }
                 if (property.NameEquals("reasonCode"))
@@ -46,11 +49,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.ReasonCode = new ReasonCode(property.Value.GetString());
+                    reasonCode = new ReasonCode(property.Value.GetString());
                     continue;
                 }
             }
-            return result;
+            return new Restriction(type, values, reasonCode);
         }
     }
 }

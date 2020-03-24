@@ -35,7 +35,9 @@ namespace Azure.Management.Storage.Models
 
         internal static Resource DeserializeResource(JsonElement element)
         {
-            Resource result = new Resource();
+            string id = default;
+            string name = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -44,7 +46,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -53,7 +55,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -62,11 +64,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new Resource(id, name, type);
         }
     }
 }

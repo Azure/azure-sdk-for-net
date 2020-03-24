@@ -11,8 +11,10 @@ namespace Azure.Management.Storage.Models
     public partial class AzureFilesIdentityBasedAuthentication
     {
         /// <summary> Initializes a new instance of AzureFilesIdentityBasedAuthentication. </summary>
-        public AzureFilesIdentityBasedAuthentication()
+        /// <param name="directoryServiceOptions"> Indicates the directory service used. </param>
+        public AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions directoryServiceOptions)
         {
+            DirectoryServiceOptions = directoryServiceOptions;
         }
 
         /// <summary> Initializes a new instance of AzureFilesIdentityBasedAuthentication. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Indicates the directory service used. </summary>
-        public DirectoryServiceOptions DirectoryServiceOptions { get; set; }
+        public DirectoryServiceOptions DirectoryServiceOptions { get; }
         /// <summary> Required if choose AD. </summary>
         public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
     }

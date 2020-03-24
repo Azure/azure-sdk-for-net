@@ -29,12 +29,12 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The status of blob restore progress. Possible values are: - InProgress: Indicates that blob restore is ongoing. - Complete: Indicates that blob restore has been completed successfully. - Failed: Indicates that blob restore is failed. </summary>
-        public BlobRestoreProgressStatus? Status { get; internal set; }
+        public BlobRestoreProgressStatus? Status { get; }
         /// <summary> Failure reason when blob restore is failed. </summary>
-        public string FailureReason { get; internal set; }
+        public string FailureReason { get; }
         /// <summary> Id for tracking blob restore request. </summary>
-        public string RestoreId { get; internal set; }
+        public string RestoreId { get; }
         /// <summary> Blob restore request parameters. </summary>
-        public BlobRestoreParameters Parameters { get; internal set; }
+        public BlobRestoreParameters Parameters { get; }
     }
 }

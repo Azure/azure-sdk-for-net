@@ -50,22 +50,22 @@ namespace Azure.Management.Storage.Models
         /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
         public PublicAccess? PublicAccess { get; set; }
         /// <summary> Returns the date and time the container was last modified. </summary>
-        public DateTimeOffset? LastModifiedTime { get; internal set; }
+        public DateTimeOffset? LastModifiedTime { get; }
         /// <summary> The lease status of the container. </summary>
-        public LeaseStatus? LeaseStatus { get; internal set; }
+        public LeaseStatus? LeaseStatus { get; }
         /// <summary> Lease state of the container. </summary>
-        public LeaseState? LeaseState { get; internal set; }
+        public LeaseState? LeaseState { get; }
         /// <summary> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </summary>
-        public LeaseDuration? LeaseDuration { get; internal set; }
+        public LeaseDuration? LeaseDuration { get; }
         /// <summary> A name-value pair to associate with the container as metadata. </summary>
         public IDictionary<string, string> Metadata { get; set; }
         /// <summary> The ImmutabilityPolicy property of the container. </summary>
-        public ImmutabilityPolicyProperties ImmutabilityPolicy { get; internal set; }
+        public ImmutabilityPolicyProperties ImmutabilityPolicy { get; }
         /// <summary> The LegalHold property of the container. </summary>
-        public LegalHoldProperties LegalHold { get; internal set; }
+        public LegalHoldProperties LegalHold { get; }
         /// <summary> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </summary>
-        public bool? HasLegalHold { get; internal set; }
+        public bool? HasLegalHold { get; }
         /// <summary> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </summary>
-        public bool? HasImmutabilityPolicy { get; internal set; }
+        public bool? HasImmutabilityPolicy { get; }
     }
 }

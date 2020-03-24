@@ -17,28 +17,36 @@ namespace Azure.Management.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value");
             writer.WriteStringValue(IPAddressOrRange);
-            writer.WritePropertyName("action");
-            writer.WriteStringValue(Action);
+            if (Action != null)
+            {
+                writer.WritePropertyName("action");
+                writer.WriteStringValue(Action);
+            }
             writer.WriteEndObject();
         }
 
         internal static IPRule DeserializeIPRule(JsonElement element)
         {
-            IPRule result = new IPRule();
+            string value = default;
+            string action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    result.IPAddressOrRange = property.Value.GetString();
+                    value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("action"))
                 {
-                    result.Action = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    action = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new IPRule(value, action);
         }
     }
 }

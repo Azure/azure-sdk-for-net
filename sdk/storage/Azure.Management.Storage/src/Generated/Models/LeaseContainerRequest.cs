@@ -11,8 +11,10 @@ namespace Azure.Management.Storage.Models
     public partial class LeaseContainerRequest
     {
         /// <summary> Initializes a new instance of LeaseContainerRequest. </summary>
-        public LeaseContainerRequest()
+        /// <param name="action"> Specifies the lease action. Can be one of the available actions. </param>
+        public LeaseContainerRequest(LeaseContainerRequestAction action)
         {
+            Action = action;
         }
 
         /// <summary> Initializes a new instance of LeaseContainerRequest. </summary>
@@ -31,7 +33,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Specifies the lease action. Can be one of the available actions. </summary>
-        public LeaseContainerRequestAction Action { get; set; }
+        public LeaseContainerRequestAction Action { get; }
         /// <summary> Identifies the lease. Can be specified in any valid GUID string format. </summary>
         public string LeaseId { get; set; }
         /// <summary> Optional. For a break action, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. </summary>

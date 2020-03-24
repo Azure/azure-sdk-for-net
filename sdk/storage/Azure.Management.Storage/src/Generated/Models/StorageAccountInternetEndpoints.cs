@@ -29,12 +29,12 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Gets the blob endpoint. </summary>
-        public string Blob { get; internal set; }
+        public string Blob { get; }
         /// <summary> Gets the file endpoint. </summary>
-        public string File { get; internal set; }
+        public string File { get; }
         /// <summary> Gets the web endpoint. </summary>
-        public string Web { get; internal set; }
+        public string Web { get; }
         /// <summary> Gets the dfs endpoint. </summary>
-        public string Dfs { get; internal set; }
+        public string Dfs { get; }
     }
 }

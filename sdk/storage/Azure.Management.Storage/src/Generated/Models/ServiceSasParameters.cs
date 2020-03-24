@@ -13,8 +13,10 @@ namespace Azure.Management.Storage.Models
     public partial class ServiceSasParameters
     {
         /// <summary> Initializes a new instance of ServiceSasParameters. </summary>
-        public ServiceSasParameters()
+        /// <param name="canonicalizedResource"> The canonical path to the signed resource. </param>
+        public ServiceSasParameters(string canonicalizedResource)
         {
+            CanonicalizedResource = canonicalizedResource;
         }
 
         /// <summary> Initializes a new instance of ServiceSasParameters. </summary>
@@ -59,7 +61,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The canonical path to the signed resource. </summary>
-        public string CanonicalizedResource { get; set; }
+        public string CanonicalizedResource { get; }
         /// <summary> The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s). </summary>
         public SignedResource? Resource { get; set; }
         /// <summary> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </summary>

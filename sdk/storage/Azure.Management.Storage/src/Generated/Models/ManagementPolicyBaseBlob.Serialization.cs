@@ -35,7 +35,9 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element)
         {
-            ManagementPolicyBaseBlob result = new ManagementPolicyBaseBlob();
+            DateAfterModification tierToCool = default;
+            DateAfterModification tierToArchive = default;
+            DateAfterModification delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"))
@@ -44,7 +46,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.TierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    tierToCool = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"))
@@ -53,7 +55,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.TierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    tierToArchive = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("delete"))
@@ -62,11 +64,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
+                    delete = DateAfterModification.DeserializeDateAfterModification(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new ManagementPolicyBaseBlob(tierToCool, tierToArchive, delete);
         }
     }
 }

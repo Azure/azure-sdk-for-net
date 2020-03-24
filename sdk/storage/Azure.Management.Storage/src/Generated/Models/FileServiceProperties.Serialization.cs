@@ -53,7 +53,12 @@ namespace Azure.Management.Storage.Models
 
         internal static FileServiceProperties DeserializeFileServiceProperties(JsonElement element)
         {
-            FileServiceProperties result = new FileServiceProperties();
+            Sku sku = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            CorsRules cors = default;
+            DeleteRetentionPolicy shareDeleteRetentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -62,7 +67,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Sku = Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -71,7 +76,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -80,7 +85,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -89,7 +94,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -102,7 +107,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.Cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = CorsRules.DeserializeCorsRules(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("shareDeleteRetentionPolicy"))
@@ -111,14 +116,14 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ShareDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            shareDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new FileServiceProperties(sku, cors, shareDeleteRetentionPolicy, id, name, type);
         }
     }
 }

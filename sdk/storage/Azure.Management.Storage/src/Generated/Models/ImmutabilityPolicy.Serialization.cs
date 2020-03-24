@@ -58,7 +58,13 @@ namespace Azure.Management.Storage.Models
 
         internal static ImmutabilityPolicy DeserializeImmutabilityPolicy(JsonElement element)
         {
-            ImmutabilityPolicy result = new ImmutabilityPolicy();
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            int? immutabilityPeriodSinceCreationInDays = default;
+            ImmutabilityPolicyState? state = default;
+            bool? allowProtectedAppendWrites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -67,7 +73,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Etag = property.Value.GetString();
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -76,7 +82,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -85,7 +91,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -94,7 +100,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -107,7 +113,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ImmutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
+                            immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("state"))
@@ -116,7 +122,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.State = new ImmutabilityPolicyState(property0.Value.GetString());
+                            state = new ImmutabilityPolicyState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowProtectedAppendWrites"))
@@ -125,14 +131,14 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.AllowProtectedAppendWrites = property0.Value.GetBoolean();
+                            allowProtectedAppendWrites = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new ImmutabilityPolicy(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, etag, id, name, type);
         }
     }
 }

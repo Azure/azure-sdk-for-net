@@ -23,9 +23,9 @@ namespace Azure.Management.Storage
         {
         }
         /// <summary> Initializes a new instance of FileServicesClient. </summary>
-        internal FileServicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        internal FileServicesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
-            RestClient = new FileServicesRestClient(clientDiagnostics, pipeline, subscriptionId, host, ApiVersion);
+            RestClient = new FileServicesRestClient(clientDiagnostics, pipeline, subscriptionId, host, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -51,21 +51,23 @@ namespace Azure.Management.Storage
         /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
+        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SetServicePropertiesAsync(resourceGroupName, accountName, parameters, cancellationToken).ConfigureAwait(false);
+            return await RestClient.SetServicePropertiesAsync(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
+        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FileServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default)
+        public virtual Response<FileServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, CancellationToken cancellationToken = default)
         {
-            return RestClient.SetServiceProperties(resourceGroupName, accountName, parameters, cancellationToken);
+            return RestClient.SetServiceProperties(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy, cancellationToken);
         }
 
         /// <summary> Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>

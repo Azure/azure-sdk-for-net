@@ -25,8 +25,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </summary>
-        public string Code { get; internal set; }
+        public string Code { get; }
         /// <summary> A message describing the error, intended to be suitable for display in a user interface. </summary>
-        public string Message { get; internal set; }
+        public string Message { get; }
     }
 }

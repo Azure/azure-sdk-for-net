@@ -40,9 +40,9 @@ namespace Azure.Management.Storage.Models
         /// <summary> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </summary>
         public EncryptionScopeState? State { get; set; }
         /// <summary> Gets the creation date and time of the encryption scope in UTC. </summary>
-        public DateTimeOffset? CreationTime { get; internal set; }
+        public DateTimeOffset? CreationTime { get; }
         /// <summary> Gets the last modification date and time of the encryption scope in UTC. </summary>
-        public DateTimeOffset? LastModifiedTime { get; internal set; }
+        public DateTimeOffset? LastModifiedTime { get; }
         /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope &apos;source&apos; attribute is set to &apos;Microsoft.KeyVault&apos;. </summary>
         public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
     }

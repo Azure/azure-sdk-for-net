@@ -11,8 +11,10 @@ namespace Azure.Management.Storage.Models
     public partial class RestorePolicyProperties
     {
         /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
-        public RestorePolicyProperties()
+        /// <param name="enabled"> Blob restore is enabled if set to true. </param>
+        public RestorePolicyProperties(bool enabled)
         {
+            Enabled = enabled;
         }
 
         /// <summary> Initializes a new instance of RestorePolicyProperties. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Blob restore is enabled if set to true. </summary>
-        public bool Enabled { get; set; }
+        public bool Enabled { get; }
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>
         public int? Days { get; set; }
     }

@@ -13,8 +13,10 @@ namespace Azure.Management.Storage.Models
     public partial class TrackedResource : Resource
     {
         /// <summary> Initializes a new instance of TrackedResource. </summary>
-        public TrackedResource()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public TrackedResource(string location)
         {
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of TrackedResource. </summary>
@@ -32,6 +34,6 @@ namespace Azure.Management.Storage.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public string Location { get; }
     }
 }

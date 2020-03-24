@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Management.Storage.Models
 {
     /// <summary> Properties of key vault. </summary>
@@ -19,11 +21,15 @@ namespace Azure.Management.Storage.Models
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
-        internal KeyVaultProperties(string keyName, string keyVersion, string keyVaultUri)
+        /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
+        /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
+        internal KeyVaultProperties(string keyName, string keyVersion, string keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyVaultUri = keyVaultUri;
+            CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
+            LastKeyRotationTimestamp = lastKeyRotationTimestamp;
         }
 
         /// <summary> The name of KeyVault key. </summary>
@@ -32,5 +38,9 @@ namespace Azure.Management.Storage.Models
         public string KeyVersion { get; set; }
         /// <summary> The Uri of KeyVault. </summary>
         public string KeyVaultUri { get; set; }
+        /// <summary> The object identifier of the current versioned Key Vault Key in use. </summary>
+        public string CurrentVersionedKeyIdentifier { get; }
+        /// <summary> Timestamp of last rotation of the Key Vault Key. </summary>
+        public DateTimeOffset? LastKeyRotationTimestamp { get; }
     }
 }

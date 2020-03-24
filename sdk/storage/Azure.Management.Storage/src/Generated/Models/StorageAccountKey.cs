@@ -27,10 +27,10 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Name of the key. </summary>
-        public string KeyName { get; internal set; }
+        public string KeyName { get; }
         /// <summary> Base 64-encoded value of the key. </summary>
-        public string Value { get; internal set; }
+        public string Value { get; }
         /// <summary> Permissions for the key -- read-only or full permissions. </summary>
-        public KeyPermission? Permissions { get; internal set; }
+        public KeyPermission? Permissions { get; }
     }
 }

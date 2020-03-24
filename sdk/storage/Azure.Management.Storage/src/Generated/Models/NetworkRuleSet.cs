@@ -13,8 +13,10 @@ namespace Azure.Management.Storage.Models
     public partial class NetworkRuleSet
     {
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
-        public NetworkRuleSet()
+        /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
+        public NetworkRuleSet(DefaultAction defaultAction)
         {
+            DefaultAction = defaultAction;
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
@@ -37,6 +39,6 @@ namespace Azure.Management.Storage.Models
         /// <summary> Sets the IP ACL rules. </summary>
         public IList<IPRule> IpRules { get; set; }
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
-        public DefaultAction DefaultAction { get; set; }
+        public DefaultAction DefaultAction { get; }
     }
 }

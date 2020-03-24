@@ -14,7 +14,7 @@ namespace Azure.Management.Storage.Models
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
         {
-            CloudError result = new CloudError();
+            CloudErrorBody error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
@@ -23,11 +23,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Error = CloudErrorBody.DeserializeCloudErrorBody(property.Value);
+                    error = CloudErrorBody.DeserializeCloudErrorBody(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new CloudError(error);
         }
     }
 }

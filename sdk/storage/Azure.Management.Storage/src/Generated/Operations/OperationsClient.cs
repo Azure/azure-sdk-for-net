@@ -24,9 +24,9 @@ namespace Azure.Management.Storage
         {
         }
         /// <summary> Initializes a new instance of OperationsClient. </summary>
-        internal OperationsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        internal OperationsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
-            RestClient = new OperationsRestClient(clientDiagnostics, pipeline, host, ApiVersion);
+            RestClient = new OperationsRestClient(clientDiagnostics, pipeline, host, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }

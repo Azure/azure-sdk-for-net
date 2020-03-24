@@ -13,6 +13,7 @@ namespace Azure.Management.Storage.Models
         /// <summary> Initializes a new instance of Identity. </summary>
         public Identity()
         {
+            Type = "SystemAssigned";
         }
 
         /// <summary> Initializes a new instance of Identity. </summary>
@@ -27,10 +28,10 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The principal ID of resource identity. </summary>
-        public string PrincipalId { get; internal set; }
+        public string PrincipalId { get; }
         /// <summary> The tenant ID of resource. </summary>
-        public string TenantId { get; internal set; }
+        public string TenantId { get; }
         /// <summary> The identity type. </summary>
-        public string Type { get; set; } = "SystemAssigned";
+        public string Type { get; }
     }
 }

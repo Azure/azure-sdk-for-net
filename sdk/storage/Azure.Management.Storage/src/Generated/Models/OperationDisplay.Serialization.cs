@@ -14,7 +14,10 @@ namespace Azure.Management.Storage.Models
     {
         internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
         {
-            OperationDisplay result = new OperationDisplay();
+            string provider = default;
+            string resource = default;
+            string operation = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"))
@@ -23,7 +26,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Provider = property.Value.GetString();
+                    provider = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resource"))
@@ -32,7 +35,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Resource = property.Value.GetString();
+                    resource = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operation"))
@@ -41,7 +44,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Operation = property.Value.GetString();
+                    operation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -50,11 +53,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new OperationDisplay(provider, resource, operation, description);
         }
     }
 }

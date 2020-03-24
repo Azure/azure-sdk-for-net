@@ -11,8 +11,10 @@ namespace Azure.Management.Storage.Models
     public partial class VirtualNetworkRule
     {
         /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
-        public VirtualNetworkRule()
+        /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
+        public VirtualNetworkRule(string virtualNetworkResourceId)
         {
+            VirtualNetworkResourceId = virtualNetworkResourceId;
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
@@ -27,9 +29,9 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
-        public string VirtualNetworkResourceId { get; set; }
+        public string VirtualNetworkResourceId { get; }
         /// <summary> The action of virtual network rule. </summary>
-        public string Action { get; set; } = "Allow";
+        public string Action { get; set; }
         /// <summary> Gets the state of virtual network rule. </summary>
         public State? State { get; set; }
     }

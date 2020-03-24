@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,7 +36,9 @@ namespace Azure.Management.Storage.Models
 
         internal static GeoReplicationStats DeserializeGeoReplicationStats(JsonElement element)
         {
-            GeoReplicationStats result = new GeoReplicationStats();
+            GeoReplicationStatus? status = default;
+            DateTimeOffset? lastSyncTime = default;
+            bool? canFailover = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -44,7 +47,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Status = new GeoReplicationStatus(property.Value.GetString());
+                    status = new GeoReplicationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastSyncTime"))
@@ -53,7 +56,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.LastSyncTime = property.Value.GetDateTimeOffset("S");
+                    lastSyncTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("canFailover"))
@@ -62,11 +65,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.CanFailover = property.Value.GetBoolean();
+                    canFailover = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return result;
+            return new GeoReplicationStats(status, lastSyncTime, canFailover);
         }
     }
 }

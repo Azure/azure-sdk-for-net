@@ -29,12 +29,12 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Operation name: {provider}/{resource}/{operation}. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         /// <summary> Display metadata associated with the operation. </summary>
-        public OperationDisplay Display { get; internal set; }
+        public OperationDisplay Display { get; }
         /// <summary> The origin of operations. </summary>
-        public string Origin { get; internal set; }
+        public string Origin { get; }
         /// <summary> One property of operation, include metric specifications. </summary>
-        public ServiceSpecification ServiceSpecification { get; internal set; }
+        public ServiceSpecification ServiceSpecification { get; }
     }
 }

@@ -11,18 +11,13 @@ namespace Azure.Management.Storage.Models
     public partial class DateAfterModification
     {
         /// <summary> Initializes a new instance of DateAfterModification. </summary>
-        public DateAfterModification()
-        {
-        }
-
-        /// <summary> Initializes a new instance of DateAfterModification. </summary>
         /// <param name="daysAfterModificationGreaterThan"> Value indicating the age in days after last modification. </param>
-        internal DateAfterModification(float daysAfterModificationGreaterThan)
+        public DateAfterModification(float daysAfterModificationGreaterThan)
         {
             DaysAfterModificationGreaterThan = daysAfterModificationGreaterThan;
         }
 
         /// <summary> Value indicating the age in days after last modification. </summary>
-        public float DaysAfterModificationGreaterThan { get; set; }
+        public float DaysAfterModificationGreaterThan { get; }
     }
 }

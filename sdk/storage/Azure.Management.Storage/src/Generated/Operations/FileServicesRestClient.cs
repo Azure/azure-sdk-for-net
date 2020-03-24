@@ -20,12 +20,12 @@ namespace Azure.Management.Storage
     {
         private string subscriptionId;
         private string host;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of FileServicesRestClient. </summary>
-        public FileServicesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        public FileServicesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
             {
@@ -35,14 +35,14 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(host));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.subscriptionId = subscriptionId;
             this.host = host;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -61,7 +61,7 @@ namespace Azure.Management.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -91,8 +91,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileServiceItems value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileServiceItems.DeserializeFileServiceItems(document.RootElement);
+                            value = FileServiceItems.DeserializeFileServiceItems(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -131,8 +132,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileServiceItems value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileServiceItems.DeserializeFileServiceItems(document.RootElement);
+                            value = FileServiceItems.DeserializeFileServiceItems(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -146,7 +148,7 @@ namespace Azure.Management.Storage
             }
         }
 
-        internal HttpMessage CreateSetServicePropertiesRequest(string resourceGroupName, string accountName, FileServiceProperties parameters)
+        internal HttpMessage CreateSetServicePropertiesRequest(string resourceGroupName, string accountName, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -161,11 +163,16 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/", false);
             uri.AppendPath("default", true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            var model = new FileServiceProperties()
+            {
+                Cors = cors,
+                ShareDeleteRetentionPolicy = shareDeleteRetentionPolicy
+            };
             using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -173,9 +180,10 @@ namespace Azure.Management.Storage
         /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
+        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<FileServiceProperties>> SetServicePropertiesAsync(string resourceGroupName, string accountName, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -185,23 +193,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
             using var scope = clientDiagnostics.CreateScope("FileServicesClient.SetServiceProperties");
             scope.Start();
             try
             {
-                using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, parameters);
+                using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            FileServiceProperties value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
+                            value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -218,9 +223,10 @@ namespace Azure.Management.Storage
         /// <summary> Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
+        /// <param name="cors"> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </param>
+        /// <param name="shareDeleteRetentionPolicy"> The file service properties for share soft delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<FileServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, FileServiceProperties parameters, CancellationToken cancellationToken = default)
+        public Response<FileServiceProperties> SetServiceProperties(string resourceGroupName, string accountName, CorsRules cors, DeleteRetentionPolicy shareDeleteRetentionPolicy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -230,23 +236,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
 
             using var scope = clientDiagnostics.CreateScope("FileServicesClient.SetServiceProperties");
             scope.Start();
             try
             {
-                using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, parameters);
+                using var message = CreateSetServicePropertiesRequest(resourceGroupName, accountName, cors, shareDeleteRetentionPolicy);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            FileServiceProperties value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
+                            value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -275,7 +278,7 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/fileServices/", false);
             uri.AppendPath("default", true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -305,8 +308,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileServiceProperties value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
+                            value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -345,8 +349,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            FileServiceProperties value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
+                            value = FileServiceProperties.DeserializeFileServiceProperties(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

@@ -19,12 +19,12 @@ namespace Azure.Management.Storage.Models
 
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         /// <param name="value"> List of Storage operations supported by the Storage resource provider. </param>
-        internal OperationListResult(IList<Operation> value)
+        internal OperationListResult(IReadOnlyList<Operation> value)
         {
             Value = value;
         }
 
         /// <summary> List of Storage operations supported by the Storage resource provider. </summary>
-        public IList<Operation> Value { get; internal set; }
+        public IReadOnlyList<Operation> Value { get; }
     }
 }

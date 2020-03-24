@@ -14,7 +14,10 @@ namespace Azure.Management.Storage.Models
     {
         internal static Usage DeserializeUsage(JsonElement element)
         {
-            Usage result = new Usage();
+            UsageUnit? unit = default;
+            int? currentValue = default;
+            int? limit = default;
+            UsageName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"))
@@ -23,7 +26,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Unit = property.Value.GetString().ToUsageUnit();
+                    unit = property.Value.GetString().ToUsageUnit();
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
@@ -32,7 +35,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.CurrentValue = property.Value.GetInt32();
+                    currentValue = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("limit"))
@@ -41,7 +44,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Limit = property.Value.GetInt32();
+                    limit = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -50,11 +53,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = UsageName.DeserializeUsageName(property.Value);
+                    name = UsageName.DeserializeUsageName(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new Usage(unit, currentValue, limit, name);
         }
     }
 }

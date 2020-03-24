@@ -14,7 +14,8 @@ namespace Azure.Management.Storage.Models
     {
         internal static SKUCapability DeserializeSKUCapability(JsonElement element)
         {
-            SKUCapability result = new SKUCapability();
+            string name = default;
+            string value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -23,7 +24,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"))
@@ -32,11 +33,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Value = property.Value.GetString();
+                    value = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new SKUCapability(name, value);
         }
     }
 }

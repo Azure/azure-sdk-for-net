@@ -11,18 +11,13 @@ namespace Azure.Management.Storage.Models
     public partial class ActiveDirectoryProperties
     {
         /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
-        public ActiveDirectoryProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
         /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
         /// <param name="forestName"> Specifies the Active Directory forest to get. </param>
         /// <param name="domainGuid"> Specifies the domain GUID. </param>
         /// <param name="domainSid"> Specifies the security identifier (SID). </param>
         /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
-        internal ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
+        public ActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string domainGuid, string domainSid, string azureStorageSid)
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -33,16 +28,16 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Specifies the primary domain that the AD DNS server is authoritative for. </summary>
-        public string DomainName { get; set; }
+        public string DomainName { get; }
         /// <summary> Specifies the NetBIOS domain name. </summary>
-        public string NetBiosDomainName { get; set; }
+        public string NetBiosDomainName { get; }
         /// <summary> Specifies the Active Directory forest to get. </summary>
-        public string ForestName { get; set; }
+        public string ForestName { get; }
         /// <summary> Specifies the domain GUID. </summary>
-        public string DomainGuid { get; set; }
+        public string DomainGuid { get; }
         /// <summary> Specifies the security identifier (SID). </summary>
-        public string DomainSid { get; set; }
+        public string DomainSid { get; }
         /// <summary> Specifies the security identifier (SID) for Azure Storage. </summary>
-        public string AzureStorageSid { get; set; }
+        public string AzureStorageSid { get; }
     }
 }

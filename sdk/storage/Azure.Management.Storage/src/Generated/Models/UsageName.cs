@@ -25,8 +25,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Gets a string describing the resource name. </summary>
-        public string Value { get; internal set; }
+        public string Value { get; }
         /// <summary> Gets a localized string describing the resource name. </summary>
-        public string LocalizedValue { get; internal set; }
+        public string LocalizedValue { get; }
     }
 }

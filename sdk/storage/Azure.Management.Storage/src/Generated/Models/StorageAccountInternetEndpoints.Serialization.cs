@@ -40,7 +40,10 @@ namespace Azure.Management.Storage.Models
 
         internal static StorageAccountInternetEndpoints DeserializeStorageAccountInternetEndpoints(JsonElement element)
         {
-            StorageAccountInternetEndpoints result = new StorageAccountInternetEndpoints();
+            string blob = default;
+            string file = default;
+            string web = default;
+            string dfs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"))
@@ -49,7 +52,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Blob = property.Value.GetString();
+                    blob = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("file"))
@@ -58,7 +61,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.File = property.Value.GetString();
+                    file = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("web"))
@@ -67,7 +70,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Web = property.Value.GetString();
+                    web = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dfs"))
@@ -76,11 +79,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Dfs = property.Value.GetString();
+                    dfs = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new StorageAccountInternetEndpoints(blob, file, web, dfs);
         }
     }
 }

@@ -40,7 +40,10 @@ namespace Azure.Management.Storage.Models
 
         internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element)
         {
-            BlobRestoreStatus result = new BlobRestoreStatus();
+            BlobRestoreProgressStatus? status = default;
+            string failureReason = default;
+            string restoreId = default;
+            BlobRestoreParameters parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -49,7 +52,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Status = new BlobRestoreProgressStatus(property.Value.GetString());
+                    status = new BlobRestoreProgressStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failureReason"))
@@ -58,7 +61,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.FailureReason = property.Value.GetString();
+                    failureReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("restoreId"))
@@ -67,7 +70,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.RestoreId = property.Value.GetString();
+                    restoreId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parameters"))
@@ -76,11 +79,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Parameters = BlobRestoreParameters.DeserializeBlobRestoreParameters(property.Value);
+                    parameters = BlobRestoreParameters.DeserializeBlobRestoreParameters(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new BlobRestoreStatus(status, failureReason, restoreId, parameters);
         }
     }
 }

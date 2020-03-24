@@ -27,7 +27,7 @@ namespace Azure.Management.Storage.Models
         /// <param name="fillGapWithZero"> The property to decide fill gap with zero or not. </param>
         /// <param name="category"> The category this metric specification belong to, could be Capacity. </param>
         /// <param name="resourceIdDimensionNameOverride"> Account Resource Id. </param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, IList<Dimension> dimensions, string aggregationType, bool? fillGapWithZero, string category, string resourceIdDimensionNameOverride)
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, IReadOnlyList<Dimension> dimensions, string aggregationType, bool? fillGapWithZero, string category, string resourceIdDimensionNameOverride)
         {
             Name = name;
             DisplayName = displayName;
@@ -41,22 +41,22 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Name of metric specification. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         /// <summary> Display name of metric specification. </summary>
-        public string DisplayName { get; internal set; }
+        public string DisplayName { get; }
         /// <summary> Display description of metric specification. </summary>
-        public string DisplayDescription { get; internal set; }
+        public string DisplayDescription { get; }
         /// <summary> Unit could be Bytes or Count. </summary>
-        public string Unit { get; internal set; }
+        public string Unit { get; }
         /// <summary> Dimensions of blobs, including blob type and access tier. </summary>
-        public IList<Dimension> Dimensions { get; internal set; }
+        public IReadOnlyList<Dimension> Dimensions { get; }
         /// <summary> Aggregation type could be Average. </summary>
-        public string AggregationType { get; internal set; }
+        public string AggregationType { get; }
         /// <summary> The property to decide fill gap with zero or not. </summary>
-        public bool? FillGapWithZero { get; internal set; }
+        public bool? FillGapWithZero { get; }
         /// <summary> The category this metric specification belong to, could be Capacity. </summary>
-        public string Category { get; internal set; }
+        public string Category { get; }
         /// <summary> Account Resource Id. </summary>
-        public string ResourceIdDimensionNameOverride { get; internal set; }
+        public string ResourceIdDimensionNameOverride { get; }
     }
 }

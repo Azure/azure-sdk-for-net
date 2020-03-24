@@ -13,8 +13,10 @@ namespace Azure.Management.Storage.Models
     public partial class ManagementPolicyFilter
     {
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
-        public ManagementPolicyFilter()
+        /// <param name="blobTypes"> An array of predefined enum values. Only blockBlob is supported. </param>
+        public ManagementPolicyFilter(IList<string> blobTypes)
         {
+            BlobTypes = blobTypes;
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
@@ -29,6 +31,6 @@ namespace Azure.Management.Storage.Models
         /// <summary> An array of strings for prefixes to be match. </summary>
         public IList<string> PrefixMatch { get; set; }
         /// <summary> An array of predefined enum values. Only blockBlob is supported. </summary>
-        public IList<string> BlobTypes { get; set; } = new List<string>();
+        public IList<string> BlobTypes { get; } = new List<string>();
     }
 }

@@ -27,12 +27,13 @@ namespace Azure.Management.Storage.Models
 
         internal static ManagementPolicyDefinition DeserializeManagementPolicyDefinition(JsonElement element)
         {
-            ManagementPolicyDefinition result = new ManagementPolicyDefinition();
+            ManagementPolicyAction actions = default;
+            ManagementPolicyFilter filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"))
                 {
-                    result.Actions = ManagementPolicyAction.DeserializeManagementPolicyAction(property.Value);
+                    actions = ManagementPolicyAction.DeserializeManagementPolicyAction(property.Value);
                     continue;
                 }
                 if (property.NameEquals("filters"))
@@ -41,11 +42,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);
+                    filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new ManagementPolicyDefinition(actions, filters);
         }
     }
 }

@@ -25,8 +25,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Display name of dimension. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         /// <summary> Display name of dimension. </summary>
-        public string DisplayName { get; internal set; }
+        public string DisplayName { get; }
     }
 }

@@ -18,12 +18,7 @@ namespace Azure.Management.Storage.Samples
             var resourceGroupName = args[2];
 
             var storageAccountsClient = new StorageAccountsClient(subscriptionId, new DefaultAzureCredential());
-            var createOperation = storageAccountsClient.StartCreate(resourceGroupName, accountName, new StorageAccountCreateParameters()
-            {
-                Sku = new Sku() { Name = "Standard_LRS" },
-                Location = "eastus",
-                Kind = Kind.StorageV2
-            });
+            var createOperation = storageAccountsClient.StartCreate(resourceGroupName, accountName, new StorageAccountCreateParameters(new Sku("Standard_LRS"), Kind.StorageV2, "eastus"));
 
             StorageAccount account = await createOperation.WaitForCompletionAsync();
             Console.WriteLine($"{account.Id} {account.Location} {account.Name}");
@@ -37,16 +32,12 @@ namespace Azure.Management.Storage.Samples
                 lastKey = storageAccountKey;
             }
 
-            await storageAccountsClient.RegenerateKeyAsync(resourceGroupName, accountName, new StorageAccountRegenerateKeyParameters()
-            {
-                KeyName = lastKey.KeyName
-            });
+            await storageAccountsClient.RegenerateKeyAsync(resourceGroupName, accountName, lastKey.KeyName);
 
             account = await storageAccountsClient.UpdateAsync(resourceGroupName, accountName, new StorageAccountUpdateParameters()
             {
-                Encryption = new Encryption()
+                Encryption = new Encryption(KeySource.MicrosoftStorage)
                 {
-                    KeySource = KeySource.MicrosoftStorage,
                     Services = new EncryptionServices()
                     {
                         Blob = new EncryptionService()

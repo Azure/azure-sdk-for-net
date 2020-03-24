@@ -15,7 +15,15 @@ namespace Azure.Management.Storage.Models
     {
         internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
         {
-            MetricSpecification result = new MetricSpecification();
+            string name = default;
+            string displayName = default;
+            string displayDescription = default;
+            string unit = default;
+            IReadOnlyList<Dimension> dimensions = default;
+            string aggregationType = default;
+            bool? fillGapWithZero = default;
+            string category = default;
+            string resourceIdDimensionNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -24,7 +32,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -33,7 +41,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.DisplayName = property.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayDescription"))
@@ -42,7 +50,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.DisplayDescription = property.Value.GetString();
+                    displayDescription = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"))
@@ -51,7 +59,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Unit = property.Value.GetString();
+                    unit = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dimensions"))
@@ -60,11 +68,12 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Dimensions = new List<Dimension>();
+                    List<Dimension> array = new List<Dimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Dimensions.Add(Dimension.DeserializeDimension(item));
+                        array.Add(Dimension.DeserializeDimension(item));
                     }
+                    dimensions = array;
                     continue;
                 }
                 if (property.NameEquals("aggregationType"))
@@ -73,7 +82,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.AggregationType = property.Value.GetString();
+                    aggregationType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fillGapWithZero"))
@@ -82,7 +91,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.FillGapWithZero = property.Value.GetBoolean();
+                    fillGapWithZero = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("category"))
@@ -91,7 +100,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Category = property.Value.GetString();
+                    category = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceIdDimensionNameOverride"))
@@ -100,11 +109,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.ResourceIdDimensionNameOverride = property.Value.GetString();
+                    resourceIdDimensionNameOverride = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new MetricSpecification(name, displayName, displayDescription, unit, dimensions, aggregationType, fillGapWithZero, category, resourceIdDimensionNameOverride);
         }
     }
 }

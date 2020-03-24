@@ -29,12 +29,12 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Gets the unit of measurement. </summary>
-        public UsageUnit? Unit { get; internal set; }
+        public UsageUnit? Unit { get; }
         /// <summary> Gets the current count of the allocated resources in the subscription. </summary>
-        public int? CurrentValue { get; internal set; }
+        public int? CurrentValue { get; }
         /// <summary> Gets the maximum count of the resources that can be allocated in the subscription. </summary>
-        public int? Limit { get; internal set; }
+        public int? Limit { get; }
         /// <summary> Gets the name of the type of usage. </summary>
-        public UsageName Name { get; internal set; }
+        public UsageName Name { get; }
     }
 }

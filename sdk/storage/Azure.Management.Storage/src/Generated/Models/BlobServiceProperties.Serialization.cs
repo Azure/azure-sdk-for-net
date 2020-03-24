@@ -83,7 +83,18 @@ namespace Azure.Management.Storage.Models
 
         internal static BlobServiceProperties DeserializeBlobServiceProperties(JsonElement element)
         {
-            BlobServiceProperties result = new BlobServiceProperties();
+            Sku sku = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            CorsRules cors = default;
+            string defaultServiceVersion = default;
+            DeleteRetentionPolicy deleteRetentionPolicy = default;
+            bool? isVersioningEnabled = default;
+            bool? automaticSnapshotPolicyEnabled = default;
+            ChangeFeed changeFeed = default;
+            RestorePolicyProperties restorePolicy = default;
+            DeleteRetentionPolicy containerDeleteRetentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -92,7 +103,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Sku = Sku.DeserializeSku(property.Value);
+                    sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -101,7 +112,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -110,7 +121,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -119,7 +130,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -132,7 +143,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.Cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = CorsRules.DeserializeCorsRules(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultServiceVersion"))
@@ -141,7 +152,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.DefaultServiceVersion = property0.Value.GetString();
+                            defaultServiceVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("deleteRetentionPolicy"))
@@ -150,7 +161,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.DeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isVersioningEnabled"))
@@ -159,7 +170,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.IsVersioningEnabled = property0.Value.GetBoolean();
+                            isVersioningEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("automaticSnapshotPolicyEnabled"))
@@ -168,7 +179,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.AutomaticSnapshotPolicyEnabled = property0.Value.GetBoolean();
+                            automaticSnapshotPolicyEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("changeFeed"))
@@ -177,7 +188,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ChangeFeed = ChangeFeed.DeserializeChangeFeed(property0.Value);
+                            changeFeed = ChangeFeed.DeserializeChangeFeed(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("restorePolicy"))
@@ -186,7 +197,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.RestorePolicy = RestorePolicyProperties.DeserializeRestorePolicyProperties(property0.Value);
+                            restorePolicy = RestorePolicyProperties.DeserializeRestorePolicyProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("containerDeleteRetentionPolicy"))
@@ -195,14 +206,14 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ContainerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new BlobServiceProperties(sku, cors, defaultServiceVersion, deleteRetentionPolicy, isVersioningEnabled, automaticSnapshotPolicyEnabled, changeFeed, restorePolicy, containerDeleteRetentionPolicy, id, name, type);
         }
     }
 }

@@ -14,7 +14,8 @@ namespace Azure.Management.Storage.Models
     {
         internal static Dimension DeserializeDimension(JsonElement element)
         {
-            Dimension result = new Dimension();
+            string name = default;
+            string displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -23,7 +24,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -32,11 +33,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.DisplayName = property.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new Dimension(name, displayName);
         }
     }
 }

@@ -27,10 +27,10 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
         /// <summary> The name of the resource. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         /// <summary> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </summary>
-        public string Type { get; internal set; }
+        public string Type { get; }
     }
 }

@@ -48,7 +48,10 @@ namespace Azure.Management.Storage.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            NetworkRuleSet result = new NetworkRuleSet();
+            Bypass? bypass = default;
+            IList<VirtualNetworkRule> virtualNetworkRules = default;
+            IList<IPRule> ipRules = default;
+            DefaultAction defaultAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"))
@@ -57,7 +60,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Bypass = new Bypass(property.Value.GetString());
+                    bypass = new Bypass(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkRules"))
@@ -66,11 +69,12 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.VirtualNetworkRules = new List<VirtualNetworkRule>();
+                    List<VirtualNetworkRule> array = new List<VirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.VirtualNetworkRules.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
+                        array.Add(VirtualNetworkRule.DeserializeVirtualNetworkRule(item));
                     }
+                    virtualNetworkRules = array;
                     continue;
                 }
                 if (property.NameEquals("ipRules"))
@@ -79,20 +83,21 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.IpRules = new List<IPRule>();
+                    List<IPRule> array = new List<IPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.IpRules.Add(IPRule.DeserializeIPRule(item));
+                        array.Add(IPRule.DeserializeIPRule(item));
                     }
+                    ipRules = array;
                     continue;
                 }
                 if (property.NameEquals("defaultAction"))
                 {
-                    result.DefaultAction = property.Value.GetString().ToDefaultAction();
+                    defaultAction = property.Value.GetString().ToDefaultAction();
                     continue;
                 }
             }
-            return result;
+            return new NetworkRuleSet(bypass, virtualNetworkRules, ipRules, defaultAction);
         }
     }
 }

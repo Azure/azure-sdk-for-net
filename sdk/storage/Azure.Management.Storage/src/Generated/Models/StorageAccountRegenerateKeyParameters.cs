@@ -11,18 +11,13 @@ namespace Azure.Management.Storage.Models
     public partial class StorageAccountRegenerateKeyParameters
     {
         /// <summary> Initializes a new instance of StorageAccountRegenerateKeyParameters. </summary>
-        public StorageAccountRegenerateKeyParameters()
-        {
-        }
-
-        /// <summary> Initializes a new instance of StorageAccountRegenerateKeyParameters. </summary>
         /// <param name="keyName"> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </param>
-        internal StorageAccountRegenerateKeyParameters(string keyName)
+        public StorageAccountRegenerateKeyParameters(string keyName)
         {
             KeyName = keyName;
         }
 
         /// <summary> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </summary>
-        public string KeyName { get; set; }
+        public string KeyName { get; }
     }
 }

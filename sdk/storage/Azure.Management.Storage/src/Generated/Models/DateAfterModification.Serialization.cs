@@ -22,16 +22,16 @@ namespace Azure.Management.Storage.Models
 
         internal static DateAfterModification DeserializeDateAfterModification(JsonElement element)
         {
-            DateAfterModification result = new DateAfterModification();
+            float daysAfterModificationGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterModificationGreaterThan"))
                 {
-                    result.DaysAfterModificationGreaterThan = property.Value.GetSingle();
+                    daysAfterModificationGreaterThan = property.Value.GetSingle();
                     continue;
                 }
             }
-            return result;
+            return new DateAfterModification(daysAfterModificationGreaterThan);
         }
     }
 }

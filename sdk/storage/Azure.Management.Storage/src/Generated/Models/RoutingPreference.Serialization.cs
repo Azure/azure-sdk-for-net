@@ -35,7 +35,9 @@ namespace Azure.Management.Storage.Models
 
         internal static RoutingPreference DeserializeRoutingPreference(JsonElement element)
         {
-            RoutingPreference result = new RoutingPreference();
+            RoutingChoice? routingChoice = default;
+            bool? publishMicrosoftEndpoints = default;
+            bool? publishInternetEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingChoice"))
@@ -44,7 +46,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.RoutingChoice = new RoutingChoice(property.Value.GetString());
+                    routingChoice = new RoutingChoice(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publishMicrosoftEndpoints"))
@@ -53,7 +55,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.PublishMicrosoftEndpoints = property.Value.GetBoolean();
+                    publishMicrosoftEndpoints = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("publishInternetEndpoints"))
@@ -62,11 +64,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.PublishInternetEndpoints = property.Value.GetBoolean();
+                    publishInternetEndpoints = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return result;
+            return new RoutingPreference(routingChoice, publishMicrosoftEndpoints, publishInternetEndpoints);
         }
     }
 }

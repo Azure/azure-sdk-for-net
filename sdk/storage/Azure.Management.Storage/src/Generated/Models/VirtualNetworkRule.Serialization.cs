@@ -17,8 +17,11 @@ namespace Azure.Management.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(VirtualNetworkResourceId);
-            writer.WritePropertyName("action");
-            writer.WriteStringValue(Action);
+            if (Action != null)
+            {
+                writer.WritePropertyName("action");
+                writer.WriteStringValue(Action);
+            }
             if (State != null)
             {
                 writer.WritePropertyName("state");
@@ -29,17 +32,23 @@ namespace Azure.Management.Storage.Models
 
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
-            VirtualNetworkRule result = new VirtualNetworkRule();
+            string id = default;
+            string action = default;
+            State? state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    result.VirtualNetworkResourceId = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("action"))
                 {
-                    result.Action = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    action = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"))
@@ -48,11 +57,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.State = property.Value.GetString().ToState();
+                    state = property.Value.GetString().ToState();
                     continue;
                 }
             }
-            return result;
+            return new VirtualNetworkRule(id, action, state);
         }
     }
 }

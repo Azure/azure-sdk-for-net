@@ -42,7 +42,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Sku name and tier. </summary>
-        public Sku Sku { get; internal set; }
+        public Sku Sku { get; }
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
         public CorsRules Cors { get; set; }
         /// <summary> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>

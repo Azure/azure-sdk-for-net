@@ -23,6 +23,6 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> List SAS credentials of storage account. </summary>
-        public string AccountSasToken { get; internal set; }
+        public string AccountSasToken { get; }
     }
 }

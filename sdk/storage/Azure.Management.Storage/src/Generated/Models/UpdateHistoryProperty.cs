@@ -35,16 +35,16 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </summary>
-        public ImmutabilityPolicyUpdateType? Update { get; internal set; }
+        public ImmutabilityPolicyUpdateType? Update { get; }
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
-        public int? ImmutabilityPeriodSinceCreationInDays { get; internal set; }
+        public int? ImmutabilityPeriodSinceCreationInDays { get; }
         /// <summary> Returns the date and time the ImmutabilityPolicy was updated. </summary>
-        public DateTimeOffset? Timestamp { get; internal set; }
+        public DateTimeOffset? Timestamp { get; }
         /// <summary> Returns the Object ID of the user who updated the ImmutabilityPolicy. </summary>
-        public string ObjectIdentifier { get; internal set; }
+        public string ObjectIdentifier { get; }
         /// <summary> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </summary>
-        public string TenantId { get; internal set; }
+        public string TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </summary>
-        public string Upn { get; internal set; }
+        public string Upn { get; }
     }
 }

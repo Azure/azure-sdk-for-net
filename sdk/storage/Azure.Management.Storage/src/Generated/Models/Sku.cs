@@ -11,8 +11,10 @@ namespace Azure.Management.Storage.Models
     public partial class Sku
     {
         /// <summary> Initializes a new instance of Sku. </summary>
-        public Sku()
+        /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
+        public Sku(SkuName name)
         {
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of Sku. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </summary>
-        public SkuName Name { get; set; }
+        public SkuName Name { get; }
         /// <summary> The SKU tier. This is based on the SKU name. </summary>
         public SkuTier? Tier { get; set; }
     }

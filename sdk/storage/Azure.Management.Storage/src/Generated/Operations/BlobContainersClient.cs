@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -25,9 +26,9 @@ namespace Azure.Management.Storage
         {
         }
         /// <summary> Initializes a new instance of BlobContainersClient. </summary>
-        internal BlobContainersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        internal BlobContainersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
-            RestClient = new BlobContainersRestClient(clientDiagnostics, pipeline, subscriptionId, host, ApiVersion);
+            RestClient = new BlobContainersRestClient(clientDiagnostics, pipeline, subscriptionId, host, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -36,44 +37,48 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="blobContainer"> Properties of the blob container to create. </param>
+        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
+        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlobContainer>> CreateAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobContainer>> CreateAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(resourceGroupName, accountName, containerName, blobContainer, cancellationToken).ConfigureAwait(false);
+            return await RestClient.CreateAsync(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="blobContainer"> Properties of the blob container to create. </param>
+        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
+        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BlobContainer> Create(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
+        public virtual Response<BlobContainer> Create(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(resourceGroupName, accountName, containerName, blobContainer, cancellationToken);
+            return RestClient.Create(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken);
         }
 
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="blobContainer"> Properties of the blob container to create. </param>
+        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
+        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlobContainer>> UpdateAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobContainer>> UpdateAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
         {
-            return await RestClient.UpdateAsync(resourceGroupName, accountName, containerName, blobContainer, cancellationToken).ConfigureAwait(false);
+            return await RestClient.UpdateAsync(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="blobContainer"> Properties of the blob container to create. </param>
+        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
+        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BlobContainer> Update(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
+        public virtual Response<BlobContainer> Update(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
         {
-            return RestClient.Update(resourceGroupName, accountName, containerName, blobContainer, cancellationToken);
+            return RestClient.Update(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken);
         }
 
         /// <summary> Gets properties of a specified container. </summary>
@@ -120,44 +125,44 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
+        /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LegalHold>> SetLegalHoldAsync(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LegalHold>> SetLegalHoldAsync(string resourceGroupName, string accountName, string containerName, IEnumerable<string> tags, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SetLegalHoldAsync(resourceGroupName, accountName, containerName, legalHold, cancellationToken).ConfigureAwait(false);
+            return await RestClient.SetLegalHoldAsync(resourceGroupName, accountName, containerName, tags, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Sets legal hold tags. Setting the same tag results in an idempotent operation. SetLegalHold follows an append pattern and does not clear out the existing tags that are not specified in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
+        /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LegalHold> SetLegalHold(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
+        public virtual Response<LegalHold> SetLegalHold(string resourceGroupName, string accountName, string containerName, IEnumerable<string> tags, CancellationToken cancellationToken = default)
         {
-            return RestClient.SetLegalHold(resourceGroupName, accountName, containerName, legalHold, cancellationToken);
+            return RestClient.SetLegalHold(resourceGroupName, accountName, containerName, tags, cancellationToken);
         }
 
         /// <summary> Clears legal hold tags. Clearing the same or non-existent tag results in an idempotent operation. ClearLegalHold clears out only the specified tags in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
+        /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LegalHold>> ClearLegalHoldAsync(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LegalHold>> ClearLegalHoldAsync(string resourceGroupName, string accountName, string containerName, IEnumerable<string> tags, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ClearLegalHoldAsync(resourceGroupName, accountName, containerName, legalHold, cancellationToken).ConfigureAwait(false);
+            return await RestClient.ClearLegalHoldAsync(resourceGroupName, accountName, containerName, tags, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Clears legal hold tags. Clearing the same or non-existent tag results in an idempotent operation. ClearLegalHold clears out only the specified tags in the request. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="legalHold"> The LegalHold property that will be set to a blob container. </param>
+        /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LegalHold> ClearLegalHold(string resourceGroupName, string accountName, string containerName, LegalHold legalHold, CancellationToken cancellationToken = default)
+        public virtual Response<LegalHold> ClearLegalHold(string resourceGroupName, string accountName, string containerName, IEnumerable<string> tags, CancellationToken cancellationToken = default)
         {
-            return RestClient.ClearLegalHold(resourceGroupName, accountName, containerName, legalHold, cancellationToken);
+            return RestClient.ClearLegalHold(resourceGroupName, accountName, containerName, tags, cancellationToken);
         }
 
         /// <summary> Creates or updates an unlocked immutability policy. ETag in If-Match is honored if given but not required for this operation. </summary>
@@ -165,11 +170,12 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImmutabilityPolicy>> CreateOrUpdateImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int? immutabilityPeriodSinceCreationInDays, bool? allowProtectedAppendWrites, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken).ConfigureAwait(false);
+            return await RestClient.CreateOrUpdateImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates or updates an unlocked immutability policy. ETag in If-Match is honored if given but not required for this operation. </summary>
@@ -177,11 +183,12 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters, CancellationToken cancellationToken = default)
+        public virtual Response<ImmutabilityPolicy> CreateOrUpdateImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, int? immutabilityPeriodSinceCreationInDays, bool? allowProtectedAppendWrites, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdateImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken);
+            return RestClient.CreateOrUpdateImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites, cancellationToken);
         }
 
         /// <summary> Gets the existing immutability policy along with the corresponding ETag in response headers and body. </summary>
@@ -255,11 +262,12 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ImmutabilityPolicy>> ExtendImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImmutabilityPolicy>> ExtendImmutabilityPolicyAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int? immutabilityPeriodSinceCreationInDays, bool? allowProtectedAppendWrites, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ExtendImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken).ConfigureAwait(false);
+            return await RestClient.ExtendImmutabilityPolicyAsync(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Extends the immutabilityPeriodSinceCreationInDays of a locked immutabilityPolicy. The only action allowed on a Locked policy will be this action. ETag in If-Match is required for this operation. </summary>
@@ -267,11 +275,12 @@ namespace Azure.Management.Storage
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of &quot;*&quot; can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="parameters"> The ImmutabilityPolicy Properties that will be created or updated to a blob container. </param>
+        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
+        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ImmutabilityPolicy> ExtendImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, ImmutabilityPolicy parameters, CancellationToken cancellationToken = default)
+        public virtual Response<ImmutabilityPolicy> ExtendImmutabilityPolicy(string resourceGroupName, string accountName, string containerName, string ifMatch, int? immutabilityPeriodSinceCreationInDays, bool? allowProtectedAppendWrites, CancellationToken cancellationToken = default)
         {
-            return RestClient.ExtendImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, parameters, cancellationToken);
+            return RestClient.ExtendImmutabilityPolicy(resourceGroupName, accountName, containerName, ifMatch, immutabilityPeriodSinceCreationInDays, allowProtectedAppendWrites, cancellationToken);
         }
 
         /// <summary> The Lease Container operation establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>

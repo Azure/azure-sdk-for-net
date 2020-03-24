@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -50,48 +51,60 @@ namespace Azure.Management.Storage.Models
 
         internal static CorsRule DeserializeCorsRule(JsonElement element)
         {
-            CorsRule result = new CorsRule();
+            IList<string> allowedOrigins = new List<string>();
+            IList<CorsRuleAllowedMethodsItem> allowedMethods = new List<CorsRuleAllowedMethodsItem>();
+            int maxAgeInSeconds = default;
+            IList<string> exposedHeaders = new List<string>();
+            IList<string> allowedHeaders = new List<string>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.AllowedOrigins.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    allowedOrigins = array;
                     continue;
                 }
                 if (property.NameEquals("allowedMethods"))
                 {
+                    List<CorsRuleAllowedMethodsItem> array = new List<CorsRuleAllowedMethodsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.AllowedMethods.Add(new CorsRuleAllowedMethodsItem(item.GetString()));
+                        array.Add(new CorsRuleAllowedMethodsItem(item.GetString()));
                     }
+                    allowedMethods = array;
                     continue;
                 }
                 if (property.NameEquals("maxAgeInSeconds"))
                 {
-                    result.MaxAgeInSeconds = property.Value.GetInt32();
+                    maxAgeInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("exposedHeaders"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ExposedHeaders.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    exposedHeaders = array;
                     continue;
                 }
                 if (property.NameEquals("allowedHeaders"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.AllowedHeaders.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    allowedHeaders = array;
                     continue;
                 }
             }
-            return result;
+            return new CorsRule(allowedOrigins, allowedMethods, maxAgeInSeconds, exposedHeaders, allowedHeaders);
         }
     }
 }

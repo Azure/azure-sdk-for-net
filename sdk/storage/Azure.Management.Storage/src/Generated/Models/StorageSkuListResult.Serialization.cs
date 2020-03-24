@@ -15,7 +15,7 @@ namespace Azure.Management.Storage.Models
     {
         internal static StorageSkuListResult DeserializeStorageSkuListResult(JsonElement element)
         {
-            StorageSkuListResult result = new StorageSkuListResult();
+            IReadOnlyList<SkuInformation> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -24,15 +24,16 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Value = new List<SkuInformation>();
+                    List<SkuInformation> array = new List<SkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Value.Add(SkuInformation.DeserializeSkuInformation(item));
+                        array.Add(SkuInformation.DeserializeSkuInformation(item));
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new StorageSkuListResult(value);
         }
     }
 }

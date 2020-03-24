@@ -29,12 +29,12 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Service provider: Microsoft Storage. </summary>
-        public string Provider { get; internal set; }
+        public string Provider { get; }
         /// <summary> Resource on which the operation is performed etc. </summary>
-        public string Resource { get; internal set; }
+        public string Resource { get; }
         /// <summary> Type of operation: get, read, delete, etc. </summary>
-        public string Operation { get; internal set; }
+        public string Operation { get; }
         /// <summary> Description of the operation. </summary>
-        public string Description { get; internal set; }
+        public string Description { get; }
     }
 }

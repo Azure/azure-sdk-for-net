@@ -25,8 +25,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Returned unique lease ID that must be included with any request to delete the container, or to renew, change, or release the lease. </summary>
-        public string LeaseId { get; internal set; }
+        public string LeaseId { get; }
         /// <summary> Approximate time remaining in the lease period, in seconds. </summary>
-        public string LeaseTimeSeconds { get; internal set; }
+        public string LeaseTimeSeconds { get; }
     }
 }

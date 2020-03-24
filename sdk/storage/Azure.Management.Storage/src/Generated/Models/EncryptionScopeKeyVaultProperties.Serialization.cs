@@ -25,7 +25,7 @@ namespace Azure.Management.Storage.Models
 
         internal static EncryptionScopeKeyVaultProperties DeserializeEncryptionScopeKeyVaultProperties(JsonElement element)
         {
-            EncryptionScopeKeyVaultProperties result = new EncryptionScopeKeyVaultProperties();
+            string keyUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"))
@@ -34,11 +34,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.KeyUri = property.Value.GetString();
+                    keyUri = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new EncryptionScopeKeyVaultProperties(keyUri);
         }
     }
 }

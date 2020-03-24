@@ -25,8 +25,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         /// <summary> A string value to indicate states of given capability. Possibly &apos;true&apos; or &apos;false&apos;. </summary>
-        public string Value { get; internal set; }
+        public string Value { get; }
     }
 }

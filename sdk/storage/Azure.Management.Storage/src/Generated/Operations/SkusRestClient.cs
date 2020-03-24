@@ -20,12 +20,12 @@ namespace Azure.Management.Storage
     {
         private string subscriptionId;
         private string host;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of SkusRestClient. </summary>
-        public SkusRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        public SkusRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
             {
@@ -35,14 +35,14 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(host));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.subscriptionId = subscriptionId;
             this.host = host;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -57,7 +57,7 @@ namespace Azure.Management.Storage
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Storage/skus", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -76,8 +76,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            StorageSkuListResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
+                            value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -105,8 +106,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            StorageSkuListResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
+                            value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -151,8 +153,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            StorageSkuListResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
+                            value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -186,8 +189,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            StorageSkuListResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
+                            value = StorageSkuListResult.DeserializeStorageSkuListResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

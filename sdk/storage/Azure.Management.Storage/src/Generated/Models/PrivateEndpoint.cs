@@ -23,6 +23,6 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
-        public string Id { get; internal set; }
+        public string Id { get; }
     }
 }

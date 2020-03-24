@@ -33,13 +33,13 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> ImmutabilityPolicy Etag. </summary>
-        public string Etag { get; internal set; }
+        public string Etag { get; }
         /// <summary> The ImmutabilityPolicy update history of the blob container. </summary>
-        public IList<UpdateHistoryProperty> UpdateHistory { get; internal set; }
+        public IList<UpdateHistoryProperty> UpdateHistory { get; }
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
         public int? ImmutabilityPeriodSinceCreationInDays { get; set; }
         /// <summary> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </summary>
-        public ImmutabilityPolicyState? State { get; internal set; }
+        public ImmutabilityPolicyState? State { get; }
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </summary>
         public bool? AllowProtectedAppendWrites { get; set; }
     }

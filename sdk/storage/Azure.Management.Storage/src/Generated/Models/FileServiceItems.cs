@@ -19,12 +19,12 @@ namespace Azure.Management.Storage.Models
 
         /// <summary> Initializes a new instance of FileServiceItems. </summary>
         /// <param name="value"> List of file services returned. </param>
-        internal FileServiceItems(IList<FileServiceProperties> value)
+        internal FileServiceItems(IReadOnlyList<FileServiceProperties> value)
         {
             Value = value;
         }
 
         /// <summary> List of file services returned. </summary>
-        public IList<FileServiceProperties> Value { get; internal set; }
+        public IReadOnlyList<FileServiceProperties> Value { get; }
     }
 }

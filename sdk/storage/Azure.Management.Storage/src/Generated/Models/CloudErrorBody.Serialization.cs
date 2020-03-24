@@ -15,7 +15,10 @@ namespace Azure.Management.Storage.Models
     {
         internal static CloudErrorBody DeserializeCloudErrorBody(JsonElement element)
         {
-            CloudErrorBody result = new CloudErrorBody();
+            string code = default;
+            string message = default;
+            string target = default;
+            IReadOnlyList<CloudErrorBody> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -24,7 +27,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Code = property.Value.GetString();
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -33,7 +36,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Message = property.Value.GetString();
+                    message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"))
@@ -42,7 +45,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Target = property.Value.GetString();
+                    target = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -51,15 +54,16 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Details = new List<CloudErrorBody>();
+                    List<CloudErrorBody> array = new List<CloudErrorBody>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Details.Add(DeserializeCloudErrorBody(item));
+                        array.Add(DeserializeCloudErrorBody(item));
                     }
+                    details = array;
                     continue;
                 }
             }
-            return result;
+            return new CloudErrorBody(code, message, target, details);
         }
     }
 }

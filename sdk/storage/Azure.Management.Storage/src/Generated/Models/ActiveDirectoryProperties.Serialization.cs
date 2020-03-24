@@ -32,41 +32,46 @@ namespace Azure.Management.Storage.Models
 
         internal static ActiveDirectoryProperties DeserializeActiveDirectoryProperties(JsonElement element)
         {
-            ActiveDirectoryProperties result = new ActiveDirectoryProperties();
+            string domainName = default;
+            string netBiosDomainName = default;
+            string forestName = default;
+            string domainGuid = default;
+            string domainSid = default;
+            string azureStorageSid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"))
                 {
-                    result.DomainName = property.Value.GetString();
+                    domainName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("netBiosDomainName"))
                 {
-                    result.NetBiosDomainName = property.Value.GetString();
+                    netBiosDomainName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("forestName"))
                 {
-                    result.ForestName = property.Value.GetString();
+                    forestName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("domainGuid"))
                 {
-                    result.DomainGuid = property.Value.GetString();
+                    domainGuid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("domainSid"))
                 {
-                    result.DomainSid = property.Value.GetString();
+                    domainSid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("azureStorageSid"))
                 {
-                    result.AzureStorageSid = property.Value.GetString();
+                    azureStorageSid = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new ActiveDirectoryProperties(domainName, netBiosDomainName, forestName, domainGuid, domainSid, azureStorageSid);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.Management.Storage.Models
 
         /// <summary> Initializes a new instance of BlobServiceItems. </summary>
         /// <param name="value"> List of blob services returned. </param>
-        internal BlobServiceItems(IList<BlobServiceProperties> value)
+        internal BlobServiceItems(IReadOnlyList<BlobServiceProperties> value)
         {
             Value = value;
         }
 
         /// <summary> List of blob services returned. </summary>
-        public IList<BlobServiceProperties> Value { get; internal set; }
+        public IReadOnlyList<BlobServiceProperties> Value { get; }
     }
 }

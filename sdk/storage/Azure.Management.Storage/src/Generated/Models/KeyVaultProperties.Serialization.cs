@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -30,12 +31,26 @@ namespace Azure.Management.Storage.Models
                 writer.WritePropertyName("keyvaulturi");
                 writer.WriteStringValue(KeyVaultUri);
             }
+            if (CurrentVersionedKeyIdentifier != null)
+            {
+                writer.WritePropertyName("currentVersionedKeyIdentifier");
+                writer.WriteStringValue(CurrentVersionedKeyIdentifier);
+            }
+            if (LastKeyRotationTimestamp != null)
+            {
+                writer.WritePropertyName("lastKeyRotationTimestamp");
+                writer.WriteStringValue(LastKeyRotationTimestamp.Value, "S");
+            }
             writer.WriteEndObject();
         }
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
-            KeyVaultProperties result = new KeyVaultProperties();
+            string keyname = default;
+            string keyversion = default;
+            string keyvaulturi = default;
+            string currentVersionedKeyIdentifier = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyname"))
@@ -44,7 +59,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.KeyName = property.Value.GetString();
+                    keyname = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyversion"))
@@ -53,7 +68,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.KeyVersion = property.Value.GetString();
+                    keyversion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyvaulturi"))
@@ -62,11 +77,29 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.KeyVaultUri = property.Value.GetString();
+                    keyvaulturi = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("currentVersionedKeyIdentifier"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentVersionedKeyIdentifier = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastKeyRotationTimestamp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
             }
-            return result;
+            return new KeyVaultProperties(keyname, keyversion, keyvaulturi, currentVersionedKeyIdentifier, lastKeyRotationTimestamp);
         }
     }
 }

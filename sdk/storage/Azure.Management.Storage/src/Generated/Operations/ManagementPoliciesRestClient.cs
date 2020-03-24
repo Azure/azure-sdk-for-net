@@ -20,12 +20,12 @@ namespace Azure.Management.Storage
     {
         private string subscriptionId;
         private string host;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of ManagementPoliciesRestClient. </summary>
-        public ManagementPoliciesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        public ManagementPoliciesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
             if (subscriptionId == null)
             {
@@ -35,14 +35,14 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(host));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.subscriptionId = subscriptionId;
             this.host = host;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -62,7 +62,7 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/managementPolicies/", false);
             uri.AppendPath("default", true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }
@@ -92,8 +92,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            ManagementPolicy value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
+                            value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -132,8 +133,9 @@ namespace Azure.Management.Storage
                 {
                     case 200:
                         {
+                            ManagementPolicy value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
+                            value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -147,7 +149,7 @@ namespace Azure.Management.Storage
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string accountName, ManagementPolicy properties)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string accountName, ManagementPolicySchema policy)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -162,11 +164,15 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/managementPolicies/", false);
             uri.AppendPath("default", true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
+            var model = new ManagementPolicy()
+            {
+                Policy = policy
+            };
             using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(properties);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -174,9 +180,9 @@ namespace Azure.Management.Storage
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
+        /// <param name="policy"> The Storage Account ManagementPolicy, in JSON format. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ManagementPolicy>> CreateOrUpdateAsync(string resourceGroupName, string accountName, ManagementPolicy properties, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ManagementPolicy>> CreateOrUpdateAsync(string resourceGroupName, string accountName, ManagementPolicySchema policy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -186,23 +192,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
 
             using var scope = clientDiagnostics.CreateScope("ManagementPoliciesClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using var message = CreateCreateOrUpdateRequest(resourceGroupName, accountName, properties);
+                using var message = CreateCreateOrUpdateRequest(resourceGroupName, accountName, policy);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            ManagementPolicy value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
+                            value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -219,9 +222,9 @@ namespace Azure.Management.Storage
         /// <summary> Sets the managementpolicy to the specified storage account. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="properties"> The ManagementPolicy set to a storage account. </param>
+        /// <param name="policy"> The Storage Account ManagementPolicy, in JSON format. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ManagementPolicy> CreateOrUpdate(string resourceGroupName, string accountName, ManagementPolicy properties, CancellationToken cancellationToken = default)
+        public Response<ManagementPolicy> CreateOrUpdate(string resourceGroupName, string accountName, ManagementPolicySchema policy, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -231,23 +234,20 @@ namespace Azure.Management.Storage
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
 
             using var scope = clientDiagnostics.CreateScope("ManagementPoliciesClient.CreateOrUpdate");
             scope.Start();
             try
             {
-                using var message = CreateCreateOrUpdateRequest(resourceGroupName, accountName, properties);
+                using var message = CreateCreateOrUpdateRequest(resourceGroupName, accountName, policy);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            ManagementPolicy value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
+                            value = ManagementPolicy.DeserializeManagementPolicy(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -276,7 +276,7 @@ namespace Azure.Management.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/managementPolicies/", false);
             uri.AppendPath("default", true);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             return message;
         }

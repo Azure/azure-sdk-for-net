@@ -26,6 +26,6 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Resource Etag. </summary>
-        public string Etag { get; internal set; }
+        public string Etag { get; }
     }
 }

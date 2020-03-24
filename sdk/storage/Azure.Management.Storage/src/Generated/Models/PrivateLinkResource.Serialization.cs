@@ -64,7 +64,12 @@ namespace Azure.Management.Storage.Models
 
         internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
         {
-            PrivateLinkResource result = new PrivateLinkResource();
+            string id = default;
+            string name = default;
+            string type = default;
+            string groupId = default;
+            IList<string> requiredMembers = default;
+            IList<string> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -73,7 +78,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -82,7 +87,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -91,7 +96,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -104,7 +109,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.GroupId = property0.Value.GetString();
+                            groupId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("requiredMembers"))
@@ -113,11 +118,12 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.RequiredMembers = new List<string>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                result.RequiredMembers.Add(item.GetString());
+                                array.Add(item.GetString());
                             }
+                            requiredMembers = array;
                             continue;
                         }
                         if (property0.NameEquals("requiredZoneNames"))
@@ -126,18 +132,19 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.RequiredZoneNames = new List<string>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                result.RequiredZoneNames.Add(item.GetString());
+                                array.Add(item.GetString());
                             }
+                            requiredZoneNames = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new PrivateLinkResource(groupId, requiredMembers, requiredZoneNames, id, name, type);
         }
     }
 }

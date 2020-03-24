@@ -11,8 +11,10 @@ namespace Azure.Management.Storage.Models
     public partial class ManagementPolicyDefinition
     {
         /// <summary> Initializes a new instance of ManagementPolicyDefinition. </summary>
-        public ManagementPolicyDefinition()
+        /// <param name="actions"> An object that defines the action set. </param>
+        public ManagementPolicyDefinition(ManagementPolicyAction actions)
         {
+            Actions = actions;
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyDefinition. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> An object that defines the action set. </summary>
-        public ManagementPolicyAction Actions { get; set; } = new ManagementPolicyAction();
+        public ManagementPolicyAction Actions { get; }
         /// <summary> An object that defines the filter set. </summary>
         public ManagementPolicyFilter Filters { get; set; }
     }

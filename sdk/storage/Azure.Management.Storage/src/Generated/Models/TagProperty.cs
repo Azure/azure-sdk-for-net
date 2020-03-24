@@ -33,14 +33,14 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The tag value. </summary>
-        public string Tag { get; internal set; }
+        public string Tag { get; }
         /// <summary> Returns the date and time the tag was added. </summary>
-        public DateTimeOffset? Timestamp { get; internal set; }
+        public DateTimeOffset? Timestamp { get; }
         /// <summary> Returns the Object ID of the user who added the tag. </summary>
-        public string ObjectIdentifier { get; internal set; }
+        public string ObjectIdentifier { get; }
         /// <summary> Returns the Tenant ID that issued the token for the user who added the tag. </summary>
-        public string TenantId { get; internal set; }
+        public string TenantId { get; }
         /// <summary> Returns the User Principal Name of the user who added the tag. </summary>
-        public string Upn { get; internal set; }
+        public string Upn { get; }
     }
 }

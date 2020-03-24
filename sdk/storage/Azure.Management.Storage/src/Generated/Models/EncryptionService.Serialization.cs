@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -35,7 +36,9 @@ namespace Azure.Management.Storage.Models
 
         internal static EncryptionService DeserializeEncryptionService(JsonElement element)
         {
-            EncryptionService result = new EncryptionService();
+            bool? enabled = default;
+            DateTimeOffset? lastEnabledTime = default;
+            KeyType? keyType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -44,7 +47,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Enabled = property.Value.GetBoolean();
+                    enabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("lastEnabledTime"))
@@ -53,7 +56,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.LastEnabledTime = property.Value.GetDateTimeOffset("S");
+                    lastEnabledTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("keyType"))
@@ -62,11 +65,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.KeyType = new KeyType(property.Value.GetString());
+                    keyType = new KeyType(property.Value.GetString());
                     continue;
                 }
             }
-            return result;
+            return new EncryptionService(enabled, lastEnabledTime, keyType);
         }
     }
 }

@@ -11,8 +11,11 @@ namespace Azure.Management.Storage.Models
     public partial class StorageAccountCheckNameAvailabilityParameters
     {
         /// <summary> Initializes a new instance of StorageAccountCheckNameAvailabilityParameters. </summary>
-        public StorageAccountCheckNameAvailabilityParameters()
+        /// <param name="name"> The storage account name. </param>
+        public StorageAccountCheckNameAvailabilityParameters(string name)
         {
+            Name = name;
+            Type = "Microsoft.Storage/storageAccounts";
         }
 
         /// <summary> Initializes a new instance of StorageAccountCheckNameAvailabilityParameters. </summary>
@@ -25,8 +28,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> The storage account name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
-        public string Type { get; set; } = "Microsoft.Storage/storageAccounts";
+        public string Type { get; }
     }
 }

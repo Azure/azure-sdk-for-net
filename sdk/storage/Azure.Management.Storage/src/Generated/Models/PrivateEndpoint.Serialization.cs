@@ -25,7 +25,7 @@ namespace Azure.Management.Storage.Models
 
         internal static PrivateEndpoint DeserializePrivateEndpoint(JsonElement element)
         {
-            PrivateEndpoint result = new PrivateEndpoint();
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,11 +34,11 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Id = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PrivateEndpoint(id);
         }
     }
 }

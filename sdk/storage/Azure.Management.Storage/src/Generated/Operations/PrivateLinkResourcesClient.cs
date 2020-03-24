@@ -23,9 +23,9 @@ namespace Azure.Management.Storage
         {
         }
         /// <summary> Initializes a new instance of PrivateLinkResourcesClient. </summary>
-        internal PrivateLinkResourcesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string ApiVersion = "2019-06-01")
+        internal PrivateLinkResourcesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, string host = "https://management.azure.com", string apiVersion = "2019-06-01")
         {
-            RestClient = new PrivateLinkResourcesRestClient(clientDiagnostics, pipeline, subscriptionId, host, ApiVersion);
+            RestClient = new PrivateLinkResourcesRestClient(clientDiagnostics, pipeline, subscriptionId, host, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }

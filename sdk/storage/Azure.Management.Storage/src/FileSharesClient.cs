@@ -13,7 +13,7 @@ namespace Azure.Management.Storage
         }
 
         public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
-            this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, ApiVersion: options.VersionString)
+            this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
         {
         }
     }

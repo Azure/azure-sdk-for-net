@@ -54,7 +54,11 @@ namespace Azure.Management.Storage.Models
 
         internal static ImmutabilityPolicyProperties DeserializeImmutabilityPolicyProperties(JsonElement element)
         {
-            ImmutabilityPolicyProperties result = new ImmutabilityPolicyProperties();
+            string etag = default;
+            IList<UpdateHistoryProperty> updateHistory = default;
+            int? immutabilityPeriodSinceCreationInDays = default;
+            ImmutabilityPolicyState? state = default;
+            bool? allowProtectedAppendWrites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -63,7 +67,7 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.Etag = property.Value.GetString();
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("updateHistory"))
@@ -72,11 +76,12 @@ namespace Azure.Management.Storage.Models
                     {
                         continue;
                     }
-                    result.UpdateHistory = new List<UpdateHistoryProperty>();
+                    List<UpdateHistoryProperty> array = new List<UpdateHistoryProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.UpdateHistory.Add(UpdateHistoryProperty.DeserializeUpdateHistoryProperty(item));
+                        array.Add(UpdateHistoryProperty.DeserializeUpdateHistoryProperty(item));
                     }
+                    updateHistory = array;
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -89,7 +94,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.ImmutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
+                            immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("state"))
@@ -98,7 +103,7 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.State = new ImmutabilityPolicyState(property0.Value.GetString());
+                            state = new ImmutabilityPolicyState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowProtectedAppendWrites"))
@@ -107,14 +112,14 @@ namespace Azure.Management.Storage.Models
                             {
                                 continue;
                             }
-                            result.AllowProtectedAppendWrites = property0.Value.GetBoolean();
+                            allowProtectedAppendWrites = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return result;
+            return new ImmutabilityPolicyProperties(etag, updateHistory, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites);
         }
     }
 }
