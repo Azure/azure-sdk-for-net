@@ -991,7 +991,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            AccessControlRecursiveChangesSummary result = await file.SetAccessControlRecursiveAsync(AccessControlList, null);
+            AccessControlChangeCounters result = await file.SetAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
             Assert.AreEqual(0, result.ChangedDirectoriesCount);
@@ -1008,7 +1008,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            AccessControlRecursiveChangesSummary result = await file.UpdateAccessControlRecursiveAsync(AccessControlList, null);
+            AccessControlChangeCounters result = await file.UpdateAccessControlRecursiveAsync(AccessControlList, null);
 
             // Assert
             Assert.AreEqual(0, result.ChangedDirectoriesCount);
@@ -1025,7 +1025,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
             // Act
-            AccessControlRecursiveChangesSummary result = await file.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
+            AccessControlChangeCounters result = await file.RemoveAccessControlRecursiveAsync(RemoveAccessControlList, null);
 
             // Assert
             Assert.AreEqual(0, result.ChangedDirectoriesCount);

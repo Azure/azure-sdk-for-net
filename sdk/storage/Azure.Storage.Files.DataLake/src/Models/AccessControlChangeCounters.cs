@@ -3,9 +3,9 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// AccessControlRecursiveChangesSummary contains summary counts of operations that change Access Control Lists recursively.
+    /// AccessControlChangeCounters contains counts of operations that change Access Control Lists recursively.
     /// </summary>
-    public class AccessControlRecursiveChangesSummary
+    public class AccessControlChangeCounters
     {
         /// <summary>
         /// Returns number of directories where Access Control List has been updated successfully.
@@ -27,6 +27,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public string ContinuationToken { get; internal set; }
 
-        internal AccessControlRecursiveChangesSummary() { }
+        internal AccessControlChangeCounters() { }
     }
 }
