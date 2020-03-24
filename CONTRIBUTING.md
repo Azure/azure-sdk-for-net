@@ -247,7 +247,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 # On-boarding New generated code library
 
-1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*`. (e.g.  `Microsoft.Azure.Management.Storage`)
+1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*`. (e.g.  `sdk/storage/Microsoft.Azure.Management.Storage`)
 2. Modify `autorest.md` to point to you Swagger file. E.g.
 
 ``` yaml
@@ -256,8 +256,63 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
 ```
-3. Run `dotnet msbuild /t:GeneratedCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13)
 
+3. Run `dotnet msbuild /t:GeneratedCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
+4. Add a `*ManagementClientOptions` type that inherits from `ClientOptions` and has a service version enum:
+
+``` C#
+namespace Azure.Management.Storage
+{
+    public class StorageManagementClientOptions: ClientOptions
+    {
+        private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
+        internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
+
+        public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
+        {
+            VersionString = serviceVersion switch
+            {
+                ServiceVersion.V2019_06_01 => "2019-06-01",
+                _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
+            };
+        }
+
+        internal string VersionString { get; }
+
+        public enum ServiceVersion
+        {
+#pragma warning disable CA1707
+            V2019_06_01 = 1
+#pragma warning restore CA1707
+        }
+    }
+}
+```
+5. Add public constructors to all the clients using a partial class.
+``` C#
+ public partial class FileSharesClient
+    {
+        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
+        {
+        }
+
+        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
+            this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
+        {
+        }
+    }
+```
+NOTE: `ManagementClientPipeline` is a helper clas that builds a client pipeline:
+
+``` C#
+    internal static class ManagementClientPipeline
+    {
+        public static HttpPipeline Build(ClientOptions options, TokenCredential tokenCredential)
+        {
+            return HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, "https://management.azure.com/.default"));
+        }
+    }
+```
 ### Code Review Process
 
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
