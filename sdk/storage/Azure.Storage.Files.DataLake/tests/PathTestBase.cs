@@ -97,26 +97,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public class InMemoryAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlChanges>>
         {
-            public List<AccessControlChangeFailure> FailedEntries { get; } = new List<AccessControlChangeFailure>();
+            public List<AccessControlChangeFailure> Failures { get; } = new List<AccessControlChangeFailure>();
 
             public void Report(Response<AccessControlChanges> response)
             {
-                FailedEntries.AddRange(response.Value.BatchFailures);
-            }
-        }
-
-        public class ActionableAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlChanges>>
-        {
-            private Action<AccessControlChanges> action;
-
-            public ActionableAccessControlRecursiveChangeProgress(Action<AccessControlChanges> action)
-            {
-                this.action = action;
-            }
-
-            public void Report(Response<AccessControlChanges> response)
-            {
-                action(response);
+                Failures.AddRange(response.Value.BatchFailures);
             }
         }
     }
