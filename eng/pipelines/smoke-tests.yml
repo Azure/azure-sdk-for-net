@@ -67,11 +67,11 @@ jobs:
       vmImage: $(OSVmImage)
 
     variables:
-      publicAdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com'; location = '$(publicLocation)' }"
+      publicAdditionalParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHostAlias = 'AzureCloud'; location = '$(publicLocation)' }"
       publicLocation: westus2
-      govAdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/'; location = '$(govLocation)' }"
+      govAdditionalParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHostAlias = 'AzureUSGovernment'; location = '$(govLocation)' }"
       govLocation: usgovvirginia
-      cnAdditionalParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; authorityHost = 'https://login.chinacloudapi.cn'; location = '$(cnLocation)' }"
+      cnAdditionalParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; authorityHostAlias = 'AzureChinaCloud'; location = '$(cnLocation)' }"
       cnLocation: chinaeast2
 
     steps:

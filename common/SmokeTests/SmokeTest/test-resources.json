@@ -23,7 +23,7 @@
         "storageEndpointSuffix": {
             "type": "string"
         },
-        "authorityHost": {
+        "authorityHostAlias": {
             "type": "string"
         }
     },
@@ -281,9 +281,9 @@
             "type": "string",
             "value": "[parameters('testApplicationSecret')]"
         },
-        "AZURE_AUTHORITY_HOST": {
+        "AZURE_AUTHORITY_HOST_ALIAS": {
             "type": "string",
-            "value": "[parameters('authorityHost')]"
+            "value": "[parameters('authorityHostAlias')]"
         },
         "KEY_VAULT_URI": {
             "type": "string",
