@@ -699,7 +699,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"startTime\": \"2020-03-02T18:21:03.0707803-08:00\",\r\n  \"endTime\": \"2020-03-02T18:21:03.4457219-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-fgltfzxdwfbg.blob.core.windows.net/pqjqzsfznsbb/abcd?sv=2017-04-17&sr=b&si=2f3e22b9-b10e-4831-aeb3-88f1c30b94da&sig=ng4UMLUuTARG4CMhLDSsrsds74e3HjEeajqYbmDS6Bk%3D\"\r\n    }\r\n  },\r\n  \"name\": \"0faadce8-d549-48e5-a4f3-d45ea46fb143\"\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"2020-03-02T18:21:03.0707803-08:00\",\r\n  \"endTime\": \"2020-03-02T18:21:03.4457219-08:00\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"output\": {\r\n      \"accessSAS\": \"https://md-fgltfzxdwfbg.blob.core.windows.net/pqjqzsfznsbb/abcd?fakesas\"\r\n    }\r\n  },\r\n  \"name\": \"0faadce8-d549-48e5-a4f3-d45ea46fb143\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -763,7 +763,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"accessSAS\": \"https://md-fgltfzxdwfbg.blob.core.windows.net/pqjqzsfznsbb/abcd?sv=2017-04-17&sr=b&si=2f3e22b9-b10e-4831-aeb3-88f1c30b94da&sig=ng4UMLUuTARG4CMhLDSsrsds74e3HjEeajqYbmDS6Bk%3D\"\r\n}",
+      "ResponseBody": "{\r\n  \"accessSAS\": \"https://md-fgltfzxdwfbg.blob.core.windows.net/pqjqzsfznsbb/abcd?fakesas\"\r\n}",
       "StatusCode": 200
     },
     {
