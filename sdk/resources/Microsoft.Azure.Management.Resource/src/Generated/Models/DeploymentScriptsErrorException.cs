@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with DefaultErrorResponse
+    /// Exception thrown for an invalid response with DeploymentScriptsError
     /// information.
     /// </summary>
-    public partial class DefaultErrorResponseException : RestException
+    public partial class DeploymentScriptsErrorException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -31,30 +31,30 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public DefaultErrorResponse Body { get; set; }
+        public DeploymentScriptsError Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorResponseException class.
+        /// Initializes a new instance of the DeploymentScriptsErrorException class.
         /// </summary>
-        public DefaultErrorResponseException()
+        public DeploymentScriptsErrorException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorResponseException class.
+        /// Initializes a new instance of the DeploymentScriptsErrorException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public DefaultErrorResponseException(string message)
+        public DeploymentScriptsErrorException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorResponseException class.
+        /// Initializes a new instance of the DeploymentScriptsErrorException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public DefaultErrorResponseException(string message, System.Exception innerException)
+        public DeploymentScriptsErrorException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }
