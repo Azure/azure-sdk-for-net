@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// 'Canceled'</param>
         /// <param name="status">The status of the replication at the time the
         /// operation was called.</param>
-        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), Status status = default(Status))
+        public Replication(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), Status1 status = default(Status1))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// called.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public Status Status { get; private set; }
+        public Status1 Status { get; private set; }
 
         /// <summary>
         /// Validate the object.

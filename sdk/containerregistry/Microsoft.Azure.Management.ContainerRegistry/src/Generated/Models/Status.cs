@@ -10,62 +10,15 @@
 
 namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
-    using Newtonsoft.Json;
-    using System.Linq;
 
     /// <summary>
-    /// The status of an Azure resource at the time the operation was called.
+    /// Defines values for Status.
     /// </summary>
-    public partial class Status
+    public static class Status
     {
-        /// <summary>
-        /// Initializes a new instance of the Status class.
-        /// </summary>
-        public Status()
-        {
-            CustomInit();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Status class.
-        /// </summary>
-        /// <param name="displayStatus">The short label for the status.</param>
-        /// <param name="message">The detailed message for the status,
-        /// including alerts and error messages.</param>
-        /// <param name="timestamp">The timestamp when the status was changed
-        /// to the current value.</param>
-        public Status(string displayStatus = default(string), string message = default(string), System.DateTime? timestamp = default(System.DateTime?))
-        {
-            DisplayStatus = displayStatus;
-            Message = message;
-            Timestamp = timestamp;
-            CustomInit();
-        }
-
-        /// <summary>
-        /// An initialization method that performs custom operations like setting defaults
-        /// </summary>
-        partial void CustomInit();
-
-        /// <summary>
-        /// Gets the short label for the status.
-        /// </summary>
-        [JsonProperty(PropertyName = "displayStatus")]
-        public string DisplayStatus { get; private set; }
-
-        /// <summary>
-        /// Gets the detailed message for the status, including alerts and
-        /// error messages.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
-
-        /// <summary>
-        /// Gets the timestamp when the status was changed to the current
-        /// value.
-        /// </summary>
-        [JsonProperty(PropertyName = "timestamp")]
-        public System.DateTime? Timestamp { get; private set; }
-
+        public const string Approved = "Approved";
+        public const string Pending = "Pending";
+        public const string Rejected = "Rejected";
+        public const string Disconnected = "Disconnected";
     }
 }
