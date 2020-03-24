@@ -116,6 +116,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Credentials");
             }
+            if (Description != null)
+            {
+                if (Description.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Description", 256);
+                }
+            }
         }
     }
 }
