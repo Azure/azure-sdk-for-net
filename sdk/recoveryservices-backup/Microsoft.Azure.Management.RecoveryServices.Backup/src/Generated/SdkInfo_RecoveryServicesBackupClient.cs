@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "Backups", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "ExportJobsOperationResults", "2019-06-15"),
                 new Tuple<string, string, string>("RecoveryServices", "FeatureSupport", "2017-07-01"),
+                new Tuple<string, string, string>("RecoveryServices", "GetOperationStatus", "2020-02-02"),
                 new Tuple<string, string, string>("RecoveryServices", "ItemLevelRecoveryConnections", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "JobCancellations", "2019-06-15"),
                 new Tuple<string, string, string>("RecoveryServices", "JobDetails", "2019-06-15"),
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "Jobs", "2019-06-15"),
                 new Tuple<string, string, string>("RecoveryServices", "Operation", "2019-06-15"),
                 new Tuple<string, string, string>("RecoveryServices", "Operations", "2016-08-10"),
+                new Tuple<string, string, string>("RecoveryServices", "PrivateEndpointConnection", "2020-02-02"),
                 new Tuple<string, string, string>("RecoveryServices", "ProtectableContainers", "2016-12-01"),
                 new Tuple<string, string, string>("RecoveryServices", "ProtectedItemOperationResults", "2019-06-15"),
                 new Tuple<string, string, string>("RecoveryServices", "ProtectedItemOperationStatuses", "2016-12-01"),
@@ -61,16 +63,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservicesbackup/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\prupadhy\\Desktop\\c\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "cd030278d173aa0c662d69b99400af509938a7ce";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
