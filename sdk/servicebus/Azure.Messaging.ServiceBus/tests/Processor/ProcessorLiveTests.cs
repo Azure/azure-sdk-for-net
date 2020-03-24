@@ -383,7 +383,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 lockDuration: lockDuration))
             {
                 await using var client = GetClient();
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                var sender = client.GetSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
                 var processor = client.GetProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
@@ -393,7 +393,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Task ProcessMessage(ProcessMessageEventArgs args)
                 {
-                    var message = args.Message;
                     tcs.SetResult(true);
                     return Task.CompletedTask;
                 }
