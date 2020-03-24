@@ -14,8 +14,18 @@ namespace Azure.Search.Documents.Models
     public partial class IndexerExecutionResult
     {
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
-        internal IndexerExecutionResult()
+        /// <param name="status"> The outcome of this indexer execution. </param>
+        /// <param name="errors"> The item-level indexing errors. </param>
+        /// <param name="warnings"> The item-level indexing warnings. </param>
+        /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
+        /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IReadOnlyList<ItemError> errors, IReadOnlyList<ItemWarning> warnings, int itemCount, int failedItemCount)
         {
+            Status = status;
+            Errors = errors;
+            Warnings = warnings;
+            ItemCount = itemCount;
+            FailedItemCount = failedItemCount;
         }
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
@@ -29,7 +39,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IList<ItemError> errors, IList<ItemWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
+        internal IndexerExecutionResult(IndexerExecutionStatus status, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<ItemError> errors, IReadOnlyList<ItemWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
         {
             Status = status;
             ErrorMessage = errorMessage;
@@ -44,24 +54,24 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The outcome of this indexer execution. </summary>
-        public IndexerExecutionStatus Status { get; internal set; }
+        public IndexerExecutionStatus Status { get; }
         /// <summary> The error message indicating the top-level error, if any. </summary>
-        public string ErrorMessage { get; internal set; }
+        public string ErrorMessage { get; }
         /// <summary> The start time of this indexer execution. </summary>
-        public DateTimeOffset? StartTime { get; internal set; }
+        public DateTimeOffset? StartTime { get; }
         /// <summary> The end time of this indexer execution, if the execution has already completed. </summary>
-        public DateTimeOffset? EndTime { get; internal set; }
+        public DateTimeOffset? EndTime { get; }
         /// <summary> The item-level indexing errors. </summary>
-        public IList<ItemError> Errors { get; internal set; } = new List<ItemError>();
+        public IReadOnlyList<ItemError> Errors { get; } = new List<ItemError>();
         /// <summary> The item-level indexing warnings. </summary>
-        public IList<ItemWarning> Warnings { get; internal set; } = new List<ItemWarning>();
+        public IReadOnlyList<ItemWarning> Warnings { get; } = new List<ItemWarning>();
         /// <summary> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </summary>
-        public int ItemCount { get; internal set; }
+        public int ItemCount { get; }
         /// <summary> The number of items that failed to be indexed during this indexer execution. </summary>
-        public int FailedItemCount { get; internal set; }
+        public int FailedItemCount { get; }
         /// <summary> Change tracking state with which an indexer execution started. </summary>
-        public string InitialTrackingState { get; internal set; }
+        public string InitialTrackingState { get; }
         /// <summary> Change tracking state with which an indexer execution finished. </summary>
-        public string FinalTrackingState { get; internal set; }
+        public string FinalTrackingState { get; }
     }
 }

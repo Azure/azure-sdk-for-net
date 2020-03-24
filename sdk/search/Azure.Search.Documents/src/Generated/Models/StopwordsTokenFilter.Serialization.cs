@@ -50,7 +50,12 @@ namespace Azure.Search.Documents.Models
 
         internal static StopwordsTokenFilter DeserializeStopwordsTokenFilter(JsonElement element)
         {
-            StopwordsTokenFilter result = new StopwordsTokenFilter();
+            IList<string> stopwords = default;
+            StopwordsList? stopwordsList = default;
+            bool? ignoreCase = default;
+            bool? removeTrailing = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopwords"))
@@ -59,11 +64,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Stopwords = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Stopwords.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    stopwords = array;
                     continue;
                 }
                 if (property.NameEquals("stopwordsList"))
@@ -72,7 +78,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.StopwordsList = property.Value.GetString().ToStopwordsList();
+                    stopwordsList = property.Value.GetString().ToStopwordsList();
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
@@ -81,7 +87,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IgnoreCase = property.Value.GetBoolean();
+                    ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("removeTrailing"))
@@ -90,21 +96,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.RemoveTrailingStopWords = property.Value.GetBoolean();
+                    removeTrailing = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new StopwordsTokenFilter(stopwords, stopwordsList, ignoreCase, removeTrailing, odatatype, name);
         }
     }
 }

@@ -29,17 +29,19 @@ namespace Azure.Search.Documents.Models
 
         internal static CognitiveServicesAccountKey DeserializeCognitiveServicesAccountKey(JsonElement element)
         {
-            CognitiveServicesAccountKey result = new CognitiveServicesAccountKey();
+            string key = default;
+            string odatatype = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
                 {
-                    result.Key = property.Value.GetString();
+                    key = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -48,11 +50,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new CognitiveServicesAccountKey(key, odatatype, description);
         }
     }
 }

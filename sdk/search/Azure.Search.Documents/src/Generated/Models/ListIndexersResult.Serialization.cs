@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,19 +15,21 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListIndexersResult DeserializeListIndexersResult(JsonElement element)
         {
-            ListIndexersResult result = new ListIndexersResult();
+            IReadOnlyList<SearchIndexer> value = new List<SearchIndexer>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    List<SearchIndexer> array = new List<SearchIndexer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Indexers.Add(SearchIndexer.DeserializeSearchIndexer(item));
+                        array.Add(SearchIndexer.DeserializeSearchIndexer(item));
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new ListIndexersResult(value);
         }
     }
 }

@@ -33,27 +33,31 @@ namespace Azure.Search.Documents.Models
 
         internal static MagnitudeScoringFunction DeserializeMagnitudeScoringFunction(JsonElement element)
         {
-            MagnitudeScoringFunction result = new MagnitudeScoringFunction();
+            MagnitudeScoringParameters magnitude = default;
+            string type = default;
+            string fieldName = default;
+            double boost = default;
+            ScoringFunctionInterpolation? interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("magnitude"))
                 {
-                    result.Parameters = MagnitudeScoringParameters.DeserializeMagnitudeScoringParameters(property.Value);
+                    magnitude = MagnitudeScoringParameters.DeserializeMagnitudeScoringParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    result.Type = property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fieldName"))
                 {
-                    result.FieldName = property.Value.GetString();
+                    fieldName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boost"))
                 {
-                    result.Boost = property.Value.GetDouble();
+                    boost = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("interpolation"))
@@ -62,11 +66,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
+                    interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
                     continue;
                 }
             }
-            return result;
+            return new MagnitudeScoringFunction(magnitude, type, fieldName, boost, interpolation);
         }
     }
 }

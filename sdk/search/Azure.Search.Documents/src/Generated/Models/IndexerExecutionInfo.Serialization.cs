@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,12 +15,15 @@ namespace Azure.Search.Documents.Models
     {
         internal static IndexerExecutionInfo DeserializeIndexerExecutionInfo(JsonElement element)
         {
-            IndexerExecutionInfo result = new IndexerExecutionInfo();
+            IndexerStatus status = default;
+            IndexerExecutionResult lastResult = default;
+            IReadOnlyList<IndexerExecutionResult> executionHistory = new List<IndexerExecutionResult>();
+            IndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    result.Status = property.Value.GetString().ToIndexerStatus();
+                    status = property.Value.GetString().ToIndexerStatus();
                     continue;
                 }
                 if (property.NameEquals("lastResult"))
@@ -28,24 +32,26 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.LastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
+                    lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("executionHistory"))
                 {
+                    List<IndexerExecutionResult> array = new List<IndexerExecutionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.ExecutionHistory.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
+                        array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
                     }
+                    executionHistory = array;
                     continue;
                 }
                 if (property.NameEquals("limits"))
                 {
-                    result.Limits = IndexerLimits.DeserializeIndexerLimits(property.Value);
+                    limits = IndexerLimits.DeserializeIndexerLimits(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new IndexerExecutionInfo(status, lastResult, executionHistory, limits);
         }
     }
 }

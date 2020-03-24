@@ -14,21 +14,22 @@ namespace Azure.Search.Documents.Models
     {
         internal static Autocompletion DeserializeAutocompletion(JsonElement element)
         {
-            Autocompletion result = new Autocompletion();
+            string text = default;
+            string queryPlusText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"))
                 {
-                    result.Text = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queryPlusText"))
                 {
-                    result.QueryPlusText = property.Value.GetString();
+                    queryPlusText = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new Autocompletion(text, queryPlusText);
         }
     }
 }

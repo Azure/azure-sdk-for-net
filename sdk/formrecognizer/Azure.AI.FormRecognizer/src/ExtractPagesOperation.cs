@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedPage> ConvertToExtractedPages(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<ExtractedPage> ConvertToExtractedPages(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<ExtractedPage> pages = new List<ExtractedPage>();
             for (int i = 0; i < pageResults.Count; i++)

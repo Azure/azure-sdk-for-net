@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     public partial class IndexDocumentsResult
     {
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
-        internal IndexDocumentsResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
-        internal IndexDocumentsResult(IList<IndexingResult> results)
+        internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results)
         {
             Results = results;
         }
 
         /// <summary> The list of status information for each document in the indexing request. </summary>
-        public IList<IndexingResult> Results { get; internal set; } = new List<IndexingResult>();
+        public IReadOnlyList<IndexingResult> Results { get; } = new List<IndexingResult>();
     }
 }

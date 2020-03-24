@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public RawExtractedPage RawExtractedPage { get; }
 
-        internal static IReadOnlyList<ExtractedTable> ConvertTables(ICollection<DataTable_internal> tablesResult, ReadResult_internal readResult)
+        internal static IReadOnlyList<ExtractedTable> ConvertTables(IReadOnlyList<DataTable_internal> tablesResult, ReadResult_internal readResult)
         {
             List<ExtractedTable> tables = new List<ExtractedTable>();
 

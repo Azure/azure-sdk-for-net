@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class LengthTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of LengthTokenFilter. </summary>
-        public LengthTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public LengthTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.LengthTokenFilter";
         }
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Models
         {
             Min = min;
             Max = max;
-            ODataType = "#Microsoft.Azure.Search.LengthTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.LengthTokenFilter";
         }
 
         /// <summary> The minimum length in characters. Default is 0. Maximum is 300. Must be less than the value of max. </summary>

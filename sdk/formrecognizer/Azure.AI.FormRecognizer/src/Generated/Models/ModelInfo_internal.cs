@@ -13,11 +13,6 @@ namespace Azure.AI.FormRecognizer.Custom
     internal partial class ModelInfo_internal
     {
         /// <summary> Initializes a new instance of ModelInfo_internal. </summary>
-        internal ModelInfo_internal()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ModelInfo_internal. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="status"> Status of the model. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the model was created. </param>
@@ -31,12 +26,12 @@ namespace Azure.AI.FormRecognizer.Custom
         }
 
         /// <summary> Model identifier. </summary>
-        public Guid ModelId { get; internal set; }
+        public Guid ModelId { get; }
         /// <summary> Status of the model. </summary>
-        public ModelStatus Status { get; internal set; }
+        public ModelStatus Status { get; }
         /// <summary> Date and time (UTC) when the model was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; internal set; }
+        public DateTimeOffset CreatedDateTime { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; internal set; }
+        public DateTimeOffset LastUpdatedDateTime { get; }
     }
 }

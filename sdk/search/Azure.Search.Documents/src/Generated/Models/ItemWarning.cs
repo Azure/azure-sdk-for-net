@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class ItemWarning
     {
         /// <summary> Initializes a new instance of ItemWarning. </summary>
-        internal ItemWarning()
+        /// <param name="message"> The message describing the warning that occurred while processing the item. </param>
+        internal ItemWarning(string message)
         {
+            Message = message;
         }
 
         /// <summary> Initializes a new instance of ItemWarning. </summary>
@@ -31,14 +33,14 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The key of the item which generated a warning. </summary>
-        public string Key { get; internal set; }
+        public string Key { get; }
         /// <summary> The message describing the warning that occurred while processing the item. </summary>
-        public string Message { get; internal set; }
+        public string Message { get; }
         /// <summary> The name of the source at which the warning originated. For example, this could refer to a particular skill in the attached skillset. This may not be always available. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; }
         /// <summary> Additional, verbose details about the warning to assist in debugging the indexer. This may not be always available. </summary>
-        public string Details { get; internal set; }
+        public string Details { get; }
         /// <summary> A link to a troubleshooting guide for these classes of warnings. This may not be always available. </summary>
-        public string DocumentationLink { get; internal set; }
+        public string DocumentationLink { get; }
     }
 }

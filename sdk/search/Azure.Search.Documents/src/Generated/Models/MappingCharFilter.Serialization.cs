@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,29 +32,33 @@ namespace Azure.Search.Documents.Models
 
         internal static MappingCharFilter DeserializeMappingCharFilter(JsonElement element)
         {
-            MappingCharFilter result = new MappingCharFilter();
+            IList<string> mappings = new List<string>();
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mappings"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Mappings.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    mappings = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new MappingCharFilter(mappings, odatatype, name);
         }
     }
 }

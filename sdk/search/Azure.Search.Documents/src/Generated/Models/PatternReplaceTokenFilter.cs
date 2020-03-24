@@ -11,8 +11,13 @@ namespace Azure.Search.Documents.Models
     public partial class PatternReplaceTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of PatternReplaceTokenFilter. </summary>
-        public PatternReplaceTokenFilter()
+        /// <param name="pattern"> A regular expression pattern. </param>
+        /// <param name="replacement"> The replacement text. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public PatternReplaceTokenFilter(string pattern, string replacement, string name) : base(name)
         {
+            Pattern = pattern;
+            Replacement = replacement;
             ODataType = "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
         }
 
@@ -25,12 +30,12 @@ namespace Azure.Search.Documents.Models
         {
             Pattern = pattern;
             Replacement = replacement;
-            ODataType = "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternReplaceTokenFilter";
         }
 
         /// <summary> A regular expression pattern. </summary>
-        public string Pattern { get; set; }
+        public string Pattern { get; }
         /// <summary> The replacement text. </summary>
-        public string Replacement { get; set; }
+        public string Replacement { get; }
     }
 }

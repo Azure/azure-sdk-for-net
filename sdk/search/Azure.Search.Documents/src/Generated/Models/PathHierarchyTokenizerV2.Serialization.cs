@@ -49,7 +49,13 @@ namespace Azure.Search.Documents.Models
 
         internal static PathHierarchyTokenizerV2 DeserializePathHierarchyTokenizerV2(JsonElement element)
         {
-            PathHierarchyTokenizerV2 result = new PathHierarchyTokenizerV2();
+            char? delimiter = default;
+            char? replacement = default;
+            int? maxTokenLength = default;
+            bool? reverse = default;
+            int? skip = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delimiter"))
@@ -58,7 +64,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Delimiter = property.Value.GetChar();
+                    delimiter = property.Value.GetChar();
                     continue;
                 }
                 if (property.NameEquals("replacement"))
@@ -67,7 +73,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Replacement = property.Value.GetChar();
+                    replacement = property.Value.GetChar();
                     continue;
                 }
                 if (property.NameEquals("maxTokenLength"))
@@ -76,7 +82,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxTokenLength = property.Value.GetInt32();
+                    maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("reverse"))
@@ -85,7 +91,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ReverseTokenOrder = property.Value.GetBoolean();
+                    reverse = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("skip"))
@@ -94,21 +100,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.NumberOfTokensToSkip = property.Value.GetInt32();
+                    skip = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PathHierarchyTokenizerV2(delimiter, replacement, maxTokenLength, reverse, skip, odatatype, name);
         }
     }
 }

@@ -11,8 +11,12 @@ namespace Azure.Search.Documents.Models
     public partial class MagnitudeScoringParameters
     {
         /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>
-        public MagnitudeScoringParameters()
+        /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
+        /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
+        public MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd)
         {
+            BoostingRangeStart = boostingRangeStart;
+            BoostingRangeEnd = boostingRangeEnd;
         }
 
         /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>
@@ -27,9 +31,9 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The field value at which boosting starts. </summary>
-        public double BoostingRangeStart { get; set; }
+        public double BoostingRangeStart { get; }
         /// <summary> The field value at which boosting ends. </summary>
-        public double BoostingRangeEnd { get; set; }
+        public double BoostingRangeEnd { get; }
         /// <summary> A value indicating whether to apply a constant boost for field values beyond the range end value; default is false. </summary>
         public bool? ShouldBoostBeyondRangeByConstant { get; set; }
     }

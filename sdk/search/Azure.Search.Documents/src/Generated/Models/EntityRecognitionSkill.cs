@@ -13,7 +13,9 @@ namespace Azure.Search.Documents.Models
     public partial class EntityRecognitionSkill : Skill
     {
         /// <summary> Initializes a new instance of EntityRecognitionSkill. </summary>
-        public EntityRecognitionSkill()
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        public EntityRecognitionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
             ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
@@ -35,7 +37,7 @@ namespace Azure.Search.Documents.Models
             DefaultLanguageCode = defaultLanguageCode;
             IncludeTypelessEntities = includeTypelessEntities;
             MinimumPrecision = minimumPrecision;
-            ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
+            ODataType = oDataType ?? "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
 
         /// <summary> A list of entity categories that should be extracted. </summary>

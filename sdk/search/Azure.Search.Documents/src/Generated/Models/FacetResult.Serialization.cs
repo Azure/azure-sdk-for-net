@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         internal static FacetResult DeserializeFacetResult(JsonElement element)
         {
-            FacetResult result = new FacetResult();
+            long? count = default;
+            IDictionary<string, object> additionalProperties = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -23,12 +25,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Count = property.Value.GetInt64();
+                    count = property.Value.GetInt64();
                     continue;
                 }
-                result.Add(property.Name, property.Value.GetObject());
+                additionalProperties.Add(property.Name, property.Value.GetObject());
             }
-            return result;
+            return new FacetResult(count, additionalProperties);
         }
     }
 }

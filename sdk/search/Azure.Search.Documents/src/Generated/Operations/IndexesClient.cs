@@ -24,9 +24,9 @@ namespace Azure.Search.Documents
         {
         }
         /// <summary> Initializes a new instance of IndexesClient. </summary>
-        internal IndexesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        internal IndexesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
-            RestClient = new IndexesRestClient(clientDiagnostics, pipeline, endpoint, ApiVersion);
+            RestClient = new IndexesRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }

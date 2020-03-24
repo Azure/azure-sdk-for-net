@@ -13,8 +13,14 @@ namespace Azure.Search.Documents.Models
     public partial class IndexerExecutionInfo
     {
         /// <summary> Initializes a new instance of IndexerExecutionInfo. </summary>
-        internal IndexerExecutionInfo()
+        /// <param name="status"> Overall indexer status. </param>
+        /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
+        /// <param name="limits"> The execution limits for the indexer. </param>
+        internal IndexerExecutionInfo(IndexerStatus status, IReadOnlyList<IndexerExecutionResult> executionHistory, IndexerLimits limits)
         {
+            Status = status;
+            ExecutionHistory = executionHistory;
+            Limits = limits;
         }
 
         /// <summary> Initializes a new instance of IndexerExecutionInfo. </summary>
@@ -22,7 +28,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
-        internal IndexerExecutionInfo(IndexerStatus status, IndexerExecutionResult lastResult, IList<IndexerExecutionResult> executionHistory, IndexerLimits limits)
+        internal IndexerExecutionInfo(IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, IndexerLimits limits)
         {
             Status = status;
             LastResult = lastResult;
@@ -31,12 +37,12 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Overall indexer status. </summary>
-        public IndexerStatus Status { get; internal set; }
+        public IndexerStatus Status { get; }
         /// <summary> The result of the most recent or an in-progress indexer execution. </summary>
-        public IndexerExecutionResult LastResult { get; internal set; }
+        public IndexerExecutionResult LastResult { get; }
         /// <summary> History of the recent indexer executions, sorted in reverse chronological order. </summary>
-        public IList<IndexerExecutionResult> ExecutionHistory { get; internal set; } = new List<IndexerExecutionResult>();
+        public IReadOnlyList<IndexerExecutionResult> ExecutionHistory { get; } = new List<IndexerExecutionResult>();
         /// <summary> The execution limits for the indexer. </summary>
-        public IndexerLimits Limits { get; internal set; } = new IndexerLimits();
+        public IndexerLimits Limits { get; }
     }
 }

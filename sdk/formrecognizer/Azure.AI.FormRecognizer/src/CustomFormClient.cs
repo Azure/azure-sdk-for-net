@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// completion will contain meta-data about the trained model.</returns>
         public virtual Operation<CustomModel> StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source);
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/autorest.csharp/issues/467
@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// completion will contain meta-data about the trained model.</returns>
         public virtual async Task<Operation<CustomModel>> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source);
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
         public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source) { UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -135,7 +135,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
         public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source) { UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359

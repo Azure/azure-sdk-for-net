@@ -422,7 +422,8 @@ namespace Azure.Search.Documents.Models
             ref Utf8JsonReader reader,
             JsonSerializerOptions options)
         {
-            FacetResult facet = new FacetResult();
+            Dictionary<string, object> facet = new Dictionary<string, object>();
+            long? count = default;
             reader.Expects(JsonTokenType.StartObject);
             while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
@@ -430,7 +431,7 @@ namespace Azure.Search.Documents.Models
                 string facetName = reader.ExpectsPropertyName();
                 if (facetName == Constants.CountKey)
                 {
-                    facet.Count = reader.ExpectsNullableLong();
+                    count = reader.ExpectsNullableLong();
                 }
                 else
                 {
@@ -438,7 +439,7 @@ namespace Azure.Search.Documents.Models
                     facet[facetName] = value;
                 }
             }
-            return facet;
+            return new FacetResult(count, facet);
         }
 
         /// <summary>

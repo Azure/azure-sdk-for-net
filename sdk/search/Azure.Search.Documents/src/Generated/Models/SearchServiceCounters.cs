@@ -11,11 +11,6 @@ namespace Azure.Search.Documents.Models
     public partial class SearchServiceCounters
     {
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        internal SearchServiceCounters()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
         /// <param name="indexerCounter"> Total number of indexers. </param>
@@ -35,18 +30,18 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Total number of documents across all indexes in the service. </summary>
-        public SearchResourceCounter DocumentCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter DocumentCounter { get; }
         /// <summary> Total number of indexes. </summary>
-        public SearchResourceCounter IndexCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter IndexCounter { get; }
         /// <summary> Total number of indexers. </summary>
-        public SearchResourceCounter IndexerCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter IndexerCounter { get; }
         /// <summary> Total number of data sources. </summary>
-        public SearchResourceCounter DataSourceCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter DataSourceCounter { get; }
         /// <summary> Total size of used storage in bytes. </summary>
-        public SearchResourceCounter StorageSizeCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter StorageSizeCounter { get; }
         /// <summary> Total number of synonym maps. </summary>
-        public SearchResourceCounter SynonymMapCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter SynonymMapCounter { get; }
         /// <summary> Total number of skillsets. </summary>
-        public SearchResourceCounter SkillsetCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter SkillsetCounter { get; }
     }
 }

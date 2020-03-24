@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     public partial class AnalyzeResult
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
-        internal AnalyzeResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
-        internal AnalyzeResult(IList<TokenInfo> tokens)
+        internal AnalyzeResult(IReadOnlyList<TokenInfo> tokens)
         {
             Tokens = tokens;
         }
 
         /// <summary> The list of tokens returned by the analyzer specified in the request. </summary>
-        public IList<TokenInfo> Tokens { get; internal set; } = new List<TokenInfo>();
+        public IReadOnlyList<TokenInfo> Tokens { get; } = new List<TokenInfo>();
     }
 }

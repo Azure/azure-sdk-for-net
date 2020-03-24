@@ -13,15 +13,17 @@ namespace Azure.Search.Documents.Models
     internal partial class SearchError
     {
         /// <summary> Initializes a new instance of SearchError. </summary>
-        internal SearchError()
+        /// <param name="message"> A human-readable representation of the error. </param>
+        internal SearchError(string message)
         {
+            Message = message;
         }
 
         /// <summary> Initializes a new instance of SearchError. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        internal SearchError(string code, string message, IList<SearchError> details)
+        internal SearchError(string code, string message, IReadOnlyList<SearchError> details)
         {
             Code = code;
             Message = message;
@@ -29,10 +31,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
-        public string Code { get; internal set; }
+        public string Code { get; }
         /// <summary> A human-readable representation of the error. </summary>
-        public string Message { get; internal set; }
+        public string Message { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IList<SearchError> Details { get; internal set; }
+        public IReadOnlyList<SearchError> Details { get; }
     }
 }

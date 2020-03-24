@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="description"> Description of the cognitive resource attached to a skillset. </param>
         internal DefaultCognitiveServicesAccount(string oDataType, string description) : base(oDataType, description)
         {
-            ODataType = "#Microsoft.Azure.Search.DefaultCognitiveServices";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.DefaultCognitiveServices";
         }
     }
 }

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -14,22 +16,25 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static AnalyzeOperationResult_internal DeserializeAnalyzeOperationResult_internal(JsonElement element)
         {
-            AnalyzeOperationResult_internal result = new AnalyzeOperationResult_internal();
+            OperationStatus status = default;
+            DateTimeOffset createdDateTime = default;
+            DateTimeOffset lastUpdatedDateTime = default;
+            AnalyzeResult_internal analyzeResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    result.Status = property.Value.GetString().ToOperationStatus();
+                    status = property.Value.GetString().ToOperationStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
                 {
-                    result.CreatedDateTime = property.Value.GetDateTimeOffset("S");
+                    createdDateTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    result.LastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("analyzeResult"))
@@ -38,11 +43,11 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.AnalyzeResult = AnalyzeResult_internal.DeserializeAnalyzeResult_internal(property.Value);
+                    analyzeResult = AnalyzeResult_internal.DeserializeAnalyzeResult_internal(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new AnalyzeOperationResult_internal(status, createdDateTime, lastUpdatedDateTime, analyzeResult);
         }
     }
 }

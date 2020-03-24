@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
         public ICollection<RawExtractedLine> Lines { get; set; }
 
-        private static ICollection<RawExtractedLine> ConvertLines(ICollection<TextLine_internal> textLines)
+        private static ICollection<RawExtractedLine> ConvertLines(IReadOnlyList<TextLine_internal> textLines)
         {
             List<RawExtractedLine> rawLines = new List<RawExtractedLine>();
 

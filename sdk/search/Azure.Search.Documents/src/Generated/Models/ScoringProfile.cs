@@ -13,8 +13,10 @@ namespace Azure.Search.Documents.Models
     public partial class ScoringProfile
     {
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
-        public ScoringProfile()
+        /// <param name="name"> The name of the scoring profile. </param>
+        public ScoringProfile(string name)
         {
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
@@ -31,7 +33,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the scoring profile. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Parameters that boost scoring based on text matches in certain index fields. </summary>
         public TextWeights TextWeights { get; set; }
         /// <summary> The collection of functions that influence the scoring of documents. </summary>

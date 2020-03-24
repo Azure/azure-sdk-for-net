@@ -29,7 +29,9 @@ namespace Azure.Search.Documents.Models
 
         internal static AsciiFoldingTokenFilter DeserializeAsciiFoldingTokenFilter(JsonElement element)
         {
-            AsciiFoldingTokenFilter result = new AsciiFoldingTokenFilter();
+            bool? preserveOriginal = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preserveOriginal"))
@@ -38,21 +40,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.PreserveOriginal = property.Value.GetBoolean();
+                    preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new AsciiFoldingTokenFilter(preserveOriginal, odatatype, name);
         }
     }
 }
