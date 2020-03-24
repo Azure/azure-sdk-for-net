@@ -78,10 +78,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(null));
             Assert.AreEqual("contacts", ex.ParamName);
-
-            List<CertificateContact> contacts = new List<CertificateContact>();
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.SetContactsAsync(contacts));
-            Assert.AreEqual("contacts", ex.ParamName);
         }
 
         [Test]
@@ -98,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void UpdateCertificatePolicyArgumentValidation()
         {
-            CertificatePolicy policy = new CertificatePolicy { Exportable = true, ContentType = CertificateContentType.Pkcs12 };
+            CertificatePolicy policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK");
 
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateCertificatePolicyAsync(null, policy));
             Assert.AreEqual("certificateName", ex.ParamName);
@@ -106,14 +102,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync(string.Empty, policy));
             Assert.AreEqual("certificateName", ex.ParamName);
             StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
-
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync("test", null));
-            Assert.AreEqual("policy", ex.ParamName);
-
-            policy = new CertificatePolicy();
-
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync("test", policy));
-            Assert.AreEqual("policy", ex.ParamName);
         }
 
         [Test]
